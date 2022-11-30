@@ -1,0 +1,26 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3305/cs_rfid?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.jdbc.Driver
+  thymeleaf:
+    encoding: utf-8
+#  servlet:
+#    multipart:
+#      max-request-size: 100MB   #上传总文件大小
+#      file-size-threshold: 10MB  #上传单个文件大小
+mybatis-plus:
+  # 全局主键策略
+  global-config:
+    db-config:
+      id-type: auto # 设置为数据库ID自增
+      logic-not-delete-value: 0 # 0表示未删除
+      logic-delete-value: 1     # 1表示已删除
+  configuration:
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+   
+    map-underscore-to-camel-case: true
+sid: null

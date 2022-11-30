@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--   <import resource="applicationContext-service.xml"></import>-->
+    <!-- 配置扫描包对象，为包下的接口创建代理对象  -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3305/cs_rfid?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=Asia/Shanghai"/>
+        <property name="username" value="root"/>
+        <property name="password" value="123456"/>
+    </bean>
+    <bean id="sqlSessionFactoryBean" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
+      <property name="dataSource" ref="dataSource" />
+      <!-- 加载mybatis的全局配置文件 -->
+<!--      <property name="configLocation"  value="classpath:mybatis-config.xml" />-->
+      <!-- TODO 加载sql映射文件 -->
+      <property name="mapperLocations" value="classpath*:mapper/*Mapper.xml" />
+      <!--别名设置 -->
+      <property name="typeAliasesPackage"  value="com.zl.house.entity" />
+   </bean>
+
+    <bean id="userDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.rights.mapper.RoleMapper"/>
+    </bean>
+
+</beans>
