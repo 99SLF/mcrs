@@ -4,6 +4,7 @@ import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.rights.pojo.Role;
 import com.zimax.mcrs.rights.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
  * @date 2022/11/28
  */
 @RestController
-@ResponseBody
 @RequestMapping("/role")
 public class RoleController {
 
@@ -22,8 +22,7 @@ public class RoleController {
 
     @RequestMapping("/test")
     public String test() {
-        roleService.queryRoles(1,2);
-        return "hello";
+        return "/test.jsp";
     }
 
     @RequestMapping("/add")

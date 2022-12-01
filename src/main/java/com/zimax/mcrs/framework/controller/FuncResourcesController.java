@@ -24,7 +24,7 @@ public class FuncResourcesController {
 
     /**
      * 更新功能资源
-     * @param funcresource 功能组信息
+     * @param funcresource 功能资源信息
      */
     @RequestMapping("/update")
     public Result<?> updateFuncresource(@RequestBody Funcresource funcresource) {
@@ -43,12 +43,13 @@ public class FuncResourcesController {
     /**
      * 查询功能资源
      * @return 应用列表
-     * @param appId 应用编号
+     * @param funcCode 功能编号
      * @param limit 记录数
      * @param page 页码
      */
     @RequestMapping("/query")
-    public Result<?> queryFuncresource(@RequestParam int appId, @RequestParam int limit, @RequestParam int page) {
+    public Result<?> queryFuncresource(@RequestParam String funcCode, @RequestParam int limit, @RequestParam int page) {
         return Result.success();
     }
+
 }

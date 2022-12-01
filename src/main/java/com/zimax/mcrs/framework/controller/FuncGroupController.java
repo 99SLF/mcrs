@@ -43,7 +43,7 @@ public class FuncGroupController {
 
     /**
      * 查询功能组
-     * @return 应用列表
+     * @return 功能组列表
      * @param appId 应用编号
      * @param limit 记录数
      * @param page 页码
