@@ -21,11 +21,9 @@
 <!--      <property name="configLocation"  value="classpath:mybatis-config.xml" />-->
       <!-- TODO 加载sql映射文件 -->
       <property name="mapperLocations" value="classpath*:mapper/*Mapper.xml" />
-      <!--别名设置 -->
-      <property name="typeAliasesPackage"  value="com.zl.house.entity" />
    </bean>
 
-    <bean id="userDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <bean id="roleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.mcrs.rights.mapper.RoleMapper"/>
     </bean>
