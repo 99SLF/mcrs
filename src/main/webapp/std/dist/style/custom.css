@@ -1,0 +1,132 @@
+@media (max-width:600px) and (max-height:550px) {
+	.layui-layer-page {
+		height:500px!important;
+		top:0!important;
+	}
+	.layui-layer-iframe {
+		height:500px!important;
+		top:0!important;
+	}
+	.layui-layer-iframe div iframe {
+		height:400px!important;
+	}
+}
+@media (max-width:600px) and (max-height:500px) {
+	.layui-layer-page {
+		height:450px!important;
+		top:0!important;
+	}
+	.layui-layer-iframe {
+		height:450px!important;
+		top:0!important;
+	}
+	.layui-layer-iframe div iframe {
+		height:350px!important;
+	}
+}
+@media (max-width:600px) and (max-height:450px) {
+	.layui-layer-page {
+		height:400px!important;
+		top:0!important;
+	}
+	.layui-layer-iframe {
+		height:400px!important;
+		top:0!important;
+	}
+	.layui-layer-iframe div iframe {
+		height:300px!important;
+	}
+}
+@media (max-width:600px) and (max-height:400px) {
+	.layui-layer-page {
+		height:350px!important;
+		top:0!important;
+	}
+	.layui-layer-iframe {
+		height:350px!important;
+		top:0!important;
+	}
+	.layui-layer-iframe div iframe {
+		height:250px!important;
+	}
+}
+@media (max-width:600px) and (max-height:350px) {
+	.layui-layer-page {
+		height:300px!important;
+		top:0!important;
+	}
+	.layui-layer-iframe {
+		height:300px!important;
+		top:0!important;
+	}
+	.layui-layer-iframe div iframe {
+		height:200px!important;
+	}
+}
+@media(max-width:600px) {
+	.layui-layer-page {
+		width:100%!important;
+		left:0!important
+	}
+	.layui-layer-iframe {
+		width:100%!important;
+		left:0!important
+	}
+	.layui-toolbar {
+		text-align: right;
+		padding-bottom: 5px;
+	}
+	.layui-toolbar .layui-btn.layuiadmin-btn-list {
+		margin-left: 5px;
+	}
+	.layui-toolbar .layui-btn.layuiadmin-btn-list i {
+		display: none;
+	}
+	.layui-search {
+		text-align: right;
+	}
+	.layui-fluid {
+		padding: 0px;
+	}
+	.layui-card-header.layuiadmin-card-header-auto {
+		padding-top: 5px;
+		padding-bottom: 5px;
+		padding-left: 5px;
+		hpadding-right: 5px;
+	}
+	.layui-form-item .layui-inline {
+		margin-bottom: 0px;
+	}
+	.layui-card-body {
+		padding-top: 5px;
+		padding-bottom: 5px;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+	.layui-table-page {
+		padding-top: 7px;
+		padding-bottom: 0px;
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+	.layui-tab {
+		margin: 2px 0;
+	}
+	.layui-tab-content {
+		padding: 0px;
+	}
+}
+.layui-tab {
+	margin: 2px 0;
+}
+.layui-tab-content {
+	padding: 0px;
+}
+.layui-toolbar {
+	padding-bottom: 5px;
+}
+.layui-form-label {
+	width: 100px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
