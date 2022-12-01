@@ -1,5 +1,5 @@
 <%@page pageEncoding="UTF-8"%>
-<%@page import="com.mes.foundation.eoscommon.ResourcesMessageUtil"%>
+<%--<%@page import="com.mes.foundation.eoscommon.ResourcesMessageUtil"%>--%>
 <!DOCTYPE html>
 <html>
 <!-- 
