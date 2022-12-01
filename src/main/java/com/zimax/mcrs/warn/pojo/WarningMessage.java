@@ -1,5 +1,6 @@
 package com.zimax.mcrs.warn.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ import java.util.Date;
 public class WarningMessage {
 
     // 警告信息编号
-    @TableId
+    @TableId(type = IdType.AUTO)
     private int waringMessageId;
 
     //设备编号
