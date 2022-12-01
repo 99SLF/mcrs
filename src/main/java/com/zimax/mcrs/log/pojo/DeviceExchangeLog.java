@@ -1,5 +1,6 @@
 package com.zimax.mcrs.log.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ public class DeviceExchangeLog {
     /**
      * 设备交换日志编号
      */
-    @TableId
+    @TableId(type = IdType.AUTO)
     private int deviceExchangeLogId;
     /**
      * 设备编号
