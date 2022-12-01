@@ -9,15 +9,15 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * 设备
+ * 软件自启动实体类
  * @author 林俊杰
- * @date 2022/11/28
+ * @date 2022/12/1
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("device")
-public class Device {
+@TableName("starSoftware")
+public class StarSoftware {
 
     /**
      * 设备编号
@@ -26,7 +26,7 @@ public class Device {
     private int deviceId;
 
     /**
-     * 版本号
+     * 设备版本号
      */
     private String deviceVersion;
 
@@ -36,7 +36,7 @@ public class Device {
     private String userName;
 
     /**
-     * 设备状态码
+     * 设备状态
      */
     private String deviceStatus;
 

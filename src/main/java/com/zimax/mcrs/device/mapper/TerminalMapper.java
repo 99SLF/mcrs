@@ -1,13 +1,13 @@
 package com.zimax.mcrs.device.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zimax.mcrs.device.pojo.Device;
+import com.zimax.mcrs.device.pojo.Terminal;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * 设备
+ * 终端
  * @author 林俊杰
- * @date 2022/11/28
+ * @date 2022/11/30
  */
-public interface DeviceMapper extends BaseMapper<Device> {
+public interface TerminalMapper extends BaseMapper<Terminal> {
 }

@@ -1,4 +1,4 @@
-package com.zimax.mcrs.device.pojo;
+package com.zimax.mcrs.log.pojo;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -9,26 +9,25 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * 设备
+ * 设备交换日志
  * @author 林俊杰
- * @date 2022/11/28
+ * @date 2022/11/30
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("device")
-public class Device {
+@TableName("deviceExchangeLog")
+public class DeviceExchangeLog {
 
+    /**
+     * 设备交换日志编号
+     */
+    @TableId
+    private int deviceExchangeLogId;
     /**
      * 设备编号
      */
-    @TableId
     private int deviceId;
-
-    /**
-     * 版本号
-     */
-    private String deviceVersion;
 
     /**
      * 用户名称
@@ -36,14 +35,14 @@ public class Device {
     private String userName;
 
     /**
-     * 设备状态码
+     * 交互内容
      */
-    private String deviceStatus;
+    private String exchangeContent;
 
     /**
-     * 创建人
+     * 交互时间
      */
-    private String creator;
+    private Date exchangeTime;
 
     /**
      * 创建时间

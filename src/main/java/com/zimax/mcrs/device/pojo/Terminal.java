@@ -9,45 +9,44 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * 设备
+ * 终端
  * @author 林俊杰
- * @date 2022/11/28
+ * @date 2022/11/30
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("device")
-public class Device {
+@TableName("terminal")
+public class Terminal {
 
     /**
-     * 设备编号
+     * APPId
      */
     @TableId
+    private int APPId;
+
+    /**
+     * 设备资源号
+     */
     private int deviceId;
 
     /**
-     * 版本号
+     * 主机地址
      */
-    private String deviceVersion;
+    private String hostAddress;
 
     /**
-     * 用户名称
+     * 终端软件类型
      */
-    private String userName;
+    private String terminalType;
 
     /**
-     * 设备状态码
+     * 注册人员
      */
-    private String deviceStatus;
+    private String registrant;
 
     /**
-     * 创建人
+     * 注册时间
      */
-    private String creator;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
+    private Date registrationDate;
 }

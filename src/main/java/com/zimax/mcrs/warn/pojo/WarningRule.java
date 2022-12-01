@@ -17,13 +17,39 @@ import lombok.NoArgsConstructor;
 @TableName("waringRule")
 public class WarningRule {
 
-    //警告编号
+    /**
+     * 预警编号
+     */
     @TableId
     private int waringId;
 
-    //警告规则名称
+    /**
+     * 警告规则名称
+     */
     private String waringMessageName;
 
-    //警告规则内容
+    /**
+     * 上限
+     */
+    private String topLimit;
+
+    /**
+     * 下限
+     */
+    private String underLimit;
+
+    /**
+     * 固定值
+     */
+    private String fixed;
+
+    /**
+     * 警告规则文本
+     */
     private String waringRule;
+
+    /**
+     * 备注
+     */
+    private String remarks;
 }
