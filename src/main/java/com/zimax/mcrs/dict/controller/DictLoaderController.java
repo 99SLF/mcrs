@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @ResponseBody
 @RequestMapping("/dictLoader")
 public class DictLoaderController {
+
     /**
      * 获取字典数据
      * @param dictTypeId 字典类型编号
-     * @return 角色信息
+     * @return 字典数据
      */
     @GetMapping("/find/{dictTypeId}")
     public Result<?> getDict(@PathVariable("dictTypeId") String dictTypeId) {

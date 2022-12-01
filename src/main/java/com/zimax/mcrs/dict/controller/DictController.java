@@ -22,7 +22,6 @@ public class DictController {
 
     /**
      * 查询业务字典类型
-     *
      * @param dictTypeId   类型代码
      * @param dictTypeName 类型名称
      * @param limit        记录数
@@ -41,7 +40,6 @@ public class DictController {
      * 查询条件：
      * 业务字典类型ID
      * 说明：默认parentid，sortno升序排列
-     *
      * @param dictTypeId   类型代码
      * @param dictId       父节点ID
      * @param parentTypeId 父节点类型ID
@@ -59,7 +57,6 @@ public class DictController {
     /**
      * 保存业务字典类型
      * 包括：添加字典类型；添加子类型；修改字典类型
-     *
      * @param dictType 字典类型编号
      * @return DictType 业务字典类型；状态码
      */
@@ -71,7 +68,6 @@ public class DictController {
     /**
      * 保存业务字典项
      * 包括：添加字典项；添加子项；修改字典项
-     *
      * @param dictEntry 字典类型项
      * @return dictEntry 业务字典项；状态码
      */
@@ -82,7 +78,6 @@ public class DictController {
 
     /**
      * 级联删除字典类型
-     *
      * @param dictTypeId 字典类型编号
      */
     @DeleteMapping("/removeDictTypeCascade")
@@ -95,7 +90,6 @@ public class DictController {
      * 说明：
      * 1.删除选择的字典类型和其子类型
      * 2.删除所有字典类型和子类型级联的业务字典项
-     *
      * @param dictType 业务字典类型
      */
     @DeleteMapping("/removeDictType")
@@ -106,7 +100,6 @@ public class DictController {
 
     /**
      * 刷新业务字典缓存
-     *
      * @return状态码
      */
     @PutMapping("refreshDictCache")
@@ -116,9 +109,9 @@ public class DictController {
 
     /**
      * 导入业务字典
-     *
      * @return状态码
      */
+    @PostMapping("importDict")
     public String importDict(@RequestParam("excelFile") MultipartFile excelFile) {
         return Result.success().getCode();
     }
@@ -126,7 +119,7 @@ public class DictController {
     /**
      * 导出业务字典
      */
-    @GetMapping("getExcel")
+    @GetMapping("exportDict")
     @ResponseBody
     public String exportDict(HttpServletResponse response) throws IOException {
         return Result.success().getCode();
