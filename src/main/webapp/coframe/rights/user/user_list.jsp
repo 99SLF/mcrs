@@ -81,10 +81,10 @@
 	//功能名
 	var funName = "user_list";
 	
-	layui.admin.renderDictSelect({    //获取用户状态的下拉值
+	/*layui.admin.renderDictSelect({    //获取用户状态的下拉值
 		elem: "#status",
 		dictTypeId: "COF_USERSTATUS"
-	});
+	});*/
 	//状态默认
 	$("#status").val("请选择");
 	form.render();

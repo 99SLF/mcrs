@@ -1,6 +1,6 @@
 <%@page pageEncoding="UTF-8"%>
 <%
-	String url = request.getContextPath() + "/std/index.jsp";
+	String url = request.getContextPath() + "/coframe/rights/role/role_manager.jsp";
 %>
 <script>
 	if (window.parent) {

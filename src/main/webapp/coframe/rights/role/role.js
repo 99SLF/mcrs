@@ -1,0 +1,555 @@
+/**
+ * 角色管理模块
+ */
+layui.define(["admin"], function(exports) {
+	var $ = layui.$;
+	var setter = layui.setter;
+	var form = layui.form;
+	var table = layui.table;
+	
+	// 是否已初始化
+	var isInit = false;
+	
+	// 调用窗口对象
+	var win = null;
+	
+	//是否已提交
+	var submit = false;
+	
+	// 操作类型
+	var type = null;
+	
+	/**
+	 * 操作类型
+	 */
+	var Type = {
+		/**
+		 * 添加
+		 */
+		add: "add",
+		
+		/**
+		 * 修改
+		 */
+		update: "update"
+	};
+	
+	// 过滤字段
+	var hiddenFields = [];
+	
+	// 功能名
+	var funName = "subfuncgroup_list";
+	
+	//获取接口地址
+	var getUrl = setter.base + "com.zimax.components.coframe.rights.RoleManager.getRole.biz.ext";
+	
+	//添加接口地址
+	var addUrl = setter.base + "com.zimax.components.coframe.rights.RoleManager.addRole.biz.ext";
+	
+	//修改接口地址
+	var updateUrl = setter.base + "com.zimax.components.coframe.rights.RoleManager.updateRole.biz.ext";
+	
+	function getFullSize() {
+		var fluid = $(".layui-fluid");
+		var header = $(".layui-card-header");
+		var cardbody = $(".layui-card-body");
+		return header.outerHeight(true)  + (cardbody.outerHeight(true) - cardbody.height()) + 
+				(fluid.outerHeight(true) - fluid.height()) + 2;
+	}
+	
+	/**
+	 * 判断是否隐藏函数
+	 */
+	function isHidden(field) {
+		for (var i = 0; i < hiddenFields.length; i++) {
+			if (hiddenFields[i].field == field ) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * 查询过滤字段
+	 */
+	function queryHiddenField() {
+		$.ajax({
+			url: "com.zimax.components.coframe.tools.ColsFilter.queryHiddenField.biz.ext",
+			type: "POST",
+			async: false ,
+			data: JSON.stringify({
+				funName: funName
+			}),
+			cache: false,
+			contentType: "text/json",
+			success: function(result) {
+				if (result) {
+					hiddenFields = result.colsFilters;
+				} else {
+					layer.msg("查询失败");
+				}
+			}
+		});
+	}
+	
+	/**
+	 * 渲染表格
+	 */
+	function renderTable() {
+		table.render({
+			elem: "#LAY-app-role-list",
+			url: "com.zimax.components.coframe.rights.RoleManager.queryRoles.biz.ext",
+			method: "post",
+			height: "full-" + getFullSize(),
+			page: true,
+			limit: 10,
+			limits: [10, 15, 20, 30],
+			toolbar: "#toolbar",
+			colHideChange: function(col, checked) {
+				var field = col.field;
+				var hidden = col.hide;
+				$.ajax({
+					url: "com.zimax.components.coframe.tools.ColsFilter.setHiddenField.biz.ext",
+					type: "POST",
+					data: JSON.stringify({
+						hidden: hidden,
+						colsFilter: {
+							funName: funName,
+							field: field
+						}
+					}),
+					cache: false,
+					contentType: "text/json",
+					success: function(result) {
+						if (result) {
+						} else{
+							layer.msg("列筛选失败");		
+						}
+					}
+				});
+			},
+			defaultToolbar: ["filter"],
+			parseData: function(res) {
+				return {
+					code: "0",
+					msg: res.msg,
+					count: res.total,
+					data: res.roles
+				};
+			},
+			cols:[[{
+				type: "checkbox"
+			}, {
+				title: "序号",
+				type: "numbers"
+			}, {
+				field: "roleCode",
+				title: "角色代码",
+				align: "left",
+				hide: isHidden("roleCode"),
+				sort: true,
+				minWidth: 100
+			}, {
+				field: "roleName",
+				title: "角色名称",
+				align: "left",
+				hide: isHidden("roleName"),
+				minWidth: 120
+			}, {
+				field: "roleDesc",
+				title: "角色描述",
+				align: "left",
+				hide: isHidden("roleDesc"),
+				minWidth: 150
+			}, {
+				title: "操作",
+				align: "center",
+				fixed: "right",
+				width:  150,
+				toolbar: "#table-role-list"
+			}]]
+		});
+	}
+	
+	// 操作集合
+	var active = {
+		
+		/**
+		 * 添加角色
+		 */
+		add: function() {
+			top.layer.open({
+				type: 2,
+				title: "添加角色",
+				content: setter.base + "coframe/rights/role/role_add.jsp",
+				area: ["450px", "350px"],
+				resize: false,
+				btn: ["确定", "取消"],
+				success: function(layero, index) {
+					var contentWindow = layero.find("iframe")[0].contentWindow;
+					var role = contentWindow.layui.role;
+					if (role) {
+						var initData = {
+					    	win: window,
+					    	type: role.Type.add
+					    };
+						role.init(initData);
+					}
+				},
+				yes: function(index, layero) {
+					var submit = layero.find("iframe").contents().find("#layuiadmin-app-form-submit");
+					submit.click();
+				}
+			});
+		},
+		
+		/**
+		 * 批量删除
+		 */
+		batchdel: function() {
+			var checkStatus = table.checkStatus("LAY-app-role-list");
+			var data = checkStatus.data;
+			for (var i = 0; i < data.length ;i++){
+				if (data[i].roleId == 1) return layer.msg("系统管理员不能删除！");
+			}
+  			if (data.length == 0) {
+				layer.msg("请至少选中一条记录!");
+			} else {
+				layer.confirm("确定删除所选角色？", {
+					icon: 3,
+					title: "系统提示"
+				}, function(index) {
+					$.ajax({
+						url: setter.base + "com.zimax.components.coframe.rights.RoleManager.removeRoles.biz.ext",
+						type: "POST",
+						data: JSON.stringify({
+							roles: data
+						}),
+						cache: false,
+						contentType: "text/json",
+						success: function(result) {
+							if (result.exception) {
+								layer.alert(result.exception.message, {
+									icon: 2,
+									title: "系统提示"
+								});
+							} else if (result) {
+								layer.msg("删除成功", {
+									icon: 1,
+									time: 2000
+								}, function() {
+									table.reload("LAY-app-role-list");
+								});
+							} else {
+								layer.msg("删除失败");		
+							}
+						},
+						error: function(jqXHR, textStatus, errorThrown) {
+							layer.msg(jqXHR.responseText, {
+								time: 2000,
+								icon: 5
+							});
+						}
+					});
+				});
+			}
+		}
+	};
+	
+	/**
+	 * 加载数据
+	 */
+	function loadData(data) {
+		var json = {
+			roleId: data.roleId
+		};
+		$.ajax({
+			url: getUrl,
+			type: "POST",
+			cache: false,
+			data: JSON.stringify(json),
+			contentType: "text/json",
+			success: function(result) {
+				if (result.exception) {
+					layer.alert(result.exception.message, {
+						icon: 2,
+						title: "系统提示"
+					});
+				} else if (result.code == 0) {
+					if (result.role) {
+						var role = result.role;
+						form.val("layuiadmin-app-form-list", {
+							"capRole/roleId": role.roleId,
+							"capRole/roleCode": role.roleCode,
+							"capRole/roleName": role.roleName,				
+							"capRole/roleDesc": role.roleDesc
+						});
+						isInit = true;
+					}
+				} else {
+					layer.alert(result.msg, {
+						icon: 2,
+						title: "系统提示"
+					}, function() {
+						var index = parent.layer.getFrameIndex(window.name);
+						win.layui.table.reload("LAY-app-role-list");
+						parent.layer.close(index);
+					});
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				layer.alert(jqXHR.responseText, {
+					icon: 2,
+					title: "系统提示"
+				}, function() {
+					var index = parent.layer.getFrameIndex(window.name);
+					win.layui.table.reload("LAY-app-role-list");
+					parent.layer.close(index);
+				});
+			}
+		});
+	}
+	
+	/**
+	 * 提交事件
+	 */
+	function onSubmit() {
+		//监听提交事件
+		form.on("submit(layuiadmin-app-form-submit)", function(data) {
+			if (!isInit) {
+				layer.msg("正在加载数据，请稍后！", {
+					icon: 1,
+					time: 2000
+				});
+				return;
+			}
+			if (submit == false) {
+				var url = addUrl;
+				if (type == Type.update)
+					url = updateUrl;
+				var submitData = JSON.stringify(data.field);
+				$.ajax({
+					url: url,
+					type: "POST",
+					data: submitData,
+					cache: false,
+					contentType: "text/json",
+					success: function(result) {
+						if (result.exception) {
+							layer.alert(result.exception.message, {
+								icon: 2,
+								title: "系统提示"
+							});
+						} else if (result.code == 0) {
+							layer.msg(result.msg, {
+								time: 2000,
+								icon: 1
+							}, function() {
+								var index = parent.layer.getFrameIndex(window.name);
+								win.layui.table.reload("LAY-app-role-list");
+								parent.layer.close(index);
+							});
+						} else {
+							submit = false;
+							layer.msg(result.msg, {
+								time: 2000,
+								icon: 5
+							});
+						}
+					},
+					error: function(jqXHR, textStatus, errorThrown) {
+						layer.msg(jqXHR.responseText, {
+							time: 2000,
+							icon: 5
+						});
+					}
+				});
+				submit = true;
+			} else {
+				layer.msg("正在提交，请稍后！", {
+					time: 2000,
+					icon: 0
+				});
+				return false;
+			}
+		});
+	}
+	
+	/**
+	 * 角色管理JSON对象
+	 */
+	var Role = {
+		
+		/**
+		 * 操作类型
+		 */
+		Type: Type,
+		
+		/**
+		 * 初始化
+		 */
+		init: function(data) {
+			if (!data)
+				return;
+			if (isInit)
+				return;
+			
+			if (data.win) {
+				win = data.win;
+			}
+			
+			if (data.type) {
+				type = data.type;
+			}
+			
+			// 加载数据
+			loadData(data);
+		},
+		
+		/**
+		 * 管理角色
+		 */
+		manager: function() {
+			// 监听搜索
+			form.on("submit(LAY-app-rolelist-search)", function(data) {
+				var field = data.field;
+				table.reload("LAY-app-role-list", {
+					where: field
+				});
+			});
+			
+			// 文本框回车事件
+			$(".layui-input").on("keydown", function(event) {
+				if (event.keyCode == 13) {
+					var submit = $("#LAY-app-rolelist-search");
+					submit.click();
+					return false;
+				}
+			});
+			
+			// 改变窗体大小事件
+			$(window).resize(function () {
+				table.reload("LAY-app-role-list", {
+					height: "full-" + getFullSize()
+				});
+			});
+			
+			// 查询过滤字段
+			queryHiddenField();
+			
+			// 渲染表格
+			renderTable();
+			
+			// 左侧表头按钮事件监听
+			table.on("toolbar(LAY-app-role-list)", function(obj) {
+				var type = obj.event;
+				active[type] ? active[type].call(this) : "";
+			});
+			
+			// 表格排序
+			table.on("sort(LAY-app-role-list)", function(obj) {
+				table.reload("LAY-app-role-list", {
+					initSort: obj ,
+					where: {
+						field: obj.field,
+						order: obj.type
+					}
+				});
+			});
+			
+			// 监听操作事件
+			table.on("tool(LAY-app-role-list)", function(e) {
+				var data = e.data;
+				if (e.event == "edit") {
+					// 编辑角色
+					top.layer.open({
+						type: 2,
+						title: "编辑角色",
+						content: setter.base + "coframe/rights/role/role_update.jsp",
+						area: ["450px", "350px"],
+						resize: false,
+						btn: ["确定", "取消"],
+						success: function(layero, index) {
+							var contentWindow = layero.find("iframe")[0].contentWindow;
+							var role = contentWindow.layui.role;
+							if (role) {
+								var initData = {
+							    	win: window,
+							    	type: role.Type.update,
+							    	roleId: data.roleId
+							    };
+								role.init(initData);
+							}
+						},
+						yes: function(index, layero) {
+							var submit = layero.find("iframe").contents().find("#layuiadmin-app-form-submit");
+							submit.click();
+						}
+					});
+				} else if (e.event == "del") {
+					// 删除角色
+					layer.confirm("确定删除此角色？", {
+						icon: 3, 
+						title: "系统提示"
+					}, function(index) {
+						$.ajax({
+							url: setter.base + "com.zimax.components.coframe.rights.RoleManager.removeRoles.biz.ext",
+							type: "POST",
+							data: JSON.stringify({
+								roles: data
+							}),
+							cache: false,
+							contentType: "text/json",
+							success: function(result) {
+								if (result.exception) {
+		       						layer.alert(result.exception.message, {
+										icon: 2,
+										title: "系统提示"
+									});
+								} else if (result) {
+									layer.msg("删除成功", {
+										icon: 1,
+										time: 2000
+									}, function() {
+										table.reload("LAY-app-role-list");
+									});
+								} else {
+									layer.msg("删除失败");		
+								}
+							},
+							error: function(jqXHR, textStatus, errorThrown) {
+								layer.msg(jqXHR.responseText, {
+									time: 2000,
+									icon: 5
+								});
+							}
+						});	
+					});
+				}
+			});
+			
+			// 批量选中	
+			$("body").on("click", ".layui-table-body table.layui-table tbody tr td", function() {
+				if ($(this).attr("data-field") === "0") return;
+				$(this).siblings().eq(0).find("i").click();
+			});
+		},
+		
+		/**
+		 * 添加角色
+		 */
+		add: function() {
+			onSubmit();
+		},
+		
+		/**
+		 * 修改角色
+		 */
+		update: function() {
+			onSubmit();
+		}
+	};
+	
+	// 扩展角色管理模块
+	exports("role", Role);
+});
