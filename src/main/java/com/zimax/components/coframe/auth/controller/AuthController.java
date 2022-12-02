@@ -1,8 +1,10 @@
 package com.zimax.components.coframe.auth.controller;
 
 import com.zimax.components.coframe.auth.service.AuthService;
+import com.zimax.components.coframe.rights.pojo.Role;
 import com.zimax.mcrs.config.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.DataObjectPropertyName;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
  * @date 2022/11/29
  */
 @RestController
-@ResponseBody
 @RequestMapping("/auth")
 public class AuthController {
 
@@ -47,6 +48,17 @@ public class AuthController {
      */
     public Result<?> register(String userId, String userName, String password, String mobile, String email){
         authService.register(userId, userName, password, mobile, email);
+        return null;
+    }
+
+    /**
+     * 角色授权
+     * @param roleId 角色编号
+     * @param withAuthRole 有权限角色
+     * @param noWithAuthRole 无权限角色
+     */
+    @RequestMapping("/authorize")
+    public Result<?> authorize(@RequestParam int roleId, @RequestBody Object withAuthRole[], @RequestBody Object noWithAuthRole[]) {
         return null;
     }
 
