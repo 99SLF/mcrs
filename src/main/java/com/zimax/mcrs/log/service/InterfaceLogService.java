@@ -2,7 +2,6 @@ package com.zimax.mcrs.log.service;
 
 import com.zimax.mcrs.log.mapper.InterfaceLogMapper;
 import com.zimax.mcrs.log.pojo.InterfaceLog;
-import com.zimax.mcrs.rights.mapper.RoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
