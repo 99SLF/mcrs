@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("deviceExchangeLog")
+@TableName("cap_device_exchange_log")
 public class DeviceExchangeLog {
 
     /**

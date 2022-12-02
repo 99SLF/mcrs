@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("terminal")
+@TableName("cap_terminal")
 public class Terminal {
 
     /**

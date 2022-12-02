@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("terminalRenew")
+@TableName("cap_terminal_renew")
 public class TerminalRenew {
 
     /**

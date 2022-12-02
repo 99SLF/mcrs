@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("device")
+@TableName("cap_device")
 public class Device {
 
     /**

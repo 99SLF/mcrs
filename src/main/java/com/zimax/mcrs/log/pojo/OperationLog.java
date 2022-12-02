@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("OperationLog")
+@TableName("cap_operation_log")
 public class OperationLog {
 
     /**

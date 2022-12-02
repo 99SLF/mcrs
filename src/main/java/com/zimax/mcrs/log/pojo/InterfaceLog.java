@@ -18,7 +18,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("interfaceLog")
+@TableName("cap_interface_log")
 public class InterfaceLog {
 
     /**
