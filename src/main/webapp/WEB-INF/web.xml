@@ -8,6 +8,12 @@
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
   <display-name>Archetype Created Web Application</display-name>
+
+  <!-- 组织权限管理启动监听器 -->
+  <listener>
+    <listener-class>com.zimax.components.coframe.auth.startup.AuthStartupListener</listener-class>
+  </listener>
+
   <!-- 创建spring容器的监听器 -->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
