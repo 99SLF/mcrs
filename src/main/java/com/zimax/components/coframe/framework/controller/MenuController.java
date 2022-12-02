@@ -14,37 +14,134 @@ import java.util.List;
  * @Description
  */
 @RestController
-@ResponseBody
 @RequestMapping("/menu")
 public class MenuController {
+
     //菜单服务
     @Autowired
     private MenuService menuService;
 
 
+    /**
+     * 删除菜单
+     * @param menuId 菜单编号
+     */
+    @DeleteMapping("/deleteMenu")
+    public void deleteMenu(@PathVariable("menuId") String menuId ){
 
-//    /**
-//     * deleteMenus(DataObject[])
-//     */
-//
+    }
+
+    /**
+     * 删除菜单节点
+     * @param nodeList 节点列表
+     */
+    @DeleteMapping("/deleteMenuNodes/{nodeList}")
+    private void deleteMenuNodes(@RequestParam(value = "nodeList") List<?> nodeList){
+
+    }
+
+
+    /**
+     * 删除菜单
+     * @param nodes 节点列表
+     */
+    @DeleteMapping("/deleteMenus/{nodes}")
+    public void deleteMenus(@RequestParam(value = "nodes") List<?> nodes){
+
+    }
+
+
+    /**
+     * 获取菜单
+     * @param template 选中菜单
+     * @return menu 菜单信息
+     */
+    @GetMapping("/getMenu")
+    public Result<?> getMenu(@RequestBody Menu template){
+        return Result.success();
+
+    }
+
+    /**
+     * 查询菜单功能
+     * @param funcCode 功能编码
+     * @param funcName 功能名
+     * @return data Function数组
+     * @return total 总记录数
+     */
+    @GetMapping("/queryFunction")
+    public Result<?> queryFunction(@PathVariable("funcCode") String funcCode, @PathVariable("funcName") String funcName, @PathVariable("limit") int limit, @PathVariable("page") int page){
+        return Result.success();
+    }
+
+
+    /**
+     * 分页查询菜单列表
+     * @param parentMenuId 功能编码
+     * @param menuName 功能名
+     * @return data Function数组
+     * @return total 总记录数
+     * @return code 状态码
+     * @return msg 返回消息
+     */
+    @GetMapping("/queryMenu")
+    public Result<?> queryMenu(@PathVariable("parentMenuId") String parentMenuId, @PathVariable("menuName") String menuName,@PathVariable("limit") int limit, @PathVariable("page") int page){
+        return Result.success();
+    }
+
+    /**
+     * 查找菜单功能资源名字
+     * @param funcCode 功能编码
+     * @return funcName 功能名
+     */
+    @GetMapping("/queryMenuFuncResource/{funcCode}")
+    public String queryMenuFuncResource(@PathVariable("funcCode") String funcCode){
+        return "";
+
+    }
+
+    /**
+     * 分页查询菜单列表
+     * @param parentMenuId 父菜单编号
+     * @param menuName 菜单名
+     * @return menus 菜单列表数组
+     * @return total 总记录数
+     * @return code 状态码
+     * @return msg 返回消息
+     */
+    @GetMapping("/queryMenuFuncResource/{parentMenuId}/{menuName}")
+    public Result<?> queryMenuList(@PathVariable("parentMenuId") String parentMenuId, @PathVariable("menuName") String menuName){
+        return Result.success();
+    }
+
+    /**
+     * 查询菜单树
+     * @param nodeId 节点编号
+     * @return data 返回菜单树
+     */
+    @GetMapping("/queryMenuTreeNode")
+    public List<?> queryMenuTreeNode(@PathVariable("nodeId") String nodeId){
+        return null;
+
+    }
+
+    /**
+     * 更新菜单
+     * @param menu 菜单
+     */
+    @PutMapping("/saveMenu")
+    public void saveMenu(@RequestBody Menu menu){
+
+    }
 
     /**
      * 修改菜单
      * @param menu 菜单
      */
-    @PutMapping("/updateMenu")
-    public Result<?> updateMenu(@RequestBody Menu menu){
-        return Result.success();
-    }
+    @PostMapping("/updateMenu")
+    public void updateMenu(@RequestBody Menu menu){
 
-//    /**
-//     * 更新菜单
-//     * @param menu 菜单
-//     */
-//    @PutMapping("/saveMenu")
-//    public void saveMenu(@RequestBody Menu menu){
-//
-//    }
+    }
 
     /**
      * 修改菜单关系
@@ -62,77 +159,12 @@ public class MenuController {
     }
 
     /**
-     * 分页查询菜单列表
+     *验证菜单
+     * @param template 菜单
+     * @return
      */
-    @GetMapping("/queryMenu")
-    public  Result<?> queryMenu(String parentMenuId , String menuName , int page , int limit){
-        List<Menu> menus = menuService.queryMenu();
-        return Result.success();
+    @GetMapping("/validateMenu")
+    public int validateMenu(@RequestBody Menu template){
+        return 0;
     }
-
-    /**
-     * 获取菜单
-     * @param menuId 菜单编号
-     * @return 菜单信息
-     */
-    @GetMapping("/find/{menuId}")
-    public Result<?> getMenu(@PathVariable("menuId") String menuId) {
-        return Result.success(null);
-    }
-
-    /**
-     * 删除菜单
-     * @param menuId 菜单编号
-     */
-    @DeleteMapping("/delete/{menuId}")
-    public Result<?> removeUsers(@PathVariable("menuId")String menuId) {
-        return Result.success();
-    }
-
-    /**
-     * 删除菜单节点
-     * @param Menus 菜单节点列表
-     */
-    @RequestMapping(value = "/removeMenus",method = RequestMethod.POST)
-    public List<Menu> removeMenus(@RequestBody List<Menu> Menus){
-
-        return Menus;
-    }
-
-
-
-//     /**
-//     * 查询菜单，需先查询出功能编码 funcCode和功能名 funcName
-//     * @param limit 页记录数
-//     * @param page 页码
-//     * @param funcCode 功能编码
-//     * @param funcName 功能名
-//     * @return function 功能详细信息
-//     * @return 总记录数
-//     *
-//     */
-//
-//    @GetMapping("/queryFunctionAll")
-//    public Result<?>queryFunction(String funcCode , String funcName, int limit, int page) {
-//
-//        List<Function> all = functionService.queryFunction();
-//        return Result.success();
-//    }
-
-     /**
-     * 分页查询菜单列表list
-     */
-     @GetMapping("/queryMenuList")
-     public  Result<?> queryMenuList(String parentMenuId , String menuName ){
-         List<Menu> menus = menuService.queryMenu();
-         return Result.success();
-     }
-
-     /**
-      *查找菜单功能资源名字
-      */
-
-    /**
-     * validateMenu验证菜单
-     */
 }
