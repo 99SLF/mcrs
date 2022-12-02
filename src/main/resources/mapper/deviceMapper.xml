@@ -7,10 +7,23 @@
         select * from cap_device
     </select>
 
-    <!---->
-    <select id="addDevice" resultType="com.zimax.mcrs.device.pojo.Device">
-        insert into cap_device values(null,#{roleCode},#{roleName})
+    <!--依据条件查询-->
+    <select id="getDevice" resultType="com.zimax.mcrs.device.pojo.Device" >
+        select * from cap_device where device_id = #{deviceId}
     </select>
 
+    <!--新增设备-->
+    <select id="addDevice" resultType = "com.zimax.mcrs.device.pojo.Device">
+        insert into cap_device values(null, #{deviceVersion}, #{userName})
+    </select>
 
+    <!--删除设备-->
+    <select id = "removeDevice" resultType = "com.zimax.mcrs.device.pojo.Device">
+        delete from cap_device where device_id = # {deviceId}
+    </select>
+
+    <!--更新设备-->
+    <update id="updateDevice" parameterType="com.zimax.mcrs.device.pojo.Device">
+        update cap_device set device_version = #{deviceVersion}, userName_name=#{userName} where device_id=#{deviceId}
+    </update>
 </mapper>

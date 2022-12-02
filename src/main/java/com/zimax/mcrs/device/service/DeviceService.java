@@ -19,11 +19,27 @@ public class DeviceService {
     private DeviceMapper deviceMapper;
 
     /**
+     * 初始化查询
+     */
+    public List<Device> queryDevices(){
+        System.out.println(deviceMapper.queryDevice());
+        return null;
+    }
+
+    /**
+     * 根据设备编号查询
+     */
+    public Device querydevice(int deviceId){
+        System.out.println(deviceMapper.getDevice(deviceId));
+        return null;
+    }
+
+    /**
      * 添加设备信息
      * @param device 角色
      */
     public void addDevice(Device device){
-        deviceMapper.insert(device);
+
     }
 
     /**
@@ -31,30 +47,17 @@ public class DeviceService {
      * @param deviceId 设备编号
      */
     public void deleteById(int deviceId){
-        deviceMapper.deleteById(deviceId);
     }
 
     /**
      * 更新设备
      */
     public void updateDevice(Device device){
-        deviceMapper.updateById(device);
 
     }
 
-    /**
-     * 查询设备
-     */
-    public List<Device> queryAll(){
-        return deviceMapper.selectList(null);
-    }
 
-    /**
-     * 根据设备编号查询
-     */
-    public Device query(int deviceId){
-        return deviceMapper.selectById(deviceId);
-    }
+
 
     /**
      * 查询所有设备信息

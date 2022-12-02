@@ -20,22 +20,15 @@ public class DeviceController {
     private DeviceService deviceService;
 
     /**
-     * 添加设备
-     * @param device 设备信息
+     * 查询设备
+     * @param deviceVersion 设备版本号
+     * @param userName 用户名名字
+     * @param limit 记录数
+     * @param page 页码
+     * @return 角色列表
      */
-    @RequestMapping("/add")
-    public Result<?> addDevice(@RequestBody Device device){
-        deviceService.addDevice(device);
-        return  Result.success();
-    }
-
-    /**
-     * 更新设备
-     * @param device 设备信息
-     */
-    @PutMapping("/update")
-    public Result<?> updateDevice(@RequestBody Device device) {
-        deviceService.updateDevice(device);
+    @GetMapping("/query")
+    public Result<?> queryDevices(@RequestParam String deviceVersion, @RequestParam String userName, @RequestParam int limit, @RequestParam int page) {
         return Result.success();
     }
 
@@ -47,7 +40,16 @@ public class DeviceController {
     @GetMapping("/find/{deviceId}")
     public Result<?> getDevice(@PathVariable("deviceId") int deviceId) {
 
-        return Result.success(deviceService.query(deviceId));
+        return Result.success();
+    }
+
+    /**
+     * 添加设备
+     * @param device 设备信息
+     */
+    @RequestMapping("/add")
+    public Result<?> addDevice(@RequestBody Device device){
+        return  Result.success();
     }
 
     /**
@@ -56,21 +58,15 @@ public class DeviceController {
      */
     @DeleteMapping("/delete/{deviceId}")
     public Result<?> removeDevice(@PathVariable("deviceId")int deviceId) {
-        deviceService.deleteById(deviceId);
         return Result.success();
     }
 
     /**
-     * 查询设备
-     * @param deviceVersion 角色代码
-     * @param userName 角色名字
-     * @param limit 记录数
-     * @param page 页码
-     * @return 角色列表
+     * 更新设备
+     * @param device 设备信息
      */
-    @GetMapping("/query")
-    public Result<?> queryDevice() {
-        return Result.success(deviceService.queryAll());
+    @PutMapping("/update")
+    public Result<?> updateDevice(@RequestBody Device device) {
+        return Result.success();
     }
-
 }
