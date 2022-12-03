@@ -1,5 +1,7 @@
 package com.zimax.components.coframe.auth.intercepter;
 
+import com.zimax.cap.access.http.*;
+import com.zimax.cap.exception.CapRuntimeException;
 import com.zimax.cap.party.IUserObject;
 import com.zimax.cap.party.Party;
 import com.zimax.cap.party.impl.UserObject;
@@ -44,6 +46,35 @@ public class UserLoginWebInterceptor implements Filter {
         boolean isLogin = isLogin(request, response);
         if (isLogin == true) {
             initContext(request, response, false);
+            chain.doFilter(servletRequest, servletResponse);
+            return;
+        }
+        String servletPath = HttpUrlHelper.getRequestUrl(request, response);
+        if (logger.isDebugEnabled()) {
+            logger.debug("checked url [" + servletPath + "] is exclude ?");
+        }
+
+        boolean isExcludeUrl = HttpUrlHelper.isIn(servletPath,
+                UserLoginCheckedFilter.getExcludeUrls());
+        if (isExcludeUrl == true) {
+            chain.doFilter(servletRequest, servletResponse);
+            return;
+        }
+
+        if (HttpUrlHelper.isIn(servletPath,
+                UserLoginCheckedFilter.getIncludeUrls())) {
+            if (logger.isTraceEnabled())
+                logger.error("access url [" + servletPath + "] must be login.");
+            // 是需要检查的url，并且不在前面的ExcludeUrl中，所以要跳转到错误页面
+            ExceptionObject exObj = new ExceptionObject(request);
+            exObj.setInvalid(true);
+            exObj.setForwardPage("/coframe/auth/noLogin.jsp");
+            exObj.setThrowable(new CapRuntimeException(
+                    ExceptionConstant.HTTP_12101001));
+            request.setAttribute(IS_FILTER_FUNCTION_KEY, "true");
+            ThrowableProcessHelper.execute(request, response, exObj, true);
+        } else {
+            chain.doFilter(servletRequest, servletResponse);
             return;
         }
     }
@@ -61,19 +92,19 @@ public class UserLoginWebInterceptor implements Filter {
         boolean isLogin = false;
         if (session.getAttribute(IUserObject.KEY_IN_CONTEXT) != null
                 && !(session.getAttribute(IUserObject.KEY_IN_CONTEXT) instanceof IUserObject)) {
-//            throw new EOSRuntimeException(ExceptionConstant.HTTP_12101011,
-//                    new String[] {
-//                            IUserObject.class.getName(),
-//                            session.getAttribute(IUserObject.KEY_IN_CONTEXT)
-//                                    .getClass().getName() });
+            throw new CapRuntimeException(ExceptionConstant.HTTP_12101011,
+                    new String[]{
+                            IUserObject.class.getName(),
+                            session.getAttribute(IUserObject.KEY_IN_CONTEXT)
+                                    .getClass().getName()});
         }
         IUserObject userObject = (IUserObject) session
                 .getAttribute(IUserObject.KEY_IN_CONTEXT);
         if (userObject != null) {
-//            if (OnlineUserManager.getUserObjectsByUniqueId(userObject
-//                    .getUniqueId()) != null) {
-            isLogin = true;
-//            }
+            if (OnlineUserManager.getUserObjectsByUniqueId(userObject
+                    .getUniqueId()) != null) {
+                isLogin = true;
+            }
         }
         return isLogin;
     }
