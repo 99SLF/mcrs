@@ -32,9 +32,9 @@ public class Device {
     private int equipmentId;
 
     /**
-     * 主机地址
+     * 接入方式
      */
-    private String hostAddress;
+    private String assessMethod;
 
     /**
      * 终端软件类型
@@ -42,9 +42,19 @@ public class Device {
     private String deviceType;
 
     /**
+     * 使用工序
+     */
+    private String useProcess;
+
+    /**
      * 注册人员
      */
     private String registrant;
+
+    /**
+     * 注册人员
+     */
+    private String registerRole;
 
     /**
      * 注册时间
