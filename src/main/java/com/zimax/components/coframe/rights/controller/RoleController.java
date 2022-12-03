@@ -19,7 +19,7 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
     @GetMapping("/test")
-    public  Result<?> test() {
+    public Result<?> test() {
         return Result.success(roleService.queryRoles());
     }
 
@@ -34,7 +34,7 @@ public class RoleController {
      * @param role 角色信息
      */
     @PutMapping("/update")
-    public  Result<?>  updateRole(@RequestBody Role role) {
+    public Result<?> updateRole(@RequestBody Role role) {
         //roleService.updateRole(role);
         return Result.success();
     }
@@ -45,7 +45,7 @@ public class RoleController {
      * @return 角色信息
      */
     @RequestMapping("/find/{roleId}")
-    public Result<?>  getRole(@PathVariable("roleId") int roleId) {
+    public Result<?> getRole(@PathVariable("roleId") int roleId) {
         return Result.success();
     }
 
@@ -54,7 +54,7 @@ public class RoleController {
      * @param roleId 角色编号
      */
     @DeleteMapping("/delete/{roleId}")
-    public  Result<?>  removeRole(@PathVariable("roleId")int roleId) {
+    public Result<?> removeRole(@PathVariable("roleId")int roleId) {
         //roleService.deleteById(roleId);
         return Result.success();
     }

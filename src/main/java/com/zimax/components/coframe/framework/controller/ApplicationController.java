@@ -19,6 +19,7 @@ public class ApplicationController {
     public Result<?> test() {
         return Result.success();
     }
+
     /**
      * 新增应用
      * @param application 应用信息
@@ -58,6 +59,7 @@ public class ApplicationController {
     public Result<?> queryApplications(@RequestParam String appName, @RequestParam String appType, @RequestParam int limit, @RequestParam int page) {
         return Result.success();
     }
+
     /**
      * 获取应用信息
      * @param appId 应用编号
