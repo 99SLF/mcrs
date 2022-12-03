@@ -24,7 +24,7 @@ public class Equipment {
      * 设备资源号
      */
     @TableId(type = IdType.AUTO)
-    private int equipmentId;
+    private String equipmentId;
 
     /**
      * 设备名称

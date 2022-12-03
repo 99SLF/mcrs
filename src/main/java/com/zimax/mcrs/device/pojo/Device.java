@@ -24,12 +24,22 @@ public class Device {
      * APPId
      */
     @TableId(type = IdType.AUTO)
-    private int APPId;
+    private String APPId;
 
     /**
      * 设备资源号
      */
-    private int equipmentId;
+    private String equipmentId;
+
+    /**
+     * 终端类型
+     */
+    private String deviceType;
+
+    /**
+     * 终端名称
+     */
+    private int deviceName;
 
     /**
      * 接入方式
@@ -37,9 +47,34 @@ public class Device {
     private String assessMethod;
 
     /**
+     * 接入端名称
+     */
+    private String assessName;
+
+    /**
+     * 接入端资源号
+     */
+    private String assessResourceId;
+
+    /**
+     * 接入端属性
+     */
+    private String assessAttributes;
+
+    /**
+     * 接入端Ip
+     */
+    private String assessIp;
+
+    /**
+     * 接入端安装位置
+     */
+    private String assessInstallLocation;
+
+    /**
      * 终端软件类型
      */
-    private String deviceType;
+    private String deviceSoftwareType;
 
     /**
      * 使用工序
@@ -60,4 +95,14 @@ public class Device {
      * 注册时间
      */
     private Date registrationDate;
+
+    /**
+     * 是否启用
+     */
+    private String enable;
+
+    /**
+     * 终端状态
+     */
+    private String deviceStatus;
 }
