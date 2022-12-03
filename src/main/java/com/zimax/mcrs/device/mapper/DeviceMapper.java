@@ -1,50 +1,43 @@
 package com.zimax.mcrs.device.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zimax.components.coframe.rights.pojo.Role;
 import com.zimax.mcrs.device.pojo.Device;
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 /**
- * 设备
+ * 终端
  * @author 林俊杰
- * @date 2022/11/28
+ * @date 2022/11/30
  */
 public interface DeviceMapper {
-
-   @Autowired
 
     /**
      * 初始化查询
      * @return
      */
     public List<Device> queryDevice();
-
     /**
-     * 依据设备id查询设备
+     *  注册终端
      * @return
      */
-    public Device getDevice(int deviceId);
+    public void registrationDevice(Device device);
 
     /**
-     * 添加设备
+     * 依据Appid注销终端
      * @return
      */
-    public void addDevice(Device device);
+    public void logoutByID(int APPId);
 
     /**
-     * 删除设备
+     * 依据AppId查询
      * @return
      */
-    public void removeDevice(int deviceId);
+    public List<Device> queryAPPId(int APPId);
 
     /**
-     * 更新设备
+     * 依据设备资源号查询
      * @return
      */
-    public void updateDevice(Device device);
+    public List<Device> queryDeviceType(int equipmentId);
 
 }

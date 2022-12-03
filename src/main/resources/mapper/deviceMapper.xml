@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zimax.mcrs.device.mapper.DeviceMapper">
+<mapper namespace="com.zimax.mcrs.equipment.mapper.DeviceMapper">
     <!--查询所有-->
-    <select id="queryDevice" resultType="com.zimax.mcrs.device.pojo.Device">
+    <select id="queryDevice" resultType="com.zimax.mcrs.equipment.pojo.Equipment">
         select * from cap_device
     </select>
 
     <!--依据条件查询-->
-    <select id="getDevice" resultType="com.zimax.mcrs.device.pojo.Device" >
+    <select id="getDevice" resultType="com.zimax.mcrs.equipment.pojo.Equipment" >
         select * from cap_device where device_id = #{deviceId}
     </select>
 
     <!--新增设备-->
-    <select id="addDevice" resultType = "com.zimax.mcrs.device.pojo.Device">
+    <select id="addDevice" resultType = "com.zimax.mcrs.equipment.pojo.Equipment">
         insert into cap_device values(null, #{deviceVersion}, #{userName})
     </select>
 
     <!--删除设备-->
-    <select id = "removeDevice" resultType = "com.zimax.mcrs.device.pojo.Device">
+    <select id = "removeDevice" resultType = "com.zimax.mcrs.equipment.pojo.Equipment">
         delete from cap_device where device_id = # {deviceId}
     </select>
 
     <!--更新设备-->
-    <update id="updateDevice" parameterType="com.zimax.mcrs.device.pojo.Device">
+    <update id="updateDevice" parameterType="com.zimax.mcrs.equipment.pojo.Equipment">
         update cap_device set device_version = #{deviceVersion}, userName_name=#{userName} where device_id=#{deviceId}
     </update>
 </mapper>

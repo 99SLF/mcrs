@@ -1,7 +1,7 @@
 package com.zimax.mcrs.device.controller;
 
 import com.zimax.mcrs.config.Result;
-import com.zimax.mcrs.device.service.TerminalRenewService;
+import com.zimax.mcrs.device.service.DeviceUpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @ResponseBody
 @RequestMapping("/terminalRenew")
-public class TerminalRenewController {
+public class DeviceUpdateController {
 
     @Autowired
-    private TerminalRenewService terminalRenewService;
+    private DeviceUpdateService deviceUpdateService;
 
     /**
      * 查询全部的设备更新信息
@@ -61,21 +61,21 @@ public class TerminalRenewController {
 
     /**
      * 回退终端
-     * @param terminalRenewId 设备更新编号
+     * @param deviceUpdateId 设备更新编号
      * @return
      */
-    @RequestMapping("rollback")
-    public void rollBackTerminalRenew(@PathVariable("terminalRenewId") int terminalRenewId){
+    @RequestMapping("follback")
+    public void rollBackTerminalRenew(@PathVariable("deviceUpdateId") int deviceUpdateId){
 
     }
 
     /**
      * 依据终端更新编码查询
-     * @param terminalRenewId 设备更新编号
+     * @param deviceUpdateId 设备更新编号
      * @return
      */
-    @RequestMapping("queryTerminalRenewId")
-    public void queryTerminalRenewId(@PathVariable("terminalRenewId") int terminalRenewId){
+    @RequestMapping("queryDeviceUpdateId")
+    public void queryTerminalRenewId(@PathVariable("deviceUpdateId") int deviceUpdateId){
 
     }
 

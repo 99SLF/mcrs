@@ -17,14 +17,14 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("cap_terminal_renew")
-public class TerminalRenew {
+@TableName("cap_device_update")
+public class DeviceUpdate {
 
     /**
      * 终端更新编码
      */
     @TableId(type = IdType.AUTO)
-    private int terminalRenewId;
+    private int deviceUpdateId;
 
     /**
      * 客户端地址
@@ -59,17 +59,17 @@ public class TerminalRenew {
     /**
      * 更新信息
      */
-    private String renewText;
+    private String updateText;
 
     /**
      * 更新人
      */
-    private String renewPeople;
+    private String updatePeople;
 
     /**
      * 更新时间
      */
-    private Date renewTime;
+    private Date updateTime;
 
     /**
      * 备注

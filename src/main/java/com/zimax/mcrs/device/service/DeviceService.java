@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * 设备服务
+ * 设备终端服务
  * @author 林俊杰
- * @date 2022/11/28
+ * @date 2022/11/30
  */
 @Service
 public class DeviceService {
@@ -19,55 +19,51 @@ public class DeviceService {
     private DeviceMapper deviceMapper;
 
     /**
+     * 注册终端
+     * @param device 终端
+     */
+    public void registrationDevice(Device device) {
+
+    }
+
+    /**
+     * 注销终端
+     * @param APPId 根据APPID注销
+     */
+    public void logoutById(int APPId) {
+
+    }
+
+    /**
      * 初始化查询
      */
-    public List<Device> queryDevices(){
-        System.out.println(deviceMapper.queryDevice());
+    public List<Device> queryAll() {
         return null;
     }
 
     /**
-     * 根据设备编号查询
+     * 根据APPId查询
+     * @param APPId 依据APPId查询
      */
-    public Device querydevice(int deviceId){
-        System.out.println(deviceMapper.getDevice(deviceId));
+    public Device queryAPPId(int APPId) {
         return null;
     }
 
     /**
-     * 添加设备信息
-     * @param device 角色
+     * 根据设备资源号查询
+     * @param equipmentId 依据设备资源号查询
      */
-    public void addDevice(Device device){
-
-    }
-
-    /**
-     * 根绝设备编号删除
-     * @param deviceId 设备编号
-     */
-    public void deleteById(int deviceId){
-    }
-
-    /**
-     * 更新设备
-     */
-    public void updateDevice(Device device){
-
-    }
-
-
-
-
-    /**
-     * 查询所有设备信息
-     * @return
-     */
-    public List<Device> queryDevice(int page, int limit){
-//        QueryWrapper<Device> queryWrapper = new QueryWrapper<>();
-//        List<Device> deviceList = deviceMapper.selectList(queryWrapper);
-//        System.out.println(deviceList.toString());
+    public Device queryEquipmentId(int equipmentId) {
         return null;
     }
+
+    /**
+     * 根据终端软件类型查询
+     * @param deviceType 依据终端软件类型查询
+     */
+    public Device queryDeviceType(String deviceType) {
+        return null;
+    }
+
 
 }

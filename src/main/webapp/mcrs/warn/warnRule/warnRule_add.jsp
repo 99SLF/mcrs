@@ -9,7 +9,7 @@ warnRule_edit.jsp<%@ page language="java" contentType="text/html; charset=UTF-8"
 -->
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
 <title>预警规则添加</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
 </head>

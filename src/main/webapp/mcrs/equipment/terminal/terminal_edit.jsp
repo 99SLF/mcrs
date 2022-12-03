@@ -9,7 +9,7 @@
 -->
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
 <title>终端编辑</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
 <script src="common/layui/layui.all.js"></script>

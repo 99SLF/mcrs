@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
 <link rel="shortcut icon" href="<%=request.getContextPath() %>/std/dist/images/favicon.ico?v=3" />
 <title>应用基础框架</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/common/layui/css/layui.css">

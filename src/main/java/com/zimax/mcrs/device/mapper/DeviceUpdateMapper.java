@@ -1,6 +1,6 @@
 package com.zimax.mcrs.device.mapper;
 
-import com.zimax.mcrs.device.pojo.TerminalRenew;
+import com.zimax.mcrs.device.pojo.DeviceUpdate;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import java.util.List;
  * @author 林俊杰
  * @date 2022/12/1
  */
-public interface TerminalRenewMapper {
+public interface DeviceUpdateMapper {
 
-    List<TerminalRenew> findAll();
+    List<DeviceUpdate> findAll();
 
 }
