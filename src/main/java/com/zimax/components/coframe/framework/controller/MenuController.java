@@ -42,7 +42,7 @@ public class MenuController {
 
 
     /**
-     * 删除菜单
+     * 删除菜单，多条
      * @param nodes 节点列表
      */
     @DeleteMapping("/deleteMenus/{nodes}")
