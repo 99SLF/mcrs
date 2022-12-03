@@ -77,6 +77,11 @@ public class UserLoginCheckedFilter implements Filter {
                 : includeUrls.split(",");
     }
 
+    static {
+        setExcludeUrls("/common/**.jsp,/index.jsp,/pro/index.jsp,/common.remote,/jmxDefault.jmx,/common.download,/coframe/auth/noLogin.jsp,/coframe/auth/login.jsp,**/com.zimax.components.coframe.auth.LoginManager.login.biz.ext,**/com.zimax.components.coframe.auth.LoginManager.logout.biz.ext");
+        setIncludeUrls("*.flow,*.flowx,*.jsp,*.html,*.ajax,*.ext,*.action,*.beanx");
+    }
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
