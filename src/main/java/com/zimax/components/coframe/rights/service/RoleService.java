@@ -30,7 +30,7 @@ public class RoleService {
         System.out.println("success---");
         System.out.println(roleMapper.queryRoles());
         System.out.println("success");
-        return null;
+        return roleMapper.queryRoles();
     }
 
     /**

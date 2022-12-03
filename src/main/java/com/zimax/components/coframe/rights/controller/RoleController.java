@@ -18,11 +18,9 @@ public class RoleController {
     //角色服务
     @Autowired
     private RoleService roleService;
-
-    @RequestMapping("/test")
-    public void test() {
-        roleService.queryRoles();
-        roleService.getRole(1);
+    @GetMapping("/test")
+    public  Result<?> test() {
+        return Result.success(roleService.queryRoles());
     }
 
     @RequestMapping("/add")

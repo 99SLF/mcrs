@@ -1,11 +1,13 @@
 package com.zimax.components.coframe.rights.pojo;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import org.springframework.format.annotation.DateTimeFormat;
 //import java.time.LocalDateTime;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -48,7 +50,9 @@ public class Role {
     /**
      * 创建时间
      */
-//    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date createTime;
 
 }

@@ -6,7 +6,6 @@
     <!--查询所有-->
     <select id="queryRoles" resultType="com.zimax.components.coframe.rights.pojo.Role">
         select * from cap_role
-            where role_code like #{roleCode} and role_name like #{roleName}
     </select>
     <select id="getRole" resultType="com.zimax.components.coframe.rights.pojo.Role" >
         select * from cap_role where role_id = #{roldId}

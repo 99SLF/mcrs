@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/application")
 public class ApplicationController {
 
+    @RequestMapping("/test")
+    public Result<?> test() {
+        return Result.success();
+    }
     /**
      * 新增应用
      * @param application 应用信息
