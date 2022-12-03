@@ -1,8 +1,8 @@
 package com.zimax.components.coframe.rights.controller;
 
-import com.zimax.mcrs.config.Result;
 import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.components.coframe.rights.service.UserService;
+import com.zimax.mcrs.config.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -136,15 +136,3 @@ public class UserController {
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

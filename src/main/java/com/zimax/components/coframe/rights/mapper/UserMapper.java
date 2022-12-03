@@ -1,9 +1,8 @@
 package com.zimax.components.coframe.rights.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
-
-@Mapper
-public interface UserMapper{
-
-
+/**
+ * @author 李伟杰
+ * @date 2022/12/3 9:48
+ */
+public interface UserMapper {
 }
