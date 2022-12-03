@@ -65,4 +65,14 @@ public class WarningRuleService {
 //        System.out.println(warningRulesList.toString());
         return null;
     }
+
+    /**
+     * 警告推送
+     * @return
+     */
+    public void pushWarning(){
+
+    }
+
+
 }

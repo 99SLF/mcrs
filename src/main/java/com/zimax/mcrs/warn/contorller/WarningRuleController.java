@@ -69,8 +69,17 @@ public class WarningRuleController {
      * @return 警告规则列表
      */
     @GetMapping("/query")
-    public Result<?> querywaringRule() {
+    public Result<?> querywaringRule(@RequestParam String waringMessageName,@RequestParam String waringRule, int limit, int page) {
         return Result.success(warningRuleService.queryAll());
+    }
+
+    /**
+     * 警告推送
+     * @return
+     */
+    @RequestMapping
+    public void pushWarning(@PathVariable String topLimit){
+
     }
 }
 

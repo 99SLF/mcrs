@@ -37,7 +37,7 @@ public class WarningMessageController {
      * @return 警告列表
      */
     @GetMapping("/queryAll")
-        public Result<?> WarningMessage() {
+        public Result<?> WarningMessage(@RequestParam int deviceId, @RequestParam String waringMessage, int limit, int page) {
         return Result.success(warningMessageService.queryAll());
     }
 
