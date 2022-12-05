@@ -27,7 +27,7 @@ public class DeviceUpdateService {
     }
 
     /**
-     * 条件查询终端升级信息
+     * 条件查询
      * @return
      */
     public List<DeviceUpdate> query(){
@@ -35,33 +35,19 @@ public class DeviceUpdateService {
     }
 
     /**
-     * 升级终端
+     * 下载
      * @return
      */
-    public void upgradeDeviceUpdate(){
+    public void download(){
 
     }
 
-    /**
-     * 导出终端升级信息
-     * @return
-     */
-    public void exportDeviceUpdateText(){
-
-    }
-    /**
-     * 上传终端的版本
-     * @return
-     */
-    public void uploadDeviceVersion(){
-
-    }
 
     /**
-     * 回退终端的版本
+     * 删除
      * @return
      */
-    public void rollbackDeviceVersion(){
+    public void remove(){
 
     }
 

@@ -26,30 +26,6 @@ public class DeviceUpdate {
     @TableId(type = IdType.AUTO)
     private int deviceUpdateId;
 
-    /**
-     * 客户端地址
-     */
-    private String clientAddress;
-
-    /**
-     * 服务器地址
-     */
-    private String serverAddress;
-
-    /**
-     * 文件是否重名
-     */
-    private String repeatName;
-
-    /**
-     * 适用范围
-     */
-    private String scopeApplication;
-
-    /**
-     * APPId
-     */
-    private int APPId;
 
     /**
      * 版本号
@@ -57,19 +33,24 @@ public class DeviceUpdate {
     private String deviceVersion;
 
     /**
-     * 更新信息
+     * 终端软件类型
      */
-    private String updateText;
+    private String deviceSoftwareType;
 
     /**
-     * 更新人
+     * 更新策略
      */
-    private String updatePeople;
+    private String updateStrategy;
 
     /**
-     * 更新时间
+     * 上传人
      */
-    private Date updateTime;
+    private String uploadPeople;
+
+    /**
+     * 上传时间
+     */
+    private Date uploadTime;
 
     /**
      * 备注

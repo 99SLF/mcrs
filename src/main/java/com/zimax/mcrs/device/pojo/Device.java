@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("cap_Device")
+@TableName("cap_device")
 public class Device {
 
     /**
@@ -39,7 +39,7 @@ public class Device {
     /**
      * 终端名称
      */
-    private int deviceName;
+    private String  deviceName;
 
     /**
      * 接入方式
@@ -87,7 +87,7 @@ public class Device {
     private String registrant;
 
     /**
-     * 注册人员
+     * 注册人员角色
      */
     private String registerRole;
 

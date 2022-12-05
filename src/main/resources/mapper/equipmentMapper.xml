@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.device.mapper.EquipmentMapper">
+
+    <!--查询所有-->
+    <select id="queryAll" resultType="com.zimax.mcrs.device.pojo.Equipment">
+        select * from cap_equipment
+    </select>
+
+    <!--添加设备-->
+    <insert id="addEquipment" parameterType="com.zimax.mcrs.device.pojo.Equipment">
+        insert into cap_qeuipment values
+    </insert>
+<!--    <select id="getRole" resultType="com.zimax.components.coframe.rights.pojo.Role" >-->
+<!--        select * from cap_role where role_id = #{roldId}-->
+<!--    </select>-->
+<!--    <insert id="addRole" parameterType="com.zimax.components.coframe.rights.pojo.Role">-->
+<!--        insert into cap_role values(null,#{roleCode},#{roleName})-->
+<!--    </insert>-->
+<!--    <delete id="removeRole" parameterType="int">-->
+<!--        delete from cap_role where role_id = #{roldId}-->
+<!--    </delete>-->
+<!--    <update id="updateRole" parameterType="com.zimax.components.coframe.rights.pojo.Role">-->
+<!--        update cap_role set role_code=#{roleCode},role_name=#{roleNmae} where role_id=#{roleId}-->
+<!--    </update>-->
+
+</mapper>

@@ -67,6 +67,11 @@ public class Equipment {
     private Date createTime;
 
     /**
+     * 创建人
+     */
+    private String creator;
+
+    /**
      * 备注
      */
     private String remarks;

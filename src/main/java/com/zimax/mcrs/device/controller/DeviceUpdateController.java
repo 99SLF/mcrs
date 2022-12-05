@@ -24,20 +24,15 @@ public class DeviceUpdateController {
 
     /**
      * 查询全部的设备更新信息
-     * @param deviceUpdateId 终端更新编码
-     * @param clientAddress 客户端地址
-     * @param serverAddress 服务器地址
-     * @param repeatName 文件是否重名
-     * @param scopeApplication 适用范围
+
      * @param deviceVersion 版本号
-     * @param updatePeople 更新人
-     * @param updateTime 更新时间
+     * @param deviceSoftwareType 终端软件类型
      * @param limit         记录数
      * @param page          页码
      * @return
      */
     @RequestMapping("/query")
-    public Result query(@RequestParam int deviceUpdateId, @RequestParam String clientAddress, @RequestParam String serverAddress, @RequestParam String repeatName, @RequestParam String scopeApplication, @RequestParam String deviceVersion, @RequestParam String updatePeople, @RequestParam Date updateTime, @RequestParam int limit, @RequestParam int page) {
+    public Result query(@RequestParam int deviceVersion, @RequestParam String deviceSoftwareType, @RequestParam int limit, @RequestParam int page) {
         return Result.success();
     }
 
@@ -52,52 +47,22 @@ public class DeviceUpdateController {
     }
 
     /**
-     * 上传
+     * 下载
      * @return
      */
-    @RequestMapping("upload")
-    public void upload(){
+    @RequestMapping("download")
+    public void download(){
 
     }
 
     /**
-     * 导出设备更新信息
-     * @param terminalRenewId 设备更新编号
-     * @return
+     * 删除终端更新信息
+     *
+     * @param deviceUpdateId 设备数组
      */
-    @RequestMapping("/print/{terminalRenewId}")
-    public void printTerminalRenew(@PathVariable("terminalRenewId") int terminalRenewId){
-
-    }
-
-    /**
-     * 升级终端
-     * @param terminalRenewId 设备更新编号
-     * @return
-     */
-    @RequestMapping("upgrade")
-    public void upgradeTerminalRenew(@PathVariable("PathVariable") int terminalRenewId){
-
-    }
-
-    /**
-     * 回退终端
-     * @param deviceUpdateId 设备更新编号
-     * @return
-     */
-    @RequestMapping("follback")
-    public void rollBackTerminalRenew(@PathVariable("deviceUpdateId") int deviceUpdateId){
-
-    }
-
-    /**
-     * 依据终端更新编码查询
-     * @param deviceUpdateId 设备更新编号
-     * @return
-     */
-    @RequestMapping("queryDeviceUpdateId")
-    public void queryTerminalRenewId(@PathVariable("deviceUpdateId") int deviceUpdateId){
-
+    @DeleteMapping("/delete/{deviceUpdateId}")
+    public Result<?> removeEquipment(@PathVariable("deviceUpdateId") int deviceUpdateId) {
+        return Result.success();
     }
 
 

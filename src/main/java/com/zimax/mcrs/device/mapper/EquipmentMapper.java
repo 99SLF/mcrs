@@ -17,13 +17,13 @@ public interface EquipmentMapper {
      * 初始化查询
      * @return
      */
-    public List<Equipment> queryEquipment();
+    public List<Equipment> queryAll();
 
     /**
      * 新建设备
      * @return
      */
-//    public void addEquipment(Equipment equipment);
+    public void addEquipment(Equipment equipment);
 
     /**
      * 导入（从excle模板导入）

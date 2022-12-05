@@ -17,35 +17,24 @@ public interface DeviceUpdateMapper {
      * 初始化查询
      * @return
      */
-    List<DeviceUpdate> queryAll();
+//    List<DeviceUpdate> queryAll();
 
     /**
      * 条件查询
      * @return
      */
-    public void query();
+//    public void query();
+
 
     /**
-     * 升级终端
+     * 下载
      * @return
      */
-//    public void upgradeDevice();
+//    public void download();
 
     /**
-     * 导出终端更新信息
+     * 删除
      * @return
      */
-//    public void exportUpdateInfo();
-
-    /**
-     * 上传
-     * @return
-     */
-//    public void upload();
-
-    /**
-     * 回退
-     * @return
-     */
-//    public void rollback();
+//    public void remove();
 }
