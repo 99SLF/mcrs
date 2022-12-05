@@ -1,6 +1,7 @@
 package com.zimax.mcrs.device.mapper;
 
 import com.zimax.mcrs.device.pojo.Equipment;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
  * @author 林俊杰
  * @date 2022/11/28
  */
+@Mapper
 public interface EquipmentMapper {
 
     /**
