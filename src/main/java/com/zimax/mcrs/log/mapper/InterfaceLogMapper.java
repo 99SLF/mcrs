@@ -1,6 +1,7 @@
 package com.zimax.mcrs.log.mapper;
 
 import com.zimax.mcrs.log.pojo.InterfaceLog;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
  * @author 林俊杰
  * @date 2022/12/2
  */
+@Mapper
 public interface InterfaceLogMapper {
     /**
      * 查询所有的接口日志

@@ -2,6 +2,7 @@ package com.zimax.mcrs.log.mapper;
 
 import com.zimax.mcrs.log.pojo.InterfaceLog;
 import com.zimax.mcrs.log.pojo.OperationLog;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  * @author 林俊杰
  * @date 2022/12/2
  */
+@Mapper
 public interface OperationLogMapper {
 
     /**
