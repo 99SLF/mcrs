@@ -24,7 +24,14 @@ public class OperationLogService {
     /**
      * 查询所有操作日志信息
      */
-    public List<OperationLog> queryOperationLog(){
+    public List<OperationLog> queryAll(){
+        return null;
+    }
+
+    /**
+     * 条件查询操作日志信息
+     */
+    public List<OperationLog> query(){
         return null;
     }
 }

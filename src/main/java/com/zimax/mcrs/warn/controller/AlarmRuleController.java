@@ -43,7 +43,7 @@ public class AlarmRuleController {
      * @return 角色列表
      */
     @GetMapping("/query")
-    public Result<?> select(@RequestParam int alarmRuleId, @RequestParam String alarmRuleTitle,@RequestParam String monitorLevel, @RequestParam String alarmRuleStatus, @RequestParam int alarmEventId, @RequestParam String monitorObject, @RequestParam String makeFormPeople, @RequestParam int limit, @RequestParam int page) {
+    public Result<?> query(@RequestParam int alarmRuleId, @RequestParam String alarmRuleTitle,@RequestParam String monitorLevel, @RequestParam String alarmRuleStatus, @RequestParam int alarmEventId, @RequestParam String monitorObject, @RequestParam String makeFormPeople, @RequestParam int limit, @RequestParam int page) {
         return Result.success();
     }
 
@@ -61,7 +61,7 @@ public class AlarmRuleController {
      * @param alarmRuleId 预警规则编码
      */
     @DeleteMapping("/delete/{alarmRuleId}")
-    public Result<?> deleteAlarmRule(@PathVariable("alarmRuleId")int alarmRuleId) {
+    public Result<?> removeAlarmRule(@PathVariable("alarmRuleId")int alarmRuleId) {
         return  Result.success();
     }
 

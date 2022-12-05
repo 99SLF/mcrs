@@ -27,7 +27,7 @@ public class AlarmEventService {
     /**
      * 根据条件查询
      */
-    public AlarmEvent select(){
+    public AlarmEvent query(){
         return null;
     }
 
@@ -51,7 +51,7 @@ public class AlarmEventService {
      * 删除告警事件
      * @param alarmEventId 告警编码
      */
-    public void deleteAlarm(int alarmEventId){
+    public void removeAlarm(int alarmEventId){
 
     }
 

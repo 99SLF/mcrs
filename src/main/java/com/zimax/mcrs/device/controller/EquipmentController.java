@@ -21,7 +21,7 @@ public class EquipmentController {
     private EquipmentService equipmentService;
 
     /**
-     * 初始化查询
+     * 条件查询
      *
      * @param equipmentId 设备资源号
      * @param equipmentName 设备名称
@@ -30,18 +30,18 @@ public class EquipmentController {
      * @return 角色列表
      */
     @GetMapping("/query")
-    public Result<?> queryEquipment(@RequestParam int equipmentId, @RequestParam String equipmentName, @RequestParam int limit, @RequestParam int page) {
+    public Result<?> query(@RequestParam int equipmentId, @RequestParam String equipmentName, @RequestParam int limit, @RequestParam int page) {
         return Result.success();
     }
 
     /**
-     * 查询设备
+     * 初始化查询
      *
-     * @param equipmentId 设备信息
+     * @param equipmentId 设备id
      * @return 设备信息
      */
     @GetMapping("/find/{equipmentId}")
-    public Result<?> getEquipment(@PathVariable("equipmentId") int equipmentId) {
+    public Result<?> queryAll(@PathVariable("equipmentId") int equipmentId) {
 
         return Result.success();
     }

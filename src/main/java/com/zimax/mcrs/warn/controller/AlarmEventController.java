@@ -26,7 +26,7 @@ public class AlarmEventController {
      * @return 告警事件
      */
     @RequestMapping("/find/{alarmEventId}")
-    public Result<?> getAlarmEvent(@PathVariable("alarmEventId") int alarmEventId) {
+    public Result<?> queryAll(@PathVariable("alarmEventId") int alarmEventId) {
         return Result.success();
     }
 
@@ -43,7 +43,7 @@ public class AlarmEventController {
      * @return 角色列表
      */
     @GetMapping("/query")
-    public Result<?> select(@RequestParam int alarmEventId, @RequestParam String alarmEventTitle,@RequestParam String alarmLevel, @RequestParam String alarmCategory, @RequestParam String alarmType, @RequestParam String makeFormPeople, @RequestParam int limit, @RequestParam int page) {
+    public Result<?> query(@RequestParam int alarmEventId, @RequestParam String alarmEventTitle,@RequestParam String alarmLevel, @RequestParam String alarmCategory, @RequestParam String alarmType, @RequestParam String makeFormPeople, @RequestParam int limit, @RequestParam int page) {
         return Result.success();
     }
 
@@ -61,7 +61,7 @@ public class AlarmEventController {
      * @param alarmEventId 预警事件编码
      */
     @DeleteMapping("/delete/{alarmEventId}")
-    public Result<?> deleteAlarmEvent(@PathVariable("alarmEventId")int alarmEventId) {
+    public Result<?> removeAlarmEvent(@PathVariable("alarmEventId")int alarmEventId) {
         return  Result.success();
     }
 

@@ -33,14 +33,14 @@ public class InterfaceLog {
     private Date operationTime;
 
     /**
-     * 接口类型
-     */
-    private String interfaceLogStatus;
-
-    /**
      * 接口名称
      */
     private String interfaceName;
+
+    /**
+     * 接口状态
+     */
+    private String interfaceLogStatus;
 
     /**
      * 操作人

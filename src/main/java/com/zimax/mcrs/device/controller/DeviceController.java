@@ -45,34 +45,16 @@ public class DeviceController {
      * @param APPID 依据APPDId来查询终端
      */
     @GetMapping("/find/{APPId}")
-    public Result<?> getTerminalAPPId(@PathVariable("APPId") int APPID) {
+    public Result<?> queryTerminalAPPId(@PathVariable("APPId") int APPID) {
 
         return Result.success(deviceService.queryAPPId(APPID));
     }
 
-    /**
-     * 查询终端
-     * @param equipmentId 依据设备资源号来查询终端
-     */
-    @GetMapping("/find/{equipmentId}")
-    public Result<?> getTerminalDeviceId(@PathVariable("equipmentId") int equipmentId) {
 
-        return Result.success(deviceService.queryEquipmentId(equipmentId));
-    }
+
 
     /**
-     * 查询终端
-     * @param deviceSoftwareType 依据设备软件类型来查询终端
-     */
-    @GetMapping("/find/{deviceSoftwareType}")
-    public Result<?> getDeviceType(@PathVariable("deviceSoftwareType") String deviceSoftwareType) {
-
-
-        return Result.success();
-    }
-
-    /**
-     * 初始化查询
+     * 条件查询
      * @param APPId APPId
      * @param equipmentId 设备资源号
      * @param limit 记录数

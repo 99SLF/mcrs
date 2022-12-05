@@ -24,7 +24,15 @@ public class InterfaceLogService {
     /**
      * 查询所有接口日志信息
      */
-    public List<InterfaceLog> queryInterfaceLog(){
+    public List<InterfaceLog> queryAll(){
+        return null;
+    }
+
+
+    /**
+     * 条件查询接口日志信息
+     */
+    public List<InterfaceLog> query(){
         return null;
     }
 }

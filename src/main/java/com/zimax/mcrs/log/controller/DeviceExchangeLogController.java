@@ -24,8 +24,9 @@ public class DeviceExchangeLogController {
      * 依据创建日期定时删除
      * @param createTime 设备交换日志ID数组
      */
-    public void deleteCreateTime(Date createTime) {
-        deviceExchangeLogService.deleteDeviceExchangeLog();
+    public void removeCreateTime(Date createTime) {
+
+
     }
 
     /**
@@ -33,64 +34,28 @@ public class DeviceExchangeLogController {
      * @param deviceExchangeLogId 设备交换日志编号数组
      */
     @DeleteMapping("/delete/{deviceExchangeLogId}")
-    public Result<?> deleteDeviceExchangeLog (@PathVariable("deviceExchangeLogId")int deviceExchangeLogId) {
-        deviceExchangeLogService.deleteById(deviceExchangeLogId);
+    public Result<?> removeDeviceExchangeLog (@PathVariable("deviceExchangeLogId")int deviceExchangeLogId) {
         return Result.success();
     }
 
     /**
-     * 依据设备Id查询
+     * 初始化查询
      * @param deviceId 设备id
      * @return deviceExchangeLog
      */
     @GetMapping("/find/{deviceId}")
-    public Result<?> getDeviceId(@PathVariable("deviceId") int deviceId) {
-
-        return Result.success(deviceExchangeLogService.queryDeviceId(deviceId));
+    public Result<?> queryAll(@PathVariable("deviceId") int deviceId) {
+        return null;
     }
 
     /**
-     * 依据用户名称查询
-     * @param userName 用户名称
-     * @return deviceExchangeLog
-     */
-    @GetMapping("/find/{userName}")
-    public Result<?> getUserName(@PathVariable("userName") String userName) {
-
-        return Result.success(deviceExchangeLogService.queryUserName(userName));
-    }
-
-    /**
-     * 依据设备交换内容查询
-     * @param exchangeContent 设备交换内容
-     * @return deviceExchangeLog
-     */
-    @GetMapping("/find/{exchangeContent}")
-    public Result<?> getDeviceExchangeLog(@PathVariable("exchangeContent") String exchangeContent) {
-
-        return Result.success(deviceExchangeLogService.queryExchangeContent(exchangeContent));
-    }
-
-    /**
-     * 依据设备交换创建日期查询
-     * @param exchangeTime 创建日期
-     * @return deviceExchangeLog
-     */
-    @GetMapping("/find/{exchangeTime}")
-    public Result<?> getExchangeTime(@PathVariable("exchangeTime") Date exchangeTime) {
-
-        return Result.success(deviceExchangeLogService.queryExchangeTime(exchangeTime));
-    }
-
-    /**
-     * 初始化查询
-     * @param limit 记录数
+     * 条件查询
      * @param page 页码
      * @return 设备交换日志列表
      */
-    @GetMapping("/find")
-    public Result<?> queryAll(int limit, int page) {
-        return Result.success(deviceExchangeLogService.queryAll());
+    @GetMapping("/query")
+    public Result<?> select(@RequestParam int limit, @RequestParam int page) {
+        return Result.success();
     }
 
 
