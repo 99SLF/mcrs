@@ -18,7 +18,7 @@ import java.util.List;
 public class UserController {
 
     //用户服务
-    @Autowired
+    @Autowired(required = false)
     private UserService userService;
 
     /**

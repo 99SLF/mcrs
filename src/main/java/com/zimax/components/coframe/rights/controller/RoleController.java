@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class RoleController {
 
     //角色服务
-    @Autowired
+    @Autowired(required = false)
     private RoleService roleService;
     @GetMapping("/test")
     public Result<?> test() {

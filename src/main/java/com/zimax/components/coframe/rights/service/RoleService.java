@@ -2,6 +2,7 @@ package com.zimax.components.coframe.rights.service;
 
 import com.zimax.components.coframe.rights.mapper.RoleMapper;
 import com.zimax.components.coframe.rights.pojo.Role;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class RoleService {
     /**
      * 角色数据操作
      */
-    @Autowired
+    @Autowired(required = false)
     private RoleMapper roleMapper;
 
     /**
