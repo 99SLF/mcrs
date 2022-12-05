@@ -2,14 +2,16 @@ package com.zimax.mcrs.warn.controller;
 
 
 import com.zimax.mcrs.config.Result;
+import com.zimax.mcrs.warn.pojo.AlarmEvent;
+import com.zimax.mcrs.warn.pojo.AlarmRule;
 import com.zimax.mcrs.warn.service.AlarmEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 角色管理
- * @author 施林丰
- * @date 2022/11/28
+ * 预警事件管理
+ * @author 林俊杰
+ * @date 2022/11/29
  */
 @RestController
 @RequestMapping("/alarmEvent")
@@ -29,7 +31,7 @@ public class AlarmEventController {
     }
 
     /**
-     * 条件查询角色
+     * 条件查询预警事件
      * @param alarmEventId 告警事件编码
      * @param alarmEventTitle 告警事件标题
      * @param alarmLevel 告警级别
@@ -41,10 +43,36 @@ public class AlarmEventController {
      * @return 角色列表
      */
     @GetMapping("/query")
-    public Result<?> queryRoles(@RequestParam int alarmEventId, @RequestParam String alarmEventTitle,@RequestParam String alarmLevel, @RequestParam String alarmCategory, @RequestParam String alarmType, @RequestParam String makeFormPeople, @RequestParam int limit, @RequestParam int page) {
+    public Result<?> select(@RequestParam int alarmEventId, @RequestParam String alarmEventTitle,@RequestParam String alarmLevel, @RequestParam String alarmCategory, @RequestParam String alarmType, @RequestParam String makeFormPeople, @RequestParam int limit, @RequestParam int page) {
         return Result.success();
     }
 
+    /**
+     * 添加告警事件
+     * @param alarmEvent 预警事件
+     */
+    @RequestMapping("/add")
+    public Result<?> addAlarmRule(@RequestBody AlarmEvent alarmEvent){
+        return Result.success();
+    }
+
+    /**
+     * 删除告警事件
+     * @param alarmEventId 预警事件编码
+     */
+    @DeleteMapping("/delete/{alarmEventId}")
+    public Result<?> deleteAlarmEvent(@PathVariable("alarmEventId")int alarmEventId) {
+        return  Result.success();
+    }
+
+    /**
+     * 修改告警事件
+     * @param alarmEvent 预警规则
+     */
+    @PutMapping("/update")
+    public Result<?> updateAlarmEvent(@RequestBody AlarmEvent alarmEvent) {
+        return Result.success();
+    }
 
 
 }

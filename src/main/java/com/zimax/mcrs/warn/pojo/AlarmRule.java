@@ -32,12 +32,17 @@ public class AlarmRule {
     private String alarmRuleTitle;
 
     /**
+     * 监控规则状态
+     */
+    private String alarmRuleStatus;
+
+    /**
      * 监控层级
      */
     private String monitorLevel;
 
     /**
-     * 告警时间编码
+     * 告警事件编码
      */
     private int alarmEventId;
 
