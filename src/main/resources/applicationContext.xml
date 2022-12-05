@@ -15,7 +15,7 @@
         <property name="user" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
     </bean>
-    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <bean id="sqlSessionFactoryBean" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
       <property name="dataSource" ref="dataSource" />
       <!-- 加载mybatis的全局配置文件 -->
 <!--      <property name="configLocation"  value="classpath:mybatis-config.xml" />-->
@@ -24,9 +24,9 @@
    </bean>
 
 <!--    Mapper扫描器-->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.zimax.components.coframe.rights.mapper.RoleMapper"/>
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean"/>
+    <bean id="roleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.components.coframe.rights.mapper.RoleMapper"/>
     </bean>
 
 </beans>
