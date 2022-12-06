@@ -90,8 +90,8 @@ public class RoleService {
     /**
      * 查询记录
      */
-    public int count(){
-        return roleMapper.count();
+    public int count(String roleCode, String roleName){
+        return roleMapper.count(roleCode,roleName);
     }
 
 }
