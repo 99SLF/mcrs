@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.components.coframe.dict.mapper.DictMapper">
+    <select id="queryDictType" resultType="com.zimax.components.coframe.dict.pojo.DictType">
+
+    </select>
+    <select id="queryDict" resultType="com.zimax.components.coframe.dict.pojo.DictEntry">
+
+    </select>
+    <select id="saveDictType" parameterType="com.zimax.components.coframe.dict.pojo.DictType">
+
+    </select>
+    <select id="saveDict" parameterType="com.zimax.components.coframe.dict.pojo.DictType">
+
+    </select>
+    <select id="removeDictTypeCascade" parameterType="java.util.List">
+
+    </select>
+    <select id="removeDictType" parameterType="com.zimax.components.coframe.dict.pojo.DictType">
+
+    </select>
+    <select id="importDict" parameterType="com.zimax.components.coframe.dict.pojo.DictType">
+
+    </select>
+    <select id="exportDict" resultType="com.zimax.components.coframe.dict.pojo.DictEntry">
+
+    </select>
+</mapper>    

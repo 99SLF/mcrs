@@ -3,8 +3,8 @@
 <% String contextPath = request.getContextPath(); %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- 
-  - Author(s): liweijie
-  - Date: 2021-12-09 22:19:40
+  - Author(s): 李伟杰
+  - Date: 2022-12-05 22:19:40
   - Description:
 -->
 <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
@@ -61,8 +61,8 @@
 	var $ = layui.jquery;
 	var isExist = false;
 	var submit = false;
-	
 	var win = null;
+
 	function SetData(data) {
 		win = data.win ? data.win : window;	 
 	}
@@ -73,7 +73,7 @@
    		if (submit == false) {
    			submit = true;
 	  		$.ajax({
-			 	url:"com.zimax.components.coframe.dict.DictManager.saveDictType.biz.ext",
+			 	url:"com/zimax/components/coframe/dict/controller/DictController.saveDictType",
 		   		type:'POST',
 		 		data:JSON.stringify({
 		 			data: adddata

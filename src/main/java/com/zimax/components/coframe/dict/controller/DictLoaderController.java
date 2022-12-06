@@ -1,6 +1,8 @@
 package com.zimax.components.coframe.dict.controller;
 
+import com.zimax.components.coframe.dict.service.DictLoaderService;
 import com.zimax.mcrs.config.Result;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -12,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 @ResponseBody
 @RequestMapping("/dictLoader")
 public class DictLoaderController {
+
+    @Autowired
+    private DictLoaderService dictLoaderService;
 
     /**
      * 获取字典数据

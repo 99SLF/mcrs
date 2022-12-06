@@ -117,7 +117,7 @@
 	var dictTb = treeTable.render({
   		elem: "#LAY-app-dictType-list",
 		id: "LAY-app-dictType-list-reload",
-		url: "com.zimax.components.coframe.dict.DictManager.queryDictType.biz.ext",
+		url: "com.zimax.components.coframe.dict.DictController.queryDictType",
 		method: "post",
 		height: "full-" + getFullSize(),
 		parseData: function(res) {

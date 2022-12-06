@@ -17,7 +17,7 @@ public class Menu {
 
     //菜单编号
     //主键
-    @TableId(value = "menuId",type = IdType.AUTO)
+//    @TableId(value = "menuId",type = IdType.AUTO)
     private String menuId;
 
     //菜单名称

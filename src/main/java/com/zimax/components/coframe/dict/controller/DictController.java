@@ -1,9 +1,11 @@
 package com.zimax.components.coframe.dict.controller;
 
+import com.zimax.components.coframe.dict.service.DictService;
 import com.zimax.mcrs.config.Result;
 
 import com.zimax.components.coframe.dict.pojo.DictEntry;
 import com.zimax.components.coframe.dict.pojo.DictType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +21,12 @@ import java.io.IOException;
 @ResponseBody
 @RequestMapping("/dict")
 public class DictController {
+
+    /**
+     * 字典服务
+     */
+    @Autowired
+    private DictService dictService;
 
     /**
      * 查询业务字典类型
@@ -47,7 +55,7 @@ public class DictController {
      * @param page         页码
      * @return 业务字典类型列表
      */
-    @GetMapping("/queryDictType")
+    @GetMapping("/queryDict")
     public Result<?> queryDict(@RequestParam String dictTypeId, @RequestParam String dictId,
                                @RequestParam String parentTypeId, @RequestParam int limit,
                                @RequestParam int page) {
@@ -60,7 +68,7 @@ public class DictController {
      * @param dictType 字典类型编号
      * @return DictType 业务字典类型；状态码
      */
-    @RequestMapping("/saveDictType")
+    @PostMapping("/saveDictType")
     public Result<?> saveDictType(@RequestBody DictType dictType) {
         return Result.success();
     }

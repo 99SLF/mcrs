@@ -15,7 +15,7 @@
         <property name="user" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
     </bean>
-    <bean id="sqlSessionFactoryBean" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
+    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
       <property name="dataSource" ref="dataSource" />
       <!-- 加载mybatis的全局配置文件 -->
 <!--      <property name="configLocation"  value="classpath:mybatis-config.xml" />-->
@@ -24,13 +24,31 @@
    </bean>
 
 <!--    Mapper扫描器-->
-    <bean id="roleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <!--扫描mapper所在的包,为mapper创建实现类(若使用此方法，接口Mapper与其映射文件的全限定名需一致)-->
+<!--    <bean id="authMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">-->
+<!--        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>-->
+<!--        <property name="mapperInterface" value="com.zimax.components.coframe.auth.mapper.authMapper"/>-->
+<!--    </bean>-->
+    <bean id="RoleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.components.coframe.rights.mapper.RoleMapper"/>
     </bean>
-    <bean id="authMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <bean id="DictLoader" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
-            <property name="mapperInterface" value="com.zimax.components.coframe.auth.mapper.authMapper"/>
+        <property name="mapperInterface" value="com.zimax.components.coframe.dict.mapper.DictLoader"/>
     </bean>
+    <bean id="DictMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.components.coframe.dict.mapper.DictMapper"/>
+    </bean>
+    <bean id="UserMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.components.coframe.rights.mapper.UserMapper"/>
+    </bean>
+    <bean id="MenuMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.components.coframe.framework.mapper.MenuMapper"/>
+    </bean>
+
 
 </beans>

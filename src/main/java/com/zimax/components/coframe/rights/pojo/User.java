@@ -20,7 +20,7 @@ public class User {
      * 操作员编号
      * 主键
      */
-    @TableId(value = "operator_id",type = IdType.AUTO)
+
     private int operatorId;
 
     /**

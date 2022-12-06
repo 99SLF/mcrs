@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.components.coframe.framework.mapper.MenuMapper">
+    <select id="deleteMenu" parameterType="string">
+
+    </select>
+    <select id="getMenu" resultType="com.zimax.components.coframe.framework.pojo.Menu">
+
+    </select>
+
+    <select id="queryFunction" parameterType="string" resultType="com.zimax.components.coframe.framework.pojo.Function">
+
+    </select>
+    <select id="queryMenu" parameterType="string" resultType="com.zimax.components.coframe.framework.pojo.Function">
+
+    </select>
+    <select id="queryMenuFuncResource" parameterType="string" resultType="string">
+
+    </select>
+    <select id="queryMenuList" parameterType="string" resultType="com.zimax.components.coframe.framework.pojo.Menu" >
+
+    </select>
+    <select id="queryMenuTreeNode" parameterType="string" resultType="com.zimax.components.coframe.framework.pojo.Menu">
+
+    </select>
+    <select id="saveMenu" parameterType="com.zimax.components.coframe.framework.pojo.Menu">
+
+    </select>
+    <select id="updateMenu" parameterType="com.zimax.components.coframe.framework.pojo.Menu">
+
+    </select>
+    <select id="updateMenuRelation" parameterType="string">
+
+    </select>
+
+
+</mapper>
