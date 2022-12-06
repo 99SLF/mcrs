@@ -22,7 +22,6 @@ public class EquipmentService {
      * 初始化查询
      */
     public List<Equipment> queryEquipment(){
-        System.out.println(equipmentMapper.queryEquipment());
         return null;
     }
 
