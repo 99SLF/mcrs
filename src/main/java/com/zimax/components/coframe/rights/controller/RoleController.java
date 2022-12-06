@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 角色管理
@@ -20,11 +21,6 @@ public class RoleController {
     //角色服务
     @Autowired
     private RoleService roleService;
-    @GetMapping("/test")
-    public Result<?> test(@RequestParam int page, @RequestParam int limit, @RequestParam String roleCode, @RequestParam String roleName) {
-        return Result.success(roleService.queryRoles(page,limit,roleCode,roleName));
-    }
-
     /**
      * 添加角色
      * @param role 角色信息
@@ -71,11 +67,18 @@ public class RoleController {
      * @param roleName 角色名字
      * @param limit 记录数
      * @param page 页码
+     * @param field 排序字段
+     * @param order 排序方式
      * @return 角色列表
      */
     @GetMapping("/query")
-    public Result<?> queryRoles(@RequestParam int page, @RequestParam int limit, String roleCode, String roleName) {
-        return Result.success(roleService.queryRoles(page,limit,roleCode,roleName));
+    public Result<?> queryRoles(@RequestParam int page, @RequestParam int limit, String roleCode, String roleName,String order, String field) {
+        List roles = roleService.queryRoles(page,limit,roleCode,roleName,order,field);
+        if((roleCode==null||roleCode=="")&&(roleName==null||roleName=="")){
+            return Result.success(roles,roleService.count());
+        }else{
+            return Result.success(roles,roles.size());
+        }
     }
 
     /**

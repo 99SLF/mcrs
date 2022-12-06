@@ -2,19 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zimax.components.coframe.rights.mapper.RoleMapper">
-
+    <!--    查询记录-->
+    <select id="count" resultType="int">
+        select count(*) from cap_role
+    </select>
     <!--查询所有-->
     <select id="queryRoles" parameterType="map" resultType="com.zimax.components.coframe.rights.pojo.Role">
         select * from cap_role
         <where>
             <if test="roleCode !=null and roleCode !=''">
-                and role_code like #{roleCode}
+                and role_code like '%${roleCode}%'
             </if>
             <if test="roleName !=null and roleName !=''">
-                and role_name like #{roleName}
+                and role_name like '%${roleName}%'
             </if>
         </where>
+        order by ${field} ${order}
         limit ${begin},${limit}
+
     </select>
 <!--    获取单个角色-->
     <select id="getRole" resultType="com.zimax.components.coframe.rights.pojo.Role" >

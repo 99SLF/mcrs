@@ -135,9 +135,9 @@ layui.define(["admin"], function(exports) {
 			parseData: function(res) {
 				var t = res.data.length;
 				return {
-					code: "0",
+					code: res.code,
 					msg: res.msg,
-					count: res.data.length,
+					count: res.total,
 					data: res.data
 				};
 			},
@@ -282,14 +282,12 @@ layui.define(["admin"], function(exports) {
 				} else if (result.code == 0) {
 					if (result.data) {
 						var role = result.data;
-						debugger;
 						form.val("layuiadmin-app-form-list", {
 							"capRole/roleId": role.roleId,
 							"capRole/roleCode": role.roleCode,
 							"capRole/roleName": role.roleName,				
 							"capRole/roleDesc": role.roleDesc
 						});
-						debugger;
 						isInit = true;
 					}
 				} else {
@@ -343,7 +341,6 @@ layui.define(["admin"], function(exports) {
 					"roleDesc": dataForm["capRole/roleDesc"],
 				}
 				var submitData = JSON.stringify(dataJson);
-				debugger;
 				$.ajax({
 					url: url,
 					type: "POST",
@@ -489,10 +486,8 @@ layui.define(["admin"], function(exports) {
 						resize: false,
 						btn: ["确定", "取消"],
 						success: function(layero, index) {
-							debugger;
 							var contentWindow = layero.find("iframe")[0].contentWindow;
 							var role = contentWindow.layui.role;
-							debugger;
 							if (role) {
 								var initData = {
 							    	win: window,

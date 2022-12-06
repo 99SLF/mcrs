@@ -17,5 +17,6 @@ public interface RoleMapper {
     void deleteRole(int roleId);
     void updateRole(Role role);
     void deleteRoles(List<Integer> roleIds);
+    int count();
 
 }

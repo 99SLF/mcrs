@@ -10,12 +10,23 @@ public class Result<T> {
     private String code;
     private String msg;
     private T data;
+    private int total;
 
     /**
      * 获取状态码
      */
     public String getCode() {
         return code;
+    }
+    /**
+     *   获取记录数
+     */
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
     }
 
     /**
@@ -63,11 +74,21 @@ public class Result<T> {
     /**
      * 有参构造
      */
+    public Result(T data,int total) {
+        this.data = data;
+        this.total = total;
+    }
     public Result(T data) {
         this.data = data;
     }
     public static Result success() {
         Result result = new Result<>();
+        result.setCode("0");
+        result.setMsg("成功");
+        return result;
+    }
+    public static <T> Result<T> success(T data,int total) {
+        Result<T> result = new Result<>(data,total);
         result.setCode("0");
         result.setMsg("成功");
         return result;
