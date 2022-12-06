@@ -101,7 +101,7 @@ layui.define(["admin"], function(exports) {
 	function renderTable() {
 		table.render({
 			elem: "#LAY-app-role-list",
-			url: "/mcrs/role/test",
+			url: "/mcrs/role/query",
 			method: "get",
 			height: "full-" + getFullSize(),
 			page: true,
@@ -136,7 +136,7 @@ layui.define(["admin"], function(exports) {
 				return {
 					code: "0",
 					msg: res.msg,
-					// count: res.total,
+					count: res.total,
 					data: res.data
 				};
 			},
@@ -267,7 +267,6 @@ layui.define(["admin"], function(exports) {
 		var json = {
 			roleId: data.roleId
 		};
-		debugger;
 		$.ajax({
 			url: getUrl+"/"+data.roleId,
 			type: "get",
@@ -282,12 +281,14 @@ layui.define(["admin"], function(exports) {
 				} else if (result.code == 0) {
 					if (result.data) {
 						var role = result.data;
+						debugger;
 						form.val("layuiadmin-app-form-list", {
 							"capRole/roleId": role.roleId,
 							"capRole/roleCode": role.roleCode,
 							"capRole/roleName": role.roleName,				
 							"capRole/roleDesc": role.roleDesc
 						});
+						debugger;
 						isInit = true;
 					}
 				} else {
@@ -332,6 +333,7 @@ layui.define(["admin"], function(exports) {
 				var url = addUrl;
 				if (type == Type.update)
 					url = updateUrl;
+				debugger;
 				var dataForm = data.field;
 				var dataJson={
 					"roleId": dataForm["capRole/roleId"],
@@ -413,7 +415,7 @@ layui.define(["admin"], function(exports) {
 			
 			if (data.type) {
 				type = data.type;
-				if(data.type = "add") {
+				if(data.type=="add") {
 					return;
 				}
 			}

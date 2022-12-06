@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * 角色管理
@@ -21,9 +20,9 @@ public class RoleController {
     //角色服务
     @Autowired
     private RoleService roleService;
-    @PostMapping("/test")
-    public Result<?> test(@RequestParam int page, @RequestParam int limit) {
-        return Result.success(roleService.queryRoles());
+    @GetMapping("/test")
+    public Result<?> test(@RequestParam int page, @RequestParam int limit, @RequestParam String roleCode, @RequestParam String roleName) {
+        return Result.success(roleService.queryRoles(page,limit,roleCode,roleName));
     }
 
     /**
@@ -40,7 +39,7 @@ public class RoleController {
      * 更新角色
      * @param role 角色信息
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     public Result<?> updateRole(@RequestBody Role role) {
         roleService.updateRole(role);
         return Result.success();
@@ -53,7 +52,7 @@ public class RoleController {
      */
     @GetMapping("/find/{roleId}")
     public Result<?> getRole(@PathVariable("roleId") int roleId) {
-        return Result.success();
+        return Result.success(roleService.getRole(roleId));
     }
 
     /**
@@ -75,8 +74,8 @@ public class RoleController {
      * @return 角色列表
      */
     @GetMapping("/query")
-    public Result<?> queryRoles(@RequestParam String roleCode, @RequestParam String roleName, @RequestParam int limit, @RequestParam int page) {
-       return Result.success();
+    public Result<?> queryRoles(@RequestParam int page, @RequestParam int limit, String roleCode, String roleName) {
+        return Result.success(roleService.queryRoles(page,limit,roleCode,roleName));
     }
 
     /**

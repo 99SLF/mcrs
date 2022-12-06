@@ -1,7 +1,10 @@
 package com.zimax.components.coframe.framework.controller;
 
+import com.zimax.components.coframe.framework.service.ApplicationService;
 import com.zimax.mcrs.config.Result;
 import com.zimax.components.coframe.framework.pojo.Application;
+import net.bytebuddy.implementation.bind.annotation.BindingPriority;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -14,18 +17,15 @@ import org.springframework.web.bind.annotation.*;
 @ResponseBody
 @RequestMapping("/application")
 public class ApplicationController {
-
-    @RequestMapping("/test")
-    public Result<?> test() {
-        return Result.success();
-    }
-
+    @Autowired
+    ApplicationService applicationService;
     /**
      * 新增应用
      * @param application 应用信息
      */
-    @RequestMapping("/add")
+    @PostMapping("/add")
     public Result<?> addApplication(@RequestBody Application application) {
+        applicationService.addApplication(application);
         return Result.success();
     }
 
@@ -33,8 +33,9 @@ public class ApplicationController {
      * 更新应用
      * @param application 应用信息
      */
-    @RequestMapping("/update")
+    @PutMapping("/update")
     public Result<?> updateApplication(@RequestBody Application application) {
+        applicationService.updateApplication(application);
         return Result.success();
     }
 
@@ -44,6 +45,7 @@ public class ApplicationController {
      */
     @DeleteMapping("/delete{appId}")
     public Result<?> removeApplication(@PathVariable int appId) {
+        applicationService.deleteApplication(appId);
         return Result.success();
     }
 
@@ -55,9 +57,9 @@ public class ApplicationController {
      * @param limit 记录数
      * @param page 页码
      */
-    @RequestMapping("/query")
-    public Result<?> queryApplications(@RequestParam String appName, @RequestParam String appType, @RequestParam int limit, @RequestParam int page) {
-        return Result.success();
+    @GetMapping("/query")
+    public Result<?> queryApplications(String appName, String appType, @RequestParam int limit, @RequestParam int page) {
+        return Result.success(applicationService.queryApplications(appName,appType,limit,page));
     }
 
     /**
@@ -67,7 +69,7 @@ public class ApplicationController {
      */
     @GetMapping("/find/{appId}")
     public Result<?>  getApplication(@PathVariable("appId") int appId) {
-        return Result.success();
+        return Result.success(applicationService.getApplication(appId));
     }
 
 }

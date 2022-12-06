@@ -4,6 +4,7 @@ import com.zimax.components.coframe.framework.pojo.Application;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author 施林丰
@@ -12,9 +13,10 @@ import java.util.List;
  */
 @Mapper
 public interface ApplicationMapper {
-    public List<Application> queryRoles();
-    public Application getRole(int id);
-    public void addApplication(Application application);
-    public void removeApplication(int applicationId);
-    public void updateApplication(Application application);
+    List<Application> queryApplications(Map map);
+    Application getApplication(int id);
+    void addApplication(Application application);
+    void deleteApplication(int appId);
+    void deleteApplications(List<Integer> appIds);
+    void updateApplication(Application application);
 }

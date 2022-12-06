@@ -1,13 +1,15 @@
 package com.zimax.components.coframe.rights.service;
 
+import com.sun.org.apache.xalan.internal.xsltc.dom.SimpleResultTreeImpl;
 import com.zimax.components.coframe.rights.mapper.RoleMapper;
 import com.zimax.components.coframe.rights.pojo.Role;
 
-import com.zimax.mcrs.config.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 角色服务
@@ -25,14 +27,17 @@ public class RoleService {
      * 查询所有角色信息
      * @return
      */
-    public List<Role> queryRoles() {
+    public List<Role> queryRoles(int page, int limit, String roleCode, String roleName) {
 //        Page<Role> rowPage = new Page(page, limit);
 //        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
 //        List<Role> roleList = (List<Role>) roleMapper.selectPage();
         System.out.println("success---");
-        System.out.println(roleMapper.queryRoles());
+        Map<String,Object> map= new HashMap<>();
+        map.put("begin",limit*(page-1));
+        map.put("limit",limit);
+        System.out.println(roleMapper.queryRoles(map));
         System.out.println("success");
-        return roleMapper.queryRoles();
+        return roleMapper.queryRoles(map);
     }
 
     /**
@@ -63,8 +68,8 @@ public class RoleService {
      * 根绝角色编码查询
      * @param roleId 角色编号
      */
-    public void getRole(int roleId) {
-       roleMapper.getRole(roleId);
+    public Role getRole(int roleId) {
+       return roleMapper.getRole(roleId);
     }
 
     /**

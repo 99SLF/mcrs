@@ -46,7 +46,7 @@
 			</div>
 			<table id="LAY-app-role-list" lay-filter="LAY-app-role-list"></table>
 			<script type="text/html" id="table-role-list">
-			{{#  if(d.roleId > 2){ }}
+			{{#  if(d.roleId > 1){ }}
 				<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
 				<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
 			{{#  } else { }}

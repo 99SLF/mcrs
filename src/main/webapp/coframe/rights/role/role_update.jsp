@@ -15,14 +15,14 @@
 </head>
 <body>
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0;">
-	<input type="hidden" name="capRole/roleId"/>
-	<input type="hidden" name="capRole/tenantId" value="default">
 	<div class="layui-form-item layui-row layui-col-space10">
 		<div class="layui-col-sm6">
 			<label class="layui-form-label">角色代码：</label>
 			<div class="layui-input-block">
 				<input id="roleCode" type="text" name="capRole/roleCode" lay-verify="required|checkRoleCode" placeholder="角色代码(必填)" autocomplete="off" class="layui-input">
 			</div>
+			<input type="hidden" name="capRole/roleId"/>
+			<input type="hidden" name="capRole/tenantId" value="default">
 		</div>
 		<div class="layui-col-sm6">
 			<label class="layui-form-label">角色名称：</label>
