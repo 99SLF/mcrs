@@ -18,18 +18,19 @@ import java.util.List;
 public class UserController {
 
     //用户服务
-    @Autowired(required = false)
+   @Autowired
     private UserService userService;
 
-    /**
-     * 添加用户
-     * @param user 用户信息
-     * @return
-     */
-    @RequestMapping("/addUser")
-    public Result<?> addUser(@RequestBody User user) {
-        return Result.success();
-    }
+//    /**
+//     * 添加用户
+//     * @param user 用户信息
+//     * @return
+//     */
+//    @PostMapping("/addUser")
+//    public Result<?> addUser(@RequestBody User user) {
+//        userService.addUser(user);
+//        return  Result.success();
+//    }
 
     /**
      * 重置密码
@@ -82,19 +83,19 @@ public class UserController {
     }
 
     /**
-     * 分页查询用户
+     * 分页查询所有用户
+     * @param page     页记录数
+     * @param limit    页码
      * @param status   用户状态
      * @param userName 用户名
-     * @param limit    页码
-     * @param page     页记录数
      * @return 用户列表
      * @return total 总记录数
      * @return code 状态码
      * @return msg 返回信息
      */
-    @GetMapping("/queryUsers/{status}/{userName}/{limit}/{page}")
-    public Result<?> queryUsers(@PathVariable("status") String status, @PathVariable("userName") String userName, @PathVariable("limit") int limit, @PathVariable("page") int page) {
-        return Result.success();
+    @GetMapping("/queryUsers")
+    public Result<?> queryUsers(@RequestParam int page, @RequestParam int limit, String status, String userName) {
+        return Result.success(userService.queryUsers( page, limit, status, userName));
     }
 
     /**

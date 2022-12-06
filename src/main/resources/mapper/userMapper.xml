@@ -3,6 +3,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zimax.components.coframe.rights.mapper.UserMapper">
 
+<!--    &lt;!&ndash; 填入用户登录名，用户名称，登录密码，密码失效日期，有效开始时间，有效截至时间，邮箱地址,字典类型（用户状态，认证模式，菜单布局），IP地址   &ndash;&gt;-->
+<!--    <insert id="addUser" parameterType="com.zimax.components.coframe.rights.pojo.User">-->
+<!--        insert into cap_user (user_id,user_name,password,inval_date,start_date,end_date,email,status,auth_mode,menu_type,ip_address)-->
+<!--        values(#{userId},#{userName},#{password},#{invalDate},#{startDate},#{endDate},#{email},#{status},#{authMode},#{menuType},#{ipAddress})-->
+<!--    </insert>-->
+
+    <!--查询所用户信息-->
+    <select id="queryUsers" parameterType="map" resultType="com.zimax.components.coframe.rights.pojo.User">
+        select * from cap_user limit ${begin} ,${limit}
+    </select>
 
 
 </mapper>

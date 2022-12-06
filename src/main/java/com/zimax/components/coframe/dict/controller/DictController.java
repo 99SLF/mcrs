@@ -36,6 +36,8 @@ public class DictController {
      * @param page         页码
      * @return 业务字典类型列表
      */
+
+
     @GetMapping("/queryDictType")
     public Result<?> queryDictType(@RequestParam String dictTypeId, @RequestParam String dictTypeName,
                                    @RequestParam int limit, @RequestParam int page) {

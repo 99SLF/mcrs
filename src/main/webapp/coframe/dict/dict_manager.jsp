@@ -117,7 +117,7 @@
 	var dictTb = treeTable.render({
   		elem: "#LAY-app-dictType-list",
 		id: "LAY-app-dictType-list-reload",
-		url: "com.zimax.components.coframe.dict.DictController.queryDictType",
+		url: "mcrs/dict/queryDictType",
 		method: "post",
 		height: "full-" + getFullSize(),
 		parseData: function(res) {
@@ -175,7 +175,7 @@
 	var dictTermTb = treeTable.render({
 		elem: "#LAY-app-dict-list",
 		id: "LAY-app-dict-list-reload",
-		url: "com.zimax.components.coframe.dict.DictManager.queryDict.biz.ext",
+		url: "com/zimax/components/coframe/dict/DictController/queryDict",
 		method: 'post',
 		height: "full-" + getFullSize2(),
 		parseData: function(res){
@@ -402,7 +402,7 @@
     
 	function refreshDictCache(){
 		$.ajax({
-			url: "com.zimax.components.coframe.dict.DictManager.refreshDictCache.biz.ext",
+			url: "com/zimax/components/coframe/dict/DictController/refreshDictCache",
 			type: "post",
 			cache: false,
 			contentType: 'text/json',
@@ -426,7 +426,7 @@
 		layer.confirm("所有关联的业务字典类型和业务字典项都将被删除，确认删除业务字典类型？",{
 			btn:['确定','取消'],btn1:function(index){
 			$.ajax({
-				url: "com.zimax.components.coframe.dict.DictManager.removeDictType.biz.ext",
+				url: "com/zimax/components/coframe/dict/DictController/removeDictType",
 				type: "post",
 				data: jsonData,
 				cache: false,
@@ -605,7 +605,7 @@
     		btn: ['确定', '取消'],
     		btn1: function(index) {
 				$.ajax({
-					url: "com.zimax.components.coframe.dict.DictManager.removeDict.biz.ext",
+					url: "com/zimax/components/coframe/dict/DictController/removeDictF",
 					type: "post",
 					data: jsonData,
 					cache: false,

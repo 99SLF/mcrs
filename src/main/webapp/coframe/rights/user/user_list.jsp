@@ -350,7 +350,7 @@
 	table.render({
 		elem: "#LAY-app-user-list",
 		id: "LAY-app-user-list-reload",
-		url: "com.zimax.components.coframe.rights.UserManager.queryUser.biz.ext",
+		url: "/mcrs/user/queryUsers",
 		method: "post",
 		height: "full-" + getFullSize(),
 		page: true,
