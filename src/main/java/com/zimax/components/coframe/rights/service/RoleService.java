@@ -31,12 +31,11 @@ public class RoleService {
 //        Page<Role> rowPage = new Page(page, limit);
 //        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
 //        List<Role> roleList = (List<Role>) roleMapper.selectPage();
-        System.out.println("success---");
         Map<String,Object> map= new HashMap<>();
         map.put("begin",limit*(page-1));
         map.put("limit",limit);
-        System.out.println(roleMapper.queryRoles(map));
-        System.out.println("success");
+        map.put("roleCode",roleCode);
+        map.put("roleName",roleName);
         return roleMapper.queryRoles(map);
     }
 

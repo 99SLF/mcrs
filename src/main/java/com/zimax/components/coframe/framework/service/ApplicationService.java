@@ -26,7 +26,7 @@ public class ApplicationService {
      * 查询所有应用信息
      * @return
      */
-    public List<Application> queryApplications(String appName, String appType, int limit, int page) {
+    public List<Application> queryApplications(int limit, int page,String appName, String appType) {
         Map<String,Object> map= new HashMap<>();
         map.put("begin",limit*(page-1));
         map.put("limit",limit);

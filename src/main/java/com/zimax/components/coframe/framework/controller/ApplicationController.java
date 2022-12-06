@@ -58,8 +58,8 @@ public class ApplicationController {
      * @param page 页码
      */
     @GetMapping("/query")
-    public Result<?> queryApplications(String appName, String appType, @RequestParam int limit, @RequestParam int page) {
-        return Result.success(applicationService.queryApplications(appName,appType,limit,page));
+    public Result<?> queryApplications(@RequestParam int limit, @RequestParam int page, String appName, String appType) {
+        return Result.success(applicationService.queryApplications(limit,page,appName,appType));
     }
 
     /**

@@ -133,10 +133,11 @@ layui.define(["admin"], function(exports) {
 			// },
 			defaultToolbar: ["filter"],
 			parseData: function(res) {
+				var t = res.data.length;
 				return {
 					code: "0",
 					msg: res.msg,
-					count: res.total,
+					count: res.data.length,
 					data: res.data
 				};
 			},
