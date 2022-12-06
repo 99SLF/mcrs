@@ -20,17 +20,19 @@ function submit() {
         }, 'json');
         return false;
     });
-    //登录
-    form.on('submit(login)', function(data) {
+
+    /**
+     * 登录
+     */
+    form.on("submit(login)", function(data) {
     	$.ajax({
-    		url: contextPath + "/com.zimax.components.coframe.auth.LoginManager.login.biz.ext",
+    		url: contextPath + "/auth/login",
     		type: "POST",
     		async: true,
-    		contentType: "application/json; charset=utf-8",
-    		dataType: "json",
+    		contentType: "text/json",
     		data: JSON.stringify(data.field),
     		success: function(res) {
-    			var url = getQueryVariable('url');
+    			var url = getQueryVariable("url");
     			if (res.code == 0) {
     				if (data.field.remember === "on") {
     					var exp = new Date;
@@ -47,30 +49,37 @@ function submit() {
 							password: data.field.password
 						}) + ";expires=" + exp.toGMTString();
     				}
-    				layer.msg(res.msg, { time: 2000, icon: 1 }, function () {
-	    				 var  forward =document.referrer;
-	   				     if(forward==""||forward==undefined||forward==null){
-	   				         forward= contextPath + "/std/index.jsp";
+    				layer.msg(res.msg, {
+    				    time: 2000,
+                        icon: 1
+                    }, function() {
+	    				 var  forward = document.referrer;
+	   				     if (forward == "" || forward == undefined || forward == null) {
+	   				         forward = contextPath + "/std/index.jsp";
 	   				         window.location.href = forward;
-	   				     } else{
+	   				     } else {
 	   				    	 var examLink = "com.zimes.mes.exammanage.examPage.flow";
 	   				    	 var trainLink = "com.zimes.mes.training.signInLink.flow";
-	   				    	 if(forward.indexOf(examLink) >= 0 || forward.indexOf(trainLink) >= 0){
-	   				    		 location.href=""+forward+"";
-	   				    	 }else {
-	   				    		forward= contextPath + "/std/index.jsp";
+	   				    	 if (forward.indexOf(examLink) >= 0 || forward.indexOf(trainLink) >= 0) {
+	   				    		 location.href = "" + forward + "";
+	   				    	 } else {
+	   				    	     forward = contextPath + "/std/index.jsp";
 		   				         window.location.href = forward;
 	   				    	 }
 	   				     }
     				});
     			} else {
-    				layer.msg(res.msg, { time: 2000, icon: 5 });
+    				layer.msg(res.msg, {
+    				    time: 2000,
+                        icon: 5
+    				});
     			}
     		}
     	});
     	return false;
     });
-    // //通过短信验证修改密码
+
+    //通过短信验证修改密码
     form.on('submit(LAY-user-forget-submit)', function (data) {
         $.post(contextPath + "/com.zimax.design.sms.check.biz.ext", data.field, function (res) {
             if (res.code) {

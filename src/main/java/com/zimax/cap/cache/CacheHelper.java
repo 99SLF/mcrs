@@ -43,10 +43,11 @@ public class CacheHelper {
 //        }
     }
 
-//    public static String getCurrentAppName() {
+    public static String getCurrentAppName() {
 //        String appName = ApplicationContext.getInstance().getAppName();
-//        return appName == null ? "defaultApp" : appName;
-//    }
+        String appName = null;
+        return appName == null ? "defaultApp" : appName;
+    }
 
     public static String getIsolationLevel(CacheProperty cacheConfig) {
         String ls_IsolationLevel = cacheConfig.getIsolationLevel();
@@ -135,9 +136,9 @@ public class CacheHelper {
 //        return null;
 //    }
 
-//    public static ICache<?, ?> createCache(CacheProperty cacheProperty)
-//            throws CacheRuntimeException {
-//        ICacheProvider cacheProvider = getCacheProvider(cacheProperty);
+    public static ICache<?, ?> createCache(CacheProperty cacheProperty)
+            throws CacheRuntimeException {
+        ICacheProvider cacheProvider = getCacheProvider(cacheProperty);
 //        if (isClustered(cacheProperty)) {
 //            try {
 //                clusterModeCheck();
@@ -146,84 +147,84 @@ public class CacheHelper {
 //                cacheProperty.setClustered(Boolean.valueOf(false));
 //            }
 //        }
-//        return cacheProvider.buildCache(cacheProperty);
-//    }
+        return cacheProvider.buildCache(cacheProperty);
+    }
 
-//    private static boolean isSupportTransaction(CacheProperty cacheProperty) {
-//        try {
-//            String ls_IsolationLevel = cacheProperty == null ? null
-//                    : cacheProperty.getIsolationLevel();
-//            if ((ls_IsolationLevel == null)
-//                    || ("NULL".equalsIgnoreCase(ls_IsolationLevel))
-//                    || ("NONE".equalsIgnoreCase(ls_IsolationLevel))) {
-//                return false;
-//            }
-//            return true;
-//        } catch (Exception e) {
+    private static boolean isSupportTransaction(CacheProperty cacheProperty) {
+        try {
+            String ls_IsolationLevel = cacheProperty == null ? null
+                    : cacheProperty.getIsolationLevel();
+            if ((ls_IsolationLevel == null)
+                    || ("NULL".equalsIgnoreCase(ls_IsolationLevel))
+                    || ("NONE".equalsIgnoreCase(ls_IsolationLevel))) {
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
 //            log.warn(
 //                    "[cacheName={0}] isSupportTransaction error.",
 //                    new String[] { cacheProperty == null ? null : cacheProperty
 //                            .getCacheName() }, e);
-//        }
-//        return false;
-//    }
+        }
+        return false;
+    }
 
-//    private static ICacheProvider getCacheProvider(CacheProperty cacheProperty)
-//            throws CacheRuntimeException {
-//        ICacheProvider iCacheProvider = null;
-//        String cacheProviderName = cacheProperty == null ? null : cacheProperty
-//                .getCacheProvider();
-//        try {
-//            if (cacheProviderName == null) {
-//                if (isSupportTransaction(cacheProperty)) {
-//                    iCacheProvider = CacheProviderManager
-//                            .getCacheProvider(true);
-//                    if (iCacheProvider == null) {
-//                        iCacheProvider = CacheProviderManager
-//                                .getDefaultCacheProvider();
-//                    }
-//                } else {
-//                    iCacheProvider = CacheProviderManager
-//                            .getDefaultCacheProvider();
-//                }
-//            } else {
-//                iCacheProvider = (ICacheProvider) Class.forName(
-//                        cacheProviderName).newInstance();
-//            }
-//        } catch (InstantiationException e) {
+    private static ICacheProvider getCacheProvider(CacheProperty cacheProperty)
+            throws CacheRuntimeException {
+        ICacheProvider iCacheProvider = null;
+        String cacheProviderName = cacheProperty == null ? null : cacheProperty
+                .getCacheProvider();
+        try {
+            if (cacheProviderName == null) {
+                if (isSupportTransaction(cacheProperty)) {
+                    iCacheProvider = CacheProviderManager
+                            .getCacheProvider(true);
+                    if (iCacheProvider == null) {
+                        iCacheProvider = CacheProviderManager
+                                .getDefaultCacheProvider();
+                    }
+                } else {
+                    iCacheProvider = CacheProviderManager
+                            .getDefaultCacheProvider();
+                }
+            } else {
+                iCacheProvider = (ICacheProvider) Class.forName(
+                        cacheProviderName).newInstance();
+            }
+        } catch (InstantiationException e) {
 //            log.error(
 //                    "[cacheName={0}, cacheProviderName={1}] get cacheProvider error.",
 //                    new String[] { cacheProperty.getCacheName(),
 //                            cacheProviderName }, e);
-//
-//            throw new CacheRuntimeException(ExceptionConstant.CACHE_13100020);
-//        } catch (IllegalAccessException e) {
-//            log.error(
-//                    "[cacheName={0}, cacheProviderName={1}] get cacheProvider error.",
-//                    new String[] { cacheProperty.getCacheName(),
-//                            cacheProviderName }, e);
-//
-//            throw new CacheRuntimeException(ExceptionConstant.CACHE_13100030);
-//        } catch (ClassNotFoundException e) {
-//            log.error(
-//                    "[cacheName={0}, cacheProviderName={1}] get cacheProvider error.",
-//                    new String[] { cacheProperty.getCacheName(),
-//                            cacheProviderName }, e);
-//
-//            throw new CacheRuntimeException(ExceptionConstant.CACHE_13100040);
-//        }
-//        return iCacheProvider;
-//    }
 
-//    public static CacheDataModificationListener getCacheModifyListener(
-//            CacheProperty cacheProperty) {
-//        if (cacheProperty == null) {
-//            return null;
-//        }
-//        CacheDataModificationListener listener = null;
-//        String listenerClassName = cacheProperty == null ? null : cacheProperty
-//                .getOtherProperties().getProperty(
-//                        "CacheDataModificationListener");
+            throw new CacheRuntimeException(ExceptionConstant.CACHE_13100020);
+        } catch (IllegalAccessException e) {
+//            log.error(
+//                    "[cacheName={0}, cacheProviderName={1}] get cacheProvider error.",
+//                    new String[] { cacheProperty.getCacheName(),
+//                            cacheProviderName }, e);
+
+            throw new CacheRuntimeException(ExceptionConstant.CACHE_13100030);
+        } catch (ClassNotFoundException e) {
+//            log.error(
+//                    "[cacheName={0}, cacheProviderName={1}] get cacheProvider error.",
+//                    new String[] { cacheProperty.getCacheName(),
+//                            cacheProviderName }, e);
+
+            throw new CacheRuntimeException(ExceptionConstant.CACHE_13100040);
+        }
+        return iCacheProvider;
+    }
+
+    public static CacheDataModificationListener getCacheModifyListener(
+            CacheProperty cacheProperty) {
+        if (cacheProperty == null) {
+            return null;
+        }
+        CacheDataModificationListener listener = null;
+        String listenerClassName = cacheProperty == null ? null : cacheProperty
+                .getOtherProperties().getProperty(
+                        "CacheDataModificationListener");
 //        if (StringUtil.isNotNullAndBlank(listenerClassName)) {
 //            try {
 //                listener = (CacheDataModificationListener) Class.forName(
@@ -235,18 +236,18 @@ public class CacheHelper {
 //                                listenerClassName }, ignore);
 //            }
 //        }
-//        return listener;
-//    }
+        return listener;
+    }
 
-//    public static ICacheLoader<?, ?> getCacheLoader(CacheProperty cacheProperty) {
-//        if (cacheProperty == null) {
-//            return null;
-//        }
-//        ICacheLoader<?, ?> cacheLoader = null;
-//
-//        String loaderClassName = cacheProperty == null ? null : cacheProperty
-//                .getCacheLoader();
-//        if (loaderClassName == null) {
+    public static ICacheLoader<?, ?> getCacheLoader(CacheProperty cacheProperty) {
+        if (cacheProperty == null) {
+            return null;
+        }
+        ICacheLoader<?, ?> cacheLoader = null;
+
+        String loaderClassName = cacheProperty == null ? null : cacheProperty
+                .getCacheLoader();
+        if (loaderClassName == null) {
 //            if ((cacheProperty instanceof BizLogicCacheProperty)) {
 //                loaderClassName = "com.zimes.ext.engine.component.cache.BizLogicCacheLoader";
 //            } else if ((cacheProperty instanceof DataEntityCacheProperty)) {
@@ -254,20 +255,20 @@ public class CacheHelper {
 //            } else if ((cacheProperty instanceof NamingSqlCacheProperty)) {
 //                loaderClassName = "com.zimes.ext.das.sql.cache.NamingSqlCacheLoader";
 //            }
-//        }
-//        if (loaderClassName != null) {
-//            try {
-//                cacheLoader = (ICacheLoader) Class.forName(loaderClassName)
-//                        .newInstance();
-//            } catch (Exception ignore) {
+        }
+        if (loaderClassName != null) {
+            try {
+                cacheLoader = (ICacheLoader) Class.forName(loaderClassName)
+                        .newInstance();
+            } catch (Exception ignore) {
 //                log.warn(
 //                        "[cacheName={0}, cacheLoaderName={1}] get cacheLoader error.",
 //                        new String[] { cacheProperty.getCacheName(),
 //                                loaderClassName }, ignore);
-//            }
-//        }
-//        return cacheLoader;
-//    }
+            }
+        }
+        return cacheLoader;
+    }
 
 //    public static String getChannelName() {
 //        String channelName = EnvironmentConfigHelper

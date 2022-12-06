@@ -23,10 +23,9 @@ public class CoframePartyUserInitService extends DefaultPartyUserInitService {
      * 初始化用户对象
      *
      * @param userId   用户编号
-     * @param tenantId 租户编号
      * @return 用户对象
      */
-    public IUserObject initUserObject(String userId, String tenantId) {
+    public IUserObject initUserObject(String userId) {
         UserObject userObject = null;
         ISessionMap sessionMap = DataContextManager.current().getSessionCtx();
         if (sessionMap != null) {
@@ -56,7 +55,8 @@ public class CoframePartyUserInitService extends DefaultPartyUserInitService {
 //        for (int i = 0; i < datas.length; i++) {
 //            DataObject data = datas[i];
 //            if (i == 0) {
-//                userObject.put(ISystemConstants.USER_ID, userId);
+                userObject.put("EXTEND_USER_ID", userId);
+                userObject.setUserName(userId);
 //                userObject.setUserName(data.getString("userName"));
 //                userObject.setUserMail(data.getString("email"));
 //

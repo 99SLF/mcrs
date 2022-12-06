@@ -1,6 +1,14 @@
 package com.zimax.components.coframe.auth.service;
 
+import com.zimax.cap.access.http.OnlineUserManager;
+import com.zimax.cap.datacontext.DataContextManager;
+import com.zimax.cap.party.IUserObject;
+import com.zimax.cap.party.impl.UserObject;
+import com.zimax.components.coframe.init.UserObjectInit;
+import com.zimax.mcrs.config.Result;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * 登录验证
@@ -11,19 +19,25 @@ import org.springframework.stereotype.Service;
 public class LoginService {
 
     /**
-     * 用户登录
-     * @param userId 用户账号
-     * @param password 密码
+     * 根据用户对象登录
+     *
+     * @param userObject 用户对象
      */
-    public void login(String userId, String password) {
-
+    public void login(UserObject userObject) {
+        OnlineUserManager.login(userObject);
     }
 
     /**
      * 登录验证
+     *
+     * @param userId 用户账号
+     * @param password 密码
      */
-   public void authentication(String userId, String password) {
-   }
+    public Result<?> authentication(String userId, String password) {
+        Result<String> result = new Result<>();
+        result.setCode("0");
+        return result;
+    }
 
     /**
      * 验证用户是否失效
@@ -36,7 +50,14 @@ public class LoginService {
      * 注销用户
      */
     public void logout() {
-
+        Object rootObject = DataContextManager.current().getSessionCtx().getRootObject();
+        IUserObject userObject = null;
+        if ((rootObject instanceof HttpSession)) {
+            userObject = (IUserObject) ((HttpSession) rootObject).getAttribute("userObject");
+        }
+        if (userObject != null) {
+            OnlineUserManager.logoutByUniqueId(userObject.getUniqueId());
+        }
     }
 
     /**
@@ -44,6 +65,16 @@ public class LoginService {
      */
     public void register(String userId, String userName, String password, String mobile, String email) {
 
+    }
+
+    /**
+     * 初始化用户对象
+     *
+     * @param userId 用户编号
+     * @return 用户对象
+     */
+    public UserObject initUserObject(String userId) {
+        return UserObjectInit.INSTANCE.init(userId);
     }
 
 }

@@ -122,17 +122,17 @@ public class DataContextManager extends HashMap {
 //        return this.service.getMapContextFactory();
 //    }
 
-//    public void setMapContextFactory(IMapContextFactory mapContextFactory) {
-//        this.service.setMapContextFactory(mapContextFactory);
-//    }
+    public void setMapContextFactory(IMapContextFactory mapContextFactory) {
+        this.service.setMapContextFactory(mapContextFactory);
+    }
 
     public IMUODataContext getMUODataContext() {
         return this.service.getMUODataContext();
     }
 
-//    public IMUODataContext setMUODataContext(IMUODataContext muoDataContext) {
-//        return this.service.setMUODataContext(muoDataContext);
-//    }
+    public IMUODataContext setMUODataContext(IMUODataContext muoDataContext) {
+        return this.service.setMUODataContext(muoDataContext);
+    }
 
     public boolean isAuthorized() {
         return this.service.isAuthorized();

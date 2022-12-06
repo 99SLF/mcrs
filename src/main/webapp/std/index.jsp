@@ -66,10 +66,10 @@
 			</a>
 		</li>
 		<li class="layui-nav-item" lay-unselect>
-			<script type="text/html" template lay-url="./com.zimax.components.coframe.auth.LoginManager.getSession.biz.ext" 
+			<script type="text/html" template lay-url="<%=request.getContextPath()%>/auth/session"
 						lay-done="layui.element.render('nav', 'layadmin-layout-right');">
 				<a href="javascript:;">
-					<cite>{{ d.data.username }}</cite>
+					<cite>{{ d.data }}</cite>
 				</a>
 				<dl class="layui-nav-child">
 					<%--<dd><a lay-href="set/user/info.html">基本资料</a></dd>--%>

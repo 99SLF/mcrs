@@ -1,5 +1,6 @@
 package com.zimax.cap.cache;
 
+import com.zimax.cap.cache.impl.HashMapCacheProvider;
 import org.apache.log4j.Logger;
 
 import java.util.Collections;
@@ -41,44 +42,48 @@ public class CacheFactory {
 
     protected CacheFactory() throws Exception {
         this.lm_Caches = new HashMap<String, ICache<?, ?>>();
+        CacheProperty cacheProperty = CacheProperty.newLocalCacheProperty("CacheForUserObject");
+        cacheProperty.setSystemCache(true);
+        cacheProperty.setCacheProvider(HashMapCacheProvider.class.getName());
+        createCache(cacheProperty);
     }
 
-//    public ICache<?, ?> createCache(CacheProperty cacheConfig)
-//            throws CacheRuntimeException {
-//        return createCache(cacheConfig, false);
-//    }
+    public ICache<?, ?> createCache(CacheProperty cacheConfig)
+            throws CacheRuntimeException {
+        return createCache(cacheConfig, false);
+    }
 
-//    public ICache<?, ?> createCache(CacheProperty cacheConfig,
-//                                    boolean persistentFlag) throws CacheRuntimeException {
-//        this.writeLock.lock();
-//        try {
-//            return doCreateCache(cacheConfig, persistentFlag);
-//        } finally {
-//            this.writeLock.unlock();
-//        }
-//    }
+    public ICache<?, ?> createCache(CacheProperty cacheConfig,
+                                    boolean persistentFlag) throws CacheRuntimeException {
+        this.writeLock.lock();
+        try {
+            return doCreateCache(cacheConfig, persistentFlag);
+        } finally {
+            this.writeLock.unlock();
+        }
+    }
 
-//    private ICache<?, ?> doCreateCache(CacheProperty cacheConfig,
-//                                       boolean persistentFlag) throws CacheRuntimeException {
-//        if (cacheConfig == null) {
-//            return null;
-//        }
-//        String cacheName = cacheConfig.getCacheName();
-//        if (this.lm_Caches.get(cacheName) != null) {
-////            log.warn("[cache={0}] is already existed!",
-////                    new String[]{cacheName});
-//            throw new CacheRuntimeException(ExceptionConstant.CACHE_13100050,
+    private ICache<?, ?> doCreateCache(CacheProperty cacheConfig,
+                                       boolean persistentFlag) throws CacheRuntimeException {
+        if (cacheConfig == null) {
+            return null;
+        }
+        String cacheName = cacheConfig.getCacheName();
+        if (this.lm_Caches.get(cacheName) != null) {
+//            log.warn("[cache={0}] is already existed!",
 //                    new String[]{cacheName});
-//        }
-//        ICache<?, ?> iCache = CacheHelper.createCache(cacheConfig);
-//
-//        this.lm_Caches.put(cacheName, iCache);
-//        if (persistentFlag) {
+            throw new CacheRuntimeException(ExceptionConstant.CACHE_13100050,
+                    new String[]{cacheName});
+        }
+        ICache<?, ?> iCache = CacheHelper.createCache(cacheConfig);
+
+        this.lm_Caches.put(cacheName, iCache);
+        if (persistentFlag) {
 //            CacheConfigParser.getInstance().updateAndSaveConfigFile(cacheName,
 //                    cacheConfig);
-//        }
-//        return iCache;
-//    }
+        }
+        return iCache;
+    }
 
     public ICache<?, ?> findCache(String cacheName) {
         if (cacheName == null) {

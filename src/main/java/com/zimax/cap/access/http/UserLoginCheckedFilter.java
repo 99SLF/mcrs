@@ -78,7 +78,7 @@ public class UserLoginCheckedFilter implements Filter {
     }
 
     static {
-        setExcludeUrls("/common/**.jsp,/index.jsp,/pro/index.jsp,/common.remote,/jmxDefault.jmx,/common.download,/coframe/auth/noLogin.jsp,/coframe/auth/login.jsp,**/com.zimax.components.coframe.auth.LoginManager.login.biz.ext,**/com.zimax.components.coframe.auth.LoginManager.logout.biz.ext");
+        setExcludeUrls("/common/**.jsp,/index.jsp,/pro/index.jsp,/coframe/auth/noLogin.jsp,/coframe/auth/login.jsp,/auth/login,/auth/logout");
         setIncludeUrls("*.flow,*.flowx,*.jsp,*.html,*.ajax,*.ext,*.action,*.beanx");
     }
 

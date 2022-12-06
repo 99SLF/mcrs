@@ -1,8 +1,6 @@
 <%@page pageEncoding="UTF-8"%>
 <%
-	String url = request.getContextPath() + "/coframe/dict/dict_manager.jsp";
-
-
+	String url = request.getContextPath() + "/std/index.jsp";
 %>
 <script>
 	if (window.parent) {

@@ -1,6 +1,9 @@
 package com.zimax.cap.common.muo;
 
-import com.zimax.cap.datacontext.IMapContextFactory;
+import com.zimax.cap.datacontext.*;
+import com.zimax.cap.datacontext.http.MUODataContext;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * @author 苏尚文
@@ -16,13 +19,14 @@ public class MUODataContextHelper {
 //        dataContext.setAutoCreatePath(true);
 //    }
 
-//    public static IMUODataContext create(HttpSession session) {
+    public static IMUODataContext create(HttpSession session) {
 //        SessionManagerConfigModel model = MUOConfig.getInstance().getModel();
 //        String[] managedKeys = model.getMuoItem().keys();
-//        MUODataContext dataContext = new MUODataContext(session, managedKeys);
+        String[] managedKeys = new String[] {};
+        MUODataContext dataContext = new MUODataContext(session, managedKeys);
 //        addTypeMapping(dataContext);
-//        return dataContext;
-//    }
+        return dataContext;
+    }
 
 //    public static IMUODataContext create(Map map) {
 //        SessionManagerConfigModel model = MUOConfig.getInstance().getModel();
@@ -46,16 +50,16 @@ public class MUODataContextHelper {
 //        return dataContext;
 //    }
 
-//    public static void flush(IMUODataContext muoDataContext, HttpSession session) {
-//        boolean[] indexes = muoDataContext.keysIsChanged();
-//        String[] managerKeys = muoDataContext.getManagedKeys();
-//        for (int i = 0; i < indexes.length; i++) {
-//            if (indexes[i] == true) {
+    public static void flush(IMUODataContext muoDataContext, HttpSession session) {
+        boolean[] indexes = muoDataContext.keysIsChanged();
+        String[] managerKeys = muoDataContext.getManagedKeys();
+        for (int i = 0; i < indexes.length; i++) {
+            if (indexes[i] == true) {
 //                session.setAttribute(managerKeys[i],
 //                        muoDataContext.get(managerKeys[i]));
-//            }
-//        }
-//    }
+            }
+        }
+    }
 
 //    public static void flush(IMUODataContext muoDataContext, IDataContext source) {
 //        boolean[] indexes = muoDataContext.keysIsChanged();
@@ -67,53 +71,53 @@ public class MUODataContextHelper {
 //        }
 //    }
 
-//    private static final IMapContextFactory NULL_FACTORY = new IMapContextFactory() {
-//
+    private static final IMapContextFactory NULL_FACTORY = new IMapContextFactory() {
+
 //        public IApplicationMap getApplicationMap() {
 //            return null;
 //        }
-//
+
 //        public IPageMap getPageMap(PageContext pageContext) {
 //            return null;
 //        }
-//
+
 //        public IParameterMap getParameterMap() {
 //            return null;
 //        }
-//
-//        public IRequestMap getRequestMap() {
-//            return null;
-//        }
-//
-//        public ISessionMap getSessionMap() {
-//            return null;
-//        }
-//    };
+
+        public IRequestMap getRequestMap() {
+            return null;
+        }
+
+        public ISessionMap getSessionMap() {
+            return null;
+        }
+    };
 
     private static final ThreadLocal<IMapContextFactory> factoryThread = new ThreadLocal();
 
-//    private static final ThreadLocal<IMUODataContext> muoThread = new ThreadLocal();
+    private static final ThreadLocal<IMUODataContext> muoThread = new ThreadLocal();
 
-//    public static IMapContextFactory bind(IMUODataContext muo) {
-//        DataContextService manager = DataContextService.current();
-//        IMapContextFactory result = manager.getMapContextFactory();
-//        IMUODataContext muoBak = manager.getMUODataContext();
-//        manager.setMUODataContext(muo);
-//        manager.setMapContextFactory(NULL_FACTORY);
-//        factoryThread.set(result);
-//        muoThread.set(muoBak);
-//        return result;
-//    }
+    public static IMapContextFactory bind(IMUODataContext muo) {
+        DataContextService manager = DataContextService.current();
+        IMapContextFactory result = manager.getMapContextFactory();
+        IMUODataContext muoBak = manager.getMUODataContext();
+        manager.setMUODataContext(muo);
+        manager.setMapContextFactory(NULL_FACTORY);
+        factoryThread.set(result);
+        muoThread.set(muoBak);
+        return result;
+    }
 
-//    public static IMUODataContext unbind(IMapContextFactory factory) {
-//        DataContextService manager = DataContextService.current();
-//        IMUODataContext result = manager.getMUODataContext();
-//        manager.setMUODataContext((IMUODataContext) muoThread.get());
-//        manager.setMapContextFactory(factory);
-//        factoryThread.remove();
-//        muoThread.remove();
-//        return result;
-//    }
+    public static IMUODataContext unbind(IMapContextFactory factory) {
+        DataContextService manager = DataContextService.current();
+        IMUODataContext result = manager.getMUODataContext();
+        manager.setMUODataContext((IMUODataContext) muoThread.get());
+        manager.setMapContextFactory(factory);
+        factoryThread.remove();
+        muoThread.remove();
+        return result;
+    }
 
     public static IMapContextFactory getMapContextFactory() {
         return (IMapContextFactory) factoryThread.get();

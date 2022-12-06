@@ -154,8 +154,7 @@ public class OnlineUserManager {
             }
             if (sessionMap != null) {
                 Object rootObject = sessionMap.getRootObject();
-                if ((rootObject != null)
-                        && ((rootObject instanceof HttpSession))) {
+                if (rootObject != null && rootObject instanceof HttpSession) {
                     HttpSession session = (HttpSession) rootObject;
                     if (UserObject.class
                             .isAssignableFrom(userObject.getClass())) {

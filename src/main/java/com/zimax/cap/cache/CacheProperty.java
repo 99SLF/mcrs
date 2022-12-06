@@ -26,6 +26,9 @@ public class CacheProperty implements Serializable, Cloneable {
 
     public static final String READ_UNCOMMITTED = "read_uncommitted";
 
+    /**
+     * 缓存名称
+     */
     private String cacheName;
 
     private String cacheProvider;

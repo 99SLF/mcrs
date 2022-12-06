@@ -6,7 +6,7 @@ import java.util.Map;
  * @author 苏尚文
  * @date 2022/12/3 16:17
  */
-public abstract class MapDataContextImpl {
+public abstract class MapDataContextImpl extends DataContextImpl {
 
     private static final long serialVersionUID = -4574584302266911415L;
 

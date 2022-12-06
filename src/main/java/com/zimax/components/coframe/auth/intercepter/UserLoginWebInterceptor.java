@@ -1,6 +1,9 @@
 package com.zimax.components.coframe.auth.intercepter;
 
 import com.zimax.cap.access.http.*;
+import com.zimax.cap.common.muo.MUODataContextHelper;
+import com.zimax.cap.datacontext.DataContextManager;
+import com.zimax.cap.datacontext.IMUODataContext;
 import com.zimax.cap.exception.CapRuntimeException;
 import com.zimax.cap.party.IUserObject;
 import com.zimax.cap.party.Party;
@@ -43,39 +46,70 @@ public class UserLoginWebInterceptor implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        boolean isLogin = isLogin(request, response);
-        if (isLogin == true) {
-            initContext(request, response, false);
-            chain.doFilter(servletRequest, servletResponse);
-            return;
-        }
-        String servletPath = HttpUrlHelper.getRequestUrl(request, response);
-        if (logger.isDebugEnabled()) {
-            logger.debug("checked url [" + servletPath + "] is exclude ?");
-        }
 
-        boolean isExcludeUrl = HttpUrlHelper.isIn(servletPath,
-                UserLoginCheckedFilter.getExcludeUrls());
-        if (isExcludeUrl == true) {
-            chain.doFilter(servletRequest, servletResponse);
-            return;
-        }
+        HttpSession session = request.getSession(false);
+        IMUODataContext muo = null;
+        try {
+            if (session != null) {
+                muo = MUODataContextHelper.create(session);
+                DataContextManager.current().setMUODataContext(muo);
+                MUODataContextHelper.bind(muo);
+                HttpMapContextFactory factory = new HttpMapContextFactory(request, response);
+                DataContextManager.current().setMapContextFactory(factory);
+            }
 
-        if (HttpUrlHelper.isIn(servletPath,
-                UserLoginCheckedFilter.getIncludeUrls())) {
-            if (logger.isTraceEnabled())
-                logger.error("access url [" + servletPath + "] must be login.");
-            // 是需要检查的url，并且不在前面的ExcludeUrl中，所以要跳转到错误页面
-            ExceptionObject exObj = new ExceptionObject(request);
-            exObj.setInvalid(true);
-            exObj.setForwardPage("/coframe/auth/noLogin.jsp");
-            exObj.setThrowable(new CapRuntimeException(
-                    ExceptionConstant.HTTP_12101001));
-            request.setAttribute(IS_FILTER_FUNCTION_KEY, "true");
-            ThrowableProcessHelper.execute(request, response, exObj, true);
-        } else {
-            chain.doFilter(servletRequest, servletResponse);
-            return;
+            boolean isLogin = isLogin(request, response);
+            if (isLogin == true) {
+                initContext(request, response, false);
+                chain.doFilter(servletRequest, servletResponse);
+                return;
+            }
+            String servletPath = HttpUrlHelper.getRequestUrl(request, response);
+            if (logger.isDebugEnabled()) {
+                logger.debug("checked url [" + servletPath + "] is exclude ?");
+            }
+
+            boolean isExcludeUrl = HttpUrlHelper.isIn(servletPath,
+                    UserLoginCheckedFilter.getExcludeUrls());
+            if (isExcludeUrl == true) {
+                chain.doFilter(servletRequest, servletResponse);
+                return;
+            }
+
+            if (HttpUrlHelper.isIn(servletPath,
+                    UserLoginCheckedFilter.getIncludeUrls())) {
+                if (logger.isTraceEnabled())
+                    logger.error("access url [" + servletPath + "] must be login.");
+                // 是需要检查的url，并且不在前面的ExcludeUrl中，所以要跳转到错误页面
+                ExceptionObject exObj = new ExceptionObject(request);
+                exObj.setInvalid(true);
+                exObj.setForwardPage("/coframe/auth/noLogin.jsp");
+                exObj.setThrowable(new CapRuntimeException(
+                        ExceptionConstant.HTTP_12101001));
+                request.setAttribute(IS_FILTER_FUNCTION_KEY, "true");
+                ThrowableProcessHelper.execute(request, response, exObj, true);
+            } else {
+                chain.doFilter(servletRequest, servletResponse);
+                return;
+            }
+        } catch (Throwable e) {
+            int loopMax = 0;
+            while (((e instanceof ServletException)) && (loopMax++ < 10)
+                    && (((ServletException) e).getRootCause() != null)) {
+                e = ((ServletException) e).getRootCause();
+            }
+            logger.error(request.getRequestURI(), e);
+            if ((e instanceof ServletException)) {
+                throw ((ServletException) e);
+            }
+            throw new ServletException(e);
+        } finally {
+            if (session != null && muo != null) {
+//                MUODataContextHelper.flush(muo, session);
+            }
+            if (!"true".equals(request.getAttribute("__keepStack"))) {
+//                DataContextManager.current().reset();
+            }
         }
     }
 
@@ -109,8 +143,7 @@ public class UserLoginWebInterceptor implements Filter {
         return isLogin;
     }
 
-    private void initContext(ServletRequest request, ServletResponse response,
-                             boolean isPortal) {
+    private void initContext(ServletRequest request, ServletResponse response, boolean isPortal) {
         if (hasInit)
             return;
 
@@ -123,17 +156,15 @@ public class UserLoginWebInterceptor implements Filter {
             userObject = new UserObject();
             userObject.setUserId(userId);
         } else {
-            userObject = (UserObject) session
-                    .getAttribute(IUserObject.KEY_IN_CONTEXT);
+            userObject = (UserObject) session.getAttribute(IUserObject.KEY_IN_CONTEXT);
             if (userObject == null)
-                throw new RuntimeException(
-                        "userObject not found in session, perhaps not login");
-//            Object obj = userObject.get(ISystemConstants.USER_ID);
-//            if (obj != null) {
-//                userId = (String) obj;
-//            } else {
-//                userId = userObject.getUserId();
-//            }
+                throw new RuntimeException("userObject not found in session, perhaps not login");
+            Object obj = userObject.get("EXTEND_USER_ID");
+            if (obj != null) {
+                userId = (String) obj;
+            } else {
+                userId = userObject.getUserId();
+            }
         }
         if (userId == null) {
             throw new RuntimeException("Illegal user");
@@ -199,15 +230,13 @@ public class UserLoginWebInterceptor implements Filter {
 //            }
 //        }
 
-//        DataContextManager.current().setMapContextFactory(
-//                new com.zimes.ext.access.http.HttpMapContextFactory(request,
-//                        response));
-//        IMUODataContext muo = null;
-//        if (isPortal) {
-//            session.setAttribute(IUserObject.KEY_IN_CONTEXT, userObject);
-//            muo = MUODataContextHelper.create(session);
-//        }
-//        DataContextManager.current().setMUODataContext(muo);
+        DataContextManager.current().setMapContextFactory(new HttpMapContextFactory(request, response));
+        IMUODataContext muo = null;
+        if (isPortal) {
+            session.setAttribute(IUserObject.KEY_IN_CONTEXT, userObject);
+            muo = MUODataContextHelper.create(session);
+        }
+        DataContextManager.current().setMUODataContext(muo);
         hasInit = true;
     }
 

@@ -2,10 +2,11 @@
  * 公共模块
  */
 layui.define(function(exports) {
-	var admin = (layui.$, layui.layer, layui.laytpl, layui.setter, layui.view, layui.admin);
+	var setter = layui.setter;
+	var admin = (layui.$, layui.layer, layui.laytpl, layui.view, layui.admin);
 	admin.events.logout = function() {
 		admin.req({
-			url: "./com.zimax.components.coframe.auth.LoginManager.logout.biz.ext",
+			url: setter.base + "auth/logout",
 			type: "get",
 			data: {},
 			done: function(e) {

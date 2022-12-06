@@ -32,10 +32,12 @@ public interface IMapContextFactory {
 
         private Map values = new HashMap();
 
+        protected Object rootObject = null;
+
         public DefaultMapDataContextImpl() {
 //            addTypeMapping("xpath:/userObject", "java:" + UserObject.class.getName());
 
-//            setRootObject(this.values);
+            setRootObject(this.values);
         }
 
         public Map getParameters() {
@@ -98,7 +100,12 @@ public interface IMapContextFactory {
 
         @Override
         public Object getRootObject() {
-            return null;
+            return rootObject;
         }
+
+        public void setRootObject(Object rootObject) {
+            this.rootObject = rootObject;
+        }
+
     }
 }
