@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.components.coframe.framework.mapper.ApplicationMapper">
+
+    <!--查询所有-->
+    <select id="queryApplications" parameterType="map" resultType="com.zimax.components.coframe.framework.pojo.Application">
+        select * from app_application limit ${begin},${limit}
+    </select>
+    <!--    获取单个应用-->
+    <select id="getApplication" resultType="com.zimax.components.coframe.framework.pojo.Application" >
+        select * from app_application where app_id = #{appId}
+    </select>
+    <!--    新增应用-->
+    <insert id="addApplication" parameterType="com.zimax.components.coframe.framework.pojo.Application">
+        insert into app_application values(#{appId},#{appCode},#{appName},#{appType},#{displayOrder},
+            #{isOpen},#{openDate},#{protocolType},#{ipAddr},#{url},#{appDesc},#{appInfo},#{tenantId})
+    </insert>
+    <!--    主键删除-->
+    <delete id="deleteApplication" parameterType="int">
+        delete from app_application where app_id = #{appId}
+    </delete>
+    <!--    更新1条应用信息-->
+    <update id="updateApplication" parameterType="com.zimax.components.coframe.framework.pojo.Application">
+        update app_application set app_code=#{appCode},app_name=#{appName},app_type=#{appType},display_order=#{displayOrder},
+                                   is_open=#{isOpen},open_date=#{openDate},protocol_type=#{protocolType},
+                                   ip_addr=#{ipAddr},url=#{url},app_desc=#{appDesc},app_info=#{appInfo} where app_id=#{apId}
+    </update>
+    <!--    批量删除-->
+    <delete id="deleteApplications" parameterType="java.util.List">
+        delete from app_application where app_id in
+        <foreach collection="list" item="id"  separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
