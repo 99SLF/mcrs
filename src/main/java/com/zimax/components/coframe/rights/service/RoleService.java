@@ -3,6 +3,7 @@ package com.zimax.components.coframe.rights.service;
 import com.zimax.components.coframe.rights.mapper.RoleMapper;
 import com.zimax.components.coframe.rights.pojo.Role;
 
+import com.zimax.mcrs.config.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class RoleService {
     /**
      * 角色数据操作
      */
-    @Autowired(required = false)
+    @Autowired
     private RoleMapper roleMapper;
 
     /**
@@ -39,30 +40,39 @@ public class RoleService {
      * @param role 角色
      */
     public void addRole(Role role) {
-
+        roleMapper.addRole(role);
     }
 
     /**
      * 根绝角色编码删除
      * @param roleId 角色编码
      */
-    public void deleteById(int roleId) {
-
+    public void deleteRole(int roleId) {
+        roleMapper.deleteRole(roleId);
     }
 
     /**
      * 更新角色
+     * @param role 角色信息
      */
     public void updateRole(Role role) {
-
+        roleMapper.updateRole(role);
     }
 
     /**
      * 根绝角色编码查询
+     * @param roleId 角色编号
      */
-    public Role getRole(int roleId) {
-        System.out.println(roleMapper.getRole(roleId));
-        return null;
+    public void getRole(int roleId) {
+       roleMapper.getRole(roleId);
+    }
+
+    /**
+     * 批量删除角色
+     * @param roleIds 角色编号
+     */
+    public void deleteRoles(List<Integer> roleIds) {
+        roleMapper.deleteRoles(roleIds);
     }
 
 }

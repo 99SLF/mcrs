@@ -6,7 +6,6 @@ layui.define(["admin"], function(exports) {
 	var setter = layui.setter;
 	var form = layui.form;
 	var table = layui.table;
-	
 	// 是否已初始化
 	var isInit = false;
 	
@@ -41,13 +40,17 @@ layui.define(["admin"], function(exports) {
 	var funName = "subfuncgroup_list";
 	
 	//获取接口地址
-	var getUrl = setter.base + "com.zimax.components.coframe.rights.RoleManager.getRole.biz.ext";
+	var getUrl = setter.base + "role/find";
 	
 	//添加接口地址
-	var addUrl = setter.base + "com.zimax.components.coframe.rights.RoleManager.addRole.biz.ext";
+	var addUrl = setter.base + "role/add";
 	
 	//修改接口地址
-	var updateUrl = setter.base + "com.zimax.components.coframe.rights.RoleManager.updateRole.biz.ext";
+	var updateUrl = setter.base + "role/update";
+    //删除接口地址
+	var deleteUrl = setter.base + "role/delete";
+	//批量删除接口地址
+	var batchDelUrl = setter.base + "role/batchDelete";
 	
 	function getFullSize() {
 		var fluid = $(".layui-fluid");
@@ -72,69 +75,69 @@ layui.define(["admin"], function(exports) {
 	/**
 	 * 查询过滤字段
 	 */
-	function queryHiddenField() {
-		$.ajax({
-			url: "com.zimax.components.coframe.tools.ColsFilter.queryHiddenField.biz.ext",
-			type: "POST",
-			async: false ,
-			data: JSON.stringify({
-				funName: funName
-			}),
-			cache: false,
-			contentType: "text/json",
-			success: function(result) {
-				if (result) {
-					hiddenFields = result.colsFilters;
-				} else {
-					layer.msg("查询失败");
-				}
-			}
-		});
-	}
-	
+	// function queryHiddenField() {
+	// 	$.ajax({
+	// 		url: "com.zimax.components.coframe.tools.ColsFilter.queryHiddenField.biz.ext",
+	// 		type: "POST",
+	// 		async: false ,
+	// 		data: JSON.stringify({
+	// 			funName: funName
+	// 		}),
+	// 		cache: false,
+	// 		contentType: "text/json",
+	// 		success: function(result) {
+	// 			if (result) {
+	// 				hiddenFields = result.colsFilters;
+	// 			} else {
+	// 				layer.msg("查询失败");
+	// 			}
+	// 		}
+	// 	});
+	// }
+
 	/**
 	 * 渲染表格
 	 */
 	function renderTable() {
 		table.render({
 			elem: "#LAY-app-role-list",
-			url: "com.zimax.components.coframe.rights.RoleManager.queryRoles.biz.ext",
-			method: "post",
+			url: "/mcrs/role/test",
+			method: "get",
 			height: "full-" + getFullSize(),
 			page: true,
 			limit: 10,
 			limits: [10, 15, 20, 30],
 			toolbar: "#toolbar",
-			colHideChange: function(col, checked) {
-				var field = col.field;
-				var hidden = col.hide;
-				$.ajax({
-					url: "com.zimax.components.coframe.tools.ColsFilter.setHiddenField.biz.ext",
-					type: "POST",
-					data: JSON.stringify({
-						hidden: hidden,
-						colsFilter: {
-							funName: funName,
-							field: field
-						}
-					}),
-					cache: false,
-					contentType: "text/json",
-					success: function(result) {
-						if (result) {
-						} else{
-							layer.msg("列筛选失败");		
-						}
-					}
-				});
-			},
+			// colHideChange: function(col, checked) {
+			// 	var field = col.field;
+			// 	var hidden = col.hide;
+			// 	$.ajax({
+			// 		url: "com.zimax.components.coframe.tools.ColsFilter.setHiddenField.biz.ext",
+			// 		type: "POST",
+			// 		data: JSON.stringify({
+			// 			hidden: hidden,
+			// 			colsFilter: {
+			// 				funName: funName,
+			// 				field: field
+			// 			}
+			// 		}),
+			// 		cache: false,
+			// 		contentType: "text/json",
+			// 		success: function(result) {
+			// 			if (result) {
+			// 			} else{
+			// 				layer.msg("列筛选失败");		
+			// 			}
+			// 		}
+			// 	});	
+			// },
 			defaultToolbar: ["filter"],
 			parseData: function(res) {
 				return {
 					code: "0",
 					msg: res.msg,
-					count: res.total,
-					data: res.roles
+					// count: res.total,
+					data: res.data
 				};
 			},
 			cols:[[{
@@ -181,13 +184,13 @@ layui.define(["admin"], function(exports) {
 			top.layer.open({
 				type: 2,
 				title: "添加角色",
-				content: setter.base + "coframe/rights/role/role_add.jsp",
+				content: setter.base+"coframe/rights/role/role_add.jsp",
 				area: ["450px", "350px"],
 				resize: false,
 				btn: ["确定", "取消"],
 				success: function(layero, index) {
 					var contentWindow = layero.find("iframe")[0].contentWindow;
-					var role = contentWindow.layui.role;
+					 var role = contentWindow.layui.role;
 					if (role) {
 						var initData = {
 					    	win: window,
@@ -195,6 +198,7 @@ layui.define(["admin"], function(exports) {
 					    };
 						role.init(initData);
 					}
+					isInit = true;
 				},
 				yes: function(index, layero) {
 					var submit = layero.find("iframe").contents().find("#layuiadmin-app-form-submit");
@@ -209,8 +213,10 @@ layui.define(["admin"], function(exports) {
 		batchdel: function() {
 			var checkStatus = table.checkStatus("LAY-app-role-list");
 			var data = checkStatus.data;
+			var roleIds = new Array();
 			for (var i = 0; i < data.length ;i++){
 				if (data[i].roleId == 1) return layer.msg("系统管理员不能删除！");
+				roleIds[i] = parseInt(data[i].roleId);
 			}
   			if (data.length == 0) {
 				layer.msg("请至少选中一条记录!");
@@ -220,11 +226,9 @@ layui.define(["admin"], function(exports) {
 					title: "系统提示"
 				}, function(index) {
 					$.ajax({
-						url: setter.base + "com.zimax.components.coframe.rights.RoleManager.removeRoles.biz.ext",
-						type: "POST",
-						data: JSON.stringify({
-							roles: data
-						}),
+						url: batchDelUrl,
+						type: "delete",
+						data: JSON.stringify(roleIds),
 						cache: false,
 						contentType: "text/json",
 						success: function(result) {
@@ -263,11 +267,11 @@ layui.define(["admin"], function(exports) {
 		var json = {
 			roleId: data.roleId
 		};
+		debugger;
 		$.ajax({
-			url: getUrl,
-			type: "POST",
+			url: getUrl+"/"+data.roleId,
+			type: "get",
 			cache: false,
-			data: JSON.stringify(json),
 			contentType: "text/json",
 			success: function(result) {
 				if (result.exception) {
@@ -276,8 +280,8 @@ layui.define(["admin"], function(exports) {
 						title: "系统提示"
 					});
 				} else if (result.code == 0) {
-					if (result.role) {
-						var role = result.role;
+					if (result.data) {
+						var role = result.data;
 						form.val("layuiadmin-app-form-list", {
 							"capRole/roleId": role.roleId,
 							"capRole/roleCode": role.roleCode,
@@ -316,6 +320,7 @@ layui.define(["admin"], function(exports) {
 	function onSubmit() {
 		//监听提交事件
 		form.on("submit(layuiadmin-app-form-submit)", function(data) {
+			isInit = true;
 			if (!isInit) {
 				layer.msg("正在加载数据，请稍后！", {
 					icon: 1,
@@ -327,7 +332,15 @@ layui.define(["admin"], function(exports) {
 				var url = addUrl;
 				if (type == Type.update)
 					url = updateUrl;
-				var submitData = JSON.stringify(data.field);
+				var dataForm = data.field;
+				var dataJson={
+					"roleId": dataForm["capRole/roleId"],
+					"roleCode": dataForm["capRole/roleCode"],
+					"roleName": dataForm["capRole/roleName"],
+					"roleDesc": dataForm["capRole/roleDesc"],
+				}
+				var submitData = JSON.stringify(dataJson);
+				debugger;
 				$.ajax({
 					url: url,
 					type: "POST",
@@ -400,6 +413,9 @@ layui.define(["admin"], function(exports) {
 			
 			if (data.type) {
 				type = data.type;
+				if(data.type = "add") {
+					return;
+				}
 			}
 			
 			// 加载数据
@@ -435,11 +451,11 @@ layui.define(["admin"], function(exports) {
 			});
 			
 			// 查询过滤字段
-			queryHiddenField();
+			//queryHiddenField();
 			
 			// 渲染表格
 			renderTable();
-			
+
 			// 左侧表头按钮事件监听
 			table.on("toolbar(LAY-app-role-list)", function(obj) {
 				var type = obj.event;
@@ -465,13 +481,15 @@ layui.define(["admin"], function(exports) {
 					top.layer.open({
 						type: 2,
 						title: "编辑角色",
-						content: setter.base + "coframe/rights/role/role_update.jsp",
+						content: setter.base+"coframe/rights/role/role_update.jsp",
 						area: ["450px", "350px"],
 						resize: false,
 						btn: ["确定", "取消"],
 						success: function(layero, index) {
+							debugger;
 							var contentWindow = layero.find("iframe")[0].contentWindow;
 							var role = contentWindow.layui.role;
+							debugger;
 							if (role) {
 								var initData = {
 							    	win: window,
@@ -493,11 +511,8 @@ layui.define(["admin"], function(exports) {
 						title: "系统提示"
 					}, function(index) {
 						$.ajax({
-							url: setter.base + "com.zimax.components.coframe.rights.RoleManager.removeRoles.biz.ext",
-							type: "POST",
-							data: JSON.stringify({
-								roles: data
-							}),
+							url: deleteUrl+"/"+data.roleId,
+							type: "delete",
 							cache: false,
 							contentType: "text/json",
 							success: function(result) {

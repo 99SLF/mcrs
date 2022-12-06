@@ -10,10 +10,11 @@ import java.util.List;
  */
 @Mapper
 public interface RoleMapper {
-    public List<Role> queryRoles();
-    public Role getRole(int id);
-    public void addRole(Role role);
-    public void removeRole(int roleId);
-    public void updateRole(Role role);
+    List<Role> queryRoles();
+    Role getRole(int id);
+    void addRole(Role role);
+    void deleteRole(int roleId);
+    void updateRole(Role role);
+    void deleteRoles(List<Integer> roleIds);
 
 }

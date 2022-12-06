@@ -6,6 +6,9 @@ import com.zimax.components.coframe.rights.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * 角色管理
  * @author 施林丰
@@ -16,16 +19,20 @@ import org.springframework.web.bind.annotation.*;
 public class RoleController {
 
     //角色服务
-    @Autowired(required = false)
+    @Autowired
     private RoleService roleService;
-    @GetMapping("/test")
-    public Result<?> test() {
+    @PostMapping("/test")
+    public Result<?> test(@RequestParam int page, @RequestParam int limit) {
         return Result.success(roleService.queryRoles());
     }
 
-    @RequestMapping("/add")
+    /**
+     * 添加角色
+     * @param role 角色信息
+     */
+    @PostMapping("/add")
     public Result<?> addRole(@RequestBody Role role) {
-        //roleService.addRole(role);
+        roleService.addRole(role);
         return Result.success();
     }
 
@@ -35,7 +42,7 @@ public class RoleController {
      */
     @PutMapping("/update")
     public Result<?> updateRole(@RequestBody Role role) {
-        //roleService.updateRole(role);
+        roleService.updateRole(role);
         return Result.success();
     }
 
@@ -44,7 +51,7 @@ public class RoleController {
      * @param roleId 角色编号
      * @return 角色信息
      */
-    @RequestMapping("/find/{roleId}")
+    @GetMapping("/find/{roleId}")
     public Result<?> getRole(@PathVariable("roleId") int roleId) {
         return Result.success();
     }
@@ -54,8 +61,8 @@ public class RoleController {
      * @param roleId 角色编号
      */
     @DeleteMapping("/delete/{roleId}")
-    public Result<?> removeRole(@PathVariable("roleId")int roleId) {
-        //roleService.deleteById(roleId);
+    public Result<?> deleteRole(@PathVariable("roleId")int roleId) {
+        roleService.deleteRole(roleId);
         return Result.success();
     }
 
@@ -70,5 +77,15 @@ public class RoleController {
     @GetMapping("/query")
     public Result<?> queryRoles(@RequestParam String roleCode, @RequestParam String roleName, @RequestParam int limit, @RequestParam int page) {
        return Result.success();
+    }
+
+    /**
+     * 查询角色
+     * @param roleIds 角色代码数组
+     */
+    @DeleteMapping("/batchDelete")
+    public Result<?> deleteRoles(@RequestBody Integer[] roleIds) {
+        roleService.deleteRoles(Arrays.asList(roleIds));
+        return Result.success();
     }
 }

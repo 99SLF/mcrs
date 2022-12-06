@@ -9,7 +9,7 @@
 -->
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>角色管理</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css">
 <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css">
@@ -64,119 +64,10 @@
 	});
 </script>
 <script src="<%=request.getContextPath()%>/std/dist/index.all.js" type="text/javascript"></script>
-<%--<script src="<%= request.getContextPath() %>/coframe/rights/role/role.js" type="text/javascript"></script>
+<script src="<%= request.getContextPath() %>/coframe/rights/role/role.js" type="text/javascript"></script>
 <script type="text/javascript">
 	var role = layui.role;
 	role.manager();
-</script>--%>
-<script type="text/javascript">
-	var $ = layui.$;
-	var setter = layui.setter;
-	var form = layui.form;
-	var table = layui.table;
-
-	// 是否已初始化
-	var isInit = false;
-
-	// 调用窗口对象
-	var win = null;
-
-	//是否已提交
-	var submit = false;
-
-
-	// 过滤字段
-	var hiddenFields = [];
-
-	// 功能名
-	var funName = "subfuncgroup_list";
-
-	function getFullSize() {
-		var fluid = $(".layui-fluid");
-		var header = $(".layui-card-header");
-		var cardbody = $(".layui-card-body");
-		return header.outerHeight(true)  + (cardbody.outerHeight(true) - cardbody.height()) +
-				(fluid.outerHeight(true) - fluid.height()) + 2;
-	}
-
-	/**
-	 * 判断是否隐藏函数
-	 */
-	function isHidden(field) {
-		for (var i = 0; i < hiddenFields.length; i++) {
-			if (hiddenFields[i].field == field ) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	table.render({
-		elem: "#LAY-app-role-list",
-		data:[],
-		method: "post",
-		height: "full-" + getFullSize(),
-		page: true,
-		limit: 10,
-		limits: [10, 15, 20, 30],
-		toolbar: "#toolbar",
-		colHideChange: function(col, checked) {
-			var field = col.field;
-			var hidden = col.hide;
-			$.ajax({
-				url: "com.zimax.components.coframe.tools.ColsFilter.setHiddenField.biz.ext",
-				type: "POST",
-				data: JSON.stringify({
-					hidden: hidden,
-					colsFilter: {
-						funName: funName,
-						field: field
-					}
-				}),
-				cache: false,
-				contentType: "text/json",
-				success: function(result) {
-					if (result) {
-					} else{
-						layer.msg("列筛选失败");
-					}
-				}
-			});
-		},
-		defaultToolbar: ["filter"],
-		cols:[[{
-			type: "checkbox"
-		}, {
-			title: "序号",
-			type: "numbers"
-		}, {
-			field: "roleCode",
-			title: "角色代码",
-			align: "left",
-			hide: isHidden("roleCode"),
-			sort: true,
-			minWidth: 100
-		}, {
-			field: "roleName",
-			title: "角色名称",
-			align: "left",
-			hide: isHidden("roleName"),
-			minWidth: 120
-		}, {
-			field: "roleDesc",
-			title: "角色描述",
-			align: "left",
-			hide: isHidden("roleDesc"),
-			minWidth: 150
-		}, {
-			title: "操作",
-			align: "center",
-			fixed: "right",
-			width:  150,
-			toolbar: "#table-role-list"
-		}]]
-	});
 </script>
-
 </body>
 </html>

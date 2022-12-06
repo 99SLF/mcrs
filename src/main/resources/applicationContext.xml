@@ -28,5 +28,9 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.components.coframe.rights.mapper.RoleMapper"/>
     </bean>
+    <bean id="authMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+            <property name="mapperInterface" value="com.zimax.components.coframe.auth.mapper.authMapper"/>
+    </bean>
 
 </beans>
