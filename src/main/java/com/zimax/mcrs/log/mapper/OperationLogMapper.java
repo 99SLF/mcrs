@@ -18,16 +18,16 @@ public interface OperationLogMapper {
      * 查询所有的接口日志
      * @return
      */
-    public List<OperationLog> queryAll();
+//    List<OperationLog> queryAll();
 
     /**
      * 定时删除
      */
-    public List<OperationLog> removeTime();
+    public void removeTime();
 
     /**
      * 根据条件查询
      */
-    public  List<OperationLog> query();
+//    public  OperationLog query();
 
 }

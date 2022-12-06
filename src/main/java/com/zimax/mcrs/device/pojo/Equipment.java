@@ -1,11 +1,11 @@
 package com.zimax.mcrs.device.pojo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -37,24 +37,14 @@ public class Equipment {
     private String enabledState;
 
     /**
-     * 设备类型
-     */
-    private String equipmentType;
-
-    /**
-     * 使用工序
-     */
-    private String useProcess;
-
-    /**
      * 设备属性
      */
     private String equipmentProperties;
 
     /**
-     * 设备Ip
+     * MES连接IP
      */
-    private String equipmentIp;
+    private String mesContinueIp;
 
     /**
      * 设备安装位置
@@ -62,8 +52,16 @@ public class Equipment {
     private String equipmentInstallLocation;
 
     /**
+     * 设备连接端口
+     */
+    private String equipmentContinuePort;
+
+    /**
      * 创建时间
      */
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date createTime;
 
     /**

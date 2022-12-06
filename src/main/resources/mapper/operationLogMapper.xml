@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.log.mapper.OperationLogMapper">
+
+    <!--初始化查询-->
+    <select id="queryAll" resultType="com.zimax.mcrs.log.mapper.OperationLogMapper">
+        select * from cap_operation_log
+    </select>
+
+    <!--定时删除-->
+    <delete id="removeTime" parameterType="int">
+        delete from cap_operation_log where operation_log_id = #{operationLogId}
+    </delete>
+
+    <!--条件查询-->
+    <select id="query" resultType="com.zimax.mcrs.log.mapper.OperationLogMapper">
+        select * from cap_operation_log where operation_log_id = #{operationLogId}
+    </select>
+
+<!--    <select id="getRole" resultType="com.zimax.components.coframe.rights.pojo.Role" >-->
+<!--        select * from cap_role where role_id = #{roldId}-->
+<!--    </select>-->
+<!--    <insert id="addRole" parameterType="com.zimax.components.coframe.rights.pojo.Role">-->
+<!--        insert into cap_role values(null,#{roleCode},#{roleName})-->
+<!--    </insert>-->
+<!--    <update id="updateRole" parameterType="com.zimax.components.coframe.rights.pojo.Role">-->
+<!--        update cap_role set role_code=#{roleCode},role_name=#{roleNmae} where role_id=#{roleId}-->
+<!--    </update>-->
+
+</mapper>

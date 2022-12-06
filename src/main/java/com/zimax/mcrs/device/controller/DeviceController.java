@@ -34,7 +34,7 @@ public class DeviceController {
      * 注销终端
      * @param APPID 依据APPDId来注销终端
      */
-    @DeleteMapping("/logoutTerminal/{APPId}")
+    @DeleteMapping("/logoutDevice/{APPId}")
     public Result<?> logoutTerminal(@PathVariable("APPId")int APPID) {
 //        terminalService.logoutById(APPID);
         return Result.success();

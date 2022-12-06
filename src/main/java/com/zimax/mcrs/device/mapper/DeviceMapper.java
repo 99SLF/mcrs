@@ -17,7 +17,7 @@ public interface DeviceMapper {
      * 初始化查询
      * @return
      */
-    public List<Device> queryDevice();
+//    List<Device> queryAll();
     /**
      *  注册终端
      * @return
