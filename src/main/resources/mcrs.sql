@@ -134,3 +134,105 @@ CREATE TABLE `cap_role` (
     `create_time` datetime DEFAULT NULL,
     PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for app_menu
+-- ----------------------------
+DROP TABLE IF EXISTS `app_menu`;
+CREATE TABLE `app_menu` (
+    `menu_id` varchar(40) NOT NULL,
+    `parent_menu_id` varchar(40) DEFAULT NULL,
+    `menu_name` varchar(40) NOT NULL,
+    `menu_label` varchar(40) NOT NULL,
+    `menu_code` varchar(40) DEFAULT NULL,
+    `is_leaf` varchar(1) DEFAULT NULL,
+    `parameter` varchar(256) DEFAULT NULL,
+    `menu_level` smallint(6) DEFAULT NULL,
+    `display_order` smallint(6) DEFAULT NULL,
+    `image_path` varchar(100) DEFAULT NULL,
+    `expand_path` varchar(100) DEFAULT NULL,
+    `menu_seq` varchar(256) DEFAULT NULL,
+    `open_mode` varchar(255) DEFAULT NULL,
+    `sub_count` decimal(10,0) DEFAULT NULL,
+    `app_id` decimal(10,0) DEFAULT NULL,
+    `func_code` varchar(255) DEFAULT NULL,
+    `app_info` varchar(64) DEFAULT NULL,
+    `tenant_id` varchar(64) NOT NULL,
+    PRIMARY KEY (`menu_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for cap_role
+-- ----------------------------
+DROP TABLE IF EXISTS `cap_role`;
+CREATE TABLE `cap_role` (
+    `role_id` int(11) NOT NULL AUTO_INCREMENT,
+    `role_code` varchar(255) DEFAULT NULL,
+    `role_name` varchar(255) DEFAULT NULL,
+    `role_desc` varchar(255) DEFAULT NULL,
+    `creator` varchar(255) DEFAULT NULL,
+    `create_time` date DEFAULT NULL,
+    PRIMARY KEY (`role_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+
+-- ----------------------------
+-- Table structure for cap_user
+-- ----------------------------
+DROP TABLE IF EXISTS `cap_user`;
+CREATE TABLE `cap_user` (
+    `operator_id` decimal(18,0) NOT NULL,
+    `tenant_id` varchar(64) NOT NULL,
+    `user_id` varchar(64) NOT NULL,
+    `password` varchar(100) DEFAULT NULL,
+    `inval_date` date DEFAULT NULL,
+    `user_name` varchar(64) DEFAULT NULL,
+    `auth_mode` varchar(255) DEFAULT NULL,
+    `status` varchar(16) DEFAULT NULL,
+    `unlock_time` datetime NOT NULL,
+    `menu_type` varchar(255) DEFAULT NULL,
+    `last_login` datetime NOT NULL,
+    `err_count` decimal(10,0) DEFAULT NULL,
+    `start_date` date DEFAULT NULL,
+    `end_date` date DEFAULT NULL,
+    `valid_time` varchar(255) DEFAULT NULL,
+    `mac_code` varchar(128) DEFAULT NULL,
+    `ip_address` varchar(128) DEFAULT NULL,
+    `email` varchar(255) DEFAULT NULL,
+    `create_user` varchar(64) DEFAULT NULL,
+    `create_time` datetime NOT NULL,
+    PRIMARY KEY (`operator_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for dict_entry
+-- ----------------------------
+DROP TABLE IF EXISTS `dict_entry`;
+CREATE TABLE `dict_entry` (
+    `dict_Id` varchar(128) NOT NULL,
+    `dict_type_Id` varchar(128) NOT NULL,
+    `dict_name` varchar(255) DEFAULT NULL,
+    `status` int(11) DEFAULT NULL,
+    `sort_no` int(11) DEFAULT NULL,
+    `rank` int(11) DEFAULT NULL,
+    `parent_id` varchar(255) DEFAULT NULL,
+    `seq_no` varchar(255) DEFAULT NULL,
+    `filter1` varchar(255) DEFAULT NULL,
+    `filter2` varchar(255) DEFAULT NULL,
+    PRIMARY KEY (`dict_Id`,`dict_type_Id`),
+    KEY `DictEntry_DictType` (`dict_type_Id`),
+    CONSTRAINT `DictEntry_DictType` FOREIGN KEY (`dict_type_Id`) REFERENCES `dict_type` (`dict_type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for dict_type
+-- ----------------------------
+DROP TABLE IF EXISTS `dict_type`;
+CREATE TABLE `dict_type` (
+    `dict_type_id` varchar(128) NOT NULL,
+    `dict_type_name` varchar(255) DEFAULT NULL,
+    `rank` int(11) DEFAULT NULL,
+    `parent_id` varchar(255) DEFAULT NULL,
+    `seq_no` varchar(255) DEFAULT NULL,
+    PRIMARY KEY (`dict_type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
