@@ -27,7 +27,7 @@ public class ApplicationService {
      * 查询所有应用信息
      * @return
      */
-    public List<Application> queryApplications(int page ,int limit, String appName, String appType, String order, String field) {
+    public List<Application> queryApplications(String  page ,String limit, String appName, String appType, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -37,8 +37,10 @@ public class ApplicationService {
             map.put("order",order);
             map.put("field",changeString.camelUnderline(field));
         }
-        map.put("begin",limit*(page-1));
-        map.put("limit",limit);
+        if(limit!=null){
+            map.put("begin",Integer.parseInt(limit)*(Integer.parseInt(page)-1));
+            map.put("limit",Integer.parseInt(limit));
+        }
         map.put("appName",appName);
         map.put("appType",appType);
         return applicationMapper.queryApplications(map);

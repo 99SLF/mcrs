@@ -3,7 +3,6 @@ package com.zimax.components.coframe.framework.controller;
 import com.zimax.components.coframe.framework.service.FuncGroupService;
 import com.zimax.mcrs.config.Result;
 import com.zimax.components.coframe.framework.pojo.FuncGroup;
-import net.bytebuddy.implementation.bind.annotation.BindingPriority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +17,7 @@ import java.util.List;
  */
 @RestController
 @ResponseBody
-@RequestMapping("/funcGroup")
+@RequestMapping("/framework")
 public class FuncGroupController {
     @Autowired
     FuncGroupService funcGroupService;
@@ -26,7 +25,7 @@ public class FuncGroupController {
      * 新增功能组
      * @param funcgroup 功能组信息
      */
-    @GetMapping("/add")
+    @PostMapping("/funcGroup/add")
     public Result<?> addFuncGroup(@RequestBody FuncGroup funcgroup) {
         funcGroupService.addFuncGroup(funcgroup);
         return Result.success();
@@ -36,7 +35,7 @@ public class FuncGroupController {
      * 更新功能组
      * @param funcgroup 功能组信息
      */
-    @PutMapping("/update")
+    @PutMapping("/funcGroup/update")
     public Result<?> updateFuncGroup(@RequestBody FuncGroup funcgroup) {
         funcGroupService.updatefuncGroup(funcgroup);
         return Result.success();
@@ -46,7 +45,7 @@ public class FuncGroupController {
      * 删除功能组
      * @param funcGroupId 应用功能组编号
      */
-    @DeleteMapping("/delete{funcGroupId}")
+    @DeleteMapping("/funcGroup/delete{funcGroupId}")
     public Result<?> removeFuncGroup(@PathVariable int funcGroupId) {
         funcGroupService.deletefuncGroup(funcGroupId);
         return Result.success();
@@ -61,8 +60,8 @@ public class FuncGroupController {
      * @param field 排序字段
      * @param order 排序方式
      */
-    @GetMapping("/query")
-    public Result<?> queryFuncGroups(@RequestParam int page, @RequestParam int limit, int appId, String order, String field) {
+    @GetMapping("/funcGroup/query")
+    public Result<?> queryFuncGroups(String page, String limit, String appId, String order, String field) {
         List funcGroups = funcGroupService.queryFuncGroups(page,limit,appId,order,field);
         return Result.success(funcGroups,funcGroupService.count(appId));
     }
@@ -72,7 +71,7 @@ public class FuncGroupController {
      * @param funcGroupId 功能组编号
      * @return 功能组信息
      */
-    @GetMapping("/find/{funcGroupId}")
+    @GetMapping("/funcGroup/find/{funcGroupId}")
     public Result<?>  getFuncGroup(@PathVariable("funcGroupId") int funcGroupId) {
         return Result.success(funcGroupService.getfuncGroup(funcGroupId));
     }

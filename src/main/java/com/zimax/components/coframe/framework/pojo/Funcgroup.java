@@ -2,12 +2,20 @@ package com.zimax.components.coframe.framework.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @Author 施林丰
  * @Date:2022/12/7 11:56
  * @Description
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@TableName("app_func_group")
 public class FuncGroup {
     /**
      * 功能组编号

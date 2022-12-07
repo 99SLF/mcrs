@@ -57,5 +57,9 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.components.coframe.framework.mapper.FuncGroupMapper"/>
     </bean>
+    <bean id="functionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.components.coframe.framework.mapper.FunctionMapper"/>
+    </bean>
 
 </beans>

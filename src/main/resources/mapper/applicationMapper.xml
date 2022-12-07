@@ -25,8 +25,12 @@
                 and app_type = '${appType}'
             </if>
         </where>
-        order by ${field} ${order}
-        limit ${begin},${limit}
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
     </select>
     <!--    获取单个应用-->
     <select id="getApplication" resultType="com.zimax.components.coframe.framework.pojo.Application" >
