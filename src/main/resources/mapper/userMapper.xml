@@ -3,16 +3,94 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zimax.components.coframe.rights.mapper.UserMapper">
 
-<!--    &lt;!&ndash; 填入用户登录名，用户名称，登录密码，密码失效日期，有效开始时间，有效截至时间，邮箱地址,字典类型（用户状态，认证模式，菜单布局），IP地址   &ndash;&gt;-->
-<!--    <insert id="addUser" parameterType="com.zimax.components.coframe.rights.pojo.User">-->
-<!--        insert into cap_user (user_id,user_name,password,inval_date,start_date,end_date,email,status,auth_mode,menu_type,ip_address)-->
-<!--        values(#{userId},#{userName},#{password},#{invalDate},#{startDate},#{endDate},#{email},#{status},#{authMode},#{menuType},#{ipAddress})-->
-<!--    </insert>-->
+    <!--新增用户-->
+    <insert id="addUser" parameterType="com.zimax.components.coframe.rights.pojo.User">
+        insert into cap_user
+        values (#{operatorId}, #{tenantId}, #{userId}, #{password}, #{invalDate}, #{userName}, #{authMode}, #{status},
+                #{unlockTime}, #{menuType},
+                #{lastLogin}, #{errCount}, #{startDate}, #{endDate}, #{validTime}, #{macCode}, #{ipAddress}, #{email},
+                #{createUser}, #{createTime})
+    </insert>
 
-    <!--查询所用户信息-->
-    <select id="queryUsers" parameterType="map" resultType="com.zimax.components.coframe.rights.pojo.User">
-        select * from cap_user limit ${begin} ,${limit}
+    <!--    查询记录数-->
+    <select id="count" resultType="int">
+        select count(*) from cap_user
+        <where>
+            <if test="status !=null and status !=''">
+                and status like '%${status}%'
+            </if>
+            <if test="userName !=null and userName !=''">
+                and user_name like '%${userName}%'
+            </if>
+        </where>
     </select>
 
+    <!--查询所用户信息-->
+    <!--列表显示-->
+    <select id="queryUsers" parameterType="map" resultType="com.zimax.components.coframe.rights.pojo.User">
+        select * from cap_user
+        <where>
+            <if test="status !=null and status !=''">
+                and status like '%${status}%'
+            </if>
+            <if test="userName !=null and userName !=''">
+                and user_name like '%${userName}%'
+            </if>
+        </where>
+        order by ${field} ${order}
+        limit ${begin},${limit}
+    </select>
 
+    <!--更新一条选中的用户信息-->
+    <update id="updateUser" parameterType="com.zimax.components.coframe.rights.pojo.User">
+        UPDATE cap_user
+        SET tenant_id   =#{tenantId},
+            user_id     = #{userId},
+            password    = #{password},
+            inval_date  = #{invalDate},
+            user_name   = #{userName},
+            auth_mode   = #{authMode},
+            status      = #{status},
+            unlock_time = #{unlockTime},
+            menu_type   = #{menuType},
+            last_login  = #{lastLogin},
+            err_count   = #{errCount},
+            start_date  = #{startDate},
+            end_date    = #{endDate},
+            valid_time  = #{validTime},
+            mac_code    = #{macCode},
+            ip_address  = #{ipAddress},
+            email       = #{email},
+            create_user = #{createUser},
+            create_time = #{createTime}
+        WHERE operator_id = #{operatorId}
+    </update>
+    <!--    主键删除-->
+    <delete id="deleteUser" parameterType="int">
+        delete from cap_user where operator_id = #{operatorId}
+    </delete>
+    <!--    批量删除-->
+    <delete id="deleteUsers" parameterType="java.util.List">
+        delete from cap_user where operator_id in
+        <foreach collection="list" item="id"  separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <!--获取一个用户信息-->
+    <select id="getUser" resultType="com.zimax.components.coframe.rights.pojo.User" >
+        select * from cap_user where operator_id = #{operatorId}
+    </select>
+
+    <!--获取一个用户信息-->
+    <select id="checkUser" resultType="com.zimax.components.coframe.rights.pojo.User" >
+        select * from cap_user where user_id = #{userId}
+    </select>
+
+    <!--重置密码-->
+    <update id="changePassword" parameterType="java.util.List">
+        update  cap_user set password="000000"  where operator_id in
+        <foreach collection="list" item="id"  separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </update>
 </mapper>

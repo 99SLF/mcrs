@@ -6,10 +6,12 @@ import com.zimax.mcrs.config.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * 用户管理
+ *
  * @author 李伟杰
  * @date 2022/11/28
  */
@@ -18,28 +20,95 @@ import java.util.List;
 public class UserController {
 
     //用户服务
-   @Autowired
+    @Autowired
     private UserService userService;
 
-//    /**
-//     * 添加用户
-//     * @param user 用户信息
-//     * @return
-//     */
-//    @PostMapping("/addUser")
-//    public Result<?> addUser(@RequestBody User user) {
-//        userService.addUser(user);
-//        return  Result.success();
-//    }
+    /**
+     * 添加用户
+     *
+     * @param user 用户信息
+     * @return
+     */
+    @PostMapping("/add")
+    public Result<?> addUser(@RequestBody User user) {
+        userService.addUser(user);
+        return Result.success();
+    }
+
+    /**
+     * 分页查询所有用户
+     *
+     * @param page     页记录数
+     * @param limit    页码
+     * @param status   用户状态
+     * @param userName 用户名
+     * @param field    排序字段
+     * @param order    排序方式
+     * @return 用户列表
+     * @return total 总记录数
+     * @return code 状态码
+     * @return msg 返回信息
+     */
+    @GetMapping("/query")
+    public Result<?> queryUsers(@RequestParam int page, @RequestParam int limit, String status, String userName, String order, String field) {
+        List users = userService.queryUsers(page,limit,status,userName,order,field);
+        return Result.success(users,userService.count(status,userName));
+    }
+
+    /**
+     * 更新用户
+     *
+     * @param user 用户信息
+     * @return
+     */
+    @PostMapping("/update")
+    public Result<?> updateUser(@RequestBody User user) {
+        userService.updateUser(user);
+        return Result.success();
+    }
+
+    /**
+     * 删除用户信息
+     *
+     * @param operatorId 操作员编号
+     */
+    @DeleteMapping("/delete/{operatorId}")
+    public Result<?> deleteUser(@PathVariable("operatorId") int operatorId) {
+        userService.deleteUser(operatorId);
+        return Result.success();
+    }
+
+    /**
+     * 批量删除用户信息
+     *
+     * @param operatorIds 用户操作编号数组
+     */
+    @DeleteMapping("/batchDelete")
+    public Result<?> deleteUsers (@RequestBody Integer[] operatorIds) {
+        userService.deleteUsers(Arrays.asList(operatorIds));
+        return Result.success();
+    }
+
+    /**
+     * 获取用户
+     *
+     * @param operatorId 操作员编号
+     */
+    @GetMapping("/find/{operatorId}")
+    public Result<?> getUser(@PathVariable("operatorId") int operatorId) {
+        return Result.success(userService.getUser(operatorId));
+    }
 
     /**
      * 重置密码
-     * @param user     用户
-     * @param password 新密码
+     *
+     * @param operatorIds 操作员编号
+     * @param
      */
-    @PostMapping("/changePassword/{password}")
+    @PostMapping("/changePassword")
     @ResponseBody
-    public Result<?> changePassword(@RequestBody User user, @PathVariable("password") String password) {
+    public Result<?> changePassword(@RequestBody  Integer[] operatorIds) {
+        userService.changePassword(Arrays.asList(operatorIds));
         return Result.success();
 
     }
@@ -48,92 +117,68 @@ public class UserController {
      * 检测用户是否存在
      * @param userId 用户名字
      */
-    @RequestMapping(value = "/checkUser/{userId}", method = RequestMethod.GET)
-    public boolean checkUser(@PathVariable("userId") String userId) {
-        return false;
+    @GetMapping("/findUser/{userId}")
+    public Result<?> checkUser(@PathVariable("userId") String userId) {
+        return Result.success(userService.checkUser(userId));
     }
-
-    /**
-     * 删除用户信息
-     * @param users 用户数组
-     */
-    @DeleteMapping("/deleteUsers}")
-    public void deleteUsers(@RequestParam(value = "users") List<User> users) {
-    }
-
-    /**
-     * 模板查询用户信息
-     * @param template 查询用户
-     * @return user 用户详细
-     */
-    @GetMapping("/getCapUser")
-    public Result<?> getCapUser(@RequestBody User template) {
-        return Result.success();
-    }
-
-    /**
-     * 根据用户模板获得完整用户信息
-     * @param user 用户模板信息
-     * @return user 用户信息
-     */
-    @GetMapping("/getUser")
-    public Result<?> getUser(@RequestBody User user) {
-        return Result.success();
-
-    }
-
-    /**
-     * 分页查询所有用户
-     * @param page     页记录数
-     * @param limit    页码
-     * @param status   用户状态
-     * @param userName 用户名
-     * @return 用户列表
-     * @return total 总记录数
-     * @return code 状态码
-     * @return msg 返回信息
-     */
-    @GetMapping("/queryUsers")
-    public Result<?> queryUsers(@RequestParam int page, @RequestParam int limit, String status, String userName) {
-        return Result.success(userService.queryUsers( page, limit, status, userName));
-    }
-
-    /**
-     * 注册用户
-     * @param user 用户
-     */
-    @PostMapping("/registerUser")
-    public void registerUser(@RequestBody User user) {
-
-    }
-
-    /**
-     * 更新密码
-     * @param user     用户
-     * @param password 密码
-     * @return 状态码
-     */
-    @RequestMapping("/updatePassword/{password}")
-    public Result<?> updatePassword(@RequestBody User user, @PathVariable("password") String password) {
-        return Result.success();
-    }
-
-    /**
-     * 更改多个密码
-     * @param users 用户集合
-     */
-    @PostMapping("/updatePasswords")
-    public void updatePasswords(@RequestParam(value = "users") List<User> users) {
-
-    }
-
-    /**
-     * 更新用户
-     * @param user 用户信息
-     * @return
-     */
-    @PostMapping("/updateUser")
-    public void updateUser(User user) {
-
-    }
+//
+//
+//
+//    /**
+//     * 模板查询用户信息
+//     *
+//     * @param template 查询用户
+//     * @return user 用户详细
+//     */
+//    @GetMapping("/getCapUser")
+//    public Result<?> getCapUser(@RequestBody User template) {
+//        return Result.success();
+//    }
+//
+//    /**
+//     * 根据用户模板获得完整用户信息
+//     *
+//     * @param user 用户模板信息
+//     * @return user 用户信息
+//     */
+//    @GetMapping("/getUser")
+//    public Result<?> getUser(@RequestBody User user) {
+//        return Result.success();
+//
+//    }
+//
+//
+//    /**
+//     * 注册用户
+//     *
+//     * @param user 用户
+//     */
+//    @PostMapping("/registerUser")
+//    public void registerUser(@RequestBody User user) {
+//
+//    }
+//
+//    /**
+//     * 更新密码
+//     *
+//     * @param user     用户
+//     * @param password 密码
+//     * @return 状态码
+//     */
+//    @RequestMapping("/updatePassword/{password}")
+//    public Result<?> updatePassword(@RequestBody User user, @PathVariable("password") String password) {
+//        return Result.success();
+//    }
+//
+//    /**
+//     * 更改多个密码
+//     *
+//     * @param users 用户集合
+//     */
+//    @PostMapping("/updatePasswords")
+//    public void updatePasswords(@RequestParam(value = "users") List<User> users) {
+//
+//    }
+//
+//
 }
