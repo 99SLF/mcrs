@@ -26,20 +26,26 @@ public class FuncGroupService {
 
     /**
      * 查询所有功能组信息
+     * @param page 页码
+     * @param limit 记录数
+     * @param order 排序方式
+     * @param field 排序字段
      * @return
      */
-    public List<FuncGroup> queryFuncGroups(int page , int limit, int appId, String order, String field) {
+    public List<FuncGroup> queryFuncGroups(String  page, String limit, String appId, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
             map.put("order","asc");
-            map.put("field","app_id");
+            map.put("field","func_group_id");
         }else{
             map.put("order",order);
             map.put("field",changeString.camelUnderline(field));
         }
-        map.put("begin",limit*(page-1));
-        map.put("limit",limit);
+        if(limit!=null){
+            map.put("begin",Integer.parseInt(limit)*(Integer.parseInt(page)-1));
+            map.put("limit",Integer.parseInt(limit));
+        }
         map.put("appId",appId);
         return funcGroupMapper.queryFuncGroups(map);
     }
@@ -49,7 +55,12 @@ public class FuncGroupService {
      * @param funcGroup 应用
      */
     public void addFuncGroup(FuncGroup funcGroup) {
+        funcGroup.setGroupLevel(1);
+        funcGroup.setIsLeaf('n');
+        funcGroup.setSubCount(0);
         funcGroupMapper.addFuncGroup(funcGroup);
+        funcGroup.setFuncGroupSeq("."+funcGroup.getFuncGroupId()+".");
+        funcGroupMapper.updateFuncGroup(funcGroup);
     }
 
     /**
@@ -87,7 +98,7 @@ public class FuncGroupService {
     /**
      * 查询记录
      */
-    public int count(int appId){
+    public int count(String appId){
         return funcGroupMapper.count(appId);
     }
 }

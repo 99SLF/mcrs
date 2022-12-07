@@ -73,7 +73,7 @@ public class RoleService {
     }
 
     /**
-     * 根绝角色编码查询
+     * 根据角色编码查询
      * @param roleId 角色编号
      */
     public Role getRole(int roleId) {

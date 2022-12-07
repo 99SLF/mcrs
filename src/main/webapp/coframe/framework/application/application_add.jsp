@@ -144,7 +144,7 @@
 			}	
 			if (i == 1) {			
 				$.ajax({
-					url: "/mcrs/application/add",
+					url: "/mcrs/framework/application/add",
 					type: "POST",
 					data: submitData,
 					cache: false,

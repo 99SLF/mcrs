@@ -221,7 +221,7 @@
 	table.render({
 		elem: "#LAY-app-application-list",
 		id: "LAY-app-application-list-reload",
-		url: "/mcrs/application/query",
+		url: "/mcrs/framework/application/query",
 		method: "get",
 		height: "full-" + getFullSize(),
 		page: true,
@@ -379,7 +379,7 @@
 			  	type: "application"
 			  });			 
 				$.ajax({
-					url: "/mcrs/application/delete",
+					url: "/mcrs/framework/application/delete",
 					type: "POST",
 					data: JSON.stringify({
 						nodes: nodes

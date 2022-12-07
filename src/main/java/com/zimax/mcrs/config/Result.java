@@ -97,6 +97,7 @@ public class Result<T> {
         Result<T> result = new Result<>(data);
         result.setCode("0");
         result.setMsg("成功");
+        result.setTotal(1);
         return result;
     }
 
