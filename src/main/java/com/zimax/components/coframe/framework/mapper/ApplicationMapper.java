@@ -2,6 +2,7 @@ package com.zimax.components.coframe.framework.mapper;
 
 import com.zimax.components.coframe.framework.pojo.Application;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -14,9 +15,10 @@ import java.util.Map;
 @Mapper
 public interface ApplicationMapper {
     List<Application> queryApplications(Map map);
-    Application getApplication(int id);
+    Application getApplication(int appId);
     void addApplication(Application application);
     void deleteApplication(int appId);
     void deleteApplications(List<Integer> appIds);
     void updateApplication(Application application);
+    int count(@Param("appName") String appName, @Param("appType") String appType);
 }

@@ -35,7 +35,7 @@
     <!--    新增应用-->
     <insert id="addApplication" parameterType="com.zimax.components.coframe.framework.pojo.Application">
         insert into app_application values(#{appId},#{appCode},#{appName},#{appType},#{displayOrder},
-            #{isOpen},#{openDate},#{protocolType},#{ipAddr},#{ipPort},#{url},#{appDesc},#{appInfo},#{tenantId})
+                                           #{isOpen},#{openDate},#{protocolType},#{ipAddr},#{ipPort},#{url},#{appDesc},#{appInfo},#{tenantId})
     </insert>
     <!--    主键删除-->
     <delete id="deleteApplication" parameterType="int">

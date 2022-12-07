@@ -72,7 +72,7 @@ public class RoleController {
      * @return 角色列表
      */
     @GetMapping("/query")
-    public Result<?> queryRoles(@RequestParam int page, @RequestParam int limit, String roleCode, String roleName,String order, String field) {
+    public Result<?> queryRoles(@RequestParam int page, @RequestParam int limit, String roleCode, String roleName, String order, String field) {
         List roles = roleService.queryRoles(page,limit,roleCode,roleName,order,field);
             return Result.success(roles,roleService.count(roleCode,roleName));
     }

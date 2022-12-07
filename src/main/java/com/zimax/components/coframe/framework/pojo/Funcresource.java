@@ -2,22 +2,13 @@ package com.zimax.components.coframe.framework.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
- * 角色
- * @author 施林丰
- * @date 2022/12/2
+ * @Author 施林丰
+ * @Date:2022/12/7 11:57
+ * @Description
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@TableName("app_func_resource")
-public class Funcresource {
-
+public class FuncResource {
     /**
      * 资源编号
      */
@@ -58,5 +49,4 @@ public class Funcresource {
      * 租户信息
      */
     private String tenantId;
-
 }

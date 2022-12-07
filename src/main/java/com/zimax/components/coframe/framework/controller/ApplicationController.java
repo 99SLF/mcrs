@@ -7,6 +7,8 @@ import net.bytebuddy.implementation.bind.annotation.BindingPriority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 应用管理
  * @Author 施林丰
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @ResponseBody
 @RequestMapping("/application")
 public class ApplicationController {
+
     @Autowired
     ApplicationService applicationService;
     /**
@@ -44,7 +47,7 @@ public class ApplicationController {
      * @param appId 应用信息编号
      */
     @DeleteMapping("/delete{appId}")
-    public Result<?> removeApplication(@PathVariable int appId) {
+    public Result<?> deleteApplication(@PathVariable int appId) {
         applicationService.deleteApplication(appId);
         return Result.success();
     }
@@ -56,16 +59,19 @@ public class ApplicationController {
      * @param appType 应用类型
      * @param limit 记录数
      * @param page 页码
+     * @param field 排序字段
+     * @param order 排序方式
      */
     @GetMapping("/query")
-    public Result<?> queryApplications(@RequestParam int limit, @RequestParam int page, String appName, String appType) {
-        return Result.success(applicationService.queryApplications(limit,page,appName,appType));
+    public Result<?> queryApplications(@RequestParam int limit, @RequestParam int page, String appName, String appType, String order, String field) {
+        List applications = applicationService.queryApplications(page,limit,appName,appType,order,field);
+        return Result.success(applications,applicationService.count(appName,appType));
     }
 
     /**
      * 获取应用信息
      * @param appId 应用编号
-     * @return 角色信息
+     * @return 应用信息
      */
     @GetMapping("/find/{appId}")
     public Result<?>  getApplication(@PathVariable("appId") int appId) {

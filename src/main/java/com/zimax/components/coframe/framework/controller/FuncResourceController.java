@@ -1,7 +1,7 @@
 package com.zimax.components.coframe.framework.controller;
 
 import com.zimax.mcrs.config.Result;
-import com.zimax.components.coframe.framework.pojo.Funcresource;
+import com.zimax.components.coframe.framework.pojo.FuncResource;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.*;
  * @Date: 2022-12-1 15:21
  * @Description
  */
-public class FuncResourcesController {
+public class FuncResourceController {
 
     /**
      * 新增功能资源
      * @param funcresource 功能资源信息
      */
     @RequestMapping("/add")
-    public Result<?> addFuncresource(@RequestBody Funcresource funcresource) {
+    public Result<?> addFuncresource(@RequestBody FuncResource funcresource) {
         return Result.success();
     }
 
@@ -26,7 +26,7 @@ public class FuncResourcesController {
      * @param funcresource 功能资源信息
      */
     @RequestMapping("/update")
-    public Result<?> updateFuncresource(@RequestBody Funcresource funcresource) {
+    public Result<?> updateFuncresource(@RequestBody FuncResource funcresource) {
         return Result.success();
     }
 

@@ -2,6 +2,7 @@ package com.zimax.components.coframe.framework.service;
 
 import com.zimax.components.coframe.framework.mapper.ApplicationMapper;
 import com.zimax.components.coframe.framework.pojo.Application;
+import com.zimax.mcrs.config.ChangeString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,10 +27,20 @@ public class ApplicationService {
      * 查询所有应用信息
      * @return
      */
-    public List<Application> queryApplications(int limit, int page,String appName, String appType) {
+    public List<Application> queryApplications(int page ,int limit, String appName, String appType, String order, String field) {
+        ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
+        if(order==null){
+            map.put("order","asc");
+            map.put("field","app_id");
+        }else{
+            map.put("order",order);
+            map.put("field",changeString.camelUnderline(field));
+        }
         map.put("begin",limit*(page-1));
         map.put("limit",limit);
+        map.put("appName",appName);
+        map.put("appType",appType);
         return applicationMapper.queryApplications(map);
     }
 
@@ -47,6 +58,7 @@ public class ApplicationService {
      */
     public void deleteApplication(int appId) {
         applicationMapper.deleteApplication(appId);
+
     }
 
     /**
@@ -72,4 +84,12 @@ public class ApplicationService {
     public void deleteApplications(List<Integer> appIds) {
         applicationMapper.deleteApplications(appIds);
     }
+
+    /**
+     * 查询记录
+     */
+    public int count(String appName, String appType){
+        return applicationMapper.count(appName,appType);
+    }
+
 }

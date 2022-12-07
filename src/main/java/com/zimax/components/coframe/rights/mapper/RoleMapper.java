@@ -13,7 +13,7 @@ import java.util.Map;
 @Mapper
 public interface RoleMapper {
     List<Role> queryRoles(Map map);
-    Role getRole(int id);
+    Role getRole(int roleId);
     void addRole(Role role);
     void deleteRole(int roleId);
     void updateRole(Role role);

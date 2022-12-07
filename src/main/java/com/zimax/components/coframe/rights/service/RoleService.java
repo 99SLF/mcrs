@@ -87,6 +87,7 @@ public class RoleService {
     public void deleteRoles(List<Integer> roleIds) {
         roleMapper.deleteRoles(roleIds);
     }
+
     /**
      * 查询记录
      */
