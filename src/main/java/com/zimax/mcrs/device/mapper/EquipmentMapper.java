@@ -2,8 +2,10 @@ package com.zimax.mcrs.device.mapper;
 
 import com.zimax.mcrs.device.pojo.Equipment;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 设备
@@ -14,17 +16,12 @@ import java.util.List;
 public interface EquipmentMapper {
 
     /**
-     * 初始化查询
+     * 查询所有
      * @return
      */
-    List<Equipment> queryAll();
+    List<Equipment> queryAll(Map map);
 
 
-    /**
-     * 条件查询
-     * @return
-     */
-    List<Equipment> query();
 
     /**
      * 新建设备
@@ -42,12 +39,22 @@ public interface EquipmentMapper {
      * 删除设备
      * @return
      */
-    public void removeEquipment(int EquipmentId);
+    void removeEquipment(String EquipmentId);
 
     /**
      * 更新设备
      * @return
      */
-    public void updateEquipment(Equipment equipment);
+    void updateEquipment(Equipment equipment);
+
+
+    /**
+     * 记录条数
+     * @return
+     */
+    int count(@Param("equipmentId") String equipmentId, @Param("equipmentName") String equipmentName);
+
+
+
 
 }

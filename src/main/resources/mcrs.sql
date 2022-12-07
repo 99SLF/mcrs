@@ -236,3 +236,50 @@ CREATE TABLE `dict_type` (
     `seq_no` varchar(255) DEFAULT NULL,
     PRIMARY KEY (`dict_type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for cap_equipment
+-- ----------------------------
+
+drop table if exists cap_equipment;
+
+create table cap_equipment (
+    equipmentId varchar(255) not null,
+    equipmentName varchar(255) not null,
+    enabledState varchar(255) not null,
+    equipmentType varchar(255) not null,
+    useProcess varchar(255) not null,
+    equipmentProperties varchar(255) not null,
+    equipmentIp varchar(255) not null,
+    equipmentInstallLocation varchar(255) not null,
+    createTime date not null,
+    creator varchar(255) not null,
+    primary key (equipmentId)
+);ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for cap_device
+-- ----------------------------
+DROP TABLE IF EXISTS `cap_device`;
+CREATE TABLE `cap_device`  (
+    `app_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    `equipment_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    `device_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+    `device_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+    `assess_method` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    `assess_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+    `assess_resource_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+    `assess_attributes` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+    `assess_ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+    `assessInstall_location` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+    `device_software_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    `use_process` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    `registrant` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    `register_role` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    `registration_date` date NOT NULL,
+    `enable` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+    `device_status` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+    PRIMARY KEY (`app_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
