@@ -4,8 +4,6 @@ import com.zimax.components.coframe.framework.IMenuService;
 import com.zimax.components.coframe.framework.mapper.MenuMapper;
 import com.zimax.components.coframe.framework.pojo.Menu;
 import com.zimax.mcrs.config.ChangeString;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,15 +16,25 @@ import java.util.Map;
  */
 public class MenuService implements IMenuService {
 
-    @Autowired
     private MenuMapper menuMapper;
+
+    public MenuMapper getMenuMapper() {
+        return menuMapper;
+    }
+
+    public void setMenuMapper(MenuMapper menuMapper) {
+        this.menuMapper = menuMapper;
+    }
 
     @Override
     public Menu[] queryMenus() {
-        List<Menu> menuList = menuMapper.queryMenus();
+        Map<String, Object> map = new HashMap<>();
+        map.put("field", "display_order");
+        map.put("order", "asc");
+        List<Menu> menuList = menuMapper.queryMenus(map);
         return menuList.toArray(new Menu[menuList.size()]);
     }
-    private MenuMapper menuMapper;
+
     /**
      * 查询所有菜单信息
      * @param page 页码
@@ -77,13 +85,6 @@ public class MenuService implements IMenuService {
         menuMapper.updateMenu(menu);
     }
 
-    public MenuMapper getMenuMapper() {
-        return menuMapper;
-    }
-
-    public void setMenuMapper(MenuMapper menuMapper) {
-        this.menuMapper = menuMapper;
-    }
     /**
      * 根据菜单编码查询
      * @param menuId 菜单编号
