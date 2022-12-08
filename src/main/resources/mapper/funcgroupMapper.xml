@@ -51,4 +51,13 @@
         </foreach>
     </delete>
 
+    <!-- 删除从表-->
+    <delete id="deleteFunctions" parameterType="java.util.List">
+        delete from app_function where func_group_id in(
+        <foreach collection="list" item="id"  separator="," open="(" close=")">
+            #{id}
+        </foreach>
+        )
+    </delete>
+
 </mapper>

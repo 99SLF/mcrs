@@ -2,7 +2,10 @@ package com.zimax.components.coframe.framework.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /*import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;*/
@@ -13,12 +16,18 @@ import javax.persistence.ManyToMany;*/
  * @Description
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@TableName("app_menu")
 public class Menu {
 
-    //菜单编号
-    //主键
-//    @TableId(value = "menuId",type = IdType.AUTO)
-    private String menuId;
+    /**   菜单编号
+    主键
+     */
+    @TableId(value = "menuId",type = IdType.AUTO)
+    private int menuId;
+
+    private int parentMenuId;
 
     //菜单名称
     private String menuName;
@@ -45,10 +54,8 @@ public class Menu {
     private short menuLevel;
 
     //rootId
-    private String rootId;
+    private int rootId;
 
-    //父菜单id
-    private String parentsId;
 
     //显示顺序
     private short displayOrder;
@@ -69,19 +76,19 @@ public class Menu {
     private String subCount;
 
     //应用程序编号
-    private String appId;
+    private int appId;
 
     //功能代码
     private String funcCode;
 
     //应用信息
-    private String app_id;
+    private String appInfo;
 
     //租户信息
-    private String tenant_id;
+    private String tenantId;
 
-    /*@ManyToMany
-    @JoinColumn(name = "menu_id")*/
-    private Menu parentMenu;
+//    /*@ManyToMany
+//    @JoinColumn(name = "menu_id")*/
+//    private Menu parentMenu;
 
 }

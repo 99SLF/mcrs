@@ -78,7 +78,7 @@ public class RoleController {
     }
 
     /**
-     * 查询角色
+     * 批量删除角色
      * @param roleIds 角色代码数组
      */
     @DeleteMapping("/batchDelete")

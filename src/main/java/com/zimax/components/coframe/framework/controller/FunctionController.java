@@ -6,6 +6,7 @@ import com.zimax.components.coframe.framework.pojo.Function;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -41,17 +42,6 @@ public class FunctionController {
     }
 
     /**
-     * 删除功能
-     * @param funcCode 应用功能组编号
-     */
-    @DeleteMapping("/function/delete{funcCode}")
-    public Result<?> deleteFunction(@PathVariable String funcCode) {
-        functionService.deleteFunction(funcCode);
-        return Result.success();
-    }
-
-
-    /**
      * 查询功能
      * @return 功能列表
      * @param funcGroupId 功能组编号
@@ -61,9 +51,23 @@ public class FunctionController {
      * @param order 排序方式
      */
     @GetMapping("/function/query")
-    public Result<?> queryFuncresources(String page, String limit, String funcGroupId, String order, String field) {
+    public Result<?> queryFunctions(String page, String limit, String funcGroupId, String order, String field) {
         List functions = functionService.queryFunctions(page,limit,funcGroupId,order,field);
         return Result.success(functions,functionService.count(funcGroupId));
+    }
+
+    /**
+     * 批量删除功能
+     * @param funcCodes 角色代码数组
+     */
+    @DeleteMapping("function/batchDelete")
+    public Result<?> deleteFunctions(@RequestBody String[] funcCodes) {
+        if(functionService.deleteFunctions(Arrays.asList(funcCodes))==0){
+            return Result.success();
+        }else{
+            return Result.error("1","删除失败");
+        }
+
     }
 
 }

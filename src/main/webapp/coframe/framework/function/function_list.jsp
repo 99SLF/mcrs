@@ -82,7 +82,6 @@
 		batchdel: function() {       //批量删除		
 			var checkStatus = table.checkStatus("LAY-app-function-list-reload");
 			var data = checkStatus.data;
-			console.log(data);
 			if (data.length === 0 ){
       			layer.msg("请至少选中一条记录！")
 			}
@@ -91,16 +90,14 @@
 					icon: 3, 
 					title: "系统提示"
 				}, function(index) {
-					var nodes=[];
+					var funcCodes = new Array();
 					for (var i=0; i<data.length;i++) {
-				 		nodes.push({realId:data[i].funccode,type:"function"});
+				 		funcCodes[i] = data[i].funcCode;
 					}		
 					$.ajax({
-						url: "com.zimax.components.coframe.framework.ApplicationManager.deleteApplications.biz.ext",
-						type: "POST",
-						data: JSON.stringify({
-							nodes: nodes
-						}),
+						url: "/mcrs/framework/function/batchDelete",
+						type: "DELETE",
+						data: JSON.stringify(funcCodes),
 						cache: false,
 						contentType: "text/json",
 						success: function(result) {
@@ -325,21 +322,16 @@
 				icon: 3, 
 				title: "系统提示"
 			}, function(index) {
-			  var nodes=[];
-			  nodes.push({
-			  	realId: data.funcCode,
-			  	type: "function"
-			  });			 
+			  var funcCodes = new Array();
+			funcCodes[0] = data.funcCode
 				$.ajax({
-					url: "com.zimax.components.coframe.framework.ApplicationManager.deleteApplications.biz.ext",
-					type: "POST",
-					data: JSON.stringify({
-						nodes: nodes
-					}),
+					url: "/mcrs/framework/function/batchDelete",
+					type: "delete",
+					data: JSON.stringify(funcCodes),
 					cache: false,
 					contentType: "text/json",
 					success: function(result) {
-						if (result) {
+						if (result.code==0) {
 							layer.msg("删除成功", {
 								icon: 1,
 								time: 2000

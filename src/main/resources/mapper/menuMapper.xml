@@ -2,11 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zimax.components.coframe.framework.mapper.MenuMapper">
-    <select id="deleteMenu" parameterType="string">
-
+    <!--    查询记录数-->
+    <select id="count" resultType="int">
+        select count(*) from app_menu
+        <where>
+            <if test="menuId !=null and menuId !=''">
+                and menu_id = '${menuId}'
+            </if>
+        </where>
     </select>
-    <select id="getMenu" resultType="com.zimax.components.coframe.framework.pojo.Menu">
-
+    <!--查询所有菜单-->
+    <select id="queryMenus" parameterType="map" resultType="com.zimax.components.coframe.framework.pojo.Menu">
+        select * from app_menu
+        <where>
+            <if test="menuId !=null and menuId !=''">
+                and menu_id = '${menuId}'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
     </select>
 
     <select id="queryFunction" parameterType="string" resultType="com.zimax.components.coframe.framework.pojo.Function">
@@ -16,10 +34,6 @@
 
     </select>
 
-    <select id="queryMenus" parameterType="map" resultType="com.zimax.components.coframe.framework.pojo.Menu">
-        select * from app_menu order by display_order asc
-    </select>
-
     <select id="queryMenuFuncResource" parameterType="string" resultType="string">
 
     </select>
@@ -27,16 +41,61 @@
 
     </select>
     <select id="queryMenuTreeNode" parameterType="string" resultType="com.zimax.components.coframe.framework.pojo.Menu">
+    <!--    新增菜单-->
+    <insert id="addMenu" parameterType="com.zimax.components.coframe.framework.pojo.Menu" keyProperty="menuId"
+            useGeneratedKeys="true">
+        insert into app_menu
+        values (#{menuId}, #{parentMenuId}, #{menuName}, #{menuLabel}, #{menuCode}, #{isLeaf}, #{menuAction},
+                #{parameter}, #{uiEntry},
+                #{menuLevel}, #{rootId},
+                #{displayOrder}, #{imagePath}, #{expandPath}, #{menuSeq}, #{openMode}, #{subCount}, #{appId},
+                #{funcCode}, #{appInfo}, #{tenantId})
+    </insert>
 
-    </select>
-    <select id="saveMenu" parameterType="com.zimax.components.coframe.framework.pojo.Menu">
+    <!--    主键删除-->
+    <delete id="deleteMenu" parameterType="int">
+        delete
+        from app_menu
+        where menu_id = #{menuId}
+    </delete>
+    <!--    更新一条菜单信息-->
+    <update id="updateMenu" parameterType="com.zimax.components.coframe.framework.pojo.Menu">
+        UPDATE app_menu
+        SET parent_menu_id = #{parentMenuId},
+            menu_name      = #{menuName},
+            menu_label     = #{menuLabel},
+            menu_code      = #{menuCode},
+            is_leaf        = #{isLeaf},
+            menu_action    = #{menuAction},
+            parameter      = #{parameter},
+            ui_entry       = #{uiEntry},
+            menu_level     = #{menuLevel},
+            root_id        = #{rootId},
+            display_order  = #{displayOrder},
+            image_path     = #{imagePath},
+            expand_path    = #{expandPath},
+            menu_seq       = #{menuSeq},
+            open_mode      = #{openMode},
+            sub_count      = #{subCount},
+            app_id         = #{appId},
+            func_code      = #{funcCode},
+            app_info       = #{appInfo},
+            tenant_id      = #{tenantId}
+        WHERE menu_id = #{menuId}
+    </update>
+    <!--    批量删除-->
+    <delete id="deleteMenus" parameterType="java.util.List">
+        delete from app_menu where menu_id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
 
-    </select>
-    <select id="updateMenu" parameterType="com.zimax.components.coframe.framework.pojo.Menu">
-
-    </select>
-    <select id="updateMenuRelation" parameterType="string">
-
+    <!--    获取单个菜单-->
+    <select id="getMenu" resultType="com.zimax.components.coframe.framework.pojo.Menu">
+        select *
+        from app_menu
+        where menu_id = #{menuId}
     </select>
 
 

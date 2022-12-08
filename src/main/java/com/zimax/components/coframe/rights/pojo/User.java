@@ -1,10 +1,12 @@
 package com.zimax.components.coframe.rights.pojo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -15,13 +17,17 @@ import java.util.List;
  * @date 2022/11/28
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@TableName("cap_user")
 public class User {
 
     /**
      * 操作员编号
      * 主键
      */
-    private BigDecimal operatorId;
+    @TableId(type = IdType.AUTO)
+    private int operatorId;
 
     /**
      * 租户编号
@@ -31,6 +37,7 @@ public class User {
     /**
      * 登录用户名
      */
+
     private String userId;
 
     /**
@@ -81,7 +88,7 @@ public class User {
     /**
      * 密码错误次数
      */
-    private BigDecimal errCount;
+    private int errCount;
 
     /**
      * 有效开始时间
@@ -124,6 +131,9 @@ public class User {
     /**
      * 创建时间
      */
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date createTime;
 
 

@@ -91,8 +91,14 @@ public class FuncGroupService {
      * 批量删除应用
      * @param funcGroupIds 功能组编号集合
      */
-    public void deletefuncGroups(List<Integer> funcGroupIds) {
-        funcGroupMapper.deleteFuncGroups(funcGroupIds);
+    public int deletefuncGroups(List<Integer> funcGroupIds) {
+        funcGroupMapper.deleteFunctions(funcGroupIds);
+        if(funcGroupMapper.deleteFuncGroups(funcGroupIds)>0) {
+            return 0;
+        }
+        else{
+            return  1;
+        }
     }
 
     /**

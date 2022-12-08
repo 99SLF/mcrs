@@ -6,6 +6,7 @@ import com.zimax.components.coframe.framework.pojo.FuncGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -74,5 +75,19 @@ public class FuncGroupController {
     @GetMapping("/funcGroup/find/{funcGroupId}")
     public Result<?>  getFuncGroup(@PathVariable("funcGroupId") int funcGroupId) {
         return Result.success(funcGroupService.getfuncGroup(funcGroupId));
+    }
+
+    /**
+     * 批量删除功能
+     * @param funcGroupIds 角色代码数组
+     */
+    @DeleteMapping("funcGroup/batchDelete")
+    public Result<?> deleteFuncGroups(@RequestBody Integer[] funcGroupIds) {
+        if(funcGroupService.deletefuncGroups(Arrays.asList(funcGroupIds))==0){
+            return Result.success();
+        }else{
+            return Result.error("1","删除失败");
+        }
+
     }
 }

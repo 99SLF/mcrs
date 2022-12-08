@@ -10,7 +10,7 @@ public class Result<T> {
     private String code;
     private String msg;
     private T data;
-    private int total;
+    private Integer total;
 
     /**
      * 获取状态码
@@ -21,11 +21,11 @@ public class Result<T> {
     /**
      *   获取记录数
      */
-    public int getTotal() {
+    public Integer getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(Integer total) {
         this.total = total;
     }
 
@@ -74,7 +74,7 @@ public class Result<T> {
     /**
      * 有参构造
      */
-    public Result(T data,int total) {
+    public Result(T data,Integer total) {
         this.data = data;
         this.total = total;
     }
@@ -85,9 +85,10 @@ public class Result<T> {
         Result result = new Result<>();
         result.setCode("0");
         result.setMsg("成功");
+
         return result;
     }
-    public static <T> Result<T> success(T data,int total) {
+    public static <T> Result<T> success(T data,Integer total) {
         Result<T> result = new Result<>(data,total);
         result.setCode("0");
         result.setMsg("成功");
@@ -97,7 +98,6 @@ public class Result<T> {
         Result<T> result = new Result<>(data);
         result.setCode("0");
         result.setMsg("成功");
-        result.setTotal(1);
         return result;
     }
 
