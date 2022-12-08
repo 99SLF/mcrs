@@ -21,5 +21,5 @@ public interface FuncGroupMapper {
     void deleteFuncGroup(int funcGroupId);
     void deleteFuncGroups(List<Integer> funcGroupIds);
     void updateFuncGroup(FuncGroup funcGroup);
-    int count(@Param("funcGroupId") int funcGroupId);
+    int count(@Param("appId") String appId);
 }

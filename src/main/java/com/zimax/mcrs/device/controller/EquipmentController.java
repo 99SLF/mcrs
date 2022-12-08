@@ -6,6 +6,8 @@ import com.zimax.mcrs.device.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 设备管理
  *
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
  * @date 2022/11/28
  */
 @RestController
-@ResponseBody
 @RequestMapping("/equipment")
 public class EquipmentController {
 
@@ -21,29 +22,20 @@ public class EquipmentController {
     private EquipmentService equipmentService;
 
     /**
-     * 条件查询
+     * 查询
      *
      * @param equipmentId 设备资源号
      * @param equipmentName 设备名称
      * @param limit         记录数
      * @param page          页码
-     * @return 角色列表
+     * @param field 排序字段
+     * @param order 排序方式
+     * @return 设备列表
      */
     @GetMapping("/query")
-    public Result<?> query(@RequestParam int equipmentId, @RequestParam String equipmentName, @RequestParam int limit, @RequestParam int page) {
-        return Result.success();
-    }
-
-    /**
-     * 初始化查询
-     *
-     * @param equipmentId 设备id
-     * @return 设备信息
-     */
-    @GetMapping("/find/{equipmentId}")
-    public Result<?> queryAll(@PathVariable("equipmentId") int equipmentId) {
-
-        return Result.success();
+    public Result<?> query( @RequestParam int limit, @RequestParam int page, String equipmentId, String equipmentName, String order, String field) {
+        List equipments = equipmentService.queryEquipments(limit,page,equipmentId,equipmentName,order,field);
+        return Result.success(equipments,equipmentService.count(equipmentId,equipmentName));
     }
 
     /**
@@ -51,8 +43,9 @@ public class EquipmentController {
      *
      * @param equipment 设备信息
      */
-    @RequestMapping("/add")
+    @PostMapping("/add")
     public Result<?> addEquipment(@RequestBody Equipment equipment) {
+        equipmentService.addEquipment(equipment);
         return Result.success();
     }
 
@@ -62,7 +55,8 @@ public class EquipmentController {
      * @param equipmentId 设备数组
      */
     @DeleteMapping("/delete/{equipmentId}")
-    public Result<?> removeEquipment(@PathVariable("equipmentId") int equipmentId) {
+    public Result<?> removeEquipment(@PathVariable("equipmentId") String equipmentId) {
+        equipmentService.removeEquipment(equipmentId);
         return Result.success();
     }
 
@@ -71,8 +65,10 @@ public class EquipmentController {
      *
      * @param equipment 设备信息
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     public Result<?> updateEquipment(@RequestBody Equipment equipment) {
+        equipmentService.updateEquipment(equipment);
+
         return Result.success();
     }
 

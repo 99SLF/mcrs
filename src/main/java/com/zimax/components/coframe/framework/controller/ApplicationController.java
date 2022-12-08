@@ -17,7 +17,7 @@ import java.util.List;
  */
 @RestController
 @ResponseBody
-@RequestMapping("/application")
+@RequestMapping("/framework")
 public class ApplicationController {
 
     @Autowired
@@ -26,7 +26,7 @@ public class ApplicationController {
      * 新增应用
      * @param application 应用信息
      */
-    @PostMapping("/add")
+    @PostMapping("/application/add")
     public Result<?> addApplication(@RequestBody Application application) {
         applicationService.addApplication(application);
         return Result.success();
@@ -36,7 +36,7 @@ public class ApplicationController {
      * 更新应用
      * @param application 应用信息
      */
-    @PutMapping("/update")
+    @PutMapping("/application/update")
     public Result<?> updateApplication(@RequestBody Application application) {
         applicationService.updateApplication(application);
         return Result.success();
@@ -46,7 +46,7 @@ public class ApplicationController {
      * 删除应用
      * @param appId 应用信息编号
      */
-    @DeleteMapping("/delete{appId}")
+    @DeleteMapping("/application/delete{appId}")
     public Result<?> deleteApplication(@PathVariable int appId) {
         applicationService.deleteApplication(appId);
         return Result.success();
@@ -62,8 +62,8 @@ public class ApplicationController {
      * @param field 排序字段
      * @param order 排序方式
      */
-    @GetMapping("/query")
-    public Result<?> queryApplications(@RequestParam int limit, @RequestParam int page, String appName, String appType, String order, String field) {
+    @GetMapping("/application/query")
+    public Result<?> queryApplications(String limit,String page, String appName, String appType, String order, String field) {
         List applications = applicationService.queryApplications(page,limit,appName,appType,order,field);
         return Result.success(applications,applicationService.count(appName,appType));
     }
@@ -73,7 +73,7 @@ public class ApplicationController {
      * @param appId 应用编号
      * @return 应用信息
      */
-    @GetMapping("/find/{appId}")
+    @GetMapping("/application/find/{appId}")
     public Result<?>  getApplication(@PathVariable("appId") int appId) {
         return Result.success(applicationService.getApplication(appId));
     }

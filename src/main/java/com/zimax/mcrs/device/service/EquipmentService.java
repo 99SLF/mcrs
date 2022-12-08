@@ -1,11 +1,14 @@
 package com.zimax.mcrs.device.service;
 
+import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.device.mapper.EquipmentMapper;
 import com.zimax.mcrs.device.pojo.Equipment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 设备服务
@@ -19,17 +22,23 @@ public class EquipmentService {
     private EquipmentMapper equipmentMapper;
 
     /**
-     * 初始化查询
+     * 查询所有
      */
-    public List<Equipment> queryEquipment(){
-        return null;
-    }
-
-    /**
-     * 根据设备资源号查询
-     */
-    public Equipment queryEquipment(int equipmentId){
-        return null;
+    public List<Equipment> queryEquipments(int limit, int page, String equipmentId, String equipmentName, String order, String field){
+        ChangeString changeString = new ChangeString();
+        Map<String,Object> map= new HashMap<>();
+        if(order==null){
+            map.put("order","desc");
+            map.put("field","create_time");
+        }else{
+            map.put("order",order);
+            map.put("field",changeString.camelUnderline(field));
+        }
+        map.put("begin",limit*(page-1));
+        map.put("limit",limit);
+        map.put("equipmentId",equipmentId);
+        map.put("equipmentName",equipmentName);
+        return equipmentMapper.queryAll(map);
     }
 
     /**
@@ -37,35 +46,32 @@ public class EquipmentService {
      * @param equipment 角色
      */
     public void addEquipment(Equipment equipment){
-
+        equipmentMapper.addEquipment(equipment);
     }
 
     /**
      * 根据资源号删除
      * @param equipmentId 设备资源号
      */
-    public void deleteById(int equipmentId){
+    public void removeEquipment(String equipmentId){
+        equipmentMapper.removeEquipment(equipmentId);
     }
 
     /**
      * 更新设备
      */
     public void updateEquipment(Equipment equipment){
-
+        equipmentMapper.updateEquipment(equipment);
     }
-
-
-
 
     /**
-     * 查询所有设备信息
-     * @return
+     * 查询记录
      */
-    public List<Equipment> queryEquipment(int page, int limit){
-//        QueryWrapper<Device> queryWrapper = new QueryWrapper<>();
-//        List<Device> deviceList = deviceMapper.selectList(queryWrapper);
-//        System.out.println(deviceList.toString());
-        return null;
+    public int count(String equipmentId, String equipmentName){
+        return equipmentMapper.count(equipmentId,equipmentName);
     }
+
+
+
 
 }

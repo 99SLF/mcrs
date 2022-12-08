@@ -12,23 +12,27 @@
         </where>
     </select>
     <!--查询所有-->
-    <select id="FuncGroups" parameterType="map" resultType="com.zimax.components.coframe.framework.pojo.FuncGroup">
+    <select id="queryFuncGroups" parameterType="map" resultType="com.zimax.components.coframe.framework.pojo.FuncGroup">
         select * from app_func_group
         <where>
             <if test="appId !=null and appId !=''">
                 and app_id = '${appId}'
             </if>
         </where>
-        order by ${field} ${order}
-        limit ${begin},${limit}
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
     </select>
     <!--    获取单个功能组-->
     <select id="getFuncGroup" resultType="com.zimax.components.coframe.framework.pojo.FuncGroup" >
         select * from app_func_group where func_group_id = #{funcGroupId}
     </select>
     <!--    新增功能组-->
-    <insert id="addFuncGroup" parameterType="com.zimax.components.coframe.framework.pojo.FuncGroup">
-        insert into app_func_group values(#{funcGroupId},#{appId},#{appName},#{funcGroupName},#{parentFuncGroupId},
+    <insert id="addFuncGroup" parameterType="com.zimax.components.coframe.framework.pojo.FuncGroup" keyProperty="funcGroupId" useGeneratedKeys="true">
+        insert into app_func_group values(#{funcGroupId},#{appId},#{funcGroupName},#{parentFuncGroupId},
             #{groupLevel},#{funcGroupSeq},#{displayOrder},#{isLeaf},#{subCount},#{appInfo},#{tenantId})
     </insert>
     <!--    主键删除-->
@@ -37,7 +41,7 @@
     </delete>
     <!--    更新1条应用信息-->
     <update id="updateFuncGroup" parameterType="com.zimax.components.coframe.framework.pojo.FuncGroup">
-        update app_func_group set func_group_name=#{funcGroupName},display_order=#{displayOrder} where func_group_id=#{funcGroupId}
+        update app_func_group set func_group_name=#{funcGroupName},display_order=#{displayOrder},func_group_seq=#{funcGroupSeq} where func_group_id=#{funcGroupId}
     </update>
     <!--    批量删除-->
     <delete id="deleteFuncGroups" parameterType="java.util.List">

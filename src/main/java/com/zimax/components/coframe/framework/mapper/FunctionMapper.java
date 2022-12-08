@@ -1,9 +1,12 @@
 package com.zimax.components.coframe.framework.mapper;
 
+import com.zimax.components.coframe.framework.pojo.FuncGroup;
 import com.zimax.components.coframe.framework.pojo.Function;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author 施林丰
@@ -28,4 +31,10 @@ public interface FunctionMapper {
      */
     List<Function> queryAllFunctions();
 
+    List<FuncGroup> queryFunctions(Map map);
+    void addFunction(Function function);
+    void deleteFunction(String funcCode);
+    void deleteFunctions(List<String> funcCodes);
+    void updateFunction(Function function);
+    int count(@Param("funcGroupId") String funcGroupId);
 }

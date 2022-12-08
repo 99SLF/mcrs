@@ -2,13 +2,20 @@ package com.zimax.components.coframe.framework.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import lombok.Data;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 /**
  * @Author 施林丰
  * @Date:2022/12/7 11:57
  * @Description
  */
+@NoArgsConstructor
+@AllArgsConstructor
+@TableName("app_func_resource")
 @Data
 public class FuncResource {
     /**
