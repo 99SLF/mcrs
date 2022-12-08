@@ -25,9 +25,9 @@ public class Menu {
     主键
      */
     @TableId(value = "menuId",type = IdType.AUTO)
-    private int menuId;
+    private String menuId;
 
-    private int parentMenuId;
+    private String parentMenuId;
 
     //菜单名称
     private String menuName;

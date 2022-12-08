@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zimax.components.coframe.framework.mapper.MenuMapper">
+
     <!--    查询记录数-->
     <select id="count" resultType="int">
         select count(*) from app_menu

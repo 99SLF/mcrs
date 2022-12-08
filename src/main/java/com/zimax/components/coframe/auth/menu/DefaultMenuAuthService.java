@@ -159,7 +159,7 @@ public class DefaultMenuAuthService {
             rootLevel = Math.min(rootLevel, menu.getMenuLevel());
             LevelMenuTreeNode node = createMenuNode(menu);
             nodeMap.put(menu.getMenuId(), node);
-            String parentMenuId = menu.getParentsId();
+            String parentMenuId = menu.getParentMenuId();
             if (parentMenuId != null) {
                 Set<LevelMenuTreeNode> childNodes = parentIdNodeMap
                         .get(parentMenuId);
