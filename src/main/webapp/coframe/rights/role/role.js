@@ -40,17 +40,17 @@ layui.define(["admin"], function(exports) {
 	var funName = "subfuncgroup_list";
 	
 	//获取接口地址
-	var getUrl = setter.base + "role/find";
+	var getUrl = setter.base + "rights/role/find";
 	
 	//添加接口地址
-	var addUrl = setter.base + "role/add";
+	var addUrl = setter.base + "rights/role/add";
 	
 	//修改接口地址
-	var updateUrl = setter.base + "role/update";
+	var updateUrl = setter.base + "rights/role/update";
     //删除接口地址
-	var deleteUrl = setter.base + "role/delete";
+	var deleteUrl = setter.base + "rights/role/delete";
 	//批量删除接口地址
-	var batchDelUrl = setter.base + "role/batchDelete";
+	var batchDelUrl = setter.base + "rights/role/batchDelete";
 	
 	function getFullSize() {
 		var fluid = $(".layui-fluid");
@@ -101,7 +101,7 @@ layui.define(["admin"], function(exports) {
 	function renderTable() {
 		table.render({
 			elem: "#LAY-app-role-list",
-			url: "/mcrs/role/query",
+			url: "/mcrs/rights/role/query",
 			method: "get",
 			height: "full-" + getFullSize(),
 			page: true,
@@ -519,7 +519,7 @@ layui.define(["admin"], function(exports) {
 										icon: 2,
 										title: "系统提示"
 									});
-								} else if (result) {
+								} else if (result.code==0) {
 									layer.msg("删除成功", {
 										icon: 1,
 										time: 2000

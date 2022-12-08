@@ -107,4 +107,10 @@ public class Result<T> {
         result.setMsg(msg);
         return result;
     }
+    public static Result error() {
+        Result result = new Result();
+        result.setCode("1");
+        result.setMsg("失败");
+        return result;
+    }
 }

@@ -1,4 +1,5 @@
 package com.zimax.components.coframe.framework.mapper;
+
 import com.zimax.components.coframe.framework.pojo.FuncResource;
 import com.zimax.components.coframe.framework.pojo.Function;
 import org.apache.ibatis.annotations.Param;
@@ -14,13 +15,19 @@ import java.util.Map;
 public interface FuncResourceMapper {
     /**
      * 查询所有的功能资源
+     *
      * @return 所有的功能资源
      */
     List<FuncResource> queryAllFuncResources();
-    List<FuncResource> queryFuncResource(Map map);
+
+    List<FuncResource> queryFuncResources(Map map);
+
     void addFuncResource(FuncResource funcResource);
-    int deleteFuncResources(List<Integer> resIds);
+
+    void deleteFuncResources(List<Integer> resIds);
+
     void updateFuncResource(FuncResource funcResource);
+
     int count(@Param("funcCode") String funcCode);
 
 }
