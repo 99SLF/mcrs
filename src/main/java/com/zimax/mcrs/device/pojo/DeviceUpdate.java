@@ -11,26 +11,32 @@ import java.util.Date;
 
 /**
  * 终端更新
+ *
  * @author 林俊杰
  * @date 2022/12/1
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("cap_device_update")
+@TableName("eqi_device_update")
 public class DeviceUpdate {
 
     /**
-     * 终端更新编码
+     * 设备资源号
      */
     @TableId(type = IdType.AUTO)
-    private int deviceUpdateId;
+    private String equipmentId;
 
 
     /**
      * 版本号
      */
-    private String deviceVersion;
+    private String version;
+
+    /**
+     * 资源包单号
+     */
+    private String resourceNumber;
 
     /**
      * 终端软件类型
@@ -38,26 +44,37 @@ public class DeviceUpdate {
     private String deviceSoftwareType;
 
     /**
-     * 更新策略
+     * 操作类型
      */
-    private String updateStrategy;
+    private String operateType;
 
     /**
-     * 上传人
+     * 接入点名称
      */
-    private String uploadPeople;
+    private String assessName;
 
     /**
-     * 上传时间
+     * 设备类型
      */
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private String equipmentType;
+
+    /**
+     * 工厂名称
+     */
+    private String factoryName;
+
+    /**
+     * 版本更改人
+     */
+    private String versionChange;
+
+    /**
+     * 版本更改时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date uploadTime;
+    private Date versionChangeTime;
 
-    /**
-     * 备注
-     */
-    private String remarks;
 
 }

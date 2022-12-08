@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("cap_device")
+@TableName("eqi_device")
 public class Device {
 
     /**
@@ -27,14 +27,20 @@ public class Device {
     private String APPId;
 
     /**
-     * 设备资源号
+     * 版本号
      */
-    private String equipmentId;
+    private String version;
 
     /**
-     * 终端类型
+     * 是否需要更新
      */
-    private String deviceType;
+    private String needUpdate;
+
+    /**
+     * 终端软件类型
+     */
+    private String deviceSoftwareType;
+
 
     /**
      * 终端名称
@@ -42,70 +48,68 @@ public class Device {
     private String  deviceName;
 
     /**
-     * 接入方式
-     */
-    private String assessMethod;
-
-    /**
-     * 接入端名称
+     * 接入点名称
      */
     private String assessName;
 
     /**
-     * 接入端资源号
+     * 工厂名称
      */
-    private String assessResourceId;
+    private String factoryName;
+
 
     /**
-     * 接入端属性
+     * 接入点种类
      */
-    private String assessAttributes;
+    private String assessType;
 
     /**
-     * 接入端Ip
+     * 接入点Ip
      */
     private String assessIp;
 
     /**
-     * 接入端安装位置
+     * 接入点资源号
+     */
+    private String equipmentId;
+
+    /**
+     * 接入点属性
+     */
+    private String assessAttributes;
+
+
+    /**
+     * 接入点安装位置
      */
     private String assessInstallLocation;
 
     /**
-     * 终端软件类型
+     * 接入方式
      */
-    private String deviceSoftwareType;
+    private String accessMethod;
 
     /**
-     * 使用工序
+     * 备注
      */
-    private String useProcess;
+    private String remarks;
 
     /**
-     * 注册人员
+     * 创建人
      */
-    private String registrant;
+    private String creator;
 
     /**
-     * 注册人员角色
-     */
-    private String registerRole;
-
-    /**
-     * 注册时间
+     * 创建时间
      */
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date registrationDate;
+    private Date createTime;
 
     /**
      * 是否启用
      */
     private String enable;
 
-    /**
-     * 终端状态
-     */
-    private String deviceStatus;
 }
