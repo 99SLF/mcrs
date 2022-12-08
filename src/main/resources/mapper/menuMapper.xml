@@ -48,14 +48,14 @@
             useGeneratedKeys="true">
         insert into app_menu
         values (#{menuId}, #{parentMenuId}, #{menuName}, #{menuLabel}, #{menuCode}, #{isLeaf}, #{menuAction},
-                #{parameter}, #{uiEntry},
-                #{menuLevel}, #{rootId},
+                #{parameter},
+                #{menuLevel},
                 #{displayOrder}, #{imagePath}, #{expandPath}, #{menuSeq}, #{openMode}, #{subCount}, #{appId},
                 #{funcCode}, #{appInfo}, #{tenantId})
     </insert>
 
     <!--    主键删除-->
-    <delete id="deleteMenu" parameterType="int">
+    <delete id="deleteMenu" parameterType="string">
         delete
         from app_menu
         where menu_id = #{menuId}
@@ -70,9 +70,7 @@
             is_leaf        = #{isLeaf},
             menu_action    = #{menuAction},
             parameter      = #{parameter},
-            ui_entry       = #{uiEntry},
             menu_level     = #{menuLevel},
-            root_id        = #{rootId},
             display_order  = #{displayOrder},
             image_path     = #{imagePath},
             expand_path    = #{expandPath},
