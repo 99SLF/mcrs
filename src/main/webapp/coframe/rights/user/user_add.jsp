@@ -18,18 +18,18 @@
 </head>
 <body>
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0;">
-	<input type="hidden" name=""user/operatorId"" value="default">
+	<input type="hidden" name="operatorId" value="default">
 	<div class="layui-form-item layui-row layui-col-space10">
 		<div class="layui-col-sm6">
-			<label class="layui-form-label" >用户登录名:<span style="color:red">*</span></label>
+			<label class="layui-form-label" >用户登录名:<span style="color:red">*</span></label>F
 			<div class="layui-input-block">
-				<input id="userId" type="text" name="user/userId" lay-verify="required|checkUserId" placeholder="用户登录名(必填)" autocomplete="off" class="layui-input">
+				<input id="userId" type="text" name="userId" lay-verify="required|checkUserId" placeholder="用户登录名(必填)" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" >用户名称:<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input id="userName" type="text" name="user/userName" lay-verify="required" placeholder="用户名称(必填)" autocomplete="off" class="layui-input">
+				<input id="userName" type="text" name="userName" lay-verify="required" placeholder="用户名称(必填)" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 	</div>
@@ -38,13 +38,13 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label"  >登录密码:<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input  type="password" name="user/password" lay-verify="required" placeholder="登录密码(必填)" autocomplete="off" class="layui-input">
+				<input  type="password" name="password" lay-verify="required" placeholder="登录密码(必填)" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-col-sm6">
 			<label class="layui-form-label">密码失效日期</label>
 			<div class="layui-input-block">
-	  			<input type="text" name="user/invalDate" id="invaldate" autocomplete="off" class="layui-input">
+	  			<input type="text" name="invalDate" id="invaldate" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 	</div>
@@ -53,13 +53,13 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" >有效开始时间:</label>
 			<div class="layui-input-block">
-	  			<input type="text" name="user/startDate" id="startdate" autocomplete="off" class="layui-input" >
+	  			<input type="text" name="startDate" id="startdate" autocomplete="off" class="layui-input" >
 			</div>
 		</div>
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" >有效截止时间：</label>
 			<div class="layui-input-block">
-	  			<input type="text" name="user/endDate" id="enddate" autocomplete="off" class="layui-input" >
+	  			<input type="text" name="endDate" id="enddate" autocomplete="off" class="layui-input" >
 			</div>
 		</div>
 	</div>
@@ -68,13 +68,13 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" >邮箱地址：</label>
 			<div class="layui-input-block">
-	       		<input type="text" name="user/email" id="email" lay-verify="" autocomplete="off" class="layui-input">
+	       		<input type="text" name="email" id="email" lay-verify="" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-col-sm6">
 			<label class="layui-form-label">用户状态：</label>
 			<div class="layui-input-block">
-				<select name="user/status" id="status" lay-filter="status" type="select"  >
+				<select name="status" id="status" lay-filter="status" type="select"  >
 					 <option value=""></option>
 				</select>		
 			</div>
@@ -85,7 +85,7 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" >认证模式：</label>
 			<div class="layui-input-block">
-				<select name="user/authMode" id="authMode" lay-filter="authMode" type="select">
+				<select name="authMode" id="authMode" lay-filter="authMode" type="select">
 					<option value=""></option>
 				</select>		
 			</div>
@@ -93,7 +93,7 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" >菜单布局：</label>
 			<div class="layui-input-block">
-				<select name="user/menuType" id="menuType" lay-filter="menuType" type="select">
+				<select name="menuType" id="menuType" lay-filter="menuType" type="select">
 			  		<option value=""></option>
 			    </select>
 			</div>
@@ -103,7 +103,7 @@
 	<div class="layui-row layui-col-space10">		
 		<label class="layui-form-label">IP地址：</label>
 		<div class="layui-input-block">
-			<textarea  class="layui-textarea field-effect field-content" name="user/ipAddress" id="ipAddress" autocomplete="off" placeholder="" lay-verify=""></textarea>
+			<textarea  class="layui-textarea field-effect field-content" name="ipAddress" id="ipAddress" autocomplete="off" placeholder="" lay-verify=""></textarea>
 		</div>
 	</div>
 	<div class="layui-form-item layui-hide">
@@ -188,31 +188,31 @@
 	});
   	
 	//判断角色是否已存在
-	$("#userId").blur(function() {
-		var userId = $("#userId").val();
-		console.log(userId);
-		if (userId != null && userId != "") {
-			var json = JSON.stringify({
-				userId: userId});
-			$.ajax({
-				url: "com.zimax.components.coframe.rights.UserManager.checkUser.biz.ext",
-				type: "POST",
-				data: json,
-				cache: false,
-				contentType: "text/json",
-				cache: false,
-				success: function(text) {
-					if (text.bool) {
-						isExist = true;
-					} else {
-						isExist = false;
-					}
-				}
-			});
-		} else {
-			return;
-		}
-	});
+	// $("#userId").blur(function() {
+	// 	var userId = $("#userId").val();
+	// 	console.log(userId);
+	// 	if (userId != null && userId != "") {
+	// 		var json = JSON.stringify({
+	// 			userId: userId});
+	// 		$.ajax({
+	// 			url: "com.zimax.components.coframe.rights.UserManager.checkUser.biz.ext",
+	// 			type: "POST",
+	// 			data: json,
+	// 			cache: false,
+	// 			contentType: "text/json",
+	// 			cache: false,
+	// 			success: function(text) {
+	// 				if (text.bool) {
+	// 					isExist = true;
+	// 				} else {
+	// 					isExist = false;
+	// 				}
+	// 			}
+	// 		});
+	// 	} else {
+	// 		return;
+	// 	}
+	// });
 	//监听提交
 	form.on("submit(layuiadmin-app-form-submit)", function(data) {
 		var submitData = JSON.stringify(data.field);
@@ -220,7 +220,7 @@
 			submit = true;
 			if (isExist == false) {
 				$.ajax({
-					url: "com.zimax.components.coframe.rights.UserManager.addUser.biz.ext",
+					url:  "/mcrs/user/add",
 					type: "POST",
 					data: submitData,
 					cache: false,
