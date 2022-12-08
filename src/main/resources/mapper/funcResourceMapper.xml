@@ -4,13 +4,10 @@
 <mapper namespace="com.zimax.components.coframe.framework.mapper.FuncResourceMapper">
     <!--    查询记录数-->
     <select id="count" resultType="int">
-        select count(*) from app_application
+        select count(*) from app_func_resource
         <where>
-            <if test="appName !=null and appName !=''">
-                and app_name like '%${appName}%'
-            </if>
-            <if test="appType !=null and appType !=''">
-                and app_type = '${appType}'
+            <if test="funcCode !=null and funcCode !=''">
+                and func_code = #{funcCode}
             </if>
         </where>
     </select>
@@ -20,41 +17,38 @@
     </select>
 
     <!--查询所有-->
-    <select id="queryApplications" parameterType="map" resultType="com.zimax.components.coframe.framework.pojo.Application">
-        select * from app_application
+    <select id="queryFuncResources" parameterType="map" resultType="com.zimax.components.coframe.framework.pojo.FuncResource">
+        select * from app_func_resource
         <where>
-            <if test="appName !=null and appName !=''">
-                and app_name like '%${appName}%'
-            </if>
-            <if test="appType !=null and appType !=''">
-                and app_type = '${appType}'
+            <if test="funcCode !=null and funcCode !=''">
+                and func_code = #{funcCode}
             </if>
         </where>
-        order by ${field} ${order}
-        limit ${begin},${limit}
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
     </select>
-    <!--    获取单个应用-->
-    <select id="getApplication" resultType="com.zimax.components.coframe.framework.pojo.Application" >
-        select * from app_application where app_id = #{appId}
-    </select>
-    <!--    新增应用-->
-    <insert id="addApplication" parameterType="com.zimax.components.coframe.framework.pojo.Application">
-        insert into app_application values(#{appId},#{appCode},#{appName},#{appType},#{displayOrder},
-                                           #{isOpen},#{openDate},#{protocolType},#{ipAddr},#{ipPort},#{url},#{appDesc},#{appInfo},#{tenantId})
+
+    <!--    新增功能资源-->
+    <insert id="addFuncResource" parameterType="com.zimax.components.coframe.framework.pojo.FuncResource">
+        insert into app_func_resource values(#{resId},#{funcCode},#{resType},#{resPath},#{comPackName},
+                                           #{resName},#{appInfo},#{tenantId})
     </insert>
     <!--    主键删除-->
-    <delete id="deleteApplication" parameterType="int">
-        delete from app_application where app_id = #{appId}
+    <delete id="deleteFuncResource" parameterType="int">
+        delete from app_func_resource where res_id = #{resId}
     </delete>
     <!--    更新1条应用信息-->
-    <update id="updateApplication" parameterType="com.zimax.components.coframe.framework.pojo.Application">
-        update app_application set app_code=#{appCode},app_name=#{appName},app_type=#{appType},display_order=#{displayOrder},
-                                   is_open=#{isOpen},open_date=#{openDate},protocol_type=#{protocolType},
-                                   ip_addr=#{ipAddr},url=#{url},app_desc=#{appDesc},app_info=#{appInfo} where app_id=#{appId}
+    <update id="updateFuncResource" parameterType="com.zimax.components.coframe.framework.pojo.FuncResource">
+        update app_func_resource set res_name=#{resName},res_type=#{resType},res_path=#{resPath},com_pack_name=#{comPackName}
+                                  where res_id=#{resId}
     </update>
     <!--    批量删除-->
-    <delete id="deleteApplications" parameterType="java.util.List">
-        delete from app_application where app_id in
+    <delete id="deleteFuncResources" parameterType="java.util.List">
+        delete from app_func_resource where res_id in
         <foreach collection="list" item="id"  separator="," open="(" close=")">
             #{id}
         </foreach>

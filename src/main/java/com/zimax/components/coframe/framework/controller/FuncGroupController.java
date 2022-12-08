@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * 功能组管理
+ *
  * @Author 施林丰
  * @Date: 2022-12-1 15:21
  * @Description
@@ -22,8 +23,10 @@ import java.util.List;
 public class FuncGroupController {
     @Autowired
     FuncGroupService funcGroupService;
+
     /**
      * 新增功能组
+     *
      * @param funcgroup 功能组信息
      */
     @PostMapping("/funcGroup/add")
@@ -34,6 +37,7 @@ public class FuncGroupController {
 
     /**
      * 更新功能组
+     *
      * @param funcgroup 功能组信息
      */
     @PutMapping("/funcGroup/update")
@@ -44,6 +48,7 @@ public class FuncGroupController {
 
     /**
      * 删除功能组
+     *
      * @param funcGroupId 应用功能组编号
      */
     @DeleteMapping("/funcGroup/delete{funcGroupId}")
@@ -54,40 +59,39 @@ public class FuncGroupController {
 
     /**
      * 查询功能组
-     * @return 功能组列表
+     *
      * @param appId 应用编号
      * @param limit 记录数
-     * @param page 页码
+     * @param page  页码
      * @param field 排序字段
      * @param order 排序方式
+     * @return 功能组列表
      */
     @GetMapping("/funcGroup/query")
     public Result<?> queryFuncGroups(String page, String limit, String appId, String order, String field) {
-        List funcGroups = funcGroupService.queryFuncGroups(page,limit,appId,order,field);
-        return Result.success(funcGroups,funcGroupService.count(appId));
+        List funcGroups = funcGroupService.queryFuncGroups(page, limit, appId, order, field);
+        return Result.success(funcGroups, funcGroupService.count(appId));
     }
 
     /**
      * 获取功能组信息
+     *
      * @param funcGroupId 功能组编号
      * @return 功能组信息
      */
     @GetMapping("/funcGroup/find/{funcGroupId}")
-    public Result<?>  getFuncGroup(@PathVariable("funcGroupId") int funcGroupId) {
+    public Result<?> getFuncGroup(@PathVariable("funcGroupId") int funcGroupId) {
         return Result.success(funcGroupService.getfuncGroup(funcGroupId));
     }
 
     /**
      * 批量删除功能
+     *
      * @param funcGroupIds 角色代码数组
      */
     @DeleteMapping("funcGroup/batchDelete")
     public Result<?> deleteFuncGroups(@RequestBody Integer[] funcGroupIds) {
-        if(funcGroupService.deletefuncGroups(Arrays.asList(funcGroupIds))==0){
-            return Result.success();
-        }else{
-            return Result.error("1","删除失败");
-        }
-
+        funcGroupService.deletefuncGroups(Arrays.asList(funcGroupIds));
+        return Result.success();
     }
 }

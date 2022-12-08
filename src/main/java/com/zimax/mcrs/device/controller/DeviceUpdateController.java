@@ -6,17 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 import static net.sf.jsqlparser.parser.feature.Feature.limit;
 
 /**
  * 终端更新管理
+ *
  * @author 林俊杰
  * @date 2022/12/1
  */
 @RestController
 @ResponseBody
-@RequestMapping("/deviceUpdate")
+@RequestMapping("/equipment")
 public class DeviceUpdateController {
 
     @Autowired
@@ -24,20 +26,25 @@ public class DeviceUpdateController {
 
     /**
      * 查询全部的设备更新信息
-
-     * @param deviceVersion 版本号
-     * @param deviceSoftwareType 终端软件类型
-     * @param limit         记录数
-     * @param page          页码
-     * @return
+     *
+     * 查询角色
+     * @param equipmentId 设备资源号
+     * @param version 版本号
+     * @param limit 记录数
+     * @param page 页码
+     * @param field 排序字段
+     * @param order 排序方式
+     * @return 更新列表
      */
-    @RequestMapping("/query")
-    public Result query(@RequestParam int deviceVersion, @RequestParam String deviceSoftwareType, @RequestParam int limit, @RequestParam int page) {
-        return Result.success();
+    @RequestMapping("/deviceUpdate/query")
+    public Result queryDeviceUpdate(@RequestParam int page, @RequestParam int limit, String equipmentId, String version, String order, String field) {
+        List deviceUpdates = deviceUpdateService.queryDeviceUpdate(page,limit,equipmentId,version,order,field);
+        return Result.success(deviceUpdates, deviceUpdateService.count(equipmentId,version));
     }
 
     /**
      * 初始化查询
+     *
      * @return
      */
     @GetMapping("/find/{deviceUpdateId}")
@@ -48,10 +55,11 @@ public class DeviceUpdateController {
 
     /**
      * 下载
+     *
      * @return
      */
     @RequestMapping("download")
-    public void download(){
+    public void download() {
 
     }
 

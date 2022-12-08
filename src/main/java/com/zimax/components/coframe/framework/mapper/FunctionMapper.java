@@ -32,9 +32,14 @@ public interface FunctionMapper {
     List<Function> queryAllFunctions();
 
     List<FuncGroup> queryFunctions(Map map);
+
     void addFunction(Function function);
+
     void deleteFunction(String funcCode);
-    int deleteFunctions(List<String> funcCodes);
+
+    void deleteFunctions(List<String> funcCodes);
+
     void updateFunction(Function function);
+
     int count(@Param("funcGroupId") String funcGroupId);
 }

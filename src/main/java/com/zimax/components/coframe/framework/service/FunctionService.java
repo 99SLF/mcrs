@@ -66,57 +66,32 @@ public class FunctionService implements IFunctionService {
         this.applicationMapper = applicationMapper;
     }
 
+    @Override
+    public void getFunction(Function appFunction) {
+
+    }
+
+    /**
+     * 添加功能信息
+     * @param function 功能信息
+     */
     public void addFunction(Function function) {
-        try {
-            functionMapper.addFunction(function);
-            ResourceRuntimeManager.getInstance().registerManagedResource(adapt(function));
-        } catch (Throwable t) {
-//            log.error(
-//                    "Insert function [funCode="
-//                            + Function.getFuncCode()
-//                            + "] failure, please do the operation again or contact the sysadmin.",
-//                    t);
-        }
+        functionMapper.addFunction(function);
+    }
+    /**
+     * 更新功能信息
+     * @param function 功能信息
+     */
+    public void updateFunction(Function function) {
+       functionMapper.updateFunction(function);
     }
 
-    public void deleteFunction(Function[] Functions) {
-//        for (DataObject Function : Functions) {
-//            try {
-//                getDASTemplate().deleteEntityCascade(Function);
-//                ResourceRuntimeManager.getInstance().unRegisterManagedResource(
-//                        Function.getString("funcCode"),
-//                        IAuthConstants.FUNCTION_TO_RESOURCE_TYPE);
-//            } catch (Throwable t) {
-//                log.error(
-//                        "Delete function [funCode="
-//                                + Function.get("funcCode")
-//                                + "] failure, please do the operation again or contact the sysadmin.",
-//                        t);
-//            }
-//        }
-    }
-
-    public void getFunction(Function Function) {
-//        getDASTemplate().expandEntity(Function);
-    }
 
     public int validateFunction(Function Function) {
 //        return getDASTemplate().expandEntity(Function);
         return 0;
     }
 
-    public void updateFunction(Function function) {
-        try {
-            functionMapper.updateFunction(function);
-            ResourceRuntimeManager.getInstance().updateRegisteredManagedResource(adapt(function));
-        } catch (Throwable t) {
-//            log.error(
-//                    "Update function [funCode="
-//                            + Function.get("funcCode")
-//                            + "] failure, please do the operation again or contact the sysadmin.",
-//                    t);
-        }
-    }
 
 //    public int countFunction(CriteriaType criteria) {
 //        criteria.set_entity(Function.QNAME);
@@ -300,17 +275,20 @@ public class FunctionService implements IFunctionService {
         return functionMapper.getFunction(funcCode);
     }
 
+    @Override
+    public void deleteFunction(Function[] Functions) {
+
+    }
+
     /**
      * 批量删除功能
      * @param funcCodes 功能编号集合
      */
-    public int deleteFunctions(List<String> funcCodes) {
-        if(functionMapper.deleteFunctions(funcCodes)>0) {
-            return 0;
+    public void deleteFunctions(List<String> funcCodes) {
+        for(int i = 0;i<funcCodes.size();i++){
+
         }
-        else{
-            return  1;
-        }
+        functionMapper.deleteFunctions(funcCodes);
     }
 
     /**

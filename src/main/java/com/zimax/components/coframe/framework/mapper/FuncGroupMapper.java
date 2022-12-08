@@ -16,11 +16,18 @@ import java.util.Map;
 @Mapper
 public interface FuncGroupMapper {
     List<FuncGroup> queryFuncGroups(Map map);
+
     FuncGroup getFuncGroup(int funcGroupId);
+
     void addFuncGroup(FuncGroup funcGroup);
+
     void deleteFuncGroup(int funcGroupId);
+
     void deleteFunctions(List<Integer> funcGroupIds);
-    int deleteFuncGroups(List<Integer> funcGroupIds);
+
+    void deleteFuncGroups(List<Integer> funcGroupIds);
+
     void updateFuncGroup(FuncGroup funcGroup);
+
     int count(@Param("appId") String appId);
 }

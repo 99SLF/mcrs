@@ -65,6 +65,10 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.components.coframe.framework.mapper.FuncResourceMapper"/>
     </bean>
+    <bean id="UserInitMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.components.coframe.auth.mapper.UserInitMapper"/>
+    </bean>
 
     <bean id="FeedingReportMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
@@ -102,4 +106,7 @@
         <property name="menuMapper" ref="MenuMapper"/>
     </bean>
 
+    <bean id="InitUserObjectServiceBean" class="com.zimax.components.coframe.init.InitUserObjectService">
+        <property name="userInitMapper" ref="UserInitMapper"/>
+    </bean>
 </beans>

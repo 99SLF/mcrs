@@ -15,10 +15,16 @@ import java.util.Map;
 @Mapper
 public interface ApplicationMapper {
     List<Application> queryApplications(Map map);
+
     Application getApplication(int appId);
+
     void addApplication(Application application);
+
     void deleteApplication(int appId);
+
     void deleteApplications(List<Integer> appIds);
+
     void updateApplication(Application application);
+
     int count(@Param("appName") String appName, @Param("appType") String appType);
 }

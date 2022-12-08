@@ -22,7 +22,6 @@ html{
 	<ul class="layui-tab-title">
 		<li class="layui-this">应用列表</li>
 		<li>功能组列表</li>
-		<li>子功能组列表</li>
 		<li>功能列表</li>
 		<li>资源列表</li>
 	</ul>
@@ -32,9 +31,6 @@ html{
 		</div>
 		<div class="layui-tab-item">
 			<iframe url="<%=request.getContextPath()%>/coframe/framework/functiongroup/func_group_list.jsp" width="100%" height="100%" scrolling="yes" frameborder="0"  ></iframe>
-		</div>
-		<div class="layui-tab-item">
-			<iframe url="<%=request.getContextPath()%>/coframe/framework/subfunctiongroup/sub_func_group_list.jsp" width="100%" height="100%" scrolling="yes" frameborder="0"  ></iframe>
 		</div>
 		<div class="layui-tab-item">
 			<iframe url="<%=request.getContextPath()%>/coframe/framework/function/function_list.jsp" width="100%" height="100%" scrolling="yes" frameborder="0"  ></iframe>

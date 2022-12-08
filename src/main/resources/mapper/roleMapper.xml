@@ -25,9 +25,12 @@
                 and role_name like '%${roleName}%'
             </if>
         </where>
-        order by ${field} ${order}
-        limit ${begin},${limit}
-
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
     </select>
 <!--    获取单个角色-->
     <select id="getRole" resultType="com.zimax.components.coframe.rights.pojo.Role" >
