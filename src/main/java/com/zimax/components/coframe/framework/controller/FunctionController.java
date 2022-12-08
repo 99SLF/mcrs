@@ -63,7 +63,7 @@ public class FunctionController {
     @DeleteMapping("function/batchDelete")
     public Result<?> deleteFunctions(@RequestBody String[] funcCodes) {
         functionService.deleteFunctions(Arrays.asList(funcCodes));
-            return Result.success();
+        return Result.success();
     }
 
 }

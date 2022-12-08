@@ -239,6 +239,8 @@ public class FuncResourceService implements IFuncResourceService {
      * @param resIds 功能集合编号集合
      */
     public void deleteFuncResources(List<Integer> resIds) {
+        if (resIds.size() == 0)
+            return;
         funcResourceMapper.deleteFuncResources(resIds);
     }
 

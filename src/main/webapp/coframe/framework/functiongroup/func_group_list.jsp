@@ -86,19 +86,14 @@
 				layer.confirm("确定删除所选功能组？", {
 					icon: 3, title: "系统提示"
 				}, function(index) {
-					var nodes=[];
-					for (var i = 0; i < data.length; i++) {
-				 		nodes.push({
-				 			realId: data[i].funcgroupid,
-				 			type: "functiongroup"
-				 		});	
-					}		 	
+					var funcGroupIds = new Array();
+					for (var i=0; i<data.length;i++) {
+						funcGroupIds[i] = data[i].funcGroupId;
+					}
 					$.ajax({
-						url: "com.zimax.components.coframe.framework.ApplicationManager.deleteApplications.biz.ext",
-						type: "POST",
-						data: JSON.stringify({
-							nodes: nodes
-						}),
+						url: "/mcrs/framework/funcGroup/batchDelete",
+						type: "DELETE",
+						data: JSON.stringify(funcGroupIds),
 						cache: false,
 						contentType: "text/json",
 						success: function(result) {
@@ -353,17 +348,12 @@
 			layer.confirm("确定删除此功能组？", {
 				icon: 3, title: "系统提示"
 			}, function(index) {
-				var nodes=[];
-			  nodes.push({
-			  	realId: data.funcGroupId,
-			  	type: "functiongroup"
-			  });			 
+				var funcGroupIds = new Array();
+				funcGroupIds[0] = data.funcGroupId;
 				$.ajax({
-					url: "com.zimax.components.coframe.framework.ApplicationManager.deleteApplications.biz.ext",
-					type: "delete",
-					data: JSON.stringify({
-						nodes: nodes
-					}),
+					url: "/mcrs/framework/funcGroup/batchDelete",
+					type: "DELETE",
+					data: JSON.stringify(funcGroupIds),
 					cache: false,
 					contentType: "text/json",
 					success: function(result) {

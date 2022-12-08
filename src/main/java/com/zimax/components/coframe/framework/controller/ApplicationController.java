@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * 应用管理
+ *
  * @Author 施林丰
  * @Date: 2022-12-1 15:21
  * @Description
@@ -22,8 +23,10 @@ public class ApplicationController {
 
     @Autowired
     ApplicationService applicationService;
+
     /**
      * 新增应用
+     *
      * @param application 应用信息
      */
     @PostMapping("/application/add")
@@ -34,6 +37,7 @@ public class ApplicationController {
 
     /**
      * 更新应用
+     *
      * @param application 应用信息
      */
     @PutMapping("/application/update")
@@ -44,6 +48,7 @@ public class ApplicationController {
 
     /**
      * 删除应用
+     *
      * @param appId 应用信息编号
      */
     @DeleteMapping("/application/delete{appId}")
@@ -54,28 +59,42 @@ public class ApplicationController {
 
     /**
      * 查询应用
-     * @return 应用列表
+     *
      * @param appName 应用名称
      * @param appType 应用类型
-     * @param limit 记录数
-     * @param page 页码
-     * @param field 排序字段
-     * @param order 排序方式
+     * @param limit   记录数
+     * @param page    页码
+     * @param field   排序字段
+     * @param order   排序方式
+     * @return 应用列表
      */
     @GetMapping("/application/query")
-    public Result<?> queryApplications(String limit,String page, String appName, String appType, String order, String field) {
-        List applications = applicationService.queryApplications(page,limit,appName,appType,order,field);
-        return Result.success(applications,applicationService.count(appName,appType));
+    public Result<?> queryApplications(String limit, String page, String appName, String appType, String order, String field) {
+        List applications = applicationService.queryApplications(page, limit, appName, appType, order, field);
+        return Result.success(applications, applicationService.count(appName, appType));
     }
 
     /**
      * 获取应用信息
+     *
      * @param appId 应用编号
      * @return 应用信息
      */
     @GetMapping("/application/find/{appId}")
-    public Result<?>  getApplication(@PathVariable("appId") int appId) {
+    public Result<?> getApplication(@PathVariable("appId") int appId) {
         return Result.success(applicationService.getApplication(appId));
+    }
+
+    /**
+     * 批量删除应用信息
+     *
+     * @param appIds 应用编号
+     * @return 应用信息
+     */
+    @DeleteMapping("/application/batchDelete")
+    public Result<?> batchDelete(@RequestBody List<Integer> appIds) {
+        applicationService.deleteApplications(appIds);
+        return Result.success();
     }
 
 }

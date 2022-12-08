@@ -118,23 +118,18 @@
   				layer.msg('请至少选中一条记录！');	 
 			}
 			if (data.length > 0) {
-				var nodes=[];
-				for (var i = 0; i < data.length; i++) {
-				  	nodes.push({
-				  		realId:data[i].appId,
-				  		type:"application"
-				  	});
+				var appIds = new Array();
+				for (var i=0; i<data.length;i++) {
+					appIds[i] = data[i].appId;
 				}
 				layer.confirm("确定删除所选应用？", {
 					icon: 3, 
 					title: "系统提示"
 				}, function(index) {		  	
 					$.ajax({
-						url: "com.zimax.components.coframe.framework.ApplicationManager.deleteApplications.biz.ext",
-						type: "POST",
-						data: JSON.stringify({
-						"nodes": nodes
-						}),
+						url: "/mcrs/framework/application/batchDelete",
+						type: "DELETE",
+						data: JSON.stringify(appIds),
 						cache: false,
 						contentType: "text/json",
 						success: function(result) {
@@ -373,17 +368,12 @@
 				icon: 3,
 				title: "系统提示"
 			}, function(index) {
-			  	var nodes=[];
-			  	nodes.push({
-			  	realId:	data.appId,
-			  	type: "application"
-			  });			 
+				var appIds = new Array();
+				appIds[0] = data.appId;
 				$.ajax({
-					url: "/mcrs/framework/application/delete",
-					type: "POST",
-					data: JSON.stringify({
-						nodes: nodes
-					}),
+					url: "/mcrs/framework/application/batchDelete",
+					type: "DELETE",
+					data: JSON.stringify(appIds),
 					cache: false,
 					contentType: "text/json",
 					success: function(result) {

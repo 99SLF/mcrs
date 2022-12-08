@@ -7,9 +7,11 @@ import com.zimax.components.coframe.framework.IFunctionService;
 import com.zimax.components.coframe.framework.constants.IAppConstants;
 import com.zimax.components.coframe.framework.mapper.ApplicationMapper;
 import com.zimax.components.coframe.framework.mapper.FuncGroupMapper;
+import com.zimax.components.coframe.framework.mapper.FuncResourceMapper;
 import com.zimax.components.coframe.framework.mapper.FunctionMapper;
 import com.zimax.components.coframe.framework.pojo.Application;
 import com.zimax.components.coframe.framework.pojo.FuncGroup;
+import com.zimax.components.coframe.framework.pojo.FuncResource;
 import com.zimax.components.coframe.framework.pojo.Function;
 import com.zimax.components.coframe.tools.IAuthConstants;
 import org.apache.log4j.Logger;
@@ -17,6 +19,7 @@ import org.springframework.util.NumberUtils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.zimax.mcrs.config.ChangeString;
@@ -36,6 +39,7 @@ public class FunctionService implements IFunctionService {
     /**
      * 功能信息数据操作
      */
+    private FuncResourceMapper funcResourceMapper;
     private FunctionMapper functionMapper;
 
     private FuncGroupMapper funcGroupMapper;
@@ -64,6 +68,9 @@ public class FunctionService implements IFunctionService {
 
     public void setApplicationMapper(ApplicationMapper applicationMapper) {
         this.applicationMapper = applicationMapper;
+    }
+    public void setFuncResourceMapper(FuncResourceMapper funcResourceMapper) {
+        this.funcResourceMapper = funcResourceMapper;
     }
 
     @Override
@@ -241,7 +248,7 @@ public class FunctionService implements IFunctionService {
      * @param field 排序字段
      * @return
      */
-    public List<FuncGroup> queryFunctions(String  page, String limit, String funcGroupId, String order, String field) {
+    public List<Function> queryFunctions(String  page, String limit, String funcGroupId, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -285,8 +292,19 @@ public class FunctionService implements IFunctionService {
      * @param funcCodes 功能编号集合
      */
     public void deleteFunctions(List<String> funcCodes) {
+        if(funcCodes.size()==0)
+            return;
         for(int i = 0;i<funcCodes.size();i++){
-
+            Map<String, Object> map = new HashMap<>();
+            map.put("funcCode",funcCodes.get(i));
+            List<FuncResource> funcResources = funcResourceMapper.queryFuncResources(map);
+            List<Integer> resIds = new ArrayList<>();
+            for(FuncResource funcResource: funcResources){
+                resIds.add(funcResource.getResId());
+            }
+            if(resIds.size()!=0){
+                funcResourceMapper.deleteFuncResources(resIds);
+            }
         }
         functionMapper.deleteFunctions(funcCodes);
     }

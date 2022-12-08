@@ -31,7 +31,7 @@ public interface FunctionMapper {
      */
     List<Function> queryAllFunctions();
 
-    List<FuncGroup> queryFunctions(Map map);
+    List<Function> queryFunctions(Map map);
 
     void addFunction(Function function);
 

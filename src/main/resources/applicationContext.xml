@@ -74,6 +74,7 @@
         <property name="functionMapper" ref="FunctionMapper"/>
         <property name="funcGroupMapper" ref="FuncGroupMapper"/>
         <property name="applicationMapper" ref="ApplicationMapper"/>
+        <property name="funcResourceMapper" ref="FuncResourceMapper"/>
     </bean>
 
     <bean id="FuncResourceBean" class="com.zimax.components.coframe.framework.service.FuncResourceService">
