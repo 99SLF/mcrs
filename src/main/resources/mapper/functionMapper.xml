@@ -35,10 +35,7 @@
         insert into app_function values(#{funcCode},#{funcName},#{funcDesc},#{funcAction},#{paraInfo},
           #{isCheck},#{funcType},#{displayOrder},#{isMenu},#{appInfo},#{tenantId},#{funcGroupId})
     </insert>
-    <!--    主键删除-->
-    <delete id="deleteFunction" parameterType="int">
-        delete from app_function where func_code = #{funcCode}
-    </delete>
+
     <!--    更新1条应用信息-->
     <update id="updateFunction" parameterType="com.zimax.components.coframe.framework.pojo.Function">
         update app_function set func_name=#{funcName},is_menu=#{isMenu},is_check=#{isCheck},func_type=#{funcType},

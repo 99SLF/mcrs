@@ -87,8 +87,13 @@ public class FunctionService {
      * 批量删除功能
      * @param funcCodes 功能编号集合
      */
-    public void deleteFunctions(List<String> funcCodes) {
-        functionMapper.deleteFunctions(funcCodes);
+    public int deleteFunctions(List<String> funcCodes) {
+        if(functionMapper.deleteFunctions(funcCodes)>0) {
+            return 0;
+        }
+        else{
+            return  1;
+        }
     }
 
     /**
