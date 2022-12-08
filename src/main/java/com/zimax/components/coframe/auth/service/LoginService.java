@@ -1,14 +1,18 @@
 package com.zimax.components.coframe.auth.service;
 
 import com.zimax.cap.access.http.OnlineUserManager;
+import com.zimax.cap.auth.IAuthManagerService;
+import com.zimax.cap.auth.MenuTree.MenuTreeNode;
 import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
 import com.zimax.cap.party.impl.UserObject;
+import com.zimax.components.coframe.auth.DefaultAuthManagerService;
 import com.zimax.components.coframe.init.UserObjectInit;
 import com.zimax.mcrs.config.Result;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * 登录验证
@@ -61,10 +65,15 @@ public class LoginService {
     }
 
     /**
-     * 注册用户
+     * 获取当前应用首页菜单数据
+     *
+     * @param appCode 应用编号
+     * @return 菜单数据
      */
-    public void register(String userId, String userName, String password, String mobile, String email) {
-
+    public List<MenuTreeNode> getUserMenuTreeByAppCode(String appCode) {
+        IAuthManagerService service = new DefaultAuthManagerService();
+        return service.getUserMenuTreeByAppCode(appCode)
+                .getMenuTreeRootNodeList();
     }
 
     /**

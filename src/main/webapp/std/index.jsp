@@ -94,7 +94,7 @@
 <!-- 侧边菜单 -->
 <div class="layui-side layui-side-menu">
 	<div class="layui-side-scroll">
-		<script type="text/html" template lay-url="./com.zimax.components.coframe.auth.LoginManager.getMenuData.biz.ext?appCode=coframe" 
+		<script type="text/html" template lay-url="<%=request.getContextPath()%>/auth/menu?appCode=coframe"
 				lay-done="layui.element.render('nav', 'layadmin-system-side-menu');" id="TPL_layout">
 <div class="layui-logo" lay-href="<%=request.getContextPath()%>/std/dist/views/index.jsp">
 	<span>{{ layui.setter.name || 'layuiAdmin' }}</span>
@@ -263,7 +263,7 @@
 		});
 		
 		$.ajax({
-			url: "com.zimax.components.coframe.auth.LoginManager.getMenuData.biz.ext",
+			url: "<%=request.getContextPath()%>/auth/menu",
 			type: "POST",
 			cache: false,
 			contentType: 'text/json',

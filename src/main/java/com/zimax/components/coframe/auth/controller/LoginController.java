@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * 登录检验
@@ -80,16 +81,19 @@ public class LoginController {
     }
 
     /**
-     * 注册用户
-     * @param userId 用户账号
-     * @param userName 用户姓名
-     * @param password 密码
-     * @param mobile 手机号
-     * @param email 邮箱
+     * 获取菜单数据
+     *
+     * @param appCode 应用编号
+     * @return
      */
-    public Result<?> register(String userId, String userName, String password, String mobile, String email) {
-        loginService.register(userId, userName, password, mobile, email);
-        return null;
+    @GetMapping("/menu")
+    public Result<?> getMenuData(String appCode) {
+        Result<List> result = new Result<>();
+
+        List menuData = loginService.getUserMenuTreeByAppCode(appCode);
+        result.setCode("0");
+        result.setData(menuData);
+        return result;
     }
 
     /**

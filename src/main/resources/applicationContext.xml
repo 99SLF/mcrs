@@ -49,13 +49,38 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.components.coframe.framework.mapper.MenuMapper"/>
     </bean>
-    <bean id="applicationMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <bean id="ApplicationMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.components.coframe.framework.mapper.ApplicationMapper"/>
     </bean>
-    <bean id="funcGroupMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <bean id="FuncGroupMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.components.coframe.framework.mapper.FuncGroupMapper"/>
+    </bean>
+    <bean id="FunctionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.components.coframe.framework.mapper.FunctionMapper"/>
+    </bean>
+    <bean id="FuncResourceMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.components.coframe.framework.mapper.FuncResourceMapper"/>
+    </bean>
+
+    <bean id="FunctionBean" class="com.zimax.components.coframe.framework.service.FunctionService">
+        <property name="functionMapper" ref="FunctionMapper"/>
+        <property name="funcGroupMapper" ref="FuncGroupMapper"/>
+        <property name="applicationMapper" ref="ApplicationMapper"/>
+    </bean>
+
+    <bean id="FuncResourceBean" class="com.zimax.components.coframe.framework.service.FuncResourceService">
+        <property name="funcResourceMapper" ref="FuncResourceMapper"/>
+        <property name="functionMapper" ref="FunctionMapper"/>
+        <property name="funcGroupMapper" ref="FuncGroupMapper"/>
+        <property name="applicationMapper" ref="ApplicationMapper"/>
+    </bean>
+
+    <bean id="MenuBean" class="com.zimax.components.coframe.framework.service.MenuService">
+        <property name="menuMapper" ref="MenuMapper"/>
     </bean>
 
 </beans>

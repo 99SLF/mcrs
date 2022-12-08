@@ -98,7 +98,7 @@ public class CoframePartyUserInitService extends DefaultPartyUserInitService {
 //
 //        // 如果只有用户没有员工，则把该处设置为userId
 //        if (empId == null) {
-//            userObject.setUserId(userId);
+            userObject.setUserId(userId);
 //        }
 //        // 所有父机构的ID（包含多机构的情况），使用，号分隔
 //        userObject.put(IConstants.PARENT_ORG_IDS,

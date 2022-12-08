@@ -6,6 +6,7 @@ import com.zimax.cap.common.muo.MUODataContextHelper;
 import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.datacontext.IRequestMap;
 import com.zimax.cap.datacontext.ISessionMap;
+import com.zimax.cap.datacontext.http.MUODataContext;
 import com.zimax.cap.exception.CapRuntimeException;
 import com.zimax.cap.party.IUserObject;
 import com.zimax.cap.party.impl.UserObject;
@@ -169,6 +170,8 @@ public class OnlineUserManager {
                         addUserIdUniqueIdMapping(userObject);
                     }
                     session.setAttribute("userObject", userObject);
+                    MUODataContext context = (MUODataContext) DataContextManager.current().getMUODataContext();
+                    context.set("userObject", userObject);
                     return;
                 }
             }

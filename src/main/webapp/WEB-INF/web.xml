@@ -9,24 +9,29 @@
          version="3.1">
   <display-name>Archetype Created Web Application</display-name>
 
-<!--  &lt;!&ndash; 用户登录拦截过滤器 &ndash;&gt;-->
-<!--  <filter>-->
-<!--    <filter-name>UserLoginWebInterceptorFilter</filter-name>-->
-<!--    <filter-class>com.zimax.components.coframe.auth.intercepter.UserLoginWebInterceptor</filter-class>-->
-<!--  </filter>-->
+  <!-- 用户登录拦截过滤器 -->
+  <filter>
+    <filter-name>UserLoginWebInterceptorFilter</filter-name>
+    <filter-class>com.zimax.components.coframe.auth.intercepter.UserLoginWebInterceptor</filter-class>
+  </filter>
 
-<!--  <filter-mapping>-->
-<!--    <filter-name>UserLoginWebInterceptorFilter</filter-name>-->
-<!--    <url-pattern>/*</url-pattern>-->
-<!--    <dispatcher>FORWARD</dispatcher>-->
-<!--    <dispatcher>REQUEST</dispatcher>-->
-<!--    <dispatcher>INCLUDE</dispatcher>-->
-<!--  </filter-mapping>-->
+  <filter-mapping>
+    <filter-name>UserLoginWebInterceptorFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+  </filter-mapping>
 
-<!--  &lt;!&ndash; 组织权限管理启动监听器 &ndash;&gt;-->
-<!--  <listener>-->
-<!--    <listener-class>com.zimax.components.coframe.auth.startup.AuthStartupListener</listener-class>-->
-<!--  </listener>-->
+  <!-- 组织权限管理启动监听器 -->
+  <listener>
+    <listener-class>com.zimax.components.coframe.auth.startup.AuthStartupListener</listener-class>
+  </listener>
+
+  <!-- 应用功能启动监听器 -->
+  <listener>
+    <listener-class>com.zimax.components.coframe.framework.startup.FunctionStartupListener</listener-class>
+  </listener>
 
   <!-- 创建spring容器的监听器 -->
   <listener>

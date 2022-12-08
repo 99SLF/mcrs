@@ -51,7 +51,7 @@ public class Function {
     /**
      * 是否验证权限
      */
-    private char isCheck;
+    private String isCheck;
 
     /**
      * 功能类型

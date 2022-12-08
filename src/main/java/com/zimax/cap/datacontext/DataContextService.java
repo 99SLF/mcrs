@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Locale;
 
 /**
- * 数据环境服务
+ * 数据上下文服务
  *
  * @author 苏尚文
  * @date 2022/12/3 11:52
@@ -19,8 +19,11 @@ public class DataContextService extends HashMap {
 
     protected IMapContextFactory mapContextFactory = null;
 
-    private Locale _EOS_Current_Locale = null;
+    private Locale _MES_Current_Locale = null;
 
+    /**
+     * MUO数据上下文
+     */
     private IMUODataContext muoDataContext;
 
     private boolean authorized = false;
@@ -49,25 +52,33 @@ public class DataContextService extends HashMap {
 //    }
 
 //    public void setCurrentLocale(Locale currentLocale) {
-//        this._EOS_Current_Locale = currentLocale;
+//        this._MES_Current_Locale = currentLocale;
 //        CurrentLocaleHelper.setCurrentLocale(currentLocale);
 //    }
 
     public Locale getCurrentLocale() {
-        return this._EOS_Current_Locale;
+        return this._MES_Current_Locale;
     }
 
-//    public void reset() {
-//        this.authorized = false;
+    /**
+     * 重置数据上下文服务
+     */
+    public void reset() {
+        this.authorized = false;
 //        this.stack = new ContextStackImpl();
-//        this.mapContextFactory = null;
-//
-//        this._EOS_Current_Locale = null;
-//    }
+        this.mapContextFactory = null;
 
+        this._MES_Current_Locale = null;
+    }
+
+    /**
+     * 获取当前的数据上下文服务
+     *
+     * @return 数据上下文服务
+     */
     public static DataContextService current() {
         DataContextService obj = (DataContextService) currentBus.get();
-        if (null == obj) {
+        if (obj == null) {
             obj = new DataContextService();
             currentBus.set(obj);
         }
@@ -120,10 +131,21 @@ public class DataContextService extends HashMap {
         this.mapContextFactory = mapContextFactory;
     }
 
+    /**
+     * 获取MUO数据上下文
+     *
+     * @return MUO数据上下文
+     */
     public IMUODataContext getMUODataContext() {
         return this.muoDataContext;
     }
 
+    /**
+     * 设置MUO数据上下文
+     *
+     * @param muoDataContext MUO数据上下文
+     * @return 旧的MUO数据上下文
+     */
     public IMUODataContext setMUODataContext(IMUODataContext muoDataContext) {
         IMUODataContext old = this.muoDataContext;
         this.muoDataContext = muoDataContext;

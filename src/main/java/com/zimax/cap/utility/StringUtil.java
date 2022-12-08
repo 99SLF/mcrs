@@ -1,6 +1,8 @@
 package com.zimax.cap.utility;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 字符串工具类
@@ -9,6 +11,8 @@ import java.text.MessageFormat;
  * @date 2022/12/2 16:50
  */
 public final class StringUtil {
+
+    private static final String[] EMPTY_STRING_ARRAY = new String[0];
 
     /**
      * 是否为空
@@ -50,6 +54,78 @@ public final class StringUtil {
             return true;
         }
         return false;
+    }
+
+    public static String substringAfter(String str, String separator) {
+        if (isEmpty(str)) {
+            return str;
+        }
+        if (separator == null) {
+            return "";
+        }
+        int pos = str.indexOf(separator);
+        if (pos == -1) {
+            return "";
+        }
+        return str.substring(pos + separator.length());
+    }
+
+    public static boolean isNotEmpty(String str) {
+        return (str != null) && (str.length() > 0);
+    }
+
+    public static String[] split(String str, char separatorChar) {
+        return splitWorker(str, separatorChar, false);
+    }
+
+    private static String[] splitWorker(String str, char separatorChar,
+                                        boolean preserveAllTokens) {
+        if (str == null) {
+            return null;
+        }
+        int len = str.length();
+        if (len == 0) {
+            return EMPTY_STRING_ARRAY;
+        }
+        List list = new ArrayList();
+        int i = 0;
+        int start = 0;
+        boolean match = false;
+        boolean lastMatch = false;
+        while (i < len) {
+            if (str.charAt(i) == separatorChar) {
+                if ((match) || (preserveAllTokens)) {
+                    list.add(str.substring(start, i));
+                    match = false;
+                    lastMatch = true;
+                }
+                i++;
+                start = i;
+            } else {
+                lastMatch = false;
+
+                match = true;
+                i++;
+            }
+        }
+        if ((match) || ((preserveAllTokens) && (lastMatch))) {
+            list.add(str.substring(start, i));
+        }
+        return (String[]) list.toArray(new String[list.size()]);
+    }
+
+    public static String substringBefore(String str, String separator) {
+        if ((isEmpty(str)) || (separator == null)) {
+            return str;
+        }
+        if (separator.length() == 0) {
+            return "";
+        }
+        int pos = str.indexOf(separator);
+        if (pos == -1) {
+            return str;
+        }
+        return str.substring(0, pos);
     }
 
 }

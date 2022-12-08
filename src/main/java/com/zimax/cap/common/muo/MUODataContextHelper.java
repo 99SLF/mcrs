@@ -1,9 +1,14 @@
 package com.zimax.cap.common.muo;
 
+import com.zimax.cap.common.muo.impl.MUOConfig;
+import com.zimax.cap.common.muo.mbean.SessionManagerConfigModel;
 import com.zimax.cap.datacontext.*;
 import com.zimax.cap.datacontext.http.MUODataContext;
+import com.zimax.cap.party.IUserObject;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author 苏尚文
@@ -19,23 +24,29 @@ public class MUODataContextHelper {
 //        dataContext.setAutoCreatePath(true);
 //    }
 
+    /**
+     * 创建并返回MUO数据上下文
+     *
+     * @param session
+     * @return MUO数据上下文
+     */
     public static IMUODataContext create(HttpSession session) {
 //        SessionManagerConfigModel model = MUOConfig.getInstance().getModel();
 //        String[] managedKeys = model.getMuoItem().keys();
-        String[] managedKeys = new String[] {};
+        String[] managedKeys = new String[] {"userObject"};
         MUODataContext dataContext = new MUODataContext(session, managedKeys);
 //        addTypeMapping(dataContext);
         return dataContext;
     }
 
-//    public static IMUODataContext create(Map map) {
-//        SessionManagerConfigModel model = MUOConfig.getInstance().getModel();
-//
-//        String[] managedKeys = model.getMuoItem().keys();
-//        MUODataContext dataContext = new MUODataContext(map, managedKeys);
+    public static IMUODataContext create(Map map) {
+        SessionManagerConfigModel model = MUOConfig.getInstance().getModel();
+
+        String[] managedKeys = model.getMuoItem().keys();
+        MUODataContext dataContext = new MUODataContext(map, managedKeys);
 //        addTypeMapping(dataContext);
-//        return dataContext;
-//    }
+        return dataContext;
+    }
 
 //    public static IMUODataContext create(IDataContext source) {
 //        SessionManagerConfigModel model = MUOConfig.getInstance().getModel();
@@ -123,14 +134,14 @@ public class MUODataContextHelper {
         return (IMapContextFactory) factoryThread.get();
     }
 
-//    public static IMUODataContext getCustomMUO(String type) {
-//        Map map = new HashMap();
-//        IUserObject userObject = CustomObjectProviderProvider.getProvider()
-//                .getVirtualUserObject(type);
-//
-//        map.put("userObject", userObject);
-//        return create(map);
-//    }
+    public static IMUODataContext getCustomMUO(String type) {
+        Map map = new HashMap();
+        IUserObject userObject = CustomObjectProviderProvider.getProvider()
+                .getVirtualUserObject(type);
+
+        map.put("userObject", userObject);
+        return create(map);
+    }
 
 //    public static SessionManagerConfigModel getSessionManagerConfigModel() {
 //        return MUOConfig.getInstance().getModel();

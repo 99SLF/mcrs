@@ -1,5 +1,7 @@
 package com.zimax.cap.party;
 
+import com.zimax.cap.datacontext.IOpenable;
+
 import java.io.Serializable;
 
 /**
@@ -8,7 +10,7 @@ import java.io.Serializable;
  * @author 苏尚文
  * @date 2022-12-02
  */
-public interface IUserObject extends Serializable, Cloneable {
+public interface IUserObject extends IOpenable, Serializable, Cloneable {
 
     /**
      * 环境中的关键字

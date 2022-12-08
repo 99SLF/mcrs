@@ -3,7 +3,7 @@ package com.zimax.cap.datacontext;
 import java.util.*;
 
 /**
- * 数据环境管理器
+ * 数据上下文管理器
  *
  * @author 苏尚文
  * @date 2022/12/3 11:49
@@ -14,6 +14,9 @@ public class DataContextManager extends HashMap {
 
     protected static ThreadLocal currentBus = new ThreadLocal();
 
+    /**
+     * 数据上下文服务
+     */
     private DataContextService service;
 
     public int size() {
@@ -118,18 +121,29 @@ public class DataContextManager extends HashMap {
 //        return this.service.getPageCtx(pageContext);
 //    }
 
-//    public IMapContextFactory getMapContextFactory() {
-//        return this.service.getMapContextFactory();
-//    }
+    public IMapContextFactory getMapContextFactory() {
+        return this.service.getMapContextFactory();
+    }
 
     public void setMapContextFactory(IMapContextFactory mapContextFactory) {
         this.service.setMapContextFactory(mapContextFactory);
     }
 
+    /**
+     * 获取MUO数据上下文
+     *
+     * @return MUO数据上下文
+     */
     public IMUODataContext getMUODataContext() {
         return this.service.getMUODataContext();
     }
 
+    /**
+     * 设置MUO数据上下文
+     *
+     * @param muoDataContext MUO数据上下文
+     * @return 旧的MUO数据上下文
+     */
     public IMUODataContext setMUODataContext(IMUODataContext muoDataContext) {
         return this.service.setMUODataContext(muoDataContext);
     }
@@ -142,14 +156,22 @@ public class DataContextManager extends HashMap {
         this.service.setAuthorized(authorized);
     }
 
-//    public void reset() {
+    /**
+     * 重置MUO数据上下文
+     */
+    public void reset() {
 //        this.contributionMetaDataStack = new Stack();
-//        this.service.reset();
-//    }
+        this.service.reset();
+    }
 
+    /**
+     * 获取当前的数据上下文管理器
+     *
+     * @return 数据上下文管理器
+     */
     public static DataContextManager current() {
         DataContextManager obj = (DataContextManager) currentBus.get();
-        if (null == obj) {
+        if (obj == null) {
             obj = new DataContextManager();
             currentBus.set(obj);
         }

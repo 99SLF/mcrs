@@ -40,6 +40,11 @@ public interface MenuMapper {
     /**
      *分页查询菜单列表
      */
+    List<Menu> queryMenus();
+
+    /**
+     *分页查询菜单列表
+     */
     public String queryMenuFuncResource(String funcCode);
 
     /**

@@ -1,5 +1,6 @@
 package com.zimax.cap.cache;
 
+import com.zimax.cap.cache.impl.HashMapCacheProvider;
 import com.zimax.cap.utility.StringUtil;
 import org.apache.log4j.Logger;
 
@@ -35,12 +36,12 @@ public class CacheHelper {
             CacheProviderManager.registerProvider(provider.getType(), provider);
         } catch (Exception e) {
         }
-//        try {
-//            provider = new HashMapCacheProvider();
-//            CacheProviderManager.registerProvider(provider.getType(), provider);
-//        } catch (Exception e) {
-//            log.error(e);
-//        }
+        try {
+            provider = new HashMapCacheProvider();
+            CacheProviderManager.registerProvider(provider.getType(), provider);
+        } catch (Exception e) {
+            log.error(e);
+        }
     }
 
     public static String getCurrentAppName() {

@@ -15,6 +15,11 @@
     <select id="queryMenu" parameterType="string" resultType="com.zimax.components.coframe.framework.pojo.Function">
 
     </select>
+
+    <select id="queryMenus" parameterType="map" resultType="com.zimax.components.coframe.framework.pojo.Menu">
+        select * from app_menu order by display_order asc
+    </select>
+
     <select id="queryMenuFuncResource" parameterType="string" resultType="string">
 
     </select>

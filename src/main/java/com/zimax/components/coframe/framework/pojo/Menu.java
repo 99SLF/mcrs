@@ -42,7 +42,7 @@ public class Menu {
     private String uiEntry;
 
     //菜单层次
-    private String menuLevel;
+    private short menuLevel;
 
     //rootId
     private String rootId;
@@ -51,7 +51,7 @@ public class Menu {
     private String parentsId;
 
     //显示顺序
-    private String displayOrder;
+    private short displayOrder;
 
     //菜单闭合图片路径
     private String imagePath;

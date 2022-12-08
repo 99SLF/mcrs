@@ -13,9 +13,7 @@ import java.util.Map;
  * @author 苏尚文
  * @date 2022/12/5 11:54
  */
-public class MUODataContext
-        extends DataContextImpl
-        implements IMUODataContext {
+public class MUODataContext extends DataContextImpl implements IMUODataContext {
 
     private static final long serialVersionUID = 2659431348879020570L;
 
@@ -53,23 +51,23 @@ public class MUODataContext
         this.rootObject = map;
     }
 
-//    public MUODataContext(Map values, String[] managedKeys) {
-//        this.autoCreateNonexistPath = false;
-//        Map map = new HashMap();
-//        this.managedKeys = managedKeys;
-//        this.managedKeysMap = new HashMap(managedKeys.length);
-//        for (int i = 0; i < managedKeys.length; i++) {
-//            String key = managedKeys[i];
-//            this.managedKeysMap.put(key, Integer.valueOf(i));
-//            map.put(key, values.get(key));
-//        }
-//        this.changed = new boolean[managedKeys.length];
-//        this.rootObject = map;
-//    }
+    public MUODataContext(Map values, String[] managedKeys) {
+        this.autoCreateNonexistPath = false;
+        Map map = new HashMap();
+        this.managedKeys = managedKeys;
+        this.managedKeysMap = new HashMap(managedKeys.length);
+        for (int i = 0; i < managedKeys.length; i++) {
+            String key = managedKeys[i];
+            this.managedKeysMap.put(key, Integer.valueOf(i));
+            map.put(key, values.get(key));
+        }
+        this.changed = new boolean[managedKeys.length];
+        this.rootObject = map;
+    }
 
-//    public Object createObject(String xpath, Class clazz) {
-//        throw new EOSRuntimeException("MUODataContext cannot create value!");
-//    }
+    public Object createObject(String xpath, Class clazz) {
+        throw new CapRuntimeException("MUODataContext cannot create value!");
+    }
 
 //    public DataObject createObject(String xpath, Type type) {
 //        throw new CapRuntimeException("MUODataContext cannot create value!");
@@ -86,7 +84,8 @@ public class MUODataContext
     public Object get(String xpath) {
         Integer i = getManagedKeyIndex(xpath);
         if (i != null) {
-            return super.get(xpath);
+//            return super.get(xpath);
+            return ((Map) this.rootObject).get(xpath);
         }
         return null;
     }
@@ -94,7 +93,8 @@ public class MUODataContext
     public void set(String xpath, Object obj) {
         Integer i = getManagedKeyIndex(xpath);
         if (i != null) {
-            super.set(xpath, obj);
+//            super.set(xpath, obj);
+            ((Map) this.rootObject).put(xpath, obj);
             this.changed[i.intValue()] = true;
         }
     }
@@ -143,7 +143,7 @@ public class MUODataContext
     public IUserObject getUserObject() {
         Object result = get("userObject");
         if (result == null) {
-            return (IUserObject) result;
+            return null;
         }
         if (!IUserObject.class.isAssignableFrom(result.getClass())) {
             throw new IllegalArgumentException("the key is 'userObject',but value is '" + result.getClass() + "'");

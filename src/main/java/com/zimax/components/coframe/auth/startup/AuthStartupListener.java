@@ -1,6 +1,8 @@
 package com.zimax.components.coframe.auth.startup;
 
 import com.zimax.cap.auth.manager.AuthRuntimeManager;
+import com.zimax.cap.common.muo.MUODataContextHelper;
+import com.zimax.cap.common.muo.VirtualUserObjectTypes;
 import com.zimax.cap.party.Party;
 import com.zimax.cap.party.manager.PartyManagerServiceLoader;
 import com.zimax.components.coframe.init.CoframePartyUserInitService;
@@ -19,6 +21,8 @@ public class AuthStartupListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent event) {
+        MUODataContextHelper.getCustomMUO(VirtualUserObjectTypes.SERVER_USER);
+
         // 初始化，主要是为了让授权池作为监听器注册到可授权资源池
         AuthRuntimeManager.getInstance();
 
