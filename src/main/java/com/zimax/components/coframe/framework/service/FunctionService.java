@@ -19,16 +19,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import com.zimax.components.coframe.framework.mapper.FuncGroupMapper;
-import com.zimax.components.coframe.framework.mapper.FunctionMapper;
-import com.zimax.components.coframe.framework.pojo.FuncGroup;
-import com.zimax.components.coframe.framework.pojo.Function;
 import com.zimax.mcrs.config.ChangeString;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,6 +33,9 @@ public class FunctionService implements IFunctionService {
 
     private Logger log = Logger.getLogger(FunctionService.class);
 
+    /**
+     * 功能信息数据操作
+     */
     private FunctionMapper functionMapper;
 
     private FuncGroupMapper funcGroupMapper;
@@ -70,20 +66,17 @@ public class FunctionService implements IFunctionService {
         this.applicationMapper = applicationMapper;
     }
 
-    public void addFunction(Function Function) {
-//        Function.setTenantId(TenantManager.getCurrentTenantID());
-//        try {
-//            getDASTemplate().insertEntity(Function);
-//            getDASTemplate().expandEntity(Function);
-//            ResourceRuntimeManager.getInstance().registerManagedResource(
-//                    adapt(Function));
-//        } catch (Throwable t) {
+    public void addFunction(Function function) {
+        try {
+            functionMapper.addFunction(function);
+            ResourceRuntimeManager.getInstance().registerManagedResource(adapt(function));
+        } catch (Throwable t) {
 //            log.error(
 //                    "Insert function [funCode="
 //                            + Function.getFuncCode()
 //                            + "] failure, please do the operation again or contact the sysadmin.",
 //                    t);
-//        }
+        }
     }
 
     public void deleteFunction(Function[] Functions) {
@@ -112,20 +105,17 @@ public class FunctionService implements IFunctionService {
         return 0;
     }
 
-    public void updateFunction(Function Function) {
-//        Function.setTenantId(TenantManager.getCurrentTenantID());
-//        try {
-//            getDASTemplate().updateEntity(Function);
-//            getDASTemplate().expandEntity(Function);
-//            ResourceRuntimeManager.getInstance()
-//                    .updateRegisteredManagedResource(adapt(Function));
-//        } catch (Throwable t) {
+    public void updateFunction(Function function) {
+        try {
+            functionMapper.updateFunction(function);
+            ResourceRuntimeManager.getInstance().updateRegisteredManagedResource(adapt(function));
+        } catch (Throwable t) {
 //            log.error(
 //                    "Update function [funCode="
 //                            + Function.get("funcCode")
 //                            + "] failure, please do the operation again or contact the sysadmin.",
 //                    t);
-//        }
+        }
     }
 
 //    public int countFunction(CriteriaType criteria) {
@@ -223,11 +213,11 @@ public class FunctionService implements IFunctionService {
                             NumberUtils.parseNumber(ipPort, Integer.class), contextPath);
                     resource.addAttribute(IAppConstants.APP_URL, url.toString());
                 } catch (MalformedURLException e) {
-                    log.error(
-                            "Get Appurl [appId="
-                                    + application.getAppId()
-                                    + "] failure, please do the operation again or contact the sysadmin.",
-                            e);
+//                    log.error(
+//                            "Get Appurl [appId="
+//                                    + application.getAppId()
+//                                    + "] failure, please do the operation again or contact the sysadmin.",
+//                            e);
                 }
             }
         }
@@ -267,13 +257,6 @@ public class FunctionService implements IFunctionService {
 //        return results;
         return null;
     }
-@Service
-public class FunctionService {
-    /**
-     * 功能信息数据操作
-     */
-    @Autowired
-    private FunctionMapper functionMapper;
 
     /**
      * 查询所有功能信息
@@ -302,27 +285,11 @@ public class FunctionService {
     }
 
     /**
-     * 添加功能信息
-     * @param function 功能信息
-     */
-    public void addFunction(Function function) {
-        functionMapper.addFunction(function);
-    }
-
-    /**
      * 根据功能编号编号删除
      * @param funcCode 功能编号
      */
     public void deleteFunction(String funcCode) {
         functionMapper.deleteFunction(funcCode);
-    }
-
-    /**
-     * 更新功能信息
-     * @param function 功能信息
-     */
-    public void updateFunction(Function function) {
-        functionMapper.updateFunction(function);
     }
 
     /**
