@@ -42,6 +42,7 @@
 
     </select>
     <select id="queryMenuTreeNode" parameterType="string" resultType="com.zimax.components.coframe.framework.pojo.Menu">
+    </select>
     <!--    新增菜单-->
     <insert id="addMenu" parameterType="com.zimax.components.coframe.framework.pojo.Menu" keyProperty="menuId"
             useGeneratedKeys="true">
