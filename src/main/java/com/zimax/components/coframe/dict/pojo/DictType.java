@@ -23,13 +23,13 @@ public class DictType {
     /**
      * 字典类型编号
      */
-    @ExcelProperty("字典类型编号")
+//    @ExcelProperty("字典类型编号")
     private String dictTypeId;
 
     /**
      * 字典类型名称
      */
-    @ExcelProperty("字典类型名")
+//    @ExcelProperty("字典类型名")
     private String dictTypeName;
 
     /**
@@ -45,6 +45,6 @@ public class DictType {
     /**
      * 序号
      */
-    private Date seqNo;
+    private String seqNo;
 
 }

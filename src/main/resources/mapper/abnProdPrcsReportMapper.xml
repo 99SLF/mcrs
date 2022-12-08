@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.report.mapper.AbnProdPrcsReportMapper">
+
+    <!--添加生产过程异常报表-->
+    <insert id="addAbnProdPrcs" parameterType="com.zimax.mcrs.report.pojo.AbnProdPrcs">
+        insert into rep_abn_prod_prcs
+        values (#{abnPPId}, #{siteId}, #{rollId}, #{equipmentId}, #{axisName},
+                #{vehicleCode}, #{prodSFCId}, #{endEANumber}, #{performStep}, #{isEnd}, #{startProdTime},
+                #{endProdTime})
+    </insert>
+
+
+</mapper>

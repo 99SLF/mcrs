@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.report.mapper.BlankingReportMapper">
+
+    <!--添加下料报表-->
+    <insert id="addBlanking" parameterType="com.zimax.mcrs.report.pojo.Blanking">
+        insert into rep_blanking
+        values (#{blankingId}, #{equipmentId}, #{axisName}, #{antennaLoc}, #{vehicleCode},
+                #{prodSFCId}, #{endEANumber}, #{inRiceNumber}, #{isEnd}, #{startProdTime}, #{endProdTime})
+    </insert>
+
+</mapper>
