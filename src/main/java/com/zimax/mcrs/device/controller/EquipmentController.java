@@ -24,18 +24,18 @@ public class EquipmentController {
     /**
      * 查询
      *
-     * @param equipmentId 设备资源号
+     * @param equipmentId   设备资源号
      * @param equipmentName 设备名称
      * @param limit         记录数
      * @param page          页码
-     * @param field 排序字段
-     * @param order 排序方式
+     * @param field         排序字段
+     * @param order         排序方式
      * @return 设备列表
      */
     @GetMapping("/query")
-    public Result<?> query( @RequestParam int limit, @RequestParam int page, String equipmentId, String equipmentName, String order, String field) {
-        List equipments = equipmentService.queryEquipments(limit,page,equipmentId,equipmentName,order,field);
-        return Result.success(equipments,equipmentService.count(equipmentId,equipmentName));
+    public Result<?> query(@RequestParam int limit, @RequestParam int page, String equipmentId, String equipmentName, String order, String field) {
+        List equipments = equipmentService.queryEquipments(limit, page, equipmentId, equipmentName, order, field);
+        return Result.success(equipments, equipmentService.count(equipmentId, equipmentName));
     }
 
     /**
@@ -68,7 +68,6 @@ public class EquipmentController {
     @PostMapping("/update")
     public Result<?> updateEquipment(@RequestBody Equipment equipment) {
         equipmentService.updateEquipment(equipment);
-
         return Result.success();
     }
 

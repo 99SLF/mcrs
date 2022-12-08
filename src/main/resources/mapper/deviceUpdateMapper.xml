@@ -3,54 +3,37 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zimax.mcrs.device.mapper.DeviceUpdateMapper">
 
-<!--    &lt;!&ndash;    查询记录数&ndash;&gt;-->
-<!--    <select id="count" resultType="int">-->
-<!--        select count(*) from cap_equipment-->
-<!--        <where>-->
-<!--            <if test="equipmentId !=null and equipmentId !=''">-->
-<!--                and equipment_id like '%${equipmentId}%'-->
-<!--            </if>-->
-<!--            <if test="equipmentName !=null and equipmentName !=''">-->
-<!--                and equipment_name like '%${equipmentName}%'-->
-<!--            </if>-->
-<!--        </where>-->
-<!--    </select>-->
+    <!--    查询记录数-->
+    <select id="count" resultType="int">
+        select count(*) from eqi_device_update
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="version !=null and version !=''">
+                and version like '%${version}%'
+            </if>
+        </where>
+    </select>
 
-<!--    &lt;!&ndash;查询所有&ndash;&gt;-->
-<!--    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.device.pojo.Equipment">-->
-<!--        select * from cap_equipment-->
-<!--        <where>-->
-<!--            <if test="equipmentId !=null and equipmentId !=''">-->
-<!--                and equipment_id like '%${equipmentId}%'-->
-<!--            </if>-->
-<!--            <if test="equipmentName !=null and equipmentName !=''">-->
-<!--                and equipment_name like '%${equipmentName}%'-->
-<!--            </if>-->
-<!--        </where>-->
-<!--        order by ${field} ${order}-->
-<!--        limit ${begin},${limit}-->
-<!--    </select>-->
-
-<!--    &lt;!&ndash;添加设备&ndash;&gt;-->
-<!--    <insert id="addEquipment" parameterType="com.zimax.mcrs.device.pojo.Equipment">-->
-<!--        insert into cap_equipment values (#{equipmentId}, #{equipmentName}, #{equipmentInstallLocation},-->
-<!--                                          #{equipmentProperties}, #{equipmentContinuePort}, #{mesContinueIp},-->
-<!--                                          #{enabledState}, #{remarks}, #{creator}, #{createTime})-->
-<!--    </insert>-->
-
-<!--    &lt;!&ndash;根据主键删除设备&ndash;&gt;-->
-<!--    <delete id="removeEquipment" parameterType="String">-->
-<!--        delete from cap_equipment where equipment_id = #{equipmentId}-->
-<!--    </delete>-->
-
-<!--    &lt;!&ndash;更新1条设备信息&ndash;&gt;-->
-<!--    <update id="updateEquipment" parameterType="com.zimax.mcrs.device.pojo.Equipment">-->
-<!--        update cap_equipment set equipment_name=#{equipmentName},equipment_install_location=#{equipmentInstallLocation},-->
-<!--                                 equipment_properties=#{equipmentProperties},equipment_continue_port=#{equipmentContinuePort},-->
-<!--                                 mes_continue_ip = #{mesContinueIp}, enabled_state = #{enabledState},remarks = #{remarks},-->
-<!--                                 creator = #{creator}, create_time=#{createTime} where equipment_id=#{equipmentId}-->
-<!--    </update>-->
-
+    <!--查询所有-->
+    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.device.pojo.DeviceUpdate">
+        select * from eqi_device_update
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="version !=null and version !=''">
+                and version like '%${version}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
 
 
 </mapper>

@@ -48,7 +48,7 @@ public class MenuController {
      * @param menuId 菜单编号
      */
     @DeleteMapping("/menu/delete{menuId}")
-    public Result<?> deleteMenu(@PathVariable int menuId) {
+    public Result<?> deleteMenu(@PathVariable String menuId) {
         menuService.deleteMenu(menuId);
         return Result.success();
     }
@@ -59,7 +59,7 @@ public class MenuController {
      * @param menuIds 用户操作编号数组
      */
     @DeleteMapping("/menu/batchDelete")
-    public Result<?> deleteMenus (@RequestBody Integer[] menuIds) {
+    public Result<?> deleteMenus (@RequestBody String[] menuIds) {
         menuService.deleteMenus(Arrays.asList(menuIds));
         return Result.success();
     }
@@ -85,7 +85,7 @@ public class MenuController {
      * @return 菜单信息
      */
     @GetMapping("/menu/find/{menuId}")
-    public Result<?>  getMenu(@PathVariable("menuId") int menuId) {
+    public Result<?>  getMenu(@PathVariable("menuId") String menuId) {
         return Result.success(menuService.getMenu(menuId));
     }
 

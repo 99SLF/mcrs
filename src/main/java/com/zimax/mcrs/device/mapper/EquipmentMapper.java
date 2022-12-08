@@ -9,6 +9,7 @@ import java.util.Map;
 
 /**
  * 设备
+ *
  * @author 林俊杰
  * @date 2022/11/28
  */
@@ -17,14 +18,15 @@ public interface EquipmentMapper {
 
     /**
      * 查询所有
+     *
      * @return
      */
     List<Equipment> queryAll(Map map);
 
 
-
     /**
      * 新建设备
+     *
      * @return
      */
     void addEquipment(Equipment equipment);
@@ -37,12 +39,14 @@ public interface EquipmentMapper {
 
     /**
      * 删除设备
+     *
      * @return
      */
     void removeEquipment(String EquipmentId);
 
     /**
      * 更新设备
+     *
      * @return
      */
     void updateEquipment(Equipment equipment);
@@ -50,11 +54,10 @@ public interface EquipmentMapper {
 
     /**
      * 记录条数
+     *
      * @return
      */
     int count(@Param("equipmentId") String equipmentId, @Param("equipmentName") String equipmentName);
-
-
 
 
 }

@@ -2,11 +2,14 @@ package com.zimax.mcrs.device.mapper;
 
 import com.zimax.mcrs.device.pojo.Device;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 终端
+ *
  * @author 林俊杰
  * @date 2022/11/30
  */
@@ -14,32 +17,44 @@ import java.util.List;
 public interface DeviceMapper {
 
     /**
-     * 初始化查询
+     * 查询全部终端信息
+     *
      * @return
      */
-//    List<Device> queryAll();
+    List<Device> queryAll(Map map);
+
     /**
-     *  注册终端
+     * 注册终端
+     *
      * @return
      */
-//    public void registrationDevice(Device device);
+    void registrationDevice(Device device);
 
     /**
      * 依据Appid注销终端
+     *
      * @return
      */
-//    public void logoutByID(int APPId);
+    public void logoutDevice(String APPId);
 
     /**
-     * 依据AppId查询
+     * 修改终端
+     *
      * @return
      */
-//    public List<Device> queryAPPId(int APPId);
+    void updateDevice(Device device);
 
     /**
-     * 依据设备资源号查询
+     * 终端配置
      * @return
      */
-//    public List<Device> queryDeviceType(int equipmentId);
+//    List<Device> configDevice(Device device);
+
+    /**
+     * 计数
+     *
+     * @return
+     */
+    int count(@Param("equipmentId") String equipmentId, @Param("APPId") String APPId);
 
 }

@@ -73,7 +73,7 @@ public class MenuService implements IMenuService {
      * 根据菜单编号删除
      * @param menuId 菜单编号
      */
-    public void deleteMenu(int menuId) {
+    public void deleteMenu(String menuId) {
         menuMapper.deleteMenu(menuId);
     }
 
@@ -89,7 +89,7 @@ public class MenuService implements IMenuService {
      * 根据菜单编码查询
      * @param menuId 菜单编号
      */
-    public Menu getMenu(int menuId) {
+    public Menu getMenu(String menuId) {
         return menuMapper.getMenu(menuId);
     }
 
@@ -97,7 +97,7 @@ public class MenuService implements IMenuService {
      * 批量删除菜单
      * @param menuIds 菜单编号集合
      */
-    public void deleteMenus(List<Integer> menuIds) {
+    public void deleteMenus(List<String> menuIds) {
         menuMapper.deleteMenus(menuIds);
     }
 
