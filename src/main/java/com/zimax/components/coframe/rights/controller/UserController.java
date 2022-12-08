@@ -19,7 +19,9 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-    //用户服务
+    /**
+     *用户服务
+     */
     @Autowired
     private UserService userService;
 
