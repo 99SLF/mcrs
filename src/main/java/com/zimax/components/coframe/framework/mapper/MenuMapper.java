@@ -4,10 +4,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zimax.components.coframe.framework.pojo.Function;
 import com.zimax.components.coframe.framework.pojo.Menu;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author 李伟杰
@@ -17,55 +19,65 @@ import java.util.List;
 @Mapper
 public interface MenuMapper {
 
-    /**
-     *删除菜单
-     */
-    public void deleteMenu(String menuId);
+    List<Menu>queryMenus(Map map);
+    Menu getMenu(int menuId);
+    void addMenu(Menu menu);
+    void deleteMenu(int menuId);
+    void deleteMenus(List<Integer> menuIds);
+    void updateMenu(Menu menu);
+    int count(@Param("menuId") String menuId);
 
-    /**
-     *获取菜单
-     */
-    public Menu getMenu();
 
-    /**
-     *查询菜单功能
-     */
-    public List<Function> queryFunction(String funcCode, String funcName);
 
-    /**
-     *分页查询菜单列表
-     */
-    public List<Function> queryMenu(String funcCode, String funcName);
-
-    /**
-     *分页查询菜单列表
-     */
-    public String queryMenuFuncResource(String funcCode);
-
-    /**
-     *分页查询菜单列表
-     */
-    public List<Menu> queryMenuList(String parentMenuId, String menuName);
-
-    /**
-     *查询菜单树
-     */
-    public List<Menu> queryMenuTreeNode(String nodeId);
-
-    /**
-     *更新菜单
-     */
-    public void saveMenu(Menu menu);
-
-    /**
-     *修改菜单
-     */
-    public void updateMenu(Menu menu);
-
-    /**
-     *修改菜单关系
-     */
-    public void updateMenuRelation(String nodeId, String nodeType, String targetNodeId, String targetNodeType);
+//    /**
+//     *删除菜单
+//     */
+//    public void deleteMenu(String menuId);
+//
+//    /**
+//     *获取菜单
+//     */
+//    public Menu getMenu();
+//
+//    /**
+//     *查询菜单功能
+//     */
+//    public List<Function> queryFunction(String funcCode, String funcName);
+//
+//    /**
+//     *分页查询菜单列表
+//     */
+//    public List<Function> queryMenu(String funcCode, String funcName);
+//
+//    /**
+//     *分页查询菜单列表
+//     */
+//    public String queryMenuFuncResource(String funcCode);
+//
+//    /**
+//     *分页查询菜单列表
+//     */
+//    public List<Menu> queryMenuList(String parentMenuId, String menuName);
+//
+//    /**
+//     *查询菜单树
+//     */
+//    public List<Menu> queryMenuTreeNode(String nodeId);
+//
+//    /**
+//     *更新菜单
+//     */
+//    public void saveMenu(Menu menu);
+//
+//    /**
+//     *修改菜单
+//     */
+//    public void updateMenu(Menu menu);
+//
+//    /**
+//     *修改菜单关系
+//     */
+//    public void updateMenuRelation(String nodeId, String nodeType, String targetNodeId, String targetNodeType);
 
 
 }
