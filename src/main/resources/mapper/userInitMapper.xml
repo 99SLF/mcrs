@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.components.coframe.auth.mapper.UserInitMapper">
+    <!-- 查询用户基础信息 -->
+    <select id="queryUserBaseInfo" resultType="map">
+        SELECT U.USER_ID,
+               U.USER_NAME,
+               U.EMAIL,
+               U.MENU_TYPE
+        FROM CAP_USER U
+--             LEFT OUTER JOIN ORG_EMPLOYEE E     ON E.USER_ID = U.USER_ID
+--             LEFT OUTER JOIN ORG_EMP_ORG O      ON E.EMP_ID = O.EMP_ID
+--             LEFT OUTER JOIN ORG_ORGANIZATION R ON E.ORG_ID = R.ORG_ID
+--             LEFT OUTER JOIN ORG_EMP_POSITION P ON E.EMP_ID = P.EMP_ID
+        where U.USER_ID = #{userId}
+    </select>
+
+    <!-- 查询参与者权限 -->
+    <select id="queryPartyAuth" resultType="map">
+        SELECT ROLE_ID FROM CAP_PARTY_AUTH P WHERE P.PARTY_ID = #{userId} AND P.PARTY_TYPE = 'user'
+--         UNION
+--         SELECT ROLE_ID FROM CAP_PARTY_AUTH P WHERE P.PARTY_ID = #empid# AND P.PARTY_TYPE = 'emp'
+--         UNION
+--         SELECT ROLE_ID FROM cap_party_auth P WHERE P.PARTY_ID IN (SELECT ORG_ID FROM ORG_EMP_ORG WHERE EMP_ID=#empid#) AND P.PARTY_TYPE = 'org'
+--         UNION
+--         SELECT ROLE_ID FROM CAP_PARTY_AUTH P WHERE P.PARTY_ID IN (SELECT POSITION_ID FROM ORG_EMP_POSITION WHERE EMP_ID=#empid#) AND P.PARTY_TYPE = 'position'
+--         UNION
+--         SELECT ROLE_ID FROM cap_party_auth P WHERE P.PARTY_ID IN (SELECT GROUP_ID FROM ORG_EMP_GROUP WHERE EMP_ID=#empid#) AND P.PARTY_TYPE = 'group'
+    </select>
+
+</mapper>

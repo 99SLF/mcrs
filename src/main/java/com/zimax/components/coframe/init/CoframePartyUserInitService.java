@@ -1,14 +1,21 @@
 package com.zimax.components.coframe.init;
 
+import com.sun.deploy.util.StringUtils;
 import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.datacontext.IMUODataContext;
 import com.zimax.cap.datacontext.ISessionMap;
 import com.zimax.cap.party.IUserObject;
 import com.zimax.cap.party.impl.DefaultPartyUserInitService;
 import com.zimax.cap.party.impl.UserObject;
+import com.zimax.components.coframe.framework.IFunctionService;
+import com.zimax.components.coframe.tools.IConstants;
 import org.springframework.beans.factory.BeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -41,25 +48,23 @@ public class CoframePartyUserInitService extends DefaultPartyUserInitService {
             userObject = new UserObject();
         }
 
-//        BeanFactory beanFactory = BeanFactory.newInstance();
-//        InitUserObjectService bean = beanFactory
-//                .getBean(InitUserObjectService.SPRING_BEAN_NAME);
-//
-//        // 取用户基本信息，考虑到用户属于多机构的情况，可能会返回多条记录
-//        DataObject[] datas = bean.getUserBaseInfo(userId);
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        InitUserObjectService bean = context.getBean(InitUserObjectService.SPRING_BEAN_NAME, InitUserObjectService.class);
+
+        // 取用户基本信息，考虑到用户属于多机构的情况，可能会返回多条记录
+        Map[] datas = bean.getUserBaseInfo(userId);
 
 //        String empId = null;
 //        Set<String> parentOrgIds = new HashSet<String>();
 //        Set<String> orgList = new HashSet<String>();
 //        Set<String> positionList = new HashSet<String>();
-//        for (int i = 0; i < datas.length; i++) {
-//            DataObject data = datas[i];
-//            if (i == 0) {
+        for (int i = 0; i < datas.length; i++) {
+            Map data = datas[i];
+            if (i == 0) {
                 userObject.put("EXTEND_USER_ID", userId);
-                userObject.setUserName(userId);
-//                userObject.setUserName(data.getString("userName"));
-//                userObject.setUserMail(data.getString("email"));
-//
+                userObject.setUserName((String) data.get("USER_NAME"));
+                userObject.setUserMail((String) data.get("EMAIL"));
+
 //                empId = data.getString("empId");
 //                if (empId != null) {
 //                    userObject.setUserId(empId);
@@ -75,7 +80,7 @@ public class CoframePartyUserInitService extends DefaultPartyUserInitService {
 //
 //                    userObject.put("positionId", data.getString("positionId"));
 //                }
-//            }
+            }
 //            if (empId != null) {
 //                // 遍历机构的orgSeqs，将机构的所有父机构数据遍历出来
 //                String orgSeq = data.getString("orgSeq");
@@ -94,13 +99,13 @@ public class CoframePartyUserInitService extends DefaultPartyUserInitService {
 //
 //                positionList.add(data.getString("positionId"));
 //            }
-//        }
+        }
 //
-//        // 如果只有用户没有员工，则把该处设置为userId
+        // 如果只有用户没有员工，则把该处设置为userId
 //        if (empId == null) {
             userObject.setUserId(userId);
 //        }
-//        // 所有父机构的ID（包含多机构的情况），使用，号分隔
+        // 所有父机构的ID（包含多机构的情况），使用，号分隔
 //        userObject.put(IConstants.PARENT_ORG_IDS,
 //                StringUtils.join(parentOrgIds.iterator(), ','));
 //
@@ -114,16 +119,15 @@ public class CoframePartyUserInitService extends DefaultPartyUserInitService {
 //
 //        userObject.put(ISystemConstants.TENENT, tenantId);
 //
-//        // 取用户权限
-//        DataObject[] roles = bean.getUserPartyAuth(userId, empId);
-//
-//        Set<String> roleSet = new HashSet<String>();
-//        for (DataObject role : roles) {
-//            roleSet.add(role.getString("ROLE_ID"));
-//        }
-//        String roleList = StringUtils.join(roleSet.toArray(new String[]{}),
-//                com.zimes.cap.auth.IConstants.SPLIET);
-//        userObject.put(IConstants.ROLE_LIST, roleList);
+        // 取用户权限
+        Map[] roles = bean.getUserPartyAuth(userId);
+
+        Set<String> roleSet = new HashSet<String>();
+        for (Map role : roles) {
+            roleSet.add((String) role.get("ROLE_ID"));
+        }
+        String roleList = String.join(com.zimax.cap.auth.IConstants.SPLIET, roleSet);
+        userObject.put(IConstants.ROLE_LIST, roleList);
 
         return userObject;
     }
