@@ -12,5 +12,5 @@ import java.util.List;
  */
 @Mapper
 public interface StarSoftwareMapper {
-    List<StarSoftware> findAll();
+//    List<StarSoftware> findAll();
 }

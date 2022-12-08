@@ -24,11 +24,11 @@ public class StarSoftwareService {
      * 查询所有设备并检查设备当前状态
      * @return
      */
-    private List<StarSoftware> queryStarSoftware(int page, int limit){
-        System.out.println("success---");
-        System.out.println(starSoftwareMapper.findAll());
-        System.out.println("success");
-        return null;
-    }
+//    private List<StarSoftware> queryStarSoftware(int page, int limit){
+//        System.out.println("success---");
+//        System.out.println(starSoftwareMapper.findAll());
+//        System.out.println("success");
+//        return null;
+//    }
 
 }
