@@ -38,6 +38,7 @@ public class LoginService {
      * @param password 密码
      */
     public Result<?> authentication(String userId, String password) {
+
         Result<String> result = new Result<>();
         result.setCode("0");
         return result;

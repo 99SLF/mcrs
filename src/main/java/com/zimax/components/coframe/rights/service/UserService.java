@@ -1,5 +1,6 @@
 package com.zimax.components.coframe.rights.service;
 
+import com.alibaba.excel.util.StringUtils;
 import com.zimax.components.coframe.rights.mapper.UserMapper;
 import com.zimax.components.coframe.rights.pojo.Role;
 import com.zimax.components.coframe.rights.pojo.User;
@@ -99,5 +100,16 @@ public class UserService {
      */
     public User checkUser(String userId){
         return userMapper.checkUser(userId);
+    }
+    /**
+     * 获取用户
+     * @param userId 用户编号
+     */
+    public User getUserByUserId(String userId) {
+        if (!StringUtils.isBlank(userId)) {
+            User user = userMapper.getUserByUserId(userId);
+           // return users.length > 0 ? users[0] : null;
+        }
+        return null;
     }
 }
