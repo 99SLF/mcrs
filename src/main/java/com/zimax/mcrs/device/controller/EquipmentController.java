@@ -33,7 +33,7 @@ public class EquipmentController {
      * @return 设备列表
      */
     @GetMapping("/equipment/query")
-    public Result<?> query(@RequestParam int limit, @RequestParam int page, String equipmentId, String equipmentName, String order, String field) {
+    public Result<?> query( String limit,  String page, String equipmentId, String equipmentName, String order, String field) {
         List equipments = equipmentService.queryEquipments(limit, page, equipmentId, equipmentName, order, field);
         return Result.success(equipments, equipmentService.count(equipmentId, equipmentName));
     }

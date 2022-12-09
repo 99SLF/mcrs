@@ -69,7 +69,7 @@ public class DeviceController {
      * @return 终端列表
      */
     @GetMapping("/device/query")
-    public Result<?> queryDevice(@RequestParam int page, @RequestParam int limit, String equipmentId, String APPId, String order, String field) {
+    public Result<?> queryDevice(String page, String limit, String equipmentId, String APPId, String order, String field) {
         List devices = deviceService.queryDevices(page, limit, equipmentId, APPId, order, field);
         return Result.success(devices, deviceService.count(equipmentId, APPId));
     }

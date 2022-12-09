@@ -26,7 +26,7 @@ public class DeviceService {
      * 查询所有终端信息
      * @return
      */
-    public List<Device> queryDevices(int page, int limit, String equipmentId, String APPId, String order, String field) {
+    public List<Device> queryDevices(String  page, String limit, String equipmentId, String APPId, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -36,8 +36,10 @@ public class DeviceService {
             map.put("order",order);
             map.put("field",changeString.camelUnderline(field));
         }
-        map.put("begin",limit*(page-1));
-        map.put("limit",limit);
+        if (limit != null) {
+            map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
+            map.put("limit", Integer.parseInt(limit));
+        }
         map.put("equipmentId",equipmentId);
         map.put("APPId",APPId);
         return deviceMapper.queryAll(map);

@@ -37,7 +37,7 @@ public class DeviceUpdateController {
      * @return 更新列表
      */
     @GetMapping("/deviceUpdate/query")
-    public Result queryDeviceUpdate(@RequestParam int page, @RequestParam int limit, String equipmentId, String version, String order, String field) {
+    public Result queryDeviceUpdate( String page, String limit, String equipmentId, String version, String order, String field) {
         List deviceUpdates = deviceUpdateService.queryDeviceUpdate(page,limit,equipmentId,version,order,field);
         return Result.success(deviceUpdates, deviceUpdateService.count(equipmentId,version));
     }
