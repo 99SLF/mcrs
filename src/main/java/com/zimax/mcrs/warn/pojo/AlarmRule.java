@@ -10,31 +10,31 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 /**
- * 告警规则
+ * 预警规则
  * @author 林俊杰
  * @date 2022/11/29
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("alarmRule")
+@TableName("war_alarm_rule")
 public class AlarmRule {
 
     /**
-     * 告警规则编码
+     * 预警规则编码
      */
     @TableId(type = IdType.AUTO)
     private int alarmRuleId;
 
     /**
-     * 告警规则标题
+     * 预警规则标题
      */
     private String alarmRuleTitle;
 
     /**
-     * 监控规则状态
+     * 是否启用
      */
-    private String alarmRuleStatus;
+    private String enable;
 
     /**
      * 监控层级
@@ -42,7 +42,7 @@ public class AlarmRule {
     private String monitorLevel;
 
     /**
-     * 告警事件编码
+     * 预警事件编码
      */
     private int alarmEventId;
 
@@ -52,7 +52,7 @@ public class AlarmRule {
     private String monitorObject;
 
     /**
-     * 告警规则描述
+     * 预警规则描述
      */
     private String alarmRuleDescribe;
 
@@ -78,6 +78,9 @@ public class AlarmRule {
     /**
      * 修改时间
      */
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date ruleUpdateTime;
 
 }

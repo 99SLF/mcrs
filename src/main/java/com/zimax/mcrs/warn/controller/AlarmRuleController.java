@@ -4,8 +4,11 @@ import com.zimax.components.coframe.rights.pojo.Role;
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.warn.pojo.AlarmRule;
 import com.zimax.mcrs.warn.service.AlarmEventService;
+import com.zimax.mcrs.warn.service.AlarmRuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 预警规则管理
@@ -14,11 +17,11 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @ResponseBody
-@RequestMapping("/alarmRule")
+@RequestMapping("/warn")
 public class AlarmRuleController {
 
     @Autowired
-    private AlarmEventService alarmEventService;
+    private AlarmRuleService alarmRuleService;
 
     /**
      * 初始化查询
@@ -31,28 +34,33 @@ public class AlarmRuleController {
 
     /**
      * 条件查询规则
-     * @param alarmRuleId 告警规则编码
-     * @param alarmRuleTitle 告警规则标题
+     * @param alarmRuleId 预警规则编码
+     * @param alarmRuleTitle 预警规则标题
      * @param monitorLevel 监控层级
-     * @param alarmRuleStatus 告警规则状态
+     * @param enable 是否启用
      * @param alarmEventId 告警事件编码
      * @param monitorObject 监控对象
-     * @param makeFormPeople 制单人
+     * @param ruleMakeFormPeople 规则制单人
+     * @param ruleMakeFormTime 规则制单时间
      * @param limit 记录数
      * @param page 页码
-     * @return 角色列表
+     * @param field 排序字段
+     * @param order 排序方式
+     * @return 预警规则列表
      */
-    @GetMapping("/query")
-    public Result<?> query(@RequestParam int alarmRuleId, @RequestParam String alarmRuleTitle,@RequestParam String monitorLevel, @RequestParam String alarmRuleStatus, @RequestParam int alarmEventId, @RequestParam String monitorObject, @RequestParam String makeFormPeople, @RequestParam int limit, @RequestParam int page) {
-        return Result.success();
+    @GetMapping("/alarmRule/query")
+    public Result<?> queryAlarmRule(String page, String limit, Integer alarmRuleId, String alarmRuleTitle,String enable, String monitorLevel, String alarmEventId, String monitorObject, String ruleMakeFormPeople, String ruleMakeFormTime, String order, String field) {
+        List alarmRules =  alarmRuleService.queryAlarmRule(page,limit,alarmRuleId,alarmRuleTitle,enable,monitorLevel,alarmEventId,monitorObject,ruleMakeFormPeople,ruleMakeFormTime,order,field);
+        return Result.success( alarmRules,alarmRuleService.count(alarmRuleId,alarmRuleTitle));
     }
 
     /**
-     * 添加告警规则
+     * 添加预警规则
      * @param alarmRule 预警规则
      */
-    @RequestMapping("/add")
+    @PostMapping("/alarmRule/add")
     public Result<?> addAlarmRule(@RequestBody AlarmRule alarmRule){
+        alarmRuleService.addAlarmRule(alarmRule);
         return Result.success();
     }
 
@@ -60,17 +68,19 @@ public class AlarmRuleController {
      * 删除预警规则
      * @param alarmRuleId 预警规则编码
      */
-    @DeleteMapping("/delete/{alarmRuleId}")
+    @DeleteMapping("/alarmRule/delete/{alarmRuleId}")
     public Result<?> removeAlarmRule(@PathVariable("alarmRuleId")int alarmRuleId) {
+        alarmRuleService.removeAlarmRule(alarmRuleId);
         return  Result.success();
     }
 
     /**
-     * 修改告警规则
+     * 修改预警规则
      * @param alarmRule 预警规则
      */
-    @PutMapping("/update")
+    @PostMapping("/alarmRule/update")
     public Result<?> updateAlarmRule(@RequestBody AlarmRule alarmRule) {
+        alarmRuleService.updateAlarmRule(alarmRule);
         return Result.success();
     }
 

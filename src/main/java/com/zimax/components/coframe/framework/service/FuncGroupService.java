@@ -130,4 +130,17 @@ public class FuncGroupService {
     public int count(String appId) {
         return funcGroupMapper.count(appId);
     }
+
+    /**
+     * 查询所有的功能组
+     *
+     * @return 所有的功能组
+     */
+    public List<FuncGroup> queryAllFuncGroups() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("field", "display_order");
+        map.put("order", "asc");
+        return funcGroupMapper.queryFuncGroups(map);
+    }
+
 }

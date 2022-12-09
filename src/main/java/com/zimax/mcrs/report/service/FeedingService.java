@@ -37,7 +37,7 @@ public class FeedingService {
     /**
      * 查询所有上料报表信息
      */
-    public List<Feeding> queryFeedings(int page, int limit, String equipmentId, String axisName,
+    public List<Feeding> queryFeedings(String page, String limit, String equipmentId, String axisName,
                                        String inSFCId, String prodSFCId,
                                        String vehicleCode, String startProdTime,
                                        String endProdTime,

@@ -186,7 +186,7 @@ CREATE TABLE `cap_user` (
     `mac_code` varchar(128) DEFAULT NULL,
     `ip_address` varchar(128) DEFAULT NULL,
     `email` varchar(255) DEFAULT NULL,
-    `create_user` varchar(64) DEFAULT NULL,
+    `creator` varchar(64) DEFAULT NULL,
     `create_time` date NOT NULL,
     PRIMARY KEY (`operator_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;

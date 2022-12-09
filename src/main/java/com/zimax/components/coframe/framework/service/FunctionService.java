@@ -316,4 +316,13 @@ public class FunctionService implements IFunctionService {
         return functionMapper.count(funcCode);
     }
 
+    /**
+     * 查询所有的功能
+     *
+     * @return 所有的功能
+     */
+    public List<Function> queryAllFunctionList() {
+        return functionMapper.queryAllFunctions();
+    }
+
 }

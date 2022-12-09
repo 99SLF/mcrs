@@ -128,4 +128,9 @@ public final class StringUtil {
         return str.substring(0, pos);
     }
 
+    public static boolean equalsIgnoreCase(String str1, String str2) {
+        return str1 == null ? false : str2 == null ? true : str1
+                .equalsIgnoreCase(str2);
+    }
+
 }
