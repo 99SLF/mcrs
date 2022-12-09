@@ -1,13 +1,12 @@
 package com.zimax.components.coframe.rights.service;
 
 import com.alibaba.excel.util.StringUtils;
+import com.zimax.components.coframe.rights.DefaultUserManager;
 import com.zimax.components.coframe.rights.mapper.UserMapper;
-import com.zimax.components.coframe.rights.pojo.Role;
 import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.mcrs.config.ChangeString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +31,7 @@ public class UserService {
     }
 
     public int count(String status, String userName) {
-        return userMapper.count(status,userName);
+        return userMapper.count(status, userName);
     }
 
     /**
@@ -58,9 +57,8 @@ public class UserService {
 
     /**
      * 编辑，更新用户
-     *
      */
-    public  void updateUser(User user){
+    public void updateUser(User user) {
         userMapper.updateUser(user);
     }
 
@@ -73,43 +71,54 @@ public class UserService {
 
     /**
      * 批量删除用户
+     *
      * @param operatorIds 操作员编号
      */
-    public void deleteUsers (List<Integer> operatorIds) {
+    public void deleteUsers(List<Integer> operatorIds) {
         userMapper.deleteUsers(operatorIds);
     }
+
     /**
      * 根据操作员编号获取用户
+     *
      * @param operatorId 操作员编号
      */
-    public User getUser(int operatorId){
+    public User getUser(int operatorId) {
         return userMapper.getUser(operatorId);
     }
 
     /**
      * 重置密码
+     *
      * @param operatorIds 操作员编号
      */
-    public void changePassword (List<Integer> operatorIds) {
+    public void changePassword(List<Integer> operatorIds) {
         userMapper.changePassword(operatorIds);
     }
 
     /**
      * 获取用户
+     *
      * @param userId 用户编号
      */
-    public User checkUser(String userId){
+    public User checkUser(String userId) {
         return userMapper.checkUser(userId);
     }
+
     /**
      * 获取用户
+     *
      * @param userId 用户编号
      */
     public User getUserByUserId(String userId) {
         if (!StringUtils.isBlank(userId)) {
             User user = userMapper.getUserByUserId(userId);
-           // return users.length > 0 ? users[0] : null;
+            return user == null ? null : user;
         }
         return null;
+    }
+
+    public String encodePassword(String password) {
+        return DefaultUserManager.INSTANCE.encodeString(password);
     }
 }

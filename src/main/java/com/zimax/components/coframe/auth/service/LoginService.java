@@ -8,10 +8,14 @@ import com.zimax.cap.party.IUserObject;
 import com.zimax.cap.party.impl.UserObject;
 import com.zimax.components.coframe.auth.DefaultAuthManagerService;
 import com.zimax.components.coframe.init.UserObjectInit;
+import com.zimax.components.coframe.rights.pojo.User;
+import com.zimax.components.coframe.rights.service.UserService;
 import com.zimax.mcrs.config.Result;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,6 +26,8 @@ import java.util.List;
 @Service
 public class LoginService {
 
+    @Autowired
+    UserService userService;
     /**
      * 根据用户对象登录
      *
@@ -37,18 +43,44 @@ public class LoginService {
      * @param userId 用户账号
      * @param password 密码
      */
-    public Result<?> authentication(String userId, String password) {
-
-        Result<String> result = new Result<>();
-        result.setCode("0");
-        return result;
+    public Result authentication(String userId, String password) {
+        User user = userService.getUserByUserId(userId);
+        if(user==null){
+           return Result.error("1","用户不存在");
+        }
+        Result result = isEnd(user);
+        if(result.getCode()=="1"){
+            return Result.error("1",result.getMsg());
+        }
+        if(user.getStatus()!="1"){
+            return Result.error("1","用户无权限登录，请联系系统管理员！");
+        }
+        if(user.getAuthMode()=="ldap"){
+            return Result.success();
+        }
+        password = userService.encodePassword(password);
+        if(user.getPassword()==password){
+            return Result.success();
+        }else {
+            return Result.error("1","密码错误");
+        }
     }
 
     /**
      * 验证用户是否失效
      */
-    public void isEnd(String userId, String password) {
-
+    public Result<?> isEnd(User user) {
+        Date today= new Date();
+        if(user.getEndDate()==null){
+            if(user.getStartDate()==null){
+                if(today.compareTo(user.getInvalDate())>=0){
+                    return Result.error("1","密码过期");
+                }else{
+                    return Result.error("0","");
+                }
+            }
+        }
+        return Result.error();
     }
 
     /**
