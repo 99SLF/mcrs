@@ -33,6 +33,10 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.components.coframe.rights.mapper.RoleMapper"/>
     </bean>
+    <bean id="ResAuthMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.components.coframe.rights.mapper.ResAuthMapper"/>
+    </bean>
     <bean id="DictLoader" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.components.coframe.dict.mapper.DictLoader"/>
@@ -112,6 +116,10 @@
     </bean>
 
     <bean id="DefaultRoleManagerBean" class="com.zimax.components.coframe.auth.party.manager.DefaultRoleManager">
-<!--        <property name="userInitMapper" ref="UserInitMapper"/>-->
+        <property name="roleMapper" ref="RoleMapper"/>
+    </bean>
+
+    <bean id="DefaultResAuthManagerBean" class="com.zimax.components.coframe.rights.resauth.DefaultResAuthManager">
+        <property name="resAuthMapper" ref="ResAuthMapper"/>
     </bean>
 </beans>
