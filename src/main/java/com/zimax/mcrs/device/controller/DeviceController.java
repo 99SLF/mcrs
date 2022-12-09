@@ -17,7 +17,7 @@ import java.util.List;
  */
 @RestController
 @ResponseBody
-@RequestMapping("/device")
+@RequestMapping("/equipment")
 public class DeviceController {
 
     @Autowired
@@ -28,7 +28,7 @@ public class DeviceController {
      *
      * @param device 终端
      */
-    @PostMapping("/registrationDevice")
+    @PostMapping("/device/registrationDevice")
     public Result<?> registrationDevice(@RequestBody Device device) {
         deviceService.registrationDevice(device);
         return Result.success();
@@ -39,7 +39,7 @@ public class DeviceController {
      *
      * @param APPID 依据APPDId来注销终端
      */
-    @DeleteMapping("/logoutDevice/{APPId}")
+    @DeleteMapping("/device/logoutDevice/{APPId}")
     public Result<?> logoutTerminal(@PathVariable("APPId") String APPID) {
         deviceService.logoutDevice(APPID);
         return Result.success();
@@ -51,7 +51,7 @@ public class DeviceController {
      *
      * @param device 终端
      */
-    @PostMapping("/update")
+    @PostMapping("/device/update")
     public Result<?> updateDevice(@RequestBody Device device) {
         deviceService.updateDevice(device);
         return Result.success();
@@ -68,9 +68,19 @@ public class DeviceController {
      * @param order       排序方式
      * @return 终端列表
      */
-    @GetMapping("/query")
-    public Result<?> queryDevice(@RequestParam int page, @RequestParam int limit, String equipmentId, String APPId, String order, String field) {
+    @GetMapping("/device/query")
+    public Result<?> queryDevice(String page, String limit, String equipmentId, String APPId, String order, String field) {
         List devices = deviceService.queryDevices(page, limit, equipmentId, APPId, order, field);
         return Result.success(devices, deviceService.count(equipmentId, APPId));
     }
+
+    /**
+     * 查询数据给监控
+     */
+    @GetMapping("/device/monitor")
+    public Result toMonitor(String equipmentId, String APPId){
+        List devices = deviceService.toMonitor();
+        return  Result.success(devices,deviceService.count(equipmentId,APPId));
+    }
+
 }

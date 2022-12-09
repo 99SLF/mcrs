@@ -153,13 +153,10 @@ public abstract class AbstractPartyManagerService implements IPartyManagerServic
 
     public abstract List<Party> doGetRootPartyList(String partyTypeID);
 
-    public abstract Map<String, List<Party>> doGetAllParentPartyList(
-            String partyID, String partyTypeID);
+    public abstract Map<String, List<Party>> doGetAllParentPartyList(String partyID, String partyTypeID);
 
-    public abstract Map<String, List<Party>> doGetScopePartyMap(
-            String partyID, String partyTypeID);
+    public abstract Map<String, List<Party>> doGetScopePartyMap(String partyID, String partyTypeID);
 
-    public abstract List<Party> doGetAssociatePartyList(
-            String partyID, String partyTypeID, String associatePartyType);
+    public abstract List<Party> doGetAssociatePartyList(String partyID, String partyTypeID, String associatePartyType);
 
 }
