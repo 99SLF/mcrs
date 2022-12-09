@@ -32,7 +32,7 @@ public class EquipmentController {
      * @param order         排序方式
      * @return 设备列表
      */
-    @GetMapping("/query")
+    @GetMapping("/equipment/query")
     public Result<?> query(@RequestParam int limit, @RequestParam int page, String equipmentId, String equipmentName, String order, String field) {
         List equipments = equipmentService.queryEquipments(limit, page, equipmentId, equipmentName, order, field);
         return Result.success(equipments, equipmentService.count(equipmentId, equipmentName));
@@ -43,7 +43,7 @@ public class EquipmentController {
      *
      * @param equipment 设备信息
      */
-    @PostMapping("/add")
+    @PostMapping("/equipment/add")
     public Result<?> addEquipment(@RequestBody Equipment equipment) {
         equipmentService.addEquipment(equipment);
         return Result.success();
@@ -54,7 +54,7 @@ public class EquipmentController {
      *
      * @param equipmentId 设备数组
      */
-    @DeleteMapping("/delete/{equipmentId}")
+    @DeleteMapping("/equipment/delete/{equipmentId}")
     public Result<?> removeEquipment(@PathVariable("equipmentId") String equipmentId) {
         equipmentService.removeEquipment(equipmentId);
         return Result.success();
@@ -65,9 +65,18 @@ public class EquipmentController {
      *
      * @param equipment 设备信息
      */
-    @PostMapping("/update")
+    @PostMapping("/equipment/update")
     public Result<?> updateEquipment(@RequestBody Equipment equipment) {
         equipmentService.updateEquipment(equipment);
+        return Result.success();
+    }
+
+    /**
+     * 提供终端信息
+     *
+     */
+    @GetMapping("/equipment/provide")
+    public Result<?> provideDevice(){
         return Result.success();
     }
 

@@ -36,22 +36,12 @@ public class DeviceUpdateController {
      * @param order 排序方式
      * @return 更新列表
      */
-    @RequestMapping("/deviceUpdate/query")
+    @GetMapping("/deviceUpdate/query")
     public Result queryDeviceUpdate(@RequestParam int page, @RequestParam int limit, String equipmentId, String version, String order, String field) {
         List deviceUpdates = deviceUpdateService.queryDeviceUpdate(page,limit,equipmentId,version,order,field);
         return Result.success(deviceUpdates, deviceUpdateService.count(equipmentId,version));
     }
 
-    /**
-     * 初始化查询
-     *
-     * @return
-     */
-    @GetMapping("/find/{deviceUpdateId}")
-    public Result<?> queryAll(@PathVariable("deviceUpdateId") int deviceUpdateId) {
-
-        return Result.success();
-    }
 
     /**
      * 下载
@@ -68,7 +58,7 @@ public class DeviceUpdateController {
      *
      * @param deviceUpdateId 设备数组
      */
-    @DeleteMapping("/delete/{deviceUpdateId}")
+    @DeleteMapping("/deviceUpdate/delete/{deviceUpdateId}")
     public Result<?> removeEquipment(@PathVariable("deviceUpdateId") int deviceUpdateId) {
         return Result.success();
     }

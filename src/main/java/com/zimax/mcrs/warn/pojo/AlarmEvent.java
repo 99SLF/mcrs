@@ -17,37 +17,37 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("alarmEvent")
+@TableName("war_alarm_event")
 public class AlarmEvent {
 
     /**
-     * 告警事件编码
+     * 预警事件编码
      */
     @TableId(type = IdType.AUTO)
     private int alarmEventId;
 
     /**
-     * 告警事件标题
+     * 预警事件标题
      */
     private String alarmEventTitle;
 
     /**
-     * 启用状态
+     * 是否启用
      */
     private String enableStatus;
 
     /**
-     * 告警级别
+     * 预警级别
      */
     private String alarmLevel;
 
     /**
-     * 告警分类
+     * 预警分类
      */
     private String alarmCategory;
 
     /**
-     * 告警类型
+     * 预警类型
      */
     private String alarmType;
 
@@ -73,6 +73,9 @@ public class AlarmEvent {
     /**
      * 修改时间
      */
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
 }
