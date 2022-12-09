@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.warn.mapper.AlarmEventMapper">
+
+    <!--查询记录数-->
+    <select id="count" resultType="int">
+        select count(*) from war_alarm_event
+        <where>
+            <if test="alarmEventId !=null and alarmEventId !=''">
+                and alarm_event_id like '%${alarmEventId}%'
+            </if>
+            <if test="alarmEventTitle !=null and alarmEventTitle !=''">
+                and alarm_event_title like '%${alarmEventTitle}%'
+            </if>
+        </where>
+    </select>
+
+    <!--查询所有-->
+    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.warn.pojo.AlarmEvent">
+        select * from war_alarm_event
+        <where>
+            <if test="alarmEventId !=null and alarmEventId !=''">
+                and alarm_event_id like '%${alarmEventId}%'
+            </if>
+            <if test="alarmEventTitle !=null and alarmEventTitle !=''">
+                and alarm_event_title like '%${alarmEventTitle}%'
+            </if>
+            <if test="alarmLevel !=null and alarmLevel !=''">
+                and alarm_level like '%${alarmLevel}%'
+            </if>
+            <if test="alarmCategory !=null and alarmCategory !=''">
+                and alarm_category like '%${alarmCategory}%'
+            </if>
+            <if test="alarmType !=null and alarmType !=''">
+                and alarm_type like '%${alarmType}%'
+            </if>
+            <if test="makeFormPeople !=null and makeFormPeople !=''">
+                and make_form-people like '%${makeFormPeople}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+    <!--添加预警事件-->
+    <insert id="addAlarmEvent" parameterType="com.zimax.mcrs.warn.pojo.AlarmEvent">
+        insert into war_alarm_event
+        values (#{alarmEventId}, #{alarmEventTitle}, #{enableStatus},
+                #{alarmLevel}, #{alarmCategory},
+                #{alarmType}, #{makeFormPeople}, #{makeFormTime},
+                #{updatePeople}, #{updateTime})
+    </insert>
+
+    <!--根据主键删除预警事件-->
+    <delete id="removeAlarmEvent" parameterType="Integer">
+        delete
+        from war_alarm_event
+        where alarm_event_id = #{alarmEventId}
+    </delete>
+
+    <!--更新预警事件-->
+    <update id="updateAlarmEvent" parameterType="com.zimax.mcrs.warn.pojo.AlarmEvent">
+        update war_alarm_event
+        set alarm_event_title=#{alarmEventTitle},
+            enable_status=#{enableStatus},
+            alarm_level=#{alarmLevel},
+            alarm_category=#{alarmCategory},
+            alarm_type=#{alarmType},
+            update_people=#{updatePeople},
+            update_time=#{updateTime}
+        where alarm_event_id = #{alarmEventId}
+    </update>
+
+<!--    更新启用状态-->
+<!--    <update id="enable" parameterType="com.zimax.mcrs.warn.pojo.AlarmEvent">-->
+<!--        update war_alarm_event-->
+<!--        set enable_status=#{enableStatus},-->
+<!--            update_people=#{updatePeople},-->
+<!--            update_time=#{updateTime}-->
+<!--        where alarm_event_id = #{alarmEventId}-->
+<!--    </update>-->
+
+
+</mapper>
