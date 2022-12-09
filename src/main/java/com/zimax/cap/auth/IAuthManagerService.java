@@ -16,7 +16,13 @@ public interface IAuthManagerService {
 
     int DEL_MODE_COMPLEX = 1;
 
-    List<AuthResource> getAuthResListByRole(Party paramParty);
+    /**
+     * 根据角色参与者获取授权资源列表
+     *
+     * @param party 角色参与者
+     * @return 授权资源列表
+     */
+    List<AuthResource> getAuthResListByRole(Party party);
 
     boolean addOrUpdateAuthRes(Party paramParty,
                                AuthResource paramAuthResource);
