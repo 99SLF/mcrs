@@ -1,11 +1,14 @@
 package com.zimax.mcrs.warn.service;
 
+import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.warn.mapper.AlarmRuleMapper;
 import com.zimax.mcrs.warn.pojo.AlarmRule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 警告规则服务
@@ -19,17 +22,38 @@ public class AlarmRuleService {
     private AlarmRuleMapper alarmRuleMapper;
 
     /**
-     * 初始化查询
+     * 查询所有预警规则
      */
-    public List<AlarmRule> queryAll(){
-        return null;
+    public List<AlarmRule> queryAlarmRule(String  page, String limit, Integer alarmRuleId, String alarmRuleTitle, String monitorLevel, String enable, String alarmEventId, String monitorObject, String ruleMakeFormPeople, String ruleMakeFormTime, String order, String field){
+        ChangeString changeString = new ChangeString();
+        Map<String,Object> map= new HashMap<>();
+        if(order==null){
+            map.put("order","desc");
+            map.put("field","rule_make_form_time");
+        }else{
+            map.put("order",order);
+            map.put("field",changeString.camelUnderline(field));
+        }
+        if (limit != null) {
+            map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
+            map.put("limit", Integer.parseInt(limit));
+        }
+        map.put("alarmRuleId",alarmRuleId);
+        map.put("alarmRuleTitle",alarmRuleTitle);
+        map.put("monitorLevel",monitorLevel);
+        map.put("enable",enable);
+        map.put("alarmEventId",alarmEventId);
+        map.put("monitorObject",monitorObject);
+        map.put("ruleMakeFormPeople",ruleMakeFormPeople);
+        map.put("ruleMakeFormTime",ruleMakeFormTime);
+        return alarmRuleMapper.queryAll(map);
     }
 
     /**
-     * 依据条件查询
+     * 查询记录
      */
-    public List<AlarmRule> select(){
-        return null;
+    public int count(Integer alarmRuleId, String alarmRuleTitle){
+        return alarmRuleMapper.count(alarmRuleId,alarmRuleTitle);
     }
 
     /**
@@ -37,23 +61,23 @@ public class AlarmRuleService {
      * @param alarmRule 预警规则
      */
     public void addAlarmRule(AlarmRule alarmRule ){
-
+        alarmRuleMapper.addAlarmRule(alarmRule);
     }
 
     /**
      * 删除预警规则
      * @param  alarmRuleId 预警规则编码
      */
-    public void deleteAlarmRule(int alarmRuleId){
-
+    public void removeAlarmRule(int alarmRuleId){
+        alarmRuleMapper.removeAlarmRule(alarmRuleId);
     }
-
 
     /**
      * 修改预警规则
-     * @param alarmRuleId 预警规则编码
+     * @param alarmRule 预警规则
      */
-    public void updateAlarmRule(int alarmRuleId){
+    public void updateAlarmRule(AlarmRule alarmRule){
+        alarmRuleMapper.updateAlarmRule(alarmRule);
 
     }
 }
