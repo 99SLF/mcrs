@@ -1,6 +1,8 @@
 package com.zimax.components.coframe.rights.service;
 
 import com.sun.org.apache.xalan.internal.xsltc.dom.SimpleResultTreeImpl;
+import com.zimax.cap.party.Party;
+import com.zimax.components.coframe.rights.gradeauth.GradeAuthService;
 import com.zimax.components.coframe.rights.mapper.RoleMapper;
 import com.zimax.components.coframe.rights.pojo.Role;
 
@@ -8,6 +10,7 @@ import com.zimax.mcrs.config.ChangeString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,14 +18,33 @@ import java.util.Map;
 /**
  * 角色服务
  */
-@Service
 public class RoleService {
 
     /**
      * 角色数据操作
      */
-    @Autowired
     private RoleMapper roleMapper;
+
+    /**
+     * 分级授权服务
+     */
+    private GradeAuthService gradeAuthService;
+
+    public RoleMapper getRoleMapper() {
+        return roleMapper;
+    }
+
+    public void setRoleMapper(RoleMapper roleMapper) {
+        this.roleMapper = roleMapper;
+    }
+
+    public GradeAuthService getGradeAuthService() {
+        return gradeAuthService;
+    }
+
+    public void setGradeAuthService(GradeAuthService gradeAuthService) {
+        this.gradeAuthService = gradeAuthService;
+    }
 
     /**
      * 查询所有角色信息
@@ -117,6 +139,27 @@ public class RoleService {
      */
     public int count(String roleCode, String roleName) {
         return roleMapper.count(roleCode, roleName);
+    }
+
+    /**
+     * 获取授权的角色列表
+     *
+     * @return 授权的角色列表
+     */
+    public List<Role> queryAuthorizedRoleList() {
+        // 获取可管控角色参与者列表
+        List<Party> authorizedRolePartyList = gradeAuthService.getManagedRoleList();
+        if (authorizedRolePartyList == null || authorizedRolePartyList.size() == 0) {
+            return null;
+        }
+
+        // 获取角色ID列表
+        List<String> roleIdList = new ArrayList<String>();
+        for (Party authorizedRoleParty : authorizedRolePartyList) {
+            roleIdList.add(authorizedRoleParty.getId());
+        }
+
+        return roleMapper.queryRolesByRoleIds(roleIdList);
     }
 
 }

@@ -37,6 +37,10 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.components.coframe.rights.mapper.ResAuthMapper"/>
     </bean>
+    <bean id="PartyAuthMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.components.coframe.rights.mapper.PartyAuthMapper"/>
+    </bean>
     <bean id="DictLoader" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.components.coframe.dict.mapper.DictLoader"/>
@@ -91,13 +95,21 @@
         <property name="mapperInterface" value="com.zimax.mcrs.report.mapper.RFIDReadRaReportMapper"/>
     </bean>
 
+    <bean id="GradeAuthBean" class="com.zimax.components.coframe.rights.gradeauth.GradeAuthService"></bean>
 
+    <bean id="RoleBean" class="com.zimax.components.coframe.rights.service.RoleService">
+        <property name="roleMapper" ref="RoleMapper"/>
+        <property name="gradeAuthService" ref="GradeAuthBean"/>
+    </bean>
 
     <bean id="FunctionBean" class="com.zimax.components.coframe.framework.service.FunctionService">
         <property name="functionMapper" ref="FunctionMapper"/>
         <property name="funcGroupMapper" ref="FuncGroupMapper"/>
         <property name="applicationMapper" ref="ApplicationMapper"/>
         <property name="funcResourceMapper" ref="FuncResourceMapper"/>
+    </bean>
+
+    <bean id="FunctionAuthService" class="com.zimax.components.coframe.framework.auth.FunctionAuthService">
     </bean>
 
     <bean id="FuncResourceBean" class="com.zimax.components.coframe.framework.service.FuncResourceService">
@@ -121,5 +133,9 @@
 
     <bean id="DefaultResAuthManagerBean" class="com.zimax.components.coframe.rights.resauth.DefaultResAuthManager">
         <property name="resAuthMapper" ref="ResAuthMapper"/>
+    </bean>
+
+    <bean id="DefaultPartyAuthManagerBean" class="com.zimax.components.coframe.rights.partyauth.DefaultPartyAuthManager">
+        <property name="partyAuthMapper" ref="PartyAuthMapper"/>
     </bean>
 </beans>

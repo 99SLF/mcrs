@@ -12,7 +12,16 @@ import java.util.Map;
  */
 @Mapper
 public interface RoleMapper {
+
     List<Role> queryRoles(Map map);
+
+    /**
+     * 根据角色编号列表获取角色列表
+     *
+     * @param roleIds 角色编号列表
+     * @return 角色列表
+     */
+    List<Role> queryRolesByRoleIds(List<String> roleIds);
 
     Role getRole(int roleId);
 

@@ -8,6 +8,7 @@ import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
 import com.zimax.cap.party.Party;
 import com.zimax.components.coframe.auth.menu.DefaultMenuAuthService;
+import com.zimax.components.coframe.rights.partyauth.DefaultPartyAuthManager;
 import com.zimax.components.coframe.rights.pojo.ResAuth;
 import com.zimax.components.coframe.rights.resauth.DefaultResAuthManager;
 import com.zimax.components.coframe.tools.IConstants;
@@ -30,13 +31,12 @@ public class DefaultAuthManagerService implements IAuthManagerService {
 
     private DefaultResAuthManager resAuthBean = null;
 
-//    private DefaultPartyAuthManager partyAuthBean = null;
+    private DefaultPartyAuthManager partyAuthBean = null;
 
     public DefaultAuthManagerService() {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         this.resAuthBean = context.getBean(DefaultResAuthManager.SPRING_BEAN_NAME, DefaultResAuthManager.class);
-//        this.partyAuthBean = beanFactory
-//                .getBean(DefaultPartyAuthManager.SPRING_BEAN_NAME);
+        this.partyAuthBean = context.getBean(DefaultPartyAuthManager.SPRING_BEAN_NAME, DefaultPartyAuthManager.class);
     }
 
     public boolean addOrUpdateAuthRes(Party party, AuthResource authRes) {

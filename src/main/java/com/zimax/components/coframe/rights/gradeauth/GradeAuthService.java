@@ -1,0 +1,151 @@
+package com.zimax.components.coframe.rights.gradeauth;
+
+import com.zimax.cap.datacontext.DataContextManager;
+import com.zimax.cap.datacontext.IMUODataContext;
+import com.zimax.cap.party.IUserObject;
+import com.zimax.cap.party.Party;
+import com.zimax.cap.party.manager.PartyRuntimeManager;
+import com.zimax.components.coframe.tools.IConstants;
+import com.zimax.components.coframe.tools.superadmin.SuperAdminService;
+import org.springframework.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 分级授权的类，获取可管理的机构列表和可管理的角色列表
+ *
+ * @author 苏尚文
+ * @date 2022/12/9 14:12
+ */
+public class GradeAuthService {
+
+    public static final String SPRING_BEAN_NAME = "GradeAuthBean";
+
+    /**
+     * 分级授权的方法，获取可管理的机构列表，从员工的参与者中获取可授权机构列表
+     *
+     * @return
+     */
+    public List<Party> getManagedOrgList() {
+        List<Party> partyList = new ArrayList<Party>();
+
+        if (SuperAdminService.currUserIsSupserAdmin()) {
+            return PartyRuntimeManager.getInstance().getRootPartyList(
+                    IConstants.ORG_PARTY_TYPE_ID);
+        }
+
+        if(!judgeIsEmp()) {
+            return partyList;
+        }
+
+        String userId = getUserId();
+
+        Party empParty = PartyRuntimeManager.getInstance().getPartyByPartyID(
+                userId, IConstants.EMP_PARTY_TYPE_ID);
+        String orgIdAndNames = empParty.getExtAttribute(IConstants.MANAGED_ORGS);
+        if (orgIdAndNames != null) {
+            String[] orgIdAndNameArray = StringUtils.split(orgIdAndNames, ",");
+            if (orgIdAndNameArray != null) {
+                for (String orgIdAndName : orgIdAndNameArray) {
+                    Party orgParty = PartyRuntimeManager.getInstance()
+                            .getPartyByPartyID(StringUtils.split(orgIdAndName, ":")[0],
+                                    IConstants.ORG_PARTY_TYPE_ID);
+                    if(orgParty != null) {
+                        partyList.add(orgParty);
+                    }
+                }
+            }
+        }
+        return partyList;
+    }
+
+    /**
+     * 分级授权的方法，获取可管理的工作组列表，从员工的参与者中获取可授权工作组列表
+     *
+     * @return
+     */
+    public List<Party> getManagedGroupList() {
+        List<Party> partyList = new ArrayList<Party>();
+
+        if (SuperAdminService.currUserIsSupserAdmin()) {
+            return PartyRuntimeManager.getInstance().getRootPartyList(
+                    IConstants.GROUP_PARTY_TYPE_ID);
+        }
+
+        if(!judgeIsEmp()) {
+            return partyList;
+        }
+
+        String userId = getUserId();
+
+        Party empParty = PartyRuntimeManager.getInstance().getPartyByPartyID(
+                userId, IConstants.EMP_PARTY_TYPE_ID);
+        String groupIdAndNames = empParty.getExtAttribute(IConstants.MANAGED_GROUPS);
+        if (groupIdAndNames != null) {
+            String[] groupIdAndNameArray = StringUtils.split(groupIdAndNames, ",");
+            if (groupIdAndNameArray != null) {
+                for (String groupIdAndName : groupIdAndNameArray) {
+                    Party orgParty = PartyRuntimeManager.getInstance()
+                            .getPartyByPartyID(StringUtils.split(groupIdAndName, ":")[0],
+                                    IConstants.GROUP_PARTY_TYPE_ID);
+                    if(orgParty != null) {
+                        partyList.add(orgParty);
+                    }
+                }
+            }
+        }
+        return partyList;
+    }
+
+    private String getUserId() {
+        IMUODataContext muoContext = DataContextManager.current()
+                .getMUODataContext();
+        IUserObject userObject = muoContext.getUserObject();
+        if (userObject != null) {
+            return userObject.getUserId();
+        }
+        return null;
+    }
+
+    private boolean judgeIsEmp() {
+        IMUODataContext muoContext = DataContextManager.current().getMUODataContext();
+        IUserObject userObject = muoContext.getUserObject();
+        if (userObject != null) {
+            if(userObject.getUserOrgId() == null || "".equals(userObject.getUserOrgId())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 分级授权的方法，获取可管理的角色列表，从员工的参与者中获取可授权角色列表
+     *
+     * @return
+     */
+    public List<Party> getManagedRoleList() {
+        if (SuperAdminService.currUserIsSupserAdmin()) {
+            return PartyRuntimeManager.getInstance().getAllPartyList(IConstants.ROLE_PARTY_TYPE_ID);
+        }
+        String userId = getUserId();
+        List<Party> partyList = new ArrayList<Party>();
+        Party empParty = PartyRuntimeManager.getInstance().getPartyByPartyID(
+                userId, IConstants.EMP_PARTY_TYPE_ID);
+        String roleIdAndNames = empParty.getExtAttribute(IConstants.MANAGED_ROLES);
+        if (roleIdAndNames != null) {
+            String[] roleIdAndNameArray = StringUtils.split(roleIdAndNames, ",");
+            if (roleIdAndNameArray != null) {
+                for (String roleIdAndName : roleIdAndNameArray) {
+                    Party roleParty = PartyRuntimeManager.getInstance()
+                            .getPartyByPartyID(StringUtils.split(roleIdAndName, ":")[0],
+                                    IConstants.ROLE_PARTY_TYPE_ID);
+                    if(roleParty != null) {
+                        partyList.add(roleParty);
+                    }
+                }
+            }
+        }
+        return partyList;
+    }
+}

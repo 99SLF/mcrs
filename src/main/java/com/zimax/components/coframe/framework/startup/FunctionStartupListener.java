@@ -2,8 +2,11 @@ package com.zimax.components.coframe.framework.startup;
 
 import com.zimax.components.coframe.framework.IFuncResourceService;
 import com.zimax.components.coframe.framework.IFunctionService;
+import com.zimax.components.coframe.tools.tab.TabPage;
+import com.zimax.components.coframe.tools.tab.TabPageManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.util.NumberUtils;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -24,6 +27,13 @@ public class FunctionStartupListener implements ServletContextListener {
 
         IFuncResourceService funcResourceService = context.getBean("FuncResourceBean", IFuncResourceService.class);
         funcResourceService.initFuncResources();
+
+        TabPage page = new TabPage();
+        page.setTitle("功能");
+        page.setUrl("/coframe/framework/function/function_role_auth.jsp");
+        page.setOrder(10);
+        page.setId("functionGroup");
+        TabPageManager.INSTANCE.addTabPage("AuthTab", page);
     }
 
     @Override

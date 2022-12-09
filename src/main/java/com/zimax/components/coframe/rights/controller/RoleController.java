@@ -107,4 +107,16 @@ public class RoleController {
             return Result.error();
         }
     }
+
+    /**
+     * 获取可授权角色
+     *
+     * @return
+     */
+    @GetMapping("/role/authorized")
+    public Result<?> queryAuthorizedRole() {
+        List<Role> roles = roleService.queryAuthorizedRoleList();
+        return Result.success(roles);
+    }
+
 }
