@@ -27,7 +27,7 @@ public class DeviceUpdateService {
      *
      * @return
      */
-    public List<DeviceUpdate> queryDeviceUpdate(int page, int limit, String equipmentId, String version, String order, String field) {
+    public List<DeviceUpdate> queryDeviceUpdate(String page, String limit, String equipmentId, String version, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -37,8 +37,10 @@ public class DeviceUpdateService {
             map.put("order",order);
             map.put("field",changeString.camelUnderline(field));
         }
-        map.put("begin",limit*(page-1));
-        map.put("limit",limit);
+        if (limit != null) {
+            map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
+            map.put("limit", Integer.parseInt(limit));
+        }
         map.put("equipmentId",equipmentId);
         map.put("version",version);
         return deviceUpdateMapper.queryAll(map);

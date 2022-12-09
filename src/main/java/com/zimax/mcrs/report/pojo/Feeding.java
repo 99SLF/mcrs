@@ -62,7 +62,6 @@ public class Feeding {
      */
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date createTime;
 
     /**
@@ -70,7 +69,6 @@ public class Feeding {
      */
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date startProdTime;
 
     /**
@@ -78,7 +76,6 @@ public class Feeding {
      */
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date endProdTime;
 
 }
