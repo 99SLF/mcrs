@@ -8,8 +8,12 @@ import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
 import com.zimax.cap.party.Party;
 import com.zimax.components.coframe.auth.menu.DefaultMenuAuthService;
+import com.zimax.components.coframe.rights.pojo.ResAuth;
+import com.zimax.components.coframe.rights.resauth.DefaultResAuthManager;
 import com.zimax.components.coframe.tools.IConstants;
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +28,13 @@ public class DefaultAuthManagerService implements IAuthManagerService {
 
     private Logger log = Logger.getLogger(DefaultAuthManagerService.class);
 
-//    private DefaultResAuthManager resAuthBean = null;
+    private DefaultResAuthManager resAuthBean = null;
 
 //    private DefaultPartyAuthManager partyAuthBean = null;
 
     public DefaultAuthManagerService() {
-//        BeanFactory beanFactory = BeanFactory.newInstance();
-//        this.resAuthBean = beanFactory
-//                .getBean(DefaultResAuthManager.SPRING_BEAN_NAME);
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        this.resAuthBean = context.getBean(DefaultResAuthManager.SPRING_BEAN_NAME, DefaultResAuthManager.class);
 //        this.partyAuthBean = beanFactory
 //                .getBean(DefaultPartyAuthManager.SPRING_BEAN_NAME);
     }
@@ -435,21 +438,18 @@ public class DefaultAuthManagerService implements IAuthManagerService {
         return true;
     }
 
+    @Override
     public List<AuthResource> getAuthResListByRole(Party party) {
-        // 返回一个测试列表
-//        ResAuth[] resauths = this.resAuthBean
-//                .getResAuthListByParty(party);
-//        List<AuthResource> returnList = new ArrayList<AuthResource>();
-//        if (resauths != null) {
-//            for (ResAuth resauth : resauths) {
-//                AuthResource authResource = new AuthResource(
-//                        resauth.getResId(), resauth.getResType(),
-//                        resauth.getResState());
-//                returnList.add(authResource);
-//            }
-//        }
-//        return returnList;
-        return null;
+        ResAuth[] resAuths = this.resAuthBean.getResAuthListByParty(party);
+        List<AuthResource> returnList = new ArrayList<AuthResource>();
+        if (resAuths != null) {
+            for (ResAuth resAuth : resAuths) {
+                AuthResource authResource = new AuthResource(
+                        resAuth.getResId(), resAuth.getResType(), resAuth.getResState());
+                returnList.add(authResource);
+            }
+        }
+        return returnList;
     }
 
     public int getOrder() {

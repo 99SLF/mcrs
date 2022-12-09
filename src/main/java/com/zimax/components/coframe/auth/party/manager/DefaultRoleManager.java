@@ -3,11 +3,14 @@ package com.zimax.components.coframe.auth.party.manager;
 import com.zimax.cap.auth.manager.AuthRuntimeManager;
 import com.zimax.cap.party.Party;
 import com.zimax.cap.party.PartyType;
+import com.zimax.components.coframe.rights.mapper.RoleMapper;
 import com.zimax.components.coframe.rights.pojo.Role;
 import com.zimax.components.coframe.tools.IConstants;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 默认角色管理，提供对角色数据实体的数据库操作（持久化）
@@ -31,43 +34,40 @@ public class DefaultRoleManager {
 
     private final static String HAS_AUTH = "hasAuth";
 
+    private RoleMapper roleMapper;
+
     /**
-     *
+     * 构造默认的角色管理
      */
     public DefaultRoleManager() {
     }
 
+    public RoleMapper getRoleMapper() {
+        return roleMapper;
+    }
+
+    public void setRoleMapper(RoleMapper roleMapper) {
+        this.roleMapper = roleMapper;
+    }
+
+    /**
+     * 获取所有的角色列表
+     *
+     * @return 所有的角色列表
+     */
     public Role[] getAllRoleList() {
-//        IDASCriteria criteria = DASManager.createCriteria(Role.QNAME);
-//        criteria.add(ExpressionHelper.eq(IConstants.TENANT_PROPERTY, tenantID));
-//        return getDASTemplate().queryEntitiesByCriteriaEntity(Role.class,
-//                criteria);
-        return null;
+        List<Role> roleList = roleMapper.queryRoles(new HashMap<>());
+        return roleList.toArray(new Role[roleList.size()]);
     }
 
-    public Role getRoleByRoleIDAndTenant(String roleID) {
-//        IDASCriteria criteria = DASManager.createCriteria(Role.QNAME);
-//        criteria.add(ExpressionHelper.eq(IConstants.TENANT_PROPERTY, tenantID));
-//        criteria.add(ExpressionHelper.eq(CAP_ROLE_ENTITY_ID_PROPERTY, roleID));
-//        Role[] roles = getDASTemplate().queryEntitiesByCriteriaEntity(
-//                Role.class, criteria);
-//        if (roles != null && roles.length > 0) {
-//            return roles[0];
-//        }
-        return null;
-    }
-
-    public Role getRoleByRoleID(String roleID) {
-//        IDASCriteria criteria = DASManager.createCriteria(Role.QNAME);
-//        criteria.add(ExpressionHelper.eq(IConstants.TENANT_PROPERTY,
-//                TenantManager.getCurrentTenantID()));
-//        criteria.add(ExpressionHelper.eq(CAP_ROLE_ENTITY_ID_PROPERTY, roleID));
-//        Role[] roles = getDASTemplate().queryEntitiesByCriteriaEntity(
-//                Role.class, criteria);
-//        if (roles != null && roles.length > 0) {
-//            return roles[0];
-//        }
-        return null;
+    /**
+     * 根据角色编号获取角色
+     *
+     * @param roleId 角色编号
+     * @return 角色
+     */
+    public Role getRoleByRoleId(String roleId) {
+        return roleMapper.getRole(Integer.parseInt(roleId));
     }
 
     /**

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.components.coframe.rights.mapper.ResAuthMapper">
+    <!-- 根据参与者编号和参与者类型获取资源授权列表 -->
+    <select id="getResAuthListByPartyIdAndPartyType" resultType="com.zimax.components.coframe.rights.pojo.ResAuth">
+        select * from cap_res_auth where PARTY_ID = #{partyId} and PARTY_TYPE = #{partyType}
+    </select>
+</mapper>

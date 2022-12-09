@@ -41,7 +41,7 @@ public class RolePartyTypeDataService implements IPartyTypeDataService {
 
     @Override
     public Party getPartyByPartyId(String partyId) {
-        Role role = bean.getRoleByRoleIDAndTenant(partyId);
+        Role role = bean.getRoleByRoleId(partyId);
         if (role == null) {
             return null;
         }
