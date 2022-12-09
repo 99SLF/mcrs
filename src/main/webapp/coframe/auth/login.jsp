@@ -54,7 +54,7 @@ html{
 					<div class="form-banner-img"></div>
 				</div>
 				<div class="layui-tab layui-tab-brief" id="tabopenid" style="display: block;background-color: #fff;" lay-filter="docDemoTabBrief">
-					<ul class="layui-tab-title">
+					<ul class="layui-tab-title" style="text-align:center;">
 						<li class="layui-this">登 录</li>
 <%--						<li class=""> <a href="/index/user/register.html"></a>注 册</li>--%>
 					</ul>

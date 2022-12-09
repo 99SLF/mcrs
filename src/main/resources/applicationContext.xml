@@ -86,10 +86,10 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.mcrs.report.mapper.BlankingReportMapper"/>
     </bean>
-    <bean id="RFIDReadRaReportMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
-        <property name="mapperInterface" value="com.zimax.mcrs.report.mapper.RFIDReadRaReportMapper"/>
-    </bean>
+<!--    <bean id="RFIDReadRaReportMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">-->
+<!--        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>-->
+<!--        <property name="mapperInterface" value="com.zimax.mcrs.report.mapper.RFIDReadRaReportMapper"/>-->
+<!--    </bean>-->
 
 
 

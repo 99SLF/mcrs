@@ -1,6 +1,4 @@
 package com.zimax.components.coframe.init;
-
-import com.sun.deploy.util.StringUtils;
 import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.datacontext.IMUODataContext;
 import com.zimax.cap.datacontext.ISessionMap;

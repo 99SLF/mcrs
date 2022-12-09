@@ -113,7 +113,7 @@ public class UserService {
     public User getUserByUserId(String userId) {
         if (!StringUtils.isBlank(userId)) {
             User user = userMapper.getUserByUserId(userId);
-            return user == null ? null : user;
+            return user;
         }
         return null;
     }
