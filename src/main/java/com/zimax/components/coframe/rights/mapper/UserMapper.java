@@ -52,7 +52,7 @@ public interface UserMapper {
      void changePassword(List<Integer> operatorIds);
 
      /**
-      * 获取用户
+      * 检查用户是否存在
       */
      User checkUser(String userId );
 

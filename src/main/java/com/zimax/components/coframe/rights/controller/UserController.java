@@ -16,7 +16,7 @@ import java.util.List;
  * @date 2022/11/28
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/rights")
 public class UserController {
 
     /**
@@ -31,9 +31,42 @@ public class UserController {
      * @param user 用户信息
      * @return
      */
-    @PostMapping("/add")
+    @PostMapping("/user/add")
     public Result<?> addUser(@RequestBody User user) {
         userService.addUser(user);
+        return Result.success();
+    }
+
+    /**
+     * 更新用户
+     *
+     * @param user 用户信息
+     * @return
+     */
+    @PostMapping("/user/update")
+    public Result<?> updateUser(@RequestBody User user) {
+        userService.updateUser(user);
+        return Result.success();
+    }
+
+    /**
+     * 获取用户
+     *
+     * @param operatorId 操作员编号
+     */
+    @GetMapping("/user/find/{operatorId}")
+    public Result<?> getUser(@PathVariable("operatorId") int operatorId) {
+        return Result.success(userService.getUser(operatorId));
+    }
+
+    /**
+     * 删除用户信息
+     *
+     * @param operatorId 操作员编号
+     */
+    @DeleteMapping("/user/delete/{operatorId}")
+    public Result<?> deleteUser(@PathVariable("operatorId") int operatorId) {
+        userService.deleteUser(operatorId);
         return Result.success();
     }
 
@@ -51,33 +84,10 @@ public class UserController {
      * @return code 状态码
      * @return msg 返回信息
      */
-    @GetMapping("/query")
-    public Result<?> queryUsers(@RequestParam int page, @RequestParam int limit, String status, String userName, String order, String field) {
+    @GetMapping("/user/query")
+    public Result<?> queryUsers( String page, String limit, String status, String userName, String order, String field) {
         List users = userService.queryUsers(page,limit,status,userName,order,field);
         return Result.success(users,userService.count(status,userName));
-    }
-
-    /**
-     * 更新用户
-     *
-     * @param user 用户信息
-     * @return
-     */
-    @PostMapping("/update")
-    public Result<?> updateUser(@RequestBody User user) {
-        userService.updateUser(user);
-        return Result.success();
-    }
-
-    /**
-     * 删除用户信息
-     *
-     * @param operatorId 操作员编号
-     */
-    @DeleteMapping("/delete/{operatorId}")
-    public Result<?> deleteUser(@PathVariable("operatorId") int operatorId) {
-        userService.deleteUser(operatorId);
-        return Result.success();
     }
 
     /**
@@ -85,21 +95,13 @@ public class UserController {
      *
      * @param operatorIds 用户操作编号数组
      */
-    @DeleteMapping("/batchDelete")
+    @DeleteMapping("/user/batchDelete")
     public Result<?> deleteUsers (@RequestBody Integer[] operatorIds) {
         userService.deleteUsers(Arrays.asList(operatorIds));
         return Result.success();
     }
 
-    /**
-     * 获取用户
-     *
-     * @param operatorId 操作员编号
-     */
-    @GetMapping("/find/{operatorId}")
-    public Result<?> getUser(@PathVariable("operatorId") int operatorId) {
-        return Result.success(userService.getUser(operatorId));
-    }
+
 
     /**
      * 重置密码
@@ -107,7 +109,7 @@ public class UserController {
      * @param operatorIds 操作员编号
      * @param
      */
-    @PostMapping("/changePassword")
+    @PostMapping("/user/changePassword")
     @ResponseBody
     public Result<?> changePassword(@RequestBody  Integer[] operatorIds) {
         userService.changePassword(Arrays.asList(operatorIds));
@@ -119,7 +121,7 @@ public class UserController {
      * 检测用户是否存在
      * @param userId 用户名字
      */
-    @GetMapping("/findUser/{userId}")
+    @GetMapping("/user/findUser/{userId}")
     public Result<?> checkUser(@PathVariable("userId") String userId) {
         return Result.success(userService.checkUser(userId));
     }
