@@ -13,11 +13,17 @@ import java.util.Map;
 @Mapper
 public interface RoleMapper {
     List<Role> queryRoles(Map map);
+
     Role getRole(int roleId);
-    void addRole(Role role);
-    void deleteRole(int roleId);
-    void updateRole(Role role);
-    void deleteRoles(List<Integer> roleIds);
+
+    int addRole(Role role);
+
+    int deleteRole(int roleId);
+
+    int updateRole(Role role);
+
+    int deleteRoles(List<Integer> roleIds);
+
     int count(@Param("roleCode") String roleCode, @Param("roleName") String roleName);
 
 }

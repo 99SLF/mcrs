@@ -1,5 +1,6 @@
 package com.zimax.components.coframe.dict.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,11 +20,13 @@ public class DictEntry {
     /**
      * 字典类型编号
      */
+    @TableId
     private String dictTypeId;
 
     /**
      * 字典编号
      */
+    @TableId
     private String dictId;
 
     /**
@@ -34,17 +37,17 @@ public class DictEntry {
     /**
      * 状态
      */
-    private String status;
+    private int status;
 
     /**
      * 排序
      */
-    private String sortNo;
+    private int sortNo;
 
     /**
      * rank
      */
-    private String rank;
+    private int rank;
 
     /**
      * 父级编号

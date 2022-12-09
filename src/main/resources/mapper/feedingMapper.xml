@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.report.mapper.FeedingReportMapper">
+
+    <!--添加上料报表-->
+    <insert id="addFeeding" parameterType="com.zimax.mcrs.report.pojo.Feeding">
+        insert into rep_feeding
+        values (#{feedingId}, #{equipmentId}, #{axisName}, #{inSFCId}, #{vehicleCode},
+                #{prodSFCId}, #{prodNumber}, #{createTime}, #{startProdTime}, #{endProdTime})
+    </insert>
+
+    <!--    查询记录数-->
+    <select id="count" resultType="int">
+        select count(*) from rep_feeding
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="axisName !=null and axisName !=''">
+                and axis_name like '%${axisName}%'
+            </if>
+            <if test="inSFCId !=null and inSFCId !=''">
+                and in_SFC_id like '%${inSFCId}%'
+            </if>
+            <if test="prodSFCId !=null and prodSFCId !=''">
+                and prod_SFC_id like '%${prodSFCId}%'
+            </if>
+            <if test="vehicleCode !=null and vehicleCode !=''">
+                and vehicle_code like '%${vehicleCode}%'
+            </if>
+            <if test="startProdTime !=null and startProdTime !=''">
+                and start_prod_time like '%${startProdTime}%'
+            </if>
+            <if test="endProdTime !=null and endProdTime !=''">
+                and end_prod_time like '%${endProdTime}%'
+            </if>
+        </where>
+    </select>
+
+    <!--查询所有报表信息-->
+    <!--列表显示-->
+    <select id="queryFeedings" parameterType="map" resultType="com.zimax.mcrs.report.pojo.Feeding">
+        select * from rep_feeding
+        <where>
+            <if test="feedingId !=null and feedingId !=''">
+                and feeding_id = '${feedingId}'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+
+</mapper>

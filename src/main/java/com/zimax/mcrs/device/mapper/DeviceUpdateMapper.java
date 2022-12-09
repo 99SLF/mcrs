@@ -2,11 +2,14 @@ package com.zimax.mcrs.device.mapper;
 
 import com.zimax.mcrs.device.pojo.DeviceUpdate;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 终端更新
+ *
  * @author 林俊杰
  * @date 2022/12/1
  */
@@ -14,23 +17,23 @@ import java.util.List;
 public interface DeviceUpdateMapper {
 
     /**
-     * 初始化查询
+     * 查询全部更新信息
      * @return
      */
-//    List<DeviceUpdate> queryAll();
-
-    /**
-     * 条件查询
-     * @return
-     */
-//    public void query();
+    List<DeviceUpdate> queryAll(Map map);
 
 
     /**
-     * 下载
+     * 计算条数
+     */
+    int count(@Param("equipmentId") String equipmentId, @Param("version") String version);
+
+
+    /**
+     * 回退
      * @return
      */
-//    public void download();
+//    void rollback();
 
     /**
      * 删除

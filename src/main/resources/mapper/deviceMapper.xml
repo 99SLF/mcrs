@@ -3,54 +3,76 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zimax.mcrs.device.mapper.DeviceMapper">
 
-<!--    &lt;!&ndash;    查询记录数&ndash;&gt;-->
-<!--    <select id="count" resultType="int">-->
-<!--        select count(*) from cap_equipment-->
-<!--        <where>-->
-<!--            <if test="equipmentId !=null and equipmentId !=''">-->
-<!--                and equipment_id like '%${equipmentId}%'-->
-<!--            </if>-->
-<!--            <if test="equipmentName !=null and equipmentName !=''">-->
-<!--                and equipment_name like '%${equipmentName}%'-->
-<!--            </if>-->
-<!--        </where>-->
-<!--    </select>-->
+    <!--查询记录数-->
+    <select id="count" resultType="int">
+        select count(*) from eqi_device
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="APPId !=null and APPId !=''">
+                and app_id like '%${APPId}%'
+            </if>
+        </where>
+    </select>
 
-<!--    &lt;!&ndash;查询所有&ndash;&gt;-->
-<!--    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.device.pojo.Equipment">-->
-<!--        select * from cap_equipment-->
-<!--        <where>-->
-<!--            <if test="equipmentId !=null and equipmentId !=''">-->
-<!--                and equipment_id like '%${equipmentId}%'-->
-<!--            </if>-->
-<!--            <if test="equipmentName !=null and equipmentName !=''">-->
-<!--                and equipment_name like '%${equipmentName}%'-->
-<!--            </if>-->
-<!--        </where>-->
-<!--        order by ${field} ${order}-->
-<!--        limit ${begin},${limit}-->
-<!--    </select>-->
+    <!--查询所有-->
+    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.device.pojo.Device">
+        select * from eqi_device
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="APPId !=null and APPId !=''">
+                and app_id like '%${APPId}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
 
-<!--    &lt;!&ndash;添加设备&ndash;&gt;-->
-<!--    <insert id="addEquipment" parameterType="com.zimax.mcrs.device.pojo.Equipment">-->
-<!--        insert into cap_equipment values (#{equipmentId}, #{equipmentName}, #{equipmentInstallLocation},-->
-<!--                                          #{equipmentProperties}, #{equipmentContinuePort}, #{mesContinueIp},-->
-<!--                                          #{enabledState}, #{remarks}, #{creator}, #{createTime})-->
-<!--    </insert>-->
+    <!--注册终端-->
+    <insert id="registrationDevice" parameterType="com.zimax.mcrs.device.pojo.Device">
+        insert into eqi_device
+        values (#{APPId}, #{version}, #{needUpdate},
+                #{deviceSoftwareType}, #{deviceName},
+                #{assessName}, #{factoryName}, #{assessType},
+                #{assessIp}, #{equipmentId},
+                #{assessAttributes}, #{assessInstallLocation},
+                #{accessMethod}, #{remarks}, #{creator},
+                #{createTime}, #{enable})
+    </insert>
 
-<!--    &lt;!&ndash;根据主键删除设备&ndash;&gt;-->
-<!--    <delete id="removeEquipment" parameterType="String">-->
-<!--        delete from cap_equipment where equipment_id = #{equipmentId}-->
-<!--    </delete>-->
+    <!--根据主键删除设备-->
+    <delete id="logoutDevice" parameterType="String">
+        delete
+        from eqi_device
+        where app_id = #{APPId}
+    </delete>
 
-<!--    &lt;!&ndash;更新1条设备信息&ndash;&gt;-->
-<!--    <update id="updateEquipment" parameterType="com.zimax.mcrs.device.pojo.Equipment">-->
-<!--        update cap_equipment set equipment_name=#{equipmentName},equipment_install_location=#{equipmentInstallLocation},-->
-<!--                                 equipment_properties=#{equipmentProperties},equipment_continue_port=#{equipmentContinuePort},-->
-<!--                                 mes_continue_ip = #{mesContinueIp}, enabled_state = #{enabledState},remarks = #{remarks},-->
-<!--                                 creator = #{creator}, create_time=#{createTime} where equipment_id=#{equipmentId}-->
-<!--    </update>-->
-
+    <!--更新1条设备信息-->
+    <update id="updateDevice" parameterType="com.zimax.mcrs.device.pojo.Device">
+        update eqi_device
+        set version=#{version},
+            need_update=#{needUpdate},
+            device_software_type=#{deviceSoftwareType},
+            device_name=#{deviceName},
+            assess_name=#{assessName},
+            factory_name=#{factoryName},
+            assess_type=#{assessType},
+            assess_ip=#{assessIp},
+            equipment_id=#{equipmentId},
+            assess_attributes=#{assessAttributes},
+            assess_install_location=#{assessInstallLocation},
+            access_method=#{accessMethod},
+            remarks=#{remarks},
+            enable=#{enable}
+        where app_id = #{APPId}
+    </update>
 
 
 </mapper>

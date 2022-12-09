@@ -62,12 +62,8 @@ public class FunctionController {
      */
     @DeleteMapping("function/batchDelete")
     public Result<?> deleteFunctions(@RequestBody String[] funcCodes) {
-        if(functionService.deleteFunctions(Arrays.asList(funcCodes))==0){
-            return Result.success();
-        }else{
-            return Result.error("1","删除失败");
-        }
-
+        functionService.deleteFunctions(Arrays.asList(funcCodes));
+        return Result.success();
     }
 
 }

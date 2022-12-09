@@ -70,10 +70,30 @@
         <property name="mapperInterface" value="com.zimax.components.coframe.auth.mapper.UserInitMapper"/>
     </bean>
 
+    <bean id="FeedingReportMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.report.mapper.FeedingReportMapper"/>
+    </bean>
+    <bean id="AbnProdPrcsReportMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.report.mapper.AbnProdPrcsReportMapper"/>
+    </bean>
+    <bean id="BlankingReportMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.report.mapper.BlankingReportMapper"/>
+    </bean>
+    <bean id="RFIDReadRaReportMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.report.mapper.RFIDReadRaReportMapper"/>
+    </bean>
+
+
+
     <bean id="FunctionBean" class="com.zimax.components.coframe.framework.service.FunctionService">
         <property name="functionMapper" ref="FunctionMapper"/>
         <property name="funcGroupMapper" ref="FuncGroupMapper"/>
         <property name="applicationMapper" ref="ApplicationMapper"/>
+        <property name="funcResourceMapper" ref="FuncResourceMapper"/>
     </bean>
 
     <bean id="FuncResourceBean" class="com.zimax.components.coframe.framework.service.FuncResourceService">
