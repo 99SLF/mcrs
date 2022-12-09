@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
  * @author 李伟杰
  * @date 2022/12/5 15:18
  */
+
 @Service
 public class RFIDReadRaService {
+
     /**
      * RFID读取率报表
      */

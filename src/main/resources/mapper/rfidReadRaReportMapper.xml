@@ -6,8 +6,7 @@
     <!--添加RFID读取率报表-->
     <insert id="addRFIDReadRa" parameterType="com.zimax.mcrs.report.pojo.RFIDReadRa">
         insert into rep_rfid
-        values (#{RFIDReadId}, #{equipmentId}, #{RFIDId}, #{antennaId}, #{readRate},
-                #{recordTime})
+        values (#{RFIDReadId}, #{equipmentId}, #{RFIDId}, #{antennaId}, #{readRate},#{recordTime})
     </insert>
 
 

@@ -25,7 +25,7 @@ public class EquipmentService {
     /**
      * 查询所有
      */
-    public List<Equipment> queryEquipments(int limit, int page, String equipmentId, String equipmentName, String order, String field) {
+    public List<Equipment> queryEquipments(String limit, String page, String equipmentId, String equipmentName, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -35,8 +35,10 @@ public class EquipmentService {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));
         }
-        map.put("begin", limit * (page - 1));
-        map.put("limit", limit);
+        if (limit != null) {
+            map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
+            map.put("limit", Integer.parseInt(limit));
+        }
         map.put("equipmentId", equipmentId);
         map.put("equipmentName", equipmentName);
         return equipmentMapper.queryAll(map);

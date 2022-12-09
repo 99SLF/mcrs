@@ -57,4 +57,9 @@ public interface DeviceMapper {
      */
     int count(@Param("equipmentId") String equipmentId, @Param("APPId") String APPId);
 
+    /**
+     * 返回数据给监控
+     */
+    List<Device> toMonitor(Map map);
+
 }

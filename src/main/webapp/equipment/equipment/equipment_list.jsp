@@ -191,7 +191,7 @@
 	table.render({
 		elem: "#LAY-app-equipment-list",
 		id: "LAY-app-equipment-list-reload",
-		url: "/mcrs/equipment/query",
+		url: "/mcrs/equipment/equipment/query",
 		method: "GET",
 		height: "full-" + getFullSize(),
 		page: true,

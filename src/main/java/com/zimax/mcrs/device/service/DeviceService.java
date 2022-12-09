@@ -26,7 +26,7 @@ public class DeviceService {
      * 查询所有终端信息
      * @return
      */
-    public List<Device> queryDevices(int page, int limit, String equipmentId, String APPId, String order, String field) {
+    public List<Device> queryDevices(String  page, String limit, String equipmentId, String APPId, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -36,8 +36,10 @@ public class DeviceService {
             map.put("order",order);
             map.put("field",changeString.camelUnderline(field));
         }
-        map.put("begin",limit*(page-1));
-        map.put("limit",limit);
+        if (limit != null) {
+            map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
+            map.put("limit", Integer.parseInt(limit));
+        }
         map.put("equipmentId",equipmentId);
         map.put("APPId",APPId);
         return deviceMapper.queryAll(map);
@@ -69,35 +71,21 @@ public class DeviceService {
     }
 
     /**
-     * 初始化查询
+     * 修改终端
      */
     public void updateDevice(Device device) {
         deviceMapper.updateDevice(device);
     }
 
     /**
-     * 根据APPId查询
-     * @param APPId 依据APPId查询
+     * 提供数据给监控
      */
-    public Device queryAPPId(int APPId) {
-        return null;
+    public List<Device> toMonitor(){
+        Map<String,Object> map= new HashMap<>();
+        return deviceMapper.toMonitor(map);
     }
 
-    /**
-     * 根据设备资源号查询
-     * @param equipmentId 依据设备资源号查询
-     */
-    public Device queryEquipmentId(int equipmentId) {
-        return null;
-    }
 
-    /**
-     * 根据终端软件类型查询
-     * @param deviceSoftwareType 依据终端软件类型查询
-     */
-    public Device queryDeviceSoftwareType(String deviceSoftwareType) {
-        return null;
-    }
 
 
 }

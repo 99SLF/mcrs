@@ -74,5 +74,10 @@
         where app_id = #{APPId}
     </update>
 
+    <!--查询数据给监控-->
+    <select id="toMonitor" parameterType="map" resultType="com.zimax.mcrs.device.pojo.Device">
+        select `equipment_id`,`app_id`,`device_software_type` from eqi_device
+    </select>
+
 
 </mapper>
