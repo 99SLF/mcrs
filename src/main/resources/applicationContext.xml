@@ -90,4 +90,8 @@
     <bean id="InitUserObjectServiceBean" class="com.zimax.components.coframe.init.InitUserObjectService">
         <property name="userInitMapper" ref="UserInitMapper"/>
     </bean>
+
+    <bean id="DefaultRoleManagerBean" class="com.zimax.components.coframe.auth.party.manager.DefaultRoleManager">
+<!--        <property name="userInitMapper" ref="UserInitMapper"/>-->
+    </bean>
 </beans>
