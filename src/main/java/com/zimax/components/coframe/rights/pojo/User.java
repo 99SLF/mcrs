@@ -126,7 +126,7 @@ public class User {
     /**
      * 创建人
      */
-    private String createUser;
+    private String creator;
 
     /**
      * 创建时间

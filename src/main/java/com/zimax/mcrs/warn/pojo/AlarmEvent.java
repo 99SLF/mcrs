@@ -24,7 +24,7 @@ public class AlarmEvent {
      * 预警事件编码
      */
     @TableId(type = IdType.AUTO)
-    private int alarmEventId;
+    private Integer alarmEventId;
 
     /**
      * 预警事件标题

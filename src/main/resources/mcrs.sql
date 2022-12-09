@@ -143,45 +143,32 @@ DROP TABLE IF EXISTS `app_menu`;
 CREATE TABLE `app_menu` (
     `menu_id` varchar(40) NOT NULL,
     `parent_menu_id` varchar(40) DEFAULT NULL,
-    `menu_name` varchar(40) NOT NULL,
-    `menu_label` varchar(40) NOT NULL,
+    `menu_name` varchar(40) DEFAULT NULL,
+    `menu_label` varchar(40) DEFAULT NULL,
     `menu_code` varchar(40) DEFAULT NULL,
     `is_leaf` varchar(1) DEFAULT NULL,
+    `menu_action` varchar(64) DEFAULT NULL,
     `parameter` varchar(256) DEFAULT NULL,
-    `menu_level` smallint(6) DEFAULT NULL,
-    `display_order` smallint(6) DEFAULT NULL,
+    `menu_level` int(6) DEFAULT NULL,
+    `display_order` int(6) DEFAULT NULL,
     `image_path` varchar(100) DEFAULT NULL,
     `expand_path` varchar(100) DEFAULT NULL,
     `menu_seq` varchar(256) DEFAULT NULL,
     `open_mode` varchar(255) DEFAULT NULL,
-    `sub_count` decimal(10,0) DEFAULT NULL,
-    `app_id` decimal(10,0) DEFAULT NULL,
+    `sub_count` int(10) DEFAULT NULL,
+    `app_id` int(10) DEFAULT NULL,
     `func_code` varchar(255) DEFAULT NULL,
     `app_info` varchar(64) DEFAULT NULL,
-    `tenant_id` varchar(64) NOT NULL,
+    `tenant_id` varchar(64) DEFAULT NULL,
     PRIMARY KEY (`menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for cap_role
--- ----------------------------
-DROP TABLE IF EXISTS `cap_role`;
-CREATE TABLE `cap_role` (
-    `role_id` int(11) NOT NULL AUTO_INCREMENT,
-    `role_code` varchar(255) DEFAULT NULL,
-    `role_name` varchar(255) DEFAULT NULL,
-    `role_desc` varchar(255) DEFAULT NULL,
-    `creator` varchar(255) DEFAULT NULL,
-    `create_time` date DEFAULT NULL,
-    PRIMARY KEY (`role_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Table structure for cap_user
 -- ----------------------------
 DROP TABLE IF EXISTS `cap_user`;
 CREATE TABLE `cap_user` (
-    `operator_id` decimal(18,0) NOT NULL,
+    `operator_id` int(18) NOT NULL AUTO_INCREMENT,
     `tenant_id` varchar(64) NOT NULL,
     `user_id` varchar(64) NOT NULL,
     `password` varchar(100) DEFAULT NULL,
@@ -189,39 +176,39 @@ CREATE TABLE `cap_user` (
     `user_name` varchar(64) DEFAULT NULL,
     `auth_mode` varchar(255) DEFAULT NULL,
     `status` varchar(16) DEFAULT NULL,
-    `unlock_time` datetime NOT NULL,
+    `unlock_time` date NOT NULL,
     `menu_type` varchar(255) DEFAULT NULL,
-    `last_login` datetime NOT NULL,
-    `err_count` decimal(10,0) DEFAULT NULL,
+    `last_login` date NOT NULL,
+    `err_count` int(10) DEFAULT NULL,
     `start_date` date DEFAULT NULL,
     `end_date` date DEFAULT NULL,
     `valid_time` varchar(255) DEFAULT NULL,
     `mac_code` varchar(128) DEFAULT NULL,
     `ip_address` varchar(128) DEFAULT NULL,
     `email` varchar(255) DEFAULT NULL,
-    `create_user` varchar(64) DEFAULT NULL,
-    `create_time` datetime NOT NULL,
+    `creator` varchar(64) DEFAULT NULL,
+    `create_time` date NOT NULL,
     PRIMARY KEY (`operator_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for dict_entry
 -- ----------------------------
 DROP TABLE IF EXISTS `dict_entry`;
 CREATE TABLE `dict_entry` (
-    `dict_Id` varchar(128) NOT NULL,
-    `dict_type_Id` varchar(128) NOT NULL,
-    `dict_name` varchar(255) DEFAULT NULL,
-    `status` int(11) DEFAULT NULL,
-    `sort_no` int(11) DEFAULT NULL,
-    `rank` int(11) DEFAULT NULL,
-    `parent_id` varchar(255) DEFAULT NULL,
-    `seq_no` varchar(255) DEFAULT NULL,
-    `filter1` varchar(255) DEFAULT NULL,
-    `filter2` varchar(255) DEFAULT NULL,
-    PRIMARY KEY (`dict_Id`,`dict_type_Id`),
-    KEY `DictEntry_DictType` (`dict_type_Id`),
-    CONSTRAINT `DictEntry_DictType` FOREIGN KEY (`dict_type_Id`) REFERENCES `dict_type` (`dict_type_id`)
+      `dict_Id` varchar(128) NOT NULL,
+      `dict_type_Id` varchar(128) NOT NULL,
+      `dict_name` varchar(255) DEFAULT NULL,
+      `status` int(11) DEFAULT NULL,
+      `sort_no` int(11) DEFAULT NULL,
+      `rank` int(11) DEFAULT NULL,
+      `parent_id` varchar(255) DEFAULT NULL,
+      `seq_no` varchar(255) DEFAULT NULL,
+      `filter1` varchar(255) DEFAULT NULL,
+      `filter2` varchar(255) DEFAULT NULL,
+      PRIMARY KEY (`dict_Id`,`dict_type_Id`),
+      KEY `DictEntry_DictType` (`dict_type_Id`),
+      CONSTRAINT `DictEntry_DictType` FOREIGN KEY (`dict_type_Id`) REFERENCES `dict_type` (`dict_type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -229,13 +216,84 @@ CREATE TABLE `dict_entry` (
 -- ----------------------------
 DROP TABLE IF EXISTS `dict_type`;
 CREATE TABLE `dict_type` (
-    `dict_type_id` varchar(128) NOT NULL,
-    `dict_type_name` varchar(255) DEFAULT NULL,
-    `rank` int(11) DEFAULT NULL,
-    `parent_id` varchar(255) DEFAULT NULL,
-    `seq_no` varchar(255) DEFAULT NULL,
-    PRIMARY KEY (`dict_type_id`)
+     `dict_type_id` varchar(128) NOT NULL,
+     `dict_type_name` varchar(255) DEFAULT NULL,
+     `rank` int(11) DEFAULT NULL,
+     `parent_id` varchar(255) DEFAULT NULL,
+     `seq_no` varchar(255) DEFAULT NULL,
+     PRIMARY KEY (`dict_type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for rep_abn_prod_prcs
+-- ----------------------------
+DROP TABLE IF EXISTS `rep_abn_prod_prcs`;
+CREATE TABLE `rep_abn_prod_prcs` (
+     `abn_PP_id` int(11) NOT NULL AUTO_INCREMENT,
+     `site_id` varchar(255) DEFAULT NULL,
+     `roll_id` varchar(255) DEFAULT NULL,
+     `equipment_id` varchar(255) DEFAULT NULL,
+     `axis_name` varchar(255) DEFAULT NULL,
+     `vehicle_code` varchar(255) DEFAULT NULL,
+     `prod_SFC_id` varchar(255) DEFAULT NULL,
+     `end_EA_number` int(11) DEFAULT NULL,
+     `perform_step` varchar(255) DEFAULT NULL,
+     `is_end` varchar(255) DEFAULT NULL,
+     `start_prod_time` date DEFAULT NULL,
+     `end_prod_time` date DEFAULT NULL,
+     PRIMARY KEY (`abn_PP_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for rep_blanking
+-- ----------------------------
+DROP TABLE IF EXISTS `rep_blanking`;
+CREATE TABLE `rep_blanking` (
+    `blanking_id` int(11) NOT NULL AUTO_INCREMENT,
+    `equipment_id` varchar(255) DEFAULT NULL,
+    `axis_name` varchar(255) DEFAULT NULL,
+    `antenna_loc` varchar(255) DEFAULT NULL,
+    `vehicle_code` varchar(255) DEFAULT NULL,
+    `prod_SFC_id` varchar(255) DEFAULT NULL,
+    `end_EA_number` int(11) DEFAULT NULL,
+    `in_rice_number` int(11) DEFAULT NULL,
+    `is_end` varchar(255) DEFAULT NULL,
+    `start_prod_time` date DEFAULT NULL,
+    `end_prod_time` date DEFAULT NULL,
+    PRIMARY KEY (`blanking_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for rep_feeding
+-- ----------------------------
+DROP TABLE IF EXISTS `rep_feeding`;
+CREATE TABLE `rep_feeding` (
+   `feeding_id` int(11) NOT NULL AUTO_INCREMENT,
+   `equipment_id` varchar(255) DEFAULT NULL,
+   `axis_name` varchar(255) DEFAULT NULL,
+   `in_SFC_id` varchar(255) DEFAULT NULL,
+   `vehicle_code` varchar(255) DEFAULT NULL,
+   `prod_SFC_id` varchar(255) DEFAULT NULL,
+   `prod_number` int(11) DEFAULT NULL,
+   `create_time` date DEFAULT NULL,
+   `start_prod_time` date DEFAULT NULL,
+   `end_prod_time` date DEFAULT NULL,
+   PRIMARY KEY (`feeding_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for rep_rfid
+-- ----------------------------
+DROP TABLE IF EXISTS `rep_rfid`;
+CREATE TABLE `rep_rfid` (
+    `rfid_read_id` int(11) NOT NULL AUTO_INCREMENT,
+    `equipment_id` varchar(255) DEFAULT NULL,
+    `RFID_id` varchar(255) DEFAULT NULL,
+    `antenna_id` varchar(255) DEFAULT NULL,
+    `read_rate` varchar(255) DEFAULT NULL,
+    `record_time` date DEFAULT NULL,
+    PRIMARY KEY (`rfid_read_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
 
 
 -- ----------------------------

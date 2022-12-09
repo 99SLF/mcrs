@@ -1,7 +1,6 @@
 package com.zimax.components.coframe.rights.service;
 
 import com.zimax.components.coframe.rights.mapper.UserMapper;
-import com.zimax.components.coframe.rights.pojo.Role;
 import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.mcrs.config.ChangeString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,11 @@ import java.util.Map;
  */
 @Service
 public class UserService {
+
+    /**
+     * 用户数据操作
+     *
+     */
     @Autowired
     private UserMapper userMapper;
 
@@ -37,7 +41,7 @@ public class UserService {
     /**
      * 查询所有用户信息
      */
-    public List<User> queryUsers(int page, int limit, String status, String userName, String order, String field) {
+    public List<User> queryUsers(String page, String limit, String status, String userName, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -47,8 +51,10 @@ public class UserService {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));
         }
-        map.put("begin", limit * (page - 1));
-        map.put("limit", limit);
+        if (limit != null) {
+            map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
+            map.put("limit", Integer.parseInt(limit));
+        }
         map.put("status", status);
         map.put("userName", userName);
         return userMapper.queryUsers(map);

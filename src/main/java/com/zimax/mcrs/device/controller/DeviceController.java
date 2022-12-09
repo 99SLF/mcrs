@@ -47,7 +47,7 @@ public class DeviceController {
 
 
     /**
-     * 注册终端
+     * 修改终端
      *
      * @param device 终端
      */

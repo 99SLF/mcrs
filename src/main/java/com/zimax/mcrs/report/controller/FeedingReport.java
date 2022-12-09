@@ -55,12 +55,12 @@ public class FeedingReport {
      * @return msg 返回信息
      */
     @GetMapping("/feeding/query")
-    public Result<?> queryFeedings(@RequestParam int page, @RequestParam int limit,
-                                  String equipmentId, String axisName,
-                                  String inSFCId, String prodSFCId,
-                                  String vehicleCode, String startProdTime,
-                                  String endProdTime,
-                                  String order, String field) {
+    public Result<?> queryFeedings(String page,  String limit,
+                                   String equipmentId, String axisName,
+                                   String inSFCId, String prodSFCId,
+                                   String vehicleCode, String startProdTime,
+                                   String endProdTime,
+                                   String order, String field) {
         List feedings = feedingService.queryFeedings(page,limit,equipmentId,axisName,inSFCId,prodSFCId,vehicleCode,startProdTime,endProdTime,order,field);
         return Result.success(feedings,feedingService.count(equipmentId,axisName,inSFCId,prodSFCId,vehicleCode,startProdTime,endProdTime));
     }
