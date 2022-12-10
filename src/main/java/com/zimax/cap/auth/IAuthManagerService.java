@@ -33,8 +33,15 @@ public interface IAuthManagerService {
     boolean delAuthRes(Party paramParty,
                        AuthResource paramAuthResource, int paramInt);
 
-    boolean delAuthResBatch(Party paramParty,
-                            List<AuthResource> paramList, int paramInt);
+    /**
+     *  批量删除授权资源
+     *
+     * @param party 参与者
+     * @param authResList 授权资源列表
+     * @param mode 模式
+     * @return 是否成功
+     */
+    boolean delAuthResBatch(Party party, List<AuthResource> authResList, int mode);
 
     boolean addOrUpdatePartyAuth(Party paramParty1,
                                  Party paramParty2);

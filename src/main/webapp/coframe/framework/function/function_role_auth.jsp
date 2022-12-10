@@ -204,9 +204,7 @@
 			var funcDatas = tree.getChecked("funcTree1");
 			var leafNodes = [];
 			active.getLeafNodes(funcDatas, leafNodes);
-			var json = JSON.stringify({
-				functions: leafNodes
-			});
+			var json = JSON.stringify(leafNodes);
 			$.ajax({
 				url: "<%=request.getContextPath()%>/function/auth/save/<%=request.getParameter("roleId") %>",
 				type: "POST",

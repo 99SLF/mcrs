@@ -1,8 +1,10 @@
 package com.zimax.components.coframe.framework.auth;
 
+import com.zimax.cap.auth.AuthResource;
 import com.zimax.cap.auth.manager.AuthRuntimeManager;
 import com.zimax.cap.party.Party;
 import com.zimax.components.coframe.framework.constants.IAppConstants;
+import com.zimax.components.coframe.framework.pojo.FunctionAuth;
 import com.zimax.components.coframe.tools.IConstants;
 import org.apache.log4j.Logger;
 
@@ -50,35 +52,44 @@ public class FunctionAuthService {
         return ret;
     }
 
-//    public boolean saveAuthFunctionsBatch(DataObject[] dataObjects, String roleId){
-//        Party party = getParty(roleId);
-//        AuthRuntimeManager manager = AuthRuntimeManager.getInstance();
-//        List<AuthResource> authList = new ArrayList<AuthResource>();
-//        for(int i = 0; i < dataObjects.length; i++){
-//            String resId = dataObjects[i].get("realId").toString();
-//            String resType = dataObjects[i].get("type").toString();
-//            AuthResource resource = new AuthResource();
-//            resource.setResourceID(resId);
-//            resource.setResourceType(resType);
-//            resource.setState("1");
-//            authList.add(resource);
-//        }
-//        boolean result = true;
-//        try{
-//            result = manager.delAuthResBatch(party, manager.getAuthResListByRole(party, "function"), 0);
-//            if (result) {
-//                result = manager.delAuthResBatch(party, manager.getAuthResListByRole(party, "functiongroup"), 0);
-//            }
-//            if (result) {
-//                result = manager.delAuthResBatch(party, manager.getAuthResListByRole(party, "application"), 0);
-//            }
-//            if (result) {
-//                result = manager.addOrUpdateAuthResBatch(party, authList);
-//            }
-//        }catch (Throwable t) {
-//            log.error("Save AuthFunctions failure, please do the operation again or contact the sysadmin.", t);
-//            result = false;
-//        }
-//        return result;
-//    }
+    /**
+     * 批量保存授权功能
+     *
+     * @param functionAuths 功能授权
+     * @param roleId 角色编号
+     * @return 是否成功
+     */
+    public boolean saveAuthFunctionsBatch(List<FunctionAuth> functionAuths, String roleId) {
+        Party party = getParty(roleId);
+        AuthRuntimeManager manager = AuthRuntimeManager.getInstance();
+        List<AuthResource> authList = new ArrayList<AuthResource>();
+        for(int i = 0; i < functionAuths.size(); i++) {
+            FunctionAuth functionAuth = functionAuths.get(i);
+            String resId = functionAuth.getRealId();
+            String resType = functionAuth.getType();
+            AuthResource resource = new AuthResource();
+            resource.setResourceId(resId);
+            resource.setResourceType(resType);
+            resource.setState("1");
+            authList.add(resource);
+        }
+        boolean result = true;
+        try{
+            result = manager.delAuthResBatch(party, manager.getAuthResListByRole(party, "function"), 0);
+            if (result) {
+                result = manager.delAuthResBatch(party, manager.getAuthResListByRole(party, "functiongroup"), 0);
+            }
+            if (result) {
+                result = manager.delAuthResBatch(party, manager.getAuthResListByRole(party, "application"), 0);
+            }
+            if (result) {
+                result = manager.addOrUpdateAuthResBatch(party, authList);
+            }
+        }catch (Throwable t) {
+            log.error("Save AuthFunctions failure, please do the operation again or contact the sysadmin.", t);
+            result = false;
+        }
+        return result;
+    }
+
 }

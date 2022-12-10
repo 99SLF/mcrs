@@ -4,9 +4,11 @@ import com.alibaba.excel.util.StringUtils;
 import com.zimax.cap.auth.AuthResource;
 import com.zimax.cap.auth.IAuthManagerService;
 import com.zimax.cap.auth.MenuTree;
+import com.zimax.cap.auth.manager.AuthRuntimeManager;
 import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
 import com.zimax.cap.party.Party;
+import com.zimax.cap.utility.StringUtil;
 import com.zimax.components.coframe.auth.menu.DefaultMenuAuthService;
 import com.zimax.components.coframe.rights.partyauth.DefaultPartyAuthManager;
 import com.zimax.components.coframe.rights.pojo.ResAuth;
@@ -16,8 +18,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * 默认授权管理实现，用于资源授权、参与者授权
@@ -39,6 +40,7 @@ public class DefaultAuthManagerService implements IAuthManagerService {
         this.partyAuthBean = context.getBean(DefaultPartyAuthManager.SPRING_BEAN_NAME, DefaultPartyAuthManager.class);
     }
 
+    @Override
     public boolean addOrUpdateAuthRes(Party party, AuthResource authRes) {
         // 如果缓存中不存在，说明是要新增，否则是更新
 //        String resId = authRes.getResourceId();
@@ -75,60 +77,56 @@ public class DefaultAuthManagerService implements IAuthManagerService {
         return true;
     }
 
-    public boolean addOrUpdateAuthResBatch(Party party,
-                                           List<AuthResource> authResList) {
-//        try {
-//            List<ResAuth> toInsert = new ArrayList<ResAuth>();
-//            List<ResAuth> toUpdate = new ArrayList<ResAuth>();
-//            Map<String, Map<String, ResAuth>> tmpAuthTypeMap = new HashMap<String, Map<String, ResAuth>>();
-//            for (AuthResource authResource : authResList) {
-//                String resId = authResource.getResourceID();
-//                String resType = authResource.getResourceType();
-//                String state = AuthRuntimeManager.getInstance()
-//                        .getAuthResourceState(party, resId, resType);
-//                if (StringUtil.isEmpty(state)) {
-//                    ResAuth capResAuth = ResAuth.FACTORY.create();
-//                    capResAuth.setPartyId(party.getId());
-//                    capResAuth.setPartyType(party.getPartyTypeID());
-//                    capResAuth.setResId(resId);
-//                    capResAuth.setResType(resType);
-//                    capResAuth.setResState(authResource.getState());
-//                    capResAuth.setCreateTime(new Date());
-//                    capResAuth.setCreateUser(AppUserManager.getCurrentUserId());
-//                    capResAuth.setTenantId(TenantManager.getCurrentTenantID());
-//                    toInsert.add(capResAuth);
-//                } else {
-//                    // 如果需要更新的数据量很大，这里单个去查询可能会慢，一般来说批量更新的资源类型是相同的
-//                    // 如果某种类型的资源授权信息很多，一次性查询出来处理也会比较慢，所以这里可能要根据实际资源类型分开处理
-//                    Map<String, ResAuth> tmpAuthIdMap = tmpAuthTypeMap
-//                            .get(resType);
-//                    if (tmpAuthIdMap == null) {
-//                        ResAuth[] resauths = this.resAuthBean
-//                                .getResAuthListByResType(party, resType);
-//                        tmpAuthIdMap = new HashMap<String, ResAuth>();
-//                        for (ResAuth tmpResAuth : resauths) {
-//                            tmpAuthIdMap.put(tmpResAuth.getResId(), tmpResAuth);
-//                        }
-//                        tmpAuthTypeMap.put(resType, tmpAuthIdMap);
-//                    }
-//                    ResAuth capResAuth = tmpAuthIdMap.get(resId);
-//                    capResAuth.setResState(authResource.getState());
-//                    toUpdate.add(capResAuth);
-//                }
-//            }
-//
-//            this.resAuthBean.save(
-//                    toInsert.toArray(new ResAuth[toInsert.size()]),
-//                    toUpdate.toArray(new ResAuth[toUpdate.size()]), null);
-//
-//            return true;
-//        } catch (Throwable t) {
-//            log.error("Add or update resources auth failed.", t);
-//            return false;
-//        }
-        return true;
+    @Override
+    public boolean addOrUpdateAuthResBatch(Party party, List<AuthResource> authResList) {
+        try {
+            List<ResAuth> toInsert = new ArrayList<ResAuth>();
+            List<ResAuth> toUpdate = new ArrayList<ResAuth>();
+            Map<String, Map<String, ResAuth>> tmpAuthTypeMap = new HashMap<String, Map<String, ResAuth>>();
+            for (AuthResource authResource : authResList) {
+                String resId = authResource.getResourceId();
+                String resType = authResource.getResourceType();
+                String state = AuthRuntimeManager.getInstance().getAuthResourceState(party, resId, resType);
+                if (StringUtil.isEmpty(state)) {
+                    ResAuth resAuth = new ResAuth();
+                    resAuth.setPartyId(party.getId());
+                    resAuth.setPartyType(party.getPartyTypeId());
+                    resAuth.setResId(resId);
+                    resAuth.setResType(resType);
+                    resAuth.setResState(authResource.getState());
+                    resAuth.setCreateTime(new Date());
+//                    resAuth.setCreateUser(AppUserManager.getCurrentUserId());
+                    toInsert.add(resAuth);
+                } else {
+                    // 如果需要更新的数据量很大，这里单个去查询可能会慢，一般来说批量更新的资源类型是相同的
+                    // 如果某种类型的资源授权信息很多，一次性查询出来处理也会比较慢，所以这里可能要根据实际资源类型分开处理
+                    Map<String, ResAuth> tmpAuthIdMap = tmpAuthTypeMap
+                            .get(resType);
+                    if (tmpAuthIdMap == null) {
+                        ResAuth[] resauths = this.resAuthBean
+                                .getResAuthListByResType(party, resType);
+                        tmpAuthIdMap = new HashMap<String, ResAuth>();
+                        for (ResAuth tmpResAuth : resauths) {
+                            tmpAuthIdMap.put(tmpResAuth.getResId(), tmpResAuth);
+                        }
+                        tmpAuthTypeMap.put(resType, tmpAuthIdMap);
+                    }
+                    ResAuth capResAuth = tmpAuthIdMap.get(resId);
+                    capResAuth.setResState(authResource.getState());
+                    toUpdate.add(capResAuth);
+                }
+            }
+
+            this.resAuthBean.save(toInsert, toUpdate, null);
+
+            return true;
+        } catch (Throwable t) {
+            log.error("Add or update resources auth failed.", t);
+            return false;
+        }
     }
 
+    @Override
     public boolean addOrUpdatePartyAuth(Party roleParty, Party party) {
 //        try {
 //            PartyAuth capPartyauth = PartyAuth.FACTORY.create();
@@ -154,6 +152,7 @@ public class DefaultAuthManagerService implements IAuthManagerService {
         return true;
     }
 
+    @Override
     public boolean addOrUpdatePartyAuthBatch(Party roleParty,
                                              List<Party> partyList) {
 //        if (partyList == null) {
@@ -191,6 +190,7 @@ public class DefaultAuthManagerService implements IAuthManagerService {
         return true;
     }
 
+    @Override
     public boolean addOrUpdatePartyAuthBatch(List<Party> rolePartyList,
                                              Party party) {
 //        if (rolePartyList == null) {
@@ -225,6 +225,7 @@ public class DefaultAuthManagerService implements IAuthManagerService {
         return true;
     }
 
+    @Override
     public boolean deletePartyAuth(String partyId, String partyType) {
 //        String tenantId = TenantManager.getCurrentTenantID();
 //        try {
@@ -236,6 +237,7 @@ public class DefaultAuthManagerService implements IAuthManagerService {
         return false;
     }
 
+    @Override
     public boolean delAuthRes(Party party, AuthResource authRes, int mode) {
 //        String resId = authRes.getResourceID();
 //        String resType = authRes.getResourceType();
@@ -286,71 +288,63 @@ public class DefaultAuthManagerService implements IAuthManagerService {
         return true;
     }
 
-    public boolean delAuthResBatch(Party party, List<AuthResource> authResList,
-                                   int mode) {
-//        try {
-//            Map<String, Map<String, ResAuth>> tmpAuthTypeMap = new HashMap<String, Map<String, ResAuth>>();
-//            List<ResAuth> toDel = new ArrayList<ResAuth>();
-//            if (mode == IAuthManagerService.DEL_MODE_SINGLE) {
-//                for (AuthResource authRes : authResList) {
-//                    String childResId = authRes.getResourceID();
-//                    String childResType = authRes.getResourceType();
-//                    Map<String, ResAuth> tmpAuthIdMap = tmpAuthTypeMap
-//                            .get(childResType);
-//                    if (tmpAuthIdMap == null) {
-//                        ResAuth[] resauths = this.resAuthBean
-//                                .getResAuthListByResType(party, childResType);
-//                        tmpAuthIdMap = new HashMap<String, ResAuth>();
-//                        for (ResAuth tmpResauth : resauths) {
-//                            tmpAuthIdMap.put(tmpResauth.getResId(), tmpResauth);
-//                        }
-//                        tmpAuthTypeMap.put(childResType, tmpAuthIdMap);
-//                    }
-//                    ResAuth capResauth = tmpAuthIdMap.get(childResId);
-//                    if (capResauth != null) {
-//                        toDel.add(capResauth);
-//                    }
-//                }
-//            } else {
-//                for (AuthResource authRes : authResList) {
-//                    String resId = authRes.getResourceID();
-//                    String resType = authRes.getResourceType();
-//                    List<AuthResource> authResListWithChildren = AuthRuntimeManager
-//                            .getInstance().getAuthResListWithChildrenByRole(
-//                                    party, resId, resType);
-//                    for (AuthResource authResource : authResListWithChildren) {
-//                        String childResId = authResource.getResourceID();
-//                        String childResType = authResource.getResourceType();
-//                        Map<String, ResAuth> tmpAuthIdMap = tmpAuthTypeMap
-//                                .get(childResType);
-//                        if (tmpAuthIdMap == null) {
-//                            ResAuth[] resauths = this.resAuthBean
-//                                    .getResAuthListByResType(party,
-//                                            childResType);
-//                            tmpAuthIdMap = new HashMap<String, ResAuth>();
-//                            for (ResAuth tmpResauth : resauths) {
-//                                tmpAuthIdMap.put(tmpResauth.getResId(),
-//                                        tmpResauth);
-//                            }
-//                            tmpAuthTypeMap.put(childResType, tmpAuthIdMap);
-//                        }
-//                        ResAuth capResauth = tmpAuthIdMap.get(childResId);
-//                        if (capResauth != null) {
-//                            toDel.add(capResauth);
-//                        }
-//                    }
-//                }
-//            }
-//            this.resAuthBean.save(null, null,
-//                    toDel.toArray(new ResAuth[toDel.size()]));
-//            return true;
-//        } catch (Throwable t) {
-//            log.error("Delete resources auth failed.", t);
-//            return false;
-//        }
-        return true;
+    @Override
+    public boolean delAuthResBatch(Party party, List<AuthResource> authResList, int mode) {
+        try {
+            Map<String, Map<String, ResAuth>> tmpAuthTypeMap = new HashMap<String, Map<String, ResAuth>>();
+            List<ResAuth> toDel = new ArrayList<ResAuth>();
+            if (mode == IAuthManagerService.DEL_MODE_SINGLE) {
+                for (AuthResource authRes : authResList) {
+                    String childResId = authRes.getResourceId();
+                    String childResType = authRes.getResourceType();
+                    Map<String, ResAuth> tmpAuthIdMap = tmpAuthTypeMap.get(childResType);
+                    if (tmpAuthIdMap == null) {
+                        ResAuth[] resauths = this.resAuthBean.getResAuthListByResType(party, childResType);
+                        tmpAuthIdMap = new HashMap<String, ResAuth>();
+                        for (ResAuth tmpResauth : resauths) {
+                            tmpAuthIdMap.put(tmpResauth.getResId(), tmpResauth);
+                        }
+                        tmpAuthTypeMap.put(childResType, tmpAuthIdMap);
+                    }
+                    ResAuth capResauth = tmpAuthIdMap.get(childResId);
+                    if (capResauth != null) {
+                        toDel.add(capResauth);
+                    }
+                }
+            } else {
+                for (AuthResource authRes : authResList) {
+                    String resId = authRes.getResourceId();
+                    String resType = authRes.getResourceType();
+                    List<AuthResource> authResListWithChildren = AuthRuntimeManager.getInstance().getAuthResListWithChildrenByRole(
+                            party, resId, resType);
+                    for (AuthResource authResource : authResListWithChildren) {
+                        String childResId = authResource.getResourceId();
+                        String childResType = authResource.getResourceType();
+                        Map<String, ResAuth> tmpAuthIdMap = tmpAuthTypeMap.get(childResType);
+                        if (tmpAuthIdMap == null) {
+                            ResAuth[] resauths = this.resAuthBean.getResAuthListByResType(party, childResType);
+                            tmpAuthIdMap = new HashMap<String, ResAuth>();
+                            for (ResAuth tmpResauth : resauths) {
+                                tmpAuthIdMap.put(tmpResauth.getResId(), tmpResauth);
+                            }
+                            tmpAuthTypeMap.put(childResType, tmpAuthIdMap);
+                        }
+                        ResAuth capResauth = tmpAuthIdMap.get(childResId);
+                        if (capResauth != null) {
+                            toDel.add(capResauth);
+                        }
+                    }
+                }
+            }
+            this.resAuthBean.save(null, null, toDel);
+            return true;
+        } catch (Throwable t) {
+            log.error("Delete resources auth failed.", t);
+            return false;
+        }
     }
 
+    @Override
     public boolean delPartyAuth(Party roleParty, Party party, int delMode) {
 //        try {
 //            if (delMode == IAuthManagerService.DEL_MODE_SINGLE) {
@@ -373,6 +367,7 @@ public class DefaultAuthManagerService implements IAuthManagerService {
         return true;
     }
 
+    @Override
     public boolean delPartyAuthBatch(Party roleParty, List<Party> partyList,
                                      int delMode) {
 //        if (partyList == null) {
@@ -408,6 +403,7 @@ public class DefaultAuthManagerService implements IAuthManagerService {
         return true;
     }
 
+    @Override
     public boolean delPartyAuthBatch(List<Party> rolePartyList, Party party,
                                      int delMode) {
 //        if (rolePartyList == null) {
@@ -457,6 +453,7 @@ public class DefaultAuthManagerService implements IAuthManagerService {
         return 0;
     }
 
+    @Override
     public boolean delAuthResByRole(Party party) {
 //        try {
 //            this.resAuthBean.deleteResAuthByParty(party);
@@ -467,6 +464,7 @@ public class DefaultAuthManagerService implements IAuthManagerService {
         return false;
     }
 
+    @Override
     public boolean delPartyAuthByRole(Party roleParty) {
 //        try {
 //            this.partyAuthBean.delPartyAuthByRole(roleParty);
@@ -477,6 +475,7 @@ public class DefaultAuthManagerService implements IAuthManagerService {
         return false;
     }
 
+    @Override
     public MenuTree getUserMenuTree() {
         IUserObject userObject = DataContextManager.current()
                 .getMUODataContext().getUserObject();
@@ -498,10 +497,12 @@ public class DefaultAuthManagerService implements IAuthManagerService {
         return menuAuthService.getAllPartyAuthMenuTree();
     }
 
+    @Override
     public MenuTree getUserMenuTree(IMenuTreeFilter filter) {
         return filter.doFilter(getUserMenuTree());
     }
 
+    @Override
     public MenuTree getUserMenuTreeByAppCode(String appCode) {
         IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
         String roleIds = (String) userObject

@@ -44,20 +44,15 @@ public class DefaultResAuthManager {
     }
 
     /**
-     * 获取某个party对于某种类型资源的所有权限数据，目前party只支持roleParty
+     * 获取某个参与者对于某种类型资源的所有权限数据，目前参与者只支持角色参与者
      *
-     * @param party
-     * @param resType
-     * @return
+     * @param party 参与者
+     * @param resType 资源类型
+     * @return 资源授权集合
      */
     public ResAuth[] getResAuthListByResType(Party party, String resType) {
-//        IDASCriteria criteria = DASManager.createCriteria(ResAuth.QNAME);
-//        criteria.add(ExpressionHelper.eq(IConstants.TENANT_PROPERTY, TenantManager.getCurrentTenantID()));
-//        criteria.add(ExpressionHelper.eq(CAP_RESAUTH_ENTITY_PARTY_ID_PROPERTY, party.getId()));
-//        criteria.add(ExpressionHelper.eq(CAP_RESAUTH_ENTITY_PARTY_TYPE_PROPERTY, party.getPartyTypeID()));
-//        criteria.add(ExpressionHelper.eq(CAP_RESAUTH_ENTITY_RES_TYPE_PROPERTY, resType));
-//        return getDASTemplate().queryEntitiesByCriteriaEntity(ResAuth.class, criteria);
-        return null;
+        List<ResAuth> resAuthList = resAuthMapper.getResAuthListByResType(party.getId(), party.getPartyTypeId(), resType);
+        return resAuthList.toArray(new ResAuth[resAuthList.size()]);
     }
 
     public ResAuth getResAuthByResIdAndType(Party party, String resId, String resType) {
@@ -78,16 +73,26 @@ public class DefaultResAuthManager {
 //        getDASTemplate().updateEntity(capResauth);
     }
 
-    private void updateResAuthBatch(ResAuth[] capResAuths) {
-//        getDASTemplate().updateEntityBatch(capResAuths);
+    /**
+     * 批量更新资源授权列表
+     *
+     * @param resAuths 资源授权列表
+     */
+    private void updateResAuthBatch(List<ResAuth> resAuths) {
+        resAuthMapper.updateResAuthBatch(resAuths);
     }
 
     public void insertResAuth(ResAuth capResauth) {
 //        getDASTemplate().insertEntity(capResauth);
     }
 
-    private void insertResAuthBatch(ResAuth[] capResauth) {
-//        getDASTemplate().insertEntityBatch(capResauth);
+    /**
+     * 批量插入资源授权列表
+     *
+     * @param resAuths 资源授权列表
+     */
+    private void insertResAuthBatch(List<ResAuth> resAuths) {
+        resAuthMapper.insertResAuthBatch(resAuths);
     }
 
     public void deleteResAuth(ResAuth capResauth) {
@@ -100,25 +105,30 @@ public class DefaultResAuthManager {
 //        getDASTemplate().deleteByCriteriaEntity(criteria);
     }
 
-    private void deleteResAuthBatch(ResAuth[] capResauth) {
-//        getDASTemplate().deleteEntityBatch(capResauth);
+    /**
+     * 批量删除资源授权列表
+     *
+     * @param resAuths 资源授权列表
+     */
+    private void deleteResAuthBatch(List<ResAuth> resAuths) {
+        resAuthMapper.deleteResAuthBatch(resAuths);
     }
 
     /**
-     * 保证事务
+     * 保存资源授权
      *
-     * @param toAdd
-     * @param toUpdate
-     * @param toDel
+     * @param toAdd 添加的资源授权
+     * @param toUpdate 更新的资源授权
+     * @param toDel 删除的资源授权
      */
-    public void save(ResAuth[] toAdd, ResAuth[] toUpdate, ResAuth[] toDel) {
-        if (toAdd != null && toAdd.length > 0) {
+    public void save(List<ResAuth> toAdd, List<ResAuth> toUpdate, List<ResAuth> toDel) {
+        if (toAdd != null && !toAdd.isEmpty()) {
             this.insertResAuthBatch(toAdd);
         }
-        if (toUpdate != null && toUpdate.length > 0) {
+        if (toUpdate != null && !toUpdate.isEmpty()) {
             this.updateResAuthBatch(toUpdate);
         }
-        if (toDel != null && toDel.length > 0) {
+        if (toDel != null && !toDel.isEmpty()) {
             this.deleteResAuthBatch(toDel);
         }
     }

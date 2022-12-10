@@ -292,8 +292,7 @@ public class AuthRuntimeManager implements IResourceChangeListener {
         return false;
     }
 
-    public boolean addOrUpdateAuthResBatch(Party roleParty,
-                                           List<AuthResource> authResList) {
+    public boolean addOrUpdateAuthResBatch(Party roleParty, List<AuthResource> authResList) {
         if (roleParty == null) {
             this.log.error("The roleParty is null");
             return false;

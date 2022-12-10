@@ -6,4 +6,48 @@
     <select id="getResAuthListByPartyIdAndPartyType" resultType="com.zimax.components.coframe.rights.pojo.ResAuth">
         select * from cap_res_auth where PARTY_ID = #{partyId} and PARTY_TYPE = #{partyType}
     </select>
+
+    <!-- 获取资源授权列表 -->
+    <select id="getResAuthListByResType" resultType="com.zimax.components.coframe.rights.pojo.ResAuth">
+        select * from cap_res_auth where PARTY_ID = #{partyId} and PARTY_TYPE = #{partyType} and RES_TYPE = #{resType}
+    </select>
+
+    <!-- 批量插入资源授权列表 -->
+    <insert id="insertResAuthBatch" parameterType="java.util.List">
+        insert into cap_res_auth(PARTY_ID, PARTY_TYPE, RES_ID, RES_TYPE, RES_STATE, PARTY_SCOPE, CREATE_USER, CREATE_TIME)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.partyId, jdbcType=VARCHAR}, #{item.partyType, jdbcType=VARCHAR}, #{item.resId, jdbcType=VARCHAR},
+             #{item.resType, jdbcType=VARCHAR}, #{item.resState, jdbcType=VARCHAR}, #{item.partyScope, jdbcType=VARCHAR},
+            #{item.createUser, jdbcType=VARCHAR}, #{item.createTime, jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+
+    <!-- 批量更新资源授权列表 -->
+    <update id="updateResAuthBatch" parameterType="java.util.List">
+        update cap_res_auth
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="res_state = case" suffix="else resState end,">
+                <foreach collection="list" item="resAuth" index="index">
+                    <if test="resAuth.resState != null and resAuth.resState != ''">
+                        when PARTY_ID = #{resAuth.partyId} and PARTY_TYPE = #{resAuth.partyType} and RES_ID = #{resAuth.resId} and RES_TYPE = #{resAuth.resType} then #{resAuth.resState}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where (PARTY_ID, PARTY_TYPE, RES_ID, RES_TYPE) in
+        <foreach collection="list" item="resAuth" index="index" separator="," open="(" close=")">
+            (#{resAuth.partyId}, #{resAuth.partyType}, #{resAuth.resId}, #{resAuth.resType})
+        </foreach>
+    </update>
+
+    <!-- 批量删除资源授权列表 -->
+    <delete id="deleteResAuthBatch" parameterType="java.util.List">
+        delete from cap_res_auth
+        where (PARTY_ID, PARTY_TYPE, RES_ID, RES_TYPE) in
+        <foreach collection="list" item="resAuth" index="index" separator="," open="(" close=")">
+            (#{resAuth.partyId}, #{resAuth.partyType}, #{resAuth.resId}, #{resAuth.resType})
+        </foreach>
+    </delete>
+
 </mapper>

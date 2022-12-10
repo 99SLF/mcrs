@@ -4,6 +4,7 @@ import com.zimax.components.coframe.framework.auth.FunctionAuthService;
 import com.zimax.components.coframe.framework.pojo.Application;
 import com.zimax.components.coframe.framework.pojo.FuncGroup;
 import com.zimax.components.coframe.framework.pojo.Function;
+import com.zimax.components.coframe.framework.pojo.FunctionAuth;
 import com.zimax.components.coframe.framework.service.ApplicationService;
 import com.zimax.components.coframe.framework.service.FuncGroupService;
 import com.zimax.components.coframe.framework.service.FunctionService;
@@ -63,10 +64,16 @@ public class FunctionAuthController {
         return Result.success(functionAuthService.getFunctionCheckedTree(applicationTree, String.valueOf(roleId)));
     }
 
-    // 保存功能授权
+    /**
+     * 保存应用功能授权
+     *
+     * @param roleId 角色编号
+     * @param functionAuths 应用功能授权
+     * @return 是否成功
+     */
     @PostMapping("/save/{roleId}")
-    public Result<?> saveFunctionAuths(@PathVariable("roleId") int roleId, List<Map> functions) {
-        return Result.success();
+    public Result<?> saveFunctionAuths(@PathVariable("roleId") int roleId, @RequestBody List<FunctionAuth> functionAuths) {
+        return Result.success(functionAuthService.saveAuthFunctionsBatch(functionAuths, String.valueOf(roleId)));
     }
 
 }
