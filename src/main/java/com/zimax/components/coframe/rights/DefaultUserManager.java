@@ -1,7 +1,7 @@
 package com.zimax.components.coframe.rights;
 
 import com.zimax.components.coframe.rights.pojo.User;
-import com.zimax.components.coframe.rights.UserPasswordCipherUtils;
+
 import java.util.Date;
 
 /**
@@ -16,7 +16,7 @@ public class DefaultUserManager {
     public User setUserAttributeE(User capUser) {
         try {
             capUser.setPassword(encrypt(capUser.getPassword()));
-            capUser.setCreateUser("sysadmin");
+            capUser.setCreator("sysadmin");
             capUser.setTenantId("default");
             capUser.setCreateTime(new Date());
             capUser.setLastLogin(new Date());
@@ -72,16 +72,15 @@ public class DefaultUserManager {
 
     // 加密
     private static String encrypt(String password) throws Exception {
-        UserPasswordCipherUtils userPasswordCipherUtils = new UserPasswordCipherUtils();
-        // return CryptoUtil.encrypt(password, ENCRYPT_KEY);
-        return userPasswordCipherUtils.encrypt(password);
+        DESedeUserPasswordCipher deSedeUserPasswordCipher = new DESedeUserPasswordCipher();
+        return deSedeUserPasswordCipher.encrypt(password);
     }
 
     // 解密
     @SuppressWarnings("unused")
     private static String decrypt(String password) throws Exception {
-        // return CryptoUtil.decrypt(password, ENCRYPT_KEY);
-        return UserPasswordCipherUtils.decrypt(password);
+        DESedeUserPasswordCipher deSedeUserPasswordCipher = new DESedeUserPasswordCipher();
+        return deSedeUserPasswordCipher.decrypt(password);
     }
 
     /**

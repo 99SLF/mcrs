@@ -1,5 +1,6 @@
 package com.zimax.components.coframe.rights;
 
+import com.zimax.cap.utility.CryptoUtil;
 import com.zimax.components.coframe.rights.impl.IUserPasswordCipher;
 
 /**
@@ -11,13 +12,13 @@ public class DESedeUserPasswordCipher implements IUserPasswordCipher {
     private final static String ENCRYPT_KEY = "cap_user";
 
     public String encrypt(String plaintext) throws Exception {
-        //return CryptoUtil.encrypt(plaintext, ENCRYPT_KEY);
-        return null;
+        CryptoUtil cryptoUtil = new CryptoUtil();
+        return cryptoUtil.encrypt(plaintext, ENCRYPT_KEY);
     }
 
     public String decrypt(String cryptograph) throws Exception {
-        //return CryptoUtil.decrypt(cryptograph, ENCRYPT_KEY);
-        return null;
+        CryptoUtil cryptoUtil = new CryptoUtil();
+        return cryptoUtil.decrypt(cryptograph, ENCRYPT_KEY);
     }
 
 }

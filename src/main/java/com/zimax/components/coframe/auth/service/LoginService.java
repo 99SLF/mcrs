@@ -46,24 +46,22 @@ public class LoginService {
      * @param password 密码
      */
     public Result authentication(String userId, String password) {
-        return Result.success();
-//        User user = userService.getUserByUserId(userId);
-//        if (user == null) {
-//            return Result.error("1", "用户不存在");
-//        }
-//        Result result = isEnd(user);
-//        if (result.getCode() == "1") {
-//            return Result.error("1", result.getMsg());
-//        }
-//        if (!"1".equals(user.getStatus())) {
-//            return Result.error("1", "用户无权限登录，请联系系统管理员！");
-//        }
-//        System.out.println(userService.encodePassword(password));
-//        if (user.getPassword().equals(userService.encodePassword(password))) {
-//            return Result.success();
-//        } else {
-//            return Result.error("1", "密码错误");
-//        }
+        User user = userService.getUserByUserId(userId);
+        if (user == null) {
+            return Result.error("1", "用户不存在");
+        }
+        Result result = isEnd(user);
+        if (result.getCode() == "1") {
+            return Result.error("1", result.getMsg());
+        }
+        if (!"1".equals(user.getStatus())) {
+            return Result.error("1", "用户无权限登录，请联系系统管理员！");
+        }
+        if (user.getPassword().equals(userService.encodePassword(password))) {
+            return Result.success();
+        } else {
+            return Result.error("1", "密码错误");
+        }
     }
 
     /**
