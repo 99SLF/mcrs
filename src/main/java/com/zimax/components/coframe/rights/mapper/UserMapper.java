@@ -56,4 +56,9 @@ public interface UserMapper {
       */
      User checkUser(String userId );
 
+     /**
+      * 获取用户
+      */
+     User getUserByUserId(String userId );
+
 }

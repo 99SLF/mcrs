@@ -54,9 +54,9 @@ html{
 					<div class="form-banner-img"></div>
 				</div>
 				<div class="layui-tab layui-tab-brief" id="tabopenid" style="display: block;background-color: #fff;" lay-filter="docDemoTabBrief">
-					<ul class="layui-tab-title">
+					<ul class="layui-tab-title" style="text-align:center;">
 						<li class="layui-this">登 录</li>
-						<li class=""> <a href="/index/user/register.html"></a>注 册</li>
+<%--						<li class=""> <a href="/index/user/register.html"></a>注 册</li>--%>
 					</ul>
 					<div class="layui-tab-content" style="display:bloc">
 						<div class="layui-tab-item   layui-show">
@@ -70,18 +70,18 @@ html{
 										<label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
 										<input type="password" name="password" id="password" lay-verify="required" placeholder="密码" value="<%=password %>" class="layui-input">
 									</div>
-									<div class="layui-form-item" id="forget" style="margin-bottom: 20px;">
-										<a href="javascript:;" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;" id="forgotpassword">忘记密码？</a>
-									</div>
+<%--									<div class="layui-form-item" id="forget" style="margin-bottom: 20px;">--%>
+<%--										<a href="javascript:;" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;" id="forgotpassword">忘记密码？</a>--%>
+<%--									</div>--%>
 									<div class="layui-form-item">
 										<button id="login" class="layui-btn layui-btn-normal layui-btn-fluid" lay-submit="login" lay-filter="login">登 入</button>
 									</div>
-									<div class="layui-trans layui-form-item layadmin-user-login-other pad-top-no">
-										<label>社交账号登入</label>
-										<a class="thirdlogin" href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>
-										<a class="thirdlogin" href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>
-										<a class="thirdlogin" href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>
-									</div>
+<%--									<div class="layui-trans layui-form-item layadmin-user-login-other pad-top-no">--%>
+<%--										<label>社交账号登入</label>--%>
+<%--										<a class="thirdlogin" href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>--%>
+<%--										<a class="thirdlogin" href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>--%>
+<%--										<a class="thirdlogin" href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>--%>
+<%--									</div>--%>
 								</div>
 							</form>
 							<div style="display:none;">

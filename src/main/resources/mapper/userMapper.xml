@@ -88,6 +88,10 @@
         from cap_user
         where operator_id = #{operatorId}
     </select>
+    <!--获取一个用户信息-->
+    <select id="getUserByUserId" resultType="com.zimax.components.coframe.rights.pojo.User" >
+        select * from cap_user where user_id = #{userId}
+    </select>
 
     <!--获取一个用户信息-->
     <select id="checkUser" resultType="com.zimax.components.coframe.rights.pojo.User">
