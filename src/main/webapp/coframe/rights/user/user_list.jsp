@@ -81,11 +81,12 @@
 	var hiddenFields = [];
 	//功能名
 	var funName = "user_list";
-	
-	/*layui.admin.renderDictSelect({    //获取用户状态的下拉值
+
+	// 获取用户状态的下拉值
+	layui.admin.renderDictSelect({
 		elem: "#status",
 		dictTypeId: "COF_USERSTATUS"
-	});*/
+	});
 	//状态默认
 	$("#status").val("请选择");
 	form.render();
@@ -99,7 +100,7 @@
 	});
 	
 	//下拉框监听事件
-	form.on('select(refreshtable)', function(data) {
+	form.on("select(refreshtable)", function(data) {
 		var submit = $("#LAY-app-userlist-search");
 		submit.click();
 	});
@@ -114,7 +115,8 @@
 	});
 	
 	var active = {
-		add: function() {       //添加用户
+		// 添加用户
+		add: function() {
 			top.layer.open({
 				type: 2,
 				title: "添加用户",
@@ -129,7 +131,7 @@
 					layero.find("iframe")[0].contentWindow.SetData(dataJson);
 				},
 				yes: function(index, layero) {
-					var submit = layero.find('iframe').contents().find("#layuiadmin-app-form-submit");
+					var submit = layero.find("iframe").contents().find("#layuiadmin-app-form-submit");
 					submit.click();
 				}
 			});
@@ -144,7 +146,8 @@
 				layer.msg("最多只能选中一条记录！");
 	        } else {
 	        	var partyId = data[0].userId;
-				var url = "<%= request.getContextPath() %>/coframe/auth/partyauth/auth.jsp";//权限配置路径
+				// 权限配置路径
+				var url = "<%= request.getContextPath() %>/coframe/auth/partyauth/auth.jsp";
 				top.layer.open({ //开启弹窗
 					type: 2, 
 					title: "用户授权",
@@ -319,23 +322,20 @@
 	});
 	
 	// 查询过滤字段
-	// $.ajax({
-	// 	// url: "com.zimax.components.coframe.tools.ColsFilter.queryHiddenField.biz.ext",
-	// 	type: "POST",
-	// 	async: false ,
-	// 	data: JSON.stringify({
-	// 		funName: funName
-	// 	}),
-	// 	cache: false,
-	// 	contentType: "text/json",
-	// 	success: function(result) {
-	// 		if (result) {
-	// 			hiddenFields = result.colsFilters
-	// 		} else {
-	// 			layer.msg("查询失败");
-	// 		}
-	// 	}
-	// });
+	$.ajax({
+		url: "<%=request.getContextPath() %>/cols/filter/query/" + funName,
+		type: "GET",
+		async: false,
+		cache: false,
+		contentType: "text/json",
+		success: function(result) {
+			if (result) {
+				hiddenFields = result.data
+			} else {
+				layer.msg("查询失败");
+			}
+		}
+	});
 
 	// 判断是否隐藏函数
 	function isHidden(field) {
@@ -358,29 +358,22 @@
 		limits: [10, 15, 20, 30],
 		toolbar: "#toolbar",
 		defaultToolbar: ["filter"],
-		// colHideChange: function(col, checked) {
-		// 	var field = col.field;
-		// 	var hidden = col.hide;
-		// 	$.ajax({
-		// 		url: "com.zimax.components.coframe.tools.ColsFilter.setHiddenField.biz.ext",
-		// 		type: "POST",
-		// 		data: JSON.stringify({
-		// 			hidden: hidden,
-		// 			colsFilter: {
-		// 				funName: funName,
-		// 				field: field
-		// 			}
-		// 		}),
-		// 		cache: false,
-		// 		contentType: "text/json",
-		// 		success: function(result) {
-		// 			if (result) {
-		// 			} else{
-		// 				layer.msg("列筛选失败");
-		// 			}
-		// 		}
-		// 	});
-		// },
+		colHideChange: function(col, checked) {
+			var field = col.field;
+			var hidden = col.hide;
+			$.ajax({
+				url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
+				type: "GET",
+				cache: false,
+				contentType: "text/json",
+				success: function(result) {
+					if (result) {
+					} else{
+						layer.msg("列筛选失败");
+					}
+				}
+			});
+		},
 		parseData: function(res) {
 			return {
 				code: res.code,
@@ -525,9 +518,9 @@
 	});
 	
 	//批量选中	
-	$('body').on("click", ".layui-table-body table.layui-table tbody tr td", function() {
+	$("body").on("click", ".layui-table-body table.layui-table tbody tr td", function() {
 		if ($(this).attr("data-field") === "0") return;
-		$(this).siblings().eq(0).find('i').click();
+		$(this).siblings().eq(0).find("i").click();
 	});	
 </script>
 </body>

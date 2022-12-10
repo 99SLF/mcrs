@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.components.coframe.tools.mapper.ColsFilterMapper">
+
+    <!-- 查询列筛选列表 -->
+    <select id="queryColsFilters" parameterType="com.zimax.components.coframe.tools.pojo.ColsFilter" resultType="com.zimax.components.coframe.tools.pojo.ColsFilter">
+        select * from base_cols_filter where FUN_NAME = #{funName} and USER_ID = #{userId}
+    </select>
+
+    <!-- 添加列筛选 -->
+    <insert id="addColsFilter" parameterType="com.zimax.components.coframe.tools.pojo.ColsFilter">
+        insert into base_cols_filter(FUN_NAME, FIELD, USER_ID)
+        values(#{funName}, #{field}, #{userId})
+    </insert>
+
+    <!-- 删除列筛选 -->
+    <delete id="deleteColsFilter" parameterType="com.zimax.components.coframe.tools.pojo.ColsFilter">
+        delete from base_cols_filter where FUN_NAME = #{roleId} and USER_ID = #{userId}
+    </delete>
+</mapper>

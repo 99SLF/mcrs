@@ -1,5 +1,4 @@
 <%@page pageEncoding="UTF-8"%>
-<%--<%@page import="com.mes.foundation.eoscommon.ResourcesMessageUtil"%>--%>
 <!DOCTYPE html>
 <html>
 <!-- 
@@ -10,18 +9,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=equipment-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-<title>添加角色</title>
+<title>添加用户</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
-<style type="text/css">
-
-</style>
 </head>
 <body>
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0;">
 	<input type="hidden" name="operatorId" value="default">
 	<div class="layui-form-item layui-row layui-col-space10">
 		<div class="layui-col-sm6">
-			<label class="layui-form-label" >用户登录名:<span style="color:red">*</span></label>F
+			<label class="layui-form-label" >用户登录名:<span style="color:red">*</span></label>
 			<div class="layui-input-block">
 				<input id="userId" type="text" name="userId" lay-verify="required|checkUserId" placeholder="用户登录名(必填)" autocomplete="off" class="layui-input">
 			</div>
@@ -220,11 +216,11 @@
 			submit = true;
 			if (isExist == false) {
 				$.ajax({
-					url:  "/mcrs/user/add",
+					url: "<%=request.getContextPath()%>/user/add",
 					type: "POST",
 					data: submitData,
 					cache: false,
-					contentType: 'text/json',
+					contentType: "text/json",
 					success: function(result) {
 						layer.msg("添加成功", {
 							icon: 1,
