@@ -297,47 +297,113 @@ CREATE TABLE `rep_rfid` (
 
 
 -- ----------------------------
--- Table structure for cap_equipment
+-- Table structure for eqi_equipment
 -- ----------------------------
-
-drop table if exists cap_equipment;
-
-create table cap_equipment (
-    equipmentId varchar(255) not null,
-    equipmentName varchar(255) not null,
-    enabledState varchar(255) not null,
-    equipmentType varchar(255) not null,
-    useProcess varchar(255) not null,
-    equipmentProperties varchar(255) not null,
-    equipmentIp varchar(255) not null,
-    equipmentInstallLocation varchar(255) not null,
-    createTime date not null,
-    creator varchar(255) not null,
-    primary key (equipmentId)
-);ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for cap_device
--- ----------------------------
-DROP TABLE IF EXISTS `cap_device`;
-CREATE TABLE `cap_device`  (
-    `app_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `equipment_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `device_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `device_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `assess_method` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `assess_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `assess_resource_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `assess_attributes` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `assess_ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `assessInstall_location` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `device_software_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `use_process` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `registrant` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `register_role` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    `registration_date` date NOT NULL,
-    `enable` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `device_status` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    PRIMARY KEY (`app_id`) USING BTREE
+DROP TABLE IF EXISTS `eqi_equipment`;
+CREATE TABLE `eqi_equipment`  (
+  `equipment_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `equipment_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `enabled_state` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `equipment_properties` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `mes_continue_ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `equipment_install_location` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `equipment_continue_port` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `create_time` date NULL DEFAULT NULL,
+  `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `creator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`equipment_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+-- ----------------------------
+-- Table structure for eqi_device
+-- ----------------------------
+DROP TABLE IF EXISTS `eqi_device`;
+CREATE TABLE `eqi_device`  (
+   `app_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'APPId',
+   `version` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '版本号',
+   `need_update` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '是否需要更新',
+   `device_software_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '终端软件类型',
+   `device_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '终端名称',
+   `assess_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '接入点名称',
+   `factory_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工厂名称',
+   `assess_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接入点种类',
+   `assess_ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接入点Ip',
+   `equipment_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '设备资源号',
+   `assess_attributes` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接入点属性',
+   `assess_install_location` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接入点安装位置',
+   `access_method` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '接入方式',
+   `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+   `creator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+   `create_time` date NULL DEFAULT NULL COMMENT '创建时间',
+   `enable` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否启用',
+   PRIMARY KEY (`app_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+    -- ----------------------------
+-- Table structure for eqi_device_update
+-- ----------------------------
+DROP TABLE IF EXISTS `eqi_device_update`;
+CREATE TABLE `eqi_device_update`  (
+  `equipment_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '设备资源号',
+  `version` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '版本号',
+  `resource_number` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '资源包单号',
+  `device_software_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '终端软件类型',
+  `operate_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作类型',
+  `assess_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接入点名称',
+  `equipment_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '设备类型',
+  `factory_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工厂名称',
+  `version_change` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '版本更改人',
+  `version_change_time` date NULL DEFAULT NULL COMMENT '版本更改时间',
+  PRIMARY KEY (`equipment_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+    -- ----------------------------
+-- Table structure for war_alarm_event
+-- ----------------------------
+DROP TABLE IF EXISTS `war_alarm_event`;
+CREATE TABLE `war_alarm_event`  (
+    `alarm_event_id` int(11) NOT NULL COMMENT '预警事件编码',
+    `alarm_event_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '预警事件标题',
+    `enable_status` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '是否启用',
+    `alarm_level` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '预警级别',
+    `alarm_category` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '预警分类',
+    `alarm_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '预警类型',
+    `make_form_people` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '制单人',
+    `make_form_time` date NULL DEFAULT NULL COMMENT '制单时间',
+    `update_people` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
+    `update_time` date NULL DEFAULT NULL COMMENT '修改时间',
+    PRIMARY KEY (`alarm_event_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+    -- ----------------------------
+-- Table structure for war_alarm_rule
+-- ----------------------------
+DROP TABLE IF EXISTS `war_alarm_rule`;
+CREATE TABLE `war_alarm_rule`  (
+   `alarm_rule_id` int(10) NOT NULL COMMENT '预警规则编码',
+   `alarm_rule_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预警规则标题',
+   `enable` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否启用',
+   `monitor_level` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '监控层级',
+   `alarm_event_id` int(255) NULL DEFAULT NULL COMMENT '预警事件编码',
+   `monitor_object` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '监控对象',
+   `alarm_rule_describe` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预警规则描述',
+   `rule_make_form_people` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '制单人',
+   `rule_make_form_time` date NULL DEFAULT NULL COMMENT '制单时间',
+   `rule_update_people` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
+   `rule_update_time` date NULL DEFAULT NULL COMMENT 'ruleUpdateTime',
+   PRIMARY KEY (`alarm_rule_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
 
