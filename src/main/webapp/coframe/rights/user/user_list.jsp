@@ -74,6 +74,7 @@
 	var table = layui.table;
 	var form = layui.form;
 	var $ = layui.jquery;
+
 	//全局参数
 	var req_data;
 	//过滤字段
@@ -91,7 +92,6 @@
 	
 	//监听搜索
 	form.on("submit(LAY-app-userlist-search)", function(data) {
-		console.log(data);
 		var field = data.field;
 		table.reload("LAY-app-user-list-reload", {
 			where: field
@@ -350,7 +350,7 @@
 	table.render({
 		elem: "#LAY-app-user-list",
 		id: "LAY-app-user-list-reload",
-		url: "/mcrs/user/query",
+		url: "<%=request.getContextPath() %>/user/query",
 		method: "get",
 		height: "full-" + getFullSize(),
 		page: true,

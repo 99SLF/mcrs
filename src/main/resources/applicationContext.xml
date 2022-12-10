@@ -43,7 +43,7 @@
     </bean>
     <bean id="DictLoader" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
-        <property name="mapperInterface" value="com.zimax.components.coframe.dict.mapper.DictLoader"/>
+        <property name="mapperInterface" value="com.zimax.components.coframe.dict.mapper.DictLoaderMapper"/>
     </bean>
     <bean id="DictMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
@@ -90,10 +90,10 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.mcrs.report.mapper.BlankingReportMapper"/>
     </bean>
-<!--    <bean id="RFIDReadRaReportMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">-->
-<!--        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>-->
-<!--        <property name="mapperInterface" value="com.zimax.mcrs.report.mapper.RFIDReadRaReportMapper"/>-->
-<!--    </bean>-->
+    <bean id="RFIDReadRaReportMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.report.mapper.RFIDReadRaReportMapper"/>
+    </bean>
 
     <bean id="GradeAuthBean" class="com.zimax.components.coframe.rights.gradeauth.GradeAuthService"></bean>
 

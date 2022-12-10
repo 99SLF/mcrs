@@ -1,9 +1,11 @@
 package com.zimax.components.coframe.dict.service;
 
-import com.zimax.components.coframe.dict.mapper.DictLoader;
-import com.zimax.components.coframe.dict.pojo.DictType;
+import com.zimax.components.coframe.dict.mapper.DictLoaderMapper;
+import com.zimax.components.coframe.dict.pojo.DictData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author 李伟杰
@@ -11,17 +13,18 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DictLoaderService {
-    @Autowired
-    private DictLoader dictLoader;
 
-    /**
-     * 根据字典类型编号获取字典数据
-     */
-    public DictType getDict(String dictTypeId){
-        return null;
+	@Autowired
+	private DictLoaderMapper dictLoader;
 
-    }
-
-
+	/**
+	 * 根据字典类型编号获取字典数据
+	 *
+	 * @param dictTypeId 字典类型编号
+	 * @return 字典数据
+	 */
+	public List<DictData> getDictDatas(String dictTypeId) {
+		return dictLoader.getDictDatas(dictTypeId);
+	}
 
 }

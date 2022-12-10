@@ -259,7 +259,7 @@ layui.define("view", function(exports) {
 			var dictNames = [];
 			for (var i = 0, c = dictList.length; i < c; i++) {
 				var dictEntry = dictList[i];
-				if (dict.contains(dictId, dictEntry.dictID)) {
+				if (dict.contains(dictId, dictEntry.dictId)) {
 					dictNames.push(dictEntry.dictName);
 				}
 			}
@@ -272,14 +272,11 @@ layui.define("view", function(exports) {
 			}
 			var dictName = "";
 			Admin.req({
-				url: "com.zimax.components.coframe.DictLoader.getDictData.biz.ext",
-				data: {
-					dictTypeId : dictTypeId
-				},
+				url: n.base + "dictLoader/find/" + dictTypeId,
 				async: false,
 				success: function(res) {
 					if (res[n.response.dataName]) {
-						var dictList = res[n.response.dataName].dictList;
+						var dictList = res[n.response.dataName];
 						dict.map[c] = dictList;
 						dictName = dict.getDictName(dictList, dictId);
 					}
@@ -298,14 +295,11 @@ layui.define("view", function(exports) {
 			var d = dict.map[dictTypeId];
 			if (!d) {
 				Admin.req({
-					url: "com.zimax.components.coframe.DictLoader.getDictData.biz.ext",
-					data: {
-						dictTypeId: dictTypeId
-					},
+					url: n.base + "dictLoader/find/" + dictTypeId,
 					async: false,
 					success: function(res) {
 						if (res[n.response.dataName]) {
-							var e = res[n.response.dataName].dictList;
+							var e = res[n.response.dataName];
 							dict.map[dictTypeId] = e;
 						}
 					}
