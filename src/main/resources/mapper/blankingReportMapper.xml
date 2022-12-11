@@ -7,7 +7,67 @@
     <insert id="addBlanking" parameterType="com.zimax.mcrs.report.pojo.Blanking">
         insert into rep_blanking
         values (#{blankingId}, #{equipmentId}, #{axisName}, #{antennaLoc}, #{vehicleCode},
-                #{prodSFCId}, #{endEANumber}, #{inRiceNumber}, #{isEnd}, #{startProdTime}, #{endProdTime})
+                #{prodSFCId}, #{endEANumber}, #{inRiceNumber}, #{isEnd}, #{createTime}, #{startProdTime}, #{endProdTime})
     </insert>
 
+    <!--    查询记录数-->
+    <select id="count" resultType="int">
+        select count(*) from rep_blanking
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="axisName !=null and axisName !=''">
+                and axis_name	 like '%${axis_name}%'
+            </if>
+            <if test="antennaLoc !=null and antennaLoc !=''">
+                and antenna_loc like '%${antennaLoc}%'
+            </if>
+            <if test="prodSFCId !=null and prodSFCId !=''">
+                and prod_SFC_id like '%${prodSFCId}%'
+            </if>
+            <if test="isEnd !=null and isEnd !=''">
+                and is_end like '%${isEnd}%'
+            </if>
+            <if test="startProdTime !=null and startProdTime !=''">
+                and start_prod_time = #{startProdTime}
+            </if>
+            <if test="endProdTime !=null and endProdTime !=''">
+                and end_prod_time = #{endProdTime}
+            </if>
+        </where>
+    </select>
+    <!--查询下料报表信息-->
+    <select id="queryBlankings" parameterType="map" resultType="com.zimax.mcrs.report.pojo.Blanking">
+        select *  from rep_blanking
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="axisName !=null and axisName !=''">
+                and axis_name like '%${axisName}%'
+            </if>
+            <if test="antennaLoc !=null and antennaLoc !=''">
+                and antenna_loc like '%${antennaLoc}%'
+            </if>
+            <if test="prodSFCId !=null and prodSFCId !=''">
+                and prod_SFC_id like '%${prodSFCId}%'
+            </if>
+            <if test="isEnd !=null and isEnd !=''">
+                and is_end like '%${isEnd}%'
+            </if>
+            <if test="startProdTime !=null and startProdTime !=''">
+                and start_prod_time = #{startProdTime}
+            </if>
+            <if test="endProdTime !=null and endProdTime !=''">
+                and end_prod_time	= #{endProdTime}
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
 </mapper>

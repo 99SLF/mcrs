@@ -99,6 +99,11 @@
         <property name="mapperInterface" value="com.zimax.mcrs.report.mapper.RFIDReadRaReportMapper"/>
     </bean>
 
+    <bean id="AccessMonitorMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.monitor.mapper.AccessMonitorMapper"/>
+    </bean>
+
     <bean id="GradeAuthBean" class="com.zimax.components.coframe.rights.gradeauth.GradeAuthService"></bean>
 
     <bean id="RoleBean" class="com.zimax.components.coframe.rights.service.RoleService">

@@ -204,7 +204,7 @@
 		    		}); //设定最长等待10秒
 					layer.close(index);
 	       			$.ajax({
-						url: "com.zimax.components.coframe.rights.UserManager.updatePasswords.biz.ext",
+						url: "/mcrs/rights/user/changePassword",
 						type: "POST",
 						data: JSON.stringify({"users":data}),
 						cache: false,
@@ -248,7 +248,7 @@
 					title: "系统提示"
 				}, function(index) {
 					$.ajax({
-						url: "com.zimax.components.coframe.rights.UserManager.deleteUsers.biz.ext",
+						url: "/mcrs/rights/user/batchDelete",
 						type: "POST",
 						data: JSON.stringify({
 							users: data
@@ -350,7 +350,8 @@
 	table.render({
 		elem: "#LAY-app-user-list",
 		id: "LAY-app-user-list-reload",
-		url: "<%=request.getContextPath() %>/user/query",
+		<%--url: "<%=request.getContextPath() %>/user/query",--%>
+		url: "/mcrs/rights/user/query",
 		method: "get",
 		height: "full-" + getFullSize(),
 		page: true,
@@ -470,7 +471,7 @@
 				icon: 3, title: "系统提示"
 			}, function(index) {
 				$.ajax({
-					url: "com.zimax.components.coframe.rights.UserManager.deleteUsers.biz.ext",
+					url: "/mcrs/rights/user/batchDelete",
 					type: "POST",
 					data: JSON.stringify({
 						"users": data

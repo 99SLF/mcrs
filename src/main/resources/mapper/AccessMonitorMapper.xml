@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.monitor.mapper.AccessMonitorMapper">
+    <!--添加监控信息-->
+    <insert id="addAccessMonitor" parameterType="com.zimax.mcrs.monitor.pojo.AccessStatus">
+        insert into access_status
+        values (#{accessId}, #{equipmentId}, #{APPId}, #{accessType}, #{accessStatus},
+                #{antennaStatus}, #{deviceSoType}, #{deviceSoRuntime})
+    </insert>
+</mapper>
