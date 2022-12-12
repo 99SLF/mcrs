@@ -49,7 +49,7 @@ public class PartyTypeManager {
     }
 
     public IPartyTypeDataService getPartyTypeDataService(String typeID) {
-        return (IPartyTypeDataService) this.partyTypeDataServiceMap.get(typeID);
+        return this.partyTypeDataServiceMap.get(typeID);
     }
 
     public void putPartyTypeDataService(String typeID,

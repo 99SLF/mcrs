@@ -4,6 +4,8 @@ import com.zimax.cap.party.Party;
 import com.zimax.components.coframe.rights.mapper.PartyAuthMapper;
 import com.zimax.components.coframe.rights.pojo.PartyAuth;
 
+import java.util.List;
+
 /**
  * 默认的参与者授权管理
  *
@@ -38,19 +40,19 @@ public class DefaultPartyAuthManager {
 //        getDASTemplate().deleteEntity(capPartyAuth);
     }
 
-    public void deletePartyAuthBatch(PartyAuth[] capPartyAuths) {
-//        getDASTemplate().deleteEntityBatch(capPartyAuths);
+    public void deletePartyAuthBatch(List<PartyAuth> partyAuths) {
+        partyAuthMapper.deletePartyAuthBatch(partyAuths);
     }
 
-    public void savePartyAuthBatch(PartyAuth[] capPartyAuths) {
-//        getDASTemplate().saveEntities(capPartyAuths);
+    public void savePartyAuthBatch(List<PartyAuth> partyAuths) {
+        partyAuthMapper.insertPartyAuthBatch(partyAuths);
     }
 
-    public void insertAndDelete(PartyAuth[] toAdd, PartyAuth[] toDel) {
-        if (toAdd != null && toAdd.length > 0) {
+    public void insertAndDelete(List<PartyAuth> toAdd, List<PartyAuth> toDel) {
+        if (toAdd != null && !toAdd.isEmpty()) {
             this.savePartyAuthBatch(toAdd);
         }
-        if (toDel != null && toDel.length > 0) {
+        if (toDel != null && !toDel.isEmpty()) {
             this.deletePartyAuthBatch(toDel);
         }
     }

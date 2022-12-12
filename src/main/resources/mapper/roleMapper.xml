@@ -33,6 +33,11 @@
         </if>
     </select>
 
+    <!-- 根据参与者编号和参与者类型获取其拥有的角色 -->
+    <select id="getRoleListByAuthParty" parameterType="com.zimax.components.coframe.rights.pojo.PartyAuth" resultType="com.zimax.components.coframe.rights.pojo.Role">
+        SELECT b.* FROM cap_party_auth a LEFT JOIN cap_role b ON a.ROLE_ID = b.ROLE_ID WHERE a.PARTY_ID = #{partyId} AND a.PARTY_TYPE = #{partyType}
+    </select>
+
     <!-- 根据角色编号列表获取角色列表 -->
     <select id="queryRolesByRoleIds" parameterType="java.util.List" resultType="com.zimax.components.coframe.rights.pojo.Role">
         select * from cap_role where role_id in

@@ -1,5 +1,6 @@
 package com.zimax.components.coframe.rights.mapper;
 
+import com.zimax.components.coframe.rights.pojo.PartyAuth;
 import com.zimax.components.coframe.rights.pojo.Role;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,6 +15,15 @@ import java.util.Map;
 public interface RoleMapper {
 
     List<Role> queryRoles(Map map);
+
+    /**
+     * 根据参与者编号和参与者类型获取其拥有的角色
+     *
+     * @param partyId 参与者编号
+     * @param partyType 参与者类型
+     * @return 其拥有的角色
+     */
+    List<Role> getRoleListByAuthParty(@Param("partyId") String partyId, @Param("partyType") String partyType);
 
     /**
      * 根据角色编号列表获取角色列表

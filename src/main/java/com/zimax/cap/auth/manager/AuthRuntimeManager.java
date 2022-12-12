@@ -510,8 +510,7 @@ public class AuthRuntimeManager implements IResourceChangeListener {
                 .deletePartyAuth(partyId, partyType);
     }
 
-    public boolean addOrUpdatePartyAuthBatch(List<Party> rolePartyList,
-                                             Party party) {
+    public boolean addOrUpdatePartyAuthBatch(List<Party> rolePartyList, Party party) {
         if (party == null) {
             this.log.error("The party is null");
             return false;
@@ -561,8 +560,7 @@ public class AuthRuntimeManager implements IResourceChangeListener {
             this.log.error("The rolePartyList is null");
             return false;
         }
-        return AuthManagerServiceLoader.getCurrentPartyManagerService()
-                .delPartyAuthBatch(rolePartyList, party, delMode);
+        return AuthManagerServiceLoader.getCurrentPartyManagerService().delPartyAuthBatch(rolePartyList, party, delMode);
     }
 
     public String[] getCurrentPartyResAuthState(String resId, String resType) {

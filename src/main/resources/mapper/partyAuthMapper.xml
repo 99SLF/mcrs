@@ -2,8 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zimax.components.coframe.rights.mapper.PartyAuthMapper">
+
     <!-- 根据参与者编号和参与者类型获取资源授权列表 -->
     <select id="getResAuthListByPartyIdAndPartyType" resultType="com.zimax.components.coframe.rights.pojo.ResAuth">
         select * from cap_res_auth where PARTY_ID = #{partyId} and PARTY_TYPE = #{partyType}
     </select>
+
+    <!-- 批量插入参与者授权列表 -->
+    <insert id="insertPartyAuthBatch" parameterType="java.util.List">
+        insert into cap_party_auth(ROLE_TYPE, PARTY_ID, PARTY_TYPE, ROLE_ID, CREATE_USER, CREATE_TIME)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.roleType, jdbcType=VARCHAR}, #{item.partyId, jdbcType=VARCHAR}, #{item.partyType, jdbcType=VARCHAR},
+            #{item.roleId, jdbcType=VARCHAR}, #{item.createUser, jdbcType=VARCHAR}, #{item.createTime, jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+
+    <!-- 批量删除参与者授权列表 -->
+    <delete id="deletePartyAuthBatch" parameterType="java.util.List">
+        delete from cap_party_auth
+        where (ROLE_TYPE, PARTY_ID, PARTY_TYPE, ROLE_ID) in
+        <foreach collection="list" item="partyAuth" index="index" separator="," open="(" close=")">
+            (#{partyAuth.roleType}, #{partyAuth.partyId}, #{partyAuth.partyType}, #{partyAuth.roleId})
+        </foreach>
+    </delete>
+
 </mapper>

@@ -110,15 +110,30 @@ public class AuthStartupListener implements ServletContextListener {
         partyTypeModel.setIsLeaf("false");
         partyModel.addPartyTypeModel(partyTypeModel);
 
-        // emp_user_ref
-//        PartyTypeRefModel partyTypeRefModel = new PartyTypeRefModel();
-//        partyTypeRefModel.setRefID("emp_user_ref");
-//        partyTypeRefModel.setRefName("员工用户");
-//        partyTypeRefModel.setRefType("p_c");
-//        partyTypeRefModel.setParentPartyTypeID("emp");
-//        partyTypeRefModel.setChildPartyTypeID("user");
-//        partyTypeRefModel.setPartyTypeRefDataService("com.zimax.components.coframe.auth.party.ref.impl.EmpUserRefDataService");
-//        partyModel.addPartyTypeRefModel(partyTypeRefModel);
+        // user
+        partyTypeModel = new PartyTypeModel();
+        partyTypeModel.setTypeID("user");
+        partyTypeModel.setName("用户");
+        partyTypeModel.setPartyTypeDataService("com.zimax.components.coframe.auth.party.impl.UserPartyTypeDataService");
+        partyTypeModel.setDescription("");
+        partyTypeModel.setIsRole("false");
+        partyTypeModel.setPriority("6");
+        partyTypeModel.setIcon16("");
+        partyTypeModel.setIcon32("");
+        partyTypeModel.setShowInTree("false");
+        partyTypeModel.setShowAtRoot("false");
+        partyTypeModel.setIsLeaf("true");
+        partyModel.addPartyTypeModel(partyTypeModel);
+
+        // role_user_ref
+        PartyTypeRefModel partyTypeRefModel = new PartyTypeRefModel();
+        partyTypeRefModel.setRefID("role_user_ref");
+        partyTypeRefModel.setRefName("角色用户");
+        partyTypeRefModel.setRefType("r_p");
+        partyTypeRefModel.setParentPartyTypeID("role");
+        partyTypeRefModel.setChildPartyTypeID("user");
+        partyTypeRefModel.setPartyTypeRefDataService("com.zimax.components.coframe.auth.party.ref.impl.RoleUserRefDataService");
+        partyModel.addPartyTypeRefModel(partyTypeRefModel);
 
         loadPartyModel(partyModel);
         loadPartyRefModel(partyModel);
@@ -131,8 +146,7 @@ public class AuthStartupListener implements ServletContextListener {
      *            参与者模型
      */
     private void loadPartyModel(PartyModel partyModel) {
-        List<PartyTypeModel> partyTypeModelListList = partyModel
-                .getPartyTypeModelList();
+        List<PartyTypeModel> partyTypeModelListList = partyModel.getPartyTypeModelList();
         for (PartyTypeModel partyTypeModel : partyTypeModelListList) {
             String typeID = partyTypeModel.getTypeID();
 

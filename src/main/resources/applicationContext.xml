@@ -106,6 +106,8 @@
 
     <bean id="GradeAuthBean" class="com.zimax.components.coframe.rights.gradeauth.GradeAuthService"></bean>
 
+    <bean id="PartyAuthService" class="com.zimax.components.coframe.auth.service.PartyAuthService"></bean>
+
     <bean id="RoleBean" class="com.zimax.components.coframe.rights.service.RoleService">
         <property name="roleMapper" ref="RoleMapper"/>
         <property name="gradeAuthService" ref="GradeAuthBean"/>
@@ -140,6 +142,10 @@
         <property name="roleMapper" ref="RoleMapper"/>
     </bean>
 
+    <bean id="DefaultUserManagerBean" class="com.zimax.components.coframe.auth.party.manager.DefaultUserManager">
+        <property name="userMapper" ref="UserMapper"/>
+    </bean>
+
     <bean id="DefaultResAuthManagerBean" class="com.zimax.components.coframe.rights.resauth.DefaultResAuthManager">
         <property name="resAuthMapper" ref="ResAuthMapper"/>
     </bean>
@@ -147,4 +153,5 @@
     <bean id="DefaultPartyAuthManagerBean" class="com.zimax.components.coframe.rights.partyauth.DefaultPartyAuthManager">
         <property name="partyAuthMapper" ref="PartyAuthMapper"/>
     </bean>
+
 </beans>

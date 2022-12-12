@@ -28,8 +28,7 @@ public class DefaultPartyManagerService extends AbstractPartyManagerService impl
 
     @Override
     public List<Party> doGetAllPartyList(String partyTypeId) {
-        IPartyTypeDataService dataservice = PartyTypeManager.getInstance()
-                .getPartyTypeDataService(partyTypeId);
+        IPartyTypeDataService dataservice = PartyTypeManager.getInstance().getPartyTypeDataService(partyTypeId);
         if (dataservice == null) {
             log.warn("Can not find the partyTypeDataservice for partyTypeID = "
                     + partyTypeId);
@@ -40,11 +39,9 @@ public class DefaultPartyManagerService extends AbstractPartyManagerService impl
 
     @Override
     public List<Party> doGetRootPartyList(String partyTypeId) {
-        IPartyTypeDataService dataservice = PartyTypeManager.getInstance()
-                .getPartyTypeDataService(partyTypeId);
+        IPartyTypeDataService dataservice = PartyTypeManager.getInstance().getPartyTypeDataService(partyTypeId);
         if (dataservice == null) {
-            log.warn("Can not find the partyTypeDataservice for partyTypeID = "
-                    + partyTypeId);
+            log.warn("Can not find the partyTypeDataservice for partyTypeID = " + partyTypeId);
             return Collections.emptyList();
         }
         return dataservice.getRootPartyList();
@@ -211,11 +208,10 @@ public class DefaultPartyManagerService extends AbstractPartyManagerService impl
     }
 
     @Override
-    public Party doGetPartyByPartyID(String partyID, String partyType) {
-        IPartyTypeDataService dataservice = PartyTypeManager.getInstance()
-                .getPartyTypeDataService(partyType);
+    public Party doGetPartyByPartyId(String partyId, String partyType) {
+        IPartyTypeDataService dataservice = PartyTypeManager.getInstance().getPartyTypeDataService(partyType);
         if (dataservice != null) {
-            return dataservice.getPartyByPartyId(partyID);
+            return dataservice.getPartyByPartyId(partyId);
         }
         return null;
     }
