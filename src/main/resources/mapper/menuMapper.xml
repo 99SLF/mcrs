@@ -79,5 +79,32 @@
         where menu_id = #{menuId}
     </select>
 
+    <select id="countMenu" resultType="int">
+        select count(*) from app_menu
+        <where>
+            <if test='parentMenuId !="root" and parentMenuId !="" and parentMenuId!=null'>
+                and parent_menu_id = #{parentMenuId}
+            </if>
+        </where>
+    </select>
+    <!--查询所有菜单-->
+    <select id="queryMenuList" parameterType="map" resultType="com.zimax.components.coframe.framework.pojo.Menu">
+        select * from app_menu
+        <where>
+            <if test="parentMenuId=='root' or parentMenuId =='' or parentMenuId==null">
+                and parent_menu_id = ''or parent_menu_id is null
+            </if>
+            <if test="parentMenuId !='root' and parentMenuId !='' and parentMenuId!=null">
+                and parent_menu_id = #{parentMenuId}
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
 
 </mapper>

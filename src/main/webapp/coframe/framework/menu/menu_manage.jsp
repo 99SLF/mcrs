@@ -163,23 +163,23 @@
 	});
 	
 	//查询过滤字段
-	$.ajax({
-		url: "com.zimax.components.coframe.tools.ColsFilter.queryHiddenField.biz.ext",
-		type: "POST",
-		async: false ,
-		data: JSON.stringify({
-			funName: funName
-		}),
-		cache: false,
-		contentType: "text/json",
-		success: function(result) {
-			if (result) {
-				hiddenFields = result.colsFilters;
-			} else {
-				layer.msg("查询失败");		
-			}
-		}
-	});	
+	// $.ajax({
+	// 	url: "com.zimax.components.coframe.tools.ColsFilter.queryHiddenField.biz.ext",
+	// 	type: "POST",
+	// 	async: false ,
+	// 	data: JSON.stringify({
+	// 		funName: funName
+	// 	}),
+	// 	cache: false,
+	// 	contentType: "text/json",
+	// 	success: function(result) {
+	// 		if (result) {
+	// 			hiddenFields = result.colsFilters;
+	// 		} else {
+	// 			layer.msg("查询失败");
+	// 		}
+	// 	}
+	// });
 	
 	//判断是否隐藏函数
 	function isHidden(field) {
@@ -196,34 +196,34 @@
 		where: {
 			parentMenuId: "root"
 		},     //传参,判断是否为父节点
-		url: "com.zimax.components.coframe.framework.MenuManager.queryMenu.biz.ext",
-		method: "post",
+		url: "<%= request.getContextPath() %>/framework/menu/queryList",
+		method: "get",
 		height: "full-" + getFullSize(),
 		page: true,
 		limit: 10,
 		limits: [10, 15, 20, 30],
-		colHideChange: function(col, checked) {
-			var field = col.field;
-			var hidden = col.hide;
-			$.ajax({
-				url: "com.zimax.components.coframe.tools.ColsFilter.setHiddenField.biz.ext",
-				type: "POST",
-				data: JSON.stringify({
-					hidden: hidden,
-					colsFilter: {
-						funName: funName,
-						field: field
-					}
-				}),
-				cache: false,
-				contentType: "text/json",
-				success: function(result) {
-					if (!result) {
-						layer.msg("列筛选失败");		
-					}
-				}
-			});	
-		},
+		// colHideChange: function(col, checked) {
+		// 	var field = col.field;
+		// 	var hidden = col.hide;
+		// 	$.ajax({
+		// 		url: "com.zimax.components.coframe.tools.ColsFilter.setHiddenField.biz.ext",
+		// 		type: "POST",
+		// 		data: JSON.stringify({
+		// 			hidden: hidden,
+		// 			colsFilter: {
+		// 				funName: funName,
+		// 				field: field
+		// 			}
+		// 		}),
+		// 		cache: false,
+		// 		contentType: "text/json",
+		// 		success: function(result) {
+		// 			if (!result) {
+		// 				layer.msg("列筛选失败");
+		// 			}
+		// 		}
+		// 	});
+		// },
 		toolbar: "#toolbar",
 		defaultToolbar: ["filter"],
 		parseData: function(res) {
@@ -231,7 +231,7 @@
 				code: res.code,
 				msg: res.msg,
 				count: res.total,
-				data: res.menus
+				data: res.data
 			};
 		},
 		cols:[[{
@@ -318,22 +318,22 @@
 	}
 	
 	//下拉框数据
-	$.ajax({
-		url: "com.zimax.components.coframe.framework.MenuManager.queryMenuList.biz.ext",
-		type: "post",
-		cache: false,
-		contentType: "text/json",
-		success: function (json) {
-			if (json != null) {
-				for (var i = 0; i < json.menus.length; i++) {
-					if (json.menus[i].isLeaf == 0) {
-						$('#menuId').append(new Option(json.menus[i].menuName,json.menus[i].menuId));// 下拉菜单里添加元素
-					}
-				}
-			}
-			form.render("select");//刷新表单select选择框渲染
-		}
-	});
+	<%--$.ajax({--%>
+	<%--	url: "<%= request.getContextPath() %>/framework/menu/queryList",--%>
+	<%--	type: "GET",--%>
+	<%--	cache: false,--%>
+	<%--	contentType: "text/json",--%>
+	<%--	success: function (json) {--%>
+	<%--		if (json != null) {--%>
+	<%--			for (var i = 0; i < json.data.length; i++) {--%>
+	<%--				if (json.data[i].isLeaf == 0) {--%>
+	<%--					$('#menuId').append(new Option(json.data[i].menuName,json.data[i].menuId));// 下拉菜单里添加元素--%>
+	<%--				}--%>
+	<%--			}--%>
+	<%--		}--%>
+	<%--		form.render("select");//刷新表单select选择框渲染--%>
+	<%--	}--%>
+	<%--});--%>
 	
 	  
 	function select(num) {

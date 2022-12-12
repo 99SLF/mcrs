@@ -47,7 +47,7 @@ public class MenuController {
      * 删除菜单
      * @param menuId 菜单编号
      */
-    @DeleteMapping("/menu/delete{menuId}")
+    @DeleteMapping("/menu/delete/{menuId}")
     public Result<?> deleteMenu(@PathVariable String menuId) {
         menuService.deleteMenu(menuId);
         return Result.success();
@@ -58,9 +58,9 @@ public class MenuController {
      *
      * @param menuIds 用户操作编号数组
      */
-    @DeleteMapping("/menu/batchDelete")
-    public Result<?> deleteMenus (@RequestBody String[] menuIds) {
-        menuService.deleteMenus(Arrays.asList(menuIds));
+        @DeleteMapping("/menu/batchDelete")
+        public Result<?> deleteMenus (@RequestBody String[] menuIds) {
+            menuService.deleteMenus(Arrays.asList(menuIds));
         return Result.success();
     }
 
@@ -79,6 +79,21 @@ public class MenuController {
         return Result.success(menuIds,menuService.count(menuId));
     }
 
+    /**
+     * 菜单管理
+     * @return 菜单列表
+     * @param parentMenuId 父菜单编号
+     * @param limit 记录数
+     * @param page 页码
+     * @param field 排序字段
+     * @param order 排序方式
+     */
+    @GetMapping("/menu/queryList")
+    public Result<?> queryMenuList(String page, String limit, String parentMenuId, String order, String field) {
+        System.out.println("----"+parentMenuId);
+        List menus = menuService.queryMenus(page,limit,parentMenuId,order,field);
+        return Result.success(menus,menuService.countMenu(parentMenuId));
+    }
     /**
      * 获取菜单信息
      * @param menuId 菜单编号

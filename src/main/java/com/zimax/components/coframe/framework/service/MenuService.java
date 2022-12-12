@@ -43,12 +43,12 @@ public class MenuService implements IMenuService {
      * @param field 排序字段
      * @return
      */
-    public List<Menu> queryMenus(String  page, String limit, String menuId, String order, String field) {
+    public List<Menu> queryMenus(String  page, String limit, String parentMenuId , String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
             map.put("order","asc");
-            map.put("field","menu_id");
+            map.put("field","display_order");
         }else{
             map.put("order",order);
             map.put("field",changeString.camelUnderline(field));
@@ -57,9 +57,10 @@ public class MenuService implements IMenuService {
             map.put("begin",Integer.parseInt(limit)*(Integer.parseInt(page)-1));
             map.put("limit",Integer.parseInt(limit));
         }
-        map.put("menuId",menuId);
-        return menuMapper.queryMenus(map);
+        map.put("parentMenuId",parentMenuId);
+        return menuMapper.queryMenuList(map);
     }
+
 
     /**
      * 添加菜单信息
@@ -106,5 +107,13 @@ public class MenuService implements IMenuService {
      */
     public int count(String appId){
         return menuMapper.count(appId);
+    }
+
+    /**
+     * 查询记录
+     */
+    public int countMenu(String parentMenuId ){
+        System.out.println(parentMenuId+"-------");
+        return menuMapper.countMenu(parentMenuId);
     }
 }

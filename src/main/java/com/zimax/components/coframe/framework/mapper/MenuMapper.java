@@ -25,6 +25,12 @@ public interface MenuMapper {
      * @return
      */
     List<Menu> queryMenus(Map map);
+    /**
+     * 查询所有菜单
+     * @param map 菜单集合
+     * @return
+     */
+    List<Menu> queryMenuList(Map map);
 
     /**
      * 获取单挑菜单数据
@@ -67,6 +73,13 @@ public interface MenuMapper {
      * @return
      */
     int count(@Param("menuId") String menuId);
+
+    /**
+     * 查询记录数
+     * @param parentMenuId 菜单编码
+     * @return
+     */
+    int countMenu(@Param("parentMenuId ") String parentMenuId );
 
 
 //    /**
