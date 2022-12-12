@@ -95,7 +95,7 @@
 				 		funcCodes[i] = data[i].funcCode;
 					}		
 					$.ajax({
-						url: "/mcrs/framework/function/batchDelete",
+						url: "<%= request.getContextPath() %>/framework/function/batchDelete",
 						type: "DELETE",
 						data: JSON.stringify(funcCodes),
 						cache: false,
@@ -160,7 +160,7 @@
 	function updata_select(flag) {
 		$("#appId").empty();
 	 	$.ajax({
-			url: "/mcrs/framework/funcGroup/query",
+			url: "<%= request.getContextPath() %>/framework/funcGroup/query",
 			type: "get",
 			cache: false,
 			contentType: "text/json",
@@ -189,7 +189,7 @@
 			table.render({
 				elem: "#LAY-app-function-list",
 				id: "LAY-app-function-list-reload",
-				url: "/mcrs/framework/function/query",
+				url: "<%= request.getContextPath() %>/framework/function/query",
 				method: "get",
 				where: data,
 				height: "full-" + getFullSize(),
@@ -325,7 +325,7 @@
 			  var funcCodes = new Array();
 			funcCodes[0] = data.funcCode
 				$.ajax({
-					url: "/mcrs/framework/function/batchDelete",
+					url: "<%= request.getContextPath() %>/framework/function/batchDelete",
 					type: "delete",
 					data: JSON.stringify(funcCodes),
 					cache: false,

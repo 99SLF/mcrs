@@ -95,7 +95,7 @@
 			}
 			if (i == 1) {		
 				$.ajax({
-					url: "/mcrs/framework/funcResource/add",
+					url:"<%= request.getContextPath() %>/framework/funcResource/add",
 					type: "POST",
 					data: submitData,
 					cache: false,

@@ -62,7 +62,7 @@
 			}
 			if (i == 1) {		
 				$.ajax({
-					url: "/mcrs/framework/funcGroup/add",
+					url: "<%= request.getContextPath() %>/framework/funcGroup/add",
 					type: "POST",
 					data: submitData,
 					cache: false,
