@@ -9,6 +9,8 @@ import java.util.Map;
 
 /**
  * 警告信息操作
+ * @author 林俊杰
+ * @date 2022/11/29
  */
 @Mapper
 public interface AlarmEventMapper {

@@ -201,7 +201,7 @@ public class DefaultPartyManagerService extends AbstractPartyManagerService
     }
 
     @Override
-    public Party doGetPartyByPartyID(String partyId, String partyType) {
+    public Party doGetPartyByPartyId(String partyId, String partyType) {
         IPartyTypeDataService dataservice = PartyTypeManager.getInstance()
                 .getPartyTypeDataService(partyType);
         if (dataservice != null) {

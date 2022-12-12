@@ -11,7 +11,9 @@ import com.zimax.cap.party.Party;
 import com.zimax.cap.utility.StringUtil;
 import com.zimax.components.coframe.auth.menu.DefaultMenuAuthService;
 import com.zimax.components.coframe.rights.partyauth.DefaultPartyAuthManager;
+import com.zimax.components.coframe.rights.pojo.PartyAuth;
 import com.zimax.components.coframe.rights.pojo.ResAuth;
+import com.zimax.components.coframe.rights.pojo.Role;
 import com.zimax.components.coframe.rights.resauth.DefaultResAuthManager;
 import com.zimax.components.coframe.tools.IConstants;
 import org.apache.log4j.Logger;
@@ -191,37 +193,30 @@ public class DefaultAuthManagerService implements IAuthManagerService {
     }
 
     @Override
-    public boolean addOrUpdatePartyAuthBatch(List<Party> rolePartyList,
-                                             Party party) {
-//        if (rolePartyList == null) {
-//            return false;
-//        }
-//        List<PartyAuth> capPartyAuthList = new ArrayList<PartyAuth>();
-//        try {
-//            for (Party roleParty : rolePartyList) {
-//                PartyAuth capPartyauth = PartyAuth.FACTORY.create();
-//                capPartyauth.setRoleType(IConstants.ROLE_PARTY_TYPE_ID);
-//                capPartyauth.setPartyId(party.getId());
-//                capPartyauth.setPartyType(party.getPartyTypeID());
-//                capPartyauth.setCreateUser(AppUserManager.getCurrentUserId());
-//                capPartyauth.setCreateTime(new Date());
-//                capPartyauth.setTenantId(TenantManager.getCurrentTenantID());
-//                Role capRole = Role.FACTORY.create();
-//                capRole.setRoleId(roleParty.getId());
-//                capRole.setRoleCode(roleParty.getCode());
-//                capRole.setRoleName(roleParty.getName());
-//                capPartyauth.setRole(capRole);
-//                capPartyAuthList.add(capPartyauth);
-//            }
-//
-//            this.partyAuthBean.savePartyAuthBatch(capPartyAuthList
-//                    .toArray(new PartyAuth[capPartyAuthList.size()]));
-//
-//        } catch (Throwable t) {
-//            log.error("insert partyAuth batch failed.");
-//            return false;
-//        }
-//        return true;
+    public boolean addOrUpdatePartyAuthBatch(List<Party> rolePartyList, Party party) {
+        if (rolePartyList == null) {
+            return false;
+        }
+        List<PartyAuth> capPartyAuthList = new ArrayList<PartyAuth>();
+        try {
+            for (Party roleParty : rolePartyList) {
+                PartyAuth partyAuth = new PartyAuth();
+                partyAuth.setRoleType(IConstants.ROLE_PARTY_TYPE_ID);
+                partyAuth.setPartyId(party.getId());
+                partyAuth.setPartyType(party.getPartyTypeId());
+                partyAuth.setRoleId(roleParty.getId());
+                String userId = DataContextManager.current().getMUODataContext().getUserObject().getUserId();
+                partyAuth.setCreateUser(userId);
+                partyAuth.setCreateTime(new Date());
+                capPartyAuthList.add(partyAuth);
+            }
+
+            this.partyAuthBean.savePartyAuthBatch(capPartyAuthList);
+
+        } catch (Throwable t) {
+            log.error("insert partyAuth batch failed.");
+            return false;
+        }
         return true;
     }
 
@@ -404,33 +399,28 @@ public class DefaultAuthManagerService implements IAuthManagerService {
     }
 
     @Override
-    public boolean delPartyAuthBatch(List<Party> rolePartyList, Party party,
-                                     int delMode) {
-//        if (rolePartyList == null) {
-//            return false;
-//        }
-//        List<PartyAuth> capPartyAuthList = new ArrayList<PartyAuth>();
-//        try {
-//            if (delMode == IAuthManagerService.DEL_MODE_SINGLE) {
-//                for (Party roleParty : rolePartyList) {
-//                    PartyAuth capPartyauth = PartyAuth.FACTORY.create();
-//                    capPartyauth.setRoleType(IConstants.ROLE_PARTY_TYPE_ID);
-//                    capPartyauth.setPartyId(party.getId());
-//                    capPartyauth.setPartyType(party.getPartyTypeID());
-//                    Role capRole = Role.FACTORY.create();
-//                    capRole.setRoleId(roleParty.getId());
-//                    capPartyauth.setRole(capRole);
-//                    capPartyAuthList.add(capPartyauth);
-//                }
-//
-//                this.partyAuthBean.deletePartyAuthBatch(capPartyAuthList
-//                        .toArray(new PartyAuth[capPartyAuthList.size()]));
-//            }
-//        } catch (Throwable t) {
-//            log.error("delete partyAuth batch failed.");
-//            return false;
-//        }
-//        return true;
+    public boolean delPartyAuthBatch(List<Party> rolePartyList, Party party, int delMode) {
+        if (rolePartyList == null) {
+            return false;
+        }
+        List<PartyAuth> capPartyAuthList = new ArrayList<PartyAuth>();
+        try {
+            if (delMode == IAuthManagerService.DEL_MODE_SINGLE) {
+                for (Party roleParty : rolePartyList) {
+                    PartyAuth partyAuth = new PartyAuth();
+                    partyAuth.setRoleType(IConstants.ROLE_PARTY_TYPE_ID);
+                    partyAuth.setPartyId(party.getId());
+                    partyAuth.setPartyType(party.getPartyTypeId());
+                    partyAuth.setRoleId(roleParty.getId());
+                    capPartyAuthList.add(partyAuth);
+                }
+
+                this.partyAuthBean.deletePartyAuthBatch(capPartyAuthList);
+            }
+        } catch (Throwable t) {
+            log.error("delete partyAuth batch failed.");
+            return false;
+        }
         return true;
     }
 

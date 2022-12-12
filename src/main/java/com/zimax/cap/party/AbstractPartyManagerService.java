@@ -60,7 +60,7 @@ public abstract class AbstractPartyManagerService implements IPartyManagerServic
     }
 
     public Party getPartyByPartyID(String partyID, String partyType) {
-        return doGetPartyByPartyID(partyID, partyType);
+        return doGetPartyByPartyId(partyID, partyType);
     }
 
     public PartyType getPartyTypeByTypeID(String partyTypeID) {
@@ -133,7 +133,7 @@ public abstract class AbstractPartyManagerService implements IPartyManagerServic
     public abstract Map<String, List<Party>> doGetDirectAssociateParentPartyList(
             String childPartyID, String[] partyTypeRefs);
 
-    public abstract Party doGetPartyByPartyID(String partyID, String partyType);
+    public abstract Party doGetPartyByPartyId(String partyID, String partyType);
 
     public abstract PartyType doGetPartyTypeByTypeID(String partyTypeID);
 

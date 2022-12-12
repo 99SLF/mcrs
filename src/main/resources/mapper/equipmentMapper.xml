@@ -37,24 +37,34 @@
 
     <!--添加设备-->
     <insert id="addEquipment" parameterType="com.zimax.mcrs.device.pojo.Equipment">
-        insert into eqi_equipment values (#{equipmentId}, #{equipmentName}, #{equipmentInstallLocation},
-                                          #{equipmentProperties}, #{equipmentContinuePort}, #{mesContinueIp},
-                                          #{enabledState}, #{remarks}, #{creator}, #{createTime})
+        insert into eqi_equipment
+        values (#{equipmentInt}, #{equipmentId}, #{equipmentName}, #{enabledState},
+                #{equipmentProperties}, #{mesContinueIp}, #{equipmentInstallLocation},
+                #{equipmentContinuePort}, #{createTime}, #{remarks}, #{creator})
     </insert>
 
     <!--根据主键删除设备-->
-    <delete id="removeEquipment" parameterType="String">
-        delete from eqi_equipment where equipment_id = #{equipmentId}
+    <delete id="removeEquipment" parameterType="int">
+        delete
+        from eqi_equipment
+        where equipment_int = #{equipmentInt}
     </delete>
 
     <!--更新1条设备信息-->
     <update id="updateEquipment" parameterType="com.zimax.mcrs.device.pojo.Equipment">
-        update eqi_equipment set equipment_name=#{equipmentName},equipment_install_location=#{equipmentInstallLocation},
-                                 equipment_properties=#{equipmentProperties},equipment_continue_port=#{equipmentContinuePort},
-                                 mes_continue_ip = #{mesContinueIp}, enabled_state = #{enabledState},remarks = #{remarks},
-                                 creator = #{creator}, create_time=#{createTime} where equipment_id=#{equipmentId}
+        update eqi_equipment
+        set equipment_id=#{equipmentId},
+            equipment_name=#{equipmentName},
+            equipment_install_location=#{equipmentInstallLocation},
+            equipment_properties=#{equipmentProperties},
+            equipment_continue_port=#{equipmentContinuePort},
+            mes_continue_ip=#{mesContinueIp},
+            enabled_state=#{enabledState},
+            remarks=#{remarks},
+            creator=#{creator},
+            create_time=#{createTime}
+        where equipment_int=#{equipmentInt}
     </update>
-
 
 
 </mapper>

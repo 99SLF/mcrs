@@ -1,5 +1,6 @@
 package com.zimax.components.coframe.rights.mapper;
 
+import com.zimax.components.coframe.rights.pojo.PartyAuth;
 import com.zimax.components.coframe.rights.pojo.ResAuth;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -23,5 +24,20 @@ public interface PartyAuthMapper {
      * @return 资源授权列表
      */
     List<ResAuth> getResAuthListByPartyIdAndPartyType(@Param("partyId") String partyId, @Param("partyType") String partyType);
+
+    /**
+     * 批量插入参与者授权列表
+     *
+     * @param partyAuths 参与者授权列表
+     * @return 是否成功
+     */
+    void insertPartyAuthBatch(List<PartyAuth> partyAuths);
+
+    /**
+     * 批量删除参与者授权列表
+     *
+     * @param partyAuths 参与者授权列表
+     */
+    void deletePartyAuthBatch(List<PartyAuth> partyAuths);
 
 }

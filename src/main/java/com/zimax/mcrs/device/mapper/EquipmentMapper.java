@@ -42,7 +42,7 @@ public interface EquipmentMapper {
      *
      * @return
      */
-    void removeEquipment(String EquipmentId);
+    void removeEquipment(int EquipmentId);
 
     /**
      * 更新设备
