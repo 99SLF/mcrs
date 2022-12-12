@@ -2,13 +2,18 @@
 <%--<%@page import="com.mes.foundation.eoscommon.ResourcesMessageUtil"%>--%>
 <!DOCTYPE html>
 <html>
+<!--
+  - Author(s): SSW
+  - Date: 2021-03-30 10:42:05
+  - Description:
+-->
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
-<title>菜单管理</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
-<link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
+	<title>用户管理</title>
+	<link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
+	<link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css" />
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
 </head>
 <body>
 <div class="layui-fluid">
@@ -40,6 +45,12 @@
 	</div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
+<script>
+	layui.config({
+		base: "<%=request.getContextPath()%>/"
+	});
+</script>
+<script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
 <script type="text/javascript">
 	var layer = layui.layer;
 	var table = layui.table;
@@ -60,7 +71,7 @@
 			top.layer.open({
 				type: 2,
 				title: "添加菜单",
-				content:  '<%= request.getContextPath() %>/coframe/framework/menu/menu_add.jsp',
+				content: '<%= request.getContextPath() %>/coframe/framework/menu/menu_add.jsp',
 				area: ["820px", "400px"],
 				resize: false,
 				btn: ["确定", "取消"],
@@ -161,25 +172,22 @@
     		}
   		});
 	});
-	
-	//查询过滤字段
-	// $.ajax({
-	// 	url: "com.zimax.components.coframe.tools.ColsFilter.queryHiddenField.biz.ext",
-	// 	type: "POST",
-	// 	async: false ,
-	// 	data: JSON.stringify({
-	// 		funName: funName
-	// 	}),
-	// 	cache: false,
-	// 	contentType: "text/json",
-	// 	success: function(result) {
-	// 		if (result) {
-	// 			hiddenFields = result.colsFilters;
-	// 		} else {
-	// 			layer.msg("查询失败");
-	// 		}
-	// 	}
-	// });
+
+	// 查询过滤字段
+	$.ajax({
+		url: "<%=request.getContextPath() %>/cols/filter/query/" + funName,
+		type: "GET",
+		async: false,
+		cache: false,
+		contentType: "text/json",
+		success: function(result) {
+			if (result) {
+				hiddenFields = result.data
+			} else {
+				layer.msg("查询失败");
+			}
+		}
+	});
 	
 	//判断是否隐藏函数
 	function isHidden(field) {
@@ -202,28 +210,22 @@
 		page: true,
 		limit: 10,
 		limits: [10, 15, 20, 30],
-		// colHideChange: function(col, checked) {
-		// 	var field = col.field;
-		// 	var hidden = col.hide;
-		// 	$.ajax({
-		// 		url: "com.zimax.components.coframe.tools.ColsFilter.setHiddenField.biz.ext",
-		// 		type: "POST",
-		// 		data: JSON.stringify({
-		// 			hidden: hidden,
-		// 			colsFilter: {
-		// 				funName: funName,
-		// 				field: field
-		// 			}
-		// 		}),
-		// 		cache: false,
-		// 		contentType: "text/json",
-		// 		success: function(result) {
-		// 			if (!result) {
-		// 				layer.msg("列筛选失败");
-		// 			}
-		// 		}
-		// 	});
-		// },
+		colHideChange: function(col, checked) {
+			var field = col.field;
+			var hidden = col.hide;
+			$.ajax({
+				url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
+				type: "GET",
+				cache: false,
+				contentType: "text/json",
+				success: function(result) {
+					if (result) {
+					} else{
+						layer.msg("列筛选失败");
+					}
+				}
+			});
+		},
 		toolbar: "#toolbar",
 		defaultToolbar: ["filter"],
 		parseData: function(res) {
@@ -318,22 +320,22 @@
 	}
 	
 	//下拉框数据
-	<%--$.ajax({--%>
-	<%--	url: "<%= request.getContextPath() %>/framework/menu/queryList",--%>
-	<%--	type: "GET",--%>
-	<%--	cache: false,--%>
-	<%--	contentType: "text/json",--%>
-	<%--	success: function (json) {--%>
-	<%--		if (json != null) {--%>
-	<%--			for (var i = 0; i < json.data.length; i++) {--%>
-	<%--				if (json.data[i].isLeaf == 0) {--%>
-	<%--					$('#menuId').append(new Option(json.data[i].menuName,json.data[i].menuId));// 下拉菜单里添加元素--%>
-	<%--				}--%>
-	<%--			}--%>
-	<%--		}--%>
-	<%--		form.render("select");//刷新表单select选择框渲染--%>
-	<%--	}--%>
-	<%--});--%>
+	$.ajax({
+		url: "<%= request.getContextPath() %>/framework/menu/queryList",
+		type: "GET",
+		cache: false,
+		contentType: "text/json",
+		success: function (json) {
+			if (json != null) {
+				for (var i = 0; i < json.data.length; i++) {
+					if (json.data[i].isLeaf == 0) {
+						$('#menuId').append(new Option(json.data[i].menuName,json.data[i].menuId));// 下拉菜单里添加元素
+					}
+				}
+			}
+			form.render("select");//刷新表单select选择框渲染
+		}
+	});
 	
 	  
 	function select(num) {

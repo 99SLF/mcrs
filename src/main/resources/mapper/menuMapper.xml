@@ -30,7 +30,7 @@
 
     <!--    新增菜单-->
     <insert id="addMenu" parameterType="com.zimax.components.coframe.framework.pojo.Menu" >
-        insert into app_menu values (#{menuId}, #{parentMenuId}, #{menuName}, #{menuLabel}, #{menuCode}, #{isLeaf}, #{menuAction},
+        insert into app_menu values ("9999", #{parentMenuId}, #{menuName}, #{menuLabel}, #{menuCode}, #{isLeaf},
                 #{parameter},#{menuLevel},#{displayOrder}, #{imagePath}, #{expandPath}, #{menuSeq}, #{openMode}, #{subCount}, #{appId},
                 #{funcCode}, #{appInfo}, #{tenantId})
     </insert>
@@ -82,7 +82,10 @@
     <select id="countMenu" resultType="int">
         select count(*) from app_menu
         <where>
-            <if test='parentMenuId !="root" and parentMenuId !="" and parentMenuId!=null'>
+            <if test="parentMenuId=='root' or parentMenuId =='' or parentMenuId==null">
+                and parent_menu_id = ''or parent_menu_id is null
+            </if>
+            <if test="parentMenuId !='root' and parentMenuId !='' and parentMenuId!=null">
                 and parent_menu_id = #{parentMenuId}
             </if>
         </where>
@@ -104,6 +107,11 @@
         <if test="limit !=null and limit !=''">
             limit ${begin},${limit}
         </if>
+    </select>
+
+    <!--查询菜单-->
+    <select id="getMenuByCode"  resultType="int">
+        select count(*) from app_menu where menu_code = #{menuCode}
     </select>
 
 

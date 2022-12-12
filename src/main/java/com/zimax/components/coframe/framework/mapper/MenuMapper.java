@@ -79,8 +79,14 @@ public interface MenuMapper {
      * @param parentMenuId 菜单编码
      * @return
      */
-    int countMenu(@Param("parentMenuId ") String parentMenuId );
+    int countMenu(@Param("parentMenuId") String parentMenuId );
 
+    /**
+     * 编码是否已存在
+     * @param menuCode 菜单编码
+     * @return
+     */
+    int getMenuByCode(@Param("menuCode") String menuCode );
 
 //    /**
 //     *删除菜单

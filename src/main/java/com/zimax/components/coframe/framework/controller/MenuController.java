@@ -90,7 +90,6 @@ public class MenuController {
      */
     @GetMapping("/menu/queryList")
     public Result<?> queryMenuList(String page, String limit, String parentMenuId, String order, String field) {
-        System.out.println("----"+parentMenuId);
         List menus = menuService.queryMenus(page,limit,parentMenuId,order,field);
         return Result.success(menus,menuService.countMenu(parentMenuId));
     }
@@ -102,6 +101,20 @@ public class MenuController {
     @GetMapping("/menu/find/{menuId}")
     public Result<?>  getMenu(@PathVariable("menuId") String menuId) {
         return Result.success(menuService.getMenu(menuId));
+    }
+
+    /**
+     * 判断菜单编码是否存在
+     * @param menuCode 菜单编号
+     * @return 菜单信息
+     */
+    @GetMapping("/menu/find/isExist")
+    public Result<?>  getMenuByCode(@RequestParam("menuCode") String menuCode) {
+        if(menuService.getMenuByCode(menuCode)>0){
+            return Result.error("1","编码已存在");
+        }else {
+            return Result.success();
+        }
     }
 
 

@@ -16,19 +16,19 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" >菜单名称：<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input id="menuId" name="menu/menuId" type="hidden"/>
-                <input id="menuAction" name="menu/menuAction" type="hidden"/>
-                <input id="menuLevel" name="menu/menuLevel" type="hidden"/>
-                <input id="menuSeq" name="menu/menuSeq" type="hidden"/>
-                <input id="subCount" name="menu/subCount" type="hidden"/>  
+				<input id="menuId" name="menuId" type="hidden"/>
+                <input id="menuAction" name="menuAction" type="hidden"/>
+                <input id="menuLevel" name="menuLevel" type="hidden"/>
+                <input id="menuSeq" name="menuSeq" type="hidden"/>
+                <input id="subCount" name="subCount" type="hidden"/>
                 <input id="type" name="type" type="hidden" />
-				<input type="text" class="layui-input" name="menu/menuName" id="menuName"  lay-verify="required" autocomplete="off" placeholder="">
+				<input type="text" class="layui-input" name="menuName" id="menuName"  lay-verify="required" autocomplete="off" placeholder="">
 			</div>
 		</div>
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" >菜单代码：<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="menu/menuCode" id="menuCode" lay-verify="required" autocomplete="off" placeholder="">
+				<input type="text" class="layui-input" name="menuCode" id="menuCode" lay-verify="required" autocomplete="off" placeholder="">
 			</div>
 		</div>
 	</div>
@@ -36,13 +36,13 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" >菜单显示名称：<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="menu/menuLabel" id="menuLabel"  lay-verify="required" autocomplete="off" placeholder="">
+				<input type="text" class="layui-input" name="menuLabel" id="menuLabel"  lay-verify="required" autocomplete="off" placeholder="">
 			</div>
 		</div>
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" >菜单显示顺序：<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="menu/displayOrder" id="displayOrder"  lay-verify="required" autocomplete="off" placeholder="">
+				<input type="text" class="layui-input" name="displayOrder" id="displayOrder"  lay-verify="required" autocomplete="off" placeholder="">
 			</div>
 		</div>
 	</div>
@@ -50,7 +50,7 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label">是否为叶子菜单：</label>
 			<div class="layui-input-block">
-				<select name="menu/isLeaf" id="islLeaf" lay-filter="isLeaf" type="select">
+				<select name="isLeaf" id="islLeaf" lay-filter="isLeaf" type="select">
 					<option value="1">是</option>
 					<option value="0">否</option>
 				</select>
@@ -59,8 +59,8 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label">功能资源：</label>
 			<div class="layui-input-block">
-				<input id="funcCode" name="menu/funcCode" type="hidden"/>
-				<input type="text" class="layui-input" style="width:85%" name="menu/funcName" id="funcName" lay-verify="" autocomplete="off" placeholder="">
+				<input id="funcCode" name="funcCode" type="hidden"/>
+				<input type="text" class="layui-input" style="width:85%" name="funcName" id="funcName" lay-verify="" autocomplete="off" placeholder="">
 				<button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="onButtonEdit" style="position:absolute;top:0px;right:0px;height:37px"><i class="layui-icon layui-icon-more"></i></button>
 			</div>
 		</div>
@@ -69,7 +69,7 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label">打开方式：</label>
 			<div class="layui-input-block">
-				<select name="menu/openMode" id="openMode" lay-filter="openMode" type="select">
+				<select name="openMode" id="openMode" lay-filter="openMode" type="select">
 					<option value="1">区域中</option>
 					<option value="0">新窗口</option>
 				</select>
@@ -78,7 +78,7 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label">菜单图片路径：</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="menu/imagePath" id="displayOrder" autocomplete="off" placeholder="">
+				<input type="text" class="layui-input" name="imagePath" id="imagePath" autocomplete="off" placeholder="">
 			</div>
 		</div>
 	</div>
@@ -95,32 +95,32 @@
 	var isExist = false;
 	var funcName1;
 	var submit = false;
-	
 	var win = null;
 	function SetData(data) {
 		win = data.win ? data.win : window;	
 	    var data = data.data;
 		FindFuncName(data.funcCode);    
 		form.val('layuiadmin-app-form-list', {
-			"menu/menuId": data.menuId,
-	  		"menu/menuAction": data.menuAction,
-	  		"menu/menuLevel": data.menuLevel,
-	  		"menu/menuSeq": data.menuSeq,
-	  		"menu/subCount": data.subCount,
-		 	"menu/menuName": data.menuName,
-			"menu/menuCode": data.menuCode,
-			"menu/menuLabel": data.menuLabel,
-			"menu/displayOrder": data.displayOrder,
-			"menu/isLeaf": data.isLeaf,
-			"menu/funcName": funcName1,
-	 		"menu/funcCode": data.funcCode,
-			"menu/openMode": data.openMode,
-			"menu/imagePath": data.imagePath
+			"menuId": data.menuId,
+	  		"menuAction": data.menuAction,
+	  		"menuLevel": data.menuLevel,
+	  		"menuSeq": data.menuSeq,
+	  		"subCount": data.subCount,
+		 	"menuName": data.menuName,
+			"menuCode": data.menuCode,
+			"menuLabel": data.menuLabel,
+			"displayOrder": data.displayOrder,
+			"isLeaf": data.isLeaf,
+			"funcName": funcName1,
+	 		"funcCode": data.funcCode,
+			"openMode": data.openMode,
+			"imagePath": data.imagePath
 		});
 	}
 	
 	//判断菜单代码是否已存在
 	$("#menuCode").blur(function() {
+		debugger;
 		var menuCode = $("#menuCode").val();
 		if (menuCode != null && menuCode != "") {
 			var sendData = {

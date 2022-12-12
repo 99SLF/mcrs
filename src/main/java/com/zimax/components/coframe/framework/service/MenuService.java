@@ -113,7 +113,13 @@ public class MenuService implements IMenuService {
      * 查询记录
      */
     public int countMenu(String parentMenuId ){
-        System.out.println(parentMenuId+"-------");
         return menuMapper.countMenu(parentMenuId);
+    }
+
+    /**
+     * 查看菜单编码是否已存在
+     */
+    public int getMenuByCode(String menuCode ){
+        return menuMapper.getMenuByCode(menuCode);
     }
 }
