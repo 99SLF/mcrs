@@ -32,12 +32,9 @@
     </bean>
 <!--    静态资源开放-->
 <!--    <mvc:default-servlet-handler/>-->
-    <context:component-scan base-package="com.zimax.components.coframe.tools"></context:component-scan>
-    <context:component-scan base-package="com.zimax.components.coframe.dict"></context:component-scan>
     <context:component-scan base-package="com.zimax.components.coframe.rights"></context:component-scan>
     <context:component-scan base-package="com.zimax.components.coframe.auth"></context:component-scan>
     <context:component-scan base-package="com.zimax.components.coframe.framework"></context:component-scan>
     <context:component-scan base-package="com.zimax.mcrs.report"></context:component-scan>
-    <context:component-scan base-package="com.zimax.mcrs.monitor"></context:component-scan>
 
 </beans>

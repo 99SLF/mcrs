@@ -14,7 +14,7 @@ import java.util.Date;
  */
 @RestController
 @ResponseBody
-@RequestMapping("/operationLog")
+@RequestMapping("/log")
 public class OperationLogController {
 
     @Autowired
@@ -40,7 +40,7 @@ public class OperationLogController {
      * @param page 页码
      * @return 角色列表
      */
-    @GetMapping("/query")
+    @GetMapping("/operationLog/query")
     public Result<?> query(@RequestParam Date operationTime, @RequestParam String operationType, @RequestParam String operationObject, @RequestParam String operator, @RequestParam String operationRole, @RequestParam int limit, @RequestParam int page) {
         return Result.success();
     }

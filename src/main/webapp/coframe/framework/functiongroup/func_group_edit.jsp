@@ -68,7 +68,7 @@
 			submit = true;
 			var submitData = JSON.stringify(data.field);	      
 			$.ajax({
-				url: "/mcrs/framework/funcGroup/update",
+				url: "<%= request.getContextPath() %>/framework/funcGroup/update",
 				type: "put",
 				data: submitData,
 				cache: false,

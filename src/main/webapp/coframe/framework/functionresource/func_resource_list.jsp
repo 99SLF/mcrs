@@ -93,7 +93,7 @@
 						resIds[i] = data[i].resId;
 					}
 			     	$.ajax({
-						url: "/mcrs/framework/funcResource/batchDelete",
+						url: "<%= request.getContextPath() %>/framework/funcResource/batchDelete",
 						type: "DELETE",
 						data: JSON.stringify(resIds),
 						cache: false,
@@ -156,7 +156,7 @@
 	function updata_select(flag) {
 		$("#appId").empty();
 	 	$.ajax({
-			url: "/mcrs/framework/function/query",
+			url: "<%= request.getContextPath() %>/framework/function/query",
 			type: "GET",
 			cache: false,
 			contentType: "text/json",
@@ -214,7 +214,7 @@
 	 		table.render({
 				elem: "#LAY-app-funcresource-list",
 				id: "LAY-app-funcresource-list-reload",
-				url: "/mcrs/framework/funcResource/query",
+				url: "<%= request.getContextPath() %>/framework/funcResource/query",
 				method: "GET",
 				where: data,
 				height: "full-" + getFullSize(),
@@ -363,7 +363,7 @@
 				var resIds = new Array();
 				resIds[0] = data.resId
 				$.ajax({
-					url: "/mcrs/framework/funcResource/batchDelete",
+					url: "<%= request.getContextPath() %>/framework/funcResource/batchDelete",
 					type: "DELETE",
 					data: JSON.stringify(resIds),
 					cache: false,

@@ -51,7 +51,7 @@ public class ApplicationController {
      *
      * @param appId 应用信息编号
      */
-    @DeleteMapping("/application/delete{appId}")
+    @DeleteMapping("/application/delete/{appId}")
     public Result<?> deleteApplication(@PathVariable int appId) {
         applicationService.deleteApplication(appId);
         return Result.success();

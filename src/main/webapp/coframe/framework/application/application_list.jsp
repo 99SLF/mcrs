@@ -127,7 +127,7 @@
 					title: "系统提示"
 				}, function(index) {		  	
 					$.ajax({
-						url: "/mcrs/framework/application/batchDelete",
+						url: "<%= request.getContextPath() %>/framework/application/batchDelete",
 						type: "DELETE",
 						data: JSON.stringify(appIds),
 						cache: false,
@@ -216,7 +216,7 @@
 	table.render({
 		elem: "#LAY-app-application-list",
 		id: "LAY-app-application-list-reload",
-		url: "/mcrs/framework/application/query",
+		url: "<%= request.getContextPath() %>/framework/application/query",
 		method: "get",
 		height: "full-" + getFullSize(),
 		page: true,
@@ -371,7 +371,7 @@
 				var appIds = new Array();
 				appIds[0] = data.appId;
 				$.ajax({
-					url: "/mcrs/framework/application/batchDelete",
+					url: "<%= request.getContextPath() %>/framework/application/batchDelete",
 					type: "DELETE",
 					data: JSON.stringify(appIds),
 					cache: false,

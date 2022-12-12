@@ -153,7 +153,7 @@
 			submit = true;
 			var submitData = JSON.stringify(data.field);
 			$.ajax({
-				url: "/mcrs/framework/function/update",
+				url: "<%= request.getContextPath() %>/framework/function/update",
 				type: "PUT",
 				data: submitData,
 				cache: false,

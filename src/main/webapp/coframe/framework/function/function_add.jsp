@@ -130,7 +130,7 @@
 			}
 			if (i == 1) {		
 				$.ajax({
-					url: "/mcrs/framework/function/add",
+					url: "<%= request.getContextPath() %>/framework/function/add",
 					type: "POST",
 					data: submitData,
 					cache: false,

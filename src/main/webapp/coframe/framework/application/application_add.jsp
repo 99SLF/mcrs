@@ -144,7 +144,7 @@
 			}	
 			if (i == 1) {			
 				$.ajax({
-					url: "/mcrs/framework/application/add",
+					url: "<%= request.getContextPath() %>/framework/application/add",
 					type: "POST",
 					data: submitData,
 					cache: false,

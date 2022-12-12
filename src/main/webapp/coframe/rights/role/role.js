@@ -101,7 +101,7 @@ layui.define(["admin"], function(exports) {
 	function renderTable() {
 		table.render({
 			elem: "#LAY-app-role-list",
-			url: "/mcrs/rights/role/query",
+			url: "<%= request.getContextPath()%>/rights/role/query",
 			method: "get",
 			height: "full-" + getFullSize(),
 			page: true,

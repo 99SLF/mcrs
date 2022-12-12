@@ -13,7 +13,7 @@ import java.util.Date;
  * @date 2022/12/2
  */
 @RestController
-@RequestMapping("/interface")
+@RequestMapping("/log")
 public class InterfaceController {
     /**
      * 接口日志管理
@@ -51,7 +51,7 @@ public class InterfaceController {
      * @param page 页码
      * @return 角色列表
      */
-    @GetMapping("/query")
+    @GetMapping("/interface/query")
     public Result<?> select(@RequestParam Date operationTime, @RequestParam String interfaceName, @RequestParam String interfaceLogStatus, @RequestParam String operator, @RequestParam String operationRole, @RequestParam int limit, @RequestParam int page) {
         return Result.success();
     }
