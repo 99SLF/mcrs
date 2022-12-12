@@ -59,7 +59,7 @@
 	        	code: res.code, //解析接口状态
 	        	msg: res.msg, //解析提示文本
 	        	count: res.total, //解析数据长度
-	        	data: res.menus //解析数据列表
+	        	data: res.data //解析数据列表
 			};	
 		},
 		cols: [[{ //设置表头。值是一个二维数组。方法渲染方式必填
@@ -94,22 +94,22 @@
 		}]]
 	});
 	
-	// $.ajax({
-	// 	url: "/mcrs/framework/menu/query",
-	// 	type: "GET",
-	// 	cache: false,
-	// 	contentType: "text/json",
-	// 	success: function (json) {
-	// 		if (json != null) {
-	// 			for (var i = 0; i < json.menus.length; i++) {
-	// 				if (json.menus[i].isLeaf == 0) {
-	// 					$("#menuId").append(new Option(json.menus[i].menuName,json.menus[i].menuId));// 下拉菜单里添加元素
-	// 				}
-	// 			}
-	// 		}
-	// 		form.render("select");//刷新表单select选择框渲染
-	// 	}
-	// });
+	$.ajax({
+		url: "/mcrs/framework/menu/query",
+		type: "GET",
+		cache: false,
+		contentType: "text/json",
+		success: function (json) {
+			if (json != null) {
+				for (var i = 0; i < json.menus.length; i++) {
+					if (json.menus[i].isLeaf == 0) {
+						$("#menuId").append(new Option(json.menus[i].menuName,json.menus[i].menuId));// 下拉菜单里添加元素
+					}
+				}
+			}
+			form.render("select");//刷新表单select选择框渲染
+		}
+	});
 	  
 	function select(num){
 		var data = {
@@ -148,7 +148,7 @@
 				content: [url, "no"],
 				end: function () {  //关闭弹窗后事件
 		    		table.reload("menuInfo", { //表格重载
-			      		url: "/mcrs/framework/menu/add" ,
+			      		url: "/mcrs/framework/menu/query" ,
 			        	page: {
 				          	curr: 1 //重新从第 1 页开始
 			        	}
@@ -168,7 +168,7 @@
 					content: [url, "no"],   //no 不出现滚动条
 					end: function () {
 			        	table.reload("menuInfo", {
-					      	url: "/mcrs/framework/menu/update",
+					      	url: "/mcrs/framework/menu/query",
 					        page: {
 					  	        curr: 1 //重新从第 1 页开始
 					    	}

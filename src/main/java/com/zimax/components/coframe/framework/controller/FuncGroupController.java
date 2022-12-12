@@ -51,7 +51,7 @@ public class FuncGroupController {
      *
      * @param funcGroupId 应用功能组编号
      */
-    @DeleteMapping("/funcGroup/delete{funcGroupId}")
+    @DeleteMapping("/funcGroup/delete/{funcGroupId}")
     public Result<?> removeFuncGroup(@PathVariable int funcGroupId) {
         funcGroupService.deletefuncGroup(funcGroupId);
         return Result.success();
