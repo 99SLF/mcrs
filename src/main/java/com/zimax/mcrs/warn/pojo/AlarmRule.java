@@ -64,10 +64,7 @@ public class AlarmRule {
     /**
      * 制单时间
      */
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date ruleMakeFormTime;
+    private String ruleMakeFormTime;
 
 
     /**
@@ -78,9 +75,6 @@ public class AlarmRule {
     /**
      * 修改时间
      */
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date ruleUpdateTime;
+    private String ruleUpdateTime;
 
 }
