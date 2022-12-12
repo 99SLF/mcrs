@@ -1,8 +1,10 @@
 package com.zimax.mcrs.report.mapper;
 
 import com.zimax.mcrs.report.pojo.AbnProdPrcs;
-import com.zimax.mcrs.report.pojo.Blanking;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 生产过程异常报表
@@ -18,5 +20,23 @@ public interface AbnProdPrcsReportMapper {
      * @return
      */
     void addAbnProdPrcs(AbnProdPrcs abnProdPrcs);
+
+    /**
+     * 查询所有生产过程异常报表
+     * @param
+     * @return
+     */
+    List<AbnProdPrcs> queryAbnProdPrcses(Map map);
+
+    /**
+     * 查询记录数
+     * @param
+     * @return
+     */
+    int count(@Param("siteId") String siteId, @Param("rollId") String rollId,
+              @Param("equipmentId") String equipmentId, @Param("axisName") String axisName,
+              @Param("performStep") String performStep, @Param("createTime") String createTime ,
+              @Param("updateTime") String updateTime
+    );
 
 }

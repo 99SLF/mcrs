@@ -9,5 +9,56 @@
         values (#{RFIDReadId}, #{equipmentId}, #{RFIDId}, #{antennaId}, #{readRate},#{recordTime})
     </insert>
 
+    <!--    查询记录数-->
+    <select id="count" resultType="int">
+        select count(*) from rep_rfid
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="RFIDId !=null and RFIDId !=''">
+                and RFID_id like '%${RFIDId}%'
+            </if>
+            <if test="antennaId !=null and antennaId !=''">
+                and antenna_id like '%${antennaId}%'
+            </if>
+            <if test="readRate !=null and readRate !=''">
+                and prod_SFC_id like '%${prodSFCId}%'
+            </if>
+            <if test="recordTime !=null and recordTime !=''">
+                and record_time like '%${recordTime}%'
+            </if>
+        </where>
+    </select>
+
+    <!--查询所有报表信息-->
+    <!--列表显示-->
+    <select id="queryRFIDs" parameterType="map" resultType="com.zimax.mcrs.report.pojo.RFIDReadRa">
+        select * from rep_rfid
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="RFIDId !=null and RFIDId !=''">
+                and RFID_id like '%${RFIDId}%'
+            </if>
+            <if test="antennaId !=null and antennaId !=''">
+                and antenna_id like '%${antennaId}%'
+            </if>
+            <if test="readRate !=null and readRate !=''">
+                and prod_SFC_id like '%${prodSFCId}%'
+            </if>
+            <if test="recordTime !=null and recordTime !=''">
+                and record_time like '%${recordTime}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
 
 </mapper>

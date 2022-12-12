@@ -23,6 +23,20 @@
     <dispatcher>INCLUDE</dispatcher>
   </filter-mapping>
 
+  <!-- 用户登录拦截过滤器 -->
+  <filter>
+    <filter-name>FunctionWebInterceptorFilter</filter-name>
+    <filter-class>com.zimax.components.coframe.auth.intercepter.FunctionWebInterceptor</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>FunctionWebInterceptorFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+  </filter-mapping>
+
   <!-- 组织权限管理启动监听器 -->
   <listener>
     <listener-class>com.zimax.components.coframe.auth.startup.AuthStartupListener</listener-class>

@@ -10,7 +10,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=equipment-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-<title>修改角色</title>
+<title>修改用户</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
 <style type="text/css"></style>
 </head>
@@ -179,9 +179,9 @@
          }
 	});
   	
-	var win=null;
+	var win = null;
 	function SetData(data) {
-		win = data.win ? data.win : window;	
+		win = data.win ? data.win : window;
 	  	var data = data.data;
 		form.val("layuiadmin-app-form-list", {
 			"user/operatorId": data.operatorId,
@@ -239,11 +239,9 @@
 	$("#userId").blur(function() {
 		var userId = $("#userId").val();
 		if (userId != null && userId != "") {
-			var json = JSON.stringify({"userId": userId});
 			$.ajax({
-				url: "com.zimax.components.coframe.rights.UserManager.checkUser.biz.ext",
-				type: "POST",
-				data: json,
+				url: "<%=request.getContextPath()%>/user/check/" + userId,
+				type: "GET",
 				cache: false,
 				contentType: "text/json",
 				cache: false,
@@ -269,11 +267,11 @@
 			submit = true;
 			if (isExist == false) {
 				$.ajax({
-					url: "com.zimax.components.coframe.rights.UserManager.updateUser.biz.ext",
+					url: "<%=request.getContextPath()%>/user/update",
 					type: "POST",
 					data: submitData,
 					cache: false,
-					contentType: 'text/json',
+					contentType: "text/json",
 					success: function(result) {
 						layer.msg("修改成功", {
 							icon: 1,
@@ -287,7 +285,7 @@
 				});	
 			} else if(isExist == true) {		
 				submit = false;
-				layer.msg("角色已存在，请重新输入", {
+				layer.msg("用户已存在，请重新输入", {
 					icon: 2,
 					time: 2000
 				});

@@ -41,11 +41,11 @@
 	//数据表格
 	table.render({
 		elem: "#menuInfo",
-		method: "post",
+		method: "GET",
 		where: {
 			parentmenuid: "root"
 		},     //传参,判断是否为父节点
-		url: "com.zimax.components.coframe.framework.MenuManager.queryMenu.biz.ext",
+		url: "/mcrs/framework/menu/query",
 		title: "功能列表"	,
 		page: true , //开启分页,
 		height : "full-30",
@@ -94,22 +94,22 @@
 		}]]
 	});
 	
-	$.ajax({
-		url: "com.zimax.components.coframe.framework.MenuManager.queryMenu.biz.ext",
-		type: "post",
-		cache: false,
-		contentType: "text/json",
-		success: function (json) {
-			if (json != null) {
-				for (var i = 0; i < json.menus.length; i++) {
-					if (json.menus[i].isLeaf == 0) {
-						$("#menuId").append(new Option(json.menus[i].menuName,json.menus[i].menuId));// 下拉菜单里添加元素
-					}
-				}
-			}
-			form.render("select");//刷新表单select选择框渲染
-		}
-	});
+	// $.ajax({
+	// 	url: "/mcrs/framework/menu/query",
+	// 	type: "GET",
+	// 	cache: false,
+	// 	contentType: "text/json",
+	// 	success: function (json) {
+	// 		if (json != null) {
+	// 			for (var i = 0; i < json.menus.length; i++) {
+	// 				if (json.menus[i].isLeaf == 0) {
+	// 					$("#menuId").append(new Option(json.menus[i].menuName,json.menus[i].menuId));// 下拉菜单里添加元素
+	// 				}
+	// 			}
+	// 		}
+	// 		form.render("select");//刷新表单select选择框渲染
+	// 	}
+	// });
 	  
 	function select(num){
 		var data = {
@@ -148,7 +148,7 @@
 				content: [url, "no"],
 				end: function () {  //关闭弹窗后事件
 		    		table.reload("menuInfo", { //表格重载
-			      		url: "com.zimax.components.coframe.framework.MenuManager.queryMenu.biz.ext" ,
+			      		url: "/mcrs/framework/menu/add" ,
 			        	page: {
 				          	curr: 1 //重新从第 1 页开始
 			        	}
@@ -168,7 +168,7 @@
 					content: [url, "no"],   //no 不出现滚动条
 					end: function () {
 			        	table.reload("menuInfo", {
-					      	url: "com.zimax.components.coframe.framework.MenuManager.queryMenu.biz.ext",
+					      	url: "/mcrs/framework/menu/update",
 					        page: {
 					  	        curr: 1 //重新从第 1 页开始
 					    	}
@@ -185,7 +185,7 @@
 				 	title: "系统提示"
 				 }, function(index) {
 					$.ajax({
-						url: "com.zimax.components.coframe.framework.MenuManager.deleteMenus.biz.ext",
+						url: "/mcrs/framework/menu/batchDelete",
 						type: "POST",
 						data: JSON.stringify({"nodes": data}),
 						cache: false,
@@ -197,7 +197,7 @@
 									time: 2000
 								}, function() {
 									table.reload("menuInfo", {
-								      	url: "com.zimax.components.coframe.framework.MenuManager.queryMenu.biz.ext",
+								      	url: "/mcrs/framework/menu/query",
 						    		    page: {
 						          			curr: 1 //重新从第 1 页开始
 						        		}

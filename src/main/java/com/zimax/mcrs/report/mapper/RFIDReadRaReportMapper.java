@@ -1,7 +1,10 @@
 package com.zimax.mcrs.report.mapper;
-
 import com.zimax.mcrs.report.pojo.RFIDReadRa;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * RFID读取率报表
@@ -16,5 +19,22 @@ public interface RFIDReadRaReportMapper {
      * @return
      */
     void addRFIDReadRa(RFIDReadRa rfidReadRa);
+
+    /**
+     * 查询记录数
+     * @param
+     * @return
+     */
+    int count(@Param("equipmentId") String equipmentId, @Param("RFIDId") String RFIDId,
+              @Param("antennaId") String antennaId, @Param("readRate") String readRate,
+              @Param("recordTime") String recordTime
+    );
+
+    /**
+     * 查询所有上料报表信息
+     * @param
+     * @return
+     */
+    List<RFIDReadRa> queryRFIDs(Map map);
 }
 

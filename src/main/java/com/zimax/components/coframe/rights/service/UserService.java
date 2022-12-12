@@ -19,113 +19,112 @@ import java.util.Map;
 @Service
 public class UserService {
 
-    /**
-     * 用户数据操作
-     *
-     */
-    @Autowired
-    private UserMapper userMapper;
+	/**
+	 * 用户数据操作
+	 */
+	@Autowired
+	private UserMapper userMapper;
 
-    /**
-     * 添加用户信息
-     *
-     * @param user 用户
-     */
-    public void addUser(User user) {
-        userMapper.addUser(user);
-    }
+	/**
+	 * 添加用户信息
+	 *
+	 * @param user 用户
+	 */
+	public void addUser(User user) {
+		userMapper.addUser(user);
+	}
 
-    public int count(String status, String userName) {
-        return userMapper.count(status, userName);
-    }
+	public int count(String status, String userName) {
+		return userMapper.count(status, userName);
+	}
 
-    /**
-     * 查询所有用户信息
-     */
-    public List<User> queryUsers(String page, String limit, String status, String userName, String order, String field) {
-        ChangeString changeString = new ChangeString();
-        Map<String, Object> map = new HashMap<>();
-        if (order == null) {
-            map.put("order", "desc");
-            map.put("field", "create_time");
-        } else {
-            map.put("order", order);
-            map.put("field", changeString.camelUnderline(field));
-        }
-        if (limit != null) {
-            map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
-            map.put("limit", Integer.parseInt(limit));
-        }
-        map.put("status", status);
-        map.put("userName", userName);
-        return userMapper.queryUsers(map);
+	/**
+	 * 查询所有用户信息
+	 */
+	public List<User> queryUsers(String page, String limit, String status, String userName, String order, String field) {
+		ChangeString changeString = new ChangeString();
+		Map<String, Object> map = new HashMap<>();
+		if (order == null) {
+			map.put("order", "desc");
+			map.put("field", "create_time");
+		} else {
+			map.put("order", order);
+			map.put("field", changeString.camelUnderline(field));
+		}
+		if (limit != null) {
+			map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
+			map.put("limit", Integer.parseInt(limit));
+		}
+		map.put("status", status);
+		map.put("userName", userName);
+		return userMapper.queryUsers(map);
 
-    }
+	}
 
-    /**
-     * 编辑，更新用户
-     */
-    public void updateUser(User user) {
-        userMapper.updateUser(user);
-    }
+	/**
+	 * 编辑，更新用户
+	 */
+	public void updateUser(User user) {
+		userMapper.updateUser(user);
+	}
 
-    /**
-     * 主键删除用户信息
-     */
-    public void deleteUser(int operatorId) {
-        userMapper.deleteUser(operatorId);
-    }
+	/**
+	 * 主键删除用户信息
+	 */
+	public void deleteUser(int operatorId) {
+		userMapper.deleteUser(operatorId);
+	}
 
-    /**
-     * 批量删除用户
-     *
-     * @param operatorIds 操作员编号
-     */
-    public void deleteUsers(List<Integer> operatorIds) {
-        userMapper.deleteUsers(operatorIds);
-    }
+	/**
+	 * 批量删除用户
+	 *
+	 * @param operatorIds 操作员编号
+	 */
+	public void deleteUsers(List<Integer> operatorIds) {
+		userMapper.deleteUsers(operatorIds);
+	}
 
-    /**
-     * 根据操作员编号获取用户
-     *
-     * @param operatorId 操作员编号
-     */
-    public User getUser(int operatorId) {
-        return userMapper.getUser(operatorId);
-    }
+	/**
+	 * 根据操作员编号获取用户
+	 *
+	 * @param operatorId 操作员编号
+	 */
+	public User getUser(int operatorId) {
+		return userMapper.getUser(operatorId);
+	}
 
-    /**
-     * 重置密码
-     *
-     * @param operatorIds 操作员编号
-     */
-    public void changePassword(List<Integer> operatorIds) {
-        userMapper.changePassword(operatorIds);
-    }
+	/**
+	 * 重置密码
+	 *
+	 * @param operatorIds 操作员编号
+	 */
+	public void changePassword(List<Integer> operatorIds) {
+		userMapper.changePassword(operatorIds);
+	}
 
-    /**
-     * 获取用户
-     *
-     * @param userId 用户编号
-     */
-    public User checkUser(String userId) {
-        return userMapper.checkUser(userId);
-    }
+	/**
+	 * 获取用户
+	 *
+	 * @param userId 用户编号
+	 */
+	public User checkUser(String userId) {
+		return userMapper.checkUser(userId);
+	}
 
-    /**
-     * 获取用户
-     *
-     * @param userId 用户编号
-     */
-    public User getUserByUserId(String userId) {
-        if (!StringUtils.isBlank(userId)) {
-            User user = userMapper.getUserByUserId(userId);
-            return user;
-        }
-        return null;
-    }
+	/**
+	 * 获取用户
+	 *
+	 * @param userId 用户编号
+	 */
+	public User getUserByUserId(String userId) {
+		if (!StringUtils.isBlank(userId)) {
+			User user = userMapper.getUserByUserId(userId);
+			return user;
+		}
+		return null;
+	}
 
-    public String encodePassword(String password) {
-        return DefaultUserManager.INSTANCE.encodeString(password);
-    }
+	public String encodePassword(String password) {
+		return DefaultUserManager.INSTANCE.encodeString(password);
+	}
 }

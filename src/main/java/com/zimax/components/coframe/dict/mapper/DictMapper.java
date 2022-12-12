@@ -3,12 +3,14 @@ package com.zimax.components.coframe.dict.mapper;
 import com.zimax.components.coframe.dict.pojo.DictEntry;
 import com.zimax.components.coframe.dict.pojo.DictType;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 字典数据操作
+ *
  * @author 李伟杰
  * @date 2022/12/1
  */
@@ -16,45 +18,97 @@ import java.util.List;
 public interface DictMapper {
 
     /**
+     * 保存业务字典类型
+     */
+    void saveDictType(DictType dictType);
+
+    /**
+     * 保存业务字典项
+     */
+    void saveDict(DictEntry dictEntry);
+
+
+    /**
      * 查询业务字典类型,刷新业务字典缓存
      */
-    public List<DictType> queryDictType();
+    List<DictType> queryDictTypes(Map map);
+
+    int countType(@Param("dictTypeId") String dictTypeId, @Param("dictTypeName") String dictTypeName);
 
     /**
-     *查询业务字典项
+     * 查询业务字典项
      */
-    public List<DictEntry> queryDict();
+    List<DictEntry> queryDicts(Map map);
+
+    int count(@Param("dictTypeId") String dictTypeId, @Param("dictId") String dictId, @Param("parentId") String parentId);
 
     /**
-     *保存业务字典类型
+     * 更新(修改)字典类型
+     *
+     * @param dictType 字典类型
      */
-    public void saveDictType(DictType dictType);
+
+    void updateDictType(DictType dictType);
 
     /**
-     *保存业务字典项
+     * 更新(修改)字典项数据
+     *
+     * @param dictEntry 字典类型
      */
-    public  void saveDict(DictEntry dictEntry);
+    void updateDict(DictEntry dictEntry);
 
     /**
-     *级联删除字典类型
+     * 删除字典类型
+     *
+     * @param dictTypeId 字典类型编号
      */
-    public void removeDictTypeCascade(List<String> dictTypeId );
+    void removeDictType(String dictTypeId);
 
     /**
-     *删除业务字典类型
+     * 删除字典项
+     *
+     * @param dictId 字典项代码
      */
-    public void removeDictType(DictType dictType);
+    void removeDict(String dictId);
 
     /**
-     *导入业务字典
+     * 批量删除字典类型
+     *
+     * @param dictTypeIds 字典类型编号数组
+     */
+    void deleteDictTypes(List<String> dictTypeIds);
+
+    /**
+     * 批量删除字典项
+     *
+     * @param dictIds 字典项数组
+     */
+    void deleteDicts(List<String> dictIds);
+
+    /**
+     * 获取字典类型信息
+     *
+     * @param dictTypeId 字典类型编号
+     * @return 字典类型信息
+     */
+    DictType getDictType(String dictTypeId);
+
+    /**
+     * 获取字典项信息
+     *
+     * @param dictId 字典类型编号
+     * @return 字典类型信息
+     */
+    DictEntry getDict(String dictId);
+
+    /**
+     * 导入业务字典
      */
     public void importDict(List<DictType> dictTypes);
 
     /**
-     *导出业务字典
+     * 导出业务字典
      */
     public List<DictEntry> exportDict();
-
-
 
 }

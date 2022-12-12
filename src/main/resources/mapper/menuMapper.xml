@@ -28,29 +28,10 @@
         </if>
     </select>
 
-    <select id="queryFunction" parameterType="string" resultType="com.zimax.components.coframe.framework.pojo.Function">
-
-    </select>
-    <select id="queryMenu" parameterType="string" resultType="com.zimax.components.coframe.framework.pojo.Function">
-
-    </select>
-
-    <select id="queryMenuFuncResource" parameterType="string" resultType="string">
-
-    </select>
-    <select id="queryMenuList" parameterType="string" resultType="com.zimax.components.coframe.framework.pojo.Menu" >
-
-    </select>
-    <select id="queryMenuTreeNode" parameterType="string" resultType="com.zimax.components.coframe.framework.pojo.Menu">
-    </select>
     <!--    新增菜单-->
-    <insert id="addMenu" parameterType="com.zimax.components.coframe.framework.pojo.Menu" keyProperty="menuId"
-            useGeneratedKeys="true">
-        insert into app_menu
-        values (#{menuId}, #{parentMenuId}, #{menuName}, #{menuLabel}, #{menuCode}, #{isLeaf}, #{menuAction},
-                #{parameter},
-                #{menuLevel},
-                #{displayOrder}, #{imagePath}, #{expandPath}, #{menuSeq}, #{openMode}, #{subCount}, #{appId},
+    <insert id="addMenu" parameterType="com.zimax.components.coframe.framework.pojo.Menu" >
+        insert into app_menu values (#{menuId}, #{parentMenuId}, #{menuName}, #{menuLabel}, #{menuCode}, #{isLeaf}, #{menuAction},
+                #{parameter},#{menuLevel},#{displayOrder}, #{imagePath}, #{expandPath}, #{menuSeq}, #{openMode}, #{subCount}, #{appId},
                 #{funcCode}, #{appInfo}, #{tenantId})
     </insert>
 

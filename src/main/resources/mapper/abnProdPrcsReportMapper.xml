@@ -7,9 +7,70 @@
     <insert id="addAbnProdPrcs" parameterType="com.zimax.mcrs.report.pojo.AbnProdPrcs">
         insert into rep_abn_prod_prcs
         values (#{abnPPId}, #{siteId}, #{rollId}, #{equipmentId}, #{axisName},
-                #{vehicleCode}, #{prodSFCId}, #{endEANumber}, #{performStep}, #{isEnd}, #{startProdTime},
-                #{endProdTime})
+                #{vehicleCode}, #{prodSFCId}, #{endEANumber}, #{performStep}, #{isEnd}, #{createTime},
+                #{updateTime})
     </insert>
+
+    <!--    查询记录数-->
+    <select id="count" resultType="int">
+        select count(*) from rep_abn_prod_prcs
+        <where>
+            <if test="siteId !=null and siteId !=''">
+                and site_id like '%${siteId}%'
+            </if>
+            <if test="rollId !=null and rollId !=''">
+                and roll_id	 like '%${rollId}%'
+            </if>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="axisName !=null and axisName !=''">
+                and axis_name like '%${axisName}%'
+            </if>
+            <if test="performStep !=null and performStep !=''">
+                and perform_step like '%${performStep}%'
+            </if>
+            <if test="createTime !=null and createTime !=''">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime !=null and updateTime !=''">
+                and update_time	= #{updateTime}
+            </if>
+        </where>
+    </select>
+    <!--查询生产过程异常信息-->
+    <select id="queryAbnProdPrcses" parameterType="map" resultType="com.zimax.mcrs.report.pojo.AbnProdPrcs">
+        select * from rep_abn_prod_prcs
+        <where>
+            <if test="siteId !=null and siteId !=''">
+                and site_id like '%${siteId}%'
+            </if>
+            <if test="rollId !=null and rollId !=''">
+                and roll_id	 like '%${rollId}%'
+            </if>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="axisName !=null and axisName !=''">
+                and axis_name like '%${axisName}%'
+            </if>
+            <if test="performStep !=null and performStep !=''">
+                and perform_step like '%${performStep}%'
+            </if>
+            <if test="createTime !=null and createTime !=''">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime !=null and updateTime !=''">
+                and update_time	= #{updateTime}
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
 
 
 </mapper>
