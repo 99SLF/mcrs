@@ -171,28 +171,15 @@ public class DefaultRoleManager {
     }
 
     /**
-     * 根据PartyID，PartyTypeID，租户获取其拥有的角色
+     * 根据参与者编号和参与者类型获取其拥有的角色
      *
-     * @param partyTypeId
-     * @param partyId
-     * @return
+     * @param partyTypeId 参与者类型
+     * @param partyId 参与者编号
+     * @return 其拥有的角色
      */
     public Role[] getRoleListByAuthParty(String partyTypeId, String partyId) {
-//        IDASCriteria criteria = DASManager.createCriteria(PartyAuth.QNAME);
-//        criteria.add(ExpressionHelper.eq(IConstants.TENANT_PROPERTY, tenantId));
-//        criteria.add(ExpressionHelper.eq(CAP_PARTY_ID, partyId));
-//        criteria.add(ExpressionHelper.eq(CAP_PARTY_TYPE, partyTypeId));
-//        criteria.addAssociation("role");
-//        PartyAuth[] authRoles = getDASTemplate()
-//                .queryEntitiesByCriteriaEntity(PartyAuth.class, criteria);
-//        List<Role> returnList = new ArrayList<Role>();
-//        if (authRoles != null) {
-//            for (PartyAuth authRole : authRoles) {
-//                returnList.add(authRole.getRole());
-//            }
-//        }
-//        return returnList.toArray(new Role[returnList.size()]);
-        return null;
+        List<Role> returnList = roleMapper.getRoleListByAuthParty(partyId, partyTypeId);
+        return returnList.toArray(new Role[returnList.size()]);
     }
 
     /**
@@ -200,7 +187,6 @@ public class DefaultRoleManager {
      *
      * @param partyTypeIdArray
      * @param partyIdArray
-     * @param tenantId
      * @return
      */
     public Role[] getRoleListByAuthPartyList(String[] partyTypeIdArray, String[] partyIdArray) {

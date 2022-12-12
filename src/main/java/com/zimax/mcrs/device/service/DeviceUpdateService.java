@@ -54,15 +54,6 @@ public class DeviceUpdateService {
     }
 
     /**
-     * 条件查询
-     *
-     * @return
-     */
-    public List<DeviceUpdate> query() {
-        return null;
-    }
-
-    /**
      * 下载
      *
      * @return

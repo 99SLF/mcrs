@@ -56,10 +56,10 @@ public class EquipmentService {
     /**
      * 根据资源号删除
      *
-     * @param equipmentId 设备资源号
+     * @param equipmentInt 设备号
      */
-    public void removeEquipment(String equipmentId) {
-        equipmentMapper.removeEquipment(equipmentId);
+    public void removeEquipment(int equipmentInt) {
+        equipmentMapper.removeEquipment(equipmentInt);
     }
 
     /**

@@ -52,11 +52,11 @@ public class EquipmentController {
     /**
      * 删除设备
      *
-     * @param equipmentId 设备数组
+     * @param equipmentInt 设备主键
      */
-    @DeleteMapping("/equipment/delete/{equipmentId}")
-    public Result<?> removeEquipment(@PathVariable("equipmentId") String equipmentId) {
-        equipmentService.removeEquipment(equipmentId);
+    @DeleteMapping("/equipment/delete/{equipmentInt}")
+    public Result<?> removeEquipment(@PathVariable("equipmentInt") int equipmentInt) {
+        equipmentService.removeEquipment(equipmentInt);
         return Result.success();
     }
 
@@ -67,6 +67,8 @@ public class EquipmentController {
      */
     @PostMapping("/equipment/update")
     public Result<?> updateEquipment(@RequestBody Equipment equipment) {
+        System.out.println("============================");
+        System.out.println(equipment);
         equipmentService.updateEquipment(equipment);
         return Result.success();
     }

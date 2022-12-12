@@ -23,7 +23,7 @@ public class AlarmEventController {
     private AlarmEventService alarmEventService;
 
     /**
-     * 条件查询预警事件
+     * 条件查询预警事件d
      * @param alarmEventId 告警事件编码
      * @param alarmEventTitle 告警事件标题
      * @param alarmLevel 告警级别

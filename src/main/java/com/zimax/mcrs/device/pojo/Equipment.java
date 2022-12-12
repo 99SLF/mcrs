@@ -22,9 +22,15 @@ import java.util.Date;
 public class Equipment {
 
     /**
-     * 设备资源号
+     * 设备主键
      */
     @TableId(type = IdType.AUTO)
+    private int equipmentInt;
+
+
+    /**
+     * 设备资源号
+     */
     private String equipmentId;
 
     /**
@@ -60,10 +66,7 @@ public class Equipment {
     /**
      * 创建时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date createTime;
+    private String createTime;
 
     /**
      * 创建人
