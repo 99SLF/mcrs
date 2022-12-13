@@ -46,7 +46,9 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" title="是否为叶子菜单">是否为叶子菜单：</label>
 			<div class="layui-input-block">
-				<select name="isLeaf" id="isLeaf" lay-filter="isLeaf" type="select">
+				<select name="isLeaf" id="islLeaf" lay-filter="isLeaf" type="select">
+					<option value="1">是</option>
+					<option value="0">否</option>
 				</select>
 			</div>
 		</div>
@@ -91,25 +93,20 @@
 	var submit = false;
 	form.render();
 
-	// layui.admin.renderDictSelect({
-	// 	elem: "#isLeaf",
-	// 	dictTypeId: "COF_YESORNO"
-	// });
-	
-	$("#isLeaf").val("1");  
+	$("#isLeaf").val("1");
 	form.render();
-	
+
 	var win = null;
 	function SetData(data) {
-	 	win = data.win ? data.win : window;	
-	 	$("#parentMenuId").val(data.parentMenuId); 
+	 	win = data.win ? data.win : window;
+	 	$("#parentMenuId").val(data.parentMenuId);
 	}
-	
+
 	layui.use(['form'], function() {
 		form.on('select(isLeaf)', function(data) {
 			var value = data.value;
 			if (value == 0) {
-				$("#funcName").attr("disabled", true); 
+				$("#funcName").attr("disabled", true);
 				$("#funcName").attr("style", "background:#CCCCCC");
 				$('#onButtonEdit').addClass("layui-btn-disabled").attr("disabled",true);
 				$("#openMode").attr("disabled","disabled");
@@ -122,10 +119,10 @@
 				form.render('select');
 			}
 		});
-		
+
 });
 
-	
+
 	//判断菜单代码是否已存在
 	$("#menuCode").blur(function() {
 		var menuCode = $("#menuCode").val();
@@ -142,14 +139,14 @@
 						isExist = true;
 					} else {
 				    isExist = false;
-					} 
+					}
 				}
 			});
 		} else {
 			return;
 		}
 	});
-	
+
 	//监听提交
 	form.on("submit(layuiadmin-app-form-submit)", function(data) {
 		if (submit == false) {
@@ -169,11 +166,11 @@
 						}, function() {
 							var index = top.layer.getFrameIndex(window.name);
 							win.layui.table.reload('LAY-app-menu-list');
-							top.layer.close(index); 
+							top.layer.close(index);
 							win.window.updata_select();
 	        			});
 					}
-				});	
+				});
 			} else if ( isExist == true) {
 				layer.msg("菜单代码已存在，请重新输入", {
 					icon: 2,
@@ -184,9 +181,9 @@
 		} else {
 			layer.msg("正在添加...请稍等！");
 		}
-		return false;                
+		return false;
 	});
-	
+
 	//调用功能选择入口
 	$("#onButtonEdit").click(function(){
     	top.layer.open({
@@ -194,7 +191,7 @@
 	        title: "选择功能调用入口",
 	        area: ["850px", "470px"],
 	        btn: ["确定", "取消"],
-	        content: "<%= request.getContextPath() %>/coframe/framework/menu/menu_function_select.jsp", 
+	        content: "<%= request.getContextPath() %>/coframe/framework/menu/menu_function_select.jsp",
 	        yes: function(index, layero) {
 				var data = layero.find('iframe')[0].contentWindow.getData();
 				$("#funcCode").val(data.funcCode);

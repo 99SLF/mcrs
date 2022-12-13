@@ -102,12 +102,14 @@
 			  		icon: 3, 
 			  		title: "系统提示"
 				}, function(index) {
+					var menuIds = new Array();
+					for (var i=0; i<data.length;i++) {
+						menuIds[i] = data[i].menuId;
+					}
 					$.ajax({
-						url: "com.zimax.components.coframe.framework.MenuManager.deleteMenus.biz.ext",
-						type: "POST",
-						data: JSON.stringify({
-							nodes: nodes
-						}),
+						url: "<%= request.getContextPath() %>/framework/menu/batchDelete",
+						type: "DELETE",
+						data: JSON.stringify(menuIds),
 						cache: false,
 						contentType: "text/json",
 						success: function(result) {
@@ -397,14 +399,12 @@
 				icon: 3, 
 				title: "系统提示"
 			}, function(index) {
-				var nodes = [];
-				nodes.push({menuId:data.menuId});
+				var menuIds = new Array();
+				menuIds[0] = data.menuId;
 				$.ajax({
-					url: "com.zimax.components.coframe.framework.MenuManager.deleteMenus.biz.ext",
-					type: "POST",
-					data: JSON.stringify({
-						"nodes": nodes
-					}),
+					url: "<%= request.getContextPath() %>/framework/menu/batchDelete",
+					type: "DELETE",
+					data: JSON.stringify(menuIds),
 					cache: false,
 					contentType: "text/json",
 					success: function(result) {

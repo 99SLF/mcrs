@@ -96,7 +96,7 @@ public interface IFunctionService {
      * @param appId
      * @return
      */
-    Function[] getFunctionsByAppId(String appId);
+    Function[] getFunctionsByAppId(int appId);
 
     /**
      * 查询功能组下所有的功能

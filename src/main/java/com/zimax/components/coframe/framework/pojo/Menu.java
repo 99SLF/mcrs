@@ -60,7 +60,7 @@ public class Menu {
     /**
      * 菜单url
      */
-                    private String menuAction;
+    private String menuAction;
 
 
     /**

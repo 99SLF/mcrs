@@ -72,5 +72,15 @@ public class FunctionController {
         functionService.deleteFunctions(Arrays.asList(funcCodes));
         return Result.success();
     }
+    /**
+     * 查询功能
+     *
+     * @param funcCode 角色代码
+     */
+    @GetMapping("function/getFunction")
+    public Result<?> getFunction(@RequestParam String funcCode) {
+        return Result.success(functionService.getFunctionsByCode(funcCode));
+    }
+
 
 }

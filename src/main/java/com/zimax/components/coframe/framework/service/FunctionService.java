@@ -214,17 +214,10 @@ public class FunctionService implements IFunctionService {
         return resource;
     }
 
-    public Function[] getFunctionsByAppId(String appId) {
-//        CriteriaType criteria = CriteriaType.FACTORY.create();
-//        criteria.set_entity(Function.QNAME);
-//        criteria.set("_expr[1]/funcGroup.application.appId", appId);
-//        criteria.set("_expr[1]/_op", "=");
-//        IDASCriteria dasCriteria = getDASTemplate().criteriaTypeToDASCriteria(
-//                criteria);
-//        Function[] results = getDASTemplate().queryEntitiesByCriteriaEntity(
-//                Function.class, dasCriteria);
-//        return results;
-        return null;
+    public Function[] getFunctionsByAppId(int appId) {
+        List<Function> list =  functionMapper.queryFunctionsByGroupId(appId);
+        Object[] objects = list.toArray();
+        return (Function[]) objects;
     }
 
     public Function[] getFunctionsByFuncGroupIds(String[] funcGroupIds) {
@@ -327,9 +320,9 @@ public class FunctionService implements IFunctionService {
         return functionMapper.queryAllFunctions();
     }
 
-    public List<Function> getFunctionsByAppId(int appId) {
-       return functionMapper.queryFunctionsByGroupId(appId);
+    public Function getFunctionsByCode(String funcCode) {
+       Function function =  functionMapper.getFunction(funcCode);
+       return function;
     }
-
 
 }

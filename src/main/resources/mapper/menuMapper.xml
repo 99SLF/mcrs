@@ -27,7 +27,7 @@
             limit ${begin},${limit}
         </if>
     </select>
-
+    
     <!--    新增菜单-->
     <insert id="addMenu" parameterType="com.zimax.components.coframe.framework.pojo.Menu" >
         insert into app_menu values ("9999", #{parentMenuId}, #{menuName}, #{menuLabel}, #{menuCode}, #{isLeaf},
@@ -66,6 +66,9 @@
     <!--    批量删除-->
     <delete id="deleteMenus" parameterType="java.util.List">
         delete from app_menu where menu_id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach> or parent_menu_id in
         <foreach collection="list" item="id" separator="," open="(" close=")">
             #{id}
         </foreach>
