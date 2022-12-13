@@ -21,9 +21,14 @@ import java.util.Date;
 public class Device {
 
     /**
-     * APPId
+     * 终端主键
      */
     @TableId(type = IdType.AUTO)
+    private int deviceId;
+
+    /**
+     * APPId
+     */
     private String APPId;
 
     /**
@@ -100,6 +105,11 @@ public class Device {
     private String creator;
 
     /**
+     * 创建角色
+     */
+    private String createRole;
+
+    /**
      * 创建时间
      */
     private String createTime;
@@ -109,4 +119,13 @@ public class Device {
      */
     private String enable;
 
+    /**
+     * 修改角色
+     */
+    private String updater;
+
+    /**
+     * 修改时间
+     */
+    private String updateTime;
 }

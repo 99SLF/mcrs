@@ -25,13 +25,13 @@
 		<div class="layui-col-sm4">
 			<label class="layui-form-label">设备名称:<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input id="equipmentName" type="text" name="equipmentName" lay-verify="" placeholder="请输入设备名称(必填)" autocomplete="off" class="layui-input">
+				<input id="equipmentName" type="text" name="equipmentName" lay-verify="required" placeholder="请输入设备名称(必填)" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-col-sm4">
 			<label class="layui-form-label"  style="width: 100px">设备安装位置:</label>
 			<div class="layui-input-block">
-				<input id="equipmentInstallLocation" type="text" name="equipmentInstallLocation" lay-verify="" placeholder="请输入设备安装位置" autocomplete="off" class="layui-input"style="width: 80%">
+				<input id="equipmentInstallLocation" type="text" name="equipmentInstallLocation" lay-verify="required" placeholder="请输入设备安装位置" autocomplete="off" class="layui-input"style="width: 80%">
 			</div>
 		</div>
 	</div>
@@ -49,14 +49,14 @@
 		<div class="layui-col-sm4">
 			<label class="layui-form-label" style="width: 100px">设备连接端口:<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input id="equipmentContinuePort" type="text" name="equipmentContinuePort" lay-verify="" placeholder="请输入设备连接端口" autocomplete="off" class="layui-input"style="width: 85%">
+				<input id="equipmentContinuePort" type="text" name="equipmentContinuePort" lay-verify="required" placeholder="请输入设备连接端口" autocomplete="off" class="layui-input"style="width: 85%">
 			</div>
 		</div>
 
 		<div class="layui-col-sm4">
 			<label class="layui-form-label" style="width: 100px">MES连接IP:<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input id="mesContinueIp" type="text" name="mesContinueIp" lay-verify="" placeholder="请输入MES连接IP" autocomplete="off" class="layui-input" style="width: 80%">
+				<input id="mesContinueIp" type="text" name="mesContinueIp" lay-verify="required" placeholder="请输入MES连接IP" autocomplete="off" class="layui-input" style="width: 80%">
 			</div>
 		</div>
 	</div>
@@ -65,7 +65,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">是否启用</label>
 			<div class="layui-input-block">
-				<input type="checkbox"id="enabledState" name="enabledState" lay-skin="switch" lay-text="是|否">
+				<input type="checkbox"id="enabledState" name="enabledState" lay-skin="switch" value="off" lay-text="是|否">
 			</div>
 		</div>
 	</div>

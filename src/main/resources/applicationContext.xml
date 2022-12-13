@@ -6,8 +6,8 @@
             http://www.springframework.org/schema/beans/spring-beans.xsd
                 http://www.springframework.org/schema/context
                     http://www.springframework.org/schema/context/spring-context.xsd">
-<!--    导入外部配置文件-->
-<!--   <import resource="applicationContext-service.xml"></import>-->
+    <!--    导入外部配置文件-->
+    <!--   <import resource="applicationContext-service.xml"></import>-->
     <context:property-placeholder location="classpath:jdbc.properties"/>
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${jdbc.driver}"/>
@@ -16,19 +16,19 @@
         <property name="password" value="${jdbc.password}"/>
     </bean>
     <bean id="sqlSessionFactoryBean" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
-      <property name="dataSource" ref="dataSource" />
-      <!-- 加载mybatis的全局配置文件 -->
-<!--      <property name="configLocation"  value="classpath:mybatis-config.xml" />-->
-      <!-- TODO 加载sql映射文件 -->
-      <property name="mapperLocations" value="classpath*:mapper/*Mapper.xml" />
-   </bean>
+        <property name="dataSource" ref="dataSource" />
+        <!-- 加载mybatis的全局配置文件 -->
+        <!--      <property name="configLocation"  value="classpath:mybatis-config.xml" />-->
+        <!-- TODO 加载sql映射文件 -->
+        <property name="mapperLocations" value="classpath*:mapper/*Mapper.xml" />
+    </bean>
 
-<!--    Mapper扫描器-->
+    <!--    Mapper扫描器-->
     <!--扫描mapper所在的包,为mapper创建实现类(若使用此方法，接口Mapper与其映射文件的全限定名需一致)-->
-<!--    <bean id="authMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">-->
-<!--        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>-->
-<!--        <property name="mapperInterface" value="com.zimax.components.coframe.auth.mapper.authMapper"/>-->
-<!--    </bean>-->
+    <!--    <bean id="authMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">-->
+    <!--        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>-->
+    <!--        <property name="mapperInterface" value="com.zimax.components.coframe.auth.mapper.authMapper"/>-->
+    <!--    </bean>-->
     <bean id="ColsFilterMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.components.coframe.tools.mapper.ColsFilterMapper"/>
@@ -153,5 +153,36 @@
     <bean id="DefaultPartyAuthManagerBean" class="com.zimax.components.coframe.rights.partyauth.DefaultPartyAuthManager">
         <property name="partyAuthMapper" ref="PartyAuthMapper"/>
     </bean>
+
+    <bean id="EquipmentMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.EquipmentMapper"/>
+    </bean>
+
+    <bean id="DeviceMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.DeviceMapper"/>
+    </bean>
+
+    <bean id="DeviceUpdateMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.DeviceUpdateMapper"/>
+    </bean>
+
+    <bean id="StarSoftwareMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.StarSoftwareMapper"/>
+    </bean>
+
+    <bean id="AlarmEventMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.warn.mapper.AlarmEventMapper"/>
+    </bean>
+
+    <bean id="AlarmRuleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.warn.mapper.AlarmRuleMapper"/>
+    </bean>
+
 
 </beans>
