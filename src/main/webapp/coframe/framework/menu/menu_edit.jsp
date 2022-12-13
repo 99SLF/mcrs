@@ -97,13 +97,15 @@
 	var submit = false;
 	var win = null;
 	function SetData(data) {
-		win = data.win ? data.win : window;	
+		win = data.win ? data.win : window;
+		var  parentMenuId=data.parentMenuId
 	    var data = data.data;
 		FindFuncName(data.funcCode);    
 		form.val('layuiadmin-app-form-list', {
 			"menuId": data.menuId,
 	  		"menuAction": data.menuAction,
 	  		"menuLevel": data.menuLevel,
+			parentMenuId: parentMenuId,
 	  		"menuSeq": data.menuSeq,
 	  		"subCount": data.subCount,
 		 	"menuName": data.menuName,
@@ -117,31 +119,24 @@
 			"imagePath": data.imagePath
 		});
 	}
-	
+
 	//判断菜单代码是否已存在
 	$("#menuCode").blur(function() {
-		debugger;
 		var menuCode = $("#menuCode").val();
 		if (menuCode != null && menuCode != "") {
-			var sendData = {
-				template: {
-					menuCode: menuCode
-				}
-			};
-			var json = JSON.stringify(sendData);
 			$.ajax({
-				url: "com.zimax.components.coframe.framework.MenuManager.validateMenu.biz.ext",
-				type: "POST",
-				data: json,
+				url: "<%= request.getContextPath() %>/framework/menu/find/isExist",
+				type: "GET",
+				data: menuCode,
 				cache: false,
 				contentType: "text/json",
 				cache: false,
 				success: function (text) {
-					if (text.data == "1") {
+					if (text.code == "1") {
 						isExist = true;
 					} else {
 						isExist = false;
-					} 
+					}
 				}
 			});
 		} else {
@@ -156,7 +151,7 @@
 			var submitData = JSON.stringify(data.field);
 			if (isExist == false) {
 				$.ajax({
-					url: "com.zimax.components.coframe.framework.MenuManager.updateMenu.biz.ext",
+					url: "<%= request.getContextPath() %>/framework/menu/update",
 					type: "POST",
 					data: submitData,
 					cache: false,

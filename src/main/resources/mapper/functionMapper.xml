@@ -22,6 +22,12 @@
             <if test="funcGroupId !=null and funcGroupId !=''">
                 and func_group_id = '${funcGroupId}'
             </if>
+            <if test="funcCode !=null and funcCode !=''">
+                and func_code = '${funcCode}'
+            </if>
+            <if test="funcName !=null and funcName !=''">
+                and func_name = '${func_name}'
+            </if>
         </where>
         <if test="order !=null and order !=''">
             order by ${field} ${order}
@@ -29,6 +35,10 @@
         <if test="limit !=null and limit !=''">
             limit ${begin},${limit}
         </if>
+    </select>
+
+    <select id="queryFunctionsByGroupId" parameterType="map" resultType="com.zimax.components.coframe.framework.pojo.Function">
+        select * from app_function where func_group_id in (select a.func_group_id from app_func_group as a where a.app_id=#{appId})
     </select>
     <!--    获取单个应用-->
     <select id="getFunction" resultType="com.zimax.components.coframe.framework.pojo.Function" >

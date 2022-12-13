@@ -248,7 +248,7 @@ public class FunctionService implements IFunctionService {
      * @param field 排序字段
      * @return
      */
-    public List<Function> queryFunctions(String  page, String limit, String funcGroupId, String order, String field) {
+    public List<Function> queryFunctions(String  page, String limit, String funcGroupId, String funcCode, String funcName, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -263,6 +263,8 @@ public class FunctionService implements IFunctionService {
             map.put("limit",Integer.parseInt(limit));
         }
         map.put("funcGroupId",funcGroupId);
+        map.put("funcCode",funcCode);
+        map.put("funcName",funcName);
         return functionMapper.queryFunctions(map);
     }
 
@@ -324,5 +326,10 @@ public class FunctionService implements IFunctionService {
     public List<Function> queryAllFunctionList() {
         return functionMapper.queryAllFunctions();
     }
+
+    public List<Function> getFunctionsByAppId(int appId) {
+       return functionMapper.queryFunctionsByGroupId(appId);
+    }
+
 
 }

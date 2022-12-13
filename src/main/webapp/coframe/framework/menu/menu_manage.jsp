@@ -10,7 +10,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
-	<title>用户管理</title>
+	<title>菜单管理</title>
 	<link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
 	<link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css" />
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
@@ -300,16 +300,16 @@
 		$("#menuId").empty();
 			//下拉框数据
 			$.ajax({
-				url: "com.zimax.components.coframe.framework.MenuManager.queryMenuList.biz.ext",
-				type: "post",
+				url: "<%= request.getContextPath() %>/framework/menu/queryList",
+				type: "GET",
 				cache: false,
 				contentType: "text/json",
 				success: function (json) {
 					$('#menuId').append(new Option("",""));
 					if (json != null) {
-						for (var i = 0; i < json.menus.length; i++) {
-							if (json.menus[i].isLeaf == 0) {
-								$('#menuId').append(new Option(json.menus[i].menuName,json.menus[i].menuId));// 下拉菜单里添加元素
+						for (var i = 0; i < json.data.length; i++) {
+							if (json.data[i].isLeaf == 0) {
+								$('#menuId').append(new Option(json.data[i].menuName,json.data[i].menuId));// 下拉菜单里添加元素
 							}
 						}
 					}
@@ -380,8 +380,9 @@
 				btn: ["确定", "取消"],
 				success: function(layero, index) {
 					var dataJson = {
-					    data: data,
-					   	win: window
+						parentMenuId: $("#menuId").val(),
+					   	win: window,
+						data: data
 				    };	
 					layero.find("iframe")[0].contentWindow.SetData(dataJson);
 				},

@@ -20,9 +20,11 @@ import java.util.List;
 public class FunctionController {
 
     @Autowired
-    FunctionService  functionService;
+    FunctionService functionService;
+
     /**
      * 新增功能
+     *
      * @param function 功能信息
      */
     @PostMapping("/function/add")
@@ -33,6 +35,7 @@ public class FunctionController {
 
     /**
      * 更新功能
+     *
      * @param function 功能信息
      */
     @PutMapping("/function/update")
@@ -43,21 +46,25 @@ public class FunctionController {
 
     /**
      * 查询功能
-     * @return 功能列表
+     *
      * @param funcGroupId 功能组编号
-     * @param limit 记录数
-     * @param page 页码
-     * @param field 排序字段
-     * @param order 排序方式
+     * @param funcCode 功能代码
+     * @param funcName 功能名字
+     * @param limit       记录数
+     * @param page        页码
+     * @param field       排序字段
+     * @param order       排序方式
+     * @return 功能列表
      */
     @GetMapping("/function/query")
-    public Result<?> queryFunctions(String page, String limit, String funcGroupId, String order, String field) {
-        List functions = functionService.queryFunctions(page,limit,funcGroupId,order,field);
-        return Result.success(functions,functionService.count(funcGroupId));
+    public Result<?> queryFunctions(String page, String limit, String funcGroupId, String funcCode, String funcName, String order, String field) {
+        List functions = functionService.queryFunctions(page, limit, funcGroupId, funcCode, funcName, order, field);
+        return Result.success(functions, functionService.count(funcGroupId));
     }
 
     /**
      * 批量删除功能
+     *
      * @param funcCodes 角色代码数组
      */
     @DeleteMapping("function/batchDelete")

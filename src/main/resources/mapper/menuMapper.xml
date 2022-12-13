@@ -49,7 +49,6 @@
             menu_label     = #{menuLabel},
             menu_code      = #{menuCode},
             is_leaf        = #{isLeaf},
-            menu_action    = #{menuAction},
             parameter      = #{parameter},
             menu_level     = #{menuLevel},
             display_order  = #{displayOrder},

@@ -63,7 +63,7 @@
 			"funcName":field.funcName
 		};
 		table.reload("LAY-app-menu-list", {
-			url: "com.zimax.components.coframe.framework.MenuManager.queryFunction.biz.ext",
+			url: "<%= request.getContextPath() %>/framework/function/query",
 			where: field
 		});
 	}); 
@@ -104,8 +104,8 @@
 	
 	table.render({
 		elem: "#LAY-app-menu-list",
-		url: "com.zimax.components.coframe.framework.MenuManager.queryFunction.biz.ext",
-		method: "post",
+		url: "<%= request.getContextPath() %>/framework/function/query",
+		method: "GET",
 		height: "full-" + getFullSize(),
 		page: true,
 		limit: 10,
