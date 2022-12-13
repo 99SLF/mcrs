@@ -1,5 +1,6 @@
 package com.zimax.components.coframe.framework.service;
 
+import com.baomidou.mybatisplus.core.conditions.interfaces.Func;
 import com.zimax.cap.management.resource.IManagedResource;
 import com.zimax.cap.management.resource.impl.DefaultManagedResource;
 import com.zimax.cap.management.resource.manager.ResourceRuntimeManager;
@@ -84,6 +85,8 @@ public class FunctionService implements IFunctionService {
      */
     public void addFunction(Function function) {
         functionMapper.addFunction(function);
+        ResourceRuntimeManager.getInstance().registerManagedResource(
+                adapt(function));
     }
     /**
      * 更新功能信息
@@ -91,6 +94,8 @@ public class FunctionService implements IFunctionService {
      */
     public void updateFunction(Function function) {
        functionMapper.updateFunction(function);
+        ResourceRuntimeManager.getInstance()
+                .updateRegisteredManagedResource(adapt(function));
     }
 
 
@@ -215,15 +220,13 @@ public class FunctionService implements IFunctionService {
     }
 
     public Function[] getFunctionsByAppId(int appId) {
-        List<Function> list =  functionMapper.queryFunctionsByGroupId(appId);
-        Object[] objects = list.toArray();
-        return (Function[]) objects;
+        Function[] functions =  functionMapper.queryFunctionsByGroupId(appId);
+        return functions;
     }
 
     public Function[] getFunctionsByFuncGroupIds(int funcGroupId) {
-        List<Function> list =  functionMapper.getFunctionsByFuncGroupId(funcGroupId);
-        Object[] objects = list.toArray();
-        return (Function[]) objects;
+        Function[] functions =  functionMapper.getFunctionsByFuncGroupId(funcGroupId);
+        return functions;
     }
 
     /**
