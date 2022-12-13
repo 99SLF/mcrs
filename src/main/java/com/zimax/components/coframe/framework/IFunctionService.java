@@ -104,7 +104,7 @@ public interface IFunctionService {
      * @param funcGroupIds
      * @return
      */
-    Function[] getFunctionsByFuncGroupIds(String[] funcGroupIds);
+    Function[] getFunctionsByFuncGroupIds(int funcGroupIds);
 
     /**
      * 验证是否存在，0不存在，1存在

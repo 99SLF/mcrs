@@ -220,17 +220,10 @@ public class FunctionService implements IFunctionService {
         return (Function[]) objects;
     }
 
-    public Function[] getFunctionsByFuncGroupIds(String[] funcGroupIds) {
-//        CriteriaType criteria = CriteriaType.FACTORY.create();
-//        criteria.set_entity(Function.QNAME);
-//        criteria.set("_expr[1]/funcGroup.funcGroupId", funcGroupIds);
-//        criteria.set("_expr[1]/_op", "in");
-//        IDASCriteria dasCriteria = getDASTemplate().criteriaTypeToDASCriteria(
-//                criteria);
-//        Function[] results = getDASTemplate().queryEntitiesByCriteriaEntity(
-//                Function.class, dasCriteria);
-//        return results;
-        return null;
+    public Function[] getFunctionsByFuncGroupIds(int funcGroupId) {
+        List<Function> list =  functionMapper.getFunctionsByFuncGroupId(funcGroupId);
+        Object[] objects = list.toArray();
+        return (Function[]) objects;
     }
 
     /**

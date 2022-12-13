@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0;">
-	<input id="menu/menuId" name="menu/menuId" type="hidden"/>								
+	<input id="parentMenuId" name="parentMenuId" type="hidden"/>
 	<div class="layui-form-item layui-row layui-col-space10">
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" >菜单名称：<span style="color:red">*</span></label>
@@ -100,12 +100,13 @@
 		win = data.win ? data.win : window;
 		var  parentMenuId=data.parentMenuId
 	    var data = data.data;
+		debugger;
 		FindFuncName(data.funcCode);    
 		form.val('layuiadmin-app-form-list', {
 			"menuId": data.menuId,
 	  		"menuAction": data.menuAction,
 	  		"menuLevel": data.menuLevel,
-			parentMenuId: parentMenuId,
+			"parentMenuId": parentMenuId,
 	  		"menuSeq": data.menuSeq,
 	  		"subCount": data.subCount,
 		 	"menuName": data.menuName,
@@ -122,6 +123,7 @@
 
 	//判断菜单代码是否已存在
 	$("#menuCode").blur(function() {
+		debugger;
 		var menuCode = $("#menuCode").val();
 		if (menuCode != null && menuCode != "") {
 			$.ajax({
@@ -148,6 +150,7 @@
 	form.on("submit(layuiadmin-app-form-edit)", function(data) {
 		if (submit ==false) {
 			submit = true;
+			debugger;
 			var submitData = JSON.stringify(data.field);
 			if (isExist == false) {
 				$.ajax({
@@ -180,8 +183,8 @@
 	
 	function FindFuncName(data){
 		$.ajax({
-			url: "com.zimax.components.coframe.framework.MenuManager.queryMenuFuncresource.biz.ext",
-			type: "POST",
+			url: "<%= request.getContextPath() %>/framework/function/getFunction",
+			type: "GET",
 			data: JSON.stringify({
 				"funcCode": data
 			}),
@@ -189,6 +192,7 @@
 			contentType: "text/json",
 			cache: false,
 			success: function (text) {
+				debugger;
 				if (text) {
 					funcName1 = text.funcName;
 				}	
