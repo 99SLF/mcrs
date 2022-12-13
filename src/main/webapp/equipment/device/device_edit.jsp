@@ -11,14 +11,244 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
 <title>终端编辑</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
-<script src="common/layui/layui.all.js"></script>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
 </head>
 <body>
+<div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0;">
+	<div class="layui-form-item layui-row layui-col-space12">
+		<%--	需要隐藏主键	--%>
+		<input type="hidden" name="deviceId" value="default">
+		<div class="layui-col-sm4">
+			<label class="layui-form-label">APPID:<span style="color:red">*</span></label>
+			<div class="layui-input-block">
+				<input id="APPId" type="text" name="APPId" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-col-sm4">
+			<label class="layui-form-label">终端名称:<span style="color:red">*</span></label>
+			<div class="layui-input-block">
+				<input id="deviceName" type="text" name="deviceName" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-col-sm4">
+			<label class="layui-form-label"  >终端软件类型:</label>
+			<div class="layui-input-block">
+				<input id="deviceSoftwareType" type="text" name="deviceSoftwareType" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+	</div>
+	<div class="layui-form-item layui-row layui-col-space12">
+		<div class="layui-col-sm4">
+			<label class="layui-form-label">接入点名称:<span style="color:red">*</span></label>
+			<div class="layui-input-block">
+				<input id="assessName" type="text" name="assessName" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-col-sm4">
+			<label class="layui-form-label">接入点种类:<span style="color:red">*</span></label>
+			<div class="layui-input-block">
+				<input id="assessType" type="text" name="assessType" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-col-sm4">
+			<label class="layui-form-label" >接入点IP:</label>
+			<div class="layui-input-block">
+				<input id="assessIp" type="text" name="assessIp" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+	</div>
+	<div class="layui-form-item layui-row layui-col-space12">
+		<div class="layui-col-sm4">
+			<label class="layui-form-label">接入点资源号:<span style="color:red">*</span></label>
+			<div class="layui-input-block">
+				<input id="equipmentId" type="text" name="equipmentId" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-col-sm4">
+			<label class="layui-form-label">接入点属性:<span style="color:red">*</span></label>
+			<div class="layui-input-block">
+				<input id="assessAttributes" type="text" name="assessAttributes" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-col-sm4">
+			<label class="layui-form-label"  style="width: 120px">接入点安装位置:</label>
+			<div class="layui-input-block">
+				<input id="assessInstallLocation" type="text" name="assessInstallLocation" lay-verify="required" placeholder="" autocomplete="off" class="layui-input"style="width: 85%">
+			</div>
+		</div>
+	</div>
+	<div class="layui-form-item layui-row layui-col-space12">
+		<div class="layui-col-sm4">
+			<label class="layui-form-label">工厂名称:<span style="color:red">*</span></label>
+			<div class="layui-input-block">
+				<input id="factoryName" type="text" name="factoryName" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-col-sm4">
+			<label class="layui-form-label">接入方式:<span style="color:red">*</span></label>
+			<div class="layui-input-block">
+				<input id="accessMethod" type="text" name="accessMethod" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-col-sm4">
+			<label class="layui-form-label">是否启用</label>
+			<div class="layui-input-block">
+				<input type="checkbox"id="enable" name="enable" lay-skin="switch"value="on" lay-text="是|否">
+			</div>
+		</div>
+	</div>
+	<div class="layui-form-item layui-row layui-col-space12">
+		<div class="layui-col-sm4">
+			<label class="layui-form-label">修改人:<span style="color:red">*</span></label>
+			<div class="layui-input-block">
+				<input id="updater" type="text" name="updater" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-col-sm4">
+			<label class="layui-form-label">修改时间:<span style="color:red">*</span></label>
+			<div class="layui-input-block">
+				<input id="updateTime" type="text" name="updateTime" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+	</div>
 
-
+	<div class="layui-form-item layui-hide">
+		<input type="button" lay-submit lay-filter="layuiadmin-app-form-edit" id="layuiadmin-app-form-edit" value="确认修改">
+	</div>
+</div>
+<script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
 <script>
-	
+	layui.config({
+		base: "<%=request.getContextPath()%>/"
+	});
+</script>
+<script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
+<script type="text/javascript">
+	var layer = layui.layer;
+	var form = layui.form;
+	var laydate = layui.laydate;
+	var $ = layui.jquery;
+	var isExist = false;
+	var submit = false;
+	var win = null;
+
+
+	function SetData(data) {
+		win = data.win ? data.win : window;
+		var data = data.data;
+		form.val("layuiadmin-app-form-list", {
+			"APPId":data.aPPId,
+			"deviceId":data.deviceId,
+			"deviceName": data.deviceName,
+			"deviceSoftwareType": data.deviceSoftwareType,
+			"assessName": data.assessName,
+			"assessType": data.assessType,
+			"assessIp": data.assessIp,
+			"equipmentId": data.equipmentId,
+			"assessAttributes": data.assessAttributes,
+			"assessInstallLocation": data.assessInstallLocation,
+			"factoryName": data.factoryName,
+			"accessMethod": data.accessMethod,
+			"enable": data.enable,
+			"updater": data.updater,
+			"updateTime": data.updateTime,
+		});
+	}
+
+	// //判断字符
+	// form.verify({
+	// 	username: function(value, item) {
+	// 		if (value.length > 10) {
+	// 			return "学生名不能超过10字";
+	// 		}
+	// 	},
+	// 	age: function(value, item) {
+	// 		if (value <= 0||value >=150) {
+	// 			return "请输入正确的年龄";
+	// 		}
+	// 	},
+	// 	teachr: function(value, item) {
+	// 		if (value.length > 10) {
+	// 			return "教师名不能超过10字";
+	// 		}
+	// 	}
+	// });
+
+	form.render();
+	// //日期
+	// laydate.render({
+	// 	elem: '#invaldate',
+	// 	format: 'yyyy-MM-dd',
+	// 	//解决时间选择器一闪而过的情况
+	// 	trigger: 'click',
+	// });
+	//
+	// var startDate = laydate.render({
+	// 	elem: '#star_time',
+	// 	//设置日期的类型
+	// 	type: 'date',
+	// 	trigger:'click',
+	// 	done: function(value, date) {
+	// 		if (value != "") {
+	// 			date.month = date.month - 1;
+	// 			date.date = date.date + 1;
+	// 			endDate.config.min = date;
+	// 		} else {
+	// 			endDate.config.min = startDate.config.min;
+	// 		}
+	// 	},
+	// });
+	//
+	// var endDate = laydate.render({
+	// 	//绑定的控件名称
+	// 	elem: '#end_time',
+	// 	//设置日期的类型
+	// 	type: 'date',
+	// 	//theme: '#2c78da',
+	// 	trigger: 'click',
+	// 	done: function(value, date) {
+	// 		if (value != "") {
+	// 			date.month = date.month - 1;
+	// 			date.date = date.date - 1;
+	// 			startDate.config.max = date;
+	// 		} else {
+	// 			startDate.config.max = endDate.config.max;
+	// 		}
+	// 	}
+	// });
+
+	//监听提交
+	form.on("submit(layuiadmin-app-form-edit)", function(data) {
+		var submitData = JSON.stringify(data.field);
+		debugger;
+		if (submit == false) {
+			submit = true;
+			if (isExist == false) {
+				$.ajax({
+					url: "<%= request.getContextPath() %>/equipment/device/update",
+					type: "POST",
+					data: submitData,
+					cache: false,
+					contentType: "text/json",
+					success: function(result) {
+						layer.msg("修改成功", {
+							icon: 1,
+							time: 500
+						}, function() {
+							var index = parent.layer.getFrameIndex(window.name);
+							win.layui.table.reload("LAY-app-device-list-reload");
+							top.layer.close(index);
+						});
+					}
+				});
+			}
+		} else {
+			layer.msg("请稍等");
+		}
+		return false;
+	});
 </script>
 </body>
 </html>

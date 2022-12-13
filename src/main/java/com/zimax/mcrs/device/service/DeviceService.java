@@ -64,10 +64,10 @@ public class DeviceService {
 
     /**
      * 注销终端
-     * @param APPId 根据APPID注销
+     * @param deviceId 依据deviceId来注销终端
      */
-    public void logoutDevice(String APPId) {
-        deviceMapper.logoutDevice(APPId);
+    public void logoutDevice(int deviceId) {
+        deviceMapper.logoutDevice(deviceId);
     }
 
     /**

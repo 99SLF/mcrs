@@ -37,11 +37,11 @@ public class DeviceController {
     /**
      * 注销终端
      *
-     * @param APPID 依据APPDId来注销终端
+     * @param deviceId 依据deviceId来注销终端
      */
-    @DeleteMapping("/device/logoutDevice/{APPId}")
-    public Result<?> logoutTerminal(@PathVariable("APPId") String APPID) {
-        deviceService.logoutDevice(APPID);
+    @DeleteMapping("/device/logoutDevice/{deviceId}")
+    public Result<?> logoutTerminal(@PathVariable("deviceId") int deviceId) {
+        deviceService.logoutDevice(deviceId);
         return Result.success();
     }
 

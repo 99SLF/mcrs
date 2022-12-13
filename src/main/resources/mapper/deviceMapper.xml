@@ -38,27 +38,27 @@
     <!--注册终端-->
     <insert id="registrationDevice" parameterType="com.zimax.mcrs.device.pojo.Device">
         insert into eqi_device
-        values (#{APPId}, #{version}, #{needUpdate},
+        values (#{deviceId}, #{APPId}, #{version}, #{needUpdate},
                 #{deviceSoftwareType}, #{deviceName},
                 #{assessName}, #{factoryName}, #{assessType},
                 #{assessIp}, #{equipmentId},
                 #{assessAttributes}, #{assessInstallLocation},
                 #{accessMethod}, #{remarks}, #{creator},
-                #{createTime}, #{enable})
+                #{createTime}, #{enable}, #{createRole},
+                #{updater}, #{updateTime})
     </insert>
 
     <!--根据主键删除设备-->
-    <delete id="logoutDevice" parameterType="String">
+    <delete id="logoutDevice" parameterType="int">
         delete
         from eqi_device
-        where app_id = #{APPId}
+        where device_id = #{deviceId}
     </delete>
 
     <!--更新1条设备信息-->
     <update id="updateDevice" parameterType="com.zimax.mcrs.device.pojo.Device">
         update eqi_device
-        set version=#{version},
-            need_update=#{needUpdate},
+        set app_id = #{APPId},
             device_software_type=#{deviceSoftwareType},
             device_name=#{deviceName},
             assess_name=#{assessName},
@@ -69,9 +69,10 @@
             assess_attributes=#{assessAttributes},
             assess_install_location=#{assessInstallLocation},
             access_method=#{accessMethod},
-            remarks=#{remarks},
-            enable=#{enable}
-        where app_id = #{APPId}
+            enable=#{enable},
+            updater=#{updater},
+            update_time=#{updateTime}
+        where device_id = #{deviceId}
     </update>
 
     <!--查询数据给监控-->

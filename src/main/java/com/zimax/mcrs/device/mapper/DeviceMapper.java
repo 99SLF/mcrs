@@ -35,7 +35,7 @@ public interface DeviceMapper {
      *
      * @return
      */
-    public void logoutDevice(String APPId);
+    public void logoutDevice(int deviceId);
 
     /**
      * 修改终端
