@@ -43,6 +43,6 @@ public interface RoleMapper {
 
     int deleteRoles(List<Integer> roleIds);
 
-    int count(@Param("roleCode") String roleCode, @Param("roleName") String roleName);
+    int count(@Param("roleCode") String roleCode, @Param("roleName") String roleName,@Param("roleString") String roleString);
 
 }

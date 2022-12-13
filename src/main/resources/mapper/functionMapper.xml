@@ -42,7 +42,7 @@
     </select>
     <!--    获取单个应用-->
     <select id="getFunction" resultType="com.zimax.components.coframe.framework.pojo.Function" >
-        select * from app_function where func_code = '${funcCode}'
+        select * from app_function where func_code = #{funcCode}
     </select>
     <!--    新增应用-->
     <insert id="addFunction" parameterType="com.zimax.components.coframe.framework.pojo.Function">

@@ -100,7 +100,6 @@
 		win = data.win ? data.win : window;
 		var  parentMenuId=data.parentMenuId
 	    var data = data.data;
-		debugger;
 		FindFuncName(data.funcCode);    
 		form.val('layuiadmin-app-form-list', {
 			"menuId": data.menuId,
@@ -185,9 +184,7 @@
 		$.ajax({
 			url: "<%= request.getContextPath() %>/framework/function/getFunction",
 			type: "GET",
-			data: JSON.stringify({
-				"funcCode": data
-			}),
+			data: JSON.stringify(data),
 	    	async: false,
 			contentType: "text/json",
 			cache: false,
