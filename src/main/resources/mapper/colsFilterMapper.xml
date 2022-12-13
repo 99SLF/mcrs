@@ -16,6 +16,6 @@
 
     <!-- 删除列筛选 -->
     <delete id="deleteColsFilter" parameterType="com.zimax.components.coframe.tools.pojo.ColsFilter">
-        delete from base_cols_filter where FUN_NAME = #{roleId} and USER_ID = #{userId}
+        delete from base_cols_filter where FUN_NAME = #{funName} and USER_ID = #{userId} and FIELD=#{field}
     </delete>
 </mapper>

@@ -119,14 +119,14 @@
     	type: 'date'
 	});
 	
-	// layui.admin.renderDictSelect({
-	// 	elem: "#appType",
-	// 	dictTypeId: "COF_APPTYPE"
-	// });
-	// layui.admin.renderDictSelect({
-	// 	elem: "#isOpen",
-	// 	dictTypeId: "COF_YESORNO"
-	// });
+	layui.admin.renderDictSelect({
+		elem: "#appType",
+		dictTypeId: "COF_APPTYPE"
+	});
+	layui.admin.renderDictSelect({
+		elem: "#isOpen",
+		dictTypeId: "COF_YESORNO"
+	});
 	
 	
 	function SetData(data) {

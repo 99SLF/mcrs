@@ -154,20 +154,20 @@
 		return false;                
 	});
 	
-	// layui.admin.renderDictSelect({
-	// 	elem: "#funcType",
-	// 	dictTypeId: "COF_FUNCTYPE"
-	// });
-	//
-	// layui.admin.renderDictSelect({
-	// 	elem: "#isMenu",
-	// 	dictTypeId: "COF_YESORNO"
-	// });
-	//
-	// layui.admin.renderDictSelect({
-	// 	elem: "#isCheck",
-	// 	dictTypeId: "COF_YESORNO"
-	// });
+	layui.admin.renderDictSelect({
+		elem: "#funcType",
+		dictTypeId: "COF_FUNCTYPE"
+	});
+
+	layui.admin.renderDictSelect({
+		elem: "#isMenu",
+		dictTypeId: "COF_YESORNO"
+	});
+
+	layui.admin.renderDictSelect({
+		elem: "#isCheck",
+		dictTypeId: "COF_YESORNO"
+	});
 	    	
 	$("#funcType").val("page");    	
 	form.render();

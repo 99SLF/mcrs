@@ -116,14 +116,14 @@
 	    ,type: 'date'
 	});
 	
-	// layui.admin.renderDictSelect({
-	// 	elem: "#appType",
-	// 	dictTypeId: "COF_APPTYPE"
-	// });
-	// layui.admin.renderDictSelect({
-	// 	elem: "#isOpen",
-	// 	dictTypeId: "COF_YESORNO"
-	// });
+	layui.admin.renderDictSelect({
+		elem: "#appType",
+		dictTypeId: "COF_APPTYPE"
+	});
+	layui.admin.renderDictSelect({
+		elem: "#isOpen",
+		dictTypeId: "COF_YESORNO"
+	});
 	
 	$("#appType").val("0");  
 	$("#isOpen").val("1"); 

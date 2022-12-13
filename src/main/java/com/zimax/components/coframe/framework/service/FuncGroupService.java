@@ -50,7 +50,7 @@ public class FuncGroupService {
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
             map.put("order", "asc");
-            map.put("field", "func_group_id");
+            map.put("field", "display_order");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));

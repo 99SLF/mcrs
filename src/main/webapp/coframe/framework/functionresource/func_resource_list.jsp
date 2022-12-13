@@ -176,26 +176,22 @@
 	}
 	
 	updata_select(flag);
-	
-	//查询过滤字段
-	// $.ajax({
-	// 	url: "com.zimax.components.coframe.tools.ColsFilter.queryHiddenField.biz.ext",
-	// 	type: "POST",
-	// 	async: false ,
-	// 	data: JSON.stringify({
-	// 		funName: funName
-	// 	}),
-	// 	cache: false,
-	// 	contentType: "text/json",
-	// 	success: function(result) {
-	// 		if (result) {
-	// 			hiddenFields = result.colsFilters
-	// 		} else {
-	// 			layer.msg("查询失败");
-	// 		}
-	// 	}
-	// });
-	//
+
+	// 查询过滤字段
+	$.ajax({
+		url: "<%=request.getContextPath() %>/cols/filter/query/" + funName,
+		type: "GET",
+		async: false,
+		cache: false,
+		contentType: "text/json",
+		success: function(result) {
+			if (result) {
+				hiddenFields = result.data
+			} else {
+				layer.msg("查询失败");
+			}
+		}
+	});
 	//判断是否隐藏函数
 	function isHidden(field) {
 		for (var i = 0; i < hiddenFields.length; i++) {
@@ -220,29 +216,22 @@
 				height: "full-" + getFullSize(),
 				page: true,
 				limit: 10,
-				// colHideChange: function(col, checked) {
-				// 	var field = col.field;
-				// 	var hidden = col.hide;
-				// 	$.ajax({
-				// 		url: "com.zimax.components.coframe.tools.ColsFilter.setHiddenField.biz.ext",
-				// 		type: "POST",
-				// 		data: JSON.stringify({
-				// 			hidden: hidden,
-				// 			colsFilter: {
-				// 				funName: funName,
-				// 				field: field
-				// 			}
-				// 		}),
-				// 		cache: false,
-				// 		contentType: "text/json",
-				// 		success: function(result) {
-				// 			if (result) {
-				// 			} else{
-				// 				layer.msg("列筛选失败");
-				// 			}
-				// 		}
-				// 	});
-				// },
+				colHideChange: function(col, checked) {
+					var field = col.field;
+					var hidden = col.hide;
+					$.ajax({
+						url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
+						type: "GET",
+						cache: false,
+						contentType: "text/json",
+						success: function(result) {
+							if (result) {
+							} else{
+								layer.msg("列筛选失败");
+							}
+						}
+					});
+				},
 				toolbar: "#toolbar",
 				defaultToolbar: ["filter"],
 				limits: [10, 15, 20, 30],
@@ -322,7 +311,6 @@
 		var data = {
 			funcCode: data.value
 		};
-		console.log(data);
 		table.reload("LAY-app-funcresource-list-reload", {
 		      page: {
 		      	curr: 1 //重新从第 1 页开始

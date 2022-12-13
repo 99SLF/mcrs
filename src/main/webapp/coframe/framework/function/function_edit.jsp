@@ -101,21 +101,21 @@
 		type: 'datetime'
 	});
 	  
-	// layui.admin.renderDictSelect({
-	// 	elem: "#funcType",
-	// 	dictTypeId: "COF_FUNCTYPE"
-	// });
-	//
-	// layui.admin.renderDictSelect({
-	// 	elem: "#isMenu",
-	// 	dictTypeId: "COF_YESORNO"
-	// });
-	//
-	// layui.admin.renderDictSelect({
-	// 	elem: "#isCheck",
-	// 	dictTypeId: "COF_YESORNO"
-	// });
-	//
+	layui.admin.renderDictSelect({
+		elem: "#funcType",
+		dictTypeId: "COF_FUNCTYPE"
+	});
+
+	layui.admin.renderDictSelect({
+		elem: "#isMenu",
+		dictTypeId: "COF_YESORNO"
+	});
+
+	layui.admin.renderDictSelect({
+		elem: "#isCheck",
+		dictTypeId: "COF_YESORNO"
+	});
+
 	var win = null;
 	function SetData(data) { 
 		win = data.win ? data.win : window;	
