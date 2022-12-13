@@ -37,7 +37,7 @@
         </if>
     </select>
 
-    <select id="queryFunctionsByGroupId" parameterType="map" resultType="com.zimax.components.coframe.framework.pojo.Function">
+    <select id="queryFunctionsByGroupId"  resultType="com.zimax.components.coframe.framework.pojo.Function">
         select * from app_function where func_group_id in (select a.func_group_id from app_func_group as a where a.app_id=#{appId})
     </select>
     <!--    获取单个应用-->
@@ -63,5 +63,10 @@
             #{id}
         </foreach>
     </delete>
+
+    <select id="getFunctionsByFuncGroupId"  resultType="com.zimax.components.coframe.framework.pojo.Function">
+        select * from app_function where func_group_id = ${funcGroupId}
+    </select>
+
 
 </mapper>

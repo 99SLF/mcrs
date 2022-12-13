@@ -259,6 +259,8 @@ public class FuncResourceService implements IFuncResourceService {
      */
     public void addFuncResource(FuncResource funcResource) {
         funcResourceMapper.addFuncResource(funcResource);
+        ResourceRuntimeManager.getInstance().registerManagedResource(
+                adapt(funcResource));
     }
 
 
@@ -269,6 +271,8 @@ public class FuncResourceService implements IFuncResourceService {
      */
     public void updateFuncResource(FuncResource funcResource) {
         funcResourceMapper.updateFuncResource(funcResource);
+        ResourceRuntimeManager.getInstance()
+                .updateRegisteredManagedResource(adapt(funcResource));
     }
 
 }

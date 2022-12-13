@@ -84,6 +84,17 @@ public class RoleService {
 //        Page<Role> rowPage = new Page(page, limit);
 //        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
 //        List<Role> roleList = (List<Role>) roleMapper.selectPage();
+        List<Party> authorizedRolePartyList = gradeAuthService.getManagedRoleList();
+        String str="";
+        if (!(authorizedRolePartyList == null || authorizedRolePartyList.size() == 0)) {
+            List<String> roleIdList = new ArrayList<String>();
+            for (int i=0;i<authorizedRolePartyList.size();i++) {
+                str=str+ authorizedRolePartyList.get(i).getId();
+                if(i!=authorizedRolePartyList.size()-1){
+                    str+=",";
+                }
+            }
+        }
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -99,6 +110,7 @@ public class RoleService {
         }
         map.put("roleCode", roleCode);
         map.put("roleName", roleName);
+        map.put("roleString",str);
         return roleMapper.queryRoles(map);
     }
 
@@ -167,7 +179,18 @@ public class RoleService {
      * 查询记录
      */
     public int count(String roleCode, String roleName) {
-        return roleMapper.count(roleCode, roleName);
+        List<Party> authorizedRolePartyList = gradeAuthService.getManagedRoleList();
+        String str="";
+        if (!(authorizedRolePartyList == null || authorizedRolePartyList.size() == 0)) {
+            List<String> roleIdList = new ArrayList<String>();
+            for (int i=0;i<authorizedRolePartyList.size();i++) {
+                str=str+ authorizedRolePartyList.get(i).getId();
+                if(i!=authorizedRolePartyList.size()-1){
+                    str+=",";
+                }
+            }
+        }
+        return roleMapper.count(roleCode, roleName,str);
     }
 
     /**
