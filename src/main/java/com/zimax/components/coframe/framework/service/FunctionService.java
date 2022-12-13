@@ -158,10 +158,10 @@ public class FunctionService implements IFunctionService {
         }
     }
 
+    @Override
     public void updateResoucesBatch(Function[] functions) {
         for (Function function : functions) {
-            ResourceRuntimeManager.getInstance()
-                    .updateRegisteredManagedResource(adapt(function));
+            ResourceRuntimeManager.getInstance().updateRegisteredManagedResource(adapt(function));
         }
     }
 

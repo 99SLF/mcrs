@@ -3,9 +3,12 @@ package com.zimax.components.coframe.rights.service;
 import com.sun.org.apache.xalan.internal.xsltc.dom.SimpleResultTreeImpl;
 import com.zimax.cap.party.Party;
 import com.zimax.components.coframe.rights.gradeauth.GradeAuthService;
+import com.zimax.components.coframe.rights.mapper.PartyAuthMapper;
+import com.zimax.components.coframe.rights.mapper.ResAuthMapper;
 import com.zimax.components.coframe.rights.mapper.RoleMapper;
 import com.zimax.components.coframe.rights.pojo.Role;
 
+import com.zimax.components.coframe.tools.IConstants;
 import com.zimax.mcrs.config.ChangeString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +33,16 @@ public class RoleService {
      */
     private GradeAuthService gradeAuthService;
 
+    /**
+     * 资源授权数据操作
+     */
+    private ResAuthMapper resAuthMapper;
+
+    /**
+     * 参与者授权数据操作
+     */
+    private PartyAuthMapper partyAuthMapper;
+
     public RoleMapper getRoleMapper() {
         return roleMapper;
     }
@@ -44,6 +57,22 @@ public class RoleService {
 
     public void setGradeAuthService(GradeAuthService gradeAuthService) {
         this.gradeAuthService = gradeAuthService;
+    }
+
+    public ResAuthMapper getResAuthMapper() {
+        return resAuthMapper;
+    }
+
+    public void setResAuthMapper(ResAuthMapper resAuthMapper) {
+        this.resAuthMapper = resAuthMapper;
+    }
+
+    public PartyAuthMapper getPartyAuthMapper() {
+        return partyAuthMapper;
+    }
+
+    public void setPartyAuthMapper(PartyAuthMapper partyAuthMapper) {
+        this.partyAuthMapper = partyAuthMapper;
     }
 
     /**
@@ -150,7 +179,7 @@ public class RoleService {
         // 获取可管控角色参与者列表
         List<Party> authorizedRolePartyList = gradeAuthService.getManagedRoleList();
         if (authorizedRolePartyList == null || authorizedRolePartyList.size() == 0) {
-            return null;
+            return new ArrayList<>();
         }
 
         // 获取角色ID列表
@@ -160,6 +189,38 @@ public class RoleService {
         }
 
         return roleMapper.queryRolesByRoleIds(roleIdList);
+    }
+
+    public void deleteRoleResRelationBatch(List<Integer> roleIds) {
+        for (int roleId : roleIds) {
+            if (countRoleResRelation(roleId) > 0) {
+                deleteRoleResRelation(roleId);
+            }
+        }
+    }
+
+    public int countRoleResRelation(int roleId) {
+        return resAuthMapper.countRoleResRelation(roleId, IConstants.ROLE_PARTY_TYPE_ID);
+    }
+
+    public void deleteRoleResRelation(int roleId) {
+        resAuthMapper.deleteRoleResRelation(roleId, IConstants.ROLE_PARTY_TYPE_ID);
+    }
+
+    public void deleteRolePartyRelationBatch(List<Integer> roleIds) {
+        for (int roleId : roleIds) {
+            if (countRolePartyRelation(roleId) > 0) {
+                deleteRolePartyRelation(roleId);
+            }
+        }
+    }
+
+    public int countRolePartyRelation(int roleId) {
+        return partyAuthMapper.countRolePartyRelation(roleId, IConstants.ROLE_PARTY_TYPE_ID);
+    }
+
+    public void deleteRolePartyRelation(int roleId) {
+        partyAuthMapper.deleteRolePartyRelation(roleId, IConstants.ROLE_PARTY_TYPE_ID);
     }
 
 }

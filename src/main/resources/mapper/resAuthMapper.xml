@@ -50,4 +50,13 @@
         </foreach>
     </delete>
 
+    <!-- 查询记录数 -->
+    <select id="countRoleResRelation" resultType="int">
+        select count(*) from cap_res_auth where PARTY_ID = #{partyId} and PARTY_TYPE = #{partyType}
+    </select>
+
+    <!-- 主键删除 -->
+    <delete id="deleteRoleResRelation">
+        delete from cap_res_auth where PARTY_ID = #{partyId} and PARTY_TYPE = #{partyType}
+    </delete>
 </mapper>

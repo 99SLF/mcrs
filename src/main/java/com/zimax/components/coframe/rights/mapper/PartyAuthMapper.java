@@ -40,4 +40,8 @@ public interface PartyAuthMapper {
      */
     void deletePartyAuthBatch(List<PartyAuth> partyAuths);
 
+    int countRolePartyRelation(@Param("roleId") int roleId, @Param("roleType") String roleType);
+
+    void deleteRolePartyRelation(@Param("roleId") int roleId, @Param("roleType") String roleType);
+
 }

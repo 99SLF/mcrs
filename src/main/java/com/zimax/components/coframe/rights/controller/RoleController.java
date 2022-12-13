@@ -100,8 +100,10 @@ public class RoleController {
      * @param roleIds 角色代码数组
      */
     @DeleteMapping("/role/batchDelete")
-    public Result<?> deleteRoles(@RequestBody Integer[] roleIds) {
-        if (roleService.deleteRoles(Arrays.asList(roleIds)) == 0) {
+    public Result<?> deleteRoles(@RequestBody List<Integer> roleIds) {
+        roleService.deleteRoleResRelationBatch(roleIds);
+        roleService.deleteRolePartyRelationBatch(roleIds);
+        if (roleService.deleteRoles(roleIds) == 0) {
             return Result.success();
         } else {
             return Result.error();

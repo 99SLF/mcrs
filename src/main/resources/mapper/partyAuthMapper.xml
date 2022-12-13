@@ -27,4 +27,13 @@
         </foreach>
     </delete>
 
+    <!-- 查询记录数 -->
+    <select id="countRolePartyRelation" resultType="int">
+        select count(*) from cap_party_auth where ROLE_ID = #{roleId} and ROLE_TYPE = #{roleType}
+    </select>
+
+    <!-- 主键删除 -->
+    <delete id="deleteRolePartyRelation">
+        delete from cap_party_auth where ROLE_ID = #{roleId} and ROLE_TYPE = #{roleType}
+    </delete>
 </mapper>

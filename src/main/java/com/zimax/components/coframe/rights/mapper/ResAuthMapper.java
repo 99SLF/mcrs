@@ -56,4 +56,8 @@ public interface ResAuthMapper {
      */
     void deleteResAuthBatch(List<ResAuth> resAuths);
 
+    int countRoleResRelation(@Param("partyId") int partyId, @Param("partyType") String partyType);
+
+    void deleteRoleResRelation(@Param("partyId") int partyId, @Param("partyType") String partyType);
+
 }
