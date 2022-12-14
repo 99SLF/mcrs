@@ -26,11 +26,6 @@ public class DeviceRollbackVo {
     private String equipmentName;
 
     /**
-     * 升级版本号
-     */
-    private String version;
-
-    /**
      * 更新包
      */
 //    private int version;
@@ -50,6 +45,11 @@ public class DeviceRollbackVo {
      * 工厂名称
      */
     private String factoryName;
+
+    /**
+     * 升级版本
+     */
+    private String upgradeVersion;
 
     /**
      * 升级状态

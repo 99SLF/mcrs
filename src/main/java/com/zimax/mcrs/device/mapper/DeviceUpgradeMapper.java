@@ -28,7 +28,7 @@ public interface DeviceUpgradeMapper {
      *
      * @return
      */
-    int count(@Param("equipmentId") String equipmentId, @Param("version") String version);
+    int count(@Param("equipmentId") String equipmentId, @Param("upgradeVersion") String upgradeVersion);
 
 
 

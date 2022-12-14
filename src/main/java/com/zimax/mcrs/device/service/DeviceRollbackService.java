@@ -25,7 +25,7 @@ public class DeviceRollbackService {
     /**
      * 查询所有终端更新信息
      */
-    public List<DeviceRollbackVo> queryDeviceRollback(String  page, String limit, String equipmentId, String version, String versionUpdater, String versionUpdateTime, String order, String field) {
+    public List<DeviceRollbackVo> queryDeviceRollback(String  page, String limit, String equipmentId, String upgradeVersion, String versionUpdater, String versionUpdateTime, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -40,7 +40,7 @@ public class DeviceRollbackService {
             map.put("limit", Integer.parseInt(limit));
         }
         map.put("equipmentId",equipmentId);
-        map.put("version",version);
+        map.put("upgradeVersion",upgradeVersion);
         map.put("versionUpdater",versionUpdater);
         map.put("versionUpdateTime",versionUpdateTime);
         return deviceRollbackMapper.queryAll(map);
@@ -49,8 +49,8 @@ public class DeviceRollbackService {
     /**
      * 计数
      */
-    public int count(String equipmentId, String version){
-        return deviceRollbackMapper.count(equipmentId,version);
+    public int count(String equipmentId, String upgradeVersion){
+        return deviceRollbackMapper.count(equipmentId,upgradeVersion);
     }
 
 }

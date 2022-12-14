@@ -24,7 +24,7 @@ public class DeviceUpgradeService {
     /**
      * 查询所有终端更新信息
      */
-    public List<DeviceUpgradeVo> queryDeviceUpgrades(String  page, String limit, String equipmentId, String version,String versionUpdater, String versionUpdateTime, String order, String field) {
+    public List<DeviceUpgradeVo> queryDeviceUpgrades(String  page, String limit, String equipmentId, String upgradeVersion,String versionUpdater, String versionUpdateTime, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -39,7 +39,7 @@ public class DeviceUpgradeService {
             map.put("limit", Integer.parseInt(limit));
         }
         map.put("equipmentId",equipmentId);
-        map.put("version",version);
+        map.put("upgradeVersion",upgradeVersion);
         map.put("versionUpdater",versionUpdater);
         map.put("versionUpdateTime",versionUpdateTime);
         return deviceUpgradeMapper.queryAll(map);
@@ -48,8 +48,8 @@ public class DeviceUpgradeService {
     /**
      * 计数
      */
-    public int count(String equipmentId, String version){
-        return deviceUpgradeMapper.count(equipmentId,version);
+    public int count(String equipmentId, String upgradeVersion){
+        return deviceUpgradeMapper.count(equipmentId,upgradeVersion);
     }
 
 }

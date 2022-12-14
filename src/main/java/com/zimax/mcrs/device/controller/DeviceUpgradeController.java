@@ -27,7 +27,7 @@ public class DeviceUpgradeController {
     /**
      * 条件查询
      *
-     * @param version      版本号
+     * @param upgradeVersion  升级版本号
      * @param equipmentId 设备资源号
      * @param limit       记录数
      * @param page        页码
@@ -36,8 +36,8 @@ public class DeviceUpgradeController {
      * @return 终端列表
      */
     @GetMapping("/deviceUpgrade/query")
-    public Result<?> queryDeviceUpgrade(String page, String limit, String equipmentId, String version, String versionUpdater, String versionUpdateTime,String order, String field) {
-        List deviceUpgrade = deviceUpgradeService.queryDeviceUpgrades(page, limit, equipmentId, version,versionUpdater,versionUpdateTime, order, field);
-        return Result.success(deviceUpgrade, deviceUpgradeService.count(equipmentId, version));
+    public Result<?> queryDeviceUpgrade(String page, String limit, String equipmentId, String upgradeVersion, String versionUpdater, String versionUpdateTime,String order, String field) {
+        List deviceUpgrade = deviceUpgradeService.queryDeviceUpgrades(page, limit, equipmentId, upgradeVersion,versionUpdater,versionUpdateTime, order, field);
+        return Result.success(deviceUpgrade, deviceUpgradeService.count(equipmentId, upgradeVersion));
     }
 }

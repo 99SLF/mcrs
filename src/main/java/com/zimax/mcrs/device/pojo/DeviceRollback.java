@@ -41,6 +41,11 @@ public class DeviceRollback {
     private int uploadId;
 
     /**
+     * 升级版本
+     */
+    private String upgradeVersion;
+
+    /**
      * 升级状态
      */
     private String upgradeStatus;

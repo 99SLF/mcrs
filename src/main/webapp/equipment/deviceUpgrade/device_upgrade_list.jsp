@@ -28,7 +28,7 @@
                     </div>
                     <label class="layui-form-label">版本号：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="version" placeholder="请输入版本号" autocomplete="off"
+                        <input type="text" name="upgradeVersion" placeholder="请输入版本号" autocomplete="off"
                                class="layui-input">
                     </div>
                     <label class="layui-form-label">版本更改人：</label>

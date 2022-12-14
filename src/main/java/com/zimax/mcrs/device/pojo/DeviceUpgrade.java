@@ -46,6 +46,11 @@ public class DeviceUpgrade {
     private String upgradeStatus;
 
     /**
+     * 升级版本
+     */
+    private String upgradeVersion;
+
+    /**
      * 版本更改人
      */
     private String versionUpdater;
