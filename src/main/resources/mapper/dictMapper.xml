@@ -18,10 +18,10 @@
         select count(*) from dict_type
         <where>
             <if test="dictTypeId !=null and dictTypeId !=''">
-                and dict_type_id like '%${dictTypeId}%'
+                and dicttypeid like '%${dictTypeId}%'
             </if>
             <if test="dictTypeName !=null and dictTypeName !=''">
-                and dict_type_name like '%${dictTypeName}%'
+                and dicttype_name like '%${dictTypeName}%'
             </if>
         </where>
     </select>
@@ -29,10 +29,13 @@
         select * from dict_type
         <where>
             <if test="dictTypeId !=null and dictTypeId !=''">
-                and dict_type_id like '%${dictTypeId}%'
+                and dicttypeid like '%${dictTypeId}%'
             </if>
             <if test="dictTypeName !=null and dictTypeName !=''">
-                and dict_type_name like '%${dictTypeName}%'
+                and dicttype_name like '%${dictTypeName}%'
+            </if>
+            <if test="parentId !=null and parentId !=''">
+                and parentId = '${parentId}'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -48,7 +51,7 @@
         select count(*) from dict_entry
         <where>
             <if test="dictTypeId !=null and dictTypeId !=''">
-                and dict_type_id like '%${dictTypeId}%'
+                and dicttypeid = '${dictTypeId}'
             </if>
             <if test="dictId !=null and dictId !=''">
                 and dict_id like '%${dictId}%'
@@ -59,58 +62,58 @@
         </where>
     </select>
     <select id="queryDicts" resultType="com.zimax.components.coframe.dict.pojo.DictEntry">
-        select count(*) from dict_entry
+        select * from dict_entry
         <where>
         <if test="dictTypeId !=null and dictTypeId !=''">
-            and dict_type_id like '%${dictTypeId}%'
+            and dicttypeid = '${dictTypeId}'
         </if>
         <if test="dictId !=null and dictId !=''">
             and dict_id like '%${dictId}%'
         </if>
         <if test="parentId !=null and parentId !=''">
-            and parent_id like '%${parentId}%'
+            and parentid like '%${parentId}%'
         </if>
+        </where>
         <if test="order !=null and order !=''">
             order by ${field} ${order}
         </if>
         <if test="limit !=null and limit !=''">
             limit ${begin},${limit}
         </if>
-        </where>
     </select>
 
     <!--更新-->
     <update id="updateDictType" parameterType="com.zimax.components.coframe.dict.pojo.DictType">
         UPDATE dict_type
-        SET dict_type_name   = #{dictTypeName},
+        SET dicttype_name   = #{dictTypeName},
             rank     = #{rank},
-            parent_id = #{parentId},
-            seq_no  = #{seqNo}
+            parentid = #{parentId},
+            seqno  = #{seqNo}
         WHERE operator_id = #{dictTypeId}
     </update>
 
     <update id="updateDict" parameterType="com.zimax.components.coframe.dict.pojo.DictEntry">
         UPDATE dict_entry
-        SET dict_type_id   = #{dictTypeId},
-            dict_name     = #{dictName},
+        SET dicttypeid   = #{dictTypeId},
+            dictname     = #{dictName},
             status = #{status},
-            sort_no  = #{sortNo},
+            sortno  = #{sortNo},
             rank     = #{rank},
-            parent_id = #{parentId},
-            seq_no  = #{seqNo},
+            parentid = #{parentId},
+            seqno  = #{seqNo},
             filter1 = #{filter1},
             filter2  = #{filter2}
-        WHERE dict_id = #{dictId}
+        WHERE dictid = #{dictId}
     </update>
     <!--    主键删除-->
     <delete id="removeDictType" parameterType="int">
         delete from dict_type
-        where dict_type_id = #{dictTypeId}
+        where dicttypeid = #{dictTypeId}
     </delete>
     <!--    主键删除-->
     <delete id="removeDict" parameterType="int">
         delete from dict_entry
-        where dict_id = #{dictId}
+        where dictid = #{dictId}
     </delete>
 
     <!--    批量删除-->
@@ -133,16 +136,27 @@
     <select id="getDictType" resultType="com.zimax.components.coframe.dict.pojo.DictType">
         select *
         from dict_type
-        where dict_type_id = #{dictTypeIds}
+        where dicttypeid = #{dictTypeIds}
     </select>
 
     <!--获取信息-->
     <select id="getDict" resultType="com.zimax.components.coframe.dict.pojo.DictEntry">
         select *
         from dict_entry
-        where dict_id = #{dictId}
+        where dictid = #{dictId}
     </select>
 
+    <select id="getDictByIdAndPid" resultType="com.zimax.components.coframe.dict.pojo.DictEntry">
+        select *
+        from dict_entry
+        where dictid = #{dictId} and dictTypeId=#{dictTypeId}
+    </select>
+
+    <select id="getDictByIdAndSeq" resultType="com.zimax.components.coframe.dict.pojo.DictEntry">
+        select *
+        from dict_entry
+            where dictid = #{dictId} and seqNo like '${seqNo}%'
+    </select>
     <select id="importDict" parameterType="com.zimax.components.coframe.dict.pojo.DictType">
 
     </select>

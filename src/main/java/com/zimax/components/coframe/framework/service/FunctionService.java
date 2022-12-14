@@ -70,6 +70,7 @@ public class FunctionService implements IFunctionService {
     public void setApplicationMapper(ApplicationMapper applicationMapper) {
         this.applicationMapper = applicationMapper;
     }
+
     public void setFuncResourceMapper(FuncResourceMapper funcResourceMapper) {
         this.funcResourceMapper = funcResourceMapper;
     }
@@ -81,6 +82,7 @@ public class FunctionService implements IFunctionService {
 
     /**
      * 添加功能信息
+     *
      * @param function 功能信息
      */
     public void addFunction(Function function) {
@@ -88,12 +90,14 @@ public class FunctionService implements IFunctionService {
         ResourceRuntimeManager.getInstance().registerManagedResource(
                 adapt(function));
     }
+
     /**
      * 更新功能信息
+     *
      * @param function 功能信息
      */
     public void updateFunction(Function function) {
-       functionMapper.updateFunction(function);
+        functionMapper.updateFunction(function);
         ResourceRuntimeManager.getInstance()
                 .updateRegisteredManagedResource(adapt(function));
     }
@@ -220,45 +224,48 @@ public class FunctionService implements IFunctionService {
     }
 
     public Function[] getFunctionsByAppId(int appId) {
-        Function[] functions =  functionMapper.queryFunctionsByGroupId(appId);
+        Function[] functions = functionMapper.queryFunctionsByGroupId(appId);
         return functions;
     }
 
     public Function[] getFunctionsByFuncGroupIds(int funcGroupId) {
-        Function[] functions =  functionMapper.getFunctionsByFuncGroupId(funcGroupId);
+        Function[] functions = functionMapper.getFunctionsByFuncGroupId(funcGroupId);
         return functions;
     }
 
     /**
      * 查询所有功能信息
-     * @param page 页码
+     *
+     * @param page  页码
      * @param limit 记录数
      * @param order 排序方式
      * @param field 排序字段
      * @return
      */
-    public List<Function> queryFunctions(String  page, String limit, String funcGroupId, String funcCode, String funcName, String order, String field) {
+    public List<Function> queryFunctions(String page, String limit, String funcGroupId, String funcCode, String funcName, String isMenu, String order, String field) {
         ChangeString changeString = new ChangeString();
-        Map<String,Object> map= new HashMap<>();
-        if(order==null){
-            map.put("order","asc");
-            map.put("field","display_order");
-        }else{
-            map.put("order",order);
-            map.put("field",changeString.camelUnderline(field));
+        Map<String, Object> map = new HashMap<>();
+        if (order == null) {
+            map.put("order", "asc");
+            map.put("field", "display_order");
+        } else {
+            map.put("order", order);
+            map.put("field", changeString.camelUnderline(field));
         }
-        if(limit!=null){
-            map.put("begin",Integer.parseInt(limit)*(Integer.parseInt(page)-1));
-            map.put("limit",Integer.parseInt(limit));
+        if (limit != null) {
+            map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
+            map.put("limit", Integer.parseInt(limit));
         }
-        map.put("funcGroupId",funcGroupId);
-        map.put("funcCode",funcCode);
-        map.put("funcName",funcName);
+        map.put("funcGroupId", funcGroupId);
+        map.put("funcCode", funcCode);
+        map.put("funcName", funcName);
+        map.put("isMenu", isMenu);
         return functionMapper.queryFunctions(map);
     }
 
     /**
      * 根据功能编号编号删除
+     *
      * @param funcCode 功能编号
      */
     public void deleteFunction(String funcCode) {
@@ -267,6 +274,7 @@ public class FunctionService implements IFunctionService {
 
     /**
      * 根绝功能编号查询
+     *
      * @param funcCode 功能编号
      */
     public Function getFunction(String funcCode) {
@@ -280,20 +288,21 @@ public class FunctionService implements IFunctionService {
 
     /**
      * 批量删除功能
+     *
      * @param funcCodes 功能编号集合
      */
     public void deleteFunctions(List<String> funcCodes) {
-        if(funcCodes.size()==0)
+        if (funcCodes.size() == 0)
             return;
-        for(int i = 0;i<funcCodes.size();i++){
+        for (int i = 0; i < funcCodes.size(); i++) {
             Map<String, Object> map = new HashMap<>();
-            map.put("funcCode",funcCodes.get(i));
+            map.put("funcCode", funcCodes.get(i));
             List<FuncResource> funcResources = funcResourceMapper.queryFuncResources(map);
             List<Integer> resIds = new ArrayList<>();
-            for(FuncResource funcResource: funcResources){
+            for (FuncResource funcResource : funcResources) {
                 resIds.add(funcResource.getResId());
             }
-            if(resIds.size()!=0){
+            if (resIds.size() != 0) {
                 funcResourceMapper.deleteFuncResources(resIds);
             }
         }
@@ -303,8 +312,8 @@ public class FunctionService implements IFunctionService {
     /**
      * 查询记录
      */
-    public int count(String funcCode){
-        return functionMapper.count(funcCode);
+    public int count(String funcGroupId, String isMenu) {
+        return functionMapper.count(funcGroupId, isMenu);
     }
 
     /**
@@ -317,8 +326,8 @@ public class FunctionService implements IFunctionService {
     }
 
     public Function getFunctionsByCode(String funcCode) {
-       Function function =  functionMapper.getFunction(funcCode);
-       return function;
+        Function function = functionMapper.getFunction(funcCode);
+        return function;
     }
 
 }

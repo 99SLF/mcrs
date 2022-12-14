@@ -22,6 +22,8 @@ public interface DictMapper {
      */
     void saveDictType(DictType dictType);
 
+     DictEntry getDictByIdAndPid(String dictId, String dictTypeId);
+    List<DictEntry> getDictByIdAndSeq(Map map);
     /**
      * 保存业务字典项
      */

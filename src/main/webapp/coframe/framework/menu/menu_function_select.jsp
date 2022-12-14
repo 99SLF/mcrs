@@ -60,7 +60,8 @@
 		var field = data.field;
 		var dataJson = {
 			"funcCode": field.funcCode,
-			"funcName":field.funcName
+			"funcName":field.funcName,
+			"isMenu": "1"
 		};
 		table.reload("LAY-app-menu-list", {
 			url: "<%= request.getContextPath() %>/framework/function/query",
@@ -110,6 +111,7 @@
 		page: true,
 		limit: 10,
 		limits: [10, 15, 20, 30],
+		where:{"isMenu": "1"},
 		parseData: function(res) {
 			return {
 				code: "0",

@@ -42,24 +42,27 @@ public class DictService {
     /**
      * 查询所有字典类型信息
      */
-    public List<DictType> queryDictTypes(String page, String limit, String dictTypeId, String dictTypeName, String order, String field) {
-        ChangeString changeString = new ChangeString();
+    public List<DictType> queryDictTypes(String page, String limit, String dictTypeId, String name, String id, String order, String field) {
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
-            map.put("order", "desc");
-            map.put("field", "dict_type_id");
+            map.put("order", "asc");
+            map.put("field", "dicttypeid");
         } else {
             map.put("order", order);
-            map.put("field", changeString.camelUnderline(field));
+            map.put("field", field);
         }
         if (limit != null) {
             map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
             map.put("limit", Integer.parseInt(limit));
         }
-        map.put("dictTypeId", dictTypeId);
-        map.put("dictTypeName", dictTypeName);
-        return dictMapper.queryDictTypes(map);
-
+        if(dictTypeId!=null){
+            map.put("parentId",dictTypeId);
+            return dictMapper.queryDictTypes(map);
+        }else{
+            map.put("dictTypeId", id);
+            map.put("dictTypeName", name);
+            return dictMapper.queryDictTypes(map);
+        }
     }
     public int countType(String dictTypeId, String dictTypeName) {
         return dictMapper.countType(dictTypeId, dictTypeName);
@@ -68,24 +71,28 @@ public class DictService {
     /**
      * 查询所有字典项信息
      */
-    public List<DictEntry> queryDicts(String page, String limit,String dictTypeId,  String dictId, String parentId,String order, String field) {
-        ChangeString changeString = new ChangeString();
+    public List<DictEntry> queryDicts(String page, String limit,String dictTypeId,  String dictId, String parentTypeId,String order, String field) {
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
-            map.put("order", "desc");
-            map.put("field", "parent_id");
+            map.put("order", "asc");
+            map.put("field", "parentid");
         } else {
             map.put("order", order);
-            map.put("field", changeString.camelUnderline(field));
+            map.put("field", field);
         }
         if (limit != null) {
             map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
             map.put("limit", Integer.parseInt(limit));
         }
-        map.put("dictTypeId", dictTypeId);
-        map.put("dictId", dictId);
-        map.put("parentId", parentId);
-        return dictMapper.queryDicts(map);
+        if(dictId!=null){
+            DictEntry dictEntry = dictMapper.getDictByIdAndPid(dictId,parentTypeId);
+            map.put("seqNo", dictEntry.getSeqNo());
+            map.put("parentId", dictId);
+            return dictMapper.getDictByIdAndSeq(map);
+        }else{
+            map.put("dictTypeId", dictTypeId);
+            return dictMapper.queryDicts(map);
+        }
 
     }
     public int count(String dictTypeId,  String dictId, String parentId) {

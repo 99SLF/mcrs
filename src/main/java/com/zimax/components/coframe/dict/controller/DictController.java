@@ -61,18 +61,24 @@ public class DictController {
     /**
      * 查询业务字典类型，刷新
      *
-     * @param dictTypeId   类型代码
-     * @param dictTypeName 类型名称
+     * @param dictTypeId   父节点ID
+     * @param name 类型名称
+     * @param id 类型代码
      * @param limit        记录数
      * @param page         页码
+     * @param order 排序
      * @return 业务字典类型列表
      */
 
 
     @GetMapping("/queryDictType")
-    public Result<?> queryDictTypes(String page, String limit, String dictTypeId, String dictTypeName, String order, String field) {
-        List DictTypes = dictService.queryDictTypes(page, limit, dictTypeId, dictTypeName, order, field);
-        return Result.success(DictTypes, dictService.countType(dictTypeId, dictTypeName));
+    public Result<?> queryDictTypes(String page, String limit, String dictTypeId, String name, String id, String order, String field) {
+        List DictTypes = dictService.queryDictTypes(page, limit, dictTypeId, name, id, order, field);
+        if(dictTypeId!=null){
+            return Result.success(DictTypes);
+        }else{
+            return Result.success(DictTypes, dictService.countType(id, name));
+        }
     }
 
     /**
@@ -84,15 +90,19 @@ public class DictController {
      *
      * @param dictTypeId 类型代码
      * @param dictId     父节点ID
-     * @param parentId   父节点类型ID
+     * @param parentTypeId   父节点类型ID
      * @param limit      记录数
      * @param page       页码
      * @return 业务字典类型列表
      */
     @GetMapping("/queryDict")
-    public Result<?> queryDict(String page, String limit, String dictTypeId, String dictId, String parentId, String order, String field) {
-        List Dicts = dictService.queryDicts(page, limit, dictTypeId, dictId, parentId, order, field);
-        return Result.success(Dicts, dictService.count(dictTypeId, dictId, parentId));
+    public Result<?> queryDict(String page, String limit, String dictTypeId, String dictId, String parentTypeId, String order, String field) {
+        List Dicts = dictService.queryDicts(page, limit, dictTypeId, dictId, parentTypeId, order, field);
+        if(dictId!=null){
+            return Result.success(Dicts);
+        }else{
+            return Result.success(Dicts, dictService.count(dictTypeId, null,null));
+        }
 
     }
 

@@ -117,8 +117,8 @@
 	var dictTb = treeTable.render({
   		elem: "#LAY-app-dictType-list",
 		id: "LAY-app-dictType-list-reload",
-		url: "mcrs/dict/queryDictType",
-		method: "post",
+		url: "<%=request.getContextPath() %>/dict/queryDictType",
+		method: "GET",
 		height: "full-" + getFullSize(),
 		parseData: function(res) {
 			return {
@@ -175,26 +175,13 @@
 	var dictTermTb = treeTable.render({
 		elem: "#LAY-app-dict-list",
 		id: "LAY-app-dict-list-reload",
-		url: "com/zimax/components/coframe/dict/DictController/queryDict",
-		method: 'post',
 		height: "full-" + getFullSize2(),
-		parseData: function(res){
-			return {
-				code: "0", //解析接口状态
-				msg: "", //解析提示文本
-				count: res.total, //解析数据长度
-				data: res.data //解析数据列表
-			};
-		},
 		tree: {
 			iconIndex: 1,           // 折叠图标显示在第几列
 			isPidData: true,        // 是否是id、pid形式数据
 			idName: "dictId",   	// id字段名称
  			pidName: "parentId"     // pid字段名称
    		},
-    	where:{
-    		dictTypeId: "sadasdasdasd"
-    	},
 		toolbar: '#toolbarDemo2',
 		defaultToolbar: [],
 		cols: [[{
@@ -647,13 +634,20 @@
   			dictParentId = checkStatus[0].dictTypeId;
   			dictParentName = checkStatus[0].dictTypeName;
   			dictTermTb.reload( {//依照参数重载表格
-  				where: dataJson//where 	接口的其它参数。如：where: {token: 'sasasas', id: 123}
+				url: "<%=request.getContextPath() %>/dict/queryDict",
+				method: 'GET',
+				where: dataJson,//where 	接口的其它参数。如：where: {token: 'sasasas', id: 123}
+				parseData: function(res){
+					return {
+						code: "0", //解析接口状态
+						msg: "", //解析提示文本
+						count: res.total, //解析数据长度
+						data: res.data //解析数据列表
+					};
+				},
 	  		});
   		} else {
   			dictTermTb.reload({//依照参数重载表格
-  				where: {
-  					dictTypeId: "sadasdasdasd"
-  				}
   			});
   		}
 	});
