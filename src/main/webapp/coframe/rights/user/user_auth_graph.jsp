@@ -97,7 +97,7 @@ function SetData(data) {
 	    	}
 	    }
 	    result_shape.click(function() {
-	        var url="<%=request.getContextPath() %>/coframe/auth/authgraph/compute_function_menu.jsp";
+	        var url=" <%=request.getContextPath() %>/coframe/auth/authgraph/compute_function_menu.jsp";
 	    		top.layui.layer.open({
 	    		type: 2,
 	            title: "功能菜单计算结果", 

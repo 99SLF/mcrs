@@ -19,6 +19,8 @@
 <div class="layui-fluid">
 	<div class="layui-card">
 		<div class="layui-form layui-card-header layuiadmin-card-header-auto">
+			<%--给租户id默认值--%>
+			<input type="hidden" name="tenantId" value="default">
 			<div class="layui-form-item">
 				<div class="layui-inline">
 					<label class="layui-form-label">用户名称：</label>
@@ -82,11 +84,11 @@
 	//功能名
 	var funName = "user_list";
 
-	// 获取用户状态的下拉值
-	layui.admin.renderDictSelect({
-		elem: "#status",
-		dictTypeId: "COF_USERSTATUS"
-	});
+	// // 获取用户状态的下拉值
+	// layui.admin.renderDictSelect({
+	// 	elem: "#status",
+	// 	dictTypeId: "COF_USERSTATUS"
+	// });
 	//状态默认
 	$("#status").val("请选择");
 	form.render();
@@ -113,7 +115,8 @@
 			return false;
 		}
 	});
-	
+
+
 	var active = {
 		// 添加用户
 		add: function() {
@@ -187,13 +190,18 @@
 			    });
 			 }
 		},
-		//重置密码
+		//重置密码()
 		resetPassword: function() {
 			var checkStatus = table.checkStatus("LAY-app-user-list-reload");
   			var data = checkStatus.data;
 			if (data.length == 0) {
       			layer.msg("请至少选中一条记录！");
-     	 	} else {
+     	 	} else{
+			// if (data.length > 0) {
+			// 	var userIds = new Array();
+			// 	for (var i=0; i<data.length;i++) {
+			// 		userIds[i] = data[i].userId;
+			// 	}
 				layer.confirm("是否将密码重置为000000？",{
 					icon: 3, 
 					title: "系统提示"
@@ -204,9 +212,11 @@
 		    		}); //设定最长等待10秒
 					layer.close(index);
 	       			$.ajax({
-						url: "/mcrs/rights/user/changePassword",
+						url: "<%= request.getContextPath() %>/user/updatePasswords",
 						type: "POST",
-						data: JSON.stringify({"users":data}),
+						// data: JSON.stringify(userIds),
+						/*逻辑流要参数接口，前后端接口已经将这个解析出来了 data: JSON.stringify({"users":data}),*/
+						data: JSON.stringify(data),
 						cache: false,
 						contentType: "text/json",
 						success: function(result) {
@@ -242,17 +252,20 @@
 			}
   			if (data.length == 0) {
 				layer.msg("请至少选中一条记录！");
-			} else {
+			}
+			if (data.length > 0) {
+				var operatorIds = new Array();
+				for (var i=0; i<data.length;i++) {
+					operatorIds[i] = data[i].operatorId;
+				}
 				layer.confirm("确定删除所选用户？", {
-					icon: 3, 
+					icon: 3,
 					title: "系统提示"
 				}, function(index) {
 					$.ajax({
-						url: "/mcrs/rights/user/batchDelete",
-						type: "POST",
-						data: JSON.stringify({
-							users: data
-						}),
+						url: "<%= request.getContextPath() %>/user/batchDelete",
+						type: "DELETE",
+						data: JSON.stringify(operatorIds),
 						cache: false,
 						contentType: "text/json",
 						success: function(result) {
@@ -275,7 +288,7 @@
 										table.reload("LAY-app-user-list-reload");
 									});
 								} else {
-									layer.msg("删除失败");		
+									layer.msg("删除失败");
 								}
 							}
 						},
@@ -285,28 +298,13 @@
 								icon: 5
 							});
 						}
-					});	
-				});	
-			} 
+					});
+				});
+			}
 		}
 	};
 	
-	//左侧表头按钮事件监听
-	table.on('toolbar(LAY-app-user-list)', function(obj) {
-		var type = obj.event;
-		active[type] ? active[type].call(this) : "";
-	});
-	
-	//表格排序
-	table.on('sort(LAY-app-user-list)', function(obj) { 
-  		table.reload('LAY-app-user-list-reload', {
-			initSort: obj ,
-			where: {
-      			sortField: obj.field, 
-				sortOrder: obj.type 
-    		}
-  		});
-	});
+
 	
 	function getFullSize() {
 		var fluid = $(".layui-fluid");
@@ -314,28 +312,39 @@
 		var cardbody = $(".layui-card-body");
 		return header.outerHeight(true)  + (cardbody.outerHeight(true) - cardbody.height()) + (fluid.outerHeight(true) - fluid.height()) + 2;
 	}
-	
-	$(window).resize(function() {
-		table.reload("LAY-app-user-list-reload", {
-			height: "full-" + getFullSize()
+	//左侧表头按钮事件监听
+	table.on('toolbar(LAY-app-user-list)', function(obj) {
+		var type = obj.event;
+		active[type] ? active[type].call(this) : "";
+	});
+
+	//表格排序
+	table.on('sort(LAY-app-user-list)', function(obj) {
+		table.reload('LAY-app-user-list-reload', {
+			initSort: obj ,
+			where: {
+				sortField: obj.field,
+				sortOrder: obj.type
+			}
 		});
 	});
+
 	
-	// 查询过滤字段
-	$.ajax({
-		url: "<%=request.getContextPath() %>/cols/filter/query/" + funName,
-		type: "GET",
-		async: false,
-		cache: false,
-		contentType: "text/json",
-		success: function(result) {
-			if (result) {
-				hiddenFields = result.data
-			} else {
-				layer.msg("查询失败");
-			}
-		}
-	});
+	<%--// 查询过滤字段--%>
+	<%--$.ajax({--%>
+	<%--	url: "<%=request.getContextPath() %>/cols/filter/query/" + funName,--%>
+	<%--	type: "GET",--%>
+	<%--	async: false,--%>
+	<%--	cache: false,--%>
+	<%--	contentType: "text/json",--%>
+	<%--	success: function(result) {--%>
+	<%--		if (result) {--%>
+	<%--			hiddenFields = result.data--%>
+	<%--		} else {--%>
+	<%--			layer.msg("查询失败");--%>
+	<%--		}--%>
+	<%--	}--%>
+	<%--});--%>
 
 	// 判断是否隐藏函数
 	function isHidden(field) {
@@ -351,7 +360,7 @@
 		elem: "#LAY-app-user-list",
 		id: "LAY-app-user-list-reload",
 		<%--url: "<%=request.getContextPath() %>/user/query",--%>
-		url: "/mcrs/rights/user/query",
+		url: "<%=request.getContextPath() %>/user/query",
 		method: "get",
 		height: "full-" + getFullSize(),
 		page: true,
@@ -359,22 +368,25 @@
 		limits: [10, 15, 20, 30],
 		toolbar: "#toolbar",
 		defaultToolbar: ["filter"],
-		colHideChange: function(col, checked) {
-			var field = col.field;
-			var hidden = col.hide;
-			$.ajax({
-				url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
-				type: "GET",
-				cache: false,
-				contentType: "text/json",
-				success: function(result) {
-					if (result) {
-					} else{
-						layer.msg("列筛选失败");
-					}
-				}
-			});
-		},
+		<%--colHideChange: function(col, checked) {--%>
+		<%--	var field = col.field;--%>
+		<%--	var hidden = col.hide;--%>
+		<%--	$.ajax({--%>
+		<%--		url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,--%>
+		<%--		type: "GET",--%>
+		<%--		cache: false,--%>
+		<%--		contentType: "text/json",--%>
+		<%--		success: function(result) {--%>
+		<%--			if (result) {--%>
+		<%--			} else{--%>
+		<%--				layer.msg("列筛选失败");--%>
+		<%--			}--%>
+		<%--		}--%>
+		<%--	});--%>
+		<%--},--%>
+
+		/*分页*/
+		limits: [10, 15, 20, 30],
 		parseData: function(res) {
 			return {
 				code: res.code,
@@ -409,7 +421,17 @@
 			minWidth: 150,
 			hide: isHidden("authMode"),
 			templet:function(d) {
-				return layui.admin.getDictText("COF_AUTHMODE", d.authMode);
+				if (d.authMode==1) {
+					return "本地密码认证";
+				} else if (d.authMode==2){
+					return "LDAP认证"
+				}else if (d.authMode==3){
+					return "远程认证";
+				}else if (d.authMode==4){
+					return "Portal认证";
+				}else{
+					return "注销"
+				}// return layui.admin.getDictText("COF_AUTHMODE", d.authMode);
 			}
 		}, {
 			field: "status",
@@ -417,8 +439,20 @@
 			align: "center",
 			minWidth: 120,
 			hide: isHidden("status"),
+			/*挂起，正常，锁定，注销*/
 			templet:function(d) {
-				return layui.admin.getDictText("COF_USERSTATUS", d.status);
+
+				if (d.status==1) {
+					return "挂起";
+				} else if (d.status==2){
+					return "正常"
+
+				}else if (d.status==3){
+					return "锁定";
+				}else{
+					return "注销"
+				}
+				// return layui.admin.getDictText("COF_USERSTATUS", d.status);
 			}
 		}, {
 			field: "email",
@@ -427,10 +461,10 @@
 			hide: isHidden("email"),
 			minWidth: 150
 		}, {
-			field: "createuser",
+			field: "creator",
 			title: "创建人",
 			align: "left",
-			hide: isHidden("createuser"),
+			hide: isHidden("creator"),
 			minWidth: 150
 		}, 
 		{
@@ -440,6 +474,12 @@
 			width: 150,
 			toolbar: "#table-user-list"
 		}]]
+	});
+
+	$(window).resize(function() {
+		table.reload("LAY-app-user-list-reload", {
+			height: "full-" + getFullSize()
+		});
 	});
 	
 	//监听操作事件
@@ -468,14 +508,15 @@
 			});
 		} else if (e.event == "del") {
 			layer.confirm("确定删除该用户？", {
-				icon: 3, title: "系统提示"
+				icon: 3,
+				title: "系统提示"
 			}, function(index) {
+				var operatorIds =new Array();
+				operatorIds[0] = data.operatorId;
 				$.ajax({
-					url: "/mcrs/rights/user/batchDelete",
-					type: "POST",
-					data: JSON.stringify({
-						"users": data
-					}),
+					url: "<%= request.getContextPath() %>/user/batchDelete",
+					type: "DELETE",
+					data: JSON.stringify(operatorIds),
 					cache: false,
 					contentType: "text/json",
 					success: function(result) {

@@ -26,6 +26,14 @@ public interface UserMapper {
 
      int count(@Param("status") String status, @Param("userName") String userName);
 
+//     /**
+//      * 查询匹配密码的用户记录数,用户
+//      */
+//
+//     int countPa(@Param("userId") String userId );
+//
+//     List<User> queryPassword(Map map);
+
      /**
       * 更新用户
       */
@@ -46,19 +54,25 @@ public interface UserMapper {
       */
      User getUser(int operatorId );
 
+//     /**
+//      * 重置密码
+//      */
+//     void updatePasswords(@Param("userIds") List<String> userIds,@Param("password")String password);
+
      /**
       * 重置密码
       */
-     void changePassword(List<Integer> operatorIds);
+     void updatePasswords(List<User> users);
 
      /**
       * 检查用户是否存在
       */
-     User checkUser(String userId );
+     int checkUser(String userId);
 
      /**
       * 获取用户
       */
      User getUserByUserId(String userId );
+
 
 }
