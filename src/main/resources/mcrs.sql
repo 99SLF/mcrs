@@ -413,3 +413,39 @@ CREATE TABLE `war_alarm_rule`  (
 SET FOREIGN_KEY_CHECKS = 1;
 
 
+    -- ----------------------------
+-- Table structure for dev_rollback
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_rollback`;
+CREATE TABLE `dev_rollback`  (
+    `device_rollback_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '终端升级主键',
+    `equipment_int` int(255) NULL DEFAULT NULL COMMENT '设备主键',
+    `device_id` int(255) NULL DEFAULT NULL COMMENT '终端主键',
+    `upload_id` int(255) NULL DEFAULT NULL COMMENT '更新包主键',
+    `upgrade_version` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '升级版本号',
+    `upgrade_status` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '升级状态',
+    `version_rollback_people` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '版本更改人',
+    `version_rollback_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '版本更改时间',
+    PRIMARY KEY (`device_rollback_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+-- ----------------------------
+-- Table structure for dev_upgrade
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_upgrade`;
+CREATE TABLE `dev_upgrade`  (
+    `device_upgrade_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '终端升级主键',
+    `equipment_int` int(255) NULL DEFAULT NULL COMMENT '设备主键',
+    `device_id` int(255) NULL DEFAULT NULL COMMENT '终端主键',
+    `upload_id` int(255) NULL DEFAULT NULL COMMENT '更新包主键',
+    `upgrade_version` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '升级版本号',
+    `upgrade_status` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '升级状态',
+    `version_updater` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '版本更改人',
+    `version_update_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '版本更改时间',
+    PRIMARY KEY (`device_upgrade_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
