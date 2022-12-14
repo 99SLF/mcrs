@@ -150,9 +150,13 @@ public class UserController {
 	 *
 	 * @param userId 用户名字
 	 */
-	@GetMapping("/check/{userId}")
-	public Result<?> checkUser(@PathVariable("userId") String userId) {
-		return Result.success(userService.checkUser(userId));
+	@GetMapping("/check/isExist")
+	public Result<?> checkUser(@RequestParam("userId") String userId) {
+		if(userService.checkUser(userId)>0){
+			return Result.error("1","用户以存在");
+		}else {
+			return Result.success();
+		}
 
 	}
 

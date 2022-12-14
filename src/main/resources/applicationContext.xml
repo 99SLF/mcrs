@@ -104,6 +104,11 @@
         <property name="mapperInterface" value="com.zimax.mcrs.monitor.mapper.AccessMonitorMapper"/>
     </bean>
 
+    <bean id="UpdatePackageMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.update.mapper.UpdatePackageMapper"/>
+    </bean>
+
     <bean id="GradeAuthBean" class="com.zimax.components.coframe.rights.gradeauth.GradeAuthService"></bean>
 
     <bean id="PartyAuthService" class="com.zimax.components.coframe.auth.service.PartyAuthService"></bean>
@@ -111,8 +116,6 @@
     <bean id="RoleBean" class="com.zimax.components.coframe.rights.service.RoleService">
         <property name="roleMapper" ref="RoleMapper"/>
         <property name="gradeAuthService" ref="GradeAuthBean"/>
-        <property name="resAuthMapper" ref="ResAuthMapper"/>
-        <property name="partyAuthMapper" ref="PartyAuthMapper"/>
     </bean>
 
     <bean id="FunctionBean" class="com.zimax.components.coframe.framework.service.FunctionService">

@@ -36,7 +36,7 @@ public class AbnProdPrcsReport {
 
 
     /**
-     * 分页查询所有用户
+     * 分页查询所有记录生产过程异常报表信息
      *
      * @param page        页记录数
      * @param limit       页码

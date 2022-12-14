@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-   xmlns:mvc="http://www.springframework.org/schema/mvc"
-   xmlns:context="http://www.springframework.org/schema/context"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
     http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/mvc
@@ -11,27 +11,28 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
 
-<!--    mvc注解驱动-->
-<mvc:annotation-driven>
-    <mvc:message-converters register-defaults="true">
-        <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
-            <property name="supportedMediaTypes">
-                <list>
-                    <value>application/json</value>
-                    <value>text/html;charset=UTF-8</value>
-                    <value>text/json;charset=UTF-8</value>
-                </list>
-            </property>
-        </bean>
-    </mvc:message-converters>
-</mvc:annotation-driven>
-<!--    视图解析器-->
-<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-    <property name="prefix" value="/coframe/"/>
-    <property name="suffix" value=".jsp"/>
-</bean>
-<!--    静态资源开放-->
-<!--    <mvc:default-servlet-handler/>-->
+    <!--    mvc注解驱动-->
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json</value>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>text/json;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!--    视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/coframe/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <!--    静态资源开放-->
+    <!--    <mvc:default-servlet-handler/>-->
     <context:component-scan base-package="com.zimax.components.coframe.tools"></context:component-scan>
     <context:component-scan base-package="com.zimax.components.coframe.dict"></context:component-scan>
     <context:component-scan base-package="com.zimax.components.coframe.rights"></context:component-scan>
@@ -41,4 +42,5 @@
     <context:component-scan base-package="com.zimax.mcrs.monitor"></context:component-scan>
     <context:component-scan base-package="com.zimax.mcrs.device"></context:component-scan>
     <context:component-scan base-package="com.zimax.mcrs.warn"></context:component-scan>
+    <context:component-scan base-package="com.zimax.mcrs.update"></context:component-scan>
 </beans>

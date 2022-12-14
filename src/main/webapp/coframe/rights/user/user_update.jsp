@@ -15,8 +15,8 @@
 <style type="text/css"></style>
 </head>
 <body>
-<div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0;white-space：nowrap" >
-	<input type="hidden" name="operatorId"/>
+<div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0;white-space：nowrap">
+	<input type="hidden" name="operatorId" value="default">
 	<input type="hidden" name="password" value="default">
 		<div class="layui-form-item layui-row layui-col-space10">
 		<div class="layui-col-sm6">
@@ -122,6 +122,8 @@
 	var form = layui.form;
 	var laydate = layui.laydate;
 	var $ = layui.jquery;
+	var util = layui.util;
+
 	var isExist = false;
 	var submit = false;
 	
@@ -184,20 +186,21 @@
 		win = data.win ? data.win : window;
 	  	var data = data.data;
 		form.val("layuiadmin-app-form-list", {
+			//添加选项几个弄几个，包括一个主键
 			"operatorId": data.operatorId,
 		 	"userId": data.userId,
 			"userName": data.userName,
 			"password": data.password,
-			"invalDate": data.invalDate,
-			"startDate": data.startDate,
-			"endDate": data.endDate,
+			"invalDate": util.toDateString(data.invalDate, "yyyy-MM-dd"),
+			"startDate": util.toDateString(data.startDate, "yyyy-MM-dd"),
+			"endDate": util.toDateString(data.endDate, "yyyy-MM-dd"),
 			"email": data.email,
 			"status": data.status,
 			"authMode": data.authMode,
 			"menuType": data.menuType,
 			"ipAddress": data.ipAddress,
 		});
-		
+
 		if (data.enddate != null) {
 			var startDate = laydate.render({
 				elem: '#startdate',
@@ -240,14 +243,14 @@
 		var userId = $("#userId").val();
 		if (userId != null && userId != "") {
 			$.ajax({
-				url: "<%=request.getContextPath()%>/user/check/"+data.userId,
-				type: "POST",
+				url: "<%=request.getContextPath()%>/user/check/isExist",
+				type: "GET",
 				cache: false,
 				contentType: "text/json",
 				cache: false,
 				success: function(text) {
 					console.log(text);
-					if (text.data) {
+					if (text.code == "1") {
 						isExist = true;
 					} else {
 						isExist = false;
@@ -283,7 +286,7 @@
 	    				});
 					}
 				});	
-			} else if(isExist == true) {		
+			} else if(isExist == true) {
 				submit = false;
 				layer.msg("用户已存在，请重新输入", {
 					icon: 2,

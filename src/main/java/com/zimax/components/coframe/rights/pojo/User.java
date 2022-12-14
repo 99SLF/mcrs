@@ -34,55 +34,95 @@ public class User {
      */
 
     private String tenantId;
+
+
     /**
-     * 登录用户名
+     * 用户登录名(添加页面)
      */
 
     private String userId;
 
     /**
-     * 密码
-     */
-    private String password;
-
-    /**
-     * 密码失效日期
-     */
-    private Date invalDate;
-
-    /**
-     * 用户名称
+     * 用户名称(添加页面)
      */
     private String userName;
 
     /**
-     * 本地密码认证
-     * 本地密码认证、LDAP认证、等
+     * 登录密码(添加页面)
      */
-    private String authMode;
+    private String password;
 
     /**
-     * 状态
+     * 密码失效日期(添加页面)
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date invalDate;
+
+    /**
+     * 有效开始时间(添加页面)
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date startDate;
+
+
+    /**
+     * 有效截止时间(添加页面)
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date endDate;
+
+    /**
+     * 邮箱地址(添加页面)
+     */
+    private String email;
+
+    /**
+     * 用户状态(添加页面)
      * 正常，挂起，注销，锁定...
      */
     private String status;
 
     /**
-     * 解锁的时间
-     * 当状态为锁定时，解锁的时间
+     * 本地密码认证模式(添加页面)
+     * 本地密码认证、LDAP认证、等
      */
-    private Date unlockTime;
+    private String authMode;
 
     /**
-     * 菜单风格
+     * 菜单布局(添加页面)
      * 用户登录后菜单的风格
      */
     private String menuType;
 
     /**
+     * 设置IP地址(添加页面)
+     * 允许设置多个IP地址
+     */
+    private String ipAddress;
+
+
+    /**
+     * 解锁的时间
+     * 当状态为锁定时，解锁的时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date unlockTime;
+
+    /**
      * 最后登录时间
      * 最后登录时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date lastLogin;
 
     /**
@@ -90,15 +130,6 @@ public class User {
      */
     private int errCount;
 
-    /**
-     * 有效开始时间
-     */
-    private Date startDate;
-
-    /**
-     * 有效截止时间
-     */
-    private Date endDate;
 
     /**
      * 有效时间范围
@@ -113,17 +144,6 @@ public class User {
     private String macCode;
 
     /**
-     * 设置IP地址
-     * 允许设置多个IP地址
-     */
-    private String ipAddress;
-
-    /**
-     * 邮箱地址
-     */
-    private String email;
-
-    /**
      * 创建人
      */
     private String creator;
@@ -131,13 +151,10 @@ public class User {
     /**
      * 创建时间
      */
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date createTime;
-
-
-
 
 }
 

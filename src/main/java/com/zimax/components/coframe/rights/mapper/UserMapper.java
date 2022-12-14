@@ -67,7 +67,7 @@ public interface UserMapper {
      /**
       * 检查用户是否存在
       */
-     int checkUser(String userId);
+     int checkUser(@Param("userId") String userId);
 
      /**
       * 获取用户
