@@ -55,7 +55,7 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label">功能资源：</label>
 			<div class="layui-input-block"  id="input-block">
-				<input id="funcCode" name="menu/funcCode" type="hidden"/>
+				<input id="funcCode" name="funcCode" type="hidden"/>
 				<input type="text" class="layui-input" style="width:85%" name="funcName" id="funcName" lay-verify="" autocomplete="off" placeholder="">
 				<button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="onButtonEdit" style="position:absolute;top:0px;right:0px;height:37px"><i class="layui-icon layui-icon-more"></i></button>
 			</div>

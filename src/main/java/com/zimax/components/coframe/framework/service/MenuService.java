@@ -69,7 +69,22 @@ public class MenuService implements IMenuService {
     public void addMenu(Menu menu) {
         String primaryKey = menuMapper.getPrimaryKey();
         menu.setMenuId(primaryKey);
-        menuMapper.addMenu(menu);
+        String parentMenuId = menu.getParentMenuId();
+        if("root".equals(parentMenuId) || "null".equals(parentMenuId) || parentMenuId==null||"".equals(parentMenuId)){
+            menu.setMenuLevel(1);
+            menu.setMenuSeq("."+primaryKey+".");
+            menu.setSubCount(0);
+            menuMapper.addMenu(menu);
+        }else{
+            Menu menu1 = menuMapper.getMenu(menu.getParentMenuId());
+            menu.setMenuLevel(menu1.getMenuLevel()+1);
+            menu.setMenuSeq(menu1.getMenuSeq()+primaryKey+".");
+            menu.setSubCount(0);
+            menuMapper.addMenu(menu);
+            menu1.setSubCount(menu1.getSubCount()+1);
+            menuMapper.updateMenu(menu1);
+        }
+
     }
 
     /**
