@@ -8,4 +8,84 @@
         values (#{accessId}, #{equipmentId}, #{APPId}, #{accessType}, #{accessStatus},
                 #{antennaStatus}, #{deviceSoType}, #{deviceSoRuntime})
     </insert>
+    <!--    查询记录数-->
+    <select id="countSO" resultType="int">
+        select count(*) from access_status
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="APPId !=null and APPId !=''">
+                and APP_id	 like '%${APPId}%'
+            </if>
+            <if test="deviceSoType !=null and deviceSoType !=''">
+                and device_so_type like '%${deviceSoType}%'
+            </if>
+            <if test="deviceSoRuntime !=null and deviceSoRuntime !=''">
+                and device_so_runtime like '%${deviceSoRuntime}%'
+            </if>
+        </where>
+    </select>
+    <!--    查询记录数-->
+    <select id="countEQ" resultType="int">
+        select count(*) from access_status
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="accessStatus !=null and accessStatus !=''">
+                and access_status	 like '%${accessStatus}%'
+            </if>
+            <if test="antennaStatus !=null and antennaStatus !=''">
+                and antenna_status like '%${antennaStatus}%'
+            </if>
+        </where>
+    </select>
+    <!--查询软件运行状态信息-->
+    <select id="querySoRuntimes" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.AccessStatus">
+        select * from access_status
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="APPId !=null and APPId !=''">
+                and APP_id	 like '%${APPId}%'
+            </if>
+            <if test="deviceSoType !=null and deviceSoType !=''">
+                and device_so_type like '%${deviceSoType}%'
+            </if>
+            <if test="deviceSoRuntime !=null and deviceSoRuntime !=''">
+                and device_so_runtime like '%${deviceSoRuntime}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+    <!--查询软件运行状态信息-->
+    <select id="queryEquipmentAccess" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.AccessStatus">
+        select * from access_status
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="accessStatus !=null and accessStatus !=''">
+                and access_status	 like '%${accessStatus}%'
+            </if>
+            <if test="antennaStatus !=null and antennaStatus !=''">
+                and antenna_status like '%${antennaStatus}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
 </mapper>

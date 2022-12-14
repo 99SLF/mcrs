@@ -72,26 +72,19 @@
     <!--更新一条选中的用户信息-->
     <update id="updateUser" parameterType="com.zimax.components.coframe.rights.pojo.User">
         UPDATE cap_user
-        SET tenant_id   = #{tenantId},
+        SET
             user_id     = #{userId},
-            password    = #{password},
-            inval_date  = #{invalDate},
             user_name   = #{userName},
-            auth_mode   = #{authMode},
-            status      = #{status},
-            unlock_time = #{unlockTime},
-            menu_type   = #{menuType},
-            last_login  = #{lastLogin},
-            err_count   = #{errCount},
-            start_date  = #{startDate},
-            end_date    = #{endDate},
-            valid_time  = #{validTime},
-            mac_code    = #{macCode},
-            ip_address  = #{ipAddress},
+            inval_date  = #{invalDate,jdbcType=DATE},
+            start_date  = #{startDate,jdbcType=DATE},
+            end_date    = #{endDate,jdbcType=DATE},
             email       = #{email},
-            creator     = #{creator},
-            create_time = #{createTime}
-        WHERE operator_id = #{operatorId}
+            status      = #{status},
+            auth_mode   = #{authMode},
+            menu_type   = #{menuType},
+            ip_address  = #{ipAddress},
+            valid_time  = #{validTime,jdbcType=DATE}
+        WHERE operator_id = ${operatorId}
     </update>
     <!--    主键删除-->
     <delete id="deleteUser" parameterType="int">
@@ -119,8 +112,8 @@
         where user_id = #{userId}
     </select>
 
-    <!--获取一个用户信息-->
-    <select id="checkUser" resultType="com.zimax.components.coframe.rights.pojo.User">
+    <!--获取一个用户信息条数-->
+    <select id="checkUser" resultType="int">
         select count(*)
         from cap_user
         where user_id = #{userId}

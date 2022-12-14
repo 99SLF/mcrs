@@ -169,27 +169,27 @@
 				});
 			}
 		},
-		authCalculate: function() {       //权限计算
-			var checkStatus = table.checkStatus("LAY-app-user-list-reload");
-			var data = checkStatus.data;
-			if (data.length == 0) {
-				layer.msg("请至少选中一条记录！");
-	        } else { 
-				top.layer.open({ //开启弹窗
-					type: 2, 
-					title: "权限计算",
-					area: ["800px", "500px"],
-					content: "<%= request.getContextPath() %>/coframe/auth/authgraph/auth_graph.jsp",
-					btn: ["关闭"],
-					success: function(layero, index) {
-						layero.find("iframe")[0].contentWindow.SetData({
-							nodeId: data[0].userId,
-							partyTypeId: "user"
-						});
-					},
-			    });
-			 }
-		},
+		<%--authCalculate: function() {       //权限计算--%>
+		<%--	var checkStatus = table.checkStatus("LAY-app-user-list-reload");--%>
+		<%--	var data = checkStatus.data;--%>
+		<%--	if (data.length == 0) {--%>
+		<%--		layer.msg("请至少选中一条记录！");--%>
+	    <%--    } else { --%>
+		<%--		top.layer.open({ //开启弹窗--%>
+		<%--			type: 2, --%>
+		<%--			title: "权限计算",--%>
+		<%--			area: ["800px", "500px"],--%>
+		<%--			content: "<%= request.getContextPath() %>/coframe/auth/authgraph/auth_graph.jsp",--%>
+		<%--			btn: ["关闭"],--%>
+		<%--			success: function(layero, index) {--%>
+		<%--				layero.find("iframe")[0].contentWindow.SetData({--%>
+		<%--					nodeId: data[0].userId,--%>
+		<%--					partyTypeId: "user"--%>
+		<%--				});--%>
+		<%--			},--%>
+		<%--	    });--%>
+		<%--	 }--%>
+		<%--},--%>
 		//重置密码()
 		resetPassword: function() {
 			var checkStatus = table.checkStatus("LAY-app-user-list-reload");

@@ -16,8 +16,6 @@
 <body>
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list"
      style="padding: 20px 30px 0 0;">
-    <%--	<input type="hidden" name="operatorId" value="default">--%>
-    <input type="hidden" name="tenantId" value="default">
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
             <label class="layui-form-label">用户登录名:<span style="color:red">*</span></label>
@@ -141,9 +139,15 @@
     var $ = layui.jquery;
     var submit = false;
     var isExist = false;
+    var win = null;
+
+    function SetData(data) {
+        win = data.win ? data.win : window;
+    }
 
     //日期
     laydate.render({
+        //密码失效时间
         elem: '#invaldate',
         format: 'yyyy-MM-dd',
         trigger: 'click',   //解决时间选择器一闪而过的情况
@@ -169,11 +173,7 @@
     //表单加载
     form.render();
 
-    var win = null;
 
-    function SetData(data) {
-        win = data.win ? data.win : window;
-    }
 
     var startDate = laydate.render({
         elem: '#startdate',
@@ -210,9 +210,11 @@
 
     //监听提交
     form.on("submit(layuiadmin-app-form-submit)", function (data) {
-        var submitData = JSON.stringify(data.field);
+        debugger;
+        // var submitData = JSON.stringify(data.field);
         if (submit == false) {
             submit = true;
+            var submitData = JSON.stringify(data.field);
             if (isExist == false) {
                 $.ajax({
                     url: "<%=request.getContextPath()%>/user/add",
@@ -237,6 +239,7 @@
                     icon: 2,
                     time: 2000
                 });
+                submit = false;
             }
         } else {
             layer.msg("请稍等");
@@ -247,20 +250,21 @@
     // 判断角色是否已存在
     $("#userId").blur(function() {
     	var userId = $("#userId").val();
-    	console.log(userId);
+    	// console.log(userId);
     	if (userId != null && userId != "") {
-    		var json = JSON.stringify({
-    			userId: userId});
+    		// var json = JSON.stringify({
+    		// 	userId: userId});
     		$.ajax({
-    			url: "<%=request.getContextPath()%>/user/check/"+data.userId,
-    			type: "POST",
-    			data: json,
+    			url: "<%=request.getContextPath()%>/user/check/isExist",
+    			type: "GET",
+    			// data: json,
+                data: userId,
     			cache: false,
     			contentType: "text/json",
     			cache: false,
     			success: function(text) {
     			    //通过接口返回，返回检测用户记录条数
-    				if (text.data) {
+    				if (text.data == "1") {
     					isExist = true;
     				} else {
     					isExist = false;

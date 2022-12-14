@@ -20,7 +20,6 @@
   </properties>
 
   <dependencies>
-
     <!-- https://mvnrepository.com/artifact/com.mchange/c3p0 -->
     <dependency>
       <groupId>com.mchange</groupId>
