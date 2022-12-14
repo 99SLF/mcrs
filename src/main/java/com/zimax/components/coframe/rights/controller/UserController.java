@@ -1,5 +1,6 @@
 package com.zimax.components.coframe.rights.controller;
 
+import com.zimax.components.coframe.rights.DefaultUserManager;
 import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.components.coframe.rights.service.UserService;
 import com.zimax.mcrs.config.Result;
@@ -16,7 +17,7 @@ import java.util.List;
  * @date 2022/11/28
  */
 @RestController
-@RequestMapping("/rights")
+@RequestMapping("/user")
 public class UserController {
 
 	/**
@@ -31,7 +32,7 @@ public class UserController {
 	 * @param user 用户信息
 	 * @return
 	 */
-	@PostMapping("/user/add")
+	@PostMapping("/add")
 	public Result<?> addUser(@RequestBody User user) {
 		userService.addUser(user);
 		return Result.success();
@@ -43,7 +44,7 @@ public class UserController {
 	 * @param user 用户信息
 	 * @return
 	 */
-	@PostMapping("/user/update")
+	@PostMapping("/update")
 	public Result<?> updateUser(@RequestBody User user) {
 		userService.updateUser(user);
 		return Result.success();
@@ -54,7 +55,7 @@ public class UserController {
 	 *
 	 * @param operatorId 操作员编号
 	 */
-	@GetMapping("/user/find/{operatorId}")
+	@GetMapping("/find/{operatorId}")
 	public Result<?> getUser(@PathVariable("operatorId") int operatorId) {
 		return Result.success(userService.getUser(operatorId));
 	}
@@ -64,7 +65,7 @@ public class UserController {
 	 *
 	 * @param operatorId 操作员编号
 	 */
-	@DeleteMapping("/user/delete/{operatorId}")
+	@DeleteMapping("/delete/{operatorId}")
 	public Result<?> deleteUser(@PathVariable("operatorId") int operatorId) {
 		userService.deleteUser(operatorId);
 		return Result.success();
@@ -84,46 +85,75 @@ public class UserController {
 	 * @return code 状态码
 	 * @return msg 返回信息
 	 */
-	@GetMapping("/user/query")
+	@GetMapping("/query")
 	public Result<?> queryUsers(String page, String limit, String status, String userName, String order, String field) {
 		List users = userService.queryUsers(page, limit, status, userName, order, field);
 		return Result.success(users, userService.count(status, userName));
 	}
+
+//	/**
+// 	* 根据用户编码查询密码
+//	* @param
+// 	* @return
+//	*/
+//	public Result<?>queryPassword(String page, String limit, String userId,String order, String field){
+//		List users = userService.queryPassword(page,limit,userId,order,field);
+//		return Result.success(users,userService.countPa(userId));
+//	}
 
 	/**
 	 * 批量删除用户信息
 	 *
 	 * @param operatorIds 用户操作编号数组
 	 */
-	@DeleteMapping("/user/batchDelete")
+	@DeleteMapping("/batchDelete")
 	public Result<?> deleteUsers(@RequestBody Integer[] operatorIds) {
 		userService.deleteUsers(Arrays.asList(operatorIds));
 		return Result.success();
+
 	}
 
+
+//	/**
+//	 * 重置密码
+//	 *
+//	 * @param userIds 用户编号
+//	 * @param
+//	 */
+//	@PostMapping("/user/updatePasswords")
+//	@ResponseBody
+//	public Result<?> updatePasswords(@RequestBody String[] userIds) {
+//		/*调用重置密码*/
+//		userService.updatePasswords(Arrays.asList(userIds));
+//		return Result.success();
+//
+//	}
 
 	/**
 	 * 重置密码
 	 *
-	 * @param operatorIds 操作员编号
+	 * @param users 用户编号
 	 * @param
 	 */
-	@PostMapping("/user/changePassword")
+	@PostMapping("/updatePasswords")
 	@ResponseBody
-	public Result<?> changePassword(@RequestBody Integer[] operatorIds) {
-		userService.changePassword(Arrays.asList(operatorIds));
+	public Result<?> updatePasswords(@RequestBody List<User> users) {
+		/*调用重置密码*/
+		userService.updatePasswords(users);
 		return Result.success();
 
 	}
+
 
 	/**
 	 * 检测用户是否存在
 	 *
 	 * @param userId 用户名字
 	 */
-	@GetMapping("/user/check/{userId}")
+	@GetMapping("/check/{userId}")
 	public Result<?> checkUser(@PathVariable("userId") String userId) {
 		return Result.success(userService.checkUser(userId));
+
 	}
 
 //

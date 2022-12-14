@@ -34,9 +34,45 @@ public class UserService {
 		userMapper.addUser(user);
 	}
 
+	/**
+	 * 通过用户状态和用户名称查询记录条数
+	 * @param
+	 * @return
+	 */
 	public int count(String status, String userName) {
 		return userMapper.count(status, userName);
 	}
+
+//	/**
+//	 * 通过用户编码查询匹配密码的记录条数
+//	 * @param
+//	 * @return
+//	 */
+//	public int countPa(String userId){
+//		return userMapper.countPa(userId);
+//	}
+//	/**
+//	 * 查询匹配密码的用户信息
+//	 * @param
+//	 * @return
+//	 */
+//	public List<User> queryPassword(String page, String limit, String userId, String order, String field){
+//		ChangeString changeString = new ChangeString();
+//		Map<String, Object> map = new HashMap<>();
+//		if (order == null) {
+//			map.put("order", "desc");
+//			map.put("field", "user_id");
+//		} else {
+//			map.put("order", order);
+//			map.put("field", changeString.camelUnderline(field));
+//		}
+//		if (limit != null) {
+//			map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
+//			map.put("limit", Integer.parseInt(limit));
+//		}
+//		map.put("userId", userId);
+//		return userMapper.queryPassword(map);
+//	}
 
 	/**
 	 * 查询所有用户信息
@@ -93,22 +129,42 @@ public class UserService {
 		return userMapper.getUser(operatorId);
 	}
 
+//	/**
+//	 * 重置密码
+//	 *
+//	 * @param userIds 用户编号
+//	 */
+//	public void updatePasswords(List<String> userIds) {
+//			String password = DefaultUserManager.INSTANCE
+//					.encodeString("000000");
+//			userMapper.updatePasswords(userIds,password);
+//
+//		}
+
+
 	/**
 	 * 重置密码
 	 *
-	 * @param operatorIds 操作员编号
+	 * @param users
 	 */
-	public void changePassword(List<Integer> operatorIds) {
-		userMapper.changePassword(operatorIds);
+	public void updatePasswords(List<User> users) {
+		String password = DefaultUserManager.INSTANCE
+				.encodeString("000000");
+		for (User user : users) {
+			user.setPassword(password);
+		}
+		userMapper.updatePasswords(users);
+
 	}
+
 
 	/**
 	 * 获取用户
 	 *
 	 * @param userId 用户编号
 	 */
-	public User checkUser(String userId) {
-		return userMapper.checkUser(userId);
+	public boolean checkUser(String userId) {
+		return userMapper.checkUser(userId) > 0;
 	}
 
 	/**
@@ -127,4 +183,7 @@ public class UserService {
 	public String encodePassword(String password) {
 		return DefaultUserManager.INSTANCE.encodeString(password);
 	}
+
+
+
 }
