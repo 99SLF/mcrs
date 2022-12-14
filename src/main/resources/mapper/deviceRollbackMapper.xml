@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.device.mapper.DeviceRollbackMapper">
+
+    <!--查询记录数-->
+    <select id="count" resultType="int">
+        select count(*) from rollback
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="version !=null and version !=''">
+                and version like '%${version}%'
+            </if>
+        </where>
+    </select>
+
+    <!--查询所有-->
+    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.device.pojo.DeviceRollbackVo">
+        select * from rollback
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id LIKE '%${equipmentId}%'
+            </if>
+            <if test="version !=null and version !=''">
+                and version like '%${version}%'
+            </if>
+            <if test="versionRollbackPeople !=null and versionRollbackPeople !=''">
+                and version_rollback_people like '%${versionRollbackPeople}%'
+            </if>
+            <if test="versionRollbackTime !=null and versionRollbackTime !=''">
+                and version_rollback_time like '%${versionRollbackTime}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+<!--    &lt;!&ndash;注册终端&ndash;&gt;-->
+<!--    <insert id="registrationDevice" parameterType="com.zimax.mcrs.device.pojo.Device">-->
+<!--        insert into eqi_device-->
+<!--        values (#{deviceId}, #{APPId}, #{version}, #{needUpdate},-->
+<!--                #{deviceSoftwareType}, #{deviceName},-->
+<!--                #{assessName}, #{factoryName}, #{assessType},-->
+<!--                #{assessIp}, #{equipmentId},-->
+<!--                #{assessAttributes}, #{assessInstallLocation},-->
+<!--                #{accessMethod}, #{remarks}, #{creator},-->
+<!--                #{createTime}, #{enable}, #{createRole},-->
+<!--                #{updater}, #{updateTime})-->
+<!--    </insert>-->
+
+<!--    &lt;!&ndash;根据主键删除设备&ndash;&gt;-->
+<!--    <delete id="logoutDevice" parameterType="int">-->
+<!--        delete-->
+<!--        from eqi_device-->
+<!--        where device_id = #{deviceId}-->
+<!--    </delete>-->
+
+<!--    &lt;!&ndash;更新1条设备信息&ndash;&gt;-->
+<!--    <update id="updateDevice" parameterType="com.zimax.mcrs.device.pojo.Device">-->
+<!--        update eqi_device-->
+<!--        set app_id = #{APPId},-->
+<!--            device_software_type=#{deviceSoftwareType},-->
+<!--            device_name=#{deviceName},-->
+<!--            assess_name=#{assessName},-->
+<!--            factory_name=#{factoryName},-->
+<!--            assess_type=#{assessType},-->
+<!--            assess_ip=#{assessIp},-->
+<!--            equipment_id=#{equipmentId},-->
+<!--            assess_attributes=#{assessAttributes},-->
+<!--            assess_install_location=#{assessInstallLocation},-->
+<!--            access_method=#{accessMethod},-->
+<!--            enable=#{enable},-->
+<!--            updater=#{updater},-->
+<!--            update_time=#{updateTime}-->
+<!--        where device_id = #{deviceId}-->
+<!--    </update>-->
+
+<!--    &lt;!&ndash;查询数据给监控&ndash;&gt;-->
+<!--    <select id="toMonitor" parameterType="map" resultType="com.zimax.mcrs.device.pojo.Device">-->
+<!--        select `equipment_id`,`app_id`,`device_software_type` ,`device_id`from eqi_device-->
+<!--    </select>-->
+
+
+</mapper>
