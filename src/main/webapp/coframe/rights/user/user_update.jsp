@@ -16,19 +16,19 @@
 </head>
 <body>
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0;white-space：nowrap" >
-	<input type="hidden" name="user/operatorId"/>
+	<input type="hidden" name="operatorId"/>
 	<input type="hidden" name="password" value="default">
 		<div class="layui-form-item layui-row layui-col-space10">
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" >用户登录名:<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input id="userId" type="text" name="user/userId" lay-verify="required|checkUserId" placeholder="用户登录名(必填)" autocomplete="off" class="layui-input">
+				<input id="userId" type="text" name="userId" lay-verify="required|checkUserId" placeholder="用户登录名(必填)" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" >用户名称:<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input id="userName" type="text" name="user/userName" lay-verify="required" placeholder="角色名称(必填)" autocomplete="off" class="layui-input">
+				<input id="userName" type="text" name="userName" lay-verify="required" placeholder="角色名称(必填)" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 	</div>
@@ -43,7 +43,7 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label">密码失效日期</label>
 			<div class="layui-input-block">
-	  			<input type="text" name="user/invalDate" id="invaldate" autocomplete="off" class="layui-input">
+	  			<input type="text" name="invalDate" id="invaldate" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 	</div>
@@ -52,13 +52,13 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" >有效开始时间:</label>
 			<div class="layui-input-block">
-	  			<input type="text" name="user/startDate" id="startdate" autocomplete="off" class="layui-input" >
+	  			<input type="text" name="startDate" id="startdate" autocomplete="off" class="layui-input" >
 			</div>
 		</div>
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" >有效截止时间：</label>
 			<div class="layui-input-block">
-	  			<input type="text" name="user/endDate" id="enddate" autocomplete="off" class="layui-input" >
+	  			<input type="text" name="endDate" id="enddate" autocomplete="off" class="layui-input" >
 			</div>
 		</div>
 	</div>
@@ -67,13 +67,13 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" >邮箱地址：</label>
 			<div class="layui-input-block">
-	       		<input type="text" name="user/email" id="email" lay-verify="" autocomplete="off" class="layui-input">
+	       		<input type="text" name="email" id="email" lay-verify="" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-col-sm6">
 			<label class="layui-form-label">用户状态：</label>
 			<div class="layui-input-block">
-				<select name="user/status" id="status" lay-filter="status" type="select"  >
+				<select name="status" id="status" lay-filter="status" type="select"  >
 					 <option value=""></option>
 				</select>		
 			</div>
@@ -84,7 +84,7 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" >认证模式：</label>
 			<div class="layui-input-block">
-				<select name="user/authMode" id="authMode" lay-filter="authMode" type="select">
+				<select name="authMode" id="authMode" lay-filter="authMode" type="select">
 					<option value=""></option>
 				</select>		
 			</div>
@@ -92,7 +92,7 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" >菜单布局：</label>
 			<div class="layui-input-block">
-				<select name="user/menuType" id="menuType" lay-filter="menuType" type="select">
+				<select name="menuType" id="menuType" lay-filter="menuType" type="select">
 			  		<option value=""></option>
 			    </select>
 			</div>
@@ -102,7 +102,7 @@
 	<div class="layui-row layui-col-space10">
 		<label class="layui-form-label">IP地址：</label>
 		<div class="layui-input-block">
-			<textarea  class="layui-textarea field-effect field-content" name="user/ipAddress" id="ipAddress" autocomplete="off" placeholder="" lay-verify=""></textarea>
+			<textarea  class="layui-textarea field-effect field-content" name="ipAddress" id="ipAddress" autocomplete="off" placeholder="" lay-verify=""></textarea>
 		</div>	
 	</div>
 	<div class="layui-form-item layui-hide">
@@ -125,18 +125,18 @@
 	var isExist = false;
 	var submit = false;
 	
- 	layui.admin.renderDictSelect({    //获取用户状态的下拉值
-  		elem: "#status",
-  		dictTypeId: "COF_USERSTATUS"
-    });
-    layui.admin.renderDictSelect({	 //获取用户权限的下拉值
-  		elem: "#authMode", 
-  		dictTypeId: "COF_AUTHMODE"
-  	});
-  	 layui.admin.renderDictSelect({	   //获取菜单布局的下拉值
-  		elem: "#menuType",
-  		dictTypeId: "COF_SKINLAYOUT"
-  	});
+ 	// layui.admin.renderDictSelect({    //获取用户状态的下拉值
+  	// 	elem: "#status",
+  	// 	dictTypeId: "COF_USERSTATUS"
+    // });
+    // layui.admin.renderDictSelect({	 //获取用户权限的下拉值
+  	// 	elem: "#authMode",
+  	// 	dictTypeId: "COF_AUTHMODE"
+  	// });
+  	//  layui.admin.renderDictSelect({	   //获取菜单布局的下拉值
+  	// 	elem: "#menuType",
+  	// 	dictTypeId: "COF_SKINLAYOUT"
+  	// });
  
 	form.render();
 	//日期
@@ -184,18 +184,18 @@
 		win = data.win ? data.win : window;
 	  	var data = data.data;
 		form.val("layuiadmin-app-form-list", {
-			"user/operatorId": data.operatorId,
-		 	"user/userId": data.userId,
-			"user/userName": data.userName,
+			"operatorId": data.operatorId,
+		 	"userId": data.userId,
+			"userName": data.userName,
 			"password": data.password,
-			"user/invalDate": data.invalDate,
-			"user/startDate": data.startDate,
-			"user/endDate": data.endDate,
-			"user/email": data.email,
-			"user/status": data.status,
-			"user/authMode": data.authMode,
-			"user/menuType": data.menuType,
-			"user/ipAddress": data.ipAddress,
+			"invalDate": data.invalDate,
+			"startDate": data.startDate,
+			"endDate": data.endDate,
+			"email": data.email,
+			"status": data.status,
+			"authMode": data.authMode,
+			"menuType": data.menuType,
+			"ipAddress": data.ipAddress,
 		});
 		
 		if (data.enddate != null) {
@@ -240,14 +240,14 @@
 		var userId = $("#userId").val();
 		if (userId != null && userId != "") {
 			$.ajax({
-				url: "<%=request.getContextPath()%>/user/check/" + userId,
-				type: "GET",
+				url: "<%=request.getContextPath()%>/user/check/"+data.userId,
+				type: "POST",
 				cache: false,
 				contentType: "text/json",
 				cache: false,
 				success: function(text) {
 					console.log(text);
-					if (text.bool) {
+					if (text.data) {
 						isExist = true;
 					} else {
 						isExist = false;
