@@ -10,7 +10,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>设备监控警告</title>
+<title>系统监控警告</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
