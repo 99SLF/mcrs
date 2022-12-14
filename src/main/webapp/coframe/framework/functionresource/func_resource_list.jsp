@@ -41,6 +41,11 @@
 	</div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
+<script>
+	layui.config({
+		base: "<%=request.getContextPath()%>/"
+	});
+</script>
 <script type="text/javascript">
 	var layer = layui.layer;
 	var table = layui.table;

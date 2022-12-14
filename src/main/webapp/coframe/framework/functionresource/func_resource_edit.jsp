@@ -56,6 +56,11 @@
 	});
 </script>
 <script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
+<script>
+	layui.config({
+		base: "<%=request.getContextPath()%>/"
+	});
+</script>
 <script type="text/javascript">
 	var layer = layui.layer;
 	var form = layui.form;

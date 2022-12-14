@@ -27,10 +27,10 @@
             limit ${begin},${limit}
         </if>
     </select>
-    
+
     <!--    新增菜单-->
     <insert id="addMenu" parameterType="com.zimax.components.coframe.framework.pojo.Menu" >
-        insert into app_menu values ("9999", #{parentMenuId}, #{menuName}, #{menuLabel}, #{menuCode}, #{isLeaf},
+        insert into app_menu values (#{menuId}, #{parentMenuId}, #{menuName}, #{menuLabel}, #{menuCode}, #{isLeaf},
                 #{parameter},#{menuLevel},#{displayOrder}, #{imagePath}, #{expandPath}, #{menuSeq}, #{openMode}, #{subCount}, #{appId},
                 #{funcCode}, #{appInfo}, #{tenantId})
     </insert>
@@ -115,6 +115,9 @@
     <select id="getMenuByCode"  resultType="int">
         select count(*) from app_menu where menu_code = #{menuCode}
     </select>
-
+    <!--获取主键-->
+    <select id="getPrimaryKey"  resultType="String">
+        select MAX(MENU_ID)+1 from app_menu
+    </select>
 
 </mapper>

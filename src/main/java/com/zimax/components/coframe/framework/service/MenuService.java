@@ -67,6 +67,8 @@ public class MenuService implements IMenuService {
      * @param menu 菜单
      */
     public void addMenu(Menu menu) {
+        String primaryKey = menuMapper.getPrimaryKey();
+        menu.setMenuId(primaryKey);
         menuMapper.addMenu(menu);
     }
 

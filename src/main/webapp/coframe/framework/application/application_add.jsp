@@ -101,6 +101,11 @@
 </div>
 
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js?v1" type="text/javascript"></script>
+<script>
+	layui.config({
+		base: "<%=request.getContextPath()%>/"
+	});
+</script>
 <script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
 <script type="text/javascript">
 	var layer = layui.layer;
@@ -115,7 +120,7 @@
 	    elem: '#openDate'
 	    ,type: 'date'
 	});
-	
+
 	layui.admin.renderDictSelect({
 		elem: "#appType",
 		dictTypeId: "COF_APPTYPE"
@@ -124,8 +129,8 @@
 		elem: "#isOpen",
 		dictTypeId: "COF_YESORNO"
 	});
-	
-	$("#appType").val("0");  
+
+	$("#appType").val("0");
 	$("#isOpen").val("1"); 
 	form.render();
   
@@ -136,6 +141,7 @@
 	//监听提交
 	form.on("submit(layuiadmin-app-form-submit)", function(data) {
 		if (submit == false) {
+			debugger;
 			submit = true;
 			var submitData = JSON.stringify(data.field);
 			debugger;
