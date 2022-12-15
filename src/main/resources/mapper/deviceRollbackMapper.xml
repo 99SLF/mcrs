@@ -6,20 +6,7 @@
     <!--查询记录数-->
     <select id="count" resultType="int">
         select
-        rol.device_rollback_id,
-        rol.equipment_int,
-        rol.device_id,
-        rol.upload_id,
-        rol.upgrade_status,
-        rol.upgrade_version,
-        rol.version_rollback_people,
-        rol.version_rollback_time,
-        eqi.equipment_id,
-        eqi.equipment_name,
-        dev.device_name,
-        dev.device_software_type,
-        dev.factory_name,
-        count(rol.device_rollback_id)
+        count(*)
       FROM
         dev_rollback AS rol
         LEFT JOIN

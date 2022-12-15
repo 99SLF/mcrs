@@ -6,20 +6,7 @@
     <!--查询记录数-->
     <select id="count" resultType="int">
         SELECT
-        upg.device_upgrade_id,
-        upg.equipment_int,
-        upg.device_id,
-        upg.upload_id,
-        upg.upgrade_status,
-        upg.upgrade_version,
-        upg.version_updater,
-        upg.version_update_time,
-        eqi.equipment_id,
-        eqi.equipment_name,
-        dev.device_name,
-        dev.device_software_type,
-        dev.factory_name,
-        count(upg.device_upgrade_id)
+        count(*)
         FROM
         dev_upgrade AS upg
         LEFT JOIN
