@@ -58,8 +58,8 @@
 				<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
 			{{#  } else { }}
 				<a class="layui-btn  layui-btn-xs layui-btn-disabled" ><i class="layui-icon layui-icon-edit"></i>编辑</a>
-				<a class="layui-btn  lay-btn-xs layui-btn-disabled" ><i class="layui-icon layui-icon-delete"></i>删除</a>
-			 {{#  } }}
+				<a class="layui-btn  layui-btn-xs layui-btn-disabled" ><i class="layui-icon layui-icon-delete"></i>删除</a>
+			{{#  } }}
 			</script>
 		</div>
 	</div>
@@ -84,11 +84,11 @@
 	//功能名
 	var funName = "user_list";
 
-	// // 获取用户状态的下拉值
-	// layui.admin.renderDictSelect({
-	// 	elem: "#status",
-	// 	dictTypeId: "COF_USERSTATUS"
-	// });
+	// 获取用户状态的下拉值
+	layui.admin.renderDictSelect({
+		elem: "#status",
+		dictTypeId: "COF_USERSTATUS"
+	});
 	//状态默认
 	$("#status").val("请选择");
 	form.render();
@@ -428,17 +428,18 @@
 			minWidth: 150,
 			hide: isHidden("authMode"),
 			templet:function(d) {
-				if (d.authMode==1) {
-					return "本地密码认证";
-				} else if (d.authMode==2){
-					return "LDAP认证"
-				}else if (d.authMode==3){
-					return "远程认证";
-				}else if (d.authMode==4){
-					return "Portal认证";
-				}else{
-					return "注销"
-				}// return layui.admin.getDictText("COF_AUTHMODE", d.authMode);
+				// if (d.authMode==1) {
+				// 	return "本地密码认证";
+				// } else if (d.authMode==2){
+				// 	return "LDAP认证"
+				// }else if (d.authMode==3){
+				// 	return "远程认证";
+				// }else if (d.authMode==4){
+				// 	return "Portal认证";
+				// }else{
+				// 	return "注销"
+				// }
+				return layui.admin.getDictText("COF_AUTHMODE", d.authMode);
 			}
 		}, {
 			field: "status",
@@ -449,17 +450,17 @@
 			/*挂起，正常，锁定，注销*/
 			templet:function(d) {
 
-				if (d.status==1) {
-					return "挂起";
-				} else if (d.status==2){
-					return "正常"
-
-				}else if (d.status==3){
-					return "锁定";
-				}else{
-					return "注销"
-				}
-				// return layui.admin.getDictText("COF_USERSTATUS", d.status);
+				// if (d.status==1) {
+				// 	return "挂起";
+				// } else if (d.status==2){
+				// 	return "正常"
+				//
+				// }else if (d.status==3){
+				// 	return "锁定";
+				// }else{
+				// 	return "注销"
+				// }
+				return layui.admin.getDictText("COF_USERSTATUS", d.status);
 			}
 		}, {
 			field: "email",

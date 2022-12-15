@@ -32,6 +32,11 @@ public class AlarmEvent {
     private String alarmEventTitle;
 
     /**
+     * 预警信息内容
+     */
+    private String alarmEventContent;
+
+    /**
      * 是否启用
      */
     private String enableStatus;
@@ -42,14 +47,19 @@ public class AlarmEvent {
     private String alarmLevel;
 
     /**
-     * 预警分类
-     */
-    private String alarmCategory;
-
-    /**
      * 预警类型
      */
     private String alarmType;
+
+    /**
+    * 上限
+    */
+    private String upperLimit;
+
+    /**
+     * 下限
+     */
+    private String lowerLimit;
 
     /**
      * 制单人

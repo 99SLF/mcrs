@@ -51,7 +51,8 @@
     <insert id="addAlarmEvent" parameterType="com.zimax.mcrs.warn.pojo.AlarmEvent">
         insert into war_alarm_event
         values (#{alarmEventId}, #{alarmEventTitle}, #{enableStatus},
-                #{alarmLevel}, #{alarmCategory},
+                #{alarmLevel}, #{upperLimit},
+                #{lowerLimit}, #{alarmEventContent},
                 #{alarmType}, #{makeFormPeople}, #{makeFormTime},
                 #{updatePeople}, #{updateTime})
     </insert>
@@ -69,7 +70,9 @@
         set alarm_event_title=#{alarmEventTitle},
             enable_status=#{enableStatus},
             alarm_level=#{alarmLevel},
-            alarm_category=#{alarmCategory},
+            upper_limit=#{upperLimit},
+            lower_limit=#{lowerLimit},
+            alarm_event_content=#{alarmEventContent},
             alarm_type=#{alarmType},
             update_people=#{updatePeople},
             update_time=#{updateTime}

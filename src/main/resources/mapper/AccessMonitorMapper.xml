@@ -4,19 +4,19 @@
 <mapper namespace="com.zimax.mcrs.monitor.mapper.AccessMonitorMapper">
     <!--添加监控信息-->
     <insert id="addAccessMonitor" parameterType="com.zimax.mcrs.monitor.pojo.AccessStatus">
-        insert into access_status
-        values (#{accessId}, #{equipmentId}, #{APPId}, #{accessType}, #{accessStatus},
-                #{antennaStatus}, #{deviceSoType}, #{deviceSoRuntime})
+        insert into mon_access_status
+        values ( #{accessId}, #{equipmentId}, #{APPId}, #{accessType}, #{accessStatus},
+                 #{antennaStatus}, #{deviceSoType}, #{deviceSoRuntime}, #{cpuRate}, #{storageRate},#{occurTime}, #{errorRate}, #{warningTitle}, #{warningType}, #{warningLevel}, #{warningContent}, #{remarks})
     </insert>
     <!--    查询记录数-->
     <select id="countSO" resultType="int">
-        select count(*) from access_status
+        select count(*) from mon_access_status
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and equipment_id like '%${equipmentId}%'
             </if>
             <if test="APPId !=null and APPId !=''">
-                and APP_id	 like '%${APPId}%'
+                and APP_id like '%${APPId}%'
             </if>
             <if test="deviceSoType !=null and deviceSoType !=''">
                 and device_so_type like '%${deviceSoType}%'
@@ -26,30 +26,16 @@
             </if>
         </where>
     </select>
-    <!--    查询记录数-->
-    <select id="countEQ" resultType="int">
-        select count(*) from access_status
-        <where>
-            <if test="equipmentId !=null and equipmentId !=''">
-                and equipment_id like '%${equipmentId}%'
-            </if>
-            <if test="accessStatus !=null and accessStatus !=''">
-                and access_status	 like '%${accessStatus}%'
-            </if>
-            <if test="antennaStatus !=null and antennaStatus !=''">
-                and antenna_status like '%${antennaStatus}%'
-            </if>
-        </where>
-    </select>
+
     <!--查询软件运行状态信息-->
     <select id="querySoRuntimes" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.AccessStatus">
-        select * from access_status
+        select * from mon_access_status
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and equipment_id like '%${equipmentId}%'
             </if>
             <if test="APPId !=null and APPId !=''">
-                and APP_id	 like '%${APPId}%'
+                and APP_id like '%${APPId}%'
             </if>
             <if test="deviceSoType !=null and deviceSoType !=''">
                 and device_so_type like '%${deviceSoType}%'
@@ -66,18 +52,165 @@
         </if>
     </select>
 
-    <!--查询软件运行状态信息-->
-    <select id="queryEquipmentAccess" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.AccessStatus">
-        select * from access_status
+    <!--    plc查询记录数-->
+    <select id="countEQP" resultType="int">
+        select count(*) from mon_access_status
         <where>
+            access_type="PLC"
             <if test="equipmentId !=null and equipmentId !=''">
                 and equipment_id like '%${equipmentId}%'
             </if>
             <if test="accessStatus !=null and accessStatus !=''">
-                and access_status	 like '%${accessStatus}%'
+                and access_status like '%${accessStatus}%'
+            </if>
+        </where>
+
+    </select>
+    <!--查询plc运行状态信息-->
+    <select id="queryEquipmentAccessP" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.AccessStatus">
+        select * from mon_access_status
+        <where>
+            access_type="PLC"
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="accessStatus !=null and accessStatus !=''">
+                and access_status like '%${accessStatus}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+    <!--RFID查询记录数-->
+    <select id="countEQR" resultType="int">
+        select count(*) from mon_access_status
+        <where>
+            access_type="RFID"
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="accessStatus !=null and accessStatus !=''">
+                and access_status like '%${accessStatus}%'
             </if>
             <if test="antennaStatus !=null and antennaStatus !=''">
                 and antenna_status like '%${antennaStatus}%'
+            </if>
+        </where>
+
+    </select>
+    <!--查询RFID运行状态信息-->
+    <select id="queryEquipmentAccessR" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.AccessStatus">
+        select * from mon_access_status
+        <where>
+            access_type="RFID"
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="accessStatus !=null and accessStatus !=''">
+                and access_status like '%${accessStatus}%'
+            </if>
+            <if test="antennaStatus !=null and antennaStatus !=''">
+                and antenna_status like '%${antennaStatus}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+    <!--终端告警信息记录数-->
+    <select id="countAA" resultType="int">
+        select count(*) from mon_access_status
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="warningTitle !=null and warningTitle !=''">
+                and warning_title like '%${warningTitle}%'
+            </if>
+            <if test="warningType !=null and warningType !=''">
+                and warning_type like '%${warningType}%'
+            </if>
+            <if test="warningLevel !=null and warningLevel !=''">
+                and warning_level like '%${warningLevel}%'
+            </if>
+            <if test="occurTime !=null and occurTime !=''">
+                and occur_time like '%${occurTime}%'
+            </if>
+        </where>
+
+    </select>
+    <!--查询终端告警信息-->
+    <select id="queryDeviceAbnormalAlarm" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.AccessStatus">
+        select * from mon_access_status
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="warningTitle !=null and warningTitle !=''">
+                and warning_title like '%${warningTitle}%'
+            </if>
+            <if test="warningType !=null and warningType !=''">
+                and warning_type like '%${warningType}%'
+            </if>
+            <if test="warningLevel !=null and warningLevel !=''">
+                and warning_level like '%${warningLevel}%'
+            </if>
+            <if test="occurTime !=null and occurTime !=''">
+                and occur_time like '%${occurTime}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+
+    <!--查询系统监控告警信息记录数-->
+    <select id="countSys" resultType="int">
+        select count(*) from mon_access_status
+        <where>
+            <if test="warningTitle !=null and warningTitle !=''">
+                and warning_title like '%${warningTitle}%'
+            </if>
+            <if test="warningType !=null and warningType !=''">
+                and warning_type like '%${warningType}%'
+            </if>
+            <if test="warningLevel !=null and warningLevel !=''">
+                and warning_level like '%${warningLevel}%'
+            </if>
+            <if test="occurTime !=null and occurTime !=''">
+                and occur_time like '%${occurTime}%'
+            </if>
+        </where>
+
+    </select>
+    <!--查询系统监控告警信息-->
+    <select id="querySystemMonitorAlarm" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.AccessStatus">
+        select * from mon_access_status
+        <where>
+            <if test="warningTitle !=null and warningTitle !=''">
+                and warning_title like '%${warningTitle}%'
+            </if>
+            <if test="warningType !=null and warningType !=''">
+                and warning_type like '%${warningType}%'
+            </if>
+            <if test="warningLevel !=null and warningLevel !=''">
+                and warning_level like '%${warningLevel}%'
+            </if>
+            <if test="occurTime !=null and occurTime !=''">
+                and occur_time like '%${occurTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">

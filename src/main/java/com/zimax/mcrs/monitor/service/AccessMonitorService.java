@@ -61,14 +61,50 @@ public class AccessMonitorService {
     }
 
     /**
-     * 查询设备接入信息
+     * 查询PLC设备接入信息
      */
-    public List<AccessStatus> queryEquipmentAccess(String page, String limit,
+    public List<AccessStatus> queryEquipmentAccessP(String page, String limit,
                                                    String equipmentId, String accessStatus,
-                                                   String antennaStatus,
                                                    String order,String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
+
+        if (order == null) {
+            map.put("order", "desc");
+            map.put("field", "equipment_id");
+        } else {
+            map.put("order", order);
+            map.put("field", changeString.camelUnderline(field));
+        }
+        if (limit != null) {
+            map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
+            map.put("limit", Integer.parseInt(limit));
+        }
+        map.put("equipmentId", equipmentId);
+        map.put("accessStatus", accessStatus);
+        return accessMonitorMapper.queryEquipmentAccessP(map);
+
+    }
+    /**
+     * 记录数
+     * @param
+     * @return
+     */
+    public int countEQP(String equipmentId, String accessStatus) {
+        return accessMonitorMapper.countEQP(equipmentId, accessStatus);
+    }
+
+
+    /**
+     * 查询RFID设备接入信息
+     */
+    public List<AccessStatus> queryEquipmentAccessR(String page, String limit,
+                                                    String equipmentId, String accessStatus,
+                                                    String antennaStatus,
+                                                    String order,String field) {
+        ChangeString changeString = new ChangeString();
+        Map<String, Object> map = new HashMap<>();
+
         if (order == null) {
             map.put("order", "desc");
             map.put("field", "equipment_id");
@@ -83,12 +119,97 @@ public class AccessMonitorService {
         map.put("equipmentId", equipmentId);
         map.put("accessStatus", accessStatus);
         map.put("antennaStatus", antennaStatus);
-        return accessMonitorMapper.queryEquipmentAccess(map);
+        return accessMonitorMapper.queryEquipmentAccessR(map);
 
     }
+    /**
+     * 记录数
+     * @param
+     * @return
+     */
+    public int countEQR(String equipmentId, String accessStatus,
+                        String antennaStatus) {
+        return accessMonitorMapper.countEQR(equipmentId, accessStatus, antennaStatus);
+    }
 
-    public int countEQ(String equipmentId, String accessStatus,
-                       String antennaStatus) {
-        return accessMonitorMapper.countEQ(equipmentId, accessStatus, antennaStatus);
+
+    /**
+     * 分页查询终端告警信息状态
+     */
+    public List<AccessStatus> queryDeviceAbnormalAlarm(String page, String limit,
+                                                       String equipmentId, String warningTitle,
+                                                       String warningType, String warningLevel,
+                                                       String occurTime,
+                                                       String order, String field) {
+        ChangeString changeString = new ChangeString();
+        Map<String, Object> map = new HashMap<>();
+
+        if (order == null) {
+            map.put("order", "desc");
+            map.put("field", "occur_time");
+        } else {
+            map.put("order", order);
+            map.put("field", changeString.camelUnderline(field));
+        }
+        if (limit != null) {
+            map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
+            map.put("limit", Integer.parseInt(limit));
+        }
+        map.put("equipmentId", equipmentId);
+        map.put("warningTitle", warningTitle);
+        map.put("warningType", warningType);
+        map.put("warningLevel", warningLevel);
+        map.put("occurTime", occurTime);
+        return accessMonitorMapper.queryDeviceAbnormalAlarm(map);
+
+    }
+    /**
+     * 记录数
+     * @param
+     * @return
+     */
+    public int countAA(String equipmentId, String warningTitle,
+                       String warningType, String warningLevel,
+                       String occurTime) {
+        return accessMonitorMapper.countAA(equipmentId, warningTitle, warningType, warningLevel,occurTime);
+    }
+
+    /**
+     * 分页查询系统监测预警
+     */
+    public List<AccessStatus> querySystemMonitorAlarm(String page, String limit,
+                                                      String warningTitle, String warningType,
+                                                      String warningLevel, String occurTime,
+                                                      String order, String field) {
+        ChangeString changeString = new ChangeString();
+        Map<String, Object> map = new HashMap<>();
+
+        if (order == null) {
+            map.put("order", "desc");
+            map.put("field", "warning_title");
+        } else {
+            map.put("order", order);
+            map.put("field", changeString.camelUnderline(field));
+        }
+        if (limit != null) {
+            map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
+            map.put("limit", Integer.parseInt(limit));
+        }
+        map.put("equipmentId", warningTitle);
+        map.put("warningTitle", warningTitle);
+        map.put("warningType", warningType);
+        map.put("warningLevel", warningLevel);
+        map.put("occurTime", occurTime);
+        return accessMonitorMapper.querySystemMonitorAlarm(map);
+
+    }
+    /**
+     * 记录数
+     * @param
+     * @return
+     */
+    public int countSys( String warningTitle, String warningType,
+                         String warningLevel, String occurTime) {
+        return accessMonitorMapper.countSys(warningTitle, warningType, warningLevel, occurTime);
     }
 }

@@ -76,10 +76,7 @@
             <div class="layui-input-block">
                 <%--下拉选择框--%>
                 <select name="status" id="status" lay-filter="status" type="select">
-                    <option value="">挂起</option>
-                    <option value="">正常</option>
-                    <option value="">锁定</option>
-                    <option value="">注销</option>
+                    <option value=""></option>
                 </select>
             </div>
         </div>
@@ -90,10 +87,7 @@
             <label class="layui-form-label">认证模式：</label>
             <div class="layui-input-block">
                 <select name="authMode" id="authMode" lay-filter="authMode" type="select">
-                    <option value="">本地密码认证</option>
-                    <option value="">LDAP认证</option>
-                    <option value="">远程认证</option>
-                    <option value="">Portal认证</option>
+                    <option value=""></option>
                 </select>
             </div>
         </div>
@@ -101,11 +95,7 @@
             <label class="layui-form-label">菜单布局：</label>
             <div class="layui-input-block">
                 <select name="menuType" id="menuType" lay-filter="menuType" type="select">
-                    <option value="">默认布局</option>
-                    <option value="">outlookmenu</option>
-                    <option value="">outlooktree</option>
-                    <option value="">win7</option>
-                    <option value="">navtree</option>
+                    <option value=""></option>
                 </select>
             </div>
         </div>
@@ -153,18 +143,18 @@
         trigger: 'click',   //解决时间选择器一闪而过的情况
     });
 
-    // layui.admin.renderDictSelect({    //获取用户状态的下拉值
-    // 	elem: "#status",
-    // 	dictTypeId: "COF_USERSTATUS",
-    // });
-    // layui.admin.renderDictSelect({	 //获取用户权限的下拉值
-    // 	elem: "#authMode",
-    // 	dictTypeId: "COF_AUTHMODE"
-    // });
-    // layui.admin.renderDictSelect({	   //获取菜单布局的下拉值
-    // 	elem: "#menuType",
-    // 	dictTypeId: "COF_SKINLAYOUT"
-    // });
+    layui.admin.renderDictSelect({    //获取用户状态的下拉值
+    	elem: "#status",
+    	dictTypeId: "COF_USERSTATUS",
+    });
+    layui.admin.renderDictSelect({	 //获取用户权限的下拉值
+    	elem: "#authMode",
+    	dictTypeId: "COF_AUTHMODE"
+    });
+    layui.admin.renderDictSelect({	   //获取菜单布局的下拉值
+    	elem: "#menuType",
+    	dictTypeId: "COF_SKINLAYOUT"
+    });
 
     $("#status").val("1");
     $("#authMode").val("local");

@@ -38,18 +38,68 @@ public interface AccessMonitorMapper {
     );
 
     /**
-     * 查询设备接入信息
+     * 查询PLC设备接入信息
      * @param
      * @return
      */
-    List<AccessStatus> queryEquipmentAccess(Map map);
+    List<AccessStatus> queryEquipmentAccessP(Map map);
 
     /**
-     * 查询软设备接入记录数
+     * 查询PLC设备接入记录数
      * @param
      * @return
      */
-    int countEQ(@Param("equipmentId") String equipmentId, @Param("accessStatus") String accessStatus,
-                @Param("antennaStatus") String antennaStatus
+    int countEQP(@Param("equipmentId") String equipmentId, @Param("accessStatus") String accessStatus
     );
+
+    /**
+     * 查询RFID设备接入信息
+     * @param
+     * @return
+     */
+    List<AccessStatus> queryEquipmentAccessR(Map map);
+
+    /**
+     * 查询RFID设备接入记录数
+     * @param
+     * @return
+     */
+    int countEQR(@Param("equipmentId") String equipmentId, @Param("accessStatus") String accessStatus,
+                 @Param("antennaStatus") String antennaStatus
+    );
+
+
+    /**
+     * 查询终端告警信息
+     * @param
+     * @return
+     */
+    List<AccessStatus> queryDeviceAbnormalAlarm(Map map);
+
+    /**
+     * 终端告警信息记录数
+     * @param
+     * @return
+     */
+    int countAA(@Param("equipmentId") String equipmentId, @Param("warningTitle") String warningTitle,
+                @Param("warningType") String warningType, @Param("warningLevel") String warningLevel,
+                @Param("occurTime") String occurTime
+    );
+
+    /**
+     * 查询系统监控告警信息
+     * @param
+     * @return
+     */
+    List<AccessStatus> querySystemMonitorAlarm(Map map);
+
+    /**
+     * 查询系统监控告警信息记录数
+     * @param
+     * @return
+     */
+    int countSys(@Param("warningTitle") String warningTitle, @Param("warningType") String warningType,
+                 @Param("warningLevel") String warningLevel, @Param("occurTime") String occurTime
+    );
+
 }

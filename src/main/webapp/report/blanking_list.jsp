@@ -3,7 +3,7 @@
 - Date: 2022-12-05 14:08:11
 - Description:
 -->
-<%@page pageEncoding="UTF-8"%>
+<%@page pageEncoding="UTF-8" %>
 <%--<%@page import="com.mes.foundation.eoscommon.ResourcesMessageUtil"%>--%>
 <!DOCTYPE html>
 <html>
@@ -11,8 +11,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>下料报表</title>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css" />
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v1">
     <style type="text/css">
         .layui-card {
@@ -27,56 +27,63 @@
 
             <div class="layui-inline">
                 <%--                <label class="layui-form-label">站点号：</label>--%>
-                <div class="layui-input-inline" >
-                    <input type="text" name="equipmentId" value="" placeholder="请输入设备资源号" autocomplete="off" class="layui-input">
+                <div class="layui-input-inline">
+                    <input type="text" name="equipmentId" value="" placeholder="请输入设备资源号" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
 
             <div class="layui-inline">
                 <%--                <label class="layui-form-label">膜卷号：</label>--%>
-                <div class="layui-input-inline" >
-                    <input type="text" name="axisName" value="" placeholder="请输入轴名称" autocomplete="off" class="layui-input">
+                <div class="layui-input-inline">
+                    <input type="text" name="axisName" value="" placeholder="请输入轴名称" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
 
             <div class="layui-inline">
                 <%--                <label class="layui-form-label">设备资源号：</label>--%>
-                <div class="layui-input-inline" >
-                    <input type="text" name="antennaLoc" value="" placeholder="请输入天线位置" autocomplete="off" class="layui-input">
+                <div class="layui-input-inline">
+                    <input type="text" name="antennaLoc" value="" placeholder="请输入天线位置" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
 
             <div class="layui-inline">
                 <%--                <label class="layui-form-label">轴名称：</label>--%>
-                <div class="layui-input-inline" >
-                    <input type="text" name="prodSFCId" value="" placeholder="请输入生产SFC编码" autocomplete="off" class="layui-input">
+                <div class="layui-input-inline">
+                    <input type="text" name="prodSFCId" value="" placeholder="请输入生产SFC编码" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
 
             <div class="layui-inline">
                 <%--                <label class="layui-form-label">执行步骤：</label>--%>
-                <div class="layui-input-inline" >
+                <div class="layui-input-inline">
                     <input type="text" name="isEnd" value="" placeholder="是否完工" autocomplete="off" class="layui-input">
                 </div>
             </div>
 
             <div class="layui-inline">
                 <%--                <label class="layui-form-label">创建时间：</label>--%>
-                <div class="layui-input-inline" >
-                    <input type="text" name="startProdTime" value="" placeholder="请选择开始时间" id="test0" autocomplete="off" class="layui-input">
+                <div class="layui-input-inline">
+                    <input type="text" name="startProdTime" value="" placeholder="请选择开始时间" id="test0" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
 
             <div class="layui-inline">
                 <%--                <label class="layui-form-label">更新时间：</label>--%>
-                <div class="layui-input-inline" >
-                    <input type="text" name="endProdTime" value="" placeholder="请选择结束时间"  id="test1" autocomplete="off" class="layui-input">
+                <div class="layui-input-inline">
+                    <input type="text" name="endProdTime" value="" placeholder="请选择结束时间" id="test1" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
 
 
             <div class="layui-inline layui-search">
-                <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-rolelist-search" id="LAY-app-rolelist-search">
+                <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-rolelist-search"
+                        id="LAY-app-rolelist-search">
                     <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                 </button>
             </div>
@@ -109,16 +116,16 @@
     //日期时间选择器
     laydate.render({
         elem: '#test0'
-        ,type: 'datetime'
+        , type: 'datetime'
     });
 
     //日期时间选择器
     laydate.render({
         elem: '#test1'
-        ,type: 'datetime'
+        , type: 'datetime'
     });
     //监听搜索
-    form.on("submit(LAY-app-rolelist-search)", function(data) {
+    form.on("submit(LAY-app-rolelist-search)", function (data) {
         var field = data.field;
         table.reload("LAY-app-application-list-reload", {
             where: field
@@ -126,13 +133,13 @@
     });
 
     //下拉框监听事件
-    form.on('select(appType)', function(data){
+    form.on('select(appType)', function (data) {
         var submit = $("#LAY-app-rolelist-search");
         submit.click();
     });
 
     //文本框回车事件
-    $(".layui-input").on("keydown", function(event) {
+    $(".layui-input").on("keydown", function (event) {
         if (event.keyCode == 13) {
             var submit = $("#LAY-app-rolelist-search");
             submit.click();
@@ -215,7 +222,7 @@
     function getFullSize() {
         var header = $(".layui-card-header");
         var cardbody = $(".layui-card-body");
-        return header.outerHeight(true) + (cardbody.outerHeight(true) - cardbody.height())+1;
+        return header.outerHeight(true) + (cardbody.outerHeight(true) - cardbody.height()) + 1;
     }
 
     // //左侧表头按钮事件监听
@@ -225,9 +232,9 @@
     // });
 
     //表格排序
-    table.on('sort(LAY-app-application-list)', function(obj){
+    table.on('sort(LAY-app-application-list)', function (obj) {
         table.reload('LAY-app-application-list-reload', {
-            initSort: obj ,
+            initSort: obj,
             where: {
                 field: obj.field,
                 order: obj.type
@@ -257,7 +264,7 @@
     //判断是否隐藏函数
     function isHidden(field) {
         for (var i = 0; i < hiddenFields.length; i++) {
-            if (hiddenFields[i].field == field ) {
+            if (hiddenFields[i].field == field) {
                 return true;
             }
         }
@@ -299,7 +306,7 @@
         // 	});
         // },
         limits: [10, 15, 20, 30],
-        parseData: function(res) {
+        parseData: function (res) {
             return {
                 code: res.code,
                 msg: res.msg,
@@ -308,9 +315,7 @@
             };
         },
         //设置表头。值是一个二维数组。方法渲染方式必填
-        cols:[[{
-            type: "checkbox"
-        }, {
+        cols: [[{
             title: "序号",
             type: "numbers"
         }, {
@@ -362,7 +367,7 @@
         }, {
             field: "endEANumber",
             title: "完工EA数量",
-            align:"center",
+            align: "center",
             hide: isHidden("endEANumber"),
             minWidth: 80
         }, {
@@ -383,13 +388,13 @@
             align: "center",
             hide: isHidden("createTime"),
             minWidth: 80
-        },{
+        }, {
             field: "startProdTime",
             title: "开始生产时间",
             align: "center",
             hide: isHidden("startProdTime"),
             minWidth: 200
-        },{
+        }, {
             field: "endProdTime",
             title: "结束生产时间",
             align: "center",
@@ -481,7 +486,7 @@
     <%--    }--%>
     <%--}--%>
 
-    $("body").on("click", ".layui-table-body table.layui-table tbody tr td", function() {
+    $("body").on("click", ".layui-table-body table.layui-table tbody tr td", function () {
         if ($(this).attr("data-field") === "0") return;
         $(this).siblings().eq(0).find('i').click();
     });
