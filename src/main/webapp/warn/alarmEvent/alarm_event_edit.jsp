@@ -17,7 +17,7 @@
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list"
      style="padding: 20px 30px 0 0;">
     <div class="layui-form-item layui-row layui-col-space10">
-        <%--	需要隐藏主键	--%>
+<%--隐藏主键--%>
         <input type="hidden" name="alarmEventId" value="default">
         <div class="layui-col-sm6">
             <label class="layui-form-label" style="width: auto">预警事件标题:<span style="color:red">*</span></label>
@@ -37,13 +37,30 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">预警分类:<span style="color:red">*</span></label>
+            <label class="layui-form-label">上限:<span style="color:red">*</span></label>
             <div class="layui-input-block">
-                <input id="alarmCategory" type="text" name="alarmCategory" lay-verify="required"
-                       placeholder="请输入预警分类" autocomplete="off" class="layui-input">
+                <input id="upperLimit" type="text" name="upperLimit" lay-verify="required"
+                       placeholder="请输入上限" autocomplete="off" class="layui-input">
             </div>
         </div>
 
+        <div class="layui-col-sm6">
+            <label class="layui-form-label">下限:<span style="color:red">*</span></label>
+            <div class="layui-input-block">
+                <input id="lowerLimit" type="text" name="lowerLimit" lay-verify="required" placeholder="请输入下限"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-row layui-col-space10">
+        <div class="layui-col-sm6">
+            <label class="layui-form-label">是否启用</label>
+            <div class="layui-input-block">
+                <input type="checkbox" id="enableStatus" name="enableStatus" lay-skin="switch" value="on"
+                       lay-text="是|否">
+            </div>
+        </div>
         <div class="layui-col-sm6">
             <label class="layui-form-label">预警类型:<span style="color:red">*</span></label>
             <div class="layui-input-block">
@@ -52,14 +69,12 @@
             </div>
         </div>
     </div>
-
-    <div class="layui-form-item layui-row layui-col-space10">
-        <div class="layui-col-sm12">
-            <label class="layui-form-label">是否启用</label>
-            <div class="layui-input-block">
-                <input type="checkbox" id="enableStatus" name="enableStatus" lay-skin="switch" value="on"
-                       lay-text="是|否">
-            </div>
+    <div class="layui-col-sm12">
+        <label class="layui-form-label">预警事件内容:</label>
+        <div class="layui-input-block">
+            <textarea cols="50" rows="10" style="width:100%;height:100px" name="alarmEventContent"
+                      id="alarmEventContent" autocomplete="off"
+                      class="layui-input" lay-verify=""></textarea>
         </div>
     </div>
 
@@ -128,7 +143,9 @@
             "alarmEventTitle": data.alarmEventTitle,
             "enableStatus": data.enableStatus,
             "alarmLevel": data.alarmLevel,
-            "alarmCategory": data.alarmCategory,
+            "alarmEventContent": data.alarmEventContent,
+            "upperLimit": data.upperLimit,
+            "lowerLimit": data.lowerLimit,
             "alarmType": data.alarmType,
             "makeFormPeople": data.makeFormPeople,
             "makeFormTime": data.makeFormTime,
