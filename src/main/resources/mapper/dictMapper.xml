@@ -8,7 +8,7 @@
         values (#{dictTypeId}, #{dictTypeName}, #{rank}, #{parentId}, #{seqNo})
     </select>
     <!--添加字典项-->
-    <select id="saveDict" parameterType="com.zimax.components.coframe.dict.pojo.DictType">
+    <select id="saveDict" parameterType="com.zimax.components.coframe.dict.pojo.DictEntry">
         insert into dict_entry
         values (#{dictTypeId}, #{dictId}, #{dictName}, #{status}, #{sortNo},#{rank}, #{parentId}, #{seqNo}, #{filter1}, #{filter2})
     </select>
@@ -18,7 +18,7 @@
         select count(*) from dict_type
         <where>
             <if test="dictTypeId !=null and dictTypeId !=''">
-                and dicttypeid like '%${dictTypeId}%'
+                and dicttypeid = '%${dictTypeId}%'
             </if>
             <if test="dictTypeName !=null and dictTypeName !=''">
                 and dicttype_name like '%${dictTypeName}%'
@@ -29,7 +29,7 @@
         select * from dict_type
         <where>
             <if test="dictTypeId !=null and dictTypeId !=''">
-                and dicttypeid like '%${dictTypeId}%'
+                and dicttypeid = '${dictTypeId}'
             </if>
             <if test="dictTypeName !=null and dictTypeName !=''">
                 and dicttype_name like '%${dictTypeName}%'
@@ -85,11 +85,11 @@
     <!--更新-->
     <update id="updateDictType" parameterType="com.zimax.components.coframe.dict.pojo.DictType">
         UPDATE dict_type
-        SET dicttype_name   = #{dictTypeName},
+        SET dicttypename   = #{dictTypeName},
             rank     = #{rank},
             parentid = #{parentId},
             seqno  = #{seqNo}
-        WHERE operator_id = #{dictTypeId}
+        WHERE dictTypeId = #{dictTypeId}
     </update>
 
     <update id="updateDict" parameterType="com.zimax.components.coframe.dict.pojo.DictEntry">
@@ -136,7 +136,7 @@
     <select id="getDictType" resultType="com.zimax.components.coframe.dict.pojo.DictType">
         select *
         from dict_type
-        where dicttypeid = #{dictTypeIds}
+        where dicttypeid = #{dictTypeId}
     </select>
 
     <!--获取信息-->

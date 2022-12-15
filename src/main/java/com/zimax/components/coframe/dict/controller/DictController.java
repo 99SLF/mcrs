@@ -41,8 +41,12 @@ public class DictController {
      */
     @PostMapping("/saveDictType")
     public Result<?> saveDictType(@RequestBody DictType dictType) {
-        dictService.saveDictType(dictType);
-        return Result.success();
+        int i=dictService.saveDictType(dictType);
+        if(i==0){
+            return Result.success();
+        }else{
+            return Result.error("1","已存在");
+        }
     }
 
     /**
@@ -54,8 +58,12 @@ public class DictController {
      */
     @RequestMapping("/saveDict")
     public Result<?> saveDict(@RequestBody DictEntry dictEntry) {
-        dictService.saveDict(dictEntry);
-        return Result.success();
+        int i = dictService.saveDict(dictEntry);
+        if(i==0){
+            return Result.success();
+        }else{
+            return Result.error("1","已存在");
+        }
     }
 
     /**
@@ -80,7 +88,10 @@ public class DictController {
             return Result.success(DictTypes, dictService.countType(id, name));
         }
     }
-
+    @PostMapping("/refreshDictCache")
+    public Result<?> refreshDictCache(){
+        return Result.success();
+    }
     /**
      * 查询业务字典项
      * 根据查询条件查询业务字典项
@@ -111,7 +122,7 @@ public class DictController {
      *
      * @param dictType 字典类型
      */
-    @PutMapping("/updateDictType")
+    @PostMapping("/updateDictType")
     public Result<?> updateDictType(@RequestBody DictType dictType) {
         dictService.updateDictType(dictType);
         return Result.success();
@@ -122,7 +133,7 @@ public class DictController {
      *
      * @param dictEntry 字典类型
      */
-    @PutMapping("/updateDict")
+    @PostMapping("/updateDict")
     public Result<?> updateDict(@RequestBody DictEntry dictEntry) {
         dictService.updateDict(dictEntry);
         return Result.success();

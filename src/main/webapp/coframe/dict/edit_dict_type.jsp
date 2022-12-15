@@ -74,7 +74,7 @@
 			}); 
 		}
 		
-		var parentData = win.childData;
+		 parentData = win.childData;
 		if (parentData.action == "add") {
 			if (parentData.length > 0) {
 				form.val("operaterform", {
@@ -104,19 +104,23 @@
 	
 	//监听提交
 	form.on("submit(layuiadmin-dicttype-form-submit)", function(data) {
+		var url = "";
+		if(parentData.action == "add"){
+			url="<%=request.getContextPath() %>/dict/saveDictType";
+		}if(parentData.action == "edit"){
+			url="<%=request.getContextPath() %>/dict/updateDictType";
+		}
 		var adddata = data.field;
 		if (submit == false) {
 			submit = true;
 			$.ajax({
-				url: "com.zimax.components.coframe.dict.DictManager.saveDictType.biz.ext",
+				url: url,
 				type: "POST",
-				data: JSON.stringify({
-					data: adddata
-				}),
+				data: JSON.stringify(adddata),
 				cache: false,
 				contentType: "text/json",
 				success: function(json) {
-					if (json.status == 'success') {
+					if (json.code == '0') {
 						layer.msg("保存成功", {
 							icon: 1,
 							time: 2000
@@ -126,7 +130,7 @@
 							win.layui.treeTable.reload("LAY-app-dictType-list");
 							top.layer.close(index);
 						});
-					} else if (json.status == 'exist') {
+					} else if (json.code == '1') {
 						layer.msg("记录已存在！");
 						submit = false;
 					} else {

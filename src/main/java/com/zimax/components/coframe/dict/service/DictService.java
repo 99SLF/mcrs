@@ -26,8 +26,21 @@ public class DictService {
      *
      * @param dictType 字典类型
      */
-    public void saveDictType(DictType dictType) {
-        dictMapper.saveDictType(dictType);
+    public int saveDictType(DictType dictType) {
+        DictType dictType1 = dictMapper.getDictType(dictType.getDictTypeId());
+        if(dictType1 == null && dictType.getParentId() != null){
+            dictType.setRank(dictType.getRank()+1);
+            dictType.setSeqNo(dictType.getSeqNo()+dictType.getDictTypeId()+".");
+            dictMapper.saveDictType(dictType);
+            return 0;//成功
+        }else if(dictType1 == null && dictType.getParentId() == null){
+            dictType.setRank(1);
+            dictType.setSeqNo("."+dictType.getDictTypeId()+".");
+            dictMapper.saveDictType(dictType);
+            return 0;
+        }else {
+            return 1;//已存在
+        }
     }
 
     /**
@@ -35,8 +48,21 @@ public class DictService {
      *
      * @param dictEntry 字典项
      */
-    public void saveDict(DictEntry dictEntry) {
-        dictMapper.saveDict(dictEntry);
+    public int saveDict(DictEntry dictEntry) {
+        DictEntry dictEntry1 = dictMapper.getDict(dictEntry.getDictId());
+        if(dictEntry1 == null && dictEntry.getParentId()!= null){
+            dictEntry.setRank(dictEntry.getRank()+1);
+            dictEntry.setSeqNo(dictEntry.getSeqNo()+dictEntry.getDictId()+".");
+            dictMapper.saveDict(dictEntry);
+            return 0;
+        }else if(dictEntry1 == null && dictEntry.getParentId()== null){
+            dictEntry.setRank(1);
+            dictEntry.setSeqNo("." + dictEntry.getDictId() + ".");
+            dictMapper.saveDict(dictEntry);
+            return 0;
+        }else {
+           return 1;
+        }
     }
 
     /**

@@ -188,6 +188,10 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.mcrs.warn.mapper.AlarmRuleMapper"/>
     </bean>
+    <bean id="DeviceUpgradeMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.DeviceUpgradeMapper"/>
+    </bean>
 
 
 </beans>

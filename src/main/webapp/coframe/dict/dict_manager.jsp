@@ -240,7 +240,8 @@
 			}
 		},
 		remove: function(){
-			if (selectedData.length <= 0) {
+			var checkStatus = dictTb.checkStatus("#LAY-app-dictType-list");
+			if (checkStatus.length <= 0) {
 				layer.msg("请选择一条业务字典类型");
     		} else {
     			removeDictType();
@@ -413,7 +414,7 @@
 		layer.confirm("所有关联的业务字典类型和业务字典项都将被删除，确认删除业务字典类型？",{
 			btn:['确定','取消'],btn1:function(index){
 			$.ajax({
-				url: "com/zimax/components/coframe/dict/DictController/removeDictType",
+				url: "<%=request.getContextPath() %>/dict/saveDictType",
 				type: "post",
 				data: jsonData,
 				cache: false,

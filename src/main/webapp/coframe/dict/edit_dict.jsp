@@ -1,12 +1,16 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<%@page pageEncoding="UTF-8"%>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<!-- 
-  - Author(s): 陈鹏
-  - Date: 2013-12-14 14:48:59
-  - Description:
+<%@page language="java" contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8" session="false" %>
+<!--
+- Author: 李伟杰
+- Date: 2022-12-01 22:19:40
+- Description:添加字典类型弹窗
 -->
-<link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css">
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js"></script>
 <style>
    	.layui-form-select {
@@ -29,7 +33,7 @@
 	  	<div class="layui-form-item">
 		    <label class="layui-form-label">类型名称</label>
 		    <div class="layui-input-block">
-		    	<select name="eosDictType/dictTypeId" id="dictTypeId" lay-verify="required" style="width:200px;" lay-filter="">
+		    	<select name="dictTypeId" id="dictTypeId" lay-verify="required" style="width:200px;" lay-filter="">
            	 		<!-- <option value="">请选择类型代码</option> -->
               	</select>
 		    </div>
@@ -138,16 +142,23 @@
 	//监听提交
 	form.on('submit(layuiadmin-dict-form-submit)', function(data) {
 		var adddata = data.field;
+		var url="";
+		if (parentData.type == "add"||parentData.type == "adddict") {
+			url = "<%=request.getContextPath() %>/dict/saveDict"
+		}
+		else if(parentData.action == "edit"){
+			url = "<%=request.getContextPath() %>/dict/updateDict"
+		}
 		if (submit == false) {
 			submit = true;
 			$.ajax({
-				url: "com.zimax.components.coframe.dict.DictManager.saveDict.biz.ext",
+				url: url,
 				type: 'POST',
-				data: JSON.stringify({data:adddata}),
+				data: JSON.stringify(adddata),
 				cache: false,
 				contentType: 'text/json',
 				success: function (json) {
-					if (json.status == 'success') {
+					if (json.code == '0') {
 						layer.msg("保存成功", {
 							icon: 1,
 							time: 2000
@@ -157,7 +168,7 @@
 							win.layui.treeTable.reload("LAY-app-dict-list");
 							parent.layer.close(index);
 						});	
-					} else if (json.status == 'exist') {
+					} else if (json.code == '1') {
 						layer.msg("记录已存在！");
 						submit = false;
 					} else {
