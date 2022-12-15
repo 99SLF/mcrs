@@ -38,7 +38,7 @@
                 and parentId = '${parentId}'
             </if>
             <if test="seqNo !=null and seqNo !=''">
-                and seqNo = '${seqNo}'
+                and seqNo like '${seqNo}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -89,7 +89,7 @@
     </select>
 
     <select id="queryDictIds" resultType="String">
-        select * from dict_entry
+        select dictId from dict_entry
         <where>
             <if test="dictTypeId !=null and dictTypeId !=''">
                 and dicttypeid = '${dictTypeId}'
