@@ -127,18 +127,18 @@
 	var isExist = false;
 	var submit = false;
 	
- 	// layui.admin.renderDictSelect({    //获取用户状态的下拉值
-  	// 	elem: "#status",
-  	// 	dictTypeId: "COF_USERSTATUS"
-    // });
-    // layui.admin.renderDictSelect({	 //获取用户权限的下拉值
-  	// 	elem: "#authMode",
-  	// 	dictTypeId: "COF_AUTHMODE"
-  	// });
-  	//  layui.admin.renderDictSelect({	   //获取菜单布局的下拉值
-  	// 	elem: "#menuType",
-  	// 	dictTypeId: "COF_SKINLAYOUT"
-  	// });
+ 	layui.admin.renderDictSelect({    //获取用户状态的下拉值
+  		elem: "#status",
+  		dictTypeId: "COF_USERSTATUS"
+    });
+    layui.admin.renderDictSelect({	 //获取用户权限的下拉值
+  		elem: "#authMode",
+  		dictTypeId: "COF_AUTHMODE"
+  	});
+  	 layui.admin.renderDictSelect({	   //获取菜单布局的下拉值
+  		elem: "#menuType",
+  		dictTypeId: "COF_SKINLAYOUT"
+  	});
  
 	form.render();
 	//日期

@@ -168,29 +168,28 @@ CREATE TABLE `app_menu` (
 -- ----------------------------
 DROP TABLE IF EXISTS `cap_user`;
 CREATE TABLE `cap_user` (
-    `operator_id` int(18) NOT NULL AUTO_INCREMENT,
-    `tenant_id` varchar(64) NOT NULL,
-    `user_id` varchar(64) NOT NULL,
-    `password` varchar(100) DEFAULT NULL,
-    `inval_date` date DEFAULT NULL,
-    `user_name` varchar(64) DEFAULT NULL,
-    `auth_mode` varchar(255) DEFAULT NULL,
-    `status` varchar(16) DEFAULT NULL,
-    `unlock_time` date NOT NULL,
-    `menu_type` varchar(255) DEFAULT NULL,
-    `last_login` date NOT NULL,
-    `err_count` int(10) DEFAULT NULL,
-    `start_date` date DEFAULT NULL,
-    `end_date` date DEFAULT NULL,
-    `valid_time` varchar(255) DEFAULT NULL,
-    `mac_code` varchar(128) DEFAULT NULL,
-    `ip_address` varchar(128) DEFAULT NULL,
-    `email` varchar(255) DEFAULT NULL,
-    `creator` varchar(64) DEFAULT NULL,
-    `create_time` date NOT NULL,
-    PRIMARY KEY (`operator_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
-
+    `OPERATOR_ID` int(18) NOT NULL AUTO_INCREMENT,
+    `TENANT_ID` varchar(64) DEFAULT NULL,
+    `USER_ID` varchar(64) NOT NULL,
+    `PASSWORD` varchar(100) DEFAULT NULL,
+    `INVAL_DATE` date DEFAULT NULL,
+    `USER_NAME` varchar(64) DEFAULT NULL,
+    `AUTH_MODE` varchar(255) DEFAULT NULL,
+    `STATUS` varchar(16) DEFAULT NULL,
+    `UNLOCK_TIME` datetime NOT NULL,
+    `MENU_TYPE` varchar(255) DEFAULT NULL,
+    `LAST_LOGIN` datetime NOT NULL,
+    `ERR_COUNT` int(10) DEFAULT NULL,
+    `START_DATE` date DEFAULT NULL,
+    `END_DATE` date DEFAULT NULL,
+    `VALID_TIME` varchar(255) DEFAULT NULL,
+    `MAC_CODE` varchar(128) DEFAULT NULL,
+    `IP_ADDRESS` varchar(128) DEFAULT NULL,
+    `EMAIL` varchar(255) DEFAULT NULL,
+    `CREATEOR` varchar(64) DEFAULT NULL,
+    `CREATE_TIME` datetime NOT NULL,
+    PRIMARY KEY (`OPERATOR_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 -- ----------------------------
 -- Table structure for dict_entry
 -- ----------------------------

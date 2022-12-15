@@ -173,17 +173,7 @@ public class UserController {
 //        return Result.success();
 //    }
 //
-//    /**
-//     * 根据用户模板获得完整用户信息
-//     *
-//     * @param user 用户模板信息
-//     * @return user 用户信息
-//     */
-//    @GetMapping("/getUser")
-//    public Result<?> getUser(@RequestBody User user) {
-//        return Result.success();
-//
-//    }
+
 //
 //
 //    /**
@@ -196,6 +186,7 @@ public class UserController {
 //
 //    }
 //
+
 //    /**
 //     * 更新密码
 //     *

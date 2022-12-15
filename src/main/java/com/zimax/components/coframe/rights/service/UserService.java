@@ -69,7 +69,7 @@ public class UserService {
 		ChangeString changeString = new ChangeString();
 		Map<String, Object> map = new HashMap<>();
 		if (order == null) {
-			map.put("order", "desc");
+			map.put("order", "asc");
 			map.put("field", "create_time");
 		} else {
 			map.put("order", order);
