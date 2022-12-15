@@ -48,7 +48,7 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label " >应用类型：</label>
 			<div class="layui-input-block">
-				<select name="appication/appType" id="appType" lay-filter="appType" type="select">
+				<select name="appType" id="appType" lay-filter="appType" type="select">
 					<option value="0">本地</option>
 					<option value="1">远程</option>
 				</select>
@@ -104,6 +104,11 @@
 </div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
+<script>
+	layui.config({
+		base: "<%=request.getContextPath()%>/"
+	});
+</script>
 <script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
 <script type="text/javascript">
 	var layer = layui.layer;
@@ -138,6 +143,7 @@
 	  	"appCode": data.appCode,
 	  	"openDate": data.openDate,
 	  	"protocolType": data.protocolType,
+		"appType": data.appType,
 	  	"isOpen": data.isOpen,
 	  	"ipAddr": data.ipAddr,
 	  	"ipPort": data.ipPort,

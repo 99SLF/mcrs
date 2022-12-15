@@ -38,7 +38,7 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" >菜单显示顺序：<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="displayOrder" id="displayOrder"  lay-verify="required" autocomplete="off" placeholder="">
+				<input type="text" class="layui-input" name="displayOrder" id="displayOrder"  lay-verify="number" autocomplete="off" placeholder="">
 			</div>
 		</div>
 	</div>
@@ -55,7 +55,7 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label">功能资源：</label>
 			<div class="layui-input-block"  id="input-block">
-				<input id="funcCode" name="menu/funcCode" type="hidden"/>
+				<input id="funcCode" name="funcCode" type="hidden"/>
 				<input type="text" class="layui-input" style="width:85%" name="funcName" id="funcName" lay-verify="" autocomplete="off" placeholder="">
 				<button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="onButtonEdit" style="position:absolute;top:0px;right:0px;height:37px"><i class="layui-icon layui-icon-more"></i></button>
 			</div>
@@ -83,6 +83,11 @@
 	</div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
+<script>
+	layui.config({
+		base: "<%=request.getContextPath()%>/"
+	});
+</script>
 <script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
 <script type="text/javascript">
 	var layer = layui.layer;
@@ -128,9 +133,8 @@
 		var menuCode = $("#menuCode").val();
 		if (menuCode != null && menuCode != "") {
 			$.ajax({
-				url: "<%= request.getContextPath() %>/framework/menu/find/isExist",
+				url: "<%= request.getContextPath() %>/framework/menu/find?menuCode="+menuCode,
 				type: "GET",
-				data: menuCode,
 				cache: false,
 				contentType: "text/json",
 				cache: false,

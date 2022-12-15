@@ -108,7 +108,7 @@ public class MenuController {
      * @param menuCode 菜单编号
      * @return 菜单信息
      */
-    @GetMapping("/menu/find/isExist")
+    @GetMapping("/menu/find")
     public Result<?>  getMenuByCode(@RequestParam("menuCode") String menuCode) {
         if(menuService.getMenuByCode(menuCode)>0){
             return Result.error("1","编码已存在");

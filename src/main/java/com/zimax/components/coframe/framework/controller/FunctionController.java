@@ -57,9 +57,9 @@ public class FunctionController {
      * @return 功能列表
      */
     @GetMapping("/function/query")
-    public Result<?> queryFunctions(String page, String limit, String funcGroupId, String funcCode, String funcName, String order, String field) {
-        List functions = functionService.queryFunctions(page, limit, funcGroupId, funcCode, funcName, order, field);
-        return Result.success(functions, functionService.count(funcGroupId));
+    public Result<?> queryFunctions(String page, String limit, String funcGroupId, String funcCode, String funcName, String isMenu, String order, String field) {
+        List functions = functionService.queryFunctions(page, limit, funcGroupId, funcCode, funcName, isMenu,order, field);
+        return Result.success(functions, functionService.count(funcGroupId,isMenu));
     }
 
     /**

@@ -87,6 +87,10 @@ public interface MenuMapper {
      * @return
      */
     int getMenuByCode(@Param("menuCode") String menuCode );
+    /**
+     * 获取主键
+     */
+    String getPrimaryKey();
 
 //    /**
 //     *删除菜单

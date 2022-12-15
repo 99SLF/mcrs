@@ -117,8 +117,8 @@
 	var dictTb = treeTable.render({
   		elem: "#LAY-app-dictType-list",
 		id: "LAY-app-dictType-list-reload",
-		url: "mcrs/dict/queryDictType",
-		method: "post",
+		url: "<%=request.getContextPath() %>/dict/queryDictType",
+		method: "GET",
 		height: "full-" + getFullSize(),
 		parseData: function(res) {
 			return {
@@ -175,26 +175,13 @@
 	var dictTermTb = treeTable.render({
 		elem: "#LAY-app-dict-list",
 		id: "LAY-app-dict-list-reload",
-		url: "com/zimax/components/coframe/dict/DictController/queryDict",
-		method: 'post',
 		height: "full-" + getFullSize2(),
-		parseData: function(res){
-			return {
-				code: "0", //解析接口状态
-				msg: "", //解析提示文本
-				count: res.total, //解析数据长度
-				data: res.data //解析数据列表
-			};
-		},
 		tree: {
 			iconIndex: 1,           // 折叠图标显示在第几列
 			isPidData: true,        // 是否是id、pid形式数据
 			idName: "dictId",   	// id字段名称
  			pidName: "parentId"     // pid字段名称
    		},
-    	where:{
-    		dictTypeId: "sadasdasdasd"
-    	},
 		toolbar: '#toolbarDemo2',
 		defaultToolbar: [],
 		cols: [[{
@@ -253,7 +240,8 @@
 			}
 		},
 		remove: function(){
-			if (selectedData.length <= 0) {
+			var checkStatus = dictTb.checkStatus("#LAY-app-dictType-list");
+			if (checkStatus.length <= 0) {
 				layer.msg("请选择一条业务字典类型");
     		} else {
     			removeDictType();
@@ -422,17 +410,17 @@
 	}
 	
 	function removeDictType() {
-		var jsonData = JSON.stringify({data:selectedData});
+		var jsonData = JSON.stringify(selectedData);
 		layer.confirm("所有关联的业务字典类型和业务字典项都将被删除，确认删除业务字典类型？",{
 			btn:['确定','取消'],btn1:function(index){
 			$.ajax({
-				url: "com/zimax/components/coframe/dict/DictController/removeDictType",
-				type: "post",
+				url: "<%=request.getContextPath() %>/dict/deleteDictTypes",
+				type: "DELETE",
 				data: jsonData,
 				cache: false,
 				contentType: 'text/json',
 				success: function (json) {
-					if (json.status == 'success'){
+					if (json.code == '0'){
 						layer.msg("删除成功", {
 								icon: 1,
 								time: 2000
@@ -600,18 +588,18 @@
 	}
 	
 	function removeDict() {
-		var jsonData = JSON.stringify({data:selectedTermData});
+		var jsonData = JSON.stringify(selectedTermData);
 		layer.confirm("所有关联的业务字典项都将被删除，确认删除业务字典项？", {
     		btn: ['确定', '取消'],
     		btn1: function(index) {
 				$.ajax({
-					url: "com/zimax/components/coframe/dict/DictController/removeDictF",
-					type: "post",
+					url: "<%=request.getContextPath() %>/dict/deleteDicts",
+					type: "DELETE",
 					data: jsonData,
 					cache: false,
 					contentType: "text/json",
 					success: function (json) {
-						if (json.status == "success") {
+						if (json.code == "0") {
 							layer.msg("删除成功", {
 								icon: 1,
 								time: 2000
@@ -647,13 +635,20 @@
   			dictParentId = checkStatus[0].dictTypeId;
   			dictParentName = checkStatus[0].dictTypeName;
   			dictTermTb.reload( {//依照参数重载表格
-  				where: dataJson//where 	接口的其它参数。如：where: {token: 'sasasas', id: 123}
+				url: "<%=request.getContextPath() %>/dict/queryDict",
+				method: 'GET',
+				where: dataJson,//where 	接口的其它参数。如：where: {token: 'sasasas', id: 123}
+				parseData: function(res){
+					return {
+						code: "0", //解析接口状态
+						msg: "", //解析提示文本
+						count: res.total, //解析数据长度
+						data: res.data //解析数据列表
+					};
+				},
 	  		});
   		} else {
   			dictTermTb.reload({//依照参数重载表格
-  				where: {
-  					dictTypeId: "sadasdasdasd"
-  				}
   			});
   		}
 	});

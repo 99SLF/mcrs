@@ -315,7 +315,7 @@ layui.define("view", function(exports) {
 			this.loadDict(options);
 			var datas = dict.map[options.dictTypeId];
 			for (var i = 0; i < datas.length; i++) {
-				a(options.elem).append(new Option(datas[i].dictName, datas[i].dictID));
+				a(options.elem).append(new Option(datas[i].dictName, datas[i].dictId));
 			}
 		}
 	};

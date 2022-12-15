@@ -1,7 +1,6 @@
 package com.zimax.mcrs.device.mapper;
 
-import com.zimax.mcrs.device.pojo.Device;
-import com.zimax.mcrs.device.pojo.DeviceUpgrade;
+import com.zimax.mcrs.device.pojo.DeviceRollbackVo;
 import com.zimax.mcrs.device.pojo.DeviceUpgradeVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -16,12 +15,12 @@ import java.util.Map;
  * @date 2022/12/13
  */
 @Mapper
-public interface DeviceUpgradeMapper {
+public interface DeviceRollbackMapper {
 
     /**
      * 查询全部的更新信息
      */
-    List<DeviceUpgradeVo> queryAll(Map map);
+    List<DeviceRollbackVo> queryAll(Map map);
 
     /**
      * 计数

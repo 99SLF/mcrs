@@ -9,6 +9,9 @@
             <if test="funcGroupId !=null and funcGroupId !=''">
                 and func_group_id = '${funcGroupId}'
             </if>
+            <if test="isMenu !=null and isMenu !=''">
+                and is_menu = '${isMenu}'
+            </if>
         </where>
     </select>
     <!-- 查询所有的功能 -->
@@ -26,7 +29,10 @@
                 and func_code = '${funcCode}'
             </if>
             <if test="funcName !=null and funcName !=''">
-                and func_name = '${func_name}'
+                and func_name like '%${funcName}%'
+            </if>
+            <if test="isMenu !=null and isMenu !=''">
+                and is_menu = '${isMenu}'
             </if>
         </where>
         <if test="order !=null and order !=''">

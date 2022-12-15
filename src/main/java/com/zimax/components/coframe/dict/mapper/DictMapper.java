@@ -22,6 +22,8 @@ public interface DictMapper {
      */
     void saveDictType(DictType dictType);
 
+     DictEntry getDictByIdAndPid(String dictId, String dictTypeId);
+    List<DictEntry> getDictByIdAndSeq(Map map);
     /**
      * 保存业务字典项
      */
@@ -32,6 +34,7 @@ public interface DictMapper {
      * 查询业务字典类型,刷新业务字典缓存
      */
     List<DictType> queryDictTypes(Map map);
+    List<String> queryDictIds(Map map);
 
     int countType(@Param("dictTypeId") String dictTypeId, @Param("dictTypeName") String dictTypeName);
 

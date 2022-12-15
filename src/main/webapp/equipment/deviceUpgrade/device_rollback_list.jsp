@@ -10,7 +10,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=deviceUpgrade-width, initial-scale=1, maximum-scale=1">
-    <title>终端升级信息</title>
+    <title>终端回退信息</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
@@ -31,14 +31,14 @@
                         <input type="text" name="upgradeVersion" placeholder="请输入版本号" autocomplete="off"
                                class="layui-input">
                     </div>
-                    <label class="layui-form-label">版本更改人：</label>
+                    <label class="layui-form-label">回退人：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="versionUpdater" placeholder="请输入版本更改人" autocomplete="off"
+                        <input type="text" name="versionRollbackPeople" placeholder="请输入回退人" autocomplete="off"
                                class="layui-input">
                     </div>
-                    <label class="layui-form-label">版本更改时间：</label>
+                    <label class="layui-form-label">回退时间：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="versionUpdateTime" placeholder="请输入版本更改时间" autocomplete="off"
+                        <input type="text" name="versionRollbackTime" placeholder="请输入版本更改时间" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -54,11 +54,11 @@
         </div>
 
         <div class="layui-card-body">
-            <div class="layui-toolbar" id="toolbar" hidden="true">
-                <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i
-                        class="layui-icon layui-icon-add-circle-fine"></i>回退
-                </button>
-            </div>
+<%--            <div class="layui-toolbar" id="toolbar" hidden="true">--%>
+<%--                <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i--%>
+<%--                        class="layui-icon layui-icon-add-circle-fine"></i>回退--%>
+<%--                </button>--%>
+<%--            </div>--%>
 
             <table id="LAY-app-deviceUpgrade-list" lay-filter="LAY-app-deviceUpgrade-list"></table>
 
@@ -178,24 +178,24 @@
         });
     });
 
-    //查询过滤字段
-    // $.ajax({
-    // 	url: "com.zimax.components.coframe.tools.ColsFilter.queryHiddenField.biz.ext",
-    // 	type: "POST",
-    // 	async: false,
-    // 	data: JSON.stringify({
-    // 		funName: funName
-    // 	}),
-    // 	cache: false,
-    // 	contentType: "text/json",
-    // 	success: function(result) {
-    // 		if (result) {
-    // 			hiddenFields = result.colsFilters;
-    // 		} else {
-    // 			layer.msg("查询失败");
-    // 		}
-    // 	}
-    // });
+    // 查询过滤字段
+    $.ajax({
+    	url: "com.zimax.components.coframe.tools.ColsFilter.queryHiddenField.biz.ext",
+    	type: "POST",
+    	async: false,
+    	data: JSON.stringify({
+    		funName: funName
+    	}),
+    	cache: false,
+    	contentType: "text/json",
+    	success: function(result) {
+    		if (result) {
+    			hiddenFields = result.colsFilters;
+    		} else {
+    			layer.msg("查询失败");
+    		}
+    	}
+    });
 
     //判断是否隐藏函数
     function isHidden(field) {
@@ -211,7 +211,7 @@
     table.render({
         elem: "#LAY-app-deviceUpgrade-list",
         id: "LAY-app-deviceUpgrade-list-reload",
-        url: "<%= request.getContextPath() %>/equipment/deviceUpgrade/query",
+        url: "<%= request.getContextPath() %>/equipment/deviceRollback/query",
         method: "GET",
         height: "full-" + getFullSize(),
         page: true,
@@ -219,29 +219,29 @@
         limits: [10, 15, 20, 30],
         toolbar: "#toolbar",
         defaultToolbar: ["filter"],
-        // colHideChange: function(col, checked) {
-        // 	var field = col.field;
-        // 	var hidden = col.hide;
-        // 	$.ajax({
-        // 		url: "com.zimax.components.coframe.tools.ColsFilter.setHiddenField.biz.ext",
-        // 		type: "POST",
-        // 		data: JSON.stringify({
-        // 			hidden: hidden,
-        // 			colsFilter: {
-        // 				funName: funName,
-        // 				field: field
-        // 			}
-        // 		}),
-        // 		cache: false,
-        // 		contentType: "text/json",
-        // 		success: function(result) {
-        // 			if (result) {
-        // 			} else{
-        // 				layer.msg("列筛选失败");
-        // 			}
-        // 		}
-        // 	});
-        // },
+        colHideChange: function(col, checked) {
+        	var field = col.field;
+        	var hidden = col.hide;
+        	$.ajax({
+        		url: "com.zimax.components.coframe.tools.ColsFilter.setHiddenField.biz.ext",
+        		type: "POST",
+        		data: JSON.stringify({
+        			hidden: hidden,
+        			colsFilter: {
+        				funName: funName,
+        				field: field
+        			}
+        		}),
+        		cache: false,
+        		contentType: "text/json",
+        		success: function(result) {
+        			if (result) {
+        			} else{
+        				layer.msg("列筛选失败");
+        			}
+        		}
+        	});
+        },
         parseData: function (res) {
             return {
                 code: res.code,
@@ -322,17 +322,17 @@
                 minWidth: 100,
                 hide: isHidden("factoryName")
             }, {
-                field: "versionUpdater",
-                title: "版本更改人",
+                field: "versionRollbackPeople",
+                title: "版本回退人",
                 align: "center",
                 minWidth: 120,
-                hide: isHidden("versionUpdater")
+                hide: isHidden("versionRollbackPeople")
             }, {
-                field: "versionUpdateTime",
-                title: "版本更改时间",
+                field: "versionRollbackTime",
+                title: "版本回退时间",
                 align: "center",
                 minWidth: 150,
-                hide: isHidden("versionUpdateTime")
+                hide: isHidden("versionRollbackTime")
             }]]
     });
 

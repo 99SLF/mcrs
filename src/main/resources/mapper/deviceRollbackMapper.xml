@@ -1,66 +1,66 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zimax.mcrs.device.mapper.DeviceUpgradeMapper">
+<mapper namespace="com.zimax.mcrs.device.mapper.DeviceRollbackMapper">
 
     <!--查询记录数-->
     <select id="count" resultType="int">
-        SELECT
+        select
         count(*)
-        FROM
-        dev_upgrade AS upg
+      FROM
+        dev_rollback AS rol
         LEFT JOIN
         eqi_equipment AS eqi
-        ON upg.equipment_int=eqi.equipment_int
+        ON rol.equipment_int=eqi.equipment_int
         LEFT JOIN
         eqi_device AS dev
-        ON upg.device_id=dev.device_id
+        ON rol.device_id=dev.device_id
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
             </if>
             <if test="upgradeVersion !=null and upgradeVersion !=''">
-                and upg.upgrade_version like '%${upgradeVersion}%'
+                and rol.upgrade_version like '%${upgradeVersion}%'
             </if>
         </where>
     </select>
 
     <!--查询所有-->
-    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.device.pojo.DeviceUpgradeVo">
+    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.device.pojo.DeviceRollbackVo">
         SELECT
-        upg.device_upgrade_id,
-        upg.equipment_int,
-        upg.device_id,
-        upg.upload_id,
-        upg.upgrade_status,
-        upg.upgrade_version,
-        upg.version_updater,
-        upg.version_update_time,
+        rol.device_rollback_id,
+        rol.equipment_int,
+        rol.device_id,
+        rol.upload_id,
+        rol.upgrade_version,
+        rol.upgrade_status,
+        rol.version_rollback_people,
+        rol.version_rollback_time,
         eqi.equipment_id,
         eqi.equipment_name,
         dev.device_name,
         dev.device_software_type,
         dev.factory_name
         FROM
-        dev_upgrade AS upg
+        dev_rollback AS rol
         LEFT JOIN
         eqi_equipment AS eqi
-        ON upg.equipment_int=eqi.equipment_int
+        ON rol.equipment_int=eqi.equipment_int
         LEFT JOIN
         eqi_device AS dev
-        ON upg.device_id=dev.device_id
+        ON rol.device_id=dev.device_id
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id LIKE '%${equipmentId}%'
             </if>
             <if test="upgradeVersion !=null and upgradeVersion !=''">
-                and upg.upgrade_version like '%${upgradeVersion}%'
+                and rol.upgrade_version like '%${upgradeVersion}%'
             </if>
-            <if test="versionUpdater !=null and versionUpdater !=''">
-                and upg.version_updater like '%${versionUpdater}%'
+            <if test="versionRollbackPeople !=null and versionRollbackPeople !=''">
+                and rol.version_rollback_people like '%${versionRollbackPeople}%'
             </if>
-            <if test="versionUpdateTime !=null and versionUpdateTime !=''">
-                and upg.version_update_time like '%${versionUpdateTime}%'
+            <if test="versionRollbackTime !=null and versionRollbackTime !=''">
+                and rol.version_rollback_time like '%${versionRollbackTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">

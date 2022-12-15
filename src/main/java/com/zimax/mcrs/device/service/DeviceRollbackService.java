@@ -1,8 +1,9 @@
 package com.zimax.mcrs.device.service;
 
 import com.zimax.mcrs.config.ChangeString;
+import com.zimax.mcrs.device.mapper.DeviceRollbackMapper;
 import com.zimax.mcrs.device.mapper.DeviceUpgradeMapper;
-import com.zimax.mcrs.device.pojo.DeviceUpgrade;
+import com.zimax.mcrs.device.pojo.DeviceRollbackVo;
 import com.zimax.mcrs.device.pojo.DeviceUpgradeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,19 +18,19 @@ import java.util.Map;
  * @date 2022/11/30
  */
 @Service
-public class DeviceUpgradeService {
+public class DeviceRollbackService {
 
     @Autowired
-    private DeviceUpgradeMapper deviceUpgradeMapper;
+    private DeviceRollbackMapper deviceRollbackMapper;
     /**
      * 查询所有终端更新信息
      */
-    public List<DeviceUpgradeVo> queryDeviceUpgrades(String  page, String limit, String equipmentId, String upgradeVersion,String versionUpdater, String versionUpdateTime, String order, String field) {
+    public List<DeviceRollbackVo> queryDeviceRollback(String  page, String limit, String equipmentId, String upgradeVersion, String versionRollbackPeople, String versionRollbackTime, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
             map.put("order","desc");
-            map.put("field","version_update_time");
+            map.put("field","version_rollback_time");
         }else{
             map.put("order",order);
             map.put("field",changeString.camelUnderline(field));
@@ -40,16 +41,16 @@ public class DeviceUpgradeService {
         }
         map.put("equipmentId",equipmentId);
         map.put("upgradeVersion",upgradeVersion);
-        map.put("versionUpdater",versionUpdater);
-        map.put("versionUpdateTime",versionUpdateTime);
-        return deviceUpgradeMapper.queryAll(map);
+        map.put("versionRollbackPeople",versionRollbackPeople);
+        map.put("versionRollbackTime",versionRollbackTime);
+        return deviceRollbackMapper.queryAll(map);
     }
 
     /**
      * 计数
      */
     public int count(String equipmentId, String upgradeVersion){
-        return deviceUpgradeMapper.count(equipmentId,upgradeVersion);
+        return deviceRollbackMapper.count(equipmentId,upgradeVersion);
     }
 
 }

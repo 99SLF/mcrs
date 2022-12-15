@@ -43,5 +43,5 @@ public interface FunctionMapper {
 
     void updateFunction(Function function);
 
-    int count(@Param("funcGroupId") String funcGroupId);
+    int count(@Param("funcGroupId") String funcGroupId,@Param("isMenu") String isMenu);
 }

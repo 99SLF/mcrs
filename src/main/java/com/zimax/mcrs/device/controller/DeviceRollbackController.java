@@ -1,6 +1,7 @@
 package com.zimax.mcrs.device.controller;
 
 import com.zimax.mcrs.config.Result;
+import com.zimax.mcrs.device.service.DeviceRollbackService;
 import com.zimax.mcrs.device.service.DeviceUpgradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,25 +20,27 @@ import java.util.List;
 @RestController
 @ResponseBody
 @RequestMapping("/equipment")
-public class DeviceUpgradeController {
+public class DeviceRollbackController {
 
     @Autowired
-    private DeviceUpgradeService deviceUpgradeService;
+    private DeviceRollbackService deviceRollbackService;
 
     /**
      * 条件查询
      *
-     * @param upgradeVersion  升级版本号
+     * @param upgradeVersion    升级版本号
      * @param equipmentId 设备资源号
+     * @param versionRollbackPeople 版本更改人
+     * @param versionRollbackTime 版本更改时间
      * @param limit       记录数
      * @param page        页码
      * @param field       排序字段
      * @param order       排序方式
      * @return 终端列表
      */
-    @GetMapping("/deviceUpgrade/query")
-    public Result<?> queryDeviceUpgrade(String page, String limit, String equipmentId, String upgradeVersion, String versionUpdater, String versionUpdateTime,String order, String field) {
-        List deviceUpgrade = deviceUpgradeService.queryDeviceUpgrades(page, limit, equipmentId, upgradeVersion,versionUpdater,versionUpdateTime, order, field);
-        return Result.success(deviceUpgrade, deviceUpgradeService.count(equipmentId, upgradeVersion));
+    @GetMapping("/deviceRollback/query")
+    public Result<?> queryDeviceUpgrade(String page, String limit, String equipmentId, String upgradeVersion, String versionRollbackPeople, String versionRollbackTime,String order, String field) {
+        List deviceRollback = deviceRollbackService.queryDeviceRollback(page, limit, equipmentId, upgradeVersion,versionRollbackPeople,versionRollbackTime, order, field);
+        return Result.success(deviceRollback, deviceRollbackService.count(equipmentId, upgradeVersion));
     }
 }

@@ -142,11 +142,11 @@
     });
 
     var active = {
-        //新增事件
+        //设备新建
         add: function () {
             top.layer.open({
                 type: 2,
-                title: "新增规则",
+                title: "设备新建",
                 content: "<%= request.getContextPath() %>/warn/alarmRule/alarm_rule_add.jsp",
                 area: ["1000px", "560px"],
                 resize: false,
@@ -206,24 +206,24 @@
         });
     });
 
-    //查询过滤字段
-    // $.ajax({
-    // 	url: "com.zimax.components.coframe.tools.ColsFilter.queryHiddenField.biz.ext",
-    // 	type: "POST",
-    // 	async: false,
-    // 	data: JSON.stringify({
-    // 		funName: funName
-    // 	}),
-    // 	cache: false,
-    // 	contentType: "text/json",
-    // 	success: function(result) {
-    // 		if (result) {
-    // 			hiddenFields = result.colsFilters;
-    // 		} else {
-    // 			layer.msg("查询失败");
-    // 		}
-    // 	}
-    // });
+    // 查询过滤字段
+    $.ajax({
+        url: "com.zimax.components.coframe.tools.ColsFilter.queryHiddenField.biz.ext",
+        type: "POST",
+        async: false,
+        data: JSON.stringify({
+            funName: funName
+        }),
+        cache: false,
+        contentType: "text/json",
+        success: function (result) {
+            if (result) {
+                hiddenFields = result.colsFilters;
+            } else {
+                layer.msg("查询失败");
+            }
+        }
+    });
 
     //判断是否隐藏函数
     function isHidden(field) {
@@ -247,29 +247,29 @@
         limits: [10, 15, 20, 30],
         toolbar: "#toolbar",
         defaultToolbar: ["filter"],
-        // colHideChange: function(col, checked) {
-        // 	var field = col.field;
-        // 	var hidden = col.hide;
-        // 	$.ajax({
-        // 		url: "com.zimax.components.coframe.tools.ColsFilter.setHiddenField.biz.ext",
-        // 		type: "POST",
-        // 		data: JSON.stringify({
-        // 			hidden: hidden,
-        // 			colsFilter: {
-        // 				funName: funName,
-        // 				field: field
-        // 			}
-        // 		}),
-        // 		cache: false,
-        // 		contentType: "text/json",
-        // 		success: function(result) {
-        // 			if (result) {
-        // 			} else{
-        // 				layer.msg("列筛选失败");
-        // 			}
-        // 		}
-        // 	});
-        // },
+        colHideChange: function (col, checked) {
+            var field = col.field;
+            var hidden = col.hide;
+            $.ajax({
+                url: "com.zimax.components.coframe.tools.ColsFilter.setHiddenField.biz.ext",
+                type: "POST",
+                data: JSON.stringify({
+                    hidden: hidden,
+                    colsFilter: {
+                        funName: funName,
+                        field: field
+                    }
+                }),
+                cache: false,
+                contentType: "text/json",
+                success: function (result) {
+                    if (result) {
+                    } else {
+                        layer.msg("列筛选失败");
+                    }
+                }
+            });
+        },
         parseData: function (res) {
             return {
                 code: res.code,
@@ -287,13 +287,13 @@
             field: "alarmRuleId",
             title: "预警规则编码",
             align: "center",
-            minWidth: 100,
+            minWidth: 120,
             hide: isHidden("alarmRuleId")
         }, {
             field: "alarmRuleTitle",
             title: "预警规则标题",
             align: "center",
-            minWidth: 100,
+            minWidth: 120,
             hide: isHidden("alarmRuleTitle")
         }, {
             field: "enable",
@@ -305,7 +305,7 @@
             field: "monitorLevel",
             title: "监控层级",
             align: "center",
-            minWidth: 120,
+            minWidth: 100,
             hide: isHidden("monitorLevel")
         }, {
             field: "alarmEventId",
@@ -317,25 +317,25 @@
             field: "monitorObject",
             title: "监控对象",
             align: "center",
-            minWidth: 100,
+            minWidth: 150,
             hide: isHidden("monitorObject")
         }, {
             field: "alarmRuleDescribe",
-            title: "预警规则描述",
+            title: "规则描述",
             align: "center",
-            minWidth: 100,
+            minWidth: 120,
             hide: isHidden("alarmRuleDescribe")
         }, {
             field: "ruleMakeFormPeople",
             title: "制单人",
             align: "center",
-            minWidth: 140,
+            minWidth: 120,
             hide: isHidden("ruleMakeFormPeople")
         }, {
             field: "ruleMakeFormTime",
             title: "制单时间",
             align: "center",
-            minWidth: 120,
+            minWidth: 100,
             hide: isHidden("ruleMakeFormTime")
         }, {
             field: "ruleUpdatePeople",
@@ -347,7 +347,7 @@
             field: "ruleUpdateTime",
             title: "修改时间",
             align: "center",
-            minWidth: 150,
+            minWidth: 100,
             hide: isHidden("ruleUpdateTime")
         }, {
             title: "操作",
@@ -364,7 +364,7 @@
         if (e.event == "edit") {
             top.layer.open({
                 type: 2,
-                title: "编辑预警规则信息",
+                title: "编辑设备信息",
                 content: "<%= request.getContextPath() %>/warn/alarmRule/alarm_rule_edit.jsp",
                 area: ["1000px", "560px"],
                 resize: false,
@@ -383,7 +383,7 @@
 
             });
         } else if (e.event == "del") {
-            layer.confirm("确定删除该预警事件？", {
+            layer.confirm("确定删除该设备？", {
                 icon: 3,
                 title: "系统提示"
             }, function (index) {

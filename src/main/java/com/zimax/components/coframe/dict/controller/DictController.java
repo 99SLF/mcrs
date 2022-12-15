@@ -41,8 +41,12 @@ public class DictController {
      */
     @PostMapping("/saveDictType")
     public Result<?> saveDictType(@RequestBody DictType dictType) {
-        dictService.saveDictType(dictType);
-        return Result.success();
+        int i=dictService.saveDictType(dictType);
+        if(i==0){
+            return Result.success();
+        }else{
+            return Result.error("1","已存在");
+        }
     }
 
     /**
@@ -54,27 +58,40 @@ public class DictController {
      */
     @RequestMapping("/saveDict")
     public Result<?> saveDict(@RequestBody DictEntry dictEntry) {
-        dictService.saveDict(dictEntry);
-        return Result.success();
+        int i = dictService.saveDict(dictEntry);
+        if(i==0){
+            return Result.success();
+        }else{
+            return Result.error("1","已存在");
+        }
     }
 
     /**
      * 查询业务字典类型，刷新
      *
-     * @param dictTypeId   类型代码
-     * @param dictTypeName 类型名称
+     * @param dictTypeId   父节点ID
+     * @param name 类型名称
+     * @param id 类型代码
      * @param limit        记录数
      * @param page         页码
+     * @param order 排序
      * @return 业务字典类型列表
      */
 
 
     @GetMapping("/queryDictType")
-    public Result<?> queryDictTypes(String page, String limit, String dictTypeId, String dictTypeName, String order, String field) {
-        List DictTypes = dictService.queryDictTypes(page, limit, dictTypeId, dictTypeName, order, field);
-        return Result.success(DictTypes, dictService.countType(dictTypeId, dictTypeName));
+    public Result<?> queryDictTypes(String page, String limit, String dictTypeId, String name, String id, String order, String field) {
+        List DictTypes = dictService.queryDictTypes(page, limit, dictTypeId, name, id, order, field);
+        if(dictTypeId!=null){
+            return Result.success(DictTypes);
+        }else{
+            return Result.success(DictTypes, dictService.countType(id, name));
+        }
     }
-
+    @PostMapping("/refreshDictCache")
+    public Result<?> refreshDictCache(){
+        return Result.success();
+    }
     /**
      * 查询业务字典项
      * 根据查询条件查询业务字典项
@@ -84,15 +101,19 @@ public class DictController {
      *
      * @param dictTypeId 类型代码
      * @param dictId     父节点ID
-     * @param parentId   父节点类型ID
+     * @param parentTypeId   父节点类型ID
      * @param limit      记录数
      * @param page       页码
      * @return 业务字典类型列表
      */
     @GetMapping("/queryDict")
-    public Result<?> queryDict(String page, String limit, String dictTypeId, String dictId, String parentId, String order, String field) {
-        List Dicts = dictService.queryDicts(page, limit, dictTypeId, dictId, parentId, order, field);
-        return Result.success(Dicts, dictService.count(dictTypeId, dictId, parentId));
+    public Result<?> queryDict(String page, String limit, String dictTypeId, String dictId, String parentTypeId, String order, String field) {
+        List Dicts = dictService.queryDicts(page, limit, dictTypeId, dictId, parentTypeId, order, field);
+        if(dictId!=null){
+            return Result.success(Dicts);
+        }else{
+            return Result.success(Dicts, dictService.count(dictTypeId, null,null));
+        }
 
     }
 
@@ -101,7 +122,7 @@ public class DictController {
      *
      * @param dictType 字典类型
      */
-    @PutMapping("/updateDictType")
+    @PostMapping("/updateDictType")
     public Result<?> updateDictType(@RequestBody DictType dictType) {
         dictService.updateDictType(dictType);
         return Result.success();
@@ -112,7 +133,7 @@ public class DictController {
      *
      * @param dictEntry 字典类型
      */
-    @PutMapping("/updateDict")
+    @PostMapping("/updateDict")
     public Result<?> updateDict(@RequestBody DictEntry dictEntry) {
         dictService.updateDict(dictEntry);
         return Result.success();
@@ -133,33 +154,22 @@ public class DictController {
     /**
      * 删除字典项
      *
-     * @param dictId 字典项代码
+     * @param dictEntrys 字典项
      */
-    @DeleteMapping("/deleteDict{dictId}")
-    public Result<?> removeDict(@PathVariable String dictId) {
-        dictService.removeDict(dictId);
+    @DeleteMapping("/deleteDicts")
+    public Result<?> removeDict(@RequestBody DictEntry[] dictEntrys) {
+        dictService.deleteDicts(dictEntrys);
         return Result.success();
     }
 
     /**
      * 批量删除字典类型
      *
-     * @param dictTypeIds 字典类型编号数组
+     * @param dictTypes 字典类型编号数组
      */
-    @DeleteMapping("/batchDeleteDictType")
-    public Result<?> deleteDictTypes(@RequestBody String[] dictTypeIds) {
-        dictService.deleteDictTypes(Arrays.asList(dictTypeIds));
-        return Result.success();
-    }
-
-    /**
-     * 批量删除字典项
-     *
-     * @param dictIds 字典项数组
-     */
-    @DeleteMapping("/batchDeleteDict")
-    public Result<?> deleteDicts(@RequestBody String[] dictIds) {
-        dictService.deleteDicts(Arrays.asList(dictIds));
+    @DeleteMapping("/deleteDictTypes")
+    public Result<?> deleteDictTypes(@RequestBody DictType[] dictTypes) {
+        dictService.deleteDictTypes(dictTypes);
         return Result.success();
     }
 
