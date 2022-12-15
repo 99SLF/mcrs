@@ -148,6 +148,13 @@
 	        } else if (data.length > 1) {
 				layer.msg("最多只能选中一条记录！");
 	        } else {
+				if(data[0].operatorId==1){
+					layer.msg("选择用户不能进行此操作", {
+						icon: 7,
+						time: 2000
+					});
+					return;
+				}
 	        	var partyId = data[0].userId;
 				// 权限配置路径
 				var url = "<%= request.getContextPath() %>/coframe/auth/partyauth/auth.jsp";
@@ -484,8 +491,8 @@
 	
 	//监听操作事件
 	table.on("tool(LAY-app-user-list)", function(e) {
+		$('#authBtn').addClass("layui-btn-disabled").attr("disabled",true);
 		var data = e.data;
-		console.log(data);
 		if (e.event == "edit") {
 			top.layer.open({
 				type: 2,
