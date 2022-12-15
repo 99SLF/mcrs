@@ -294,7 +294,7 @@
 				field: "warningTitle",
 				title: "预警标题",
 				align: "center",
-				sort: true,
+				// sort: true,
 				hide: isHidden("warningTitle"),
 				minWidth: 100
 			}, {

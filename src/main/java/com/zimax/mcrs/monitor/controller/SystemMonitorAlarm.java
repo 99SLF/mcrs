@@ -32,7 +32,7 @@ public class SystemMonitorAlarm {
      * @param occurTime      发生时间
      * @param order       排序方式
      * @param field       排序字段
-     * @return 上料报表信息列表
+     * @return 信息列表
      * @return total 总记录数
      * @return code 状态码
      * @return msg 返回信息

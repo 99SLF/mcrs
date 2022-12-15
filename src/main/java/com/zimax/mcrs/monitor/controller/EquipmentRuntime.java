@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
+ * 设备接入状态
  * @author 李伟杰
  * @date 2022/12/3
  */
@@ -28,7 +29,7 @@ public class EquipmentRuntime {
      * @param accessStatus       接入状态
      * @param order       排序方式
      * @param field       排序字段
-     * @return 上料报表信息列表
+     * @return 信息列表
      * @return total 总记录数
      * @return code 状态码
      * @return msg 返回信息

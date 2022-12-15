@@ -18,7 +18,7 @@
                 and equipment_id like '%${equipmentId}%'
             </if>
             <if test="axisName !=null and axisName !=''">
-                and axis_name	 like '%${axis_name}%'
+                and axis_name	 like '%${axisName}%'
             </if>
             <if test="antennaLoc !=null and antennaLoc !=''">
                 and antenna_loc like '%${antennaLoc}%'

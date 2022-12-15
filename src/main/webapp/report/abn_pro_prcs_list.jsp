@@ -323,8 +323,8 @@
         }, {
             field: "siteId",
             title: "站点号",
-            align: "left",
-            sort: true,
+            align: "center",
+            // sort: true,
             hide: isHidden("siteId"),
             minWidth: 100
         }, {
@@ -357,7 +357,7 @@
         }, {
             field: "axisName",
             title: "轴名称",
-            align: "left",
+            align: "center",
             hide: isHidden("axisName"),
             minWidth: 150
         }, {

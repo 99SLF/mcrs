@@ -23,7 +23,7 @@
                 and antenna_id like '%${antennaId}%'
             </if>
             <if test="readRate !=null and readRate !=''">
-                and prod_SFC_id like '%${prodSFCId}%'
+                and read_rate like '%${readRate}%'
             </if>
             <if test="recordTime !=null and recordTime !=''">
                 and record_time like '%${recordTime}%'
@@ -46,7 +46,7 @@
                 and antenna_id like '%${antennaId}%'
             </if>
             <if test="readRate !=null and readRate !=''">
-                and prod_SFC_id like '%${prodSFCId}%'
+                and read_rate like '%${readRate}%'
             </if>
             <if test="recordTime !=null and recordTime !=''">
                 and record_time like '%${recordTime}%'

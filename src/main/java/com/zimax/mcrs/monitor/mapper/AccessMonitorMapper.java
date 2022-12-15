@@ -1,6 +1,7 @@
 package com.zimax.mcrs.monitor.mapper;
 
 import com.zimax.mcrs.monitor.pojo.AccessStatus;
+import com.zimax.mcrs.monitor.pojo.vo.AccessStatusVo;
 import com.zimax.mcrs.report.pojo.AbnProdPrcs;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -100,6 +101,22 @@ public interface AccessMonitorMapper {
      */
     int countSys(@Param("warningTitle") String warningTitle, @Param("warningType") String warningType,
                  @Param("warningLevel") String warningLevel, @Param("occurTime") String occurTime
+    );
+
+    /**
+     * 查询终端运行状态信息
+     * @param
+     * @return
+     */
+    List<AccessStatusVo> queryDeviceRuntime(Map map);
+
+    /**
+     * 查询终端运行状态记录数
+     * @param
+     * @return
+     */
+    int countDR(@Param("equipmentId") String equipmentId, @Param("APPId") String APPId,
+                @Param("deviceSoType") String deviceSoType, @Param("deviceSoRuntime") String deviceSoRuntime
     );
 
 }

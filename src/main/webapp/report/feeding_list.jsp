@@ -323,8 +323,8 @@
         }, {
             field: "equipmentId",
             title: "设备资源号",
-            align: "left",
-            sort: true,
+            align: "center",
+            // sort: true,
             hide: isHidden("equipmentId"),
             minWidth: 100
         }, {
@@ -357,7 +357,7 @@
         }, {
             field: "vehicleCode",
             title: "载具码",
-            align: "left",
+            align: "center",
             hide: isHidden("vehicleCode"),
             minWidth: 100
         }, {

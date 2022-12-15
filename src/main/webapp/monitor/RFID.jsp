@@ -289,7 +289,7 @@
                 field: "equipmentId",
                 title: "设备资源号",
                 align: "center",
-                sort: true,
+                // sort: true,
                 hide: isHidden("equipmentId"),
                 minWidth: 100
             }, {
