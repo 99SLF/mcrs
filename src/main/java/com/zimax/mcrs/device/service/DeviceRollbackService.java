@@ -25,7 +25,7 @@ public class DeviceRollbackService {
     /**
      * 查询所有终端更新信息
      */
-    public List<DeviceRollbackVo> queryDeviceRollback(String  page, String limit, String equipmentId, String upgradeVersion, String versionUpdater, String versionUpdateTime, String order, String field) {
+    public List<DeviceRollbackVo> queryDeviceRollback(String  page, String limit, String equipmentId, String upgradeVersion, String versionRollbackPeople, String versionRollbackTime, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -41,8 +41,8 @@ public class DeviceRollbackService {
         }
         map.put("equipmentId",equipmentId);
         map.put("upgradeVersion",upgradeVersion);
-        map.put("versionUpdater",versionUpdater);
-        map.put("versionUpdateTime",versionUpdateTime);
+        map.put("versionRollbackPeople",versionRollbackPeople);
+        map.put("versionRollbackTime",versionRollbackTime);
         return deviceRollbackMapper.queryAll(map);
     }
 
