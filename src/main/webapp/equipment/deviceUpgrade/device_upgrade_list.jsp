@@ -289,11 +289,11 @@
             //     hide: isHidden("enabledState")
             // },
             {
-                field: "version",
+                field: "upgradeVersion",
                 title: "升级版本号",
                 align: "center",
                 minWidth: 120,
-                hide: isHidden("version")
+                hide: isHidden("upgradeVersion")
             }, {
                 field: "upgradeStatus",
                 title: "升级状态",
