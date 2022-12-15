@@ -21,7 +21,7 @@
                 and dicttypeid = '%${dictTypeId}%'
             </if>
             <if test="dictTypeName !=null and dictTypeName !=''">
-                and dicttype_name like '%${dictTypeName}%'
+                and dicttypename like '%${dictTypeName}%'
             </if>
         </where>
     </select>
@@ -32,10 +32,13 @@
                 and dicttypeid = '${dictTypeId}'
             </if>
             <if test="dictTypeName !=null and dictTypeName !=''">
-                and dicttype_name like '%${dictTypeName}%'
+                and dicttypename like '%${dictTypeName}%'
             </if>
             <if test="parentId !=null and parentId !=''">
                 and parentId = '${parentId}'
+            </if>
+            <if test="seqNo !=null and seqNo !=''">
+                and seqNo = '${seqNo}'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -54,10 +57,10 @@
                 and dicttypeid = '${dictTypeId}'
             </if>
             <if test="dictId !=null and dictId !=''">
-                and dict_id like '%${dictId}%'
+                and dictid like '%${dictId}%'
             </if>
             <if test="parentId !=null and parentId !=''">
-                and parent_id like '%${parentId}%'
+                and parentid like '%${parentId}%'
             </if>
         </where>
     </select>
@@ -68,10 +71,13 @@
             and dicttypeid = '${dictTypeId}'
         </if>
         <if test="dictId !=null and dictId !=''">
-            and dict_id like '%${dictId}%'
+            and dictid like '%${dictId}%'
         </if>
         <if test="parentId !=null and parentId !=''">
             and parentid like '%${parentId}%'
+        </if>
+        <if test="seqNo !=null and seqNo !=''">
+            and seqNo like '${seqNo}%'
         </if>
         </where>
         <if test="order !=null and order !=''">
@@ -82,6 +88,29 @@
         </if>
     </select>
 
+    <select id="queryDictIds" resultType="String">
+        select * from dict_entry
+        <where>
+            <if test="dictTypeId !=null and dictTypeId !=''">
+                and dicttypeid = '${dictTypeId}'
+            </if>
+            <if test="dictId !=null and dictId !=''">
+                and dictid like '%${dictId}%'
+            </if>
+            <if test="parentId !=null and parentId !=''">
+                and parentid like '%${parentId}%'
+            </if>
+            <if test="seqNo !=null and seqNo !=''">
+                and seqNo like '${seqNo}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
     <!--更新-->
     <update id="updateDictType" parameterType="com.zimax.components.coframe.dict.pojo.DictType">
         UPDATE dict_type
@@ -106,19 +135,19 @@
         WHERE dictid = #{dictId}
     </update>
     <!--    主键删除-->
-    <delete id="removeDictType" parameterType="int">
+    <delete id="removeDictType">
         delete from dict_type
         where dicttypeid = #{dictTypeId}
     </delete>
     <!--    主键删除-->
-    <delete id="removeDict" parameterType="int">
+    <delete id="removeDict">
         delete from dict_entry
         where dictid = #{dictId}
     </delete>
 
     <!--    批量删除-->
     <delete id="deleteDictTypes" parameterType="java.util.List">
-        delete from dict_type where dictTypeIds in
+        delete from dict_type where dictTypeId in
         <foreach collection="list" item="id" separator="," open="(" close=")">
             #{id}
         </foreach>

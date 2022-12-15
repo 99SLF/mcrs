@@ -124,9 +124,8 @@
 			form.render("select");
 		} else if (parentData.dictParentId != null) {
 			$.ajax({
-				url: "com.zimax.components.coframe.dict.DictManager.queryDictType.biz.ext",
-				type: 'post',
-				data: JSON.stringify({dictTypeId:parentData.dictParentId}),
+				url: "<%=request.getContextPath() %>/dict/queryDictType?dictTypeId="+parentData.dictParentId,
+				type: 'GET',
 				cache: false,
 				contentType:'text/json',
 				success: function (json) {

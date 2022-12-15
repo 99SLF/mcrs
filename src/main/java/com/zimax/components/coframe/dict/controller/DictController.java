@@ -154,33 +154,22 @@ public class DictController {
     /**
      * 删除字典项
      *
-     * @param dictId 字典项代码
+     * @param dictEntrys 字典项
      */
-    @DeleteMapping("/deleteDict{dictId}")
-    public Result<?> removeDict(@PathVariable String dictId) {
-        dictService.removeDict(dictId);
+    @DeleteMapping("/deleteDicts")
+    public Result<?> removeDict(@RequestBody DictEntry[] dictEntrys) {
+        dictService.deleteDicts(dictEntrys);
         return Result.success();
     }
 
     /**
      * 批量删除字典类型
      *
-     * @param dictTypeIds 字典类型编号数组
+     * @param dictTypes 字典类型编号数组
      */
-    @DeleteMapping("/batchDeleteDictType")
-    public Result<?> deleteDictTypes(@RequestBody String[] dictTypeIds) {
-        dictService.deleteDictTypes(Arrays.asList(dictTypeIds));
-        return Result.success();
-    }
-
-    /**
-     * 批量删除字典项
-     *
-     * @param dictIds 字典项数组
-     */
-    @DeleteMapping("/batchDeleteDict")
-    public Result<?> deleteDicts(@RequestBody String[] dictIds) {
-        dictService.deleteDicts(Arrays.asList(dictIds));
+    @DeleteMapping("/deleteDictTypes")
+    public Result<?> deleteDictTypes(@RequestBody DictType[] dictTypes) {
+        dictService.deleteDictTypes(dictTypes);
         return Result.success();
     }
 

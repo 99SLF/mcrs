@@ -198,8 +198,8 @@ CREATE TABLE `cap_role` (
 -- ----------------------------
 DROP TABLE IF EXISTS `cap_user`;
 CREATE TABLE `cap_user` (
-    `OPERATOR_ID` decimal(18,0) NOT NULL,
-    `TENANT_ID` varchar(64) NOT NULL,
+    `OPERATOR_ID` int(9) NOT NULL AUTO_INCREMENT,
+    `TENANT_ID` varchar(64) DEFAULT NULL,
     `USER_ID` varchar(64) NOT NULL,
     `PASSWORD` varchar(100) DEFAULT NULL,
     `INVAL_DATE` date DEFAULT NULL,
@@ -216,10 +216,10 @@ CREATE TABLE `cap_user` (
     `MAC_CODE` varchar(128) DEFAULT NULL,
     `IP_ADDRESS` varchar(128) DEFAULT NULL,
     `EMAIL` varchar(255) DEFAULT NULL,
-    `CREATE_USER` varchar(64) DEFAULT NULL,
+    `CREATEOR` varchar(64) DEFAULT NULL,
     `CREATE_TIME` datetime NOT NULL,
     PRIMARY KEY (`OPERATOR_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for dev_rollback

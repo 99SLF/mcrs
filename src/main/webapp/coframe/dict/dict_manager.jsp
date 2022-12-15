@@ -410,17 +410,17 @@
 	}
 	
 	function removeDictType() {
-		var jsonData = JSON.stringify({data:selectedData});
+		var jsonData = JSON.stringify(selectedData);
 		layer.confirm("所有关联的业务字典类型和业务字典项都将被删除，确认删除业务字典类型？",{
 			btn:['确定','取消'],btn1:function(index){
 			$.ajax({
-				url: "<%=request.getContextPath() %>/dict/saveDictType",
-				type: "post",
+				url: "<%=request.getContextPath() %>/dict/deleteDictTypes",
+				type: "DELETE",
 				data: jsonData,
 				cache: false,
 				contentType: 'text/json',
 				success: function (json) {
-					if (json.status == 'success'){
+					if (json.code == '0'){
 						layer.msg("删除成功", {
 								icon: 1,
 								time: 2000
@@ -588,18 +588,18 @@
 	}
 	
 	function removeDict() {
-		var jsonData = JSON.stringify({data:selectedTermData});
+		var jsonData = JSON.stringify(selectedTermData);
 		layer.confirm("所有关联的业务字典项都将被删除，确认删除业务字典项？", {
     		btn: ['确定', '取消'],
     		btn1: function(index) {
 				$.ajax({
-					url: "com/zimax/components/coframe/dict/DictController/removeDictF",
-					type: "post",
+					url: "<%=request.getContextPath() %>/dict/deleteDicts",
+					type: "DELETE",
 					data: jsonData,
 					cache: false,
 					contentType: "text/json",
 					success: function (json) {
-						if (json.status == "success") {
+						if (json.code == "0") {
 							layer.msg("删除成功", {
 								icon: 1,
 								time: 2000
