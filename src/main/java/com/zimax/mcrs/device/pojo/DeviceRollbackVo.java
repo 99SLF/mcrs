@@ -8,12 +8,12 @@ import lombok.Data;
  * @date 2022/12/14
  */
 @Data
-public class DeviceUpgradeVo {
+public class DeviceRollbackVo {
 
     /**
-     * 终端升级信息主键
+     * 终端回退信息主键
      */
-    private int deviceUpgradeId;
+    private int deviceRollbackId;
 
     /**
      * 设备资源号
@@ -24,11 +24,6 @@ public class DeviceUpgradeVo {
      * 设备名称
      */
     private String equipmentName;
-
-    /**
-     * 升级版本
-     */
-    private String upgradeVersion;
 
     /**
      * 更新包
@@ -52,6 +47,11 @@ public class DeviceUpgradeVo {
     private String factoryName;
 
     /**
+     * 升级版本
+     */
+    private String upgradeVersion;
+
+    /**
      * 升级状态
      */
     private String upgradeStatus;
@@ -59,11 +59,11 @@ public class DeviceUpgradeVo {
     /**
      * 版本更改人
      */
-    private String versionUpdater;
+    private String versionRollbackPeople;
 
     /**
      * 版本更改时间
      */
-    private String versionUpdateTime;
+    private String versionRollbackTime;
 
 }

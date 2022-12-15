@@ -10,7 +10,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=deviceUpgrade-width, initial-scale=1, maximum-scale=1">
-    <title>终端升级信息</title>
+    <title>终端回退信息</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
@@ -28,17 +28,7 @@
                     </div>
                     <label class="layui-form-label">版本号：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="upgradeVersion" placeholder="请输入版本号" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                    <label class="layui-form-label">版本更改人：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="versionUpdater" placeholder="请输入版本更改人" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                    <label class="layui-form-label">版本更改时间：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="versionUpdateTime" placeholder="请输入版本更改时间" autocomplete="off"
+                        <input type="text" name="version" placeholder="请输入版本号" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -211,7 +201,7 @@
     table.render({
         elem: "#LAY-app-deviceUpgrade-list",
         id: "LAY-app-deviceUpgrade-list-reload",
-        url: "<%= request.getContextPath() %>/equipment/deviceUpgrade/query",
+        url: "<%= request.getContextPath() %>/equipment/deviceRollback/query",
         method: "GET",
         height: "full-" + getFullSize(),
         page: true,
@@ -289,11 +279,11 @@
             //     hide: isHidden("enabledState")
             // },
             {
-                field: "version",
+                field: "upgradeVersion",
                 title: "升级版本号",
                 align: "center",
                 minWidth: 120,
-                hide: isHidden("version")
+                hide: isHidden("upgradeVersion")
             }, {
                 field: "upgradeStatus",
                 title: "升级状态",
@@ -322,17 +312,17 @@
                 minWidth: 100,
                 hide: isHidden("factoryName")
             }, {
-                field: "versionUpdater",
+                field: "versionRollbackPeople",
                 title: "版本更改人",
                 align: "center",
                 minWidth: 120,
-                hide: isHidden("versionUpdater")
+                hide: isHidden("versionRollbackPeople")
             }, {
-                field: "versionUpdateTime",
+                field: "versionRollbackTime",
                 title: "版本更改时间",
                 align: "center",
                 minWidth: 150,
-                hide: isHidden("versionUpdateTime")
+                hide: isHidden("versionRollbackTime")
             }]]
     });
 

@@ -179,6 +179,15 @@
         <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.StarSoftwareMapper"/>
     </bean>
 
+    <bean id="DeviceUpgradeMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.DeviceUpgradeMapper"/>
+    </bean>
+    <bean id="DeviceRollbackMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.DeviceRollbackMapper"/>
+    </bean>
+
     <bean id="AlarmEventMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.mcrs.warn.mapper.AlarmEventMapper"/>

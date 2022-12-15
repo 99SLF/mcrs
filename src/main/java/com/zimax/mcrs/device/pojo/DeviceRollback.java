@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 终端升级信息
+ * 终端回退信息
  *
  * @author 林俊杰
  * @date 2022/12/13
@@ -16,14 +16,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("dev_upgrade")
-public class DeviceUpgrade {
+@TableName("dev_rollback")
+public class DeviceRollback {
 
     /**
-     * 终端升级信息主键
+     * 终端回退信息主键
      */
     @TableId(type = IdType.AUTO)
-    private int deviceUpgradeId;
+    private int deviceRollbackId;
 
     /**
      * 设备资产主键
@@ -41,24 +41,24 @@ public class DeviceUpgrade {
     private int uploadId;
 
     /**
-     * 升级状态
-     */
-    private String upgradeStatus;
-
-    /**
      * 升级版本
      */
     private String upgradeVersion;
 
     /**
+     * 升级状态
+     */
+    private String upgradeStatus;
+
+    /**
      * 版本更改人
      */
-    private String versionUpdater;
+    private String versionRollbackPeople;
 
     /**
      * 版本更改时间
      */
-    private String versionUpdateTime;
+    private String versionRollbackTime;
 
 
 }
