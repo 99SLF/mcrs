@@ -410,19 +410,23 @@ CREATE TABLE `rep_rfid` (
 -- Table structure for war_alarm_event
 -- ----------------------------
 DROP TABLE IF EXISTS `war_alarm_event`;
-CREATE TABLE `war_alarm_event` (
+CREATE TABLE `war_alarm_event`  (
     `alarm_event_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '预警事件编码',
-    `alarm_event_title` varchar(255) DEFAULT NULL COMMENT '预警事件标题',
-    `enable_status` varchar(255) DEFAULT NULL COMMENT '是否启用',
-    `alarm_level` varchar(255) DEFAULT NULL COMMENT '预警级别',
-    `alarm_category` varchar(255) DEFAULT NULL COMMENT '预警分类',
-    `alarm_type` varchar(255) DEFAULT NULL COMMENT '预警类型',
-    `make_form_people` varchar(255) DEFAULT NULL COMMENT '制单人',
-    `make_form_time` varchar(255) DEFAULT NULL COMMENT '制单时间',
-    `update_people` varchar(255) DEFAULT NULL COMMENT '修改人',
-    `update_time` varchar(255) DEFAULT NULL COMMENT '修改时间',
+    `alarm_event_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预警事件标题',
+    `enable_status` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否启用',
+    `alarm_level` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预警级别',
+    `upper_limit` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '上限',
+    `lower_limit` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '下限',
+    `alarm_event_content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '预警信息内容',
+    `alarm_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预警类型',
+    `make_form_people` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '制单人',
+    `make_form_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '制单时间',
+    `update_people` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
+    `update_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改时间',
     PRIMARY KEY (`alarm_event_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 78 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- ----------------------------
 -- Table structure for war_alarm_rule
