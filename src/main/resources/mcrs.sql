@@ -198,7 +198,7 @@ CREATE TABLE `cap_role` (
 -- ----------------------------
 DROP TABLE IF EXISTS `cap_user`;
 CREATE TABLE `cap_user` (
-    `OPERATOR_ID` int(9) NOT NULL AUTO_INCREMENT,
+    `OPERATOR_ID` int(18) NOT NULL AUTO_INCREMENT,
     `TENANT_ID` varchar(64) DEFAULT NULL,
     `USER_ID` varchar(64) NOT NULL,
     `PASSWORD` varchar(100) DEFAULT NULL,
@@ -209,7 +209,7 @@ CREATE TABLE `cap_user` (
     `UNLOCK_TIME` datetime NOT NULL,
     `MENU_TYPE` varchar(255) DEFAULT NULL,
     `LAST_LOGIN` datetime NOT NULL,
-    `ERR_COUNT` decimal(10,0) DEFAULT NULL,
+    `ERR_COUNT` int(10) DEFAULT NULL,
     `START_DATE` date DEFAULT NULL,
     `END_DATE` date DEFAULT NULL,
     `VALID_TIME` varchar(255) DEFAULT NULL,
@@ -219,7 +219,13 @@ CREATE TABLE `cap_user` (
     `CREATEOR` varchar(64) DEFAULT NULL,
     `CREATE_TIME` datetime NOT NULL,
     PRIMARY KEY (`OPERATOR_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of cap_user
+-- ----------------------------
+INSERT INTO `cap_user` VALUES ('1', 'default', 'sysadmin', 'k2xvHUmCHWw=', '2028-06-10', '系统管理员', 'local', '1', '2013-03-16 11:58:31', 'default', '2013-03-16 11:58:31', null, null, null, null, null, null, null, 'sysadmin', '2013-03-16 11:58:31');
+
 
 -- ----------------------------
 -- Table structure for dev_rollback
@@ -446,3 +452,28 @@ CREATE TABLE `war_alarm_rule` (
     `rule_update_time` varchar(255) DEFAULT NULL COMMENT 'ruleUpdateTime',
     PRIMARY KEY (`alarm_rule_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+
+-- ----------------------------
+-- Table structure for mon_access_status
+-- ----------------------------
+DROP TABLE IF EXISTS `mon_access_status`;
+CREATE TABLE `mon_access_status` (
+     `access_id` int(11) NOT NULL AUTO_INCREMENT,
+     `equipment_id` varchar(255) NOT NULL,
+     `APPId` varchar(255) NOT NULL,
+     `access_type` varchar(255) NOT NULL,
+     `access_status` varchar(255) NOT NULL,
+     `antenna_status` varchar(255) DEFAULT NULL,
+     `device_so_type` varchar(255) NOT NULL,
+     `device_so_runtime` varchar(255) NOT NULL,
+     `cpu_rate` varchar(255) NOT NULL,
+     `storage_rate` varchar(255) NOT NULL,
+     `occur_time` datetime NOT NULL,
+     `error_rate` varchar(255) NOT NULL,
+     `warning_title` varchar(255) NOT NULL,
+     `warning_type` varchar(255) NOT NULL,
+     `warning_level` varchar(255) NOT NULL,
+     `warning_content` varchar(255) NOT NULL,
+     `remarks` varchar(255) DEFAULT NULL,
+     PRIMARY KEY (`access_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
