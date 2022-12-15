@@ -57,12 +57,12 @@ public class DeviceRollbackVo {
     private String upgradeStatus;
 
     /**
-     * 版本更改人
+     * 版本回退人
      */
     private String versionRollbackPeople;
 
     /**
-     * 版本更改时间
+     * 版本回退时间
      */
     private String versionRollbackTime;
 
