@@ -308,8 +308,8 @@
         }, {
             field: "equipmentId",
             title: "设备资源号",
-            align: "left",
-            sort: true,
+            align: "center",
+            // sort: true,
             hide: isHidden("equipmentId"),
             minWidth: 100
         }, {
@@ -342,7 +342,7 @@
         }, {
             field: "readRate",
             title: "读取率",
-            align: "left",
+            align: "center",
             hide: isHidden("readRate"),
             minWidth: 100
         }, {

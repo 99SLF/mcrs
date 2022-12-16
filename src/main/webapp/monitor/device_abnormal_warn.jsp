@@ -301,7 +301,7 @@
 				field: "equipmentId",
 				title: "设备资源号",
 				align: "center",
-				sort: true,
+				// sort: true,
 				hide: isHidden("equipmentId"),
 				minWidth: 100
 			}, {
@@ -345,13 +345,13 @@
 				hide: isHidden("warningContent"),
 				minWidth: 100
 			}, {
-				field: "",
+				field: "occurTime",
 				title: "发生时间",
 				align:"center",
 				hide: isHidden("occurTime"),
 				minWidth: 100
 			}, {
-				field: "",
+				field: "remarks",
 				title: "备注",
 				align: "center",
 				hide: isHidden("remarks"),

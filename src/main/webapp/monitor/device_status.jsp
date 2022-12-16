@@ -10,7 +10,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>终端异常告警</title>
+	<title>终端状态</title>
 	<link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
 	<link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css" />
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v1">
@@ -26,33 +26,25 @@
 		<div class="layui-form-item">
 
 			<div class="layui-inline">
-				<%--                <label class="layui-form-label">站点号：</label>--%>
 				<div class="layui-input-inline" >
 					<input type="text" name="equipmentId" value="" placeholder="请输入设备资源号" autocomplete="off" class="layui-input">
 				</div>
 			</div>
-
 			<div class="layui-inline">
-				<%--                <label class="layui-form-label">膜卷号：</label>--%>
 				<div class="layui-input-inline" >
-					<input type="text" name="APPId" value="" placeholder="请输入APPID" autocomplete="off" class="layui-input">
+					<input type="text" name="APPId" value="" placeholder="请输入APPId" autocomplete="off" class="layui-input">
 				</div>
 			</div>
-
 			<div class="layui-inline">
-				<%--                <label class="layui-form-label">设备资源号：</label>--%>
 				<div class="layui-input-inline" >
 					<input type="text" name="deviceSoType" value="" placeholder="请输入终端软件类型" autocomplete="off" class="layui-input">
 				</div>
 			</div>
-
 			<div class="layui-inline">
-				<%--                <label class="layui-form-label">轴名称：</label>--%>
 				<div class="layui-input-inline" >
 					<input type="text" name="deviceSoRuntime" value="" placeholder="请输入终端软件运行状态" autocomplete="off" class="layui-input">
 				</div>
 			</div>
-
 			<div class="layui-inline layui-search">
 				<button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-rolelist-search" id="LAY-app-rolelist-search">
 					<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
@@ -247,8 +239,8 @@
 	table.render({
 		elem: "#LAY-app-application-list",
 		id: "LAY-app-application-list-reload",
-		<%--url: "<%= request.getContextPath() %>/SoftwareRuntime/querySoRuntimes",--%>
-		method: "get",
+		url: "<%= request.getContextPath() %>/DeviceRuntime/query",
+		method: "GET",
 		height: "full-" + getFullSize(),
 		page: true,
 		limit: 10,
@@ -295,36 +287,22 @@
 				field: "equipmentId",
 				title: "设备资源号",
 				align: "center",
-				sort: true,
+				// sort: true,
 				hide: isHidden("equipmentId"),
 				minWidth: 100
 			}, {
 				//field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
-				field: "APPId",
+				field: "aPPId",
 				title: "APPID",
 				align: "center",
-				minWidth: 100,
-				hide: isHidden("APPId")
-				// templet: function(d){
-				//     if (d.appType==1) {
-				//         return "远程";
-				//     } else {
-				//         return "本地";
-				//     }
-				// }
+				hide: isHidden("aPPId"),
+				minWidth: 100
 			}, {
 				field: "deviceSoType",
 				title: "终端软件类型",
 				align: "center",
 				hide: isHidden("deviceSoType"),
 				minWidth: 100
-				// templet:function(d){
-				//     if (d.isOpen==1) {
-				//         return "是";
-				//     } else {
-				//         return "否";
-				//     }
-				// }
 			}, {
 				field: "deviceSoRuntime",
 				title: "软件运行",
@@ -339,51 +317,12 @@
 				hide: isHidden("accessStatus"),
 				minWidth: 100
 			}, {
-				field: "",
+				field: "deviceWarning",
 				title: "终端告警",
 				align:"center",
-				hide: isHidden(""),
+				hide: isHidden("deviceWarning"),
 				minWidth: 100
 			}
-			// , {
-			// 	field: "",
-			// 	title: "备注",
-			// 	align: "center",
-			// 	hide: isHidden(""),
-			// 	minWidth: 80
-			// }
-			// , {
-			// 	field: "performStep",
-			// 	title: "执行步骤",
-			// 	align: "center",
-			// 	hide: isHidden("performStep"),
-			// 	minWidth: 80
-			// }, {
-			// 	field: "isEnd",
-			// 	title: "是否完工",
-			// 	align: "center",
-			// 	hide: isHidden("isEnd"),
-			// 	minWidth: 80
-			// },{
-			// 	field: "createTime",
-			// 	title: "创建时间",
-			// 	align: "center",
-			// 	hide: isHidden("createTime"),
-			// 	minWidth: 200
-			// },{
-			// 	field: "updateTime",
-			// 	title: "更新时间",
-			// 	align: "center",
-			// 	hide: isHidden("updateTime"),
-			// 	minWidth: 200
-			// }
-			// ,{
-			//     title: "操作",
-			//     align: "center",
-			//     fixed: "right",
-			//     width: 150,
-			//     toolbar: "#table-role-list"
-			// }
 		]]
 	});
 

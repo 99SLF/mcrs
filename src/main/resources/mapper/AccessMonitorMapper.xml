@@ -5,10 +5,11 @@
     <!--添加监控信息-->
     <insert id="addAccessMonitor" parameterType="com.zimax.mcrs.monitor.pojo.AccessStatus">
         insert into mon_access_status
-        values ( #{accessId}, #{equipmentId}, #{APPId}, #{accessType}, #{accessStatus},
-                 #{antennaStatus}, #{deviceSoType}, #{deviceSoRuntime}, #{cpuRate}, #{storageRate},#{occurTime}, #{errorRate}, #{warningTitle}, #{warningType}, #{warningLevel}, #{warningContent}, #{remarks})
+        values (#{accessId}, #{equipmentId}, #{APPId}, #{accessType}, #{accessStatus},
+                #{antennaStatus}, #{deviceSoType}, #{deviceSoRuntime}, #{cpuRate}, #{storageRate}, #{occurTime},
+                #{errorRate}, #{warningTitle}, #{warningType}, #{warningLevel}, #{warningContent}, #{remarks})
     </insert>
-    <!--    查询记录数-->
+    <!--    查询软件运行状态记录数-->
     <select id="countSO" resultType="int">
         select count(*) from mon_access_status
         <where>
@@ -16,7 +17,7 @@
                 and equipment_id like '%${equipmentId}%'
             </if>
             <if test="APPId !=null and APPId !=''">
-                and APP_id like '%${APPId}%'
+                and app_id like '%${APPId}%'
             </if>
             <if test="deviceSoType !=null and deviceSoType !=''">
                 and device_so_type like '%${deviceSoType}%'
@@ -35,7 +36,7 @@
                 and equipment_id like '%${equipmentId}%'
             </if>
             <if test="APPId !=null and APPId !=''">
-                and APP_id like '%${APPId}%'
+                and app_id like '%${APPId}%'
             </if>
             <if test="deviceSoType !=null and deviceSoType !=''">
                 and device_so_type like '%${deviceSoType}%'
@@ -221,4 +222,53 @@
         </if>
     </select>
 
+    <!--    查询终端运行状态记录数-->
+    <select id="countDR" resultType="int">
+        select count(*) from mon_access_status
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="APPId !=null and APPId !=''">
+                and app_id like '%${APPId}%'
+            </if>
+            <if test="deviceSoType !=null and deviceSoType !=''">
+                and device_so_type like '%${deviceSoType}%'
+            </if>
+            <if test="deviceSoRuntime !=null and deviceSoRuntime !=''">
+                and device_so_runtime like '%${deviceSoRuntime}%'
+            </if>
+        </where>
+    </select>
+    <select id="queryDeviceRuntime" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.vo.AccessStatusVo">
+        SELECT equipment_id, app_id, device_so_type, device_so_runtime, access_status, cpu_rate, storage_rate,
+        error_rate,
+        COUNT(*) AS device_warning FROM mon_access_status
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="APPId !=null and APPId !=''">
+                and app_id like '%${APPId}%'
+            </if>
+            <if test="deviceSoType !=null and deviceSoType !=''">
+                and device_so_type like '%${deviceSoType}%'
+            </if>
+            <if test="deviceSoRuntime !=null and deviceSoRuntime !=''">
+                and device_so_runtime like '%${deviceSoRuntime}%'
+            </if>
+        </where>
+        GROUP BY equipment_id
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
 </mapper>
+
+
+
+
+

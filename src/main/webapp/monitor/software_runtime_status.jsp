@@ -294,16 +294,16 @@
 			field: "equipmentId",
 			title: "设备资源号",
 			align: "center",
-			sort: true,
+			// sort: true,
 			hide: isHidden("equipmentId"),
 			minWidth: 100
 		}, {
-			//field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
-			field: "APPId",
-			title: "APPId",
+			//field:设定字段名。字段名的设定非常重要不能弄成APPId，识别不了，且是表格数据列的唯一标识;title:设定标题名称
+			field: "aPPId",
+			title: "APPID",
 			align: "center",
 			minWidth: 100,
-			hide: isHidden("APPId")
+			hide: isHidden("aPPId")
 			// templet: function(d){
 			//     if (d.appType==1) {
 			//         return "远程";

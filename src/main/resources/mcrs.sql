@@ -443,7 +443,7 @@ DROP TABLE IF EXISTS `mon_access_status`;
 CREATE TABLE `mon_access_status` (
      `access_id` int(11) NOT NULL AUTO_INCREMENT,
      `equipment_id` varchar(255) NOT NULL,
-     `APPId` varchar(255) NOT NULL,
+     `app_id` varchar(255) NOT NULL,
      `access_type` varchar(255) NOT NULL,
      `access_status` varchar(255) NOT NULL,
      `antenna_status` varchar(255) DEFAULT NULL,
