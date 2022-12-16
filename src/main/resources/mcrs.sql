@@ -129,23 +129,6 @@ CREATE TABLE `base_cols_filter` (
     PRIMARY KEY (`FUN_NAME`,`FIELD`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Table structure for cap_equipment
--- ----------------------------
-DROP TABLE IF EXISTS `cap_equipment`;
-CREATE TABLE `cap_equipment` (
-    `equipmentId` varchar(255) NOT NULL,
-    `equipmentName` varchar(255) NOT NULL,
-    `enabledState` varchar(255) NOT NULL,
-    `equipmentType` varchar(255) NOT NULL,
-    `useProcess` varchar(255) NOT NULL,
-    `equipmentProperties` varchar(255) NOT NULL,
-    `equipmentIp` varchar(255) NOT NULL,
-    `equipmentInstallLocation` varchar(255) NOT NULL,
-    `createTime` date NOT NULL,
-    `creator` varchar(255) NOT NULL,
-    PRIMARY KEY (`equipmentId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for cap_party_auth
@@ -156,7 +139,7 @@ CREATE TABLE `cap_party_auth` (
     `PARTY_ID` varchar(64) NOT NULL,
     `PARTY_TYPE` varchar(64) NOT NULL,
     `ROLE_ID` varchar(64) NOT NULL,
-    `TENANT_ID` varchar(64) NOT NULL,
+    `TENANT_ID` varchar(64) DEFAULT NULL,
     `CREATE_USER` varchar(64) DEFAULT NULL,
     `CREATE_TIME` datetime NOT NULL,
     PRIMARY KEY (`ROLE_TYPE`,`PARTY_ID`,`PARTY_TYPE`,`ROLE_ID`)
