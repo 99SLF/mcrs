@@ -103,6 +103,7 @@ public interface DictMapper {
      * @return 字典类型信息
      */
     DictEntry getDict(String dictId);
+    DictEntry getDictByPrimary(@Param("dictId") String dictId, @Param("dictTypeId")String dictTypeId);
 
     /**
      * 导入业务字典
