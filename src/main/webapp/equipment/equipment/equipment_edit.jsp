@@ -1,5 +1,7 @@
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" session="false" %>
+		 pageEncoding="UTF-8" session="false" %>
 <!DOCTYPE html>
 <html>
 <!-- 
@@ -21,19 +23,19 @@
 		<div class="layui-col-sm4">
 			<label class="layui-form-label">设备资源号:<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input id="equipmentId" type="text" name="equipmentId" lay-verify="required" placeholder="请输入设备资源号(必填)" autocomplete="off" class="layui-input">
+				<input id="equipmentId" type="text" name="equipmentId" lay-verify="required|equipmentId" placeholder="请输入设备资源号(必填)" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-col-sm4">
 			<label class="layui-form-label">设备名称:<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input id="equipmentName" type="text" name="equipmentName" lay-verify="required" placeholder="请输入设备名称(必填)" autocomplete="off" class="layui-input">
+				<input id="equipmentName" type="text" name="equipmentName" lay-verify="required|equipmentName" placeholder="请输入设备名称(必填)" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-col-sm4">
 			<label class="layui-form-label"  style="width: 100px">设备安装位置:</label>
 			<div class="layui-input-block">
-				<input id="equipmentInstallLocation" type="text" name="equipmentInstallLocation" lay-verify="required" placeholder="请输入设备安装位置" autocomplete="off" class="layui-input"style="width: 80%">
+				<input id="equipmentInstallLocation" type="text" name="equipmentInstallLocation" lay-verify="required|equipmentInstallLocation" placeholder="请输入设备安装位置" autocomplete="off" class="layui-input"style="width: 80%">
 			</div>
 		</div>
 	</div>
@@ -51,14 +53,14 @@
 		<div class="layui-col-sm4">
 			<label class="layui-form-label" style="width: 100px">设备连接端口:<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input id="equipmentContinuePort" type="text" name="equipmentContinuePort" lay-verify="required" placeholder="请输入设备连接端口" autocomplete="off" class="layui-input"style="width: 85%">
+				<input id="equipmentContinuePort" type="text" name="equipmentContinuePort" lay-verify="required|equipmentContinuePort" placeholder="请输入设备连接端口" autocomplete="off" class="layui-input"style="width: 85%">
 			</div>
 		</div>
 
 		<div class="layui-col-sm4">
 			<label class="layui-form-label" style="width: 100px">MES连接IP:<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input id="mesContinueIp" type="text" name="mesContinueIp" lay-verify="required" placeholder="请输入MES连接IP" autocomplete="off" class="layui-input" style="width: 80%">
+				<input id="mesContinueIp" type="text" name="mesContinueIp" lay-verify="required|mesContinueIp" placeholder="请输入MES连接IP" autocomplete="off" class="layui-input" style="width: 80%">
 			</div>
 		</div>
 	</div>
@@ -74,22 +76,21 @@
 	<div class="layui-col-sm12">
 		<label class="layui-form-label" >备注:</label>
 		<div class="layui-input-block">
-			<textarea cols="50" rows="10" style="width:100%;height:100px" name="remarks" id="remarks" autocomplete="off" class="layui-input" lay-verify=""></textarea>
+			<textarea cols="50" rows="10" style="width:100%;height:100px" name="remarks" id="remarks" autocomplete="off" class="layui-input" lay-verify="remarks"></textarea>
 		</div>
 	</div>
 
-	<div class="layui-form-item layui-row layui-col-space12" style="padding-top: 30px">
-		<div class="layui-col-sm4">
-			<label class="layui-form-label">创建人:</label>
+	<div class="layui-row layui-col-space10 layui-form-item">
+		<div class="layui-col-sm6">
+			<label class="layui-form-label" >创建人：</label>
 			<div class="layui-input-block">
-				<input id="creator" type="text" name="creator" lay-verify="" placeholder="" autocomplete="off" class="layui-input">
+				<input type="text" class="layui-input" name="creator" readonly />
 			</div>
 		</div>
-
-		<div class="layui-col-sm4">
-			<label class="layui-form-label" >创建日期：</label>
+		<div class="layui-col-sm6">
+			<label class="layui-form-label" >创建时间：</label>
 			<div class="layui-input-block">
-				<input type="text" name="createTime" id="createTime" autocomplete="off" class="layui-input" >
+				<input type="text" class="layui-input" name="createTime"  readonly />
 			</div>
 		</div>
 	</div>
@@ -134,24 +135,39 @@
 		});
 	}
 
-	// //判断字符
-	// form.verify({
-	// 	username: function(value, item) {
-	// 		if (value.length > 10) {
-	// 			return "学生名不能超过10字";
-	// 		}
-	// 	},
-	// 	age: function(value, item) {
-	// 		if (value <= 0||value >=150) {
-	// 			return "请输入正确的年龄";
-	// 		}
-	// 	},
-	// 	teachr: function(value, item) {
-	// 		if (value.length > 10) {
-	// 			return "教师名不能超过10字";
-	// 		}
-	// 	}
-	// });
+	//判断字符
+	form.verify({
+		equipmentId: function(value, item) {
+			if (value.length > 20) {
+				return "设备资源号不能超过20个字符";
+			}
+		},
+		equipmentName: function(value, item) {
+			if (value.length > 20) {
+				return "设备名称不能超过20个字符";
+			}
+		},
+		equipmentInstallLocation: function(value, item) {
+			if (value.length > 20) {
+				return "设备安装位置不能超过20字符";
+			}
+		},
+		equipmentContinuePort: function(value, item) {
+			if (value.length > 20) {
+				return "设备连接端口不能超过20字符";
+			}
+		},
+		mesContinueIp: function(value, item) {
+			if (value.length > 30) {
+				return "MES连接IP不能超过30字符";
+			}
+		},
+		remarks: function(value, item) {
+			if (value.length > 255) {
+				return "备注不能超过255个字符";
+			}
+		}
+	});
 
 	form.render();
 	// //日期

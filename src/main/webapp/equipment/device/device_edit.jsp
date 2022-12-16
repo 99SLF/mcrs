@@ -1,5 +1,9 @@
+<%@ page import="com.zimax.cap.party.IUserObject" %>
+<%@ page import="com.zimax.cap.datacontext.DataContextManager" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" session="false" %>
+		 pageEncoding="UTF-8" session="false" %>
 <!DOCTYPE html>
 <html>
 <!-- 
@@ -11,85 +15,85 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
 <title>终端编辑</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
 </head>
 <body>
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0;">
-	<div class="layui-form-item layui-row layui-col-space12">
+	<div class="layui-form-item layui-row layui-col-space10">
 		<%--	需要隐藏主键	--%>
-		<input type="hidden" name="deviceId" value="default">
-		<div class="layui-col-sm4">
-			<label class="layui-form-label">APPID:<span style="color:red">*</span></label>
-			<div class="layui-input-block">
-				<input id="APPId" type="text" name="APPId" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+			<input type="hidden" name="deviceId" value="default">
+			<div class="layui-col-sm4">
+				<label class="layui-form-label">APPID:<span style="color:red">*</span></label>
+				<div class="layui-input-block">
+					<input id="APPId" type="text" name="APPId" lay-verify="" placeholder="" autocomplete="off" class="layui-input" readonly>
+				</div>
 			</div>
-		</div>
-		<div class="layui-col-sm4">
-			<label class="layui-form-label">终端名称:<span style="color:red">*</span></label>
-			<div class="layui-input-block">
-				<input id="deviceName" type="text" name="deviceName" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+			<div class="layui-col-sm4">
+				<label class="layui-form-label">终端名称:<span style="color:red">*</span></label>
+				<div class="layui-input-block">
+					<input id="deviceName" type="text" name="deviceName" lay-verify="required|deviceName" placeholder="" autocomplete="off" class="layui-input">
+				</div>
 			</div>
-		</div>
-		<div class="layui-col-sm4">
-			<label class="layui-form-label"  >终端软件类型:</label>
-			<div class="layui-input-block">
-				<input id="deviceSoftwareType" type="text" name="deviceSoftwareType" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+			<div class="layui-col-sm4">
+				<label class="layui-form-label" style="width: 100px" >终端软件类型:<span style="color:red">*</span></label>
+				<div class="layui-input-block">
+					<input id="deviceSoftwareType" type="text" name="deviceSoftwareType" lay-verify="required|deviceSoftwareType" placeholder="" autocomplete="off" class="layui-input"style="width: 90%">
+				</div>
 			</div>
-		</div>
 	</div>
-	<div class="layui-form-item layui-row layui-col-space12">
+
+	<div class="layui-form-item layui-row layui-col-space10">
 		<div class="layui-col-sm4">
 			<label class="layui-form-label">接入点名称:<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input id="assessName" type="text" name="assessName" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+				<input id="assessName" type="text" name="assessName" lay-verify="required|assessName" placeholder="" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-col-sm4">
 			<label class="layui-form-label">接入点种类:<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input id="assessType" type="text" name="assessType" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+				<input id="assessType" type="text" name="assessType" lay-verify="require|assessType" placeholder="" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-col-sm4">
 			<label class="layui-form-label" >接入点IP:</label>
 			<div class="layui-input-block">
-				<input id="assessIp" type="text" name="assessIp" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+				<input id="assessIp" type="text" name="assessIp" lay-verify="assessIp" placeholder="" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 	</div>
-	<div class="layui-form-item layui-row layui-col-space12">
+
+	<div class="layui-form-item layui-row layui-col-space10">
 		<div class="layui-col-sm4">
-			<label class="layui-form-label">接入点资源号:<span style="color:red">*</span></label>
+			<label class="layui-form-label"style="width: 100px">接入点资源号:<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input id="equipmentId" type="text" name="equipmentId" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+				<input id="equipmentId" type="text" name="equipmentId" lay-verify="required|equipmentId" placeholder="" autocomplete="off" class="layui-input"style="width: 90%">
 			</div>
 		</div>
 		<div class="layui-col-sm4">
 			<label class="layui-form-label">接入点属性:<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input id="assessAttributes" type="text" name="assessAttributes" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+				<input id="assessAttributes" type="text" name="assessAttributes" lay-verify="assessAttributes" placeholder="" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-col-sm4">
 			<label class="layui-form-label"  style="width: 120px">接入点安装位置:</label>
 			<div class="layui-input-block">
-				<input id="assessInstallLocation" type="text" name="assessInstallLocation" lay-verify="required" placeholder="" autocomplete="off" class="layui-input"style="width: 85%">
+				<input id="assessInstallLocation" type="text" name="assessInstallLocation" lay-verify="assessInstallLocation" placeholder="" autocomplete="off" class="layui-input"style="width: 80%">
 			</div>
 		</div>
 	</div>
-	<div class="layui-form-item layui-row layui-col-space12">
+	<div class="layui-form-item layui-row layui-col-space10">
 		<div class="layui-col-sm4">
-			<label class="layui-form-label">工厂名称:<span style="color:red">*</span></label>
+			<label class="layui-form-label">工厂名称:</label>
 			<div class="layui-input-block">
-				<input id="factoryName" type="text" name="factoryName" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+				<input id="factoryName" type="text" name="factoryName" lay-verify="factoryName" placeholder="" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-col-sm4">
 			<label class="layui-form-label">接入方式:<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input id="accessMethod" type="text" name="accessMethod" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+				<input id="accessMethod" type="text" name="accessMethod" lay-verify="required|accessMethod" placeholder="" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-col-sm4">
@@ -99,17 +103,23 @@
 			</div>
 		</div>
 	</div>
-	<div class="layui-form-item layui-row layui-col-space12">
+
+	<div class="layui-form-item layui-row layui-col-space12" style="padding-top: 30px">
 		<div class="layui-col-sm4">
-			<label class="layui-form-label">修改人:<span style="color:red">*</span></label>
+			<label class="layui-form-label">修改人:</label>
 			<div class="layui-input-block">
-				<input id="updater" type="text" name="updater" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+				<%
+					IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
+				%>
+				<input type="text" class="layui-input" name="updater" value="<%=usetObject.getUserName()%>"
+					   readonly/>
 			</div>
 		</div>
 		<div class="layui-col-sm4">
-			<label class="layui-form-label">修改时间:<span style="color:red">*</span></label>
+			<label class="layui-form-label">修改时间:</label>
 			<div class="layui-input-block">
-				<input id="updateTime" type="text" name="updateTime" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+				<input type="text" class="layui-input" name="updateTime"
+					   value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>" readonly/>
 			</div>
 		</div>
 	</div>
@@ -152,29 +162,77 @@
 			"factoryName": data.factoryName,
 			"accessMethod": data.accessMethod,
 			"enable": data.enable,
-			"updater": data.updater,
-			"updateTime": data.updateTime,
+			// "updater": updater,
+			// "updateTime": updateTime,
 		});
 	}
 
-	// //判断字符
-	// form.verify({
-	// 	username: function(value, item) {
-	// 		if (value.length > 10) {
-	// 			return "学生名不能超过10字";
-	// 		}
-	// 	},
-	// 	age: function(value, item) {
-	// 		if (value <= 0||value >=150) {
-	// 			return "请输入正确的年龄";
-	// 		}
-	// 	},
-	// 	teachr: function(value, item) {
-	// 		if (value.length > 10) {
-	// 			return "教师名不能超过10字";
-	// 		}
-	// 	}
-	// });
+	//获取班级的下拉值
+	layui.admin.renderDictSelect({
+		elem: "#classify",
+		dictTypeId: "COF_CLASSIFY"
+	});
+
+	//班级默认
+	$("#classify").val("软件工程1班");
+	form.render();
+
+
+
+	//判断字符
+	form.verify({
+		deviceName: function(value, item) {
+			if (value.length > 20) {
+				return "终端名称不能超过20个字符";
+			}
+		},
+		assessName: function(value, item) {
+			if (value.length > 20) {
+				return "接入点名称不能超过20个字符";
+			}
+		},
+		deviceSoftwareType: function(value, item) {
+			if (value.length > 10) {
+				return "终端软件类型不能超过10字符";
+			}
+		},
+		assessType: function(value, item) {
+			if (value.length > 10) {
+				return "接入点类型不能超过10字符";
+			}
+		},
+		assessIp: function(value, item) {
+			if (value.length > 50) {
+				return "接入点Ip不能超过50字符";
+			}
+		},
+		equipmentId: function(value, item) {
+			if (value.length > 30) {
+				return "接入点资源号不能超过30字符";
+			}
+		},
+		assessAttributes: function(value, item) {
+			if (value.length > 30 ){
+				return "接入点属性不能超30字符";
+			}
+		},
+		assessInstallLocation: function(value, item) {
+			if (value.length > 30 ){
+				return "接入点安装位置不能超30字符";
+			}
+		},
+        factoryName: function(value, item) {
+            if (value.length > 20 ){
+                return "工厂名称不能超20字符";
+            }
+        },
+        accessMethod: function(value, item) {
+            if (value.length > 20 ){
+                return "接入方式不能超20字符";
+            }
+        }
+
+	});
 
 	form.render();
 	// //日期
