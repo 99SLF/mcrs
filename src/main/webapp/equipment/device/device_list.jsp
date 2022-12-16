@@ -172,24 +172,21 @@
 		});
 	});
 
-	//查询过滤字段
-	// $.ajax({
-	// 	url: "com.zimax.components.coframe.tools.ColsFilter.queryHiddenField.biz.ext",
-	// 	type: "POST",
-	// 	async: false,
-	// 	data: JSON.stringify({
-	// 		funName: funName
-	// 	}),
-	// 	cache: false,
-	// 	contentType: "text/json",
-	// 	success: function(result) {
-	// 		if (result) {
-	// 			hiddenFields = result.colsFilters;
-	// 		} else {
-	// 			layer.msg("查询失败");
-	// 		}
-	// 	}
-	// });
+	// 查询过滤字段
+	$.ajax({
+		url: "<%=request.getContextPath() %>/cols/filter/query/" + funName,
+		type: "GET",
+		async: false,
+		cache: false,
+		contentType: "text/json",
+		success: function(result) {
+			if (result) {
+				hiddenFields = result.data
+			} else {
+				layer.msg("查询失败");
+			}
+		}
+	});
 
 	//判断是否隐藏函数
 	function isHidden(field) {
@@ -213,29 +210,22 @@
 		limits: [10, 15, 20, 30],
 		toolbar: "#toolbar",
 		defaultToolbar: ["filter"],
-		// colHideChange: function(col, checked) {
-		// 	var field = col.field;
-		// 	var hidden = col.hide;
-		// 	$.ajax({
-		// 		url: "com.zimax.components.coframe.tools.ColsFilter.setHiddenField.biz.ext",
-		// 		type: "POST",
-		// 		data: JSON.stringify({
-		// 			hidden: hidden,
-		// 			colsFilter: {
-		// 				funName: funName,
-		// 				field: field
-		// 			}
-		// 		}),
-		// 		cache: false,
-		// 		contentType: "text/json",
-		// 		success: function(result) {
-		// 			if (result) {
-		// 			} else{
-		// 				layer.msg("列筛选失败");
-		// 			}
-		// 		}
-		// 	});
-		// },
+		colHideChange: function(col, checked) {
+			var field = col.field;
+			var hidden = col.hide;
+			$.ajax({
+				url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
+				type: "GET",
+				cache: false,
+				contentType: "text/json",
+				success: function(result) {
+					if (result) {
+					} else{
+						layer.msg("列筛选失败");
+					}
+				}
+			});
+		},
 		parseData: function (res) {
 			return {
 				code: res.code,
@@ -345,6 +335,18 @@
 			align: "center",
 			minWidth: 100,
 			hide: isHidden("enable")
+		},{
+			field: "updater",
+			title: "修改人",
+			align: "center",
+			minWidth: 100,
+			hide: isHidden("updater")
+		}, {
+			field: "updateTime",
+			title: "修改时间",
+			align: "center",
+			minWidth: 100,
+			hide: isHidden("updateTime")
 		},{
 			title: "操作",
 			align: "center",

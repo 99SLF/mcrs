@@ -9,7 +9,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="shortcut icon" href="<%=request.getContextPath() %>/std/dist/images/favicon.ico?v=3" />
-<title>应用基础框架</title>
+<title>RFID数据采集管控一体平台</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/common/layui/css/layui.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/std/dist/style/admin.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/std/dist/style/lmxnew.css?v120301021">
