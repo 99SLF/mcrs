@@ -336,22 +336,22 @@
 		});
 	});
 
-	
-	<%--// 查询过滤字段--%>
-	<%--$.ajax({--%>
-	<%--	url: "<%=request.getContextPath() %>/cols/filter/query/" + funName,--%>
-	<%--	type: "GET",--%>
-	<%--	async: false,--%>
-	<%--	cache: false,--%>
-	<%--	contentType: "text/json",--%>
-	<%--	success: function(result) {--%>
-	<%--		if (result) {--%>
-	<%--			hiddenFields = result.data--%>
-	<%--		} else {--%>
-	<%--			layer.msg("查询失败");--%>
-	<%--		}--%>
-	<%--	}--%>
-	<%--});--%>
+
+	// 查询过滤字段
+	$.ajax({
+		url: "<%=request.getContextPath() %>/cols/filter/query/" + funName,
+		type: "GET",
+		async: false,
+		cache: false,
+		contentType: "text/json",
+		success: function(result) {
+			if (result) {
+				hiddenFields = result.data
+			} else {
+				layer.msg("查询失败");
+			}
+		}
+	});
 
 	// 判断是否隐藏函数
 	function isHidden(field) {
@@ -375,22 +375,23 @@
 		limits: [10, 15, 20, 30],
 		toolbar: "#toolbar",
 		defaultToolbar: ["filter"],
-		<%--colHideChange: function(col, checked) {--%>
-		<%--	var field = col.field;--%>
-		<%--	var hidden = col.hide;--%>
-		<%--	$.ajax({--%>
-		<%--		url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,--%>
-		<%--		type: "GET",--%>
-		<%--		cache: false,--%>
-		<%--		contentType: "text/json",--%>
-		<%--		success: function(result) {--%>
-		<%--			if (result) {--%>
-		<%--			} else{--%>
-		<%--				layer.msg("列筛选失败");--%>
-		<%--			}--%>
-		<%--		}--%>
-		<%--	});--%>
-		<%--},--%>
+		//列筛选
+		colHideChange: function(col, checked) {
+			var field = col.field;
+			var hidden = col.hide;
+			$.ajax({
+				url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
+				type: "GET",
+				cache: false,
+				contentType: "text/json",
+				success: function(result) {
+					if (result) {
+					} else{
+						layer.msg("列筛选失败");
+					}
+				}
+			});
+		},
 
 		/*分页*/
 		limits: [10, 15, 20, 30],

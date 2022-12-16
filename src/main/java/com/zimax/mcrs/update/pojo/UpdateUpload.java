@@ -7,7 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Date;
+
 /**
+ * 更新包管理
  * @author 李伟杰
  * @date 2022/12/13 18:45
  */
@@ -30,11 +33,6 @@ public class UpdateUpload {
     private String uploadNumber;
 
     /**
-     * 是否为主版本号
-     */
-    private String majorVersion;
-
-    /**
      * 版本号
      */
     private String version;
@@ -50,9 +48,9 @@ public class UpdateUpload {
     private String uploadStrategy;
 
     /**
-     * 更新包附件（地址）
+     * 更新包文件名
      */
-    private  String uploadEnclosure;
+    private  String fileName;
 
 
     /**
@@ -65,14 +63,24 @@ public class UpdateUpload {
      * 版本上传时间
      * 即更新包上传的时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private String versionUploadTime;
+//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+//    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date versionUploadTime;
 
     /**
      * 备注
      */
     private String remarks;
+
+    /**
+     * 是否为主版本号
+     */
+    private String majorVersion;
+
+    /**
+     *  存放路径路径
+     */
+    private String downloadUrl;
 
 }

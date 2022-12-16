@@ -2,6 +2,7 @@ package com.zimax.mcrs.update.controller;
 
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.update.mapper.UpdatePackageMapper;
+import com.zimax.mcrs.update.service.UpdatePackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class UpdatePackage {
 
     @Autowired
-    private UpdatePackageMapper updatePackageMapper;
+    private UpdatePackageService  updatePackageService;
 
     /**
      * 接受APPId
