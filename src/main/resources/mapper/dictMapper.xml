@@ -18,7 +18,7 @@
         select count(*) from dict_type
         <where>
             <if test="dictTypeId !=null and dictTypeId !=''">
-                and dicttypeid = '%${dictTypeId}%'
+                and dicttypeid like '%${dictTypeId}%'
             </if>
             <if test="dictTypeName !=null and dictTypeName !=''">
                 and dicttypename like '%${dictTypeName}%'
@@ -29,7 +29,7 @@
         select * from dict_type
         <where>
             <if test="dictTypeId !=null and dictTypeId !=''">
-                and dicttypeid = '${dictTypeId}'
+                and dicttypeid = '%${dictTypeId}%'
             </if>
             <if test="dictTypeName !=null and dictTypeName !=''">
                 and dicttypename like '%${dictTypeName}%'

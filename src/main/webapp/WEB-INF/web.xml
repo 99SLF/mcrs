@@ -47,7 +47,7 @@
     <listener-class>com.zimax.components.coframe.framework.startup.FunctionStartupListener</listener-class>
   </listener>
 
-  <!-- 创建spring容器的监听器 -->
+<!--   创建spring容器的监听器-->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
@@ -138,6 +138,10 @@
   <servlet-mapping>
     <servlet-name>default</servlet-name>
     <url-pattern>*.ttf</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.svg</url-pattern>
   </servlet-mapping>
 
 </web-app>

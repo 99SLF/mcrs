@@ -118,10 +118,10 @@
 		return false;                
 	});
 		
-	// layui.admin.renderDictSelect({
-	// 	elem: "#resType",
-	// 	dictTypeId: "COF_FUNCTYPE"
-	// });
+	layui.admin.renderDictSelect({
+		elem: "#resType",
+		dictTypeId: "COF_FUNCTYPE"
+	});
 	
 	$("#resType").val("page");  
 	form.render();
