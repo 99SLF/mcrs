@@ -88,6 +88,18 @@
         </if>
     </select>
 
+    <select id="getDictByPrimary" resultType="com.zimax.components.coframe.dict.pojo.DictEntry">
+        select * from dict_entry
+        <where>
+            <if test="dictTypeId !=null and dictTypeId !=''">
+                and dictTypeId = '${dictTypeId}'
+            </if>
+            <if test="dictId !=null and dictId !=''">
+                and dictid = '${dictId}'
+            </if>
+        </where>
+    </select>
+
     <select id="queryDictIds" resultType="String">
         select dictId from dict_entry
         <where>

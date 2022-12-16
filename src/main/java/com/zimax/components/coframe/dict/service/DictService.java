@@ -51,7 +51,7 @@ public class DictService {
      * @param dictEntry 字典项
      */
     public int saveDict(DictEntry dictEntry) {
-        DictEntry dictEntry1 = dictMapper.getDict(dictEntry.getDictId());
+        DictEntry dictEntry1 = dictMapper.getDictByPrimary(dictEntry.getDictId(),dictEntry.getDictTypeId());
         if (dictEntry1 == null && dictEntry.getParentId() != null && !"".equals(dictEntry.getParentId())) {
             dictEntry.setRank(dictEntry.getRank() + 1);
             dictEntry.setSeqNo(dictEntry.getSeqNo() + dictEntry.getDictId() + ".");
