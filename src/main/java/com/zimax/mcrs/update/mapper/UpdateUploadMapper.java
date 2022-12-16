@@ -1,8 +1,11 @@
 package com.zimax.mcrs.update.mapper;
 
-import com.zimax.mcrs.report.pojo.AbnProdPrcs;
 import com.zimax.mcrs.update.pojo.UpdateUpload;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -18,4 +21,8 @@ public interface UpdateUploadMapper {
      * @return
      */
     void addUpdateUpload(UpdateUpload updateUpload);
+
+    List<UpdateUpload> queryUpdateUpload(Map map);
+
+    int count(@Param("version") String version, @Param("deviceSoType") String deviceSoType);
 }
