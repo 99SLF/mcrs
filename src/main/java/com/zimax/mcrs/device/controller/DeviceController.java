@@ -29,7 +29,7 @@ public class DeviceController {
      * @param device 终端
      */
     @PostMapping("/device/registrationDevice")
-    public Result<?> registrationDevice(@RequestBody Device device) {
+    public Result<?> registrationDevice(@RequestBody Device device) throws Exception {
         deviceService.registrationDevice(device);
         return Result.success();
     }
@@ -41,6 +41,7 @@ public class DeviceController {
      */
     @DeleteMapping("/device/logoutDevice/{deviceId}")
     public Result<?> logoutTerminal(@PathVariable("deviceId") int deviceId) {
+
         deviceService.logoutDevice(deviceId);
         return Result.success();
     }

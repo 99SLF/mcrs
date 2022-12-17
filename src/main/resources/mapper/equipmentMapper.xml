@@ -13,6 +13,9 @@
             <if test="equipmentName !=null and equipmentName !=''">
                 and equipment_name like '%${equipmentName}%'
             </if>
+            <if test="equipmentProperties !=null and equipmentProperties !=''">
+                and equipment_properties like '%${equipmentProperties}%'
+            </if>
         </where>
     </select>
 
@@ -25,6 +28,9 @@
             </if>
             <if test="equipmentName !=null and equipmentName !=''">
                 and equipment_name like '%${equipmentName}%'
+            </if>
+            <if test="equipmentProperties !=null and equipmentProperties !=''">
+                and equipment_properties like '%${equipmentProperties}%'
             </if>
         </where>
         <if test="order !=null and order !=''">

@@ -114,7 +114,7 @@
 				type: 2,
 				title: "注册终端",
 				content: "<%= request.getContextPath() %>/equipment/device/devicel_regist.jsp",
-				area: ["1000px", "560px"],
+				area: ["600px", "560px"],
 				resize: false,
 				btn: ["确定", "取消"],
 				success: function (layero, index) {
@@ -270,11 +270,11 @@
 			minWidth: 150,
 			hide: isHidden("deviceName")
 		}, {
-			field: "assessName",
+			field: "equipmentName",
 			title: "接入点名称",
 			align: "center",
 			minWidth: 100,
-			hide: isHidden("assessName")
+			hide: isHidden("equipmentName")
 		}, {
 			field: "factoryName",
 			title: "工厂名称",
@@ -288,11 +288,11 @@
 			minWidth: 140,
 			hide: isHidden("assessType")
 		}, {
-			field: "assessIp",
+			field: "mesContinueIp",
 			title: "接入点IP",
 			align: "center",
 			minWidth: 120,
-			hide: isHidden("assessIp")
+			hide: isHidden("mesContinueIp")
 		}, {
 			field: "equipmentId",
 			title: "接入点资源号",
@@ -300,23 +300,23 @@
 			minWidth: 150,
 			hide: isHidden("equipmentId")
 		}, {
-			field: "assessAttributes",
+			field: "equipmentProperties",
 			title: "接入点属性",
 			align: "center",
 			minWidth: 100,
-			hide: isHidden("assessAttributes")
+			hide: isHidden("equipmentProperties")
 		}, {
-			field: "assessInstallLocation",
+			field: "equipmentInstallLocation",
 			title: "接入点安装位置",
 			align: "center",
 			minWidth: 150,
-			hide: isHidden("assessInstallLocation")
+			hide: isHidden("equipmentInstallLocation")
 		}, {
-			field: "accessMethod",
+			field: "equipmentContinuePort",
 			title: "接入方式",
 			align: "center",
 			minWidth: 100,
-			hide: isHidden("accessMethod")
+			hide: isHidden("equipmentContinuePort")
 		}, {
 			field: "creator",
 			title: "创建人",
@@ -335,19 +335,13 @@
 			align: "center",
 			minWidth: 100,
 			hide: isHidden("enable")
-		},{
-			field: "updater",
-			title: "修改人",
+		},  {
+			field: "remarks",
+			title: "备注",
 			align: "center",
 			minWidth: 100,
-			hide: isHidden("updater")
+			hide: isHidden("remarks")
 		}, {
-			field: "updateTime",
-			title: "修改时间",
-			align: "center",
-			minWidth: 100,
-			hide: isHidden("updateTime")
-		},{
 			title: "操作",
 			align: "center",
 			fixed: "right",
@@ -364,7 +358,7 @@
 				type: 2,
 				title: "编辑设备信息",
 				content: "<%= request.getContextPath() %>/equipment/device/device_edit.jsp",
-				area: ["1000px", "560px"],
+				area: ["800px", "560px"],
 				resize: false,
 				btn: ["确定", "取消"],
 				success: function (layero, index) {

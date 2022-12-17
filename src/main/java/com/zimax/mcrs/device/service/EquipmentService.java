@@ -25,7 +25,7 @@ public class EquipmentService {
     /**
      * 查询所有
      */
-    public List<Equipment> queryEquipments(String limit, String page, String equipmentId, String equipmentName, String order, String field) {
+    public List<Equipment> queryEquipments(String limit, String page, String equipmentId, String equipmentName, String equipmentProperties,String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -41,6 +41,7 @@ public class EquipmentService {
         }
         map.put("equipmentId", equipmentId);
         map.put("equipmentName", equipmentName);
+        map.put("equipmentProperties", equipmentProperties);
         return equipmentMapper.queryAll(map);
     }
 
@@ -72,8 +73,8 @@ public class EquipmentService {
     /**
      * 查询记录
      */
-    public int count(String equipmentId, String equipmentName) {
-        return equipmentMapper.count(equipmentId, equipmentName);
+    public int count(String equipmentId, String equipmentName ,String equipmentProperties) {
+        return equipmentMapper.count(equipmentId, equipmentName ,equipmentProperties);
     }
 
 
