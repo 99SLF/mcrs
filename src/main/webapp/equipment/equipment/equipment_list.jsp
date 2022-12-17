@@ -48,6 +48,9 @@
                         class="layui-icon layui-icon-add-circle-fine"></i>新建
                 </button>
                 <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i
+                        class="layui-icon layui-icon-delete"></i>删除
+                </button>
+                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="import"><i
                         class="layui-icon layui-icon-import"></i>导入
                 </button>
             </div>
@@ -127,6 +130,56 @@
                 }
             });
         },
+
+        //批量删除
+        batchdel: function() {
+            var checkStatus = table.checkStatus("LAY-app-equipment-list-reload");
+            var data = checkStatus.data;
+            if (data.length == 0) {
+                layer.msg("请至少选中一条记录！");
+            }
+            if (data.length > 0) {
+                var equipmentInts = new Array();
+                for (var i=0; i<data.length;i++) {
+                    equipmentInts[i] = data[i].equipmentInt;
+                }
+                layer.confirm("确定删除所选设备信息？", {
+                    icon: 3,
+                    title: "系统提示"
+                }, function(index) {
+                    $.ajax({
+                        url: "<%= request.getContextPath() %>/equipment/equipment/batchDelete",
+                        type: "DELETE",
+                        data: JSON.stringify(equipmentInts),
+                        cache: false,
+                        contentType: "text/json",
+                        success: function(result) {
+                            if (result.exception) {
+                                layer.alert(result.exception.message, {
+                                    icon: 2,
+                                    title: "系统提示"
+                                });
+                            } else if (result) {
+                                layer.msg("删除成功", {
+                                    icon: 1,
+                                    time: 2000
+                                }, function() {
+                                    table.reload("LAY-app-equipment-list-reload");
+                                });
+                            } else {
+                                layer.msg("删除失败");
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            layer.msg(jqXHR.responseText, {
+                                time: 2000,
+                                icon: 5
+                            });
+                        }
+                    });
+                });
+            }
+        }
     };
 
     table.on('sort(LAY-app-equipment-list)', function (obj) {
@@ -281,7 +334,7 @@
             hide: isHidden("mesContinueIp")
         }, {
             field: "creator",
-            title: "创建角色",
+            title: "创建人",
             align: "center",
             minWidth: 100,
             hide: isHidden("creator")

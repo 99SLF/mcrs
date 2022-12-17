@@ -38,7 +38,7 @@
                     </div>
                     <label class="layui-form-label">回退时间：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="versionRollbackTime" placeholder="请输入版本更改时间" autocomplete="off"
+                        <input type="text" name="versionRollbackTime" placeholder="请输入版本更改时间" autocomplete="off" id="test"
                                class="layui-input">
                     </div>
                 </div>
@@ -102,6 +102,28 @@
             where: field
         });
     });
+    // form.render();
+    // //日期
+    // laydate.render({
+    //     elem: '#test',
+    //     format: 'yyyy-MM-dd',
+    //     trigger: 'click',   //解决时间选择器一闪而过的情况
+    // });
+    //
+    // var startDate = laydate.render({
+    //     elem: '#test',
+    //     type: 'date',//设置日期的类型
+    //     trigger:'click',
+    //     done: function(value, date) {
+    //         if (value != "") {
+    //             date.month = date.month - 1;
+    //             date.date = date.date + 1;
+    //             endDate.config.min = date;
+    //         } else {
+    //             endDate.config.min = startDate.config.min;
+    //         }
+    //     },
+    // });
 
 
     //文本框回车事件
@@ -178,23 +200,22 @@
         });
     });
 
+
+
     // 查询过滤字段
     $.ajax({
-    	url: "com.zimax.components.coframe.tools.ColsFilter.queryHiddenField.biz.ext",
-    	type: "POST",
-    	async: false,
-    	data: JSON.stringify({
-    		funName: funName
-    	}),
-    	cache: false,
-    	contentType: "text/json",
-    	success: function(result) {
-    		if (result) {
-    			hiddenFields = result.colsFilters;
-    		} else {
-    			layer.msg("查询失败");
-    		}
-    	}
+        url: "<%=request.getContextPath() %>/cols/filter/query/" + funName,
+        type: "GET",
+        async: false,
+        cache: false,
+        contentType: "text/json",
+        success: function(result) {
+            if (result) {
+                hiddenFields = result.data
+            } else {
+                layer.msg("查询失败");
+            }
+        }
     });
 
     //判断是否隐藏函数
@@ -220,27 +241,20 @@
         toolbar: "#toolbar",
         defaultToolbar: ["filter"],
         colHideChange: function(col, checked) {
-        	var field = col.field;
-        	var hidden = col.hide;
-        	$.ajax({
-        		url: "com.zimax.components.coframe.tools.ColsFilter.setHiddenField.biz.ext",
-        		type: "POST",
-        		data: JSON.stringify({
-        			hidden: hidden,
-        			colsFilter: {
-        				funName: funName,
-        				field: field
-        			}
-        		}),
-        		cache: false,
-        		contentType: "text/json",
-        		success: function(result) {
-        			if (result) {
-        			} else{
-        				layer.msg("列筛选失败");
-        			}
-        		}
-        	});
+            var field = col.field;
+            var hidden = col.hide;
+            $.ajax({
+                url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
+                type: "GET",
+                cache: false,
+                contentType: "text/json",
+                success: function(result) {
+                    if (result) {
+                    } else{
+                        layer.msg("列筛选失败");
+                    }
+                }
+            });
         },
         parseData: function (res) {
             return {

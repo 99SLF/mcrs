@@ -6,6 +6,7 @@ import com.zimax.mcrs.device.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -81,6 +82,18 @@ public class EquipmentController {
     @GetMapping("/equipment/provide")
     public Result<?> provideDevice(){
         return Result.success();
+    }
+
+    /**
+     * 批量删除设备信息
+     *
+     * @param equipmentInt 设备主键
+     */
+    @DeleteMapping("/equipment/batchDelete")
+    public Result<?> deleteEquipments(@RequestBody Integer[] equipmentInt) {
+        equipmentService.deleteEquipments(Arrays.asList(equipmentInt));
+        return Result.success();
+
     }
 
 

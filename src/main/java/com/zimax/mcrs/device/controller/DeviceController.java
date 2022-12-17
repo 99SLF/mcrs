@@ -89,9 +89,9 @@ public class DeviceController {
     /**
      * 批量删除终端信息
      *
-     * @param deviceIds 用户操作编号数组
+     * @param deviceIds 设备主键数组
      */
-    @DeleteMapping("device/batchDelete")
+    @DeleteMapping("/device/batchDelete")
     public Result<?> deleteDevices(@RequestBody Integer[] deviceIds) {
         deviceService.deleteDevices(Arrays.asList(deviceIds));
         return Result.success();

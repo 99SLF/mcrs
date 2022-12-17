@@ -411,7 +411,7 @@
         if (e.event == "edit") {
             top.layer.open({
                 type: 2,
-                title: "编辑设备信息",
+                title: "编辑终端信息",
                 content: "<%= request.getContextPath() %>/equipment/device/device_edit.jsp",
                 area: ["800px", "560px"],
                 resize: false,
@@ -430,7 +430,7 @@
 
             });
         } else if (e.event == "del") {
-            layer.confirm("确定删除该设备？", {
+            layer.confirm("确定删除该终端？", {
                 icon: 3,
                 title: "系统提示"
             }, function (index) {

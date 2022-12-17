@@ -212,7 +212,6 @@
         elem: "#deviceSoftwareType",
         dictTypeId: "SOFTWARE_TYPE",
     });
-    //设置软件类型的默认值
     form.render();
 
 

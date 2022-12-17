@@ -60,4 +60,10 @@ public interface EquipmentMapper {
     int count(@Param("equipmentId") String equipmentId, @Param("equipmentName") String equipmentName,@Param("equipmentProperties") String equipmentProperties);
 
 
+    /**
+     * 批量删除设备
+     * @param equipmentInt
+     */
+    void deleteEquipments(List<Integer> equipmentInt);
+
 }

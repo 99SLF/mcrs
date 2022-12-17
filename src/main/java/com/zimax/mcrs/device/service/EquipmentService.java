@@ -77,5 +77,12 @@ public class EquipmentService {
         return equipmentMapper.count(equipmentId, equipmentName ,equipmentProperties);
     }
 
+    /**
+     * 批量删除终端
+     */
+    public void deleteEquipments(List<Integer> equipmentInt) {
+        equipmentMapper.deleteEquipments(equipmentInt);
+    }
+
 
 }
