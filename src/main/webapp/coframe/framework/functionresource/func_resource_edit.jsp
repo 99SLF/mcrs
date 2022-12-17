@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-<title>修改资源</title>
+<title>修改功能资源</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
 </head>
@@ -13,7 +13,7 @@
 <div class="layui-fluid">
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0;">	 
 	<input id="resId" name="resId" type="hidden" />
-	<input id="funcResource.function.funcCode" name="funcResource.function.funcCode" type="hidden" />
+	<input id="funcCode" name="funcCode" type="hidden" />
 	<div class="layui-row layui-col-space10 layui-form-item">
 		<div class="layui-col-sm6">
 			<label class="layui-form-label " >资源名称：<span style="color:red">*</span></label>
@@ -33,9 +33,6 @@
 			<label class="layui-form-label layui-form-project">资源路径：</label>
 			<div class="layui-input-block layui-textarea-block">
 				<input id="resPath" type="text" class="layui-input"  name="resPath" autocomplete="off">
-				<button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="btn" style="position:absolute;top:0px;right:0px;height:37px">
-				   <i class="layui-icon layui-icon-more" id="onButtonEdit"></i>
-				</button>
 			</div>
 	</div>
 	<div class="layui-row layui-form-item">
@@ -73,19 +70,23 @@
     	elem: '#openDate',
     	type: 'datetime'
 	});
-	
+	layui.admin.renderDictSelect({
+		elem: "#resType",
+		dictTypeId: "COF_FUNCTYPE"
+	});
 	var win = null;
 	function SetData(data) {
     win = data.win ? data.win : window;	
     var data = data.data;
-		form.val('layuiadmin-app-form-list', {
-			"funcCode": data.funcCode,
-  		 	"resId": data.resId,
-	    	"resName": data.resName,
-		 	"resType": data.resType,
-			"resPath": data.resPath,
-			"comPackName": data.comPackName
-		});		
+	form.val('layuiadmin-app-form-list', {
+		"funcCode": data.funcCode,
+		"resId": data.resId,
+		"resName": data.resName,
+		"resType": data.resType,
+		"resPath": data.resPath,
+		"comPackName": data.comPackName
+	});
+	form.render();
 	}
 	
 	<%--$("#onButtonEdit").click(function(){--%>
