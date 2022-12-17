@@ -77,5 +77,13 @@
         select `equipment_id`,`app_id`,`device_software_type` ,`device_id`from eqi_device
     </select>
 
+    <delete id="deleteDevices" parameterType="java.util.List">
+        delete from eqi_device where device_id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
 
 </mapper>

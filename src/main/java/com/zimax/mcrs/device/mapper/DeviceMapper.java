@@ -63,4 +63,10 @@ public interface DeviceMapper {
      */
     List<Device> toMonitor(Map map);
 
+    /**
+     * 批量删除
+     * @param deviceId
+     */
+    void deleteDevices(List<Integer> deviceId);
+
 }

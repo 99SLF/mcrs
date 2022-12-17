@@ -97,6 +97,14 @@ public class DeviceService {
         return DefaultUserManager.INSTANCE.encodeString(APPId);
     }
 
+    /**
+     * 批量删除终端
+     */
+    public void deleteDevices(List<Integer> deviceId) {
+        deviceMapper.deleteDevices(deviceId);
+    }
+
+
 
 
 

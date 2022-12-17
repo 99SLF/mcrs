@@ -7,6 +7,7 @@ import com.zimax.mcrs.device.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -82,6 +83,19 @@ public class DeviceController {
     public Result toMonitor(String equipmentId, String APPId){
         List devices = deviceService.toMonitor();
         return  Result.success(devices,deviceService.count(equipmentId,APPId));
+    }
+
+
+    /**
+     * 批量删除终端信息
+     *
+     * @param deviceIds 用户操作编号数组
+     */
+    @DeleteMapping("device/batchDelete")
+    public Result<?> deleteDevices(@RequestBody Integer[] deviceIds) {
+        deviceService.deleteDevices(Arrays.asList(deviceIds));
+        return Result.success();
+
     }
 
 }
