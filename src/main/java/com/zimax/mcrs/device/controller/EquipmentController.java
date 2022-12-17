@@ -6,6 +6,7 @@ import com.zimax.mcrs.device.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,6 +27,7 @@ public class EquipmentController {
      *
      * @param equipmentId   设备资源号
      * @param equipmentName 设备名称
+     * @param equipmentProperties 设备名称
      * @param limit         记录数
      * @param page          页码
      * @param field         排序字段
@@ -33,9 +35,9 @@ public class EquipmentController {
      * @return 设备列表
      */
     @GetMapping("/equipment/query")
-    public Result<?> query( String limit,  String page, String equipmentId, String equipmentName, String order, String field) {
-        List equipments = equipmentService.queryEquipments(limit, page, equipmentId, equipmentName, order, field);
-        return Result.success(equipments, equipmentService.count(equipmentId, equipmentName));
+    public Result<?> query( String limit,  String page, String equipmentId, String equipmentName, String equipmentProperties,String order, String field) {
+        List equipments = equipmentService.queryEquipments(limit, page, equipmentId, equipmentName,equipmentProperties ,order, field);
+        return Result.success(equipments, equipmentService.count(equipmentId, equipmentName,equipmentProperties));
     }
 
     /**
@@ -80,6 +82,18 @@ public class EquipmentController {
     @GetMapping("/equipment/provide")
     public Result<?> provideDevice(){
         return Result.success();
+    }
+
+    /**
+     * 批量删除设备信息
+     *
+     * @param equipmentInt 设备主键
+     */
+    @DeleteMapping("/equipment/batchDelete")
+    public Result<?> deleteEquipments(@RequestBody Integer[] equipmentInt) {
+        equipmentService.deleteEquipments(Arrays.asList(equipmentInt));
+        return Result.success();
+
     }
 
 

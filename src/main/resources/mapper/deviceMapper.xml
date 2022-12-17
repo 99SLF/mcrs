@@ -5,26 +5,30 @@
 
     <!--查询记录数-->
     <select id="count" resultType="int">
-        select count(*) from eqi_device
+        SELECT count(*) FROM eqi_device AS dev
+        LEFT JOIN eqi_equipment AS eqi
+        ON dev.equipment_int=eqi.equipment_int
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
-                and equipment_id like '%${equipmentId}%'
+                and eqi.equipment_id like '%${equipmentId}%'
             </if>
             <if test="APPId !=null and APPId !=''">
-                and app_id like '%${APPId}%'
+                and dev.app_id like '%${APPId}%'
             </if>
         </where>
     </select>
 
     <!--查询所有-->
-    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.device.pojo.Device">
-        select * from eqi_device
+    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.device.pojo.DeviceVo">
+        SELECT * FROM eqi_device AS dev
+        LEFT JOIN eqi_equipment AS eqi
+        ON dev.equipment_int=eqi.equipment_int
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
-                and equipment_id like '%${equipmentId}%'
+                and eqi.equipment_id like '%${equipmentId}%'
             </if>
             <if test="APPId !=null and APPId !=''">
-                and app_id like '%${APPId}%'
+                and dev.app_id like '%${APPId}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -39,11 +43,9 @@
     <insert id="registrationDevice" parameterType="com.zimax.mcrs.device.pojo.Device">
         insert into eqi_device
         values (#{deviceId}, #{APPId}, #{version}, #{needUpdate},
-                #{deviceSoftwareType}, #{deviceName},
-                #{assessName}, #{factoryName}, #{assessType},
-                #{assessIp}, #{equipmentId},
-                #{assessAttributes}, #{assessInstallLocation},
-                #{accessMethod}, #{remarks}, #{creator},
+                #{deviceSoftwareType}, #{deviceName},#{equipmentInt},
+                #{factoryName},
+                #{remarks}, #{creator},
                 #{createTime}, #{enable}, #{createRole},
                 #{updater}, #{updateTime})
     </insert>
@@ -61,17 +63,12 @@
         set app_id = #{APPId},
             device_software_type=#{deviceSoftwareType},
             device_name=#{deviceName},
-            assess_name=#{assessName},
             factory_name=#{factoryName},
-            assess_type=#{assessType},
-            assess_ip=#{assessIp},
-            equipment_id=#{equipmentId},
-            assess_attributes=#{assessAttributes},
-            assess_install_location=#{assessInstallLocation},
-            access_method=#{accessMethod},
+            equipment_int=#{equipmentInt},
             enable=#{enable},
             updater=#{updater},
-            update_time=#{updateTime}
+            update_time=#{updateTime},
+            remarks=#{remarks}
         where device_id = #{deviceId}
     </update>
 
@@ -79,6 +76,14 @@
     <select id="toMonitor" parameterType="map" resultType="com.zimax.mcrs.device.pojo.Device">
         select `equipment_id`,`app_id`,`device_software_type` ,`device_id`from eqi_device
     </select>
+
+    <delete id="deleteDevices" parameterType="java.util.List">
+        delete from eqi_device where device_id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
 
 
 </mapper>

@@ -7,6 +7,7 @@ import com.zimax.mcrs.device.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -29,7 +30,7 @@ public class DeviceController {
      * @param device 终端
      */
     @PostMapping("/device/registrationDevice")
-    public Result<?> registrationDevice(@RequestBody Device device) {
+    public Result<?> registrationDevice(@RequestBody Device device) throws Exception {
         deviceService.registrationDevice(device);
         return Result.success();
     }
@@ -41,6 +42,7 @@ public class DeviceController {
      */
     @DeleteMapping("/device/logoutDevice/{deviceId}")
     public Result<?> logoutTerminal(@PathVariable("deviceId") int deviceId) {
+
         deviceService.logoutDevice(deviceId);
         return Result.success();
     }
@@ -81,6 +83,19 @@ public class DeviceController {
     public Result toMonitor(String equipmentId, String APPId){
         List devices = deviceService.toMonitor();
         return  Result.success(devices,deviceService.count(equipmentId,APPId));
+    }
+
+
+    /**
+     * 批量删除终端信息
+     *
+     * @param deviceIds 设备主键数组
+     */
+    @DeleteMapping("/device/batchDelete")
+    public Result<?> deleteDevices(@RequestBody Integer[] deviceIds) {
+        deviceService.deleteDevices(Arrays.asList(deviceIds));
+        return Result.success();
+
     }
 
 }
