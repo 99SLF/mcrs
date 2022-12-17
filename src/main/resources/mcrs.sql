@@ -279,30 +279,26 @@ CREATE TABLE `dict_type` (
 -- Table structure for eqi_device
 -- ----------------------------
 DROP TABLE IF EXISTS `eqi_device`;
-CREATE TABLE `eqi_device` (
-    `device_id` int(255) NOT NULL AUTO_INCREMENT COMMENT '终端主键',
-    `app_id` varchar(255) DEFAULT NULL COMMENT 'APPId',
-    `version` varchar(255) DEFAULT NULL COMMENT '版本号',
-    `need_update` varchar(255) DEFAULT '' COMMENT '是否需要更新',
-    `device_software_type` varchar(255) DEFAULT NULL COMMENT '终端软件类型',
-    `device_name` varchar(255) DEFAULT NULL COMMENT '终端名称',
-    `assess_name` varchar(255) DEFAULT NULL COMMENT '接入点名称',
-    `factory_name` varchar(255) DEFAULT NULL COMMENT '工厂名称',
-    `assess_type` varchar(255) DEFAULT NULL COMMENT '接入点种类',
-    `assess_ip` varchar(255) DEFAULT NULL COMMENT '接入点Ip',
-    `equipment_id` varchar(255) DEFAULT NULL COMMENT '设备资源号',
-    `assess_attributes` varchar(255) DEFAULT NULL COMMENT '接入点属性',
-    `assess_install_location` varchar(255) DEFAULT NULL COMMENT '接入点安装位置',
-    `access_method` varchar(255) DEFAULT NULL COMMENT '接入方式',
-    `remarks` varchar(255) DEFAULT NULL COMMENT '备注',
-    `creator` varchar(255) DEFAULT NULL COMMENT '创建人',
-    `create_time` varchar(255) DEFAULT NULL COMMENT '创建时间',
-    `enable` varchar(255) DEFAULT NULL COMMENT '是否启用',
-    `create_role` varchar(255) DEFAULT NULL COMMENT '创建角色',
-    `updater` varchar(255) DEFAULT NULL COMMENT '修改角色',
-    `update_time` varchar(255) DEFAULT NULL COMMENT '修改时间',
-    PRIMARY KEY (`device_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+CREATE TABLE `eqi_device`  (
+   `device_id` int(255) NOT NULL AUTO_INCREMENT COMMENT '终端主键',
+   `app_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'APPId',
+   `version` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '版本号',
+   `need_update` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '是否需要更新',
+   `device_software_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '终端软件类型',
+   `device_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '终端名称',
+   `equipment_int` int(255) NULL DEFAULT NULL COMMENT '设备主键',
+   `factory_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工厂名称',
+   `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+   `creator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+   `create_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建时间',
+   `enable` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否启用',
+   `create_role` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建角色',
+   `updater` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
+   `update_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改时间',
+   PRIMARY KEY (`device_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- ----------------------------
 -- Table structure for eqi_equipment
