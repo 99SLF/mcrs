@@ -14,9 +14,29 @@
             </if>
         </where>
     </select>
-    <!-- 查询所有的功能 -->
     <select id="queryAllFunctions" resultType="com.zimax.components.coframe.framework.pojo.Function">
         select * from app_function
+    </select>
+    <!-- 查询所有的功能 -->
+    <select id="queryAllFunctionsBylike" resultType="com.zimax.components.coframe.framework.pojo.Function">
+        select * from app_function
+        <where>
+            <if test="funcCode !=null and funcCode !=''">
+                and func_code like '%${funcCode}%'
+            </if>
+            <if test="funcName !=null and funcName !=''">
+                and func_name like '%${funcName}%'
+            </if>
+            <if test="isMenu !=null and isMenu !=''">
+                and is_menu = '${isMenu}'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
     </select>
     <!--查询所有-->
     <select id="queryFunctions" parameterType="map" resultType="com.zimax.components.coframe.framework.pojo.Function">

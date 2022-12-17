@@ -18,17 +18,17 @@
 				<div class="layui-inline">
 					<label class="layui-form-label">功能编号：</label>
 					<div class="layui-input-inline">
-						 <input name="funcCode" class="layui-input" onenter="search" />
+						 <input name="funcCode" class="layui-input"/>
 					</div>
 				</div>
 				<div class="layui-inline">
 					<label class="layui-form-label">功能名称：</label>
 					<div class="layui-input-inline">
-						<input name="funcName" class="layui-input" onenter="search" />
+						<input name="funcName" class="layui-input"/>
 					</div>
 				</div>
 				<div class="layui-inline">
-					<button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-menuInfo-search">
+					<button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-menuInfo-search" id="search">
 						<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
 					</button>
 				</div>
@@ -51,7 +51,7 @@
 	var table = layui.table;
 	var form = layui.form;
 	var $ = layui.jquery;
-	
+	var active={};
 	form.render();
 	var menuData = {};
 	
@@ -64,7 +64,7 @@
 			"isMenu": "1"
 		};
 		table.reload("LAY-app-menu-list", {
-			url: "<%= request.getContextPath() %>/framework/function/query",
+			url: "<%= request.getContextPath() %>/framework/function/queryByLike",
 			where: field
 		});
 	}); 
@@ -73,7 +73,15 @@
 		var type = $(this).data("type");
 		active[type] ? active[type].call(this) : "";
 	});
-    
+	//文本框回车事件
+	$(".layui-input").on("keydown", function(event) {
+		if (event.keyCode == 13) {
+			debugger;
+			var submit = $("#search");
+			submit.click();
+			return false;
+		}
+	});
 	var selData = {};      //存放选中行数据
     
     //监听行单击事件（双击事件为：rowDouble）
@@ -105,7 +113,7 @@
 	
 	table.render({
 		elem: "#LAY-app-menu-list",
-		url: "<%= request.getContextPath() %>/framework/function/query",
+		url: "<%= request.getContextPath() %>/framework/function/queryByLike",
 		method: "GET",
 		height: "full-" + getFullSize(),
 		page: true,

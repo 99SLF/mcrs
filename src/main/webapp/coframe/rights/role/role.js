@@ -8,7 +8,7 @@ layui.define(["admin"], function(exports) {
 	var table = layui.table;
 	// 是否已初始化
 	var isInit = false;
-	
+	var hiddenFields = [];
 	// 调用窗口对象
 	var win = null;
 	
@@ -32,9 +32,6 @@ layui.define(["admin"], function(exports) {
 		 */
 		update: "update"
 	};
-	
-	// 过滤字段
-	var hiddenFields = [];
 	
 	// 功能名
 	var funName = "subfuncgroup_list";
@@ -71,29 +68,22 @@ layui.define(["admin"], function(exports) {
 		}
 		return false;
 	}
-	
-	/**
-	 * 查询过滤字段
-	 */
-	// function queryHiddenField() {
-	// 	$.ajax({
-	// 		url: "com.zimax.components.coframe.tools.ColsFilter.queryHiddenField.biz.ext",
-	// 		type: "POST",
-	// 		async: false ,
-	// 		data: JSON.stringify({
-	// 			funName: funName
-	// 		}),
-	// 		cache: false,
-	// 		contentType: "text/json",
-	// 		success: function(result) {
-	// 			if (result) {
-	// 				hiddenFields = result.colsFilters;
-	// 			} else {
-	// 				layer.msg("查询失败");
-	// 			}
-	// 		}
-	// 	});
-	// }
+
+	// 查询过滤字段
+	$.ajax({
+		url: "/mcrs/cols/filter/query/" + funName,
+		type: "GET",
+		async: false,
+		cache: false,
+		contentType: "text/json",
+		success: function(result) {
+			if (result) {
+				hiddenFields = result.data
+			} else {
+				layer.msg("查询失败");
+			}
+		}
+	});
 
 	/**
 	 * 渲染表格
@@ -108,29 +98,22 @@ layui.define(["admin"], function(exports) {
 			limit: 10,
 			limits: [10, 15, 20, 30],
 			toolbar: "#toolbar",
-			// colHideChange: function(col, checked) {
-			// 	var field = col.field;
-			// 	var hidden = col.hide;
-			// 	$.ajax({
-			// 		url: "com.zimax.components.coframe.tools.ColsFilter.setHiddenField.biz.ext",
-			// 		type: "POST",
-			// 		data: JSON.stringify({
-			// 			hidden: hidden,
-			// 			colsFilter: {
-			// 				funName: funName,
-			// 				field: field
-			// 			}
-			// 		}),
-			// 		cache: false,
-			// 		contentType: "text/json",
-			// 		success: function(result) {
-			// 			if (result) {
-			// 			} else{
-			// 				layer.msg("列筛选失败");		
-			// 			}
-			// 		}
-			// 	});	
-			// },
+			colHideChange: function(col, checked) {
+				var field = col.field;
+				var hidden = col.hide;
+				$.ajax({
+					url: "/mcrs/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
+					type: "GET",
+					cache: false,
+					contentType: "text/json",
+					success: function(result) {
+						if (result) {
+						} else{
+							layer.msg("列筛选失败");
+						}
+					}
+				});
+			},
 			defaultToolbar: ["filter"],
 			parseData: function(res) {
 				var t = res.data.length;
@@ -332,7 +315,6 @@ layui.define(["admin"], function(exports) {
 				var url = addUrl;
 				if (type == Type.update)
 					url = updateUrl;
-				debugger;
 				var dataForm = data.field;
 				var dataJson={
 					"roleId": dataForm["capRole/roleId"],

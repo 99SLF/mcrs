@@ -51,7 +51,7 @@
 	var  num1 = $("#appId").val(); 
 	var num;
 	var flag = true;
-	
+	var funName = "function_list";
 	//状态默认
 	$("#appId").val("请选择");
 	form.render();
@@ -126,7 +126,16 @@
 		var type = $(this).data("type");
 		active[type] ? active[type].call(this) : "";
 	});
-	
+
+	// 判断是否隐藏函数
+	function isHidden(field) {
+		for (var i = 0; i < hiddenFields.length; i++) {
+			if (hiddenFields[i].field == field ) {
+				return true;
+			}
+		}
+		return false;
+	}
 	function getFullSize() {
 		var header = $(".layui-card-header");
 		var cardbody = $(".layui-card-body");
