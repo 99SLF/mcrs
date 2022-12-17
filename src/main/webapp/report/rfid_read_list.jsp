@@ -26,7 +26,6 @@
         <div class="layui-form-item">
 
             <div class="layui-inline">
-                <%--                <label class="layui-form-label">站点号：</label>--%>
                 <div class="layui-input-inline">
                     <input type="text" name="equipmentId" value="" placeholder="请输入设备资源号" autocomplete="off"
                            class="layui-input">
@@ -34,7 +33,6 @@
             </div>
 
             <div class="layui-inline">
-                <%--                <label class="layui-form-label">膜卷号：</label>--%>
                 <div class="layui-input-inline">
                     <input type="text" name="RFIDId" value="" placeholder="请输入RFID编码" autocomplete="off"
                            class="layui-input">
@@ -42,7 +40,6 @@
             </div>
 
             <div class="layui-inline">
-                <%--                <label class="layui-form-label">设备资源号：</label>--%>
                 <div class="layui-input-inline">
                     <input type="text" name="antennaId" value="" placeholder="请输入天线ID" autocomplete="off"
                            class="layui-input">
@@ -50,7 +47,6 @@
             </div>
 
             <div class="layui-inline">
-                <%--                <label class="layui-form-label">设备资源号：</label>--%>
                 <div class="layui-input-inline">
                     <input type="text" name="readRate" value="" placeholder="请选择读取率" autocomplete="off"
                            class="layui-input">
@@ -59,7 +55,6 @@
 
 
             <div class="layui-inline">
-                <%--                <label class="layui-form-label">创建时间：</label>--%>
                 <div class="layui-input-inline">
                     <input type="text" name="startProdTime" value="" placeholder="请选择记录时间" id="test1" autocomplete="off"
                            class="layui-input">
@@ -134,72 +129,6 @@
         }
     });
 
-    <%--var active = {--%>
-    <%--    add: function() {--%>
-    <%--        top.layer.open({--%>
-    <%--            type: 2,--%>
-    <%--            title: "添加应用",--%>
-    <%--            resize: false,--%>
-    <%--            content: "<%= request.getContextPath() %>/coframe/framework/application/application_add.jsp",--%>
-    <%--            area: ["800px", "530px"],--%>
-    <%--            btn: ["确定", "取消"],--%>
-    <%--            success: function(layero, index) {--%>
-    <%--                var dataJson = {--%>
-    <%--                    win:window,--%>
-    <%--                };--%>
-    <%--                debugger;--%>
-    <%--                layero.find("iframe")[0].contentWindow.SetData(dataJson);--%>
-    <%--            },--%>
-    <%--            yes: function(index, layero) {--%>
-    <%--                var submit = layero.find('iframe').contents().find("#layuiadmin-app-form-submit");--%>
-    <%--                submit.click();--%>
-    <%--            }--%>
-    <%--        });--%>
-    <%--    },--%>
-    <%--    &lt;%&ndash;//批量删除&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;batchdel: function() {&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;    var checkStatus = table.checkStatus("LAY-app-application-list-reload");&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;    var data = checkStatus.data;&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;    if (data.length === 0){&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;        layer.msg('请至少选中一条记录！');&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;    }&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;    if (data.length > 0) {&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;        var appIds = new Array();&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;        for (var i=0; i<data.length;i++) {&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;            appIds[i] = data[i].appId;&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;        }&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;        layer.confirm("确定删除所选应用？", {&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;            icon: 3,&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;            title: "系统提示"&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;        }, function(index) {&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;            $.ajax({&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;                url: "<%= request.getContextPath() %>/framework/application/batchDelete",&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;                type: "DELETE",&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;                data: JSON.stringify(appIds),&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;                cache: false,&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;                contentType: "text/json",&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;                success: function(result) {&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;                    if (result) {&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;                        layer.msg("删除成功", {&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;                            icon: 1,&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;                            time: 2000&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;                        }, function() {&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;                            table.reload("LAY-app-application-list-reload");&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;                            updateFuncgroupSelect();&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;                        });&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;                    } else {&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;                        layer.msg("删除失败");&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;                    }&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;                },&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;                error: function(result) {&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;                    layer.msg(result.retMsg);&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;                }&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;            });&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;        });&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;    }&ndash;%&gt;--%>
-    <%--    &lt;%&ndash;}&ndash;%&gt;--%>
-    <%--};--%>
-
     /* //按钮事件监听
     $(".layui-btn.layuiadmin-btn-list").on("click", function() {
         var type = $(this).data("type");
@@ -229,24 +158,21 @@
         });
     });
 
-    //查询过滤字段
-    // $.ajax({
-    // 	url: "com.zimax.components.coframe.tools.ColsFilter.queryHiddenField.biz.ext",
-    // 	type: "POST",
-    // 	async: false ,
-    // 	data: JSON.stringify({
-    // 		funName: funName
-    // 	}),
-    // 	cache: false,
-    // 	contentType: "text/json",
-    // 	success: function(result) {
-    // 		if (result) {
-    // 			hiddenFields = result.colsFilters;
-    // 		} else {
-    // 			layer.msg("查询失败");
-    // 		}
-    // 	}
-    // });
+    // 查询过滤字段
+    $.ajax({
+        url: "<%=request.getContextPath() %>/cols/filter/query/" + funName,
+        type: "GET",
+        async: false,
+        cache: false,
+        contentType: "text/json",
+        success: function(result) {
+            if (result) {
+                hiddenFields = result.data
+            } else {
+                layer.msg("查询失败");
+            }
+        }
+    });
 
     //判断是否隐藏函数
     function isHidden(field) {
@@ -267,31 +193,25 @@
         height: "full-" + getFullSize(),
         page: true,
         limit: 10,
-        // toolbar: "#toolbar",
-        // defaultToolbar: ["filter"],
-        // colHideChange: function(col, checked) {
-        // 	var field = col.field;
-        // 	var hidden = col.hide;
-        // 	$.ajax({
-        // 		url: "com.zimax.components.coframe.tools.ColsFilter.setHiddenField.biz.ext",
-        // 		type: "POST",
-        // 		data: JSON.stringify({
-        // 			hidden: hidden,
-        // 			colsFilter: {
-        // 				funName: funName,
-        // 				field: field
-        // 			}
-        // 		}),
-        // 		cache: false,
-        // 		contentType: "text/json",
-        // 		success: function(result) {
-        // 			if (result) {
-        // 			} else{
-        // 				layer.msg("列筛选失败");
-        // 			}
-        // 		}
-        // 	});
-        // },
+        toolbar: "#toolbar",
+        defaultToolbar: ["filter"],
+        //列筛选
+        colHideChange: function(col, checked) {
+            var field = col.field;
+            var hidden = col.hide;
+            $.ajax({
+                url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
+                type: "GET",
+                cache: false,
+                contentType: "text/json",
+                success: function(result) {
+                    if (result) {
+                    } else{
+                        layer.msg("列筛选失败");
+                    }
+                }
+            });
+        },
         limits: [10, 15, 20, 30],
         parseData: function (res) {
             return {
@@ -319,26 +239,13 @@
             align: "center",
             minWidth: 100,
             hide: isHidden("RFIDId")
-            // templet: function(d){
-            //     if (d.appType==1) {
-            //         return "远程";
-            //     } else {
-            //         return "本地";
-            //     }
-            // }
         }, {
             field: "antennaId",
             title: "天线ID",
             align: "center",
             hide: isHidden("antennaId"),
             minWidth: 100
-            // templet:function(d){
-            //     if (d.isOpen==1) {
-            //         return "是";
-            //     } else {
-            //         return "否";
-            //     }
-            // }
+
         }, {
             field: "readRate",
             title: "读取率",
@@ -351,28 +258,7 @@
             align: "center",
             hide: isHidden("recordTime"),
             minWidth: 80
-        }
-            // ,{
-            //     field: "startProdTime",
-            //     title: "开始生产时间",
-            //     align: "center",
-            //     hide: isHidden("startProdTime"),
-            //     minWidth: 200
-            // },{
-            //     field: "endProdTime",
-            //     title: "结束生产时间",
-            //     align: "center",
-            //     hide: isHidden("endProdTime"),
-            //     minWidth: 200
-            // }
-            // ,{
-            //     title: "操作",
-            //     align: "center",
-            //     fixed: "right",
-            //     width: 150,
-            //     toolbar: "#table-role-list"
-            // }
-        ]]
+        }]]
     });
 
     $(window).resize(function () {
@@ -381,74 +267,6 @@
         });
     });
 
-    <%--//监听操作事件--%>
-    <%--table.on("tool(LAY-app-application-list)", function(e) {--%>
-    <%--    var data = e.data;--%>
-    <%--    if (e.event == "edit") {--%>
-    <%--        top.layer.open({--%>
-    <%--            type: 2,--%>
-    <%--            title: "编辑应用",--%>
-    <%--            content: "<%= request.getContextPath() %>/coframe/framework/application/application_edit.jsp",--%>
-    <%--            area: ["800px", "530px"],--%>
-    <%--            resize: false,--%>
-    <%--            btn: ["确定", "取消"],--%>
-    <%--            success: function(layero, index) {--%>
-    <%--                var dataJson = {--%>
-    <%--                    data : data,--%>
-    <%--                    win: window--%>
-    <%--                };--%>
-    <%--                layero.find("iframe")[0].contentWindow.SetData(dataJson);--%>
-    <%--            },--%>
-    <%--            yes: function(index, layero) {--%>
-    <%--                var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");--%>
-    <%--                edit.click();--%>
-    <%--            }--%>
-    <%--        });--%>
-    <%--    } else if (e.event == "del") {--%>
-    <%--        layer.confirm("确定删除此应用？", {--%>
-    <%--            icon: 3,--%>
-    <%--            title: "系统提示"--%>
-    <%--        }, function(index) {--%>
-    <%--            var appIds = new Array();--%>
-    <%--            appIds[0] = data.appId;--%>
-    <%--            $.ajax({--%>
-    <%--                url: "<%= request.getContextPath() %>/framework/application/batchDelete",--%>
-    <%--                type: "DELETE",--%>
-    <%--                data: JSON.stringify(appIds),--%>
-    <%--                cache: false,--%>
-    <%--                contentType: "text/json",--%>
-    <%--                success: function(result) {--%>
-    <%--                    if (result) {--%>
-    <%--                        layer.msg("删除成功", {--%>
-    <%--                            icon: 1,--%>
-    <%--                            time: 2000--%>
-    <%--                        }, function() {--%>
-    <%--                            updateFuncgroupSelect();--%>
-    <%--                            table.reload('LAY-app-application-list-reload');--%>
-    <%--                        });--%>
-    <%--                    } else {--%>
-    <%--                        layer.msg("删除失败");--%>
-    <%--                    }--%>
-    <%--                },--%>
-    <%--                error: function(result) {--%>
-    <%--                    layer.msg(result.retMsg);--%>
-    <%--                }--%>
-    <%--            });--%>
-    <%--        });--%>
-    <%--    }--%>
-    <%--});--%>
-
-    <%--function updateFuncgroupSelect(){--%>
-    <%--    var url = [];--%>
-    <%--    url.push("iframe[src='<%= request.getContextPath() %>/coframe/framework/functiongroup/funcgroup_list.jsp']");--%>
-    <%--    for (var i = 0; i < url.length; i++) {--%>
-    <%--        var iframeTemp = parent.layui.$(url[i]);--%>
-    <%--        if (iframeTemp.length) {--%>
-    <%--            var iframe = iframeTemp[0].contentWindow;--%>
-    <%--            iframe.updata_select(false);--%>
-    <%--        }--%>
-    <%--    }--%>
-    <%--}--%>
 
     $("body").on("click", ".layui-table-body table.layui-table tbody tr td", function () {
         if ($(this).attr("data-field") === "0") return;

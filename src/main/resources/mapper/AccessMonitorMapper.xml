@@ -144,7 +144,7 @@
                 and warning_level like '%${warningLevel}%'
             </if>
             <if test="occurTime !=null and occurTime !=''">
-                and occur_time like '%${occurTime}%'
+                and occur_time =#{occurTime}
             </if>
         </where>
 
@@ -166,7 +166,7 @@
                 and warning_level like '%${warningLevel}%'
             </if>
             <if test="occurTime !=null and occurTime !=''">
-                and occur_time like '%${occurTime}%'
+                and occur_time =#{occurTime}
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -192,7 +192,7 @@
                 and warning_level like '%${warningLevel}%'
             </if>
             <if test="occurTime !=null and occurTime !=''">
-                and occur_time like '%${occurTime}%'
+                and occur_time =#{occurTime}
             </if>
         </where>
 
@@ -211,7 +211,7 @@
                 and warning_level like '%${warningLevel}%'
             </if>
             <if test="occurTime !=null and occurTime !=''">
-                and occur_time like '%${occurTime}%'
+                and occur_time =#{occurTime}
             </if>
         </where>
         <if test="order !=null and order !=''">

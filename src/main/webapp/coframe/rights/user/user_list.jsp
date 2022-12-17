@@ -336,7 +336,7 @@
 		});
 	});
 
-	
+
 	// 查询过滤字段
 	$.ajax({
 		url: "<%=request.getContextPath() %>/cols/filter/query/" + funName,
@@ -375,6 +375,7 @@
 		limits: [10, 15, 20, 30],
 		toolbar: "#toolbar",
 		defaultToolbar: ["filter"],
+		//列筛选
 		colHideChange: function(col, checked) {
 			var field = col.field;
 			var hidden = col.hide;
