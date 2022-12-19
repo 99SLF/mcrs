@@ -166,13 +166,39 @@
         //上传后台接受接口
         url: "<%= request.getContextPath() %>/upload/package/upload",
         //true，为选中文件直接提交，false为不提交根据bindAction属性上的id提交
-        bindAction: "#layuiadmin-app-form-submit",
+        //bindAction: "#layuiadmin-app-form-submit",
         //是否接受拖拽的文件上传，设置 false 可禁用。不支持ie8/9
         drag: false,
         field:"file",
         //是否选完文件后自动上传。如果设定 false，那么需要设置 bindAction 参数来指向一个其它按钮提交上传
         auto: false,
         dataType:'json',
+        data: {
+            uploadNumber:()=>{
+                return $('#uploadNumber').val();//实现动态传值
+            },
+            // majorVersion:()=>{
+            //     return $('#majorVersion').val();//实现动态传值
+            // },
+            version:()=>{
+                return $('#version').val();//实现动态传值
+            },
+            // deviceSoType:()=>{
+            //     return $('#deviceSoType').val();//实现动态传值
+            // },
+            // uploadStrategy:()=>{
+            //     return $('#uploadStrategy').val();//实现动态传值
+            // },
+            // remarks:()=>{
+            //     return $('#remarks').val();//实现动态传值
+            // },
+            // versionUploadTime:()=>{
+            //     return $('#versionUploadTime').val();//实现动态传值
+            // },
+            // uploader:()=>{
+            //     return $('#uploader').val();//实现动态传值
+            // },
+        },
         // //是否允许多文件上传。设置 true即可开启。不支持ie8/9
         // multiple: true,
         // //指定允许上传时校验的文件类型，可选值有：images（图片）、file（所有文件）、video（视频）、audio（音频）
@@ -211,44 +237,45 @@
     //提交表单数据
     form.on('submit(layuiadmin-app-form-submit)', function (data) {
         debugger;
+        test.upload();
         //layuiadmin-app-form-list,整个表单id
-        var formData = new FormData($("#layuiadmin-app-form-list")[0]);
-        $.ajax({
+        //var formData = new FormData($("#layuiadmin-app-form-list")[0]);
+        //$.ajax({
             //cache作用：是否在缓存中读取数据的读取
             //cache属性是true（默认值）时：在第一次请求完成之后，如果地址和参数不变化，第二次去请求，会默认获取缓存中的数据，不去读取服务器端的最新数据。
             //cache属性是flase（默认值）时：每次读取的是最新的数据
-            cache: true,
-            type: "post",
-            url: "<%= request.getContextPath() %>/upload/package/upload",
-            async: false,
-            //form_id, layuiadmin-app-form-list,整个表单id
-            data: formData,
-            ////jax中contentType设置为false是为了避免JQuery对其操作，从⽽失去分界符，⽽使服务器不能正常解析⽂件
-            contentType: false,
-            //当设置为true的时候,jquery ajax提交的时候不会序列化data，⽽是直接使用data
-            processData: false,
-            error: function (request) {
-                layer.alert('操作失败', {
-                    con: 2,
-                    title: "提⽰"
-                });
-            },
-            success: function (ret) {
-                if (ret.success) {
-                    layer.alert('上传成功', {
-                        icon: 2,
-                        title: "提⽰"
-                    });
-                    layer.closeAll();
-                    // window.location.href = "/login" rel = "external nofollow";
-                } else {
-                    layer.alert(ret.msg, {
-                        icon: 2,
-                        title: "提⽰"
-                    });
-                }
-            }
-        })
+            //cache: true,
+            //type: "post",
+            // url: "<%= request.getContextPath() %>/upload/package/upload",
+        //     async: false,
+        //     //form_id, layuiadmin-app-form-list,整个表单id
+        //     data: formData,
+        //     ////jax中contentType设置为false是为了避免JQuery对其操作，从⽽失去分界符，⽽使服务器不能正常解析⽂件
+        //     contentType: false,
+        //     //当设置为true的时候,jquery ajax提交的时候不会序列化data，⽽是直接使用data
+        //     processData: false,
+        //     error: function (request) {
+        //         layer.alert('操作失败', {
+        //             con: 2,
+        //             title: "提⽰"
+        //         });
+        //     },
+        //     success: function (ret) {
+        //         if (ret.success) {
+        //             layer.alert('上传成功', {
+        //                 icon: 2,
+        //                 title: "提⽰"
+        //             });
+        //             layer.closeAll();
+        //             // window.location.href = "/login" rel = "external nofollow";
+        //         } else {
+        //             layer.alert(ret.msg, {
+        //                 icon: 2,
+        //                 title: "提⽰"
+        //             });
+        //         }
+        //     }
+        // })
     });
 
 

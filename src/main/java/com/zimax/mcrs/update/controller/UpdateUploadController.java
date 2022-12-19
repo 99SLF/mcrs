@@ -47,7 +47,7 @@ public class UpdateUploadController {
      * @param updateUpload 更新包信息
      */
     @PostMapping("/package/upload")
-    public Result<?> addUpdateUpload(MultipartFile file, UpdateUpload updateUpload, HttpServletRequest request) {
+    public Result<?> addUpdateUpload(MultipartFile file,@RequestBody UpdateUpload updateUpload, HttpServletRequest request) {
         if (file != null) {
             // 一、定义文件名
             String fileName = "fileBag";
