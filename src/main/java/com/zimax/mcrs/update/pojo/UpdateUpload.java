@@ -79,8 +79,29 @@ public class UpdateUpload {
     private String majorVersion;
 
     /**
-     *  存放路径路径
+     *  存放路径
      */
     private String downloadUrl;
 
+
+    /**
+     *  资源文件生成的uuid
+     */
+    private  String uploadUuid;
+
+    /**
+     *  资源文件原始名称
+     */
+    private String OriginalFilename;
+
+    /**
+     *  文件大大小
+     */
+    private  double  uploadFileSize;
+
+    /**
+     *  文件类型
+     */
+
+    private  String  uploadFileType;
 }

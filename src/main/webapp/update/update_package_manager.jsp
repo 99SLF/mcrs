@@ -80,10 +80,26 @@
     //全局参数
     var req_data;
 
-    //功能名
+
+    //功能名，查询过滤字段和列筛选
     var funName = "list";
 
     var hiddenFields = [];
+
+
+    /*
+    * 搜素栏选择下拉框选值
+    */
+    // 获取终端软件类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#deviceSoType",
+        dictTypeId: "DEVICE_SOFTWARE_TYPE"
+    });
+    //状态默认
+    $("#deviceSoType").val("请选择");
+    //数据字典项加载
+    form.render();
+
 
     //监听搜索
     form.on("submit(LAY-app-devicelist-search)", function (data) {
@@ -246,13 +262,21 @@
             title: "终端软件类型",
             align: "center",
             minWidth: 120,
-            hide: isHidden("deviceSoType")
+            hide: isHidden("deviceSoType"),
+            templet:function(d) {
+
+                return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoType);
+            }
         }, {
             field: "uploadStrategy",
             title: "更新策略",
             align: "center",
             minWidth: 150,
-            hide: isHidden("uploadStrategy")
+            hide: isHidden("uploadStrategy"),
+            templet:function(d) {
+
+                return layui.admin.getDictText("UPDATESTRATEGY", d.uploadStrategy);
+            }
         }, {
             field: "fileName",
             title: "更新包",
@@ -294,7 +318,7 @@
             top.layer.open({
                 type: 2,
                 title: "下载更新包资源",
-                content: "<%= request.getContextPath() %>",
+                content: "<%= request.getContextPath() %>/upload/download",
                 area: ["1000px", "560px"],
                 resize: false,
                 btn: ["确定", "取消"],

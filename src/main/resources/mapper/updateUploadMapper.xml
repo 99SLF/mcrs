@@ -5,8 +5,9 @@
     <!--添加更新包信息-->
     <insert id="addUpdateUpload" parameterType="com.zimax.mcrs.update.pojo.UpdateUpload">
         insert into upd_upload
-        values (#{uploadId}, #{uploadNumber}, #{version}, #{deviceSoType}, #{uploadStrategy},
-                #{fileName}, #{uploader}, #{versionUploadTime}, #{remarks}, #{majorVersion}, #{downloadUrl})
+        values (#{uploadId}, #{uploadNumber}, #{version}, #{deviceSoType}, #{uploadStrategy},#{fileName}, #{uploader}, #{versionUploadTime}, #{remarks}, #{majorVersion}, #{downloadUrl},
+                #{uploadUuid},
+                #{OriginalFilename},#{uploadFileSize},#{uploadFileType})
     </insert>
 
     <!--    查询记录数-->
@@ -21,7 +22,7 @@
             </if>
         </where>
     </select>
-    <!--查询角色信息-->
+    <!--查询更新包数据-->
     <select id="queryUpdateUpload" parameterType="map"  resultType="com.zimax.mcrs.update.pojo.UpdateUpload">
         select * from upd_upload
         <where>
