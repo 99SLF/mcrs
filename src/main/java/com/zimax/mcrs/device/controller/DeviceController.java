@@ -30,7 +30,7 @@ public class DeviceController {
      * @param device 终端
      */
     @PostMapping("/device/registrationDevice")
-    public Result<?> registrationDevice(@RequestBody Device device) throws Exception {
+    public Result<?> registrationDevice(@RequestBody Device device) {
         deviceService.registrationDevice(device);
         return Result.success();
     }

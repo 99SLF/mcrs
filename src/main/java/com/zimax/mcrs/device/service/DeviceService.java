@@ -59,8 +59,9 @@ public class DeviceService {
      * 注册终端
      * @param device 终端
      */
-    public void registrationDevice(Device device) throws Exception {
-        device.setAPPId(encrypt(device.getAPPId()));
+    public void registrationDevice(Device device) {
+        //调用方法加密，不使用，使用数据库MD5加密
+//        device.setAPPId(encrypt(device.getAPPId()));
         deviceMapper.registrationDevice(device);
     }
 

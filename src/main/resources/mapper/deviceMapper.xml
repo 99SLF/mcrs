@@ -42,7 +42,7 @@
     <!--注册终端-->
     <insert id="registrationDevice" parameterType="com.zimax.mcrs.device.pojo.Device">
         insert into eqi_device
-        values (#{deviceId}, #{APPId}, #{version}, #{needUpdate},
+        values (#{deviceId}, MD5(#{APPId}), #{version}, #{needUpdate},
                 #{deviceSoftwareType}, #{deviceName},#{equipmentInt},
                 #{factoryName},
                 #{remarks}, #{creator},
