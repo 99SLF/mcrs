@@ -51,6 +51,7 @@ public class UserService {
 	}
 	// 加密
 	private static String encrypt(String password) throws Exception {
+		//加密类对象
 		 return DefaultUserManager.INSTANCE.encodeString(password);
 	}
 	/**

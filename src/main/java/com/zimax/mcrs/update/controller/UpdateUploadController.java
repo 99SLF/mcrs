@@ -1,7 +1,9 @@
 package com.zimax.mcrs.update.controller;
 
 import com.alibaba.excel.util.StringUtils;
+import com.zimax.components.coframe.framework.pojo.Application;
 import com.zimax.mcrs.config.Result;
+import com.zimax.mcrs.update.mapper.UpdateUploadMapper;
 import com.zimax.mcrs.update.pojo.UpdateUpload;
 import com.zimax.mcrs.update.service.UpdateUploadService;
 import org.apache.commons.compress.utils.IOUtils;
@@ -44,11 +46,64 @@ public class UpdateUploadController {
      *
      * @param updateUpload 更新包信息
      */
-    @PostMapping("/addUpdateUpload/add")
+    @PostMapping("/package/upload")
+    public Result<?> addUpdateUpload(MultipartFile file,@RequestBody UpdateUpload updateUpload, HttpServletRequest request) {
+        if (file != null) {
+            // 一、定义文件名
+            String fileName = "fileBag";
+            // 1.获取原始文件名
+            String uploadFileName = file.getOriginalFilename();
+            // 2.截取文件扩展名
+            String extendName = uploadFileName.substring(uploadFileName.lastIndexOf(".") + 1);
+            // 3.把文件加上随机数，防止文件重复
+            String uuid = UUID.randomUUID().toString().replace("-", "").toUpperCase();
+
+            //文件大小
+            double uploadFileSize = file.getSize();
+
+            //获取文件类型
+            String uploadFileType = file.getContentType();
+
+            // 二、使用request获取文件路径
+            ServletContext context = request.getServletContext();
+
+            String basePath = context.getRealPath("/uploads");
+            // 三、解决同一文件夹中文件过多问题
+            String datePath = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            // 四、判断路径是否存在
+            File isfile = new File(basePath + "/" + datePath);
+            if (!isfile.exists()) {
+                isfile.mkdirs();
+            }
+            // 五、使用 MulitpartFile 接口中方法，把上传的文件写到指定位置
+            try {
+                file.transferTo(new File(isfile, fileName));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            updateUpload.setUploadUuid(uuid);
+            updateUpload.setOriginalFilename(uploadFileName);
+            updateUpload.setUploadFileType(uploadFileType);
+            updateUpload.setUploadFileSize(uploadFileSize);
+            updateUpload.setDownloadUrl(fileName);
+            updateUploadService.addUpdateUpload(updateUpload);
+        } else {
+            return Result.error("1", "上传失败");
+
+    }
+        return Result.success();
+
+}
+
+
+    @PostMapping("/add")
     public Result<?> addUpdateUpload(@RequestBody UpdateUpload updateUpload) {
         updateUploadService.addUpdateUpload(updateUpload);
         return Result.success();
     }
+
+
 
 
     /**
@@ -98,46 +153,8 @@ public class UpdateUploadController {
 
     /*通过更新包编号删除数据库数据*/
 
-    /*更新包上传*/
-    @PostMapping("/upload")
-    public Result<?> upload(String picName, MultipartFile uploadFile, HttpServletRequest request) {
-        // 一、定义文件名
-        String fileName = "";
-        // 1.获取原始文件名
-        String uploadFileName = uploadFile.getOriginalFilename();
-        // 2.截取文件扩展名
-        String extendName = uploadFileName.substring(uploadFileName.lastIndexOf(".") + 1);
-        // 3.把文件加上随机数，防止文件重复
-        String uuid = UUID.randomUUID().toString().replace("-", "").toUpperCase();
-        // 4.判断是否输入了文件名
-        if (!StringUtils.isEmpty(picName)) {
-            fileName = uuid + "_" + picName + "." + extendName;
-        } else {
-            fileName = uuid + "_" + uploadFileName;
-        }
-        System.out.println(fileName);
-        // 二、使用request获取文件路径
-        ServletContext context = request.getServletContext();
-        String basePath = context.getRealPath("/uploads");
-        // 三、解决同一文件夹中文件过多问题
-        String datePath = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        // 四、判断路径是否存在
-        File file = new File(basePath + "/" + datePath);
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-        // 五、使用 MulitpartFile 接口中方法，把上传的文件写到指定位置
-        try {
-            uploadFile.transferTo(new File(file, fileName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-//       file.transferTo(fileName);
 
-        return Result.success();
-    }
-
-    @GetMapping("/application/download")
+    @GetMapping("/download")
     public  String download(String fileName, HttpServletRequest request, HttpServletResponse response) throws IOException {
         //获取下载服务器上文件的绝对路径
         String realPath = request.getSession().getServletContext().getRealPath("fileBag");

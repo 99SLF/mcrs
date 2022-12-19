@@ -113,4 +113,20 @@ public class Result<T> {
         result.setMsg("失败");
         return result;
     }
+
+    /**
+     * 假设有异常，将异常信息传递给构造方法
+     * @param
+     * @return
+     */
+    public Result(Throwable e){
+
+        this.msg = e.getMessage();
+
+    }
+
+    public Result(String code,T data){
+        this.code=code;
+        this.data=data;
+    }
 }

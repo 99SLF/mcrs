@@ -38,7 +38,8 @@
                     </div>
                     <label class="layui-form-label">回退时间：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="versionRollbackTime" placeholder="请输入版本更改时间" autocomplete="off" id="test"
+                        <input type="text" name="versionRollbackTime" placeholder="请输入版本更改时间"
+                               autocomplete="off" id="test"
                                class="layui-input">
                     </div>
                 </div>
@@ -54,11 +55,11 @@
         </div>
 
         <div class="layui-card-body">
-<%--            <div class="layui-toolbar" id="toolbar" hidden="true">--%>
-<%--                <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i--%>
-<%--                        class="layui-icon layui-icon-add-circle-fine"></i>回退--%>
-<%--                </button>--%>
-<%--            </div>--%>
+            <%--            <div class="layui-toolbar" id="toolbar" hidden="true">--%>
+            <%--                <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i--%>
+            <%--                        class="layui-icon layui-icon-add-circle-fine"></i>回退--%>
+            <%--                </button>--%>
+            <%--            </div>--%>
 
             <table id="LAY-app-deviceUpgrade-list" lay-filter="LAY-app-deviceUpgrade-list"></table>
 
@@ -201,7 +202,6 @@
     });
 
 
-
     // 查询过滤字段
     $.ajax({
         url: "<%=request.getContextPath() %>/cols/filter/query/" + funName,
@@ -209,7 +209,7 @@
         async: false,
         cache: false,
         contentType: "text/json",
-        success: function(result) {
+        success: function (result) {
             if (result) {
                 hiddenFields = result.data
             } else {
@@ -240,7 +240,7 @@
         limits: [10, 15, 20, 30],
         toolbar: "#toolbar",
         defaultToolbar: ["filter"],
-        colHideChange: function(col, checked) {
+        colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;
             $.ajax({
@@ -248,9 +248,9 @@
                 type: "GET",
                 cache: false,
                 contentType: "text/json",
-                success: function(result) {
+                success: function (result) {
                     if (result) {
-                    } else{
+                    } else {
                         layer.msg("列筛选失败");
                     }
                 }
@@ -263,6 +263,7 @@
                 count: res.total,
                 data: res.data
             };
+            debugger;
         },
         cols: [[{
             type: "checkbox"
@@ -293,28 +294,25 @@
             align: "center",
             minWidth: 150,
             hide: isHidden("equipmentName")
+        }, {
+            field: "uploadNumber",
+            title: "资源包单号",
+            align: "center",
+            minWidth: 120,
+            hide: isHidden("uploadNumber")
+        }, {
+            field: "upgradeVersion",
+            title: "升级版本号",
+            align: "center",
+            minWidth: 120,
+            hide: isHidden("upgradeVersion")
+        }, {
+            field: "upgradeStatus",
+            title: "升级状态",
+            align: "center",
+            minWidth: 150,
+            hide: isHidden("upgradeStatus")
         },
-
-            //     {
-            //     field: "enabledState",
-            //     title: "资源包单号",
-            //     align: "center",
-            //     minWidth: 120,
-            //     hide: isHidden("enabledState")
-            // },
-            {
-                field: "upgradeVersion",
-                title: "升级版本号",
-                align: "center",
-                minWidth: 120,
-                hide: isHidden("upgradeVersion")
-            }, {
-                field: "upgradeStatus",
-                title: "升级状态",
-                align: "center",
-                minWidth: 150,
-                hide: isHidden("upgradeStatus")
-            },
             //     {
             //     field: "mesContinueIp",
             //     title: "接入点名称",

@@ -66,7 +66,8 @@
         var field = data.field;
         var dataJson = {
             "equipmentInt": field.equipmentInt,
-            "equipmentId": field.equipmentInt,
+            "equipmentId": field.equipmentId,
+            "equipmentProperties": field.equipmentProperties,
             "isEquipment": "1"
         };
         table.reload("LAY-app-device-list", {

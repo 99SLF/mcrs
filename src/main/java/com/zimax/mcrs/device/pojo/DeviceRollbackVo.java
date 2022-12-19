@@ -26,9 +26,9 @@ public class DeviceRollbackVo {
     private String equipmentName;
 
     /**
-     * 更新包
+     * 更新包单号
      */
-//    private int version;
+    private String uploadNumber;
 
     /**
      * 终端名称

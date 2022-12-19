@@ -123,6 +123,46 @@
         <property name="mapperInterface" value="com.zimax.mcrs.update.mapper.UpdateUploadMapper"/>
     </bean>
 
+    <bean id="EquipmentMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.EquipmentMapper"/>
+    </bean>
+
+    <bean id="DeviceMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.DeviceMapper"/>
+    </bean>
+
+    <bean id="DeviceUpdateMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.DeviceUpdateMapper"/>
+    </bean>
+
+    <bean id="StarSoftwareMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.StarSoftwareMapper"/>
+    </bean>
+
+    <bean id="DeviceUpgradeMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.DeviceUpgradeMapper"/>
+    </bean>
+
+    <bean id="DeviceRollbackMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.DeviceRollbackMapper"/>
+    </bean>
+
+    <bean id="AlarmEventMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.warn.mapper.AlarmEventMapper"/>
+    </bean>
+
+    <bean id="AlarmRuleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.warn.mapper.AlarmRuleMapper"/>
+    </bean>
+
     <bean id="GradeAuthBean" class="com.zimax.components.coframe.rights.gradeauth.GradeAuthService"></bean>
 
     <bean id="PartyAuthService" class="com.zimax.components.coframe.auth.service.PartyAuthService"></bean>
@@ -175,45 +215,5 @@
     <bean id="DefaultPartyAuthManagerBean" class="com.zimax.components.coframe.rights.partyauth.DefaultPartyAuthManager">
         <property name="partyAuthMapper" ref="PartyAuthMapper"/>
     </bean>
-
-    <bean id="EquipmentMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
-        <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.EquipmentMapper"/>
-    </bean>
-
-    <bean id="DeviceMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
-        <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.DeviceMapper"/>
-    </bean>
-
-    <bean id="DeviceUpdateMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
-        <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.DeviceUpdateMapper"/>
-    </bean>
-
-    <bean id="StarSoftwareMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
-        <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.StarSoftwareMapper"/>
-    </bean>
-
-    <bean id="DeviceUpgradeMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
-        <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.DeviceUpgradeMapper"/>
-    </bean>
-    <bean id="DeviceRollbackMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
-        <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.DeviceRollbackMapper"/>
-    </bean>
-
-    <bean id="AlarmEventMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
-        <property name="mapperInterface" value="com.zimax.mcrs.warn.mapper.AlarmEventMapper"/>
-    </bean>
-
-    <bean id="AlarmRuleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
-        <property name="mapperInterface" value="com.zimax.mcrs.warn.mapper.AlarmRuleMapper"/>
-    </bean>
-
 
 </beans>
