@@ -27,7 +27,6 @@ public class Equipment {
     @TableId(type = IdType.AUTO)
     private int equipmentInt;
 
-
     /**
      * 设备资源号
      */

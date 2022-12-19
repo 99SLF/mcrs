@@ -13,6 +13,9 @@
             <if test="equipmentName !=null and equipmentName !=''">
                 and equipment_name like '%${equipmentName}%'
             </if>
+            <if test="equipmentProperties !=null and equipmentProperties !=''">
+                and equipment_properties like '%${equipmentProperties}%'
+            </if>
         </where>
     </select>
 
@@ -25,6 +28,9 @@
             </if>
             <if test="equipmentName !=null and equipmentName !=''">
                 and equipment_name like '%${equipmentName}%'
+            </if>
+            <if test="equipmentProperties !=null and equipmentProperties !=''">
+                and equipment_properties like '%${equipmentProperties}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -60,11 +66,16 @@
             equipment_continue_port=#{equipmentContinuePort},
             mes_continue_ip=#{mesContinueIp},
             enabled_state=#{enabledState},
-            remarks=#{remarks},
-            creator=#{creator},
-            create_time=#{createTime}
+            remarks=#{remarks}
         where equipment_int=#{equipmentInt}
     </update>
 
+    <!--  批量删除-->
+    <delete id="deleteEquipments" parameterType="java.util.List">
+        delete from eqi_equipment where equipment_int in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
 
 </mapper>

@@ -43,6 +43,22 @@ public class FunctionController {
         functionService.updateFunction(function);
         return Result.success();
     }
+    /**
+     * 更新功能
+     *
+     * @param funcCode 功能代码
+     * @param funcName 功能名字
+     * @param limit       记录数
+     * @param page        页码
+     * @param field       排序字段
+     * @param order       排序方式
+     * @return 功能列表
+     */
+    @GetMapping("/function/queryByLike")
+    public Result<?> queryBylike(String page, String limit, String funcCode, String funcName, String isMenu, String order, String field) {
+        List functions = functionService.queryAllFunctionsBylike(page, limit, funcCode, funcName, isMenu,order, field);
+        return Result.success(functions, functionService.count(null,isMenu));
+    }
 
     /**
      * 查询功能

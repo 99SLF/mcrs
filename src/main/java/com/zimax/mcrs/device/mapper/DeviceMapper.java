@@ -1,6 +1,7 @@
 package com.zimax.mcrs.device.mapper;
 
 import com.zimax.mcrs.device.pojo.Device;
+import com.zimax.mcrs.device.pojo.DeviceVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,7 +22,7 @@ public interface DeviceMapper {
      *
      * @return
      */
-    List<Device> queryAll(Map map);
+    List<DeviceVo> queryAll(Map map);
 
     /**
      * 注册终端
@@ -61,5 +62,11 @@ public interface DeviceMapper {
      * 返回数据给监控
      */
     List<Device> toMonitor(Map map);
+
+    /**
+     * 批量删除
+     * @param deviceId
+     */
+    void deleteDevices(List<Integer> deviceId);
 
 }

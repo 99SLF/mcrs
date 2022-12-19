@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-<title>添加应用</title>
+<title>添加功能资源</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
 </head>
@@ -33,9 +33,6 @@
 		<label class="layui-form-label layui-form-project">资源路径：</label>
 			<div class="layui-input-block layui-textarea-block">
 				<input id="resPath" type="text" class="layui-input"  name="resPath"  autocomplete="off">
-				<button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="btn" style="position:absolute;top:0px;right:0px;height:37px">
-					<i class="layui-icon layui-icon-more" id="onButtonEdit"></i>
-				</button>
 			</div>
 	</div>
 	<div class="layui-row layui-form-item">
@@ -123,7 +120,7 @@
 		dictTypeId: "COF_FUNCTYPE"
 	});
 	
-	$("#resType").val("page");  
+	//$("#resType").val("page");
 	form.render();
 </script>
 </body>

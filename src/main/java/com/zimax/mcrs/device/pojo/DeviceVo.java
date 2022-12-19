@@ -1,24 +1,20 @@
 package com.zimax.mcrs.device.pojo;
 
-import com.baomidou.mybatisplus.annotation.*;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.util.Date;
 
 /**
- * 终端
+ * 终端映射层
  * @author 林俊杰
- * @date 2022/11/30
+ * @date 2022/12/16
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("eqi_device")
-public class Device {
+public class DeviceVo {
 
     /**
      * 终端主键
@@ -57,10 +53,10 @@ public class Device {
      */
     private int equipmentInt;
 
-//    /**
-//     * 接入点名称
-//     */
-//    private String assessName;
+    /**
+     * 接入点名称
+     */
+    private String equipmentName;
 
     /**
      * 工厂名称
@@ -68,36 +64,36 @@ public class Device {
     private String factoryName;
 
 
-//    /**
-//     * 接入点种类
-//     */
-//    private String assessType;
+    /**
+     * 接入点种类
+     */
+    private String assessType;
 
-//    /**
-//     * 接入点Ip
-//     */
-//    private String assessIp;
+    /**
+     * 接入点Ip
+     */
+    private String mesContinueIp;
 
-//    /**
-//     * 接入点资源号
-//     */
-//    private String equipmentId;
+    /**
+     * 接入点资源号
+     */
+    private String equipmentId;
 
-//    /**
-//     * 接入点属性
-//     */
-//    private String assessAttributes;
+    /**
+     * 接入点属性
+     */
+    private String equipmentProperties;
 
 
-//    /**
-//     * 接入点安装位置
-//     */
-//    private String assessInstallLocation;
+    /**
+     * 接入点安装位置
+     */
+    private String equipmentInstallLocation;
 
-//    /**
-//     * 接入方式
-//     */
-//    private String accessMethod;
+    /**
+     * 接入方式
+     */
+    private String equipmentContinuePort;
 
     /**
      * 备注
@@ -124,13 +120,5 @@ public class Device {
      */
     private String enable;
 
-    /**
-     * 修改角色
-     */
-    private String updater;
 
-    /**
-     * 修改时间
-     */
-    private String updateTime;
 }

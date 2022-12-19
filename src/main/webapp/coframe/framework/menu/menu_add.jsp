@@ -8,6 +8,15 @@
 <title>添加菜单</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
+<style>
+	.layui-form-label{
+		width: 120px;
+	}
+	.layui-input-block {
+		margin-left: 130px;
+		min-height: 36px
+	}
+</style>
 </head>
 <body>
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0;">
@@ -56,7 +65,7 @@
 			<label class="layui-form-label">功能资源：</label>
 			<div class="layui-input-block"  id="input-block">
 				<input id="funcCode" name="funcCode" type="hidden"/>
-				<input type="text" class="layui-input" style="width:85%" name="funcName" id="funcName" lay-verify="" autocomplete="off" placeholder="">
+				<input type="text" class="layui-input" style="width:85%" name="funcName" id="funcName" lay-verify="" autocomplete="off" placeholder="" readonly>
 				<button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="onButtonEdit" style="position:absolute;top:0px;right:0px;height:37px"><i class="layui-icon layui-icon-more"></i></button>
 			</div>
 		</div>

@@ -51,7 +51,7 @@
 	var  num1 = $("#appId").val(); 
 	var num;
 	var flag = true;
-	
+	var funName = "function_list";
 	//状态默认
 	$("#appId").val("请选择");
 	form.render();
@@ -126,7 +126,16 @@
 		var type = $(this).data("type");
 		active[type] ? active[type].call(this) : "";
 	});
-	
+
+	// 判断是否隐藏函数
+	function isHidden(field) {
+		for (var i = 0; i < hiddenFields.length; i++) {
+			if (hiddenFields[i].field == field ) {
+				return true;
+			}
+		}
+		return false;
+	}
 	function getFullSize() {
 		var header = $(".layui-card-header");
 		var cardbody = $(".layui-card-body");
@@ -155,7 +164,21 @@
     		}
   		});
 	});
-	
+	// 查询过滤字段
+	$.ajax({
+		url: "<%=request.getContextPath() %>/cols/filter/query/" + funName,
+		type: "GET",
+		async: false,
+		cache: false,
+		contentType: "text/json",
+		success: function(result) {
+			if (result) {
+				hiddenFields = result.data
+			} else {
+				layer.msg("查询失败");
+			}
+		}
+	});
 	//更改下拉框事件
 	function updata_select(flag) {
 		$("#appId").empty();
@@ -198,6 +221,22 @@
 				toolbar: "#toolbar",
 				defaultToolbar: ["filter"],
 				limits: [10, 15, 20, 30],
+				colHideChange: function(col, checked) {
+					var field = col.field;
+					var hidden = col.hide;
+					$.ajax({
+						url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
+						type: "GET",
+						cache: false,
+						contentType: "text/json",
+						success: function(result) {
+							if (result) {
+							} else{
+								layer.msg("列筛选失败");
+							}
+						}
+					});
+				},
 				parseData: function(res) {
 					return {
 						code: res.code,
@@ -215,6 +254,7 @@
 					field: "funcName",
 					title: "功能名称",
 					align: "left",
+					hide: isHidden("funcName"),
 					minWidth: 150
 				}, { 
 				//field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
@@ -222,6 +262,7 @@
 					title: "功能类型",
 					align: "center",
 					minWidth: 100,
+					hide: isHidden("funcType"),
 					templet: function(d){
 						if (d.funcType == "flow") {
 							return "页面流";
@@ -242,6 +283,7 @@
 					title: "是否定义为菜单",
 					align: "center",
 					minWidth: 150,
+					hide: isHidden("isMenu"),
 					templet: function(d){
 						if (d.isMenu == 1) {
 							return "是";
@@ -254,6 +296,7 @@
 					title: "所属功能组",
 					align: "center",
 					minWidth: 150,
+					hide: isHidden("funcGroupName"),
 					templet: function(d){
 						return funcGroupName;
 					}
@@ -261,6 +304,7 @@
 					field: "displayOrder",
 					title: "显示顺序", 
 					align: "center",
+					hide: isHidden("displayOrder"),
 					minWidth: 150
 				}, {			
 					title: "操作",

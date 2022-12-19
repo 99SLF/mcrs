@@ -18,30 +18,26 @@
 <body>
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0;">
 	<div class="layui-form-item layui-row layui-col-space10">
-		<%--	需要隐藏主键	--%>
-		<input type="hidden" name="equipmentInt" value="default">
-		<div class="layui-col-sm4">
+<%--		需要隐藏主键--%>
+	<input type="hidden" name="equipmentInt" value="default">
+		<div class="layui-col-sm6">
 			<label class="layui-form-label">设备资源号:<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input id="equipmentId" type="text" name="equipmentId" lay-verify="required|equipmentId" placeholder="请输入设备资源号(必填)" autocomplete="off" class="layui-input">
+				<input id="equipmentId" type="text" name="equipmentId" lay-verify="required|equipmentId"
+					   placeholder="请输入设备资源号(必填)" autocomplete="off" class="layui-input" readonly>
 			</div>
 		</div>
-		<div class="layui-col-sm4">
+		<div class="layui-col-sm6">
 			<label class="layui-form-label">设备名称:<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input id="equipmentName" type="text" name="equipmentName" lay-verify="required|equipmentName" placeholder="请输入设备名称(必填)" autocomplete="off" class="layui-input">
-			</div>
-		</div>
-		<div class="layui-col-sm4">
-			<label class="layui-form-label"  style="width: 100px">设备安装位置:</label>
-			<div class="layui-input-block">
-				<input id="equipmentInstallLocation" type="text" name="equipmentInstallLocation" lay-verify="required|equipmentInstallLocation" placeholder="请输入设备安装位置" autocomplete="off" class="layui-input"style="width: 80%">
+				<input id="equipmentName" type="text" name="equipmentName" lay-verify="required|equipmentName"
+					   placeholder="请输入设备名称(必填)" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 	</div>
 
 	<div class="layui-form-item layui-row layui-col-space10">
-		<div class="layui-col-sm4">
+		<div class="layui-col-sm6">
 			<label class="layui-form-label">设备属性:<span style="color:red">*</span></label>
 			<div class="layui-input-block">
 				<select name="equipmentProperties" id="equipmentProperties" lay-filter="" type="select">
@@ -50,48 +46,60 @@
 			</div>
 		</div>
 
-		<div class="layui-col-sm4">
-			<label class="layui-form-label" style="width: 100px">设备连接端口:<span style="color:red">*</span></label>
+		<div class="layui-col-sm6">
+			<label class="layui-form-label">设备连接端口:<span style="color:red">*</span></label>
 			<div class="layui-input-block">
-				<input id="equipmentContinuePort" type="text" name="equipmentContinuePort" lay-verify="required|equipmentContinuePort" placeholder="请输入设备连接端口" autocomplete="off" class="layui-input"style="width: 85%">
-			</div>
-		</div>
-
-		<div class="layui-col-sm4">
-			<label class="layui-form-label" style="width: 100px">MES连接IP:<span style="color:red">*</span></label>
-			<div class="layui-input-block">
-				<input id="mesContinueIp" type="text" name="mesContinueIp" lay-verify="required|mesContinueIp" placeholder="请输入MES连接IP" autocomplete="off" class="layui-input" style="width: 80%">
+				<input id="equipmentContinuePort" type="text" name="equipmentContinuePort"
+					   lay-verify="required|equipmentContinuePort"
+					   placeholder="请输入设备连接端口" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 	</div>
 
 	<div class="layui-form-item layui-row layui-col-space10">
-		<div class="layui-form-item">
-			<label class="layui-form-label">是否启用</label>
+		<div class="layui-col-sm6">
+			<label class="layui-form-label">设备安装位置:</label>
 			<div class="layui-input-block">
-				<input type="checkbox"id="enabledState" name="enabledState" lay-skin="switch" lay-text="是|否">
+				<input id="equipmentInstallLocation" type="text" name="equipmentInstallLocation"
+					   lay-verify="required|equipmentInstallLocation"
+					   placeholder="请输入设备安装位置" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+
+
+		<div class="layui-col-sm6">
+			<label class="layui-form-label">MES连接IP:<span style="color:red">*</span></label>
+			<div class="layui-input-block">
+				<input id="mesContinueIp" type="text" name="mesContinueIp" lay-verify="required|mesContinueIp"
+					   placeholder="请输入MES连接IP" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 	</div>
+
+	<div class="layui-form-item layui-row layui-col-space10">
+		<div class="layui-col-sm6">
+			<label class="layui-form-label">是否启用:<span style="color:red">*</span></label>
+			<div class="layui-input-block">
+				<select name="enabledState" id="enabledState" lay-filter="required" type="select">
+					<option value="on">是</option>
+					<option value="off">否</option>
+				</select>
+			</div>
+		</div>
+
+<%--		<div class="layui-col-sm6">--%>
+<%--			<label class="layui-form-label">接入点名称:<span style="color:red">*</span></label>--%>
+<%--			<div class="layui-input-block">--%>
+<%--				<input id="assessType" type="text" name="assessType" lay-verify=""--%>
+<%--					   placeholder="请输入接入点名称" autocomplete="off" class="layui-input">--%>
+<%--			</div>--%>
+<%--		</div>--%>
+	</div>
+
 	<div class="layui-col-sm12">
 		<label class="layui-form-label" >备注:</label>
 		<div class="layui-input-block">
 			<textarea cols="50" rows="10" style="width:100%;height:100px" name="remarks" id="remarks" autocomplete="off" class="layui-input" lay-verify="remarks"></textarea>
-		</div>
-	</div>
-
-	<div class="layui-row layui-col-space10 layui-form-item">
-		<div class="layui-col-sm6">
-			<label class="layui-form-label" >创建人：</label>
-			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="creator" readonly />
-			</div>
-		</div>
-		<div class="layui-col-sm6">
-			<label class="layui-form-label" >创建时间：</label>
-			<div class="layui-input-block">
-				<input type="text" class="layui-input" name="createTime"  readonly />
-			</div>
 		</div>
 	</div>
 
@@ -130,10 +138,17 @@
 			"mesContinueIp": data.mesContinueIp,
 			"enabledState": data.enabledState,
 			"remarks": data.remarks,
-			"creator": data.creator,
-			"createTime": data.createTime,
 		});
 	}
+
+	//获取设备属性的下拉值
+	layui.admin.renderDictSelect({
+		elem: "#equipmentProperties",
+		dictTypeId: "EQUIPMENT_PROPERTY",
+	});
+	//设置设备属性的默认值
+	$("#equipmentProperties").val("101");
+	form.render();
 
 	//判断字符
 	form.verify({

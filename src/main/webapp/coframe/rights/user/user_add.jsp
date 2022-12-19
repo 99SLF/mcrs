@@ -12,6 +12,15 @@
           content="width=equipment-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>添加用户</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
+    <style>
+        .layui-form-label{
+            width: 120px;
+        }
+        .layui-input-block {
+            margin-left: 150px;
+            min-height: 36px
+        }
+    </style>
 </head>
 <body>
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list"
@@ -72,11 +81,10 @@
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label">用户状态：</label>
+            <label class="layui-form-label">用户状态：<span style="color:red">*</span></label>
             <div class="layui-input-block">
                 <%--下拉选择框--%>
-                <select name="status" id="status" lay-filter="status" type="select">
-                    <option value=""></option>
+                <select name="status" id="status" lay-filter="status" lay-verify="required">
                 </select>
             </div>
         </div>

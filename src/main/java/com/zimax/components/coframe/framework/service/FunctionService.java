@@ -330,4 +330,32 @@ public class FunctionService implements IFunctionService {
         return function;
     }
 
+    /**
+     * 查询所有功能信息
+     *
+     * @param page  页码
+     * @param limit 记录数
+     * @param order 排序方式
+     * @param field 排序字段
+     * @return
+     */
+    public List<Function> queryAllFunctionsBylike(String page, String limit, String funcCode, String funcName, String isMenu, String order, String field) {
+        ChangeString changeString = new ChangeString();
+        Map<String, Object> map = new HashMap<>();
+        if (order == null) {
+            map.put("order", "asc");
+            map.put("field", "display_order");
+        } else {
+            map.put("order", order);
+            map.put("field", changeString.camelUnderline(field));
+        }
+        if (limit != null) {
+            map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
+            map.put("limit", Integer.parseInt(limit));
+        }
+        map.put("funcCode", funcCode);
+        map.put("funcName", funcName);
+        map.put("isMenu", isMenu);
+        return functionMapper.queryAllFunctionsBylike(map);
+    }
 }

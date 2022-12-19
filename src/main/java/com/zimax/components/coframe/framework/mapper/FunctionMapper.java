@@ -31,8 +31,12 @@ public interface FunctionMapper {
      */
     List<Function> queryAllFunctions();
 
+    List<Function> queryAllFunctionsBylike(Map map);
+
     List<Function> queryFunctions(Map map);
+
     Function[] queryFunctionsByGroupId(int funcGroupId);
+
     Function[] getFunctionsByFuncGroupId(int funcGroupId);
 
     void addFunction(Function function);
@@ -43,5 +47,5 @@ public interface FunctionMapper {
 
     void updateFunction(Function function);
 
-    int count(@Param("funcGroupId") String funcGroupId,@Param("isMenu") String isMenu);
+    int count(@Param("funcGroupId") String funcGroupId, @Param("isMenu") String isMenu);
 }
