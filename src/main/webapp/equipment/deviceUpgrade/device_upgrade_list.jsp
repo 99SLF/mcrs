@@ -185,7 +185,7 @@
         async: false,
         cache: false,
         contentType: "text/json",
-        success: function(result) {
+        success: function (result) {
             if (result) {
                 hiddenFields = result.data
             } else {
@@ -216,7 +216,7 @@
         limits: [10, 15, 20, 30],
         toolbar: "#toolbar",
         defaultToolbar: ["filter"],
-        colHideChange: function(col, checked) {
+        colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;
             $.ajax({
@@ -224,9 +224,9 @@
                 type: "GET",
                 cache: false,
                 contentType: "text/json",
-                success: function(result) {
+                success: function (result) {
                     if (result) {
-                    } else{
+                    } else {
                         layer.msg("列筛选失败");
                     }
                 }
@@ -269,28 +269,25 @@
             align: "center",
             minWidth: 150,
             hide: isHidden("equipmentName")
+        }, {
+            field: "uploadNumber",
+            title: "资源包单号",
+            align: "center",
+            minWidth: 120,
+            hide: isHidden("uploadNumber")
+        }, {
+            field: "upgradeVersion",
+            title: "升级版本号",
+            align: "center",
+            minWidth: 120,
+            hide: isHidden("upgradeVersion")
+        }, {
+            field: "upgradeStatus",
+            title: "升级状态",
+            align: "center",
+            minWidth: 150,
+            hide: isHidden("upgradeStatus")
         },
-
-            //     {
-            //     field: "enabledState",
-            //     title: "资源包单号",
-            //     align: "center",
-            //     minWidth: 120,
-            //     hide: isHidden("enabledState")
-            // },
-            {
-                field: "upgradeVersion",
-                title: "升级版本号",
-                align: "center",
-                minWidth: 120,
-                hide: isHidden("upgradeVersion")
-            }, {
-                field: "upgradeStatus",
-                title: "升级状态",
-                align: "center",
-                minWidth: 150,
-                hide: isHidden("upgradeStatus")
-            },
             //     {
             //     field: "mesContinueIp",
             //     title: "接入点名称",
