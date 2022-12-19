@@ -47,11 +47,11 @@
                 <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i
                         class="layui-icon layui-icon-add-circle-fine"></i>终端注册
                 </button>
-                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="upgrade"><i
-                        class="layui-icon layui-icon-upgrade"></i>升级
-                </button>
                 <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i
                         class="layui-icon layui-icon-delete"></i>删除
+                </button>
+                <button class="layui-btn layui-btn-normal layui-btn-sm " lay-event="upgrade">
+                    <i class="layui-icon layui-icon-upload-circle"></i>升级
                 </button>
             </div>
 
@@ -62,7 +62,7 @@
                         class="layui-icon layui-icon-edit"></i>编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
                         class="layui-icon layui-icon-delete"></i>删除</a>
-                <a class="layui-btn layui-btn-port layui-btn-xs" lay-event="del"><i
+                <a class="layui-btn layui-btn-port layui-btn-xs" lay-event="point"><i
                         class="layui-icon layui-icon-port"></i>点位</a>
             </script>
         </div>
@@ -134,7 +134,7 @@
         },
 
         //批量删除
-        batchdel: function() {
+        batchdel: function () {
             var checkStatus = table.checkStatus("LAY-app-device-list-reload");
             var data = checkStatus.data;
             if (data.length == 0) {
@@ -142,38 +142,38 @@
             }
             if (data.length > 0) {
                 var deviceIds = new Array();
-                for (var i=0; i<data.length;i++) {
+                for (var i = 0; i < data.length; i++) {
                     deviceIds[i] = data[i].deviceId;
                 }
                 layer.confirm("确定删除所选终端信息？", {
                     icon: 3,
                     title: "系统提示"
-                }, function(index) {
+                }, function (index) {
                     $.ajax({
                         url: "<%= request.getContextPath() %>/equipment/device/batchDelete",
                         type: "DELETE",
                         data: JSON.stringify(deviceIds),
                         cache: false,
                         contentType: "text/json",
-                        success: function(result) {
-                                if (result.exception) {
-                                    layer.alert(result.exception.message, {
-                                        icon: 2,
-                                        title: "系统提示"
-                                    });
-                                } else if (result) {
-                                    layer.msg("删除成功", {
-                                        icon: 1,
-                                        time: 2000
-                                    }, function() {
-                                        table.reload("LAY-app-device-list-reload");
-                                    });
-                                } else {
-                                    layer.msg("删除失败");
-                                }
+                        success: function (result) {
+                            if (result.exception) {
+                                layer.alert(result.exception.message, {
+                                    icon: 2,
+                                    title: "系统提示"
+                                });
+                            } else if (result) {
+                                layer.msg("删除成功", {
+                                    icon: 1,
+                                    time: 2000
+                                }, function () {
+                                    table.reload("LAY-app-device-list-reload");
+                                });
+                            } else {
+                                layer.msg("删除失败");
+                            }
 
                         },
-                        error: function(jqXHR, textStatus, errorThrown) {
+                        error: function (jqXHR, textStatus, errorThrown) {
                             layer.msg(jqXHR.responseText, {
                                 time: 2000,
                                 icon: 5
@@ -182,7 +182,58 @@
                     });
                 });
             }
-        }
+        },
+        //升级跳转
+        upgrade: function () {
+            var checkStatus = table.checkStatus("LAY-app-device-list-reload");
+            var data = checkStatus.data;
+            if (data.length == 0) {
+                layer.msg("请至少选中一条记录！");
+            }
+            if (data.length > 0) {
+                var deviceIds = new Array();
+                for (var i = 0; i < data.length; i++) {
+                    deviceIds[i] = data[i].deviceId;
+                }
+                layer.confirm("确定升级所选终端？", {
+                    icon: 3,
+                    title: "系统提示"
+                }, function (index) {
+                    top.layui.index.openTabsPage( "<%=request.getContextPath() %>/update/update_package_manager.jsp");
+                    <%--$.ajax({--%>
+                    <%--    url: "<%= request.getContextPath() %>/equipment/device/batchDelete",--%>
+                    <%--    type: "DELETE",--%>
+                    <%--    data: JSON.stringify(deviceIds),--%>
+                    <%--    cache: false,--%>
+                    <%--    contentType: "text/json",--%>
+                    <%--    success: function (result) {--%>
+                    <%--        if (result.exception) {--%>
+                    <%--            layer.alert(result.exception.message, {--%>
+                    <%--                icon: 2,--%>
+                    <%--                title: "系统提示"--%>
+                    <%--            });--%>
+                    <%--        } else if (result) {--%>
+                    <%--            layer.msg("删除成功", {--%>
+                    <%--                icon: 1,--%>
+                    <%--                time: 2000--%>
+                    <%--            }, function () {--%>
+                    <%--                table.reload("LAY-app-device-list-reload");--%>
+                    <%--            });--%>
+                    <%--        } else {--%>
+                    <%--            layer.msg("删除失败");--%>
+                    <%--        }--%>
+
+                    <%--    },--%>
+                    <%--    error: function (jqXHR, textStatus, errorThrown) {--%>
+                    <%--        layer.msg(jqXHR.responseText, {--%>
+                    <%--            time: 2000,--%>
+                    <%--            icon: 5--%>
+                    <%--        });--%>
+                    <%--    }--%>
+                    <%--});--%>
+                });
+            }
+        },
     };
 
     table.on('sort(LAY-app-device-list)', function (obj) {
