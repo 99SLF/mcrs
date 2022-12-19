@@ -15,13 +15,13 @@
 	 <input id="funcGroupId"  name="funcGroupId" type="hidden"/>
 	 <div class="layui-row layui-col-space10 layui-form-item">
 		<div class="layui-col-sm6">
-			<label class="layui-form-label " >功能名称：<span style="color:red">*</span></label>
+			<label class="layui-form-label " ><span style="color:red">*</span>功能名称：</label>
 			<div class="layui-input-block">
 				<input type="text" class="layui-input" name="funcName" id="funcName"  lay-verify="required" autocomplete="off" placeholder="">
 			</div>
 		</div>
 		<div class="layui-col-sm6">
-			<label class="layui-form-label " >功能编码：<span style="color:red">*</span></label>
+			<label class="layui-form-label " ><span style="color:red">*</span>功能编码：</label>
 			<div class="layui-input-block">
 				<input type="text" class="layui-input" name="funcCode" id="appCode" lay-verify="required" autocomplete="off" placeholder="" disabled="disabled" >
 			</div>
@@ -52,7 +52,7 @@
 			</div>
 		</div>
 		<div class="layui-col-sm6">
-			<label class="layui-form-label">显示顺序：<span style="color:red">*</span></label>
+			<label class="layui-form-label"><span style="color:red">*</span>显示顺序：</label>
 			<div class="layui-input-block">
 				<input type="text" name="displayOrder" id="displayOrder" lay-verify="required"  class="layui-input field-title" autocomplete="off"   class="layui-input">
 			</div>

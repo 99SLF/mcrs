@@ -17,7 +17,7 @@
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0;">
 	<div class="layui-form-item layui-row layui-col-space10">
 		<div class="layui-col-sm6">
-			<label class="layui-form-label">角色代码：<span style="color:red">*</span></label>
+			<label class="layui-form-label"><span style="color:red">*</span>角色代码：</label>
 			<div class="layui-input-block">
 				<input id="roleCode" type="text" name="capRole/roleCode" lay-verify="required|checkRoleCode" placeholder="角色代码(必填)" autocomplete="off" class="layui-input">
 			</div>
@@ -25,7 +25,7 @@
 			<input type="hidden" name="capRole/tenantId" value="default">
 		</div>
 		<div class="layui-col-sm6">
-			<label class="layui-form-label">角色名称：<span style="color:red">*</span></label>
+			<label class="layui-form-label"><span style="color:red">*</span>角色名称：</label>
 			<div class="layui-input-block">
 				<input id="roleName" type="text" name="capRole/roleName" lay-verify="required" placeholder="角色名称(必填)" autocomplete="off" class="layui-input">
 			</div>
