@@ -3,6 +3,7 @@
 <%@ page import="com.zimax.cap.party.IUserObject" %>
 <%@ page import="com.zimax.cap.datacontext.DataContextManager" %>
 <%@ page import="javax.management.relation.InvalidRoleInfoException" %>
+<%@ page import="com.zimax.mcrs.update.pojo.UpdateUpload" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" session="false" %>
 <!DOCTYPE html>
@@ -25,15 +26,16 @@
         <div class="layui-col-md4">
             <label class="layui-form-label"><span style="color:red">*</span>更新包单号:</label>
             <div class="layui-input-block">
-                <input id="uploadNumber" type="text" name="uploadNumber" lay-verify="required|uploadNumber"
-                       placeholder="" autocomplete="off" class="layui-input">
+                <%--lay-verify="uploadNumber|required 自定义校验要有顺序--%>
+                <input id="uploadNumber" type="text" name="uploadNumber" lay-verify="uploadNumber|required"
+                       placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
 
         <div class="layui-col-md4">
             <label class="layui-form-label"><span style="color:red">*</span>是否为主要版本</label>
             <div class="layui-input-block">
-                <select name="majorVersion" id="majorVersion" lay-filter="majorVersion" type="select">
+                <select name="majorVersion" id="majorVersion" lay-filter="majorVersion" lay-verify="majorVersion|required type="select">
                     <option value=""></option>
                 </select>
             </div>
@@ -42,8 +44,9 @@
         <div class="layui-col-md4">
             <label class="layui-form-label">版本号：</label>
             <div class="layui-input-block">
-                <input id="version" type="text" name="version" lay-verify="required|version" placeholder=""
-                       autocomplete="off" class="layui-input">
+                <%--从上往下加载顺序--%>
+                <input id="version" type="text" name="version" lay-verify="version|required" placeholder=""
+                       autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
 
@@ -54,7 +57,7 @@
             <label class="layui-form-label"><span style="color:red">*</span>终端软件类型:</label>
             <div class="layui-input-block">
                 <%--下拉选择框--%>
-                <select name="deviceSoType" id="deviceSoType" lay-filter="deviceSoType" type="select">
+                <select name="deviceSoType" id="deviceSoType" lay-filter="deviceSoType"  lay-verify="deviceSoType|required" majorVersiontype="select">
                     <option value=""></option>
                 </select>
             </div>
@@ -64,7 +67,7 @@
             <label class="layui-form-label"><span style="color:red">*</span>更新策略:</label>
             <div class="layui-input-block">
                 <%--下拉选择框--%>
-                <select name="uploadStrategy" id="uploadStrategy" lay-filter="uploadStrategy" type="select">
+                <select name="uploadStrategy" id="uploadStrategy" lay-filter="uploadStrategy" lay-verify="uploadStrategy|required" type="select">
                     <option value=""></option>
                 </select>
             </div>
@@ -73,12 +76,11 @@
             <div class="layui-form-item layui-row layui-col-space10">
                 <div class="layui-col-sm4">
                     <label class="layui-form-label"><span style="color:red">*</span>更新包</label>
-                    <div class="layui-input-block layui-upload">
+                    <div class="layui-input-block layui-upload" style="width: 400px">
                         <button type="button" name="url" class="layui-btn layui-btn-sm"
                                 id="test1"><i class="layui-icon">&#xe67c;</i>附件上传
                         </button>
-                        <img class="layui-upload-img" id="photo" width="100" height="100">
-                        <p id="demoText"></p>
+                        <span id="demoListView"></span>
                     </div>
                 </div>
             </div>
@@ -133,10 +135,51 @@
                     var laydate = layui.laydate;
                     var form = layui.form;
                     var $ = layui.jquery;
+                    //文件上传依赖组件
                     var upload = layui.upload;
                     var submit = false;
                     var isExist = false;
                     var win = null;
+
+                    //表单填充校验，自定义lay-verify
+                    form.verify({
+                        uploadNumber: function(value, item) { //value：表单的值、item：表单的DOM对象
+                            if(value.length < 1 ) {
+                                return '请选择附件';
+                            }
+                        },
+                    });
+                    form.verify({
+                        majorVersion: function(value, item) { //value：表单的值、item：表单的DOM对象
+                            if(value.length < 1 ) {
+                                return '请选择是否为主要版本';
+                            }
+                        },
+                    });
+
+                    form.verify({
+                        version: function(value, item) { //value：表单的值、item：表单的DOM对象
+                            if(value.length < 1 ) {
+                                return '请选择是否为主要版本';
+                            }
+                        },
+                    });
+
+                    form.verify({
+                        deviceSoType: function(value, item) { //value：表单的值、item：表单的DOM对象
+                            if(value.length < 1 ) {
+                                return '请选择是终端软件类型';
+                            }
+                        },
+                    });
+
+                    form.verify({
+                        uploadStrategy: function(value, item) { //value：表单的值、item：表单的DOM对象
+                            if(value.length < 1 ) {
+                                return '请选择更新策略';
+                            }
+                        },
+                    });
 
                     layui.admin.renderDictSelect({    //获取终端软件类型
                         elem: "#deviceSoType",
@@ -150,29 +193,52 @@
                         elem: "#majorVersion",
                         dictTypeId: "ISMAINVERSION"
                     });
-                    $("#deviceSoType").val("BS_UICLIENT");
-                    $("#uploadStrategy").val("002");
-                    $("#majorVersion").val("002");
+                    $("#deviceSoType").val();
+                    $("#uploadStrategy").val();
+                    $("#majorVersion").val();
                     //表单加载，字典项数据
                     form.render();
 
                     function SetData(data) {
                         win = data.win ? data.win : window;
                     }
-                    //多图片上传
+                    //通过选择的是否为主要版本带出版本号
+                    form.on("select(majorVersion)", function(data) {
+                        valuetrue="<%="V2.0"+""%>"
+                        valuefalse="<%="V1.0"+""%>"
+                        if(data.value == null){
+                            /*流水单号*/
+                            $("#version").val();
+
+                        } else if(data.value == '001') {
+                            $("#version").val(valuetrue);
+
+                        }else {
+                            $("#version").val(valuefalse);
+                        }
+
+                    });
+
+                    //上传
                     var test = upload.render({
-                        //根据绑定id，打开本地图片
+                        //根据绑定id，打开本地
                         elem: "#test1",
                         //上传后台接受接口
                         url: "<%= request.getContextPath() %>/upload/package/upload",
-                        //true，为选中文件直接提交，false为不提交根据bindAction属性上的id提交
+                        //true，为选中文件直接提交，false为不提交根据bindAction属性上的id提交，后端做了判断走了两次的接口，直接是选择就提交了
                         //bindAction: "#layuiadmin-app-form-submit",
                         //是否接受拖拽的文件上传，设置 false 可禁用。不支持ie8/9
                         drag: false,
+                        accept: 'file',
+                        // //允许上传的文件后缀。一般结合 accept 参数类设定。假设 accept 为 file 类型时，那么你设置 exts: 'zip|rar|7z' 即代表只允许上传压缩格式的文件。如果 accept 未设定，那么限制的就是图片的文件格式
+                        // exts: 'txt|rar|zip|doc|docx|pdf|xls|xlsx|jpg|png',//允许上传的文件类型
+                        exts: 'zip|rar|7z',
+                        //和后端接口命名相同的文件名
                         field:"file",
                         //是否选完文件后自动上传。如果设定 false，那么需要设置 bindAction 参数来指向一个其它按钮提交上传
                         auto: false,
                         dataType:'json',
+                        //动态赋值表单值
                         data: {
                             uploadNumber:()=>{
                                 return $('#uploadNumber').val();//实现动态传值
@@ -202,87 +268,44 @@
                         // //是否允许多文件上传。设置 true即可开启。不支持ie8/9
                         // multiple: true,
                         // //指定允许上传时校验的文件类型，可选值有：images（图片）、file（所有文件）、video（视频）、audio（音频）
-                        // accept: 'file',
-                        // //允许上传的文件后缀。一般结合 accept 参数类设定。假设 accept 为 file 类型时，那么你设置 exts: 'zip|rar|7z' 即代表只允许上传压缩格式的文件。如果 accept 未设定，那么限制的就是图片的文件格式
-                        // exts: 'txt|rar|zip|doc|docx|pdf|xls|xlsx|jpg|png',//允许上传的文件类型
+
                         //选择文件后的回调函数。返回一个object参数
-                        choose: function (obj) {
-                            //预读本地图片上传后的示例展示，不支持ie
-                            obj.preview(function (index, file, result) {
-                                //获得图片资源的链接
-                                $("#photo").attr("src", result); //图⽚链接
+                        choose: function(obj){
+                            obj.preview(function(index, file, result){
+                                uploadfileName = file.name;
+                                //获取更新包的文件名，将文件名赋值到表单的资源包单号
+                                document.getElementById("demoListView").innerHTML= uploadfileName;
+                                /*将后端的流水单号绑定前端显示*/
+                                value="<%="GX"+(new SimpleDateFormat("yyyy-MM-dd")).format(new Date())+""%>"
+                                $("#uploadNumber").val(value);
                             });
                         },
-                        //执行上传请求后的回调。返回三个参数，
-                        // 分别为：res（服务端响应信息）、index（当前文件的索引）、upload（重新上传的方法，一般在文件上传失败后使用）。
                         done: function (res) {
-                            //如果上传失败
-                            if (res.code==0){
-                                layer.msg(res.msg, {icon: 1});
-                                setTimeout(function () {
-                                    window.location.href="{:url('update_package_manager.jsp')}"
-                                },2000);
-                            }
-
-                            //上传成功
-                        },
-                        //执行上传请求出现异常的回调（一般为网络异常、URL 404等）。
-                        // 返回两个参数，分别为：index（当前文件的索引）、upload（重新上传的方法）。
-                        error: function () {
-                            //演示失败状态demoText是图片上传的哪个预读框，并实现重传
-                            var demoText = $("#demoText")
-                            demoText.html('<span style="color: #FF5722;">上传失败</span><a class= "layui-btn layui-btn-mini demo-reload" > 重试</a > ');
-                            demoText.find('.demo - reload').on('click', function () {
-                                uploadInst.upload();
-
+                            //上传成功刷新页面
+                            layer.msg("上传成功", {
+                                icon: 1,
+                                time: 2000
+                            }, function () {
+                                var index = parent.layer.getFrameIndex(window.name);
+                                win.layui.table.reload("LAY-app-device-list-reload");
+                                top.layer.close(index);
                             });
+                        },
+                        error: function () {
+                            // //演示失败状态demoText是图片上传的哪个预读框，并实现重传
+                            // var demoText = $("#demoText")
+                            // demoText.html('<span style="color: #FF5722;">上传失败</span><a class= "layui-btn layui-btn-mini demo-reload" >重试</a > ');
+                            // demoText.find('.demo - reload').on('click', function () {
+                            //     uploadInst.upload();
+                            //
+                            // });
                         }
                     });
                     //提交表单数据
                     form.on('submit(layuiadmin-app-form-submit)', function (data) {
                         debugger;
                         test.upload();
-                        //layuiadmin-app-form-list,整个表单id
-                        //var formData = new FormData($("#layuiadmin-app-form-list")[0]);
-                        //$.ajax({
-                        //cache作用：是否在缓存中读取数据的读取
-                        //cache属性是true（默认值）时：在第一次请求完成之后，如果地址和参数不变化，第二次去请求，会默认获取缓存中的数据，不去读取服务器端的最新数据。
-                        //cache属性是flase（默认值）时：每次读取的是最新的数据
-                        //cache: true,
-                        //type: "post",
-                        // url: "<%= request.getContextPath() %>/upload/package/upload",
-                        //     async: false,
-                        //     //form_id, layuiadmin-app-form-list,整个表单id
-                        //     data: formData,
-                        //     ////jax中contentType设置为false是为了避免JQuery对其操作，从⽽失去分界符，⽽使服务器不能正常解析⽂件
-                        //     contentType: false,
-                        //     //当设置为true的时候,jquery ajax提交的时候不会序列化data，⽽是直接使用data
-                        //     processData: false,
-                        //     error: function (request) {
-                        //         layer.alert('操作失败', {
-                        //             con: 2,
-                        //             title: "提⽰"
-                        //         });
-                        //     },
-                        //     success: function (ret) {
-                        //         if (ret.success) {
-                        //             layer.alert('上传成功', {
-                        //                 icon: 2,
-                        //                 title: "提⽰"
-                        //             });
-                        //             layer.closeAll();
-                        //             // window.location.href = "/login" rel = "external nofollow";
-                        //         } else {
-                        //             layer.alert(ret.msg, {
-                        //                 icon: 2,
-                        //                 title: "提⽰"
-                        //             });
-                        //         }
-                        //     }
-                        // })
                     });
-
-
 
                     //禁用按钮3秒
                     function disabledSubmitButton(submitButtonName) {
@@ -294,6 +317,10 @@
                             clearTimeout(timeoutObj);
                         }, 3000);
                     }
+
+
+
+
                 </script>
 </body>
 </html>

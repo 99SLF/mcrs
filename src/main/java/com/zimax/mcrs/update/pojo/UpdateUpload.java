@@ -89,10 +89,10 @@ public class UpdateUpload {
      */
     private  String uploadUuid;
 
-    /**
-     *  资源文件原始名称
-     */
-    private String OriginalFilename;
+//    /**
+//     *  资源文件原始名称
+//     */
+//    private String OriginalFilename;
 
     /**
      *  文件大大小
@@ -104,4 +104,10 @@ public class UpdateUpload {
      */
 
     private  String  uploadFileType;
+
+    /**
+     *
+     * uui前缀和文件名(用户下载截取，获取文件名，或其他字段)
+     */
+    private  String  uuidFile;
 }

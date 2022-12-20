@@ -47,14 +47,21 @@
                 <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i
                         class="layui-icon layui-icon-add-circle-fine"></i>上传
                 </button>
+                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i
+                        class="layui-icon layui-icon-delete"></i>删除
+                </button>
 
             </div>
 
             <table id="LAY-app-device-list" lay-filter="LAY-app-device-list"></table>
 
             <script type="text/html" id="table-device-list">
-                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
-                        class="layui-icon layui-icon-edit"></i>下载</a>
+<%--                方法一--%>
+<%--                <a href="<%= request.getContextPath() %>/upload/download" class="layui-btn layui-btn-normal layui-btn-xs" lay-event=""><i--%>
+
+                    <a  class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
+                        class="layui-icon layui-icon-edit" ></i>下载</a>
+
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
                         class="layui-icon layui-icon-delete"></i>删除</a>
             </script>
@@ -136,10 +143,62 @@
                     layero.find("iframe")[0].contentWindow.SetData(dataJson);
                 },
                 yes: function (index, layero) {
+                    debugger;
                     var submit = layero.find("iframe").contents().find("#layuiadmin-app-form-submit");
                     submit.click();
+
                 }
             });
+        },
+        //批量删除
+        batchdel: function () {
+            var checkStatus = table.checkStatus("LAY-app-device-list-reload");
+            var data = checkStatus.data;
+            if (data.length == 0) {
+                layer.msg("请至少选中一条记录！");
+            }
+            if (data.length > 0) {
+                var uploadIds = new Array();
+                for (var i = 0; i < data.length; i++) {
+                    uploadIds[i] = data[i].uploadId;
+                }
+                layer.confirm("确定删除所选中更新包文件信息？", {
+                    icon: 3,
+                    title: "系统提示"
+                }, function (index) {
+                    $.ajax({
+                        url: "<%= request.getContextPath() %>/upload/batchDelete",
+                        type: "DELETE",
+                        data: JSON.stringify(uploadIds),
+                        cache: false,
+                        contentType: "text/json",
+                        success: function (result) {
+                            if (result.exception) {
+                                layer.alert(result.exception.message, {
+                                    icon: 2,
+                                    title: "系统提示"
+                                });
+                            } else if (result) {
+                                layer.msg("删除成功", {
+                                    icon: 1,
+                                    time: 2000
+                                }, function () {
+                                    table.reload("LAY-app-device-list-reload");
+                                });
+                            } else {
+                                layer.msg("删除失败");
+                            }
+
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            layer.msg(jqXHR.responseText, {
+                                time: 2000,
+                                icon: 5
+                            });
+                        }
+                    });
+                });
+            }
         },
     };
 
@@ -158,6 +217,7 @@
         var type = obj.event;
         active[type] ? active[type].call(this) : "";
     });
+
 
     //表格排序
     table.on("sort(LAY-app-device-list)", function (obj) {
@@ -210,6 +270,7 @@
         return false;
     }
 
+
     table.render({
         elem: "#LAY-app-device-list",
         id: "LAY-app-device-list-reload",
@@ -246,6 +307,11 @@
             };
         },
         cols: [[{
+            type: "checkbox",
+        }, {
+            title: "序号",
+            type: "numbers",
+        },{
             field: "uploadNumber",
             title: "更新包单号",
             align: "center",
@@ -255,13 +321,13 @@
             field: "version",
             title: "版本号",
             align: "center",
-            minWidth: 120,
+            minWidth: 80,
             hide: isHidden("version")
         }, {
             field: "deviceSoType",
             title: "终端软件类型",
             align: "center",
-            minWidth: 120,
+            minWidth: 150,
             hide: isHidden("deviceSoType"),
             templet:function(d) {
 
@@ -271,7 +337,7 @@
             field: "uploadStrategy",
             title: "更新策略",
             align: "center",
-            minWidth: 150,
+            minWidth: 120,
             hide: isHidden("uploadStrategy"),
             templet:function(d) {
 
@@ -281,19 +347,19 @@
             field: "fileName",
             title: "更新包",
             align: "center",
-            minWidth: 120,
+            minWidth: 100,
             hide: isHidden("fileName")
         }, {
             field: "uploader",
             title: "上传人",
             align: "center",
-            minWidth: 120,
+            minWidth: 80,
             hide: isHidden("uploader")
         }, {
             field: "versionUploadTime",
             title: "上传时间",
             align: "center",
-            minWidth: 150,
+            minWidth: 200,
             hide: isHidden("versionUploadTime"),
             templet:function (data) {
              return layui.util.toDateString(data.versionUploadTime, "yyyy-MM-dd HH:mm:ss");
@@ -316,41 +382,34 @@
 
     //监听操作事件
     table.on("tool(LAY-app-device-list)", function (e) {
+        //当前行数据
         var data = e.data;
         //edit 下载
         if (e.event == "edit") {
-            top.layer.open({
-                type: 2,
-                title: "下载更新包资源",
-                content: "<%= request.getContextPath() %>/upload/download",
-                area: ["1000px", "560px"],
-                resize: false,
-                btn: ["确定", "取消"],
-                success: function (layero, index) {
-                    var dataJson = {
-                        data: data,
-                        win: window
-                    };
-                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
-                },
-                yes: function (index, layero) {
-                    var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");
-                    edit.click();
-                }
-
-            });
+            debugger;
+            var filePath = encodeURIComponent(e.data.downloadUrl);
+            // var filename = encodeURIComponent(e.data.fileName)
+            var url = "<%= request.getContextPath() %>/upload/download?filePath=" + filePath ;
+            //创建a标签，用于点击
+            var a = document.createElement('a');
+                a.download = filename;
+                a.href = url;
+                //兼容firefox
+                $('body').append(a);
+                a.click();
+                $(a).remove();
         } else if (e.event == "del") {
             //删除
             layer.confirm("确定删除该条资源信息单号？", {
                 icon: 3,
                 title: "系统提示"
             }, function (index) {
+                var uploadIds =new Array();
+                uploadIds[0] = data.uploadId;
                 $.ajax({
-                    url: "<%= request.getContextPath() %>",
+                    url: "<%= request.getContextPath() %>/upload/batchDelete",
                     type: "DElETE",
-                    data: JSON.stringify({
-                        device: data
-                    }),
+                    data: JSON.stringify(uploadIds),
                     cache: false,
                     contentType: "text/json",
                     success: function (result) {
