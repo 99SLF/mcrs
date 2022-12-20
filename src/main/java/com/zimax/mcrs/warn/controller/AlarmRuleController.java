@@ -8,6 +8,7 @@ import com.zimax.mcrs.warn.service.AlarmRuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -66,11 +67,11 @@ public class AlarmRuleController {
 
     /**
      * 删除预警规则
-     * @param alarmRuleId 预警规则编码
+     * @param alarmRuleInt 预警规则编码
      */
-    @DeleteMapping("/alarmRule/delete/{alarmRuleId}")
-    public Result<?> removeAlarmRule(@PathVariable("alarmRuleId")int alarmRuleId) {
-        alarmRuleService.removeAlarmRule(alarmRuleId);
+    @DeleteMapping("/alarmRule/delete/{alarmRuleInt}")
+    public Result<?> removeAlarmRule(@PathVariable("alarmRuleInt")int alarmRuleInt) {
+        alarmRuleService.removeAlarmRule(alarmRuleInt);
         return  Result.success();
     }
 
@@ -82,6 +83,18 @@ public class AlarmRuleController {
     public Result<?> updateAlarmRule(@RequestBody AlarmRule alarmRule) {
         alarmRuleService.updateAlarmRule(alarmRule);
         return Result.success();
+    }
+
+
+    /**
+     * 批量删除告警规则
+     * @param alarmRuleInt 预警规则主键数组
+     */
+    @DeleteMapping("/alarmRule/batchDelete")
+    public Result<?> deleteDevices(@RequestBody Integer[] alarmRuleInt) {
+        alarmRuleService.deleteAlarmRules(Arrays.asList(alarmRuleInt));
+        return Result.success();
+
     }
 
 

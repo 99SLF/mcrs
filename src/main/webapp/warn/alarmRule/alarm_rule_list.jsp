@@ -55,12 +55,7 @@
                                class="layui-input">
                     </div>
                 </div>
-                <div class="layui-inline layui-search">
-                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-alarmRulelist-search"
-                            id="LAY-app-alarmRulelist-search">
-                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                    </button>
-                </div>
+
                 <div class="layui-inline" >
                     <label class="layui-form-label">制单人：</label>
                     <div class="layui-input-inline">
@@ -69,15 +64,16 @@
                     </div>
                     <label class="layui-form-label">制单时间：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="ruleMakeFormTime" placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                    <div class="layui-input-inline">
-                        <input type="hidden" name="test" placeholder="" autocomplete="off"
+                        <input type="text" name="ruleMakeFormTime" id="ruleMakeFormTime" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
-
+                <div class="layui-inline layui-search">
+                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-alarmRulelist-search"
+                            id="LAY-app-alarmRulelist-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -86,7 +82,11 @@
                 <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i
                         class="layui-icon layui-icon-add-circle-fine"></i>新增规则
                 </button>
+                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i
+                        class="layui-icon layui-icon-delete"></i>删除
+                </button>
             </div>
+
 
             <table id="LAY-app-alarmRule-list" lay-filter="LAY-app-alarmRule-list"></table>
 
@@ -123,6 +123,14 @@
 
     var hiddenFields = [];
 
+    var laydate = layui.laydate;
+    //日期时间选择器
+    laydate.render({
+        elem: '#ruleMakeFormTime',
+        type: 'date'
+    });
+
+
     //监听搜索
     form.on("submit(LAY-app-alarmRulelist-search)", function (data) {
         var field = data.field;
@@ -146,7 +154,7 @@
         add: function () {
             top.layer.open({
                 type: 2,
-                title: "设备新建",
+                title: "预警规则新建",
                 content: "<%= request.getContextPath() %>/warn/alarmRule/alarm_rule_add.jsp",
                 area: ["1000px", "560px"],
                 resize: false,
@@ -163,6 +171,55 @@
                 }
             });
         },
+        //批量删除
+        batchdel: function() {
+            var checkStatus = table.checkStatus("LAY-app-alarmRule-list-reload");
+            var data = checkStatus.data;
+            if (data.length == 0) {
+                layer.msg("请至少选中一条记录！");
+            }
+            if (data.length > 0) {
+                var alarmRuleInts = new Array();
+                for (var i=0; i<data.length;i++) {
+                    alarmRuleInts[i] = data[i].alarmRuleInt;
+                }
+                layer.confirm("确定删除所选预警规则？", {
+                    icon: 3,
+                    title: "系统提示"
+                }, function(index) {
+                    $.ajax({
+                        url: "<%= request.getContextPath() %>/warn/alarmRule/batchDelete",
+                        type: "DELETE",
+                        data: JSON.stringify(alarmRuleInts),
+                        cache: false,
+                        contentType: "text/json",
+                        success: function(result) {
+                            if (result.exception) {
+                                layer.alert(result.exception.message, {
+                                    icon: 2,
+                                    title: "系统提示"
+                                });
+                            } else if (result) {
+                                layer.msg("删除成功", {
+                                    icon: 1,
+                                    time: 2000
+                                }, function() {
+                                    table.reload("LAY-app-alarmRule-list-reload");
+                                });
+                            } else {
+                                layer.msg("删除失败");
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            layer.msg(jqXHR.responseText, {
+                                time: 2000,
+                                icon: 5
+                            });
+                        }
+                    });
+                });
+            }
+        }
     };
 
     table.on('sort(LAY-app-alarmRule-list)', function (obj) {
@@ -208,17 +265,14 @@
 
     // 查询过滤字段
     $.ajax({
-        url: "com.zimax.components.coframe.tools.ColsFilter.queryHiddenField.biz.ext",
-        type: "POST",
+        url: "<%=request.getContextPath() %>/cols/filter/query/" + funName,
+        type: "GET",
         async: false,
-        data: JSON.stringify({
-            funName: funName
-        }),
         cache: false,
         contentType: "text/json",
-        success: function (result) {
+        success: function(result) {
             if (result) {
-                hiddenFields = result.colsFilters;
+                hiddenFields = result.data
             } else {
                 layer.msg("查询失败");
             }
@@ -247,30 +301,24 @@
         limits: [10, 15, 20, 30],
         toolbar: "#toolbar",
         defaultToolbar: ["filter"],
-        colHideChange: function (col, checked) {
+        colHideChange: function(col, checked) {
             var field = col.field;
             var hidden = col.hide;
             $.ajax({
-                url: "com.zimax.components.coframe.tools.ColsFilter.setHiddenField.biz.ext",
-                type: "POST",
-                data: JSON.stringify({
-                    hidden: hidden,
-                    colsFilter: {
-                        funName: funName,
-                        field: field
-                    }
-                }),
+                url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
+                type: "GET",
                 cache: false,
                 contentType: "text/json",
-                success: function (result) {
+                success: function(result) {
                     if (result) {
-                    } else {
+                    } else{
                         layer.msg("列筛选失败");
                     }
                 }
             });
         },
         parseData: function (res) {
+            debugger;
             return {
                 code: res.code,
                 msg: res.msg,
@@ -388,7 +436,7 @@
                 title: "系统提示"
             }, function (index) {
                 $.ajax({
-                    url: "<%= request.getContextPath() %>/warn/alarmRule/delete/" + data.alarmRuleId,
+                    url: "<%= request.getContextPath() %>/warn/alarmRule/delete/" + data.alarmRuleInt,
                     type: "DElETE",
                     data: JSON.stringify({
                         alarmRule: data

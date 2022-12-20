@@ -38,7 +38,7 @@
                     </div>
                     <label class="layui-form-label">回退时间：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="versionRollbackTime" placeholder="请输入版本更改时间"
+                        <input type="text" name="versionRollbackTime"  id="versionRollbackTime" placeholder="请输入版本更改时间"
                                autocomplete="off" id="test"
                                class="layui-input">
                     </div>
@@ -95,6 +95,14 @@
     var funName = "list";
 
     var hiddenFields = [];
+
+
+    var laydate = layui.laydate;
+    //日期时间选择器
+    laydate.render({
+        elem: '#versionRollbackTime',
+        type: 'date'
+    });
 
     //监听搜索
     form.on("submit(LAY-app-deviceUpgradelist-search)", function (data) {
