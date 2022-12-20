@@ -1,6 +1,8 @@
 package com.zimax.mcrs.update.controller;
 
 import com.alibaba.excel.util.StringUtils;
+import com.zimax.cap.datacontext.DataContextManager;
+import com.zimax.cap.party.IUserObject;
 import com.zimax.components.coframe.framework.pojo.Application;
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.update.mapper.UpdateUploadMapper;
@@ -47,10 +49,10 @@ public class UpdateUploadController {
      * @param updateUpload 更新包信息
      */
     @PostMapping("/package/upload")
-    public Result<?> addUpdateUpload(MultipartFile file,@RequestBody UpdateUpload updateUpload, HttpServletRequest request) {
+    public Result<?> addUpdateUpload(MultipartFile file, UpdateUpload updateUpload, HttpServletRequest request) {
         if (file != null) {
             // 一、定义文件名
-            String fileName = "fileBag";
+            String fileName = "";
             // 1.获取原始文件名
             String uploadFileName = file.getOriginalFilename();
             // 2.截取文件扩展名
@@ -87,6 +89,9 @@ public class UpdateUploadController {
             updateUpload.setUploadFileType(uploadFileType);
             updateUpload.setUploadFileSize(uploadFileSize);
             updateUpload.setDownloadUrl(fileName);
+            updateUpload.setVersionUploadTime(new Date());
+            IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
+            updateUpload.setUploader(usetObject.getUserName());
             updateUploadService.addUpdateUpload(updateUpload);
         } else {
             return Result.error("1", "上传失败");

@@ -294,7 +294,10 @@
             title: "上传时间",
             align: "center",
             minWidth: 150,
-            hide: isHidden("versionUploadTime")
+            hide: isHidden("versionUploadTime"),
+            templet:function (data) {
+             return layui.util.toDateString(data.versionUploadTime, "yyyy-MM-dd HH:mm:ss");
+            }
         }, {
             field: "remarks",
             title: "备注",
@@ -307,7 +310,8 @@
             fixed: "right",
             width: 150,
             toolbar: "#table-device-list"
-        }]]
+        }
+        ]]
     });
 
     //监听操作事件

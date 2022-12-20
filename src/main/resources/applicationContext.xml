@@ -163,6 +163,22 @@
         <property name="mapperInterface" value="com.zimax.mcrs.warn.mapper.AlarmRuleMapper"/>
     </bean>
 
+    <bean id="EquipMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.basic.accPointResMaintain.equipTypeMaintain.mapper.EquipMapper"/>
+    </bean>
+    <bean id="FactoryMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.basic.accPointResMaintain.factoryInfoMaintain.mapper.FactoryMapper"/>
+    </bean>
+    <bean id="ProcessMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.basic.accPointResMaintain.processInfoMaintain.mapper.ProcessMapper"/>
+    </bean>
+
+
+
+
     <bean id="GradeAuthBean" class="com.zimax.components.coframe.rights.gradeauth.GradeAuthService"></bean>
 
     <bean id="PartyAuthService" class="com.zimax.components.coframe.auth.service.PartyAuthService"></bean>
