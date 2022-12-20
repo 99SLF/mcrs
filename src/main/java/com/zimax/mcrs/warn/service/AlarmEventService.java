@@ -25,7 +25,7 @@ public class AlarmEventService {
     /**
      * 查询全部预警信息
      */
-    public List<AlarmEvent> queryAll(String page, String limit, Integer alarmEventId, String alarmEventTitle, String alarmLevel, String alarmCategory, String alarmType, String makeFormPeople, String order, String field){
+    public List<AlarmEvent> queryAll(String page, String limit, Integer alarmEventId, String alarmEventTitle, String alarmLevel, String alarmCategory, String alarmType, String makeFormPeople, String makeFormTime,String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -45,6 +45,7 @@ public class AlarmEventService {
         map.put("alarmCategory", alarmCategory);
         map.put("alarmType", alarmType);
         map.put("makeFormPeople", makeFormPeople);
+        map.put("makeFormTime", makeFormTime);
         return alarmEventMapper.queryAll(map);
     }
 

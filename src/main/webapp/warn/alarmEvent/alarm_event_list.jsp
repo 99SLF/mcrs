@@ -53,7 +53,7 @@
                     </div>
                     <label class="layui-form-label">制单时间：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="makeFormTime" placeholder="请输入制单时间" autocomplete="off"
+                        <input type="text" name="makeFormTime" placeholder="请输入制单时间" id="makeFormTime" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -114,13 +114,19 @@
 
     var hiddenFields = [];
 
+    var laydate = layui.laydate;
+    //日期时间选择器
+    laydate.render({
+        elem: '#makeFormTime',
+        type: 'date'
+    });
+
     //获取预警类型的下拉值
     layui.admin.renderDictSelect({
         elem: "#alarmType",
         dictTypeId: "WRANING_TYPE",
     });
     //设置预警类型的默认值
-    $("#alarmType").val("101");
     form.render();
 
     //监听搜索

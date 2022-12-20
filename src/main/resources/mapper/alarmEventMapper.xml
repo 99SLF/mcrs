@@ -38,6 +38,9 @@
             <if test="makeFormPeople !=null and makeFormPeople !=''">
                 and make_form-people like '%${makeFormPeople}%'
             </if>
+            <if test="makeFormTime !=null and makeFormTime !=''">
+                and make_form_time like '%${makeFormTime}%'
+            </if>
         </where>
         <if test="order !=null and order !=''">
             order by ${field} ${order}

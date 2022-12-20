@@ -5,44 +5,48 @@
 
     <!--查询记录数-->
     <select id="count" resultType="int">
-        select count(*) from war_alarm_rule
+        SELECT count(*) FROM war_alarm_rule as rul
+        LEFT JOIN war_alarm_event as eve
+        on rul.alarm_event_int = eve.alarm_event_int
         <where>
             <if test="alarmRuleId !=null and alarmRuleId !=''">
-                and alarm_rule_id like '%${alarmRuleId}%'
+                and rul.alarm_rule_id like '%${alarmRuleId}%'
             </if>
             <if test="alarmRuleTitle !=null and alarmRuleTitle !=''">
-                and alarm_rule_title like '%${alarmRuleTitle}%'
+                and rul.alarm_rule_title like '%${alarmRuleTitle}%'
             </if>
         </where>
     </select>
 
     <!--查询所有-->
-    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.warn.pojo.AlarmRule">
-        select * from war_alarm_rule
+    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.warn.pojo.AlarmRuleVo">
+        SELECT *FROM war_alarm_rule as rul
+        LEFT JOIN war_alarm_event as eve
+        on rul.alarm_event_int = eve.alarm_event_int
         <where>
             <if test="alarmRuleId !=null and alarmRuleId !=''">
-                and alarm_rule_id like '%${alarmRuleId}%'
+                and rul.alarm_rule_id like '%${alarmRuleId}%'
             </if>
             <if test="alarmRuleTitle !=null and alarmRuleTitle !=''">
-                and alarm_rule_title like '%${alarmRuleTitle}%'
+                and rul.alarm_rule_title like '%${alarmRuleTitle}%'
             </if>
             <if test="monitorLevel !=null and monitorLevel !=''">
-                and monitor_level like '%${monitorLevel}%'
+                and rul.monitor_level like '%${monitorLevel}%'
             </if>
             <if test="enable !=null and enable !=''">
-                and enable like '%${enable}%'
+                and rul.enable like '%${enable}%'
             </if>
             <if test="alarmEventId !=null and alarmEventId !=''">
-                and alarm_event_id like '%${alarmEventId}%'
+                and rul.alarm_event_id like '%${alarmEventId}%'
             </if>
             <if test="monitorObject !=null and monitorObject !=''">
-                and monitor_object like '%${monitorObject}%'
+                and rul.monitor_object like '%${monitorObject}%'
             </if>
             <if test="ruleMakeFormPeople !=null and ruleMakeFormPeople !=''">
-                and rule_make_form_People like '%${ruleMakeFormPeople}%'
+                and rul.rule_make_form_People like '%${ruleMakeFormPeople}%'
             </if>
             <if test="ruleMakeFormTime !=null and ruleMakeFormTime !=''">
-                and rule_make_form_time like '%${ruleMakeFormTime}%'
+                and rul.rule_make_form_time like '%${ruleMakeFormTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -56,11 +60,12 @@
     <!--添加预警规则-->
     <insert id="addAlarmRule" parameterType="com.zimax.mcrs.warn.pojo.AlarmRule">
         insert into war_alarm_rule
-        values (#{alarmRuleId},
+        values (#{alarmRuleInt},
+                #{alarmRuleId},
                 #{alarmRuleTitle},
                 #{enable},
                 #{monitorLevel},
-                #{alarmEventId},
+                #{alarmEventInt},
                 #{monitorObject},
                 #{alarmRuleDescribe},
                 #{ruleMakeFormPeople},
@@ -73,22 +78,31 @@
     <delete id="removeAlarmRule" parameterType="int">
         delete
         from war_alarm_rule
-        where alarm_rule_id = #{alarmRuleId}
+        where alarm_rule_int = #{alarmRuleInt}
     </delete>
 
         <!--更新1条预警规则-->
         <update id="updateAlarmRule" parameterType="com.zimax.mcrs.warn.pojo.AlarmRule">
             update war_alarm_rule
-            set alarm_rule_title=#{alarmRuleTitle},
+            set alarm_rule_id = #{alarmRuleId},
+                alarm_rule_title=#{alarmRuleTitle},
                 enable=#{enable},
                 monitor_level=#{monitorLevel},
-                alarm_event_id=#{alarmEventId},
+                alarm_event_int=#{alarmEventInt},
                 monitor_object=#{monitorObject},
                 alarm_rule_describe=#{alarmRuleDescribe},
                 rule_update_people=#{ruleUpdatePeople},
                 rule_update_time=#{ruleUpdateTime}
-            where alarm_rule_id = #{alarmRuleId}
+            where alarm_rule_int =  #{alarmRuleInt}
         </update>
+
+    <!--    批量删除-->
+    <delete id="deleteAlarmRules" parameterType="java.util.List">
+        delete from war_alarm_rule where alarm_rule_int in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
 
 
 

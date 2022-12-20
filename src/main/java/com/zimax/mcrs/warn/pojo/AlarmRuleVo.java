@@ -1,13 +1,11 @@
 package com.zimax.mcrs.warn.pojo;
 
-import com.baomidou.mybatisplus.annotation.*;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.util.Date;
 
 /**
  * 预警规则
@@ -18,7 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("war_alarm_rule")
-public class AlarmRule {
+public class AlarmRuleVo {
 
     /**
      * 预警规则主键
@@ -31,7 +29,6 @@ public class AlarmRule {
      * 预警规则编码
      */
     private String alarmRuleId;
-
 
     /**
      * 预警规则标题
@@ -51,7 +48,12 @@ public class AlarmRule {
     /**
      * 预警事件编码
      */
-    private int alarmEventInt;
+    private Integer alarmEventId;
+
+    /**
+     * 预警事件主键
+     */
+    private Integer alarmEventInt;
 
     /**
      * 监控对象
