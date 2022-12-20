@@ -50,7 +50,7 @@
     <!--添加预警事件-->
     <insert id="addAlarmEvent" parameterType="com.zimax.mcrs.warn.pojo.AlarmEvent">
         insert into war_alarm_event
-        values (#{alarmEventId}, #{alarmEventTitle}, #{enableStatus},
+        values (#{alarmEventInt},#{alarmEventId}, #{alarmEventTitle}, #{enableStatus},
                 #{alarmLevel}, #{upperLimit},
                 #{lowerLimit}, #{alarmEventContent},
                 #{alarmType}, #{makeFormPeople}, #{makeFormTime},
@@ -58,16 +58,17 @@
     </insert>
 
     <!--根据主键删除预警事件-->
-    <delete id="removeAlarmEvent" parameterType="Integer">
+    <delete id="removeAlarmEvent" parameterType="int">
         delete
         from war_alarm_event
-        where alarm_event_id = #{alarmEventId}
+        where alarm_event_int = #{alarmEventInt}
     </delete>
 
     <!--更新预警事件-->
     <update id="updateAlarmEvent" parameterType="com.zimax.mcrs.warn.pojo.AlarmEvent">
         update war_alarm_event
-        set alarm_event_title=#{alarmEventTitle},
+        set alarm_event_id=#{alarmEventId},
+            alarm_event_title=#{alarmEventTitle},
             enable_status=#{enableStatus},
             alarm_level=#{alarmLevel},
             upper_limit=#{upperLimit},
@@ -76,7 +77,7 @@
             alarm_type=#{alarmType},
             update_people=#{updatePeople},
             update_time=#{updateTime}
-        where alarm_event_id = #{alarmEventId}
+        where alarm_event_int = #{alarmEventInt}
     </update>
 
 <!--    更新启用状态-->
@@ -88,5 +89,12 @@
 <!--        where alarm_event_id = #{alarmEventId}-->
 <!--    </update>-->
 
+<!--    批量删除-->
+    <delete id="deleteAlarmEvents" parameterType="java.util.List">
+        delete from war_alarm_event where alarm_event_int in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
 
 </mapper>

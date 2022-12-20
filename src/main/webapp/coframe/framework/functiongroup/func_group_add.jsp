@@ -14,7 +14,7 @@
 	<input type="hidden" name="tenantId" value="default">
 	<input id="appId" name="appId" type="hidden" />
 	<div class="layui-form-item">
-		<label class="layui-form-label">功能组名称：<span style="color:red">*</span></label>
+		<label class="layui-form-label"><span style="color:red">*</span>功能组名称：</label>
 		<div class="layui-input-inline">
 			<input type="text" class="layui-input" name="funcGroupName" id="funcGroupName"  lay-verify="required" autocomplete="off" placeholder="" style="width: 300px;">
 			<input name="funcGroupId" type="hidden"/>
@@ -24,7 +24,7 @@
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">显示顺序：<span style="color:red">*</span></label>
+		<label class="layui-form-label"><span style="color:red">*</span>显示顺序：</label>
 		<div class="layui-input-inline">
 			<input type="text" class="layui-input" name="displayOrder" id="displayOrder"  lay-verify="number" autocomplete="off" placeholder="" style="width: 300px;">
 		</div>

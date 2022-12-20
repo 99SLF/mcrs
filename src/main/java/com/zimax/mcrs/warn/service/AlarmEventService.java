@@ -66,10 +66,10 @@ public class AlarmEventService {
 
     /**
      * 删除预警事件
-     * @param alarmEventId 告警编码
+     * @param alarmEventInt 告警主键
      */
-    public void removeAlarm(Integer alarmEventId){
-        alarmEventMapper.removeAlarmEvent(alarmEventId);
+    public void removeAlarm(Integer alarmEventInt){
+        alarmEventMapper.removeAlarmEvent(alarmEventInt);
 
     }
 
@@ -86,5 +86,12 @@ public class AlarmEventService {
 //    public  void enableAlarm(AlarmEvent alarmEvent){
 //        alarmEventMapper.enable(alarmEvent);
 //    }
+
+    /**
+     * 批量删除告警事件
+     */
+    public void deleteAlarmEvents(List<Integer> alarmEventInt) {
+        alarmEventMapper.deleteAlarmEvents(alarmEventInt);
+    }
 
 }

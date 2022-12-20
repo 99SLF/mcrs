@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.serialnumber.mapper.SerialnumberMapper">
+    <!--    查询记录数-->
+    <select id="count" resultType="int">
+        select count(*) from base_coding_serialnumber
+        <where>
+            <if test="functionName !=null and functionName !=''">
+                and function_name like '%${functionName}%'
+            </if>
+            <if test="functionNum !=null and functionNum !=''">
+                and function_num = '${functionNum}'
+            </if>
+        </where>
+    </select>
+    <!--查询角色信息-->
+    <select id="querySerialnumbers" parameterType="map"  resultType="com.zimax.mcrs.serialnumber.pojo.Serialnumber">
+        select * from base_coding_serialnumber
+        <where>
+            <if test="functionName !=null and functionName !=''">
+                and function_name like '%${functionName}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+
+    </select>
+
+    <insert id="addSerialnumber" parameterType="com.zimax.mcrs.serialnumber.pojo.Serialnumber">
+        insert into base_coding_serialnumber values(#{id},#{ruleName},#{digit},#{startvalue},#{currentvalue},#{note},#{functionNum},#{functionName},#{numberRule},
+                                                    #{numBasis},#{titleRule})
+    </insert>
+    <!--    更新1条角色信息-->
+    <update id="updateSerialnumber" parameterType="com.zimax.mcrs.serialnumber.pojo.Serialnumber">
+        update base_coding_serialnumber set rule_name=#{ruleName},digit=${digit},startvalue=${startvalue},currentvalue=${currentvalue},
+                                            note=#{note},function_num=#{functionNum},function_name=#{functionName},number_rule=#{numberRule}where id=#{id}
+    </update>
+    <!--    批量删除-->
+    <delete id="batchDeleteSerialnumber" parameterType="java.util.List">
+        delete from base_coding_serialnumber where id in
+        <foreach collection="list" item="id"  separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+</mapper>

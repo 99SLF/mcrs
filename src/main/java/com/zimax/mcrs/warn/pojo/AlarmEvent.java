@@ -21,9 +21,14 @@ import java.util.Date;
 public class AlarmEvent {
 
     /**
-     * 预警事件编码
+     * 预警事件主键
      */
     @TableId(type = IdType.AUTO)
+    private Integer alarmEventInt;
+
+    /**
+     * 预警事件编码
+     */
     private Integer alarmEventId;
 
     /**

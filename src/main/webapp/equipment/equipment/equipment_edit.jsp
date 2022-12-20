@@ -21,14 +21,14 @@
 <%--		需要隐藏主键--%>
 	<input type="hidden" name="equipmentInt" value="default">
 		<div class="layui-col-sm6">
-			<label class="layui-form-label">设备资源号:<span style="color:red">*</span></label>
+			<label class="layui-form-label"><span style="color:red">*</span>设备资源号:</label>
 			<div class="layui-input-block">
 				<input id="equipmentId" type="text" name="equipmentId" lay-verify="required|equipmentId"
 					   placeholder="请输入设备资源号(必填)" autocomplete="off" class="layui-input" readonly>
 			</div>
 		</div>
 		<div class="layui-col-sm6">
-			<label class="layui-form-label">设备名称:<span style="color:red">*</span></label>
+			<label class="layui-form-label"><span style="color:red">*</span>设备名称:</label>
 			<div class="layui-input-block">
 				<input id="equipmentName" type="text" name="equipmentName" lay-verify="required|equipmentName"
 					   placeholder="请输入设备名称(必填)" autocomplete="off" class="layui-input">
@@ -38,7 +38,7 @@
 
 	<div class="layui-form-item layui-row layui-col-space10">
 		<div class="layui-col-sm6">
-			<label class="layui-form-label">设备属性:<span style="color:red">*</span></label>
+			<label class="layui-form-label"><span style="color:red">*</span>设备属性:</label>
 			<div class="layui-input-block">
 				<select name="equipmentProperties" id="equipmentProperties" lay-filter="" type="select">
 					<option value=""></option>
@@ -47,7 +47,7 @@
 		</div>
 
 		<div class="layui-col-sm6">
-			<label class="layui-form-label">设备连接端口:<span style="color:red">*</span></label>
+			<label class="layui-form-label"><span style="color:red">*</span>设备连接端口:</label>
 			<div class="layui-input-block">
 				<input id="equipmentContinuePort" type="text" name="equipmentContinuePort"
 					   lay-verify="required|equipmentContinuePort"
@@ -68,7 +68,7 @@
 
 
 		<div class="layui-col-sm6">
-			<label class="layui-form-label">MES连接IP:<span style="color:red">*</span></label>
+			<label class="layui-form-label"><span style="color:red">*</span>MES连接IP:</label>
 			<div class="layui-input-block">
 				<input id="mesContinueIp" type="text" name="mesContinueIp" lay-verify="required|mesContinueIp"
 					   placeholder="请输入MES连接IP" autocomplete="off" class="layui-input">
@@ -78,7 +78,7 @@
 
 	<div class="layui-form-item layui-row layui-col-space10">
 		<div class="layui-col-sm6">
-			<label class="layui-form-label">是否启用:<span style="color:red">*</span></label>
+			<label class="layui-form-label"><span style="color:red">*</span>是否启用:</label>
 			<div class="layui-input-block">
 				<select name="enabledState" id="enabledState" lay-filter="required" type="select">
 					<option value="on">是</option>

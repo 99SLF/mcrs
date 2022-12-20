@@ -16,7 +16,7 @@
    <input id="funcCode"	name="funcCode" type="hidden"  />
    <div class="layui-row layui-col-space10 layui-form-item">
 		<div class="layui-col-sm6">
-			<label class="layui-form-label " >资源名称：<span style="color:red">*</span></label>
+			<label class="layui-form-label " ><span style="color:red">*</span>资源名称：</label>
 			<div class="layui-input-block">
 				<input type="text" class="layui-input" name="resName" id="resName" lay-verify="required" autocomplete="off">
 			</div>

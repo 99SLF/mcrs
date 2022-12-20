@@ -44,7 +44,7 @@ public class ApplicationService {
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
             map.put("order", "asc");
-            map.put("field", "display_order");
+            map.put("field", "functionNum");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));

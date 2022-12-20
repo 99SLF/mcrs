@@ -1,3 +1,7 @@
+<%@ page import="com.zimax.cap.party.IUserObject" %>
+<%@ page import="com.zimax.cap.datacontext.DataContextManager" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" session="false" %>
 <!DOCTYPE html>
@@ -17,27 +21,49 @@
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list"
      style="padding: 20px 30px 0 0;">
     <div class="layui-form-item layui-row layui-col-space10">
-<%--隐藏主键--%>
-        <input type="hidden" name="alarmEventId" value="default">
+        <%--隐藏主键--%>
+        <input type="hidden" name="alarmEventInt" value="default">
         <div class="layui-col-sm6">
-            <label class="layui-form-label" style="width: auto">预警事件标题:<span style="color:red">*</span></label>
+            <label class="layui-form-label"><span style="color:red">*</span>预警事件编码:</label>
             <div class="layui-input-block">
-                <input id="alarmEventTitle" type="text" name="alarmEventTitle" lay-verify="required"
-                       placeholder="预警事件标题(必填)" autocomplete="off" class="layui-input" style="width:96%">
+                <input id="alarmEventId" type="text" name="alarmEventId" lay-verify="required"
+                       placeholder="预警事件编码(必填)" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label">预警级别:<span style="color:red">*</span></label>
+            <label class="layui-form-label">预警事件标题:</label>
             <div class="layui-input-block">
-                <input id="alarmLevel" type="text" name="alarmLevel" lay-verify="" placeholder="请输入预警级别"
-                       autocomplete="off" class="layui-input">
+                <input id="alarmEventTitle" type="text" name="alarmEventTitle" lay-verify=""
+                       placeholder="预警事件标题" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">上限:<span style="color:red">*</span></label>
+            <label class="layui-form-label"><span style="color:red">*</span>预警级别:</label>
+            <div class="layui-input-block">
+                <select name="alarmLevel" id="alarmLevel" lay-filter="required" type="select">
+                    <option value="1级">1级</option>
+                    <option value="2级">2级</option>
+                    <option value="3级">3级</option>
+                    <option value="4级">4级</option>
+                    <option value="5级">5级</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><span style="color:red">*</span>预警类型:</label>
+            <div class="layui-input-block">
+                <select name="alarmType" id="alarmType" lay-filter="" type="select">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item layui-row layui-col-space10">
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><span style="color:red">*</span>上限:</label>
             <div class="layui-input-block">
                 <input id="upperLimit" type="text" name="upperLimit" lay-verify="required"
                        placeholder="请输入上限" autocomplete="off" class="layui-input">
@@ -45,7 +71,7 @@
         </div>
 
         <div class="layui-col-sm6">
-            <label class="layui-form-label">下限:<span style="color:red">*</span></label>
+            <label class="layui-form-label"><span style="color:red">*</span>下限:</label>
             <div class="layui-input-block">
                 <input id="lowerLimit" type="text" name="lowerLimit" lay-verify="required" placeholder="请输入下限"
                        autocomplete="off" class="layui-input">
@@ -55,61 +81,38 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">是否启用</label>
+            <label class="layui-form-label"><span style="color:red">*</span>是否启用：</label>
             <div class="layui-input-block">
-                <input type="checkbox" id="enableStatus" name="enableStatus" lay-skin="switch" value="on"
-                       lay-text="是|否">
-            </div>
-        </div>
-        <div class="layui-col-sm6">
-            <label class="layui-form-label">预警类型:<span style="color:red">*</span></label>
-            <div class="layui-input-block">
-                <input id="alarmType" type="text" name="alarmType" lay-verify="required" placeholder="请输入预警类型"
-                       autocomplete="off" class="layui-input">
+                <select name="enableStatus" id="enableStatus" lay-filter="" type="select">
+                    <option value="on">是</option>
+                    <option value="off">否</option>
+                </select>
             </div>
         </div>
     </div>
-    <div class="layui-col-sm12">
-        <label class="layui-form-label">预警事件内容:</label>
-        <div class="layui-input-block">
+    <div class="layui-form-item layui-row layui-col-space10">
+        <div class="layui-col-sm12">
+            <label class="layui-form-label">内容:</label>
+            <div class="layui-input-block">
             <textarea cols="50" rows="10" style="width:100%;height:100px" name="alarmEventContent"
                       id="alarmEventContent" autocomplete="off"
                       class="layui-input" lay-verify=""></textarea>
-        </div>
-    </div>
-
-    <div class="layui-form-item layui-row layui-col-space12">
-        <div class="layui-col-sm5">
-            <label class="layui-form-label">制单人:</label>
-            <div class="layui-input-block">
-                <input id="makeFormPeople" type="text" name="makeFormPeople" lay-verify="" placeholder=""
-                       autocomplete="off" class="layui-input">
-            </div>
-        </div>
-
-        <div class="layui-col-sm5">
-            <label class="layui-form-label">制单时间：</label>
-            <div class="layui-input-block">
-                <input type="text" name="makeFormTime" id="makeFormTime" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
 
-    <div class="layui-form-item layui-row layui-col-space12">
-        <div class="layui-col-sm5">
-            <label class="layui-form-label">修改人:</label>
-            <div class="layui-input-block">
-                <input id="updatePeople" type="text" name="updatePeople" lay-verify="" placeholder=""
-                       autocomplete="off" class="layui-input">
-            </div>
-        </div>
-
-        <div class="layui-col-sm5">
-            <label class="layui-form-label">修改时间：</label>
-            <div class="layui-input-block">
-                <input type="text" name="updateTime" id="updateTime" autocomplete="off" class="layui-input">
-            </div>
-        </div>
+    <%--    //修改人人--%>
+    <div class="layui-input-block">
+        <%
+            IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
+        %>
+        <input id="updatePeople" type="text" name="updatePeople" value="<%=usetObject.getUserName()%>"
+               class="layui-hide">
+    </div>
+    <%--    //修改时间--%>
+    <div class="layui-input-block">
+        <input type="text" name="updateTime" id="updateTime" class="layui-hide"
+               value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>">
     </div>
     <div class="layui-form-item layui-hide">
         <input type="button" lay-submit lay-filter="layuiadmin-app-form-edit" id="layuiadmin-app-form-edit"
@@ -139,6 +142,7 @@
         win = data.win ? data.win : window;
         var data = data.data;
         form.val("layuiadmin-app-form-list", {
+            "alarmEventInt": data.alarmEventInt,
             "alarmEventId": data.alarmEventId,
             "alarmEventTitle": data.alarmEventTitle,
             "enableStatus": data.enableStatus,
@@ -147,12 +151,17 @@
             "upperLimit": data.upperLimit,
             "lowerLimit": data.lowerLimit,
             "alarmType": data.alarmType,
-            "makeFormPeople": data.makeFormPeople,
-            "makeFormTime": data.makeFormTime,
-            "updatePeople": data.updatePeople,
-            "updateTime": data.updateTime,
         });
     }
+
+    //获取预警类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#alarmType",
+        dictTypeId: "WRANING_TYPE",
+    });
+    //设置预警类型的默认值
+    $("#alarmType").val("101");
+    form.render();
 
     // //判断字符
     // form.verify({

@@ -23,7 +23,7 @@
 	<input id="parentMenuId" name="parentMenuId" type="hidden"/>
 	<div class="layui-form-item layui-row layui-col-space10">
 		<div class="layui-col-sm6">
-			<label class="layui-form-label" >菜单名称：<span style="color:red">*</span></label>
+			<label class="layui-form-label" ><span style="color:red">*</span>菜单名称：</label>
 			<div class="layui-input-block">
 				<input id="menuId" name="menuId" type="hidden"/>
                 <input id="menuAction" name="menuAction" type="hidden"/>
@@ -35,7 +35,7 @@
 			</div>
 		</div>
 		<div class="layui-col-sm6">
-			<label class="layui-form-label" >菜单代码：<span style="color:red">*</span></label>
+			<label class="layui-form-label" ><span style="color:red">*</span>菜单代码：</label>
 			<div class="layui-input-block">
 				<input type="text" class="layui-input" name="menuCode" id="menuCode" lay-verify="required" autocomplete="off" placeholder="">
 			</div>
@@ -43,13 +43,13 @@
 	</div>
 	<div class="layui-form-item layui-row layui-col-space10">
 		<div class="layui-col-sm6">
-			<label class="layui-form-label" >菜单显示名称：<span style="color:red">*</span></label>
+			<label class="layui-form-label" ><span style="color:red">*</span>菜单显示名称：</label>
 			<div class="layui-input-block">
 				<input type="text" class="layui-input" name="menuLabel" id="menuLabel"  lay-verify="required" autocomplete="off" placeholder="">
 			</div>
 		</div>
 		<div class="layui-col-sm6">
-			<label class="layui-form-label" >菜单显示顺序：<span style="color:red">*</span></label>
+			<label class="layui-form-label" ><span style="color:red">*</span>菜单显示顺序：</label>
 			<div class="layui-input-block">
 				<input type="text" class="layui-input" name="displayOrder" id="displayOrder"  lay-verify="number" autocomplete="off" placeholder="">
 			</div>

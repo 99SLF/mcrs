@@ -71,8 +71,11 @@
                 <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i
                         class="layui-icon layui-icon-add-circle-fine"></i>新增事件
                 </button>
+                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="enable"><i
+                        class="layui-icon layui-icon-ok-circle"></i>启用
+                </button>
                 <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i
-                        class="layui-icon layui-icon-import"></i>启用
+                        class="layui-icon layui-icon-delete"></i>删除
                 </button>
             </div>
 
@@ -111,6 +114,15 @@
 
     var hiddenFields = [];
 
+    //获取预警类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#alarmType",
+        dictTypeId: "WRANING_TYPE",
+    });
+    //设置预警类型的默认值
+    $("#alarmType").val("101");
+    form.render();
+
     //监听搜索
     form.on("submit(LAY-app-alarmEventlist-search)", function (data) {
         var field = data.field;
@@ -134,9 +146,9 @@
         add: function () {
             top.layer.open({
                 type: 2,
-                title: "设备新建",
+                title: "预警事件新建",
                 content: "<%= request.getContextPath() %>/warn/alarmEvent/alarm_event_add.jsp",
-                area: ["1000px", "560px"],
+                area: ["800px", "580px"],
                 resize: false,
                 btn: ["确定", "取消"],
                 success: function (layero, index) {
@@ -151,6 +163,55 @@
                 }
             });
         },
+        //批量删除
+        batchdel: function() {
+            var checkStatus = table.checkStatus("LAY-app-alarmEvent-list-reload");
+            var data = checkStatus.data;
+            if (data.length == 0) {
+                layer.msg("请至少选中一条记录！");
+            }
+            if (data.length > 0) {
+                var alarmEventInts = new Array();
+                for (var i=0; i<data.length;i++) {
+                    alarmEventInts[i] = data[i].alarmEventInt;
+                }
+                layer.confirm("确定删除所选预警信息？", {
+                    icon: 3,
+                    title: "系统提示"
+                }, function(index) {
+                    $.ajax({
+                        url: "<%= request.getContextPath() %>/warn/alarmEvent/batchDelete",
+                        type: "DELETE",
+                        data: JSON.stringify(alarmEventInts),
+                        cache: false,
+                        contentType: "text/json",
+                        success: function(result) {
+                            if (result.exception) {
+                                layer.alert(result.exception.message, {
+                                    icon: 2,
+                                    title: "系统提示"
+                                });
+                            } else if (result) {
+                                layer.msg("删除成功", {
+                                    icon: 1,
+                                    time: 2000
+                                }, function() {
+                                    table.reload("LAY-app-alarmEvent-list-reload");
+                                });
+                            } else {
+                                layer.msg("删除失败");
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            layer.msg(jqXHR.responseText, {
+                                time: 2000,
+                                icon: 5
+                            });
+                        }
+                    });
+                });
+            }
+        }
     };
 
     table.on('sort(LAY-app-alarmEvent-list)', function (obj) {
@@ -196,17 +257,14 @@
 
     // 查询过滤字段
     $.ajax({
-        url: "com.zimax.components.coframe.tools.ColsFilter.queryHiddenField.biz.ext",
-        type: "POST",
+        url: "<%=request.getContextPath() %>/cols/filter/query/" + funName,
+        type: "GET",
         async: false,
-        data: JSON.stringify({
-            funName: funName
-        }),
         cache: false,
         contentType: "text/json",
-        success: function (result) {
+        success: function(result) {
             if (result) {
-                hiddenFields = result.colsFilters;
+                hiddenFields = result.data
             } else {
                 layer.msg("查询失败");
             }
@@ -235,24 +293,17 @@
         limits: [10, 15, 20, 30],
         toolbar: "#toolbar",
         defaultToolbar: ["filter"],
-        colHideChange: function (col, checked) {
+        colHideChange: function(col, checked) {
             var field = col.field;
             var hidden = col.hide;
             $.ajax({
-                url: "com.zimax.components.coframe.tools.ColsFilter.setHiddenField.biz.ext",
-                type: "POST",
-                data: JSON.stringify({
-                    hidden: hidden,
-                    colsFilter: {
-                        funName: funName,
-                        field: field
-                    }
-                }),
+                url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
+                type: "GET",
                 cache: false,
                 contentType: "text/json",
-                success: function (result) {
+                success: function(result) {
                     if (result) {
-                    } else {
+                    } else{
                         layer.msg("列筛选失败");
                     }
                 }
@@ -382,7 +433,7 @@
                 title: "系统提示"
             }, function (index) {
                 $.ajax({
-                    url: "<%= request.getContextPath() %>/warn//alarmEvent/delete/" + data.alarmEventId,
+                    url: "<%= request.getContextPath() %>/warn/alarmEvent/delete/" + data.alarmEventInt,
                     type: "DElETE",
                     data: JSON.stringify({
                         alarmEvent: data

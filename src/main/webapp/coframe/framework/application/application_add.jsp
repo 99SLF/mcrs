@@ -15,13 +15,13 @@
 	<input type="hidden" name="tenantId" value="default">
 	<div class="layui-row layui-col-space10 layui-form-item">
 		<div class="layui-col-sm6">
-			<label class="layui-form-label " >应用名称：<span style="color:red">*</span></label>
+			<label class="layui-form-label " ><span style="color:red">*</span>应用名称：</label>
 			<div class="layui-input-block">
 				<input type="text" class="layui-input" name="appName" id="appName"  lay-verify="required" autocomplete="off" placeholder="">
 			</div>
 		</div>
 		<div class="layui-col-sm6">
-			<label class="layui-form-label " >应用代码：<span style="color:red">*</span></label>
+			<label class="layui-form-label " ><span style="color:red">*</span>应用代码：</label>
 			<div class="layui-input-block">
 				<input type="text" class="layui-input" name="appCode" id="appCode" lay-verify="required" autocomplete="off" placeholder="">
 			</div>

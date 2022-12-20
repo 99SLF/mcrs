@@ -224,7 +224,10 @@
     <bean id="DefaultResAuthManagerBean" class="com.zimax.components.coframe.rights.resauth.DefaultResAuthManager">
         <property name="resAuthMapper" ref="ResAuthMapper"/>
     </bean>
-
+    <bean id="SerialnumberMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.serialnumber.mapper.SerialnumberMapper"/>
+    </bean>
     <bean id="DefaultPartyAuthManagerBean" class="com.zimax.components.coframe.rights.partyauth.DefaultPartyAuthManager">
         <property name="partyAuthMapper" ref="PartyAuthMapper"/>
     </bean>

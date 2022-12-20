@@ -35,7 +35,7 @@ public interface AlarmEventMapper {
     /**
      *根据预警事件编号来删除
      */
-    void removeAlarmEvent(Integer alarmEventId);
+    void removeAlarmEvent(int alarmEventInt);
 
     /**
      *修改预警事件
@@ -46,4 +46,10 @@ public interface AlarmEventMapper {
      *修改预警事件启用状态
      */
 //    void enable(AlarmEvent alarmEvent);
+
+    /**
+     * 批量删除
+     * @param alarmEvents
+     */
+    void deleteAlarmEvents(List<Integer> alarmEvents);
 }
