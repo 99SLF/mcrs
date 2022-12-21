@@ -2,9 +2,12 @@ package com.zimax.mcrs.log.mapper;
 
 import com.zimax.mcrs.log.pojo.InterfaceLog;
 import com.zimax.mcrs.log.pojo.OperationLog;
+import com.zimax.mcrs.log.pojo.OperationLogVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 操作日志操作
@@ -18,16 +21,24 @@ public interface OperationLogMapper {
      * 查询所有的接口日志
      * @return
      */
-//    List<OperationLog> queryAll();
+    List<OperationLogVo> queryAll(Map map);
 
+
+    /**
+     * 计数
+     * @return
+     */
+    int count(@Param("logStatus") String logStatus);
     /**
      * 定时删除
      */
-    public void removeTime();
+//    public void removeTime();
 
     /**
-     * 根据条件查询
+     * 新建操作日志
      */
-//    public  OperationLog query();
+    void addOperationLog(OperationLog operationLog);
+
+
 
 }
