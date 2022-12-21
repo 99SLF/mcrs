@@ -51,10 +51,10 @@
                 #{operator}, #{operationTime})
     </insert>
 
-<!--    &lt;!&ndash;定时删除&ndash;&gt;-->
-<!--    <delete id="removeTime" parameterType="int">-->
-<!--        delete from cap_operation_log where operation_log_id = #{operationLogId}-->
-<!--    </delete>-->
+    <!--删除-->
+    <delete id="removeOperationLog" parameterType="int">
+        delete from log_operation_log where operation_log_id = #{operationLogId}
+    </delete>
 
 
 <!--    <select id="getRole" resultType="com.zimax.components.coframe.rights.pojo.Role" >-->

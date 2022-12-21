@@ -65,4 +65,12 @@ public class OperationLogService {
         operationLogMapper.addOperationLog(operationLog);
     }
 
+
+    /**
+     * 删除操作日志
+     */
+    public void removeOperationLog(int operationLogId) {
+        operationLogMapper.removeOperationLog(operationLogId);
+    }
+
 }

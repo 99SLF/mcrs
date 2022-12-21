@@ -79,4 +79,10 @@
     </select>
 
 
+    <!--删除-->
+    <delete id="removeInterfaceLog" parameterType="int">
+        delete from log_interface_log where interface_log_id = #{interfaceLogId}
+    </delete>
+
+
 </mapper>

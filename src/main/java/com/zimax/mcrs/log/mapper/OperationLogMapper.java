@@ -29,10 +29,11 @@ public interface OperationLogMapper {
      * @return
      */
     int count(@Param("logStatus") String logStatus);
+
     /**
-     * 定时删除
+     * 删除功能
      */
-//    public void removeTime();
+    public void removeOperationLog(int operationLogId);
 
     /**
      * 新建操作日志

@@ -49,14 +49,18 @@ public class OperationLogController {
         return Result.success();
     }
 
-//    /**
-//     * 定时删除
-//     * @return
-//     */
-//    @DeleteMapping("")
-//    public  Result<?>  removeOperationLog(@PathVariable("operationTime") Date operationTime) {
-//        return Result.success();
-//    }
+
+    /**
+     * 删除功能
+     *
+     * @param operationLogId 依据操作日志主键删除
+     */
+    @DeleteMapping("/operationLog/delete/{operationLogId}")
+    public Result<?> removeOperationLog(@PathVariable("operationLogId") int operationLogId) {
+        operationLogService.removeOperationLog(operationLogId);
+        return Result.success();
+    }
+
 
 
 }

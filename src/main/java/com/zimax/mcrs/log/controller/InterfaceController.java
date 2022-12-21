@@ -26,16 +26,6 @@ public class InterfaceController {
 
 
     /**
-     * 定时删除接口日志
-     * @param operationTime  操作时间
-     */
-    @DeleteMapping("/{operationTime}")
-    public  Result<?>  removeInterfaceLog(@PathVariable("operationTime")int operationTime) {
-        return Result.success();
-    }
-
-
-    /**
      * 查询
      *
      * @param createTime   创建时间
@@ -86,5 +76,16 @@ public class InterfaceController {
         return Result.success();
     }
 
+
+    /**
+     * 删除接口日志
+     *
+     * @param interfaceLogId 依据接口日志主键删除
+     */
+    @DeleteMapping("/interfaceLog/delete/{interfaceLogId}")
+    public Result<?> removeInterfaceLog(@PathVariable("interfaceLogId") int interfaceLogId){
+        interfaceLogService.removeInterfaceLog(interfaceLogId);
+        return Result.success();
+    }
 
 }
