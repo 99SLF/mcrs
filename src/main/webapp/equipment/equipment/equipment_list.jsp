@@ -321,6 +321,12 @@
             minWidth: 150,
             hide: isHidden("equipmentInstallLocation")
         }, {
+            field: "equipmentIp",
+            title: "设备连接Ip",
+            align: "center",
+            minWidth: 150,
+            hide: isHidden("equipmentIp")
+        }, {
             field: "equipmentContinuePort",
             title: "设备连接端口",
             align: "center",
@@ -332,6 +338,12 @@
             align: "center",
             minWidth: 120,
             hide: isHidden("mesContinueIp")
+        }, {
+            field: "protocolCommunication",
+            title: "通讯协议",
+            align: "center",
+            minWidth: 120,
+            hide: isHidden("protocolCommunication")
         }, {
             field: "creator",
             title: "创建人",

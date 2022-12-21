@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.log.mapper.DeviceExchangeLogMapper">
+
+    <!--    查询记录数-->
+    <select id="count" resultType="int">
+        SELECT count(*) FROM
+        log_device_exchange_log as exchange
+        LEFT JOIN eqi_equipment as eqi
+        ON exchange.equipment_int = eqi.equipment_int
+        LEFT JOIN eqi_device AS dev
+        ON exchange.device_id = dev.device_id
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id like '%${equipmentId}%'
+            </if>
+        </where>
+    </select>
+
+    <!--查询所有-->
+    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.log.pojo.DeviceExchangeLogVo">
+        SELECT * FROM
+        log_device_exchange_log as exchange
+        LEFT JOIN eqi_equipment as eqi
+        ON exchange.equipment_int = eqi.equipment_int
+        LEFT JOIN eqi_device AS dev
+        ON exchange.device_id = dev.device_id
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="equipmentContinuePort !=null and equipmentContinuePort !=''">
+                and eqi.equipment_continue_port like '%${equipmentContinuePort}%'
+            </if>
+            <if test="processName !=null and processName !=''">
+                and exchange.process_name like '%${processName}%'
+            </if>
+            <if test="operator !=null and operator !=''">
+                and exchange.operator like '%${operator}%'
+            </if>
+            <if test="exchangeTime !=null and exchangeTime !=''">
+                and exchange.exchange_time like '%${exchangeTime}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+    <!--添加设备交换日志-->
+    <insert id="addDeviceExchangeLog" parameterType="com.zimax.mcrs.log.pojo.DeviceExchangeLog">
+        insert into log_device_exchange_log
+        values (#{deviceExchangeLogId}, #{deviceExchangeLogNum}, #{logType}, #{equipmentInt},
+                #{deviceId}, #{factoryName}, #{processName},
+                #{dataAcquisition}, #{operator}, #{exchangeTime})
+    </insert>
+
+    <!--根据主键删除设备交换日志-->
+    <delete id="removeDeviceExchangeLog" parameterType="int">
+        delete
+        from log_device_exchange_log
+        where device_exchange_log_id = #{deviceExchangeLogId}
+    </delete>
+
+
+
+</mapper>

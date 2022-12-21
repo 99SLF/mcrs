@@ -46,7 +46,8 @@
         insert into eqi_equipment
         values (#{equipmentInt}, #{equipmentId}, #{equipmentName}, #{enabledState},
                 #{equipmentProperties}, #{mesContinueIp}, #{equipmentInstallLocation},
-                #{equipmentContinuePort}, #{createTime}, #{remarks}, #{creator})
+                #{equipmentContinuePort}, #{createTime}, #{remarks}, #{creator},
+                #{equipmentIp}, #{protocolCommunication})
     </insert>
 
     <!--根据主键删除设备-->

@@ -74,7 +74,7 @@
                 #{ruleUpdateTime})
     </insert>
 
-    <!--根据主键删除设备-->
+    <!--根据主键删除预警谷子额-->
     <delete id="removeAlarmRule" parameterType="int">
         delete
         from war_alarm_rule

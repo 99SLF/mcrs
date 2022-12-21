@@ -418,20 +418,23 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- Table structure for war_alarm_rule
 -- ----------------------------
 DROP TABLE IF EXISTS `war_alarm_rule`;
-CREATE TABLE `war_alarm_rule` (
-    `alarm_rule_id` int(10) NOT NULL COMMENT '预警规则编码',
-    `alarm_rule_title` varchar(255) DEFAULT NULL COMMENT '预警规则标题',
-    `enable` varchar(255) DEFAULT NULL COMMENT '是否启用',
-    `monitor_level` varchar(255) DEFAULT NULL COMMENT '监控层级',
-    `alarm_event_id` int(255) DEFAULT NULL COMMENT '预警事件编码',
-    `monitor_object` varchar(255) DEFAULT NULL COMMENT '监控对象',
-    `alarm_rule_describe` varchar(255) DEFAULT NULL COMMENT '预警规则描述',
-    `rule_make_form_people` varchar(255) DEFAULT NULL COMMENT '制单人',
-    `rule_make_form_time` varchar(255) DEFAULT NULL COMMENT '制单时间',
-    `rule_update_people` varchar(255) DEFAULT NULL COMMENT '修改人',
-    `rule_update_time` varchar(255) DEFAULT NULL COMMENT 'ruleUpdateTime',
-    PRIMARY KEY (`alarm_rule_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+CREATE TABLE `war_alarm_rule`  (
+   `alarm_rule_int` int(255) NOT NULL AUTO_INCREMENT COMMENT '预警规则主键',
+   `alarm_rule_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预警规则编码',
+   `alarm_rule_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预警规则标题',
+   `enable` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否启用',
+   `monitor_level` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '监控层级',
+   `alarm_event_int` int(255) NULL DEFAULT NULL COMMENT '预警事件主键',
+   `monitor_object` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '监控对象',
+   `alarm_rule_describe` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预警规则描述',
+   `rule_make_form_people` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '制单人',
+   `rule_make_form_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '制单时间',
+   `rule_update_people` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
+   `rule_update_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ruleUpdateTime',
+   PRIMARY KEY (`alarm_rule_int`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1239 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- ----------------------------
 -- Table structure for mon_access_status
@@ -458,6 +461,7 @@ CREATE TABLE `mon_access_status` (
      PRIMARY KEY (`access_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
 
+
 -- ----------------------------
 -- Table structure for upd_upload
 -- ----------------------------
@@ -480,3 +484,71 @@ CREATE TABLE `upd_upload` (
       `uuid_file` varchar(255) DEFAULT NULL,
       PRIMARY KEY (`upload_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=197 DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for log_interface_log
+-- ----------------------------
+DROP TABLE IF EXISTS `log_interface_log`;
+CREATE TABLE `log_interface_log`  (
+    `interface_log_id` int(9) NOT NULL AUTO_INCREMENT COMMENT '接口日志主键',
+    `interface_log_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接口日志编号',
+    `log_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志类型',
+    `source` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '来源',
+    `equipment_int` int(9) NULL DEFAULT NULL COMMENT '设备主键',
+    `device_id` int(9) NULL DEFAULT NULL COMMENT '终端主键',
+    `interface_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接口名称',
+    `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+    `json_page` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'JSON包',
+    `dispose_result` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '处理结果',
+    `start_time` datetime NULL DEFAULT NULL COMMENT '开始时间',
+    `end_time` datetime NULL DEFAULT NULL COMMENT '结束时间',
+    `invoker` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '调用者',
+    `dispose_time` datetime NULL DEFAULT NULL COMMENT '处理时长',
+    `method_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '方法名',
+    PRIMARY KEY (`interface_log_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 92 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+-- ----------------------------
+-- Table structure for log_operation_log
+-- ----------------------------
+DROP TABLE IF EXISTS `log_operation_log`;
+CREATE TABLE `log_operation_log`  (
+  `operation_log_id` int(9) NOT NULL AUTO_INCREMENT COMMENT '操作日志主键',
+  `operation_log_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作日志编号',
+  `log_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志类型',
+  `log_status` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志状态',
+  `operation_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作类型',
+  `operation_content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作内容',
+  `operation_result` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作结果',
+  `operator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作人',
+  `operation_time` datetime NULL DEFAULT NULL COMMENT '操作时间',
+  PRIMARY KEY (`operation_log_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+
+    -- ----------------------------
+-- Table structure for log_device_exchange_log
+-- ----------------------------
+DROP TABLE IF EXISTS `log_device_exchange_log`;
+CREATE TABLE `log_device_exchange_log`  (
+    `device_exchange_log_id` int(9) NOT NULL AUTO_INCREMENT COMMENT '设备交换日志主键',
+    `device_exchange_log_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '设备交换日志编号',
+    `log_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志类型',
+    `equipment_int` int(9) NULL DEFAULT NULL COMMENT '设备主键',
+    `device_id` int(9) NULL DEFAULT NULL COMMENT '终端主键',
+    `factory_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工厂名称',
+    `process_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '使用工序',
+    `data_acquisition` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '数据采集',
+    `operator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作人',
+    `exchange_time` datetime NULL DEFAULT NULL COMMENT '交互时间',
+    PRIMARY KEY (`device_exchange_log_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 97 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;

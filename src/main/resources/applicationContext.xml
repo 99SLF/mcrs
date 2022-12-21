@@ -180,8 +180,20 @@
         <property name="mapperInterface" value="com.zimax.mcrs.basic.treeStructure.mapper.TreeMapper"/>
     </bean>
 
+    <bean id="DeviceExchangeLogMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.log.mapper.DeviceExchangeLogMapper"/>
+    </bean>
 
+    <bean id="InterfaceLogMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.log.mapper.InterfaceLogMapper"/>
+    </bean>
 
+    <bean id="OperationLogMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.log.mapper.OperationLogMapper"/>
+    </bean>
 
     <bean id="GradeAuthBean" class="com.zimax.components.coframe.rights.gradeauth.GradeAuthService"></bean>
 

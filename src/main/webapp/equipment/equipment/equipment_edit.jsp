@@ -40,7 +40,7 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label"><span style="color:red">*</span>设备属性:</label>
 			<div class="layui-input-block">
-				<select name="equipmentProperties" id="equipmentProperties" lay-filter="" type="select">
+				<select name="equipmentProperties" id="equipmentProperties" lay-filter="required" type="select">
 					<option value=""></option>
 				</select>
 			</div>
@@ -61,7 +61,7 @@
 			<label class="layui-form-label">设备安装位置:</label>
 			<div class="layui-input-block">
 				<input id="equipmentInstallLocation" type="text" name="equipmentInstallLocation"
-					   lay-verify="required|equipmentInstallLocation"
+					   lay-verify="equipmentInstallLocation"
 					   placeholder="请输入设备安装位置" autocomplete="off" class="layui-input">
 			</div>
 		</div>
