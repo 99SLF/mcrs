@@ -83,15 +83,6 @@
         where alarm_event_int = #{alarmEventInt}
     </update>
 
-<!--    更新启用状态-->
-<!--    <update id="enable" parameterType="com.zimax.mcrs.warn.pojo.AlarmEvent">-->
-<!--        update war_alarm_event-->
-<!--        set enable_status=#{enableStatus},-->
-<!--            update_people=#{updatePeople},-->
-<!--            update_time=#{updateTime}-->
-<!--        where alarm_event_id = #{alarmEventId}-->
-<!--    </update>-->
-
 <!--    批量删除-->
     <delete id="deleteAlarmEvents" parameterType="java.util.List">
         delete from war_alarm_event where alarm_event_int in
@@ -99,5 +90,13 @@
             #{id}
         </foreach>
     </delete>
+
+<!--批量启用-->
+    <update id="enable" parameterType="java.util.List">
+        update war_alarm_event set enableStatus = 'on' where alarm_event_int
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </update>
 
 </mapper>

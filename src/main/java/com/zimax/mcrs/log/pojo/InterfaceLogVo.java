@@ -1,7 +1,9 @@
 package com.zimax.mcrs.log.pojo;
 
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +20,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("log_interface_log")
-public class InterfaceLog {
+public class InterfaceLogVo {
 
     /**
      * 接口日志Id
@@ -42,14 +44,24 @@ public class InterfaceLog {
     private String source;
 
     /**
-     * 设备主键
+     * 设备资源号
      */
-    private int equipmentInt;
+    private String equipmentId;
 
     /**
-     * 终端主键
+     * APPID
      */
-    private int deviceId;
+    private String APPId;
+
+    /**
+     * 设备接入IP
+     */
+    private String equipmentIp;
+
+    /**
+     * 设备接入端口
+     */
+    private String equipmentContinuePort;
 
     /**
      * 接口名称
@@ -59,7 +71,7 @@ public class InterfaceLog {
     /**
      *创建时间
      */
-    private Date createTime;
+    private String createTime;
 
     /**
      * JSON包
@@ -74,12 +86,12 @@ public class InterfaceLog {
     /**
      * 开始时间
      */
-    private Date startTime;
+    private String startTime;
 
     /**
      * 结束时间
      */
-    private Date endTime;
+    private String endTime;
 
     /**
      * 调用者
@@ -89,7 +101,7 @@ public class InterfaceLog {
     /**
      * 处理时长
      */
-    private Date disposeTime;
+    private String disposeTime;
 
     /**
      * 方法名

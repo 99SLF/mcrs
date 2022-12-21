@@ -458,6 +458,7 @@ CREATE TABLE `mon_access_status` (
      PRIMARY KEY (`access_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
 
+
 -- ----------------------------
 -- Table structure for upd_upload
 -- ----------------------------
@@ -480,3 +481,48 @@ CREATE TABLE `upd_upload` (
       `uuid_file` varchar(255) DEFAULT NULL,
       PRIMARY KEY (`upload_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=197 DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for log_interface_log
+-- ----------------------------
+DROP TABLE IF EXISTS `log_interface_log`;
+CREATE TABLE `log_interface_log`  (
+    `interface_log_id` int(9) NOT NULL AUTO_INCREMENT COMMENT '接口日志主键',
+    `interface_log_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接口日志编号',
+    `log_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志类型',
+    `source` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '来源',
+    `equipment_int` int(9) NULL DEFAULT NULL COMMENT '设备主键',
+    `device_id` int(9) NULL DEFAULT NULL COMMENT '终端主键',
+    `interface_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接口名称',
+    `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+    `json_page` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'JSON包',
+    `dispose_result` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '处理结果',
+    `start_time` datetime NULL DEFAULT NULL COMMENT '开始时间',
+    `end_time` datetime NULL DEFAULT NULL COMMENT '结束时间',
+    `invoker` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '调用者',
+    `dispose_time` datetime NULL DEFAULT NULL COMMENT '处理时长',
+    `method_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '方法名',
+    PRIMARY KEY (`interface_log_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 92 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+    -- ----------------------------
+-- Table structure for log_operation_log
+-- ----------------------------
+DROP TABLE IF EXISTS `log_operation_log`;
+CREATE TABLE `log_operation_log`  (
+  `operation_log_id` int(9) NOT NULL AUTO_INCREMENT COMMENT '操作日志主键',
+  `operation_log_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作日志编号',
+  `log_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志类型',
+  `log_status` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志状态',
+  `operation_content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作内容',
+  `operation_result` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作结果',
+  `operator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作人',
+  `operation_time` datetime NULL DEFAULT NULL COMMENT '操作时间',
+  PRIMARY KEY (`operation_log_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;

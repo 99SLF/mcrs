@@ -1,9 +1,13 @@
 package com.zimax.mcrs.log.mapper;
 
+import com.zimax.mcrs.device.pojo.Equipment;
 import com.zimax.mcrs.log.pojo.InterfaceLog;
+import com.zimax.mcrs.log.pojo.InterfaceLogVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 接口日志操作
@@ -17,25 +21,31 @@ public interface InterfaceLogMapper {
      * 查询所有的接口日志
      * @return
      */
-    public List<InterfaceLog> queryAll();
+    List<InterfaceLogVo> queryAll(Map map);
 
     /**
      * 定时删除
      */
-    public List<InterfaceLog> removeTime();
+//    List<InterfaceLog> removeTime();
 
-//    /**
-//     * 根据Id查询正常目录
-//     */
-//    public  List<InterfaceLog> queryNormalLog();
-//
-//    /**
-//     * 根据Id查询异常目录
-//     */
-//    public  List<InterfaceLog> queryUnusual();
 
     /**
-     * 根据Id查询操作内容
+     * 计数
+     * @return
      */
-    public  List<InterfaceLog> queryOperationText();
+    int count(@Param("source") String source);
+
+    /**
+     * 新建接口日志
+     *
+     * @return
+     */
+    void addInterfaceLog(InterfaceLog interfaceLog);
+
+    /**
+     * 检查设备是否存在
+     */
+    int checkEquipment(@Param("equipmentInt") int equipmentInt);
+
+
 }
