@@ -3,6 +3,7 @@ package com.zimax.mcrs.warn.service;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.warn.mapper.AlarmRuleMapper;
 import com.zimax.mcrs.warn.pojo.AlarmRule;
+import com.zimax.mcrs.warn.pojo.AlarmRuleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class AlarmRuleService {
     /**
      * 查询所有预警规则
      */
-    public List<AlarmRule> queryAlarmRule(String  page, String limit, Integer alarmRuleId, String alarmRuleTitle, String monitorLevel, String enable, String alarmEventId, String monitorObject, String ruleMakeFormPeople, String ruleMakeFormTime, String order, String field){
+    public List<AlarmRuleVo> queryAlarmRule(String  page, String limit, Integer alarmRuleId, String alarmRuleTitle, String monitorLevel, String enable, String alarmEventId, String monitorObject, String ruleMakeFormPeople, String ruleMakeFormTime, String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -66,10 +67,10 @@ public class AlarmRuleService {
 
     /**
      * 删除预警规则
-     * @param  alarmRuleId 预警规则编码
+     * @param  alarmRuleInt 预警规则主键
      */
-    public void removeAlarmRule(int alarmRuleId){
-        alarmRuleMapper.removeAlarmRule(alarmRuleId);
+    public void removeAlarmRule(int alarmRuleInt){
+        alarmRuleMapper.removeAlarmRule(alarmRuleInt);
     }
 
     /**
@@ -79,5 +80,12 @@ public class AlarmRuleService {
     public void updateAlarmRule(AlarmRule alarmRule){
         alarmRuleMapper.updateAlarmRule(alarmRule);
 
+    }
+
+    /**
+     * 批量删除告警规则
+     */
+    public void deleteAlarmRules(List<Integer> alarmRuleInt) {
+        alarmRuleMapper.deleteAlarmRules(alarmRuleInt);
     }
 }

@@ -6,8 +6,7 @@
     <insert id="addUpdateUpload" parameterType="com.zimax.mcrs.update.pojo.UpdateUpload">
         insert into upd_upload
         values (#{uploadId}, #{uploadNumber}, #{version}, #{deviceSoType}, #{uploadStrategy},#{fileName}, #{uploader}, #{versionUploadTime}, #{remarks}, #{majorVersion}, #{downloadUrl},
-                #{uploadUuid},
-                #{OriginalFilename},#{uploadFileSize},#{uploadFileType})
+                #{uploadUuid},#{uploadFileSize},#{uploadFileType},#{uuidFile})
     </insert>
 
     <!--    查询记录数-->
@@ -39,6 +38,32 @@
         <if test="limit !=null and limit !=''">
             limit ${begin},${limit}
         </if>
-
     </select>
+
+    <!--    批量删除-->
+    <delete id="deleteUpload" parameterType="java.util.List">
+        delete from upd_upload where upload_id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--通过组件批量获取符合实体-->
+    <select id="getUpload" parameterType="java.util.List" resultType="com.zimax.mcrs.update.pojo.UpdateUpload">
+        select * from upd_upload where upload_id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <!--通过uuidFile批量获取符合文件名-->
+    <select id="getUploadFileName" resultType="string">
+        select file_name from upd_upload
+        <where>
+            <if test="uuidFile !=null and uuidFile !=''">
+                and uuid_file like '%${uuidFile}%'
+            </if>
+        </where>
+    </select>
+
 </mapper>

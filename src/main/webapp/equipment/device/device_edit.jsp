@@ -24,14 +24,14 @@
         <%--	需要隐藏主键	--%>
         <input type="hidden" name="deviceId" value="default">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">APPID:<span style="color:red">*</span></label>
+            <label class="layui-form-label"><span style="color:red">*</span>APPID:</label>
             <div class="layui-input-block">
                 <input id="APPId" type="text" name="APPId" lay-verify="" placeholder="" autocomplete="off"
                        class="layui-input" readonly>
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label">终端名称:<span style="color:red">*</span></label>
+            <label class="layui-form-label"><span style="color:red">*</span>终端名称:</label>
             <div class="layui-input-block">
                 <input id="deviceName" type="text" name="deviceName" lay-verify="required|deviceName" placeholder=""
                        autocomplete="off" class="layui-input">
@@ -41,7 +41,7 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">终端软件类型:<span style="color:red">*</span></label>
+            <label class="layui-form-label"><span style="color:red">*</span>终端软件类型:</label>
             <div class="layui-input-block">
                 <select name="deviceSoftwareType" id="deviceSoftwareType" lay-filter="" type="select"  >
                     <option value=""></option>
@@ -77,7 +77,7 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">接入点资源号:<span style="color:red">*</span></label>
+            <label class="layui-form-label"><span style="color:red">*</span>接入点资源号:</label>
             <div class="layui-input-block">
                 <input id="equipmentInt" name="equipmentInt" type="hidden"/>
                 <input type="text" class="layui-input"  name="equipmentId" id="equipmentId"
@@ -100,7 +100,7 @@
     </div>
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">接入点属性:<span style="color:red">*</span></label>
+            <label class="layui-form-label"><span style="color:red">*</span>接入点属性:</label>
             <div class="layui-input-block">
                 <input id="equipmentProperties" type="text" name="equipmentProperties" lay-verify="assessAttributes"
                        placeholder="" autocomplete="off" class="layui-input" readonly>

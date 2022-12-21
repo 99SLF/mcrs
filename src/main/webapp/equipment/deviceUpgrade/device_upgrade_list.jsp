@@ -38,7 +38,7 @@
                     </div>
                     <label class="layui-form-label">版本更改时间：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="versionUpdateTime" placeholder="请输入版本更改时间" autocomplete="off"
+                        <input type="text" name="versionUpdateTime" id="versionUpdateTime" placeholder="请输入版本更改时间" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -94,6 +94,13 @@
     var funName = "list";
 
     var hiddenFields = [];
+
+    var laydate = layui.laydate;
+    //日期时间选择器
+    laydate.render({
+        elem: '#versionUpdateTime',
+        type: 'date'
+    });
 
     //监听搜索
     form.on("submit(LAY-app-deviceUpgradelist-search)", function (data) {

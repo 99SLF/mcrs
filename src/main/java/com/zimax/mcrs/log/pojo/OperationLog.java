@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("cap_operation_log")
+@TableName("log_operation_log")
 public class OperationLog {
 
     /**
@@ -27,17 +27,19 @@ public class OperationLog {
     private int operationLogId;
 
     /**
-     * 操作时间
+     * 操作日志编号
      */
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date operationTime;
+    private String operationLogNum;
 
     /**
-     * 操作类型
+     * 日志类型
      */
-    private String operationType;
+    private String logType;
+
+    /**
+     * 日志状态
+     */
+    private String logStatus;
 
     /**
      * 操作内容
@@ -45,9 +47,9 @@ public class OperationLog {
     private String operationContent;
 
     /**
-     * 操作对象
+     * 操作结果
      */
-    private String operationObject;
+    private String operationResult;
 
     /**
      * 操作人
@@ -55,13 +57,10 @@ public class OperationLog {
     private String operator;
 
     /**
-     * 操作角色
+     * 操作时间
      */
-    private String operationRole;
+    private Date operationTime;
 
-    /**
-     * 操作结果
-     */
-    private String operationResult;
+
 
 }

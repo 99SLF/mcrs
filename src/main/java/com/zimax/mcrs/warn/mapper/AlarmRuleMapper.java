@@ -2,6 +2,7 @@ package com.zimax.mcrs.warn.mapper;
 
 import com.zimax.mcrs.warn.pojo.AlarmEvent;
 import com.zimax.mcrs.warn.pojo.AlarmRule;
+import com.zimax.mcrs.warn.pojo.AlarmRuleVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,7 +20,7 @@ public interface AlarmRuleMapper {
     /**
      *查询全部预警事件
      */
-    List<AlarmRule> queryAll(Map map);
+    List<AlarmRuleVo> queryAll(Map map);
 
     /**
      *记录预警事件条数
@@ -36,11 +37,17 @@ public interface AlarmRuleMapper {
     /**
      *依据主键删除预警事件
      */
-    void removeAlarmRule(int alarmRuleId);
+    void removeAlarmRule(int alarmRuleInt);
 
     /**
      *修改预警事件
      */
     void updateAlarmRule(AlarmRule alarmRule);
+
+    /**
+     * 批量删除
+     * @param alarmRuleInt
+     */
+    void deleteAlarmRules(List<Integer> alarmRuleInt);
 
 }

@@ -77,4 +77,13 @@ public class Equipment {
      */
     private String remarks;
 
+    /**
+     * 设备连接IP
+     */
+    private String equipmentIp;
+
+    /**
+     * 通讯协议
+     */
+    private String protocolCommunication;
 }

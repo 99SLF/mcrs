@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.basic.accPointResMaintain.equipTypeMaintain.mapper.EquipMapper">
+    <!--添加设备基础数据-->
+    <insert id="addEquipInfo" parameterType="com.zimax.mcrs.basic.accPointResMaintain.equipTypeMaintain.pojo.EquipTypeInfo">
+        insert into bas_equipType_info
+        values (#{equipTypeId}, #{equipTypeName}, #{equipTypeCode}, #{equipTypeEnable}, #{equipTypeModel},#{protocolCommunication},#{remarks})
+    </insert>
+</mapper>

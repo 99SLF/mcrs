@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.log.mapper.InterfaceLogMapper">
+
+    <!--    查询记录数-->
+    <select id="count" resultType="int">
+        SELECT count(*) FROM log_interface_log as inter
+        LEFT JOIN eqi_equipment as eqi
+        on inter.equipment_int = eqi.equipment_int
+        LEFT JOIN eqi_device as dev
+        ON inter.device_id = dev.device_id
+        <where>
+            <if test="source !=null and source !=''">
+                and inter.source like '%${source}%'
+            </if>
+        </where>
+    </select>
+
+    <!--查询所有-->
+    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.log.pojo.InterfaceLogVo">
+        SELECT * FROM log_interface_log as inter
+        LEFT JOIN eqi_equipment as eqi
+        on inter.equipment_int = eqi.equipment_int
+        LEFT JOIN eqi_device as dev
+        ON inter.device_id = dev.device_id
+        <where>
+            <if test="createTime !=null and createTime !=''">
+                and inter.create_time like '%${createTime}%'
+            </if>
+            <if test="source !=null and source !=''">
+                and inter.source like '%${source}%'
+            </if>
+            <if test="interfaceName !=null and interfaceName !=''">
+                and inter.interface_name like '%${interfaceName}%'
+            </if>
+            <if test="equipmentIp !=null and equipmentIp !=''">
+                and eqi.equipment_ip like '%${equipmentIp}%'
+            </if>
+            <if test="invoker !=null and invoker !=''">
+                and inter.invoker like '%${invoker}%'
+            </if>
+            <if test="methodName !=null and methodName !=''">
+                and inter.method_name like '%${methodName}%'
+            </if>
+            <if test="disposeTime !=null and disposeTime !=''">
+                and inter.dispose_time like '%${disposeTime}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+    <!--添加设备-->
+    <insert id="addInterfaceLog" parameterType="com.zimax.mcrs.log.pojo.InterfaceLog">
+        insert into log_interface_log
+        values (#{interfaceLogId}, #{interfaceLogNum}, #{logType}, #{source},
+                #{equipmentInt}, #{deviceId}, #{interfaceName},
+                #{createTime}, #{JSONPage}, #{disposeResult}, #{startTime},
+                #{endTime}, #{invoker}, #{disposeTime}, #{methodName})
+    </insert>
+
+<!--    &lt;!&ndash;根据主键删除设备&ndash;&gt;-->
+<!--    <delete id="removeEquipment" parameterType="int">-->
+<!--        delete-->
+<!--        from eqi_equipment-->
+<!--        where equipment_int = #{equipmentInt}-->
+<!--    </delete>-->
+
+    <!--依据设备资源号获取设备信息-->
+    <select id="checkEquipment" resultType="int">
+        select count(*)
+        from eqi_equipment
+        where equipment_int = #{equipmentInt}
+    </select>
+
+
+</mapper>

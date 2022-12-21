@@ -21,10 +21,17 @@ import java.util.Date;
 public class AlarmRule {
 
     /**
-     * 预警规则编码
+     * 预警规则主键
      */
     @TableId(type = IdType.AUTO)
-    private int alarmRuleId;
+    private int alarmRuleInt;
+
+
+    /**
+     * 预警规则编码
+     */
+    private String alarmRuleId;
+
 
     /**
      * 预警规则标题
@@ -44,7 +51,7 @@ public class AlarmRule {
     /**
      * 预警事件编码
      */
-    private int alarmEventId;
+    private int alarmEventInt;
 
     /**
      * 监控对象

@@ -2,23 +2,22 @@ package com.zimax.mcrs.log.pojo;
 
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 /**
  * 接口日志
+ *
  * @author 林俊杰
- * @date 2022/12/2
+ * @date 2022/12/20
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("cap_interface_log")
+@TableName("log_interface_log")
 public class InterfaceLog {
 
     /**
@@ -28,12 +27,29 @@ public class InterfaceLog {
     private int interfaceLogId;
 
     /**
-     * 操作时间
+     * 接口日志编号
      */
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date operationTime;
+    private String interfaceLogNum;
+
+    /**
+     * 日志类型
+     */
+    private String logType;
+
+    /**
+     * 来源
+     */
+    private String source;
+
+    /**
+     * 设备主键
+     */
+    private int equipmentInt;
+
+    /**
+     * 终端主键
+     */
+    private int deviceId;
 
     /**
      * 接口名称
@@ -41,19 +57,42 @@ public class InterfaceLog {
     private String interfaceName;
 
     /**
-     * 接口状态
+     *创建时间
      */
-    private String interfaceLogStatus;
+    private Date createTime;
 
     /**
-     * 操作人
+     * JSON包
      */
-    private String operator;
+    private String JSONPage;
 
     /**
-     * 操作角色
+     * 处理结果
      */
-    private String operationRole;
+    private String disposeResult;
 
+    /**
+     * 开始时间
+     */
+    private Date startTime;
 
+    /**
+     * 结束时间
+     */
+    private Date endTime;
+
+    /**
+     * 调用者
+     */
+    private String invoker;
+
+    /**
+     * 处理时长
+     */
+    private Date disposeTime;
+
+    /**
+     * 方法名
+     */
+    private String methodName;
 }

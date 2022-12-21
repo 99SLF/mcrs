@@ -9,6 +9,8 @@ import com.zimax.mcrs.update.pojo.UpdateUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,7 @@ public class UpdateUploadService {
 
     /**
      * 更新包数据处理
+     *
      * @param
      * @return
      */
@@ -30,9 +33,10 @@ public class UpdateUploadService {
 
     /**
      * 添加更新包信息
+     *
      * @param updateUpload 更新包信息
      */
-    public void addUpdateUpload(UpdateUpload updateUpload){
+    public void addUpdateUpload(UpdateUpload updateUpload) {
 
         updateUploadMapper.addUpdateUpload(updateUpload);
     }
@@ -40,6 +44,7 @@ public class UpdateUploadService {
 
     /**
      * 通过查询记录条数
+     *
      * @param
      * @return
      */
@@ -50,7 +55,7 @@ public class UpdateUploadService {
     /**
      * 查询所有更新包信息
      */
-    public List<UpdateUpload> queryUpdateUpload(String page, String limit, String version,String deviceSoType, String order, String field) {
+    public List<UpdateUpload> queryUpdateUpload(String page, String limit, String version, String deviceSoType, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -68,5 +73,52 @@ public class UpdateUploadService {
         map.put("deviceSoType", deviceSoType);
         return updateUploadMapper.queryUpdateUpload(map);
 
+    }
+
+    /**
+     * 删除更新包数据
+     *
+     * @param
+     * @return
+     */
+    public void deleteUpload(List<Integer> uploadIds) {
+
+
+        List<UpdateUpload> uploadDatas = updateUploadMapper.getUpload(uploadIds);
+        String imgpaths = "";
+        for (UpdateUpload uploadData:
+                uploadDatas) {
+            imgpaths += uploadData.getDownloadUrl() + ",";
+        }
+        try {
+            UpdateUploadService.deleteFile(imgpaths);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        updateUploadMapper.deleteUpload(uploadIds);
+
+    }
+
+    /**
+     * 通过uuid删除文件资料
+     *
+     * @param
+     * @return
+     */
+    public static boolean deleteFile(String imgPath) throws IOException {
+        boolean flag = false;
+        if (imgPath == null) {
+            return flag;
+        }
+        String[] imgSrc = imgPath.split(",");
+        for (String src : imgSrc) {
+            File file = new File(src);
+            if (file.exists()) {
+                if (file.delete()) {
+                    flag = true;
+                }
+            }
+        }
+        return flag;
     }
 }

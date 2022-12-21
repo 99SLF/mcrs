@@ -8,6 +8,7 @@ import com.zimax.mcrs.warn.service.AlarmEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,8 +36,8 @@ public class AlarmEventController {
      * @return 角色列表
      */
     @GetMapping("/alarmEvent/query")
-    public Result<?> query(Integer alarmEventId, String alarmEventTitle, String alarmLevel, String alarmCategory,  String alarmType, String makeFormPeople, String limit,  String page, String order, String field) {
-        List alarmEvents = alarmEventService.queryAll(page,limit,alarmEventId,alarmEventTitle,alarmLevel,alarmCategory,alarmType,makeFormPeople,order,field);
+    public Result<?> query(Integer alarmEventId, String alarmEventTitle, String alarmLevel, String alarmCategory,  String alarmType, String makeFormPeople, String makeFormTime, String limit,  String page, String order, String field) {
+        List alarmEvents = alarmEventService.queryAll(page,limit,alarmEventId,alarmEventTitle,alarmLevel,alarmCategory,alarmType,makeFormPeople,makeFormTime,order,field);
         return Result.success(alarmEvents, alarmEventService.count(alarmEventId,alarmEventTitle));
     }
 
@@ -52,11 +53,11 @@ public class AlarmEventController {
 
     /**
      * 删除告警事件
-     * @param alarmEventId 预警事件编码
+     * @param alarmEventInt 预警事件编码
      */
-    @DeleteMapping("/alarmEvent/delete/{alarmEventId}")
-    public Result<?> removeAlarmEvent(@PathVariable("alarmEventId")Integer alarmEventId) {
-        alarmEventService.removeAlarm(alarmEventId);
+    @DeleteMapping("/alarmEvent/delete/{alarmEventInt}")
+    public Result<?> removeAlarmEvent(@PathVariable("alarmEventInt")int alarmEventInt) {
+        alarmEventService.removeAlarm(alarmEventInt);
         return  Result.success();
     }
 
@@ -79,6 +80,18 @@ public class AlarmEventController {
 //        alarmEventService.enableAlarm(alarmEvent);
 //        return Result.success();
 //    }
+
+
+    /**
+     * 批量删除告警事件
+     * @param alarmEventInt 告警事件主键数组
+     */
+    @DeleteMapping("/alarmEvent/batchDelete")
+    public Result<?> deleteDevices(@RequestBody Integer[] alarmEventInt) {
+        alarmEventService.deleteAlarmEvents(Arrays.asList(alarmEventInt));
+        return Result.success();
+
+    }
 
 
 }

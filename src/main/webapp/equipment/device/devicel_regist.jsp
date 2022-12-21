@@ -24,7 +24,7 @@
 
     <div class="layui-form-item layui-row layui-col-space6">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">终端名称:<span style="color:red">*</span></label>
+            <label class="layui-form-label"><span style="color:red">*</span>终端名称:</label>
             <div class="layui-input-block">
                 <input id="deviceName" type="text" name="deviceName" lay-verify="required|deviceName"
                        placeholder="终端名称(必填)" autocomplete="off" class="layui-input">
@@ -34,7 +34,7 @@
 
     <div class="layui-form-item layui-row layui-col-space6">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">设备资源号:<span style="color:red">*</span></label>
+            <label class="layui-form-label"><span style="color:red">*</span>设备资源号:</label>
             <div class="layui-input-block">
                 <input id="equipmentInt" name="equipmentInt" type="hidden"/>
                 <input type="text" class="layui-input" name="equipmentId" id="equipmentId"
@@ -43,7 +43,6 @@
                 <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="onButtonEdit"
                         style="position:absolute;top:0px;right:0px;height:37px"><i
                         class="layui-icon layui-icon-more"></i></button>
-                `
             </div>
         </div>
     </div>
@@ -51,7 +50,7 @@
 
     <div class="layui-form-item layui-row layui-col-space6">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">终端软件类型:<span style="color:red">*</span></label>
+            <label class="layui-form-label"><span style="color:red">*</span>终端软件类型:</label>
             <div class="layui-input-block">
                 <select name="deviceSoftwareType" id="deviceSoftwareType" lay-filter="deviceSoftwareType" type="select">
                     <option value=""></option>
