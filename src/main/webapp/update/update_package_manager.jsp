@@ -348,7 +348,10 @@
             title: "更新包",
             align: "center",
             minWidth: 100,
-            hide: isHidden("fileName")
+            hide: isHidden("fileName"),
+            templet:function (data) {
+                return layui.util.toDateString(data.versionUploadTime, "yyyy-MM-dd");
+            }
         }, {
             field: "uploader",
             title: "上传人",

@@ -6,16 +6,15 @@ import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.update.mapper.UpdateUploadMapper;
 import com.zimax.mcrs.update.pojo.UpdateUpload;
 import com.zimax.mcrs.update.service.UpdateUploadService;
-import org.apache.commons.compress.utils.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -103,6 +102,11 @@ public class UpdateUploadController {
             //将当期的用户信息存储到数据库表里
             updateUpload.setUploader(usetObject.getUserName());
 
+            //走编码规则，流水单号
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String format = simpleDateFormat.format(new Date());
+            updateUpload.setUploadNumber("GX"+format);
+
             //调用存储添加功能
             updateUploadService.addUpdateUpload(updateUpload);
         } else {
@@ -159,6 +163,22 @@ public class UpdateUploadController {
         return Result.success();
 
     }
+
+    /**
+     * 通过终端软件类型查询出相应的最新的一条数据获取其相应的版本号是什么
+     *
+     * @param
+     * @return
+     */
+    @GetMapping("/getUpdateUpload")
+    public Result<?> getUpdateUpload(String deviceSoType){
+        List UpdateUpload = updateUploadService.getUpdateUpload(deviceSoType);
+        return Result.success(UpdateUpload);
+
+    }
+
+
+
 
 
     @RequestMapping("/download")

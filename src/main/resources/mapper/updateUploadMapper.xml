@@ -66,4 +66,16 @@
         </where>
     </select>
 
+    <!--通过终端软件类型查询出最新的版本号-->
+    <select id="getUpdateUpload" resultType="com.zimax.mcrs.update.pojo.UpdateUpload">
+    SELECT * FROM upd_upload
+        <where>
+            <if test="deviceSoType !=null and deviceSoType !=''">
+                and device_so_type like '%${deviceSoType}%'
+            </if>
+        </where>
+    ORDER BY version_upload_time DESC
+    LIMIT 1;
+    </select>
+
 </mapper>
