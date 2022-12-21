@@ -457,3 +457,26 @@ CREATE TABLE `mon_access_status` (
      `remarks` varchar(255) DEFAULT NULL,
      PRIMARY KEY (`access_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for upd_upload
+-- ----------------------------
+DROP TABLE IF EXISTS `upd_upload`;
+CREATE TABLE `upd_upload` (
+      `upload_id` int(11) NOT NULL AUTO_INCREMENT,
+      `upload_number` varchar(255) DEFAULT NULL,
+      `version` varchar(255) DEFAULT NULL,
+      `device_so_type` varchar(255) DEFAULT NULL,
+      `upload_strategy` varchar(255) DEFAULT NULL,
+      `file_name` varchar(255) DEFAULT NULL,
+      `uploader` varchar(255) DEFAULT NULL,
+      `version_upload_time` datetime DEFAULT NULL,
+      `remarks` varchar(255) DEFAULT NULL,
+      `major_version` varchar(255) DEFAULT NULL,
+      `download_url` varchar(255) DEFAULT NULL,
+      `upload_uu_id` varchar(255) DEFAULT NULL,
+      `upload_file_size` double DEFAULT NULL,
+      `upload_file_type` varchar(255) DEFAULT NULL,
+      `uuid_file` varchar(255) DEFAULT NULL,
+      PRIMARY KEY (`upload_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=197 DEFAULT CHARSET=utf8;
