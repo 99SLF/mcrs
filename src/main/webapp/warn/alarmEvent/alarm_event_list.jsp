@@ -217,6 +217,54 @@
                     });
                 });
             }
+        },
+        enable: function() {
+            var checkStatus = table.checkStatus("LAY-app-alarmEvent-list-reload");
+            var data = checkStatus.data;
+            if (data.length == 0) {
+                layer.msg("请至少选中一条记录！");
+            }
+            if (data.length > 0) {
+                var alarmEventInts = new Array();
+                for (var i=0; i<data.length;i++) {
+                    alarmEventInts[i] = data[i].alarmEventInt;
+                }
+                layer.confirm("确定启用所选预警信息？", {
+                    icon: 3,
+                    title: "系统提示"
+                }, function(index) {
+                    $.ajax({
+                        url: "<%= request.getContextPath() %>/warn/alarmEvent/enable",
+                        type: "POSt",
+                        data: JSON.stringify(alarmEventInts),
+                        cache: false,
+                        contentType: "text/json",
+                        success: function(result) {
+                            if (result.exception) {
+                                layer.alert(result.exception.message, {
+                                    icon: 2,
+                                    title: "系统提示"
+                                });
+                            } else if (result) {
+                                layer.msg("启用成功", {
+                                    icon: 1,
+                                    time: 2000
+                                }, function() {
+                                    table.reload("LAY-app-alarmEvent-list-reload");
+                                });
+                            } else {
+                                layer.msg("启用失败");
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            layer.msg(jqXHR.responseText, {
+                                time: 2000,
+                                icon: 5
+                            });
+                        }
+                    });
+                });
+            }
         }
     };
 

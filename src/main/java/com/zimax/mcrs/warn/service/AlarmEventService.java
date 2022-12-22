@@ -95,4 +95,12 @@ public class AlarmEventService {
         alarmEventMapper.deleteAlarmEvents(alarmEventInt);
     }
 
+
+    /**
+     * 批量启用告警事件
+     */
+    public void enable(List<Integer> alarmEventInt) {
+        alarmEventMapper.enable(alarmEventInt);
+    }
+
 }

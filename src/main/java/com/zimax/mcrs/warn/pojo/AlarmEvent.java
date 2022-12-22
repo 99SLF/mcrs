@@ -29,7 +29,7 @@ public class AlarmEvent {
     /**
      * 预警事件编码
      */
-    private Integer alarmEventId;
+    private String alarmEventId;
 
     /**
      * 预警事件标题

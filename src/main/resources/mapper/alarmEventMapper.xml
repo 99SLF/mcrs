@@ -91,9 +91,9 @@
         </foreach>
     </delete>
 
-<!--批量启用-->
+    <!--批量启用-->
     <update id="enable" parameterType="java.util.List">
-        update war_alarm_event set enableStatus = 'on' where alarm_event_int
+        update war_alarm_event set enable_status = 'on' where alarm_event_int in
         <foreach collection="list" item="id" separator="," open="(" close=")">
             #{id}
         </foreach>
