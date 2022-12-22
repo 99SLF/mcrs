@@ -29,13 +29,13 @@
                 <h1>参数信息</h1>
             </div>
         </div>
-        <div class="layui-form" lay-filter="pointDispose-add" id="order-add" style="padding:20px;">
+        <div class="layui-form" lay-filter="pointDispose-add" id="pointDispose-add" style="padding:20px;">
             <div class="layui-row layui-col-space10 layui-form-item">
                 <div class="layui-col-sm4">
                     <label class="layui-form-label"><span style="color:red">*</span>APPID：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="appId" id="appId"
-                               autocomplete="off" >
+                               autocomplete="off" readonly>
                         <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="selectAppId"
                                 style="position:absolute;top:0px;right:0px;height:37px">
                             <i class="layui-icon layui-icon-more"></i>
@@ -336,6 +336,32 @@
         });
     });
 
+    //选择设备资源号入口
+    $("#selectAppId").click(function () {
+        top.layer.open({
+            type: 2,
+            title: "选择终端",
+            area: ["850px", "470px"],
+            btn: ["确定", "取消"],
+            content: "<%= request.getContextPath() %>/equipment/device/device_select.jsp",
+            yes: function (index, layero) {
+                var pointDispose = layero.find('iframe')[0].contentWindow.getData();
+                debugger;
+                form.val("pointDispose-add",{
+                    "appId": pointDispose.aPPId,
+                    "deviceName": pointDispose.deviceName,
+                    "equipmentId": pointDispose.equipmentId,
+                    "equipmentIp":pointDispose.equipmentIp,
+                    "equipmentContinuePort": pointDispose.equipmentContinuePort,
+                    "equipmentName":pointDispose.equipmentName,
+                    "factoryName":pointDispose.factoryName,
+                    "production": pointDispose.production,
+                    "equipmentProperties":pointDispose.equipmentProperties,
+                })
+                top.layer.close(index);
+            }
+        });
+    });
     table.on('toolbar(plc)', function (obj) {
         var type = obj.event;
         active[type] ? active[type].call(this) : "";

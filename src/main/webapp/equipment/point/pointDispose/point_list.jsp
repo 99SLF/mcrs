@@ -246,25 +246,21 @@
         }, {
             field: "deviceName",
             title: "终端名称",
-            edit: 'text',
             align: "left",
             minWidth: 100,
         }, {
             field: "equipmentId",
             title: "设备资源号",
-            edit: 'text',
             align: "center",
             minWidth: 100,
         }, {
             field: "equipmentIp",
             title: "接入点IP",
-            edit: 'text',
             align: "center",
             minWidth: 100,
         }, {
             field: "equipmentContinuePort",
             title: "端口号",
-            edit: 'text',
             align: "center",
             minWidth: 120,
         }, {
