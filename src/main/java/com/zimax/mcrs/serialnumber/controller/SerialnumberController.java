@@ -51,8 +51,9 @@ public class SerialnumberController {
         serialnumberService.batchDeleteSerialnumber(Ids);
         return Result.success();
     }
+
     @GetMapping("/query")
     public Result<?> querySerialnumbers(String page, String limit, String functionName, String order, String field){
-        return Result.success(serialnumberService.querySerialnumbers(page, limit, functionName, order, field),serialnumberService.count(functionName,null));
+        return Result.success(serialnumberService.querySerialnumbers(page, limit, functionName,null, order, field),serialnumberService.count(functionName,null));
     }
 }
