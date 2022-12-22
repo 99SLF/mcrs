@@ -1,10 +1,15 @@
 package com.zimax.mcrs.device.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * @Author 施林丰
@@ -19,87 +24,89 @@ public class PointDispose {
     /**
      * 主键
      */
-    String appId;
+    @TableId(type = IdType.AUTO)
+    private String appId;
     /**
      * 下料执行作业
      */
-    String downwork;
+    private String downWork;
     /**
      * 上料执行作业
      */
-    String upWork;
+    private String upWork;
     /**
      * 上料过账模式
      */
-        String upModel;
+    private String upModel;
     /**
      * 下料过账模式
      */
-    String downModel;
+    private String downModel;
     /**
      * 数量单位
      */
-    String dataUnit;
+    private String dataUnit;
     /**
      * 数据计算方法
      */
-    String dataMethod;
+    private String dataMethod;
     /**
      * 单片机长度
      */
-    Double chipLength;
+    private Integer chipLength;
     /**
      * 比例
      */
-    Double scale;
+    private Integer scale;
     /**
      * 系数
      */
-    Double ratio;
+    private Integer ratio;
     /**
      * 数采检查参数
      */
-    Double checkParam;
+    private Integer checkParam;
     /**
-     *  放卷卸料设定卷径
+     * 放卷卸料设定卷径
      */
-    Double rollDiameter;
+    private Integer rollDiameter;
     /**
-     *  验证周期
+     * 验证周期
      */
-    Double lableCycle;
+    private Integer lableCycle;
     /**
      * 监测时间
      */
-    Data monitorDate;
+    private Integer monitorDate;
     /**
      * 终端名称
      */
-     String  deviceName;
+    private String deviceName;
     /**
      * 设备资源号
      */
-    String equipmentId;
+    private String equipmentId;
     /**
      * 设备连接IP
      */
-    String equipmentIp;
+    private String equipmentIp;
     /**
      * 端口
      */
-     String equipmentContinuePort;
+    private String equipmentContinuePort;
     /**
      * 接入点名称
      */
-     String equipmentName;
+    private String equipmentName;
 
     /**
      * 工厂名称
      */
-     String factoryName;
+    private String factoryName;
     @TableField(exist = false)
-    PlcGroup plcGroup[];
+    private List<PlcGroup> plcGroupList;
     @TableField(exist = false)
-    RfidGroup rfidGroup[];
+    private List<RfidGroup> rfidGroupList;
+
 
 }

@@ -32,10 +32,10 @@
         <div class="layui-form" lay-filter="pointDispose-add" id="order-add" style="padding:20px;">
             <div class="layui-row layui-col-space10 layui-form-item">
                 <div class="layui-col-sm4">
-                    <label class="layui-form-label">APPID：</label>
+                    <label class="layui-form-label"><span style="color:red">*</span>APPID：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="appId" id="appId" lay-verify="required"
-                               autocomplete="off" readonly>
+                        <input type="text" class="layui-input" name="appId" id="appId"
+                               autocomplete="off" >
                         <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="selectAppId"
                                 style="position:absolute;top:0px;right:0px;height:37px">
                             <i class="layui-icon layui-icon-more"></i>
@@ -45,14 +45,14 @@
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">终端名称：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="deviceName" id="deviceName" lay-verify="required"
+                        <input type="text" class="layui-input" name="deviceName" id="deviceName"
                                autocomplete="off" readonly>
                     </div>
                 </div>
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">设备资源号：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="equipmentId" id="equipmentId" lay-verify="required"
+                        <input type="text" class="layui-input" name="equipmentId" id="equipmentId"
                                autocomplete="off" readonly>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">接入点IP：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="equipmentIp" id="equipmentIp" lay-verify="required"
+                        <input type="text" class="layui-input" name="equipmentIp" id="equipmentIp"
                                autocomplete="off" readonly>
                     </div>
                 </div>
@@ -69,14 +69,14 @@
                     <label class="layui-form-label">端口号：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="equipmentContinuePort" id="equipmentContinuePort"
-                               lay-verify="required" autocomplete="off" readonly>
+                                autocomplete="off" readonly>
                     </div>
                 </div>
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">接入点名称：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="equipmentName" id="equipmentName"
-                               lay-verify="required" autocomplete="off" readonly>
+                                autocomplete="off" readonly>
                     </div>
                 </div>
             </div>
@@ -84,14 +84,14 @@
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">工厂名称：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="factoryName" id="factoryName" lay-verify="required"
+                        <input type="text" class="layui-input" name="factoryName" id="factoryName"
                                autocomplete="off" readonly>
                     </div>
                 </div>
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">使用工序：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="production" id="production" lay-verify="required"
+                        <input type="text" class="layui-input" name="production" id="production"
                                autocomplete="off" readonly>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
                     <label class="layui-form-label">设备类型：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="equipmentProperties" id="equipmentProperties"
-                               lay-verify="required" autocomplete="off" readonly>
+                                autocomplete="off" readonly>
                     </div>
                 </div>
             </div>
@@ -108,21 +108,21 @@
                     <label class="layui-form-label">通信协议：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="protocolCommunication" id="protocolCommunication"
-                               lay-verify="required" autocomplete="off" readonly>
+                              autocomplete="off" readonly>
                     </div>
                 </div>
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">下料执行作业：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="downwork" id="downwork" lay-verify="required"
-                               autocomplete="off" readonly>
+                        <input type="text" class="layui-input" name="downwork" id="downwork"
+                               autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">上料执行作业：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="upWork" id="upWork" lay-verify="required"
-                               autocomplete="off" readonly>
+                        <input type="text" class="layui-input" name="upWork" id="upWork"
+                               autocomplete="off" >
                     </div>
                 </div>
             </div>
@@ -130,22 +130,22 @@
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">上料过账模式：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="upModel" id="upModel" lay-verify="required"
-                               autocomplete="off" readonly>
+                        <input type="text" class="layui-input" name="upModel" id="upModel"
+                               autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">下料过账模式：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="downModel" id="downModel" lay-verify="required"
-                               autocomplete="off" readonly>
+                        <input type="text" class="layui-input" name="downModel" id="downModel"
+                               autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">数量单位：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="dataUnit" id="dataUnit" lay-verify="required"
-                               autocomplete="off" readonly>
+                        <input type="text" class="layui-input" name="dataUnit" id="dataUnit"
+                               autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -153,22 +153,22 @@
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">数据计算方法：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="dataMethod" id="dataMethod" lay-verify="required"
+                        <input type="text" class="layui-input" name="dataMethod" id="dataMethod"
                                autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">单片机总长度：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="chipLength" id="chipLength" lay-verify="required"
-                               autocomplete="off">
+                        <input type="text" class="layui-input" name="chipLength" id="chipLength"
+                               autocomplete="off" lay-verify=”int” value="0">
                     </div>
                 </div>
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">比例：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="scale" id="scale" lay-verify="required"
-                               autocomplete="off">
+                        <input type="text" class="layui-input" name="scale" id="scale"
+                               autocomplete="off" lay-verify=”int” value="0">
                     </div>
                 </div>
             </div>
@@ -176,22 +176,22 @@
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">系数：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="ratio" id="ratio" lay-verify="required"
-                               autocomplete="off">
+                        <input type="text" class="layui-input" name="ratio" id="ratio"
+                               autocomplete="off" lay-verify=”int” value="0">
                     </div>
                 </div>
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">数采检查参数：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="checkParam" id="checkParam" lay-verify="required"
-                               autocomplete="off">
+                        <input type="text" class="layui-input" name="checkParam" id="checkParam"
+                               autocomplete="off"lay-verify=”int” value="0">
                     </div>
                 </div>
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">放卷卸料设定卷径：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="rollDiameter" id="rollDiameter"
-                               lay-verify="required" autocomplete="off">
+                                autocomplete="off"lay-verify=”int” value="0">
                     </div>
                 </div>
             </div>
@@ -199,17 +199,22 @@
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">标签验证周期：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="lableCycle" id="lableCycle" lay-verify="required"
-                               autocomplete="off">
+                        <input type="text" class="layui-input" name="lableCycle" id="lableCycle"
+                               autocomplete="off"lay-verify=”int” value="0">
                     </div>
                 </div>
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">防串读监测时间：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="monitorDate" id="monitorDate" lay-verify="required"
-                               autocomplete="off">
+                        <input type="text" class="layui-input" name="monitorDate" id="monitorDate"
+                               autocomplete="off" lay-verify=”int” value="0">
+
                     </div>
                 </div>
+            </div>
+            <div class="layui-form-item layui-hide">
+                <input type="button" lay-submit lay-filter="layuiadmin-app-form-submit" id="layuiadmin-app-form-submit"
+                       value="确认添加">
             </div>
         </div>
         <div class="layui-card-body">
@@ -270,38 +275,19 @@
     var submit = false;
     var isExist = false;
     var form = layui.form;
+    var editIndex = 0;
     var $ = layui.jquery;
     var reg = /^\d+$|^\d*\.\d+$/;
     var laydate = layui.laydate;
+    var i=0;
     form.render();
-    //监听普通搜索按钮点击事件
-    form.on('select(status)', function (rel) {
-        var submit = $("#search");
-        submit.click();
-        return false;
-    });
     var funName = "point_add";
+    var win = null;
     //过滤字段
     var hiddenFields = [];
-    table.on('sort(plc)', function (obj) { //注：sort 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
-        table.reload('plc', {
-            initSort: obj //记录初始排序，如果不设的话，将无法标记表头的排序状态。
-            , where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
-                field: obj.field //排序字段
-                , order: obj.type //排序方式
-            }
-        });
-    });
-    table.on('sort(rfid)', function (obj) { //注：sort 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
-        table.reload('rfid', {
-            initSort: obj //记录初始排序，如果不设的话，将无法标记表头的排序状态。
-            , where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
-                field: obj.field //排序字段
-                , order: obj.type //排序方式
-            }
-        });
-
-    });
+    function SetData(data){
+        win = data.win ? data.win : window;
+    }
     //查询过滤字段
     $.ajax({
         url: "<%=request.getContextPath() %>/cols/filter/query/" + funName,
@@ -359,6 +345,61 @@
         active[type] ? active[type].call(this) : "";
     });
 
+    form.on("submit(layuiadmin-app-form-submit)", function (data) {
+        var pointDispose = data.field;
+        if (submit == false) {
+            submit = true;
+            debugger;
+            var plcGroupList = table.cache['plc'];
+            pointDispose.plcGroupList = plcGroupList;
+            var rfidGroupList = table.cache['rfid'];
+            pointDispose.rfidGroupList = rfidGroupList;
+            var submitData = JSON.stringify(pointDispose);
+            if (submitData != null) {
+                i = i + 1;
+            }
+            if (i == 1) {
+                $.ajax({
+                    url: "<%= request.getContextPath() %>/pointdispose/add",
+                    type: "POST",
+                    data: submitData,
+                    cache: false,
+                    contentType: 'text/json',
+                    success: function(result) {
+                        if (result.exception) {
+                            layer.alert(result.exception.message, {
+                                icon: 2,
+                                title: "系统提示"
+                            });
+                        } else if (result) {
+                            layer.msg("添加成功", {
+                                icon: 1,
+                                time: 2000
+                            }, function() {
+                                var index = parent.layer.getFrameIndex(window.name);
+                                win.layui.table.reload("LAY-app-application-list-reload");
+                                top.layer.close(index);
+                                win.window.updateFuncgroupSelect();
+                            });
+                        } else {
+                            layer.msg("添加失败");
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        layer.msg(jqXHR.responseText, {
+                            time: 2000,
+                            icon: 5
+                        });
+                    }
+                });
+            }
+            var index = parent.layer.getFrameIndex(window.name);
+            top.layer.close(index);
+        } else {
+            layer.msg("请稍等");
+        }
+        return false;
+    });
 
     //监听按钮点击事件
     var active = {
@@ -367,6 +408,26 @@
                 type: 2,
                 title: "PLC点位配置",
                 content: "<%= request.getContextPath() %>/equipment/point/point_plc_add.jsp",
+                area: ["1000px", "560px"],
+                resize: false,
+                btn: ["确定", "取消"],
+                success: function (layero, index) {
+                    var dataJson = {
+                        win: window,
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function (index, layero) {
+                    var submit = layero.find("iframe").contents().find("#layuiadmin-app-form-submit");
+                    submit.click();
+                }
+            });
+        },
+        addRfid: function () {
+            top.layer.open({
+                type: 2,
+                title: "RFID点位配置",
+                content: "<%= request.getContextPath() %>/equipment/point/point_rfid_add.jsp",
                 area: ["1000px", "560px"],
                 resize: false,
                 btn: ["确定", "取消"],
@@ -478,94 +539,122 @@
             title: '序号',
             type: 'numbers',
         }, {
-            field: "rawMaterial",
-            title: "加工方法",
+            field: "rfidNum",
+            title: "RFID编号",
             align: "center",
-            width: 120,
-            templet: function (d) {
-                return layui.admin.getDictText("BIZ_RAWMATERIAL", d.rawMaterial);
-            }
+            minWidth: 120,
         }, {
-            field: 'matterNum',
-            title: '物料编号',
+            field: 'ipAddr',
+            title: '连接IP',
             align: 'center',
-            minWidth: 140,
-            templet: function (d) {
-                return d.queryMatter == null ? "" : d.queryMatter.matterNum;
-            }
+            minWidth: 100,
         }, {
-            field: 'matterName',
-            title: '材料名称/加工方法',
+            field: 'port',
+            title: '端口',
             minWidth: 100,
             align: "center",
-            templet: function (d) {
-                return d.queryMatter == null ? "" : d.queryMatter.matterName;
-            }
-        }, {
-            field: 'secondaryUnit',
-            title: '二级单位',
-            align: 'center',
-            minWidth: 100,
-            templet: function (d) {
-                return d.queryMatter == null ? "" : layui.admin.getDictText("SECONDARY_UNIT", d.queryMatter.secondaryUnit);
-            }
-        }, {
-            field: 'coefficient',
-            title: '系数',
-            align: 'center',
-            minWidth: 100,
-        }, {
-            field: 'singleQuantity',
-            title: '单耗量',
-            align: 'center',
-            minWidth: 100,
-        }, {
-            field: 'supplierName',
-            title: '供应商',
-            minWidth: 100,
-            align: "center",
-            templet: function (d) {
-                return d.supplier == null ? "" : d.supplier.supplierName;
-            }
-        }, {
-            field: 'issuingMethod',
-            title: '发料方式',
-            align: 'center',
-            minWidth: 100,
-            templet: function (d) {
-                return layui.admin.getDictText("BIZ_ISSUANCEMETHOD", d.issuingMethod);
-            }
-        }, {
-            field: 'issuingWarehouse',
-            title: '发料仓',
-            align: 'center',
-            minWidth: 100,
-            templet: function (d) {
-                return layui.admin.getDictText("BIZ_ISSUINGWAREHOUSE", d.issuingWarehouse);
-            }
         }, {
             title: "操作",
             align: "center",
             fixed: "right",
-            width: 200,
+            minWidth: 120,
             toolbar: "#table-rfid-list"
         }]]
     });
 
-    function setPlcDatas(plcData) {
-        debugger;
-        var plcDatas = table.cache['plc'];
-        plcDatas.push(plcData);
+    function setPlcGroup(plcGroup) {
+        var plcGroupList = table.cache['plc'];
+        plcGroupList.push(plcGroup);
         table.reload('plc',{
-            data : plcDatas
+            data : plcGroupList
         });
     }
-    table.on('tool(plc)', function(obj) {
-        var data = obj.data;
-        if (obj.event == "addPlc") {
-            top.layui.index.openTabsPage( "<%=request.getContextPath() %>/bom/info/order_list.jsp?modeNum="+data.modeNum ,"订单明细");
+    function setRfidGroup(rfidGroup) {
+        var rfidGroupList = table.cache['rfid'];
+        rfidGroupList.push(rfidGroup);
+        table.reload('rfid',{
+            data : rfidGroupList
+        });
+    }
+    function setEditPlcGroup(plcGroup) {
+        var plcGroupList = table.cache['plc'];
+        plcGroupList.splice(editIndex,1,plcGroup);
+        table.reload('plc',{
+            data : plcGroupList
+        });
+    }
+    function setEditRfidGroup(rfidGroup) {
+        var rfidGroupList = table.cache['rfid'];
+        rfidGroupList.splice(editIndex,1,rfidGroup);
+        table.reload('rfid',{
+            data : rfidGroupList
+        });
+    }
+    table.on("tool(plc)", function (obj) {
+        if (obj.event == 'edit') {
+            editIndex =  obj.tr.data("index");
+            top.layer.open({
+                type: 2,
+                title: "编辑PLC点位配置",
+                content: "<%= request.getContextPath() %>/equipment/point/point_plc_edit.jsp",
+                area: ["1000px", "560px"],
+                resize: false,
+                btn: ["确定", "取消"],
+                success: function (layero, index) {
+                    var dataJson = {
+                        win: window,
+                        plcGroup: obj.data
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function (index, layero) {
+                    var submit = layero.find("iframe").contents().find("#layuiadmin-app-form-submit");
+                    submit.click();
+                }
+            });
+        } else if(obj.event == "del") {
+            var Data = table.cache["plc"];
+            if (obj.tr.data("index") >= -1) {
+                Data.splice(obj.tr.data("index"), 1);	//根据索引删除当前行
+                table.reload('plc',{
+                    data : Data
+                });
+            }
         }
-    });
+    })
+
+    table.on("tool(rfid)", function (obj) {
+        if (obj.event == 'edit') {
+            editIndex =  obj.tr.data("index");
+            top.layer.open({
+                type: 2,
+                title: "编辑RFID点位配置",
+                content: "<%= request.getContextPath() %>/equipment/point/point_rfid_edit.jsp",
+                area: ["1000px", "560px"],
+                resize: false,
+                btn: ["确定", "取消"],
+                success: function (layero, index) {
+                    var dataJson = {
+                        win: window,
+                        rfidGroup: obj.data
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function (index, layero) {
+                    var submit = layero.find("iframe").contents().find("#layuiadmin-app-form-submit");
+                    submit.click();
+                }
+            });
+        } else if(obj.event == "del") {
+            var Data = table.cache["rfid"];
+            if (obj.tr.data("index") >= -1) {
+                Data.splice(obj.tr.data("index"), 1);	//根据索引删除当前行
+                table.reload('rfid',{
+                    data : Data
+                });
+            }
+        }
+    })
     //单击行事件
     $('body').on("click", ".layui-table-body table.layui-table tbody tr td", function () {
         if ($(this).attr("data-field") === "0")

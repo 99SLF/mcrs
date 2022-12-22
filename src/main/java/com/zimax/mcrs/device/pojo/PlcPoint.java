@@ -38,11 +38,11 @@ public class PlcPoint {
     /**
      * 参数长度
      */
-    int paramLen;
+    Integer paramLen;
     /**
      * 小数位数长度
      */
-    int smallPoint;
+    Integer smallPoint;
     /**
      * 中文释义
      */

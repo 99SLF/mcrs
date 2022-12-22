@@ -154,13 +154,14 @@
                 btn: ["保存","关闭"],
                 success: function(layero, index) {
                     var dataJson = {
-                        data: data,
-                        orderStatus: orderStatus,
                         win: window
                     };
                     layero.find("iframe")[0].contentWindow.SetData(dataJson);
                 },
-
+                yes: function (index, layero) {
+                    var submit = layero.find("iframe").contents().find("#layuiadmin-app-form-submit");
+                    submit.click();
+                }
             })
         }
     }

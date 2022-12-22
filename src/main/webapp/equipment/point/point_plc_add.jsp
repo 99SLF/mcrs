@@ -112,9 +112,10 @@
     var win = null;
     form.render();
 
-    function SetData(data){
+    function SetData(data) {
         win = data.win ? data.win : window;
     }
+
     table.on('sort(plcParam)', function (obj) { //注：sort 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
         table.reload('plcParam', {
             initSort: obj //记录初始排序，如果不设的话，将无法标记表头的排序状态。
@@ -179,12 +180,11 @@
     });
     //监听提交
     form.on("submit(layuiadmin-app-form-submit)", function (data) {
-        debugger;
-        var plcData = data.field;
+        var plcGroup = data.field;
         if (submit == false) {
-            var plcParam = table.cache['plcParam'];
-            plcData.plcParam = plcParam;
-            win.setPlcDatas(plcData);
+            var plcPointList = table.cache['plcParam'];
+            plcGroup.plcPointList = plcPointList;
+            win.setPlcGroup(plcGroup);
             var index = parent.layer.getFrameIndex(window.name);
             top.layer.close(index);
             submit = true;
@@ -195,9 +195,7 @@
     });
 
     //监听按钮点击事件
-    var active = {
-
-    }
+    var active = {}
 
     /*   PLC */
 
@@ -205,6 +203,7 @@
         elem: "#plcParam",
         id: "plcParam",
         data: [],
+        limit: 99999,
         height: "full-" + getFullSize(),
         colHideChange: function (col, checked) {
             var field = col.field;
@@ -290,6 +289,35 @@
     tables.reload({
         data: dataJson
     });
+
+    table.on("tool(plcParam)", function (obj) {
+        if (obj.event == 'add') {
+            var Data = table.cache["plcParam"];
+            var datas = {
+                "shineAddr": "",
+                "lableName": "",
+                "dataType": "",
+                "paramLen": "",
+                "smallPoint": "",
+                "chineseMean": "",
+                "remarks": "",
+            }
+            Data.push(datas);
+            tables.reload({
+                data: Data
+            });
+        } else if(obj.event == "del") {
+            var Data = table.cache["plcParam"];
+            if(Data.length>1){
+                if (obj.tr.data("index") >= -1) {
+                    Data.splice(obj.tr.data("index"), 1);	//根据索引删除当前行
+                    tables.reload({
+                        data: Data
+                    });
+                }
+            }
+        }
+    })
     //单击行事件
     $('body').on("click", ".layui-table-body table.layui-table tbody tr td", function () {
         if ($(this).attr("data-field") === "0")

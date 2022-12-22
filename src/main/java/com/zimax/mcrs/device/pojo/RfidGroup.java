@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * @Author 施林丰
  * @Date:2022/12/20 10:43
@@ -40,5 +42,5 @@ public class RfidGroup {
      */
     String appId;
     @TableField(exist = false)
-    RfidPoint rfidPoint[];
+    List<RfidPoint> rfidPointList;
 }

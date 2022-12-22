@@ -96,6 +96,15 @@
 
     function SetData(data){
         win = data.win ? data.win : window;
+        var data = data.rfidGroup;
+        form.val('point-rfid-add', {
+            "rfidNum": data.rfidNum,
+            "ipAddr": data.ipAddr,
+            "port": data.port,
+        });
+        tables.reload({
+            data: data.rfidPointList
+        });
     }
     table.on('sort(rfidParam)', function (obj) { //注：sort 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
         table.reload('rfidParam', {
@@ -165,7 +174,7 @@
         if (submit == false) {
             var rfidPointList = table.cache['rfidParam'];
             rfidGroup.rfidPointList = rfidPointList;
-            win.setRfidGroup(rfidGroup);
+            win.setEditRfidGroup(rfidGroup);
             var index = parent.layer.getFrameIndex(window.name);
             top.layer.close(index);
             submit = true;
@@ -246,17 +255,33 @@
         }]],
 
     });
-    var param = {
-        "paramName": "",
-        "paramKey": "",
-        "paramValue": "",
-        "paramMark": "",
-        "remarks": "",
-    }
-    dataJson.push(param);
-    tables.reload({
-        data: dataJson
-    });
+
+    table.on("tool(rfidParam)", function (obj) {
+        if (obj.event == 'add') {
+            var Data = table.cache["rfidParam"];
+            var datas = {
+                "paramName": "",
+                "paramKey": "",
+                "paramValue": "",
+                "paramMark": "",
+                "remarks": "",
+            }
+            Data.push(datas);
+            tables.reload({
+                data: Data
+            });
+        } else if(obj.event == "del") {
+            var Data = table.cache["rfidParam"];
+            if(Data.length>1){
+                if (obj.tr.data("index") >= -1) {
+                    Data.splice(obj.tr.data("index"), 1);	//根据索引删除当前行
+                    tables.reload({
+                        data: Data
+                    });
+                }
+            }
+        }
+    })
     //单击行事件
     $('body').on("click", ".layui-table-body table.layui-table tbody tr td", function () {
         if ($(this).attr("data-field") === "0")
