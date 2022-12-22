@@ -267,13 +267,13 @@
             minWidth: 100
         }, {
             field: "prodSFCId",
-            title: "上账SFC编码",
+            title: "生产SFC编码",
             align: "center",
             hide: isHidden("prodSFCId"),
             minWidth: 100
         }, {
             field: "prodNumber",
-            title: "上账数量",
+            title: "生产数量",
             align: "center",
             hide: isHidden("prodNumber"),
             minWidth: 80

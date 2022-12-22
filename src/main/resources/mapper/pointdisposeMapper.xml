@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.device.mapper.PointDisposeMapper">
+
+    <insert id="addPoint" parameterType="com.zimax.mcrs.device.pojo.PointDispose">
+        insert into dev_point_dispose values(#{appId},#{downWork},#{upWork},#{upModel},
+                #{downModel},#{dataUnit},#{dataMethod},#{chipLength},#{scale},#{ratio},
+                #{checkParam},#{rollDiameter},#{lableCycle},#{monitorDate})
+    </insert>
+    <insert id="addPlcGroup" parameterType="com.zimax.mcrs.device.pojo.PlcGroup" keyProperty="plcGroupId" useGeneratedKeys="true">
+        insert into dev_plc_group values(#{plcGroupId},#{plcGroupName},#{plcGroupType},#{plcGroupRname},
+                                             #{rfidNum},#{remarks},#{appId})
+    </insert>
+    <insert id="addPlcParam" parameterType="com.zimax.mcrs.device.pojo.PlcPoint" keyProperty="plcParamId" useGeneratedKeys="true">
+        insert into dev_plcparam_dispose values(#{plcParamId},#{shineAddr},#{lableName},#{dataType},
+                                         #{paramLen},#{smallPoint},#{chineseMean},#{remarks},#{plcGroupId})
+    </insert>
+    <insert id="addRfidGroup" parameterType="com.zimax.mcrs.device.pojo.RfidGroup" keyProperty="rfidGroupId" useGeneratedKeys="true">
+        insert into dev_rfid_group values(#{rfidGroupId},#{rfidNum},#{ipAddr},#{port},
+                                         #{appId})
+    </insert>
+    <insert id="addRfidParam" parameterType="com.zimax.mcrs.device.pojo.RfidPoint" keyProperty="rfidParamId" useGeneratedKeys="true">
+        insert into dev_rfidparam_dispose values(#{rfidParamId},#{paramName},#{paramKey},#{paramValue},
+                                                #{paramMark},#{remarks},#{rfidGroupId})
+    </insert>
+<!--    查询记录-->
+    <select id="count" resultType="int">
+        SELECT *FROM dev_point_dispose as a
+            LEFT JOIN (SELECT dev.app_id as devAppId,dev.device_name,eqi.equipment_id	 FROM eqi_device AS dev
+                LEFT JOIN eqi_equipment AS eqi
+                    ON dev.equipment_int=eqi.equipment_int) as b
+        ON a.app_id=b.devAppId
+        <where>
+            <if test="deviceName !=null and deviceName !=''">
+                and device_name like '%${deviceName}%'
+            </if>
+        </where>
+    </select>
+
+    <select id="queryPointDisposes" parameterType="map" resultType="com.zimax.mcrs.device.pojo.PointDispose">
+        SELECT *FROM dev_point_dispose as a
+         LEFT JOIN (SELECT dev.app_id as devAppId,dev.device_name,eqi.equipment_id	 FROM eqi_device AS dev
+            LEFT JOIN eqi_equipment AS eqi
+                      ON dev.equipment_int=eqi.equipment_int) as b
+        ON a.app_id=b.devAppId
+        <where>
+            <if test="deviceName !=null and deviceName !=''">
+                and device_name like '%${deviceName}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+    <select id="queryPlcGroups" resultType="com.zimax.mcrs.device.pojo.PlcGroup">
+        select * from dev_plc_group where app_id = #{appId}
+    </select>
+    <select id="queryRfidGroups" resultType="com.zimax.mcrs.device.pojo.RfidGroup">
+        select * from dev_rfid_group where app_id = #{appId}
+    </select>
+
+    <select id="queryPlcPoints" resultType="com.zimax.mcrs.device.pojo.PlcPoint">
+        select * from dev_plcparam_dispose where plc_group_id = ${plcGroupId}
+    </select>
+    <select id="queryRfidPoints" resultType="com.zimax.mcrs.device.pojo.RfidPoint">
+        select * from dev_rfidparam_dispose where rfid_group_id = ${rfidGroupId}
+    </select>
+
+
+</mapper>

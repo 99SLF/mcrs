@@ -1,49 +1,55 @@
 package com.zimax.mcrs.device.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * @Author 施林丰
- * @Date:2022/12/19 11:07
+ * @Date:2022/12/20 10:43
  * @Description
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("dev_rfidparam_dispose")
-public class RfidPoint {
+@TableName("dev_plc_group")
+public class PlcGroup {
     /**
-     * rfid点位主键
+     * plc点位组主键
      */
     @TableId(type = IdType.AUTO)
+    int plcGroupId;
     /**
-     * rfid参数编码
+     * plc点位组名称
      */
-    int rfidParamId;
+    String plcGroupName;
     /**
-     * 参数名字
+     * plc功能组类型
      */
-    String paramName;
+    String plcGroupType;
     /**
-     * 参数主键
+     * plc映射RFID名称
      */
-    String paramKey;
+    String plcGroupRname;
     /**
-     * 参数值
+     * rfid编号
      */
-    String paramValue;
-    /**
-     * 参数标记
-     */
-    String paramMark;
+    String rfidNum;
     /**
      * 备注
      */
     String remarks;
-    int rfidGroupId;
+    /**
+     * appId
+     */
+    String appId;
+    @TableField(exist = false)
+    List<PlcPoint> plcPointList;
+
 }
