@@ -94,4 +94,15 @@ public class AlarmEventController {
     }
 
 
+    /**
+     * 批量启用告警事件
+     * @param alarmEventInt 告警事件主键数组
+     */
+    @PostMapping("/alarmEvent/enable")
+    public Result<?> enable(@RequestBody Integer[] alarmEventInt) {
+        alarmEventService.enable(Arrays.asList(alarmEventInt));
+        return Result.success();
+
+    }
+
 }

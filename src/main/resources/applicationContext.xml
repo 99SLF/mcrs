@@ -200,6 +200,11 @@
         <property name="mapperInterface" value="com.zimax.mcrs.log.mapper.OperationLogMapper"/>
     </bean>
 
+    <bean id="LogDeleteRuleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.basic.logDeleteRule.mapper.LogDeleteRuleMapper"/>
+    </bean>
+
     <bean id="GradeAuthBean" class="com.zimax.components.coframe.rights.gradeauth.GradeAuthService"></bean>
 
     <bean id="PartyAuthService" class="com.zimax.components.coframe.auth.service.PartyAuthService"></bean>

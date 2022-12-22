@@ -49,7 +49,12 @@ public interface AlarmEventMapper {
 
     /**
      * 批量删除
-     * @param alarmEvents
+     * @param alarmEventInts
      */
-    void deleteAlarmEvents(List<Integer> alarmEvents);
+    void deleteAlarmEvents(List<Integer> alarmEventInts);
+
+    /**
+     * 批量启用
+     */
+    int enable(List<Integer> alarmEventInts);
 }
