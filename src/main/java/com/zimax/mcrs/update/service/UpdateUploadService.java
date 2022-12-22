@@ -123,12 +123,11 @@ public class UpdateUploadService {
         return flag;
     }
 
-    public UpdateUpload getMajorVersion(String deviceSoType) {
-        return updateUploadMapper.getMajorVersion(deviceSoType);
-    }
+
 
 
     /**
+     * 通过终端软件类型获取
      * 查询所有更新包信息
      */
     public List<UpdateUpload> getUpdateUpload(String deviceSoType) {

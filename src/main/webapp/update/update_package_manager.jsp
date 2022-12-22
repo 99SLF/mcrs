@@ -338,11 +338,7 @@
             title: "更新策略",
             align: "center",
             minWidth: 120,
-            hide: isHidden("uploadStrategy"),
-            templet:function(d) {
-
-                return layui.admin.getDictText("UPDATESTRATEGY", d.uploadStrategy);
-            }
+            hide: isHidden("uploadStrategy")
         }, {
             field: "fileName",
             title: "更新包",
@@ -386,15 +382,15 @@
     //监听操作事件
     table.on("tool(LAY-app-device-list)", function (e) {
         //当前行数据
+        debugger;
         var data = e.data;
         //edit 下载
         if (e.event == "edit") {
-            debugger;
             var filePath = encodeURIComponent(e.data.downloadUrl);
-            // var filename = encodeURIComponent(e.data.fileName)
+            var filename = encodeURIComponent(e.data.fileName);
             var url = "<%= request.getContextPath() %>/upload/download?filePath=" + filePath ;
             //创建a标签，用于点击
-            var a = document.createElement('a');
+            var a = document.createElement("a");
                 a.download = filename;
                 a.href = url;
                 //兼容firefox

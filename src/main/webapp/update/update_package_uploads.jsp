@@ -29,9 +29,31 @@
 
         }
     </style>
-    <script src="common/layui/layui.all.js"></script>
+<script src="common/layui/layui.all.js"></script>
+<script type="text/javascript">
+        var obj; //建立全局变量
+        function getTime()
+        {
+        obj=document.getElementById("myDiv"); //得到容器对象
+        var myDate=new Date(); //得到时间对象
+        var y=myDate.getFullYear(); //获取年
+        var m=myDate.getMonth()+1; //获取月
+        m=m>9?m:"0"+m; //如果月份小于10,则在前面加0补充为两位数字
+        var d=myDate.getDay(); //获取日
+        d=d>9?d:"0"+d; //如果天数小于10,则在前面加0补充为两位数字
+        var h=myDate.getHours(); //获取小时
+        h=h>9?h:"0"+h; //如果小时数字小于10,则在前面加0补充为两位数字
+        var M=myDate.getMinutes(); //获取分
+        M=M>9?M:"0"+M; //如果分钟小于10,则在前面加0补充为两位数字
+        var s=myDate.getSeconds(); //获取秒
+        s=s>9?s:"0"+s; //如果秒数小于10,则在前面加0补充为两位数字
+        var NowTime=y+"年"+m+"月"+d+"日"+h+":"+M+":"+s; //串联字符串用于输入
+        obj.value=NowTime;// 在文本框中输入时间
+        window.setTimeout("getTime()",1000); //每隔1秒自动变换时间
+}
+</script>
 </head>
-<body>
+<body onLoad="getTime()"><!--页面加载时候自动获取时间-->
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" enctype="multipart/form-data" style="padding: 20px 30px 0 0;">
     <div class="layui-form-item layui-row layui-col-space10">
 <%--        <div class="layui-col-md4">--%>
@@ -114,22 +136,22 @@
 
     <div class="layui-form-item layui-row layui-col-space12">
         <div class="layui-col-sm4">
-            <label class="layui-form-label">制单时间：</label>
+            <label class="layui-form-label" style="margin-top: 10px;">制单时间：</label>
             <div class="layui-input-block" id="div" style="width: 200px;margin-top: 10px; " >
 <%--                <input type="text" class="layui-input" name="versionUploadTime"--%>
 <%--                       value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>"--%>
 <%--                       readonly/>--%>
-<%--                    <input type="text" class="layui-input" name="versionUploadTime" readonly/>--%>
+            <input type="text" class="layui-input" name="versionUploadTime" id="myDiv" size="150" readonly/>
             </div>
         </div>
         <div class="layui-col-sm4">
-            <label class="layui-form-label">制单人:</label>
-            <div class="layui-input-block">
+            <label class="layui-form-label" style="margin-top: 10px;">制单人:</label>
+            <div class="layui-input-block" style="width: 200px;margin-top: 10px; " >
                 <%
                     IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
                 %>
-                <input type="text" class="layui-input" id="uploader" name="uploader" style="border:none"
-                       value="<%=usetObject.getUserName()%>" readonly/>
+                <input type="text" class="layui-input" id="uploader" name="uploader"
+                       value="<%=usetObject.getUserName()%>"   size="150" readonly/>
             </div>
         </div>
     </div>
@@ -148,23 +170,25 @@
 </script>
 
 <script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
-        <script>
-            var i=0;
-            function myDate(){
-                var now=new Date();
-                var year=now.getFullYear();
-                var month=now.getMonth()+1;
-                var day=now.getDate();
-                var hours=now.getHours();
-                var minutes=now.getMinutes();
-                var seconds=now.getSeconds();
-
-                document.getElementById("div").innerHTML=year+"年"+month+"月"+day+"日"+hours+"："+minutes+"："+seconds;
-            }
-            setInterval(myDate,1000);
-        </script>
+<script>
+    // var i=0;
+    // function myDate(){
+    // var now=new Date();
+    // var year=now.getFullYear();
+    // var month=now.getMonth()+1;
+    // month=month>9?month:"0"+month;
+    //     var day=now.getDate();
+    // var hours=now.getHours();
+    // var minutes=now.getMinutes();
+    // var seconds=now.getSeconds();
+    //
+    // document.getElementById("div").innerHTML=year+"年"+month+"月"+day+"日"+hours+"时"+":"+minutes+"分"+":"+seconds+"秒";
+    // }
+    // setInterval(myDate,1000);
+</script>
 
 <script type="text/javascript">
+
     var layer = layui.layer;
     var laydate = layui.laydate;
     var form = layui.form;
