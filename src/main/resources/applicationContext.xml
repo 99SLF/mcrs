@@ -128,6 +128,11 @@
         <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.EquipmentMapper"/>
     </bean>
 
+    <bean id="PointDisposeMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.PointDisposeMapper"/>
+    </bean>
+
     <bean id="DeviceMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.mcrs.device.mapper.DeviceMapper"/>

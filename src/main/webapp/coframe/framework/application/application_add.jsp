@@ -141,10 +141,8 @@
 	//监听提交
 	form.on("submit(layuiadmin-app-form-submit)", function(data) {
 		if (submit == false) {
-			debugger;
 			submit = true;
 			var submitData = JSON.stringify(data.field);
-			debugger;
 			if (submitData != null) {
 				i = i + 1;
 			}	
