@@ -25,16 +25,6 @@ public class DeviceExchangeLogController {
     private DeviceExchangeLogService deviceExchangeLogService;
 
 
-    /**
-     * 依据设备交换日志Id删除
-     *
-     * @param deviceExchangeLogId 设备交换日志编号数组
-     */
-    @DeleteMapping("/delete/{deviceExchangeLogId}")
-    public Result<?> removeDeviceExchangeLog(@PathVariable("deviceExchangeLogId") int deviceExchangeLogId) {
-        return Result.success();
-    }
-
 
     /**
      * 查询
@@ -71,7 +61,7 @@ public class DeviceExchangeLogController {
      * @param deviceExchangeLogId 设备交换日志主键
      */
     @DeleteMapping("/deviceExchangeLog/delete/{deviceExchangeLogId}")
-    public Result<?> addDeviceExchangeLog(@PathVariable("deviceExchangeLogId") int deviceExchangeLogId) {
+    public Result<?> removeDeviceExchangeLog(@PathVariable("deviceExchangeLogId") int deviceExchangeLogId) {
         deviceExchangeLogService.removeDeviceExchangeLog(deviceExchangeLogId);
         return Result.success();
     }

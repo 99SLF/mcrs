@@ -102,6 +102,10 @@
         elem: "#deviceSoType",
         dictTypeId: "DEVICE_SOFTWARE_TYPE"
     });
+    layui.admin.renderDictSelect({
+        elem: "#uploadStrategy",
+        dictTypeId: "UPDATESTRATEGY"
+    });
     //状态默认
     $("#deviceSoType").val("请选择");
     //数据字典项加载
@@ -338,16 +342,18 @@
             title: "更新策略",
             align: "center",
             minWidth: 120,
-            hide: isHidden("uploadStrategy")
+            hide: isHidden("uploadStrategy"),
+            templet:function(d) {
+
+                return layui.admin.getDictText("UPDATESTRATEGY", d.uploadStrategy);
+            }
         }, {
             field: "fileName",
             title: "更新包",
             align: "center",
             minWidth: 100,
-            hide: isHidden("fileName"),
-            templet:function (data) {
-                return layui.util.toDateString(data.versionUploadTime, "yyyy-MM-dd");
-            }
+            hide: isHidden("fileName")
+
         }, {
             field: "uploader",
             title: "上传人",

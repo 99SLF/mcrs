@@ -17,7 +17,7 @@
     </select>
 
     <!--查询所有-->
-    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.warn.pojo.AlarmEvent">
+    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.warn.pojo.AlarmEventVo">
         select * from war_alarm_event
         <where>
             <if test="alarmEventId !=null and alarmEventId !=''">
@@ -51,7 +51,7 @@
     </select>
 
     <!--添加预警事件-->
-    <insert id="addAlarmEvent" parameterType="com.zimax.mcrs.warn.pojo.AlarmEvent">
+    <insert id="addAlarmEvent" parameterType="com.zimax.mcrs.warn.pojo.AlarmEventVo">
         insert into war_alarm_event
         values (#{alarmEventInt},#{alarmEventId}, #{alarmEventTitle}, #{enableStatus},
                 #{alarmLevel}, #{upperLimit},
@@ -84,19 +84,20 @@
     </update>
 
 <!--    批量删除-->
-    <delete id="deleteAlarmEvents" parameterType="java.util.List">
+    <delete id="deleteAlarmEvents" parameterType="com.zimax.mcrs.warn.pojo.AlarmEvent">
         delete from war_alarm_event where alarm_event_int in
         <foreach collection="list" item="id" separator="," open="(" close=")">
             #{id}
         </foreach>
     </delete>
 
-<!--批量启用-->
+    <!--批量启用-->
     <update id="enable" parameterType="java.util.List">
-        update war_alarm_event set enableStatus = 'on' where alarm_event_int
-        <foreach collection="list" item="id" separator="," open="(" close=")">
-            #{id}
-        </foreach>
+        update war_alarm_event
+        set enable_status = #{enableStatus},
+            update_people=#{updatePeople},
+            update_time=#{updateTime}
+        where alarm_event_int = #{alarmEventInt}
     </update>
 
 </mapper>

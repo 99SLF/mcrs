@@ -157,10 +157,10 @@
     //获取软件类型的下拉值
     layui.admin.renderDictSelect({
         elem: "#deviceSoftwareType",
-        dictTypeId: "SOFTWARE_TYPE",
+        dictTypeId: "DEVICE_SOFTWARE_TYPE",
     });
     //设置软件类型的默认值
-    $("#deviceSoftwareType").val("105");
+    $("#deviceSoftwareType").val("101");
     form.render();
 
     // 判断字符

@@ -1,6 +1,7 @@
 package com.zimax.mcrs.warn.mapper;
 
 import com.zimax.mcrs.warn.pojo.AlarmEvent;
+import com.zimax.mcrs.warn.pojo.AlarmEventVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,7 +19,7 @@ public interface AlarmEventMapper {
     /**
      *查询全部预警事件
      */
-    List<AlarmEvent> queryAll(Map map);
+    List<AlarmEventVo> queryAll(Map map);
 
     /**
      *记录预警事件条数
@@ -49,7 +50,12 @@ public interface AlarmEventMapper {
 
     /**
      * 批量删除
-     * @param alarmEvents
+     * @param alarmEventInts
      */
-    void deleteAlarmEvents(List<Integer> alarmEvents);
+    void deleteAlarmEvents(List<Integer> alarmEventInts);
+
+    /**
+     * 批量启用
+     */
+    int enable(AlarmEvent alarmEvent);
 }

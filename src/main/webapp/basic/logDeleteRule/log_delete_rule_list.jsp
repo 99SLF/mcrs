@@ -2,15 +2,15 @@
          pageEncoding="UTF-8" session="false" %>
 <!DOCTYPE html>
 <html>
-<!-- 
+<!--
   - Author(s): 林俊杰
-  - Date: 2022-12-01 16:06:00
+  - Date: 2022-12-22 11:23:00
   - Description:
 -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
-    <title>预警信息</title>
+    <title>日志删除规则管理</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
@@ -21,55 +21,49 @@
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">预警事件编码：</label>
+                    <label class="layui-form-label">日志删除规则编码：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="alarmEventId" placeholder="请输入编码" autocomplete="off"
+                        <input type="text" name="deleteRuleNum" placeholder="请输入编码" autocomplete="off"
                                class="layui-input">
                     </div>
-                    <label class="layui-form-label">预警事件标题：</label>
+                    <label class="layui-form-label">日志删除规则标题：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="alarmEventTitle" placeholder="请输入标题" autocomplete="off"
+                        <input type="text" name="deleteRuleTitle" placeholder="请输入标题" autocomplete="off"
                                class="layui-input">
                     </div>
-                    <label class="layui-form-label">预警级别：</label>
+                    <label class="layui-form-label">规则级别：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="alarmLevel" placeholder="请输入预警级别" autocomplete="off"
+                        <input type="text" name="ruleLevel" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <div class="layui-col-sm4">
-                        <label class="layui-form-label">预警类型：</label>
-                        <div class="layui-input-block">
-                            <select name="alarmType" id="alarmType" lay-filter="" type="select">
-                                <option value=""></option>
-                            </select>
-                        </div>
+                    <label class="layui-form-label">规则类型：</label>
+                    <div class="layui-input-inline">
+                        <select name="deleteRuleType" id="deleteRuleType" lay-filter="" type="select">
+                            <option value=""></option>
+                        </select>
                     </div>
                     <label class="layui-form-label">制单人：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="makeFormPeople" placeholder="请输入制单人" autocomplete="off"
+                        <input type="text" name="creator" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
-                    <label class="layui-form-label">制单时间：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="makeFormTime" placeholder="请输入制单时间" id="makeFormTime" autocomplete="off"
-                               class="layui-input">
+                    <div class="layui-inline layui-search">
+                        <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-logDeleteRulelist-search"
+                                id="LAY-app-logDeleteRulelist-search">
+                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                        </button>
                     </div>
                 </div>
-                <div class="layui-inline layui-search">
-                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-alarmEventlist-search"
-                            id="LAY-app-alarmEventlist-search">
-                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                    </button>
-                </div>
+
             </div>
         </div>
 
         <div class="layui-card-body">
             <div class="layui-toolbar" id="toolbar" hidden="true">
                 <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i
-                        class="layui-icon layui-icon-add-circle-fine"></i>新增事件
+                        class="layui-icon layui-icon-add-circle-fine"></i>删除规则新增
                 </button>
                 <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="enable"><i
                         class="layui-icon layui-icon-ok-circle"></i>启用
@@ -79,9 +73,9 @@
                 </button>
             </div>
 
-            <table id="LAY-app-alarmEvent-list" lay-filter="LAY-app-alarmEvent-list"></table>
+            <table id="LAY-app-logDeleteRule-list" lay-filter="LAY-app-logDeleteRule-list"></table>
 
-            <script type="text/html" id="table-alarmEvent-list">
+            <script type="text/html" id="table-logDeleteRule-list">
                 <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
                         class="layui-icon layui-icon-edit"></i>修改</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
@@ -114,25 +108,25 @@
 
     var hiddenFields = [];
 
-    var laydate = layui.laydate;
-    //日期时间选择器
-    laydate.render({
-        elem: '#makeFormTime',
-        type: 'date'
-    });
+    // var laydate = layui.laydate;
+    // //日期时间选择器
+    // laydate.render({
+    //     elem: '#makeFormTime',
+    //     type: 'date'
+    // });
 
-    //获取预警类型的下拉值
+    //获取规则类型的下拉值
     layui.admin.renderDictSelect({
-        elem: "#alarmType",
+        elem: "#deleteRuleType",
         dictTypeId: "WRANING_TYPE",
     });
     //设置预警类型的默认值
     form.render();
 
     //监听搜索
-    form.on("submit(LAY-app-alarmEventlist-search)", function (data) {
+    form.on("submit(LAY-app-logDeleteRulelist-search)", function (data) {
         var field = data.field;
-        table.reload("LAY-app-alarmEvent-list-reload", {
+        table.reload("LAY-app-logDeleteRule-list-reload", {
             where: field
         });
     });
@@ -141,19 +135,19 @@
     //文本框回车事件
     $(".layui-input").on("keydown", function (event) {
         if (event.keyCode == 13) {
-            var submit = $("#LAY-app-alarmEventlist-search");
+            var submit = $("#LAY-app-logDeleteRulelist-search");
             submit.click();
             return false;
         }
     });
 
     var active = {
-        //预警事件新建
+        //删除规则添加
         add: function () {
             top.layer.open({
                 type: 2,
-                title: "预警事件新建",
-                content: "<%= request.getContextPath() %>/warn/alarmEvent/alarm_event_add.jsp",
+                title: "删除规则添加",
+                content: "<%= request.getContextPath() %>/basic/logDeleteRule/log_delete_rule_add.jsp",
                 area: ["800px", "580px"],
                 resize: false,
                 btn: ["确定", "取消"],
@@ -170,28 +164,28 @@
             });
         },
         //批量删除
-        batchdel: function() {
-            var checkStatus = table.checkStatus("LAY-app-alarmEvent-list-reload");
+        batchdel: function () {
+            var checkStatus = table.checkStatus("LAY-app-logDeleteRule-list-reload");
             var data = checkStatus.data;
             if (data.length == 0) {
                 layer.msg("请至少选中一条记录！");
             }
             if (data.length > 0) {
-                var alarmEventInts = new Array();
-                for (var i=0; i<data.length;i++) {
-                    alarmEventInts[i] = data[i].alarmEventInt;
+                var ruleDeleteIds = new Array();
+                for (var i = 0; i < data.length; i++) {
+                    ruleDeleteIds[i] = data[i].ruleDeleteId;
                 }
-                layer.confirm("确定删除所选预警信息？", {
+                layer.confirm("确定删除所选日志删除规则？", {
                     icon: 3,
                     title: "系统提示"
-                }, function(index) {
+                }, function (index) {
                     $.ajax({
-                        url: "<%= request.getContextPath() %>/warn/alarmEvent/batchDelete",
+                        url: "<%= request.getContextPath() %>/logDeleteRule/logDeleteRule/batchDelete",
                         type: "DELETE",
-                        data: JSON.stringify(alarmEventInts),
+                        data: JSON.stringify(ruleDeleteIds),
                         cache: false,
                         contentType: "text/json",
-                        success: function(result) {
+                        success: function (result) {
                             if (result.exception) {
                                 layer.alert(result.exception.message, {
                                     icon: 2,
@@ -201,14 +195,14 @@
                                 layer.msg("删除成功", {
                                     icon: 1,
                                     time: 2000
-                                }, function() {
-                                    table.reload("LAY-app-alarmEvent-list-reload");
+                                }, function () {
+                                    table.reload("LAY-app-logDeleteRule-list-reload");
                                 });
                             } else {
                                 layer.msg("删除失败");
                             }
                         },
-                        error: function(jqXHR, textStatus, errorThrown) {
+                        error: function (jqXHR, textStatus, errorThrown) {
                             layer.msg(jqXHR.responseText, {
                                 time: 2000,
                                 icon: 5
@@ -218,28 +212,28 @@
                 });
             }
         },
-        enable: function() {
-            var checkStatus = table.checkStatus("LAY-app-alarmEvent-list-reload");
+        enable: function () {
+            var checkStatus = table.checkStatus("LAY-app-logDeleteRule-list-reload");
             var data = checkStatus.data;
             if (data.length == 0) {
                 layer.msg("请至少选中一条记录！");
             }
             if (data.length > 0) {
-                var alarmEventInts = new Array();
-                for (var i=0; i<data.length;i++) {
-                    alarmEventInts[i] = data[i].alarmEventInt;
+                var ruleDeleteIds = new Array();
+                for (var i = 0; i < data.length; i++) {
+                    ruleDeleteIds[i] = data[i].ruleDeleteId;
                 }
-                layer.confirm("确定启用所选预警信息？", {
+                layer.confirm("确定启用所选日志删除规则？", {
                     icon: 3,
                     title: "系统提示"
-                }, function(index) {
+                }, function (index) {
                     $.ajax({
-                        url: "<%= request.getContextPath() %>/warn/alarmEvent/enable",
+                        url: "<%= request.getContextPath() %>/logDeleteRule/logDeleteRule/enable",
                         type: "POSt",
-                        data: JSON.stringify(alarmEventInts),
+                        data: JSON.stringify(ruleDeleteIds),
                         cache: false,
                         contentType: "text/json",
-                        success: function(result) {
+                        success: function (result) {
                             if (result.exception) {
                                 layer.alert(result.exception.message, {
                                     icon: 2,
@@ -249,14 +243,14 @@
                                 layer.msg("启用成功", {
                                     icon: 1,
                                     time: 2000
-                                }, function() {
-                                    table.reload("LAY-app-alarmEvent-list-reload");
+                                }, function () {
+                                    table.reload("LAY-app-logDeleteRule-list-reload");
                                 });
                             } else {
                                 layer.msg("启用失败");
                             }
                         },
-                        error: function(jqXHR, textStatus, errorThrown) {
+                        error: function (jqXHR, textStatus, errorThrown) {
                             layer.msg(jqXHR.responseText, {
                                 time: 2000,
                                 icon: 5
@@ -268,8 +262,8 @@
         }
     };
 
-    table.on('sort(LAY-app-alarmEvent-list)', function (obj) {
-        table.reload('LAY-app-alarmEvent-list-reload', {
+    table.on('sort(LAY-app-logDeleteRule-list)', function (obj) {
+        table.reload('LAY-app-logDeleteRule-list-reload', {
             initSort: obj,
             where: {
                 sortField: obj.field,
@@ -279,14 +273,14 @@
     });
 
     //左侧表头按钮事件监听
-    table.on("toolbar(LAY-app-alarmEvent-list)", function (obj) {
+    table.on("toolbar(LAY-app-logDeleteRule-list)", function (obj) {
         var type = obj.event;
         active[type] ? active[type].call(this) : "";
     });
 
     //表格排序
-    table.on("sort(LAY-app-alarmEvent-list)", function (obj) {
-        table.reload("LAY-app-alarmEvent-list-reload", {
+    table.on("sort(LAY-app-logDeleteRule-list)", function (obj) {
+        table.reload("LAY-app-logDeleteRule-list-reload", {
             initSort: obj,
             where: {
                 sortField: obj.field,
@@ -304,7 +298,7 @@
 
 
     $(window).resize(function () {
-        table.reload("LAY-app-alarmEvent-list-reload", {
+        table.reload("LAY-app-logDeleteRule-list-reload", {
             height: "full-" + getFullSize()
         });
     });
@@ -316,7 +310,7 @@
         async: false,
         cache: false,
         contentType: "text/json",
-        success: function(result) {
+        success: function (result) {
             if (result) {
                 hiddenFields = result.data
             } else {
@@ -337,9 +331,9 @@
 
 
     table.render({
-        elem: "#LAY-app-alarmEvent-list",
-        id: "LAY-app-alarmEvent-list-reload",
-        url: "<%= request.getContextPath() %>/warn/alarmEvent/query",
+        elem: "#LAY-app-logDeleteRule-list",
+        id: "LAY-app-logDeleteRule-list-reload",
+        url: "<%= request.getContextPath() %>/logDeleteRule/logDeleteRule/query",
         method: "GET",
         height: "full-" + getFullSize(),
         page: true,
@@ -347,7 +341,7 @@
         limits: [10, 15, 20, 30],
         toolbar: "#toolbar",
         defaultToolbar: ["filter"],
-        colHideChange: function(col, checked) {
+        colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;
             $.ajax({
@@ -355,15 +349,16 @@
                 type: "GET",
                 cache: false,
                 contentType: "text/json",
-                success: function(result) {
+                success: function (result) {
                     if (result) {
-                    } else{
+                    } else {
                         layer.msg("列筛选失败");
                     }
                 }
             });
         },
         parseData: function (res) {
+            debugger;
             return {
                 code: res.code,
                 msg: res.msg,
@@ -377,95 +372,89 @@
             title: "序号",
             type: "numbers"
         }, {
-            field: "alarmEventId",
-            title: "预警事件编码",
+            field: "deleteRuleNum",
+            title: "日志删除规则编码",
             align: "center",
             minWidth: 120,
-            hide: isHidden("alarmEventId")
+            hide: isHidden("deleteRuleNum")
         }, {
-            field: "alarmEventTitle",
-            title: "预警事件标题",
+            field: "deleteRuleTitle",
+            title: "日志删除标题",
             align: "center",
             minWidth: 120,
-            hide: isHidden("alarmEventTitle")
+            hide: isHidden("deleteRuleTitle")
         }, {
-            field: "enableStatus",
+            field: "enable",
             title: "是否启用",
             align: "center",
             minWidth: 120,
-            hide: isHidden("enableStatus")
+            hide: isHidden("enable")
         }, {
-            field: "alarmLevel",
-            title: "预警级别",
+            field: "deleteRuleType",
+            title: "日志删除规则类型",
             align: "center",
             minWidth: 100,
-            hide: isHidden("alarmLevel")
+            hide: isHidden("deleteRuleType")
         }, {
-            field: "alarmType",
-            title: "预警类型",
+            field: "ruleLevel",
+            title: "规则级别",
             align: "center",
             minWidth: 150,
-            hide: isHidden("alarmType")
+            hide: isHidden("ruleLevel")
         }, {
-            field: "alarmEventContent",
-            title: "内容",
+            field: "timeInterval",
+            title: "时间间隔",
             align: "center",
             minWidth: 150,
-            hide: isHidden("alarmEventContent")
+            hide: isHidden("timeInterval")
         }, {
-            field: "upperLimit",
-            title: "上限",
+            field: "timeUnit",
+            title: "时间单位",
             align: "center",
             minWidth: 120,
-            hide: isHidden("upperLimit")
+            hide: isHidden("timeUnit")
         }, {
-            field: "lowerLimit",
-            title: "下限",
-            align: "center",
-            minWidth: 100,
-            hide: isHidden("lowerLimit")
-        }, {
-            field: "makeFormPeople",
+            field: "creator",
             title: "制单人",
             align: "center",
-            minWidth: 120,
-            hide: isHidden("makeFormPeople")
+            minWidth: 100,
+            hide: isHidden("creator")
         }, {
-            field: "makeFormTime",
+            field: "createTime",
             title: "制单时间",
             align: "center",
-            minWidth: 100,
-            hide: isHidden("makeFormTime")
+            minWidth: 120,
+            hide: isHidden("createTime")
         }, {
-            field: "updatePeople",
+            field: "updater",
             title: "修改人",
             align: "center",
-            minWidth: 120,
-            hide: isHidden("updatePeople")
+            minWidth: 100,
+            hide: isHidden("updater")
         }, {
             field: "updateTime",
             title: "修改时间",
             align: "center",
-            minWidth: 100,
+            minWidth: 120,
             hide: isHidden("updateTime")
         }, {
             title: "操作",
             align: "center",
             fixed: "right",
             width: 200,
-            toolbar: "#table-alarmEvent-list"
+            toolbar: "#table-logDeleteRule-list"
         }]]
     });
 
     //监听操作事件
-    table.on("tool(LAY-app-alarmEvent-list)", function (e) {
+    table.on("tool(LAY-app-logDeleteRule-list)", function (e) {
         var data = e.data;
         if (e.event == "edit") {
             top.layer.open({
                 type: 2,
-                title: "编辑设备信息",
-                content: "<%= request.getContextPath() %>/warn/alarmEvent/alarm_event_edit.jsp",
-                area: ["1000px", "560px"],
+                title: "编辑日志删除规则信息",
+                content: "<%= request.getContextPath() %>/basic/logDeleteRule/log_delete_rule_edit.jsp",
+                area: ["800px", "560px"],
                 resize: false,
                 btn: ["确定", "取消"],
                 success: function (layero, index) {
@@ -487,10 +476,10 @@
                 title: "系统提示"
             }, function (index) {
                 $.ajax({
-                    url: "<%= request.getContextPath() %>/warn/alarmEvent/delete/" + data.alarmEventInt,
+                    url: "<%= request.getContextPath() %>/logDeleteRule/logDeleteRule/delete/" + data.ruleDeleteId,
                     type: "DElETE",
                     data: JSON.stringify({
-                        alarmEvent: data
+                        logDeleteRule: data
                     }),
                     cache: false,
                     contentType: "text/json",
@@ -505,7 +494,7 @@
                                 icon: 1,
                                 time: 500
                             }, function () {
-                                table.reload("LAY-app-alarmEvent-list-reload");
+                                table.reload("LAY-app-logDeleteRule-list-reload");
                             });
                         } else {
                             layer.msg("删除失败！", {

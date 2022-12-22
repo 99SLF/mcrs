@@ -133,4 +133,14 @@ public class Device {
      * 修改时间
      */
     private String updateTime;
+
+    /**
+     * 设备连接IP
+     */
+    private String equipmentIp;
+
+    /**
+     * 通讯协议
+     */
+    private String protocolCommunication;
 }
