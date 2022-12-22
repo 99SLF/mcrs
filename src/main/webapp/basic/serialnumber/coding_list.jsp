@@ -264,7 +264,7 @@
 			minWidth: 160,
 			sort: true,
 			templet:function(data){
-				return layui.admin.getDictText("numbasis" , data.numBasis);;
+				return layui.admin.getDictText("numbasis" , data.numBasis);
 			}
 		}, {
 			field:'note',

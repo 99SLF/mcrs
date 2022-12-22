@@ -106,8 +106,8 @@ public class LogDeleteRuleController {
      * @param ruleDeleteIds 日志删除规则主键数组
      */
     @PostMapping("/logDeleteRule/enable")
-    public Result<?> enable(@RequestBody Integer[] ruleDeleteIds) {
-        logDeleteRuleService.enable(Arrays.asList(ruleDeleteIds));
+    public Result<?> enable(@RequestBody List<Integer> ruleDeleteIds) {
+        logDeleteRuleService.enable(ruleDeleteIds);
         return Result.success();
 
     }

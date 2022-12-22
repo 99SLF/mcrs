@@ -23,9 +23,28 @@ public interface TreeMapper {
     List<TreeTemplate> queryTreeInfo(Map map);
 
     /**
+     * 查询树信息
+     * @param
+     * @return
+     */
+    List<TreeTemplate> querySubTreeInfo(Map map);
+
+    /**
      * 查询记录数
      * @param
      * @return
      */
     int count();
+
+    /**
+     * 修改树
+     * @param treeTemplate
+     */
+    void updateTreeTemplate(TreeTemplate treeTemplate);
+
+    /**
+     * 新增树
+     * @param treeTemplate
+     */
+    void addTreeTemplate(TreeTemplate treeTemplate);
 }

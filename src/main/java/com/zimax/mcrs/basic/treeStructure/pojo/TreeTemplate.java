@@ -33,7 +33,7 @@ public class TreeTemplate {
      * 排序
      */
 
-    private int displayOrder;
+    private Integer displayOrder;
 
     /**
      * 拼接编号
@@ -45,7 +45,7 @@ public class TreeTemplate {
      * 子类总数
      */
 
-    private int subCount;
+    private Integer subCount;
 
     /**
      * 子类类型
@@ -57,7 +57,12 @@ public class TreeTemplate {
      * 上级id
      */
 
-    private int parentId;
+    private Integer parentId;
+
+    /**
+     * 逻辑状态
+     */
+    private Integer logicStates;
 
 
 }

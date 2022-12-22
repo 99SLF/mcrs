@@ -148,7 +148,7 @@
     });
 
     var active = {
-        //设备新建
+        //预警事件新建
         add: function () {
             top.layer.open({
                 type: 2,

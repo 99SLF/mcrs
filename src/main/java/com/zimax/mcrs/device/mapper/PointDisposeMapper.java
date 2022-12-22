@@ -25,4 +25,10 @@ public interface PointDisposeMapper {
     List<RfidGroup> queryRfidGroups(String appId);
     List<RfidPoint> queryRfidPoints(int rfidGroupId);
     int count(@Param("deviceName") String deviceName);
+    void delPointDispose(String appId);
+    void delPlcGroups(String appId);
+    void delPlcPoints(int plcGroupId);
+    void delRfidGroups(String appId);
+    void delRfidPoints(int rfidGroupId);
+    void updatePointDispose(PointDispose pointDispose);
 }

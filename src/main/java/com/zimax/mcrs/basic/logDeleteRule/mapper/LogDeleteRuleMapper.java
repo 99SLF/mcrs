@@ -66,6 +66,6 @@ public interface LogDeleteRuleMapper {
     /**
      * 批量启用
      */
-    int enable(List<Integer> ruleDeleteId);
+    int enable(LogDeleteRule logDeleteRule);
 
 }

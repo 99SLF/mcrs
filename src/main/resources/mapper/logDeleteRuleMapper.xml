@@ -72,7 +72,7 @@
         where rule_delete_id = #{ruleDeleteId}
     </update>
 
-<!--    批量删除-->
+    <!--    批量删除-->
     <delete id="deleteLogDeleteRules" parameterType="java.util.List">
         delete from bas_log_delete_rule where rule_delete_id in
         <foreach collection="list" item="id" separator="," open="(" close=")">
@@ -87,12 +87,13 @@
         where delete_rule_num = #{deleteRuleNum}
     </select>
 
-<!--批量启用-->
-    <update id="enable" parameterType="java.util.List">
-        update bas_log_delete_rule set enable = 'on' where rule_delete_id in
-        <foreach collection="list" item="id" separator="," open="(" close=")">
-            #{id}
-        </foreach>
+    <!--批量启用-->
+    <update id="enable" parameterType="com.zimax.mcrs.basic.logDeleteRule.pojo.LogDeleteRule">
+        update bas_log_delete_rule
+        set enable = #{enable},
+        updater=#{updater},
+        update_time=#{updateTime}
+        where rule_delete_id = #{ruleDeleteId}
     </update>
 
 </mapper>

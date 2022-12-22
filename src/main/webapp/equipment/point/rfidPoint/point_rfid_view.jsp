@@ -26,21 +26,21 @@
         <div class="layui-form" lay-filter="point-rfid-add" id="point-rfid-add" style="padding:20px;">
             <div class="layui-row layui-col-space10 layui-form-item">
                 <div class="layui-col-sm4">
-                    <label class="layui-form-label"><span style="color:red">*</span>RFID编号：</label>
+                    <label class="layui-form-label">RFID-ID：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="rfidNum" id="rfidNum"
                                autocomplete="off" placeholder="请输入RFID编号" lay-verify="required">
                     </div>
                 </div>
                 <div class="layui-col-sm4">
-                    <label class="layui-form-label"><span style="color:red">*</span>连接IP：</label>
+                    <label class="layui-form-label">连接IP：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="ipAddr" id="ipAddr"
                                autocomplete="off" lay-verify="required">
                     </div>
                 </div>
                 <div class="layui-col-sm4">
-                    <label class="layui-form-label"><span style="color:red">*</span>端口号：</label>
+                    <label class="layui-form-label">端口号：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="port" id="port"
                                autocomplete="off" lay-verify="required">
@@ -96,6 +96,16 @@
 
     function SetData(data){
         win = data.win ? data.win : window;
+        debugger;
+        var data = data.rfidGroup;
+        form.val('point-rfid-add', {
+            "rfidNum": data.rfidNum,
+            "ipAddr": data.ipAddr,
+            "port": data.port,
+        });
+        tables.reload({
+            data: data.rfidPointList
+        });
     }
     table.on('sort(rfidParam)', function (obj) { //注：sort 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
         table.reload('rfidParam', {
@@ -165,7 +175,7 @@
         if (submit == false) {
             var rfidPointList = table.cache['rfidParam'];
             rfidGroup.rfidPointList = rfidPointList;
-            win.setRfidGroup(rfidGroup);
+            win.setEditRfidGroup(rfidGroup);
             var index = parent.layer.getFrameIndex(window.name);
             top.layer.close(index);
             submit = true;
@@ -211,52 +221,31 @@
             field: "paramName",
             title: "参数名称",
             align: "center",
-            edit: 'text',
             minWidth: 100,
         }, {
             field: "paramKey",
             title: "参数主键(key)",
-            edit: 'text',
             align: "left",
             minWidth: 100,
         }, {
             field: "paramValue",
             title: "参数值(value)",
-            edit: 'text',
             align: "center",
             minWidth: 80,
         }, {
             field: "paramMark",
             title: "参数标记(mark)",
-            edit: 'text',
             align: "center",
             minWidth: 80,
         }, {
             field: "remarks",
             title: "备注",
-            edit: 'text',
             align: "center",
             minWidth: 120,
-        }, {
-            title: "操作",
-            align: "center",
-            fixed: "right",
-            width: 120,
-            toolbar: "#table-list"
         }]],
 
     });
-    var param = {
-        "paramName": "",
-        "paramKey": "",
-        "paramValue": "",
-        "paramMark": "",
-        "remarks": "",
-    }
-    dataJson.push(param);
-    tables.reload({
-        data: dataJson
-    });
+
     //单击行事件
     $('body').on("click", ".layui-table-body table.layui-table tbody tr td", function () {
         if ($(this).attr("data-field") === "0")

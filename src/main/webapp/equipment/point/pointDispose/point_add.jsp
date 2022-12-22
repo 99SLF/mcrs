@@ -29,13 +29,13 @@
                 <h1>参数信息</h1>
             </div>
         </div>
-        <div class="layui-form" lay-filter="pointDispose-add" id="order-add" style="padding:20px;">
+        <div class="layui-form" lay-filter="pointDispose-add" id="pointDispose-add" style="padding:20px;">
             <div class="layui-row layui-col-space10 layui-form-item">
                 <div class="layui-col-sm4">
                     <label class="layui-form-label"><span style="color:red">*</span>APPID：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="appId" id="appId"
-                               autocomplete="off" >
+                               autocomplete="off" readonly>
                         <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="selectAppId"
                                 style="position:absolute;top:0px;right:0px;height:37px">
                             <i class="layui-icon layui-icon-more"></i>
@@ -336,6 +336,32 @@
         });
     });
 
+    //选择设备资源号入口
+    $("#selectAppId").click(function () {
+        top.layer.open({
+            type: 2,
+            title: "选择终端",
+            area: ["850px", "470px"],
+            btn: ["确定", "取消"],
+            content: "<%= request.getContextPath() %>/equipment/device/device_select.jsp",
+            yes: function (index, layero) {
+                var pointDispose = layero.find('iframe')[0].contentWindow.getData();
+                debugger;
+                form.val("pointDispose-add",{
+                    "appId": pointDispose.aPPId,
+                    "deviceName": pointDispose.deviceName,
+                    "equipmentId": pointDispose.equipmentId,
+                    "equipmentIp":pointDispose.equipmentIp,
+                    "equipmentContinuePort": pointDispose.equipmentContinuePort,
+                    "equipmentName":pointDispose.equipmentName,
+                    "factoryName":pointDispose.factoryName,
+                    "production": pointDispose.production,
+                    "equipmentProperties":pointDispose.equipmentProperties,
+                })
+                top.layer.close(index);
+            }
+        });
+    });
     table.on('toolbar(plc)', function (obj) {
         var type = obj.event;
         active[type] ? active[type].call(this) : "";
@@ -349,7 +375,6 @@
         var pointDispose = data.field;
         if (submit == false) {
             submit = true;
-            debugger;
             var plcGroupList = table.cache['plc'];
             pointDispose.plcGroupList = plcGroupList;
             var rfidGroupList = table.cache['rfid'];
@@ -377,7 +402,7 @@
                                 time: 2000
                             }, function() {
                                 var index = parent.layer.getFrameIndex(window.name);
-                                win.layui.table.reload("LAY-app-application-list-reload");
+                                win.layui.table.reload("pointDispose");
                                 top.layer.close(index);
                                 win.window.updateFuncgroupSelect();
                             });
@@ -407,7 +432,7 @@
             top.layer.open({
                 type: 2,
                 title: "PLC点位配置",
-                content: "<%= request.getContextPath() %>/equipment/point/point_plc_add.jsp",
+                content: "<%= request.getContextPath() %>/equipment/point/plcPoint/point_plc_add.jsp",
                 area: ["1000px", "560px"],
                 resize: false,
                 btn: ["确定", "取消"],
@@ -427,7 +452,7 @@
             top.layer.open({
                 type: 2,
                 title: "RFID点位配置",
-                content: "<%= request.getContextPath() %>/equipment/point/point_rfid_add.jsp",
+                content: "<%= request.getContextPath() %>/equipment/point/rfidPoint/point_rfid_add.jsp",
                 area: ["1000px", "560px"],
                 resize: false,
                 btn: ["确定", "取消"],
@@ -479,28 +504,29 @@
             title: "组别名称",
             align: "center",
             minWidth: 120,
+            templet: function(data) {
+                data.plcGroupName = data.plcGroupName == null ? "" : data.plcGroupName;
+                var html = '<div><a rel="nofollow" href="javascript:void(0);" style="color:#1E9FFF" lay-event="showView">' + data.plcGroupName+ '</a></div>';
+                return html;
+            }
         }, {
             field: "plcGroupType",
             title: "组别类型",
-            edit: 'text',
             align: "left",
             minWidth: 100,
         }, {
             field: "plcGroupRname",
             title: "组映射RFID名称",
-            edit: 'text',
             align: "center",
             minWidth: 100,
         }, {
             field: "rfidNum",
             title: "RFID天线编码",
-            edit: 'text',
             align: "center",
             minWidth: 100,
         }, {
             field: "remarks",
             title: "备注",
-            edit: 'text',
             align: "center",
             minWidth: 120,
         }, {
@@ -540,9 +566,14 @@
             type: 'numbers',
         }, {
             field: "rfidNum",
-            title: "RFID编号",
+            title: "RFID_ID",
             align: "center",
             minWidth: 120,
+            templet: function(data) {
+                data.rfidNum = data.rfidNum == null ? "" : data.rfidNum;
+                var html = '<div><a rel="nofollow" href="javascript:void(0);" style="color:#1E9FFF" lay-event="showView">' + data.rfidNum+ '</a></div>';
+                return html;
+            }
         }, {
             field: 'ipAddr',
             title: '连接IP',
@@ -596,7 +627,7 @@
             top.layer.open({
                 type: 2,
                 title: "编辑PLC点位配置",
-                content: "<%= request.getContextPath() %>/equipment/point/point_plc_edit.jsp",
+                content: "<%= request.getContextPath() %>/equipment/point/plcPoint/point_plc_edit.jsp",
                 area: ["1000px", "560px"],
                 resize: false,
                 btn: ["确定", "取消"],
@@ -620,6 +651,22 @@
                     data : Data
                 });
             }
+        }else if(obj.event == "showView") {
+            top.layer.open({
+                type: 2,
+                title: "PLC点位配置详情",
+                content: "<%= request.getContextPath() %>/equipment/point/plcPoint/point_plc_view.jsp",
+                area: ["1000px","560px"],
+                resize: false,
+                btn: ["关闭"],
+                success: function(layero, index) {
+                    var dataJson = {
+                        plcGroup: obj.data,
+                        win: window
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+            });
         }
     })
 
@@ -629,7 +676,7 @@
             top.layer.open({
                 type: 2,
                 title: "编辑RFID点位配置",
-                content: "<%= request.getContextPath() %>/equipment/point/point_rfid_edit.jsp",
+                content: "<%= request.getContextPath() %>/equipment/point/rfidPoint/point_rfid_edit.jsp",
                 area: ["1000px", "560px"],
                 resize: false,
                 btn: ["确定", "取消"],
@@ -653,6 +700,23 @@
                     data : Data
                 });
             }
+        }else if(obj.event == "showView") {
+            top.layer.open({
+                type: 2,
+                title: "RFID点位配置详情",
+                content: "<%= request.getContextPath() %>/equipment/point/rfidPoint/point_rfid_view.jsp",
+                area: ["1000px","560px"],
+                resize: false,
+                btn: ["关闭"],
+                success: function(layero, index) {
+                    debugger;
+                    var dataJson = {
+                        rfidGroup: obj.data,
+                        win: window
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+            });
         }
     })
     //单击行事件

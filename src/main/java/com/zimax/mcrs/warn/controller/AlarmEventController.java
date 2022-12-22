@@ -99,8 +99,8 @@ public class AlarmEventController {
      * @param alarmEventInt 告警事件主键数组
      */
     @PostMapping("/alarmEvent/enable")
-    public Result<?> enable(@RequestBody Integer[] alarmEventInt) {
-        alarmEventService.enable(Arrays.asList(alarmEventInt));
+    public Result<?> enable(@RequestBody List<Integer> alarmEventInt) {
+        alarmEventService.enable(alarmEventInt);
         return Result.success();
 
     }

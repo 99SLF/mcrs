@@ -552,3 +552,122 @@ CREATE TABLE `log_device_exchange_log`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 97 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+# 编码规则
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for base_coding_serialnumber
+-- ----------------------------
+DROP TABLE IF EXISTS `base_coding_serialnumber`;
+CREATE TABLE `base_coding_serialnumber` (
+    `id` int(18) NOT NULL AUTO_INCREMENT,
+    `rule_name` varchar(255) DEFAULT NULL,
+    `digit` int(18) DEFAULT NULL,
+    `startvalue` int(18) DEFAULT NULL,
+    `currentvalue` int(18) DEFAULT NULL,
+    `note` varchar(255) DEFAULT NULL,
+    `function_num` varchar(255) DEFAULT NULL,
+    `function_name` varchar(255) DEFAULT NULL,
+    `number_rule` varchar(255) DEFAULT NULL,
+    `num_basis` varchar(255) DEFAULT NULL,
+    `title_rule` varchar(255) DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=228 DEFAULT CHARSET=utf8;
+
+# plc点位组管理
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for dev_plc_group
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_plc_group`;
+CREATE TABLE `dev_plc_group` (
+    `plc_group_id` int(9) NOT NULL AUTO_INCREMENT,
+    `plc_group_name` varchar(64) DEFAULT NULL,
+    `plc_group_type` varchar(32) DEFAULT NULL,
+    `plc_group_rname` varchar(32) DEFAULT NULL COMMENT '组映射RFID名称',
+    `rfid_num` varchar(32) DEFAULT NULL COMMENT 'rfid天线编码',
+    `remarks` varchar(255) DEFAULT NULL,
+    `app_id` varchar(255) DEFAULT NULL,
+    PRIMARY KEY (`plc_group_id`),
+    KEY `app_id` (`app_id`) USING BTREE,
+    CONSTRAINT `dev_plc_group_ibfk_1` FOREIGN KEY (`app_id`) REFERENCES `dev_point_dispose` (`app_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+
+# plc点位参数
+-- ----------------------------
+-- Table structure for dev_plcparam_dispose
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_plcparam_dispose`;
+CREATE TABLE `dev_plcparam_dispose` (
+    `plc_param_id` int(9) NOT NULL AUTO_INCREMENT,
+    `shine_addr` varchar(64) DEFAULT NULL COMMENT '映射地址',
+    `lable_name` varchar(64) DEFAULT NULL COMMENT '标签名称',
+    `data_type` varchar(32) DEFAULT NULL COMMENT '数据类型',
+    `param_len` int(9) DEFAULT NULL COMMENT '参数长度',
+    `small_point` int(9) DEFAULT NULL COMMENT '小数位数',
+    `chinese_mean` varchar(255) DEFAULT NULL COMMENT '中文释义',
+    `remarks` varchar(255) DEFAULT NULL COMMENT '备注',
+    `plc_group_id` int(9) DEFAULT NULL,
+    PRIMARY KEY (`plc_param_id`),
+    KEY `plc_group_id` (`plc_group_id`),
+    CONSTRAINT `dev_plcparam_dispose_ibfk_1` FOREIGN KEY (`plc_group_id`) REFERENCES `dev_plc_group` (`plc_group_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+
+# 点位配置
+-- ----------------------------
+-- Table structure for dev_point_dispose
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_point_dispose`;
+CREATE TABLE `dev_point_dispose` (
+    `app_id` varchar(255) NOT NULL,
+    `down_work` varchar(255) DEFAULT NULL COMMENT '下料执行作业',
+    `up_work` varchar(255) DEFAULT NULL COMMENT '上料执行作业',
+    `up_model` varchar(255) DEFAULT NULL COMMENT '上料过账模式',
+    `down_model` varchar(255) DEFAULT NULL COMMENT '下料过账模式',
+    `data_unit` varchar(32) DEFAULT NULL,
+    `data_method` varchar(32) DEFAULT NULL COMMENT '数据计算方法',
+    `chip_length` int(10) DEFAULT NULL COMMENT '单片机长度',
+    `scale` int(10) DEFAULT NULL COMMENT '比例',
+    `ratio` int(10) DEFAULT NULL COMMENT '系数',
+    `check_param` int(10) DEFAULT NULL COMMENT '检查参数',
+    `roll_diameter` int(10) DEFAULT NULL COMMENT '放卷卸料设定',
+    `lable_cycle` int(10) DEFAULT NULL,
+    `monitor_date` int(9) DEFAULT NULL,
+    PRIMARY KEY (`app_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+# rfid点位组
+-- ----------------------------
+-- Table structure for dev_rfid_group
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_rfid_group`;
+CREATE TABLE `dev_rfid_group` (
+    `rfid_group_id` int(9) NOT NULL AUTO_INCREMENT,
+    `rfid_num` varchar(32) DEFAULT NULL,
+    `ip_addr` varchar(64) DEFAULT NULL,
+    `port` varchar(32) DEFAULT NULL,
+    `app_id` varchar(255) DEFAULT NULL,
+    PRIMARY KEY (`rfid_group_id`),
+    KEY `app_id` (`app_id`),
+    CONSTRAINT `dev_rfid_group_ibfk_1` FOREIGN KEY (`app_id`) REFERENCES `dev_point_dispose` (`app_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+
+# rfid点位参数配置
+-- ----------------------------
+-- Table structure for dev_rfidparam_dispose
+-- ----------------------------
+DROP TABLE IF EXISTS `dev_rfidparam_dispose`;
+CREATE TABLE `dev_rfidparam_dispose` (
+    `rfid_param_id` int(9) NOT NULL AUTO_INCREMENT,
+    `param_name` varchar(32) DEFAULT '' COMMENT '参数名称',
+    `param_key` varchar(64) DEFAULT '' COMMENT '参数主键',
+    `param_value` varchar(32) DEFAULT NULL COMMENT '参数值',
+    `param_mark` varchar(32) DEFAULT NULL COMMENT '参数标记',
+    `remarks` varchar(255) DEFAULT NULL COMMENT '备注',
+    `rfid_group_id` int(9) DEFAULT NULL,
+    PRIMARY KEY (`rfid_param_id`),
+    KEY `rfid_group_id` (`rfid_group_id`),
+    CONSTRAINT `dev_rfidparam_dispose_ibfk_1` FOREIGN KEY (`rfid_group_id`) REFERENCES `dev_rfid_group` (`rfid_group_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
