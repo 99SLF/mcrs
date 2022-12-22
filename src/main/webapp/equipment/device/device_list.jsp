@@ -199,7 +199,7 @@
                     icon: 3,
                     title: "系统提示"
                 }, function (index) {
-                    top.layui.index.openTabsPage( "<%=request.getContextPath() %>/update/update_package_manager.jsp");
+                    top.layui.index.openTabsPage( "<%=request.getContextPath() %>/update/update_package_manager.jsp","选择更新包");
                     <%--$.ajax({--%>
                     <%--    url: "<%= request.getContextPath() %>/equipment/device/batchDelete",--%>
                     <%--    type: "DELETE",--%>

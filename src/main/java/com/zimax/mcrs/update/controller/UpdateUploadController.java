@@ -3,6 +3,7 @@ package com.zimax.mcrs.update.controller;
 import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
 import com.zimax.mcrs.config.Result;
+import com.zimax.mcrs.serialnumber.service.SerialnumberService;
 import com.zimax.mcrs.update.mapper.UpdateUploadMapper;
 import com.zimax.mcrs.update.pojo.UpdateUpload;
 import com.zimax.mcrs.update.service.UpdateUploadService;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -41,6 +43,8 @@ public class UpdateUploadController {
     @Autowired
     private UpdateUploadMapper updateUploadMapper;
 
+    @Autowired
+    private SerialnumberService serialnumberService;
     /**
      * 记录更新包上传记录
      *
@@ -105,7 +109,10 @@ public class UpdateUploadController {
             //走编码规则，流水单号
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String format = simpleDateFormat.format(new Date());
-            updateUpload.setUploadNumber("GX"+format);
+
+            //编码规则，参数是编码规则表功能编码functionNum
+            String coding = serialnumberService.getSerialNum("gxCod");
+            updateUpload.setUploadNumber(coding);
 
             //调用存储添加功能
             updateUploadService.addUpdateUpload(updateUpload);
@@ -177,10 +184,6 @@ public class UpdateUploadController {
 
     }
 
-
-
-
-
     @RequestMapping("/download")
     public void download(String filePath, HttpServletRequest request, HttpServletResponse response) {
 
@@ -188,31 +191,45 @@ public class UpdateUploadController {
 
         // String filePath="C:\\Users\\HUAWEI\\IdeaProjects\\MCRS-JAVA\\target\\mcrs\\upload\\1fdce043-23b0-4f3c-a35a-de68e74869deuploadFile.rar";
         //sql做不了反斜杠查询（最开始没有uuidFile字段的，为了查询文件名创建），改用截取数据字符串+uuidFile查询
-        String uuidFile = filePath.substring(filePath.lastIndexOf("\\") + 1);
+        String uuidFile = filePath.substring(filePath.lastIndexOf("/") + 1);
+        //第一遍、要获取文件名
+        //String fileName = "1fdce043-23b0-4f3c-a35a-de68e74869deuploadFile.rar";
+        //Sql中用反斜杠查不到数据
+        //String fileName = updateUploadMapper.getUploadFileName(downloadUrl);
+
+        String fileName = updateUploadMapper.getUploadFileName(uuidFile);
+        FileInputStream fileIn = null;
+        ServletOutputStream out = null;
         try {
-            try (InputStream bis = new BufferedInputStream(new FileInputStream(new File(filePath)))) {
+            //String fileName = new String(fileNameString.getBytes("ISO8859-1"), "UTF-8");
+            response.setContentType("application/octet-stream");
+            // URLEncoder.encode(fileNameString, "UTF-8") 下载文件名为中文的，文件名需要经过url编码
+            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            File file;
+            String filePathString = filePath;
+            file = new File(filePathString);
+            fileIn = new FileInputStream(file);
+            out = response.getOutputStream();
 
-                //第一遍、要获取文件名
-                //String fileName = "1fdce043-23b0-4f3c-a35a-de68e74869deuploadFile.rar";
-                //Sql中用反斜杠查不到数据
-                //String fileName = updateUploadMapper.getUploadFileName(downloadUrl);
-
-                String fileName = updateUploadMapper.getUploadFileName(uuidFile);
-                fileName = URLEncoder.encode(fileName, "UTF-8");
-                response.addHeader("Content-Disposition", "attachment;filename=" + fileName);
-                response.setContentType("multipart/form-data");
-                BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
-                int len = 0;
-                while ((len = bis.read()) != -1) {
-                    out.write(len);
-                    out.flush();
-                }
-                out.close();
-                bis.close();
+            byte[] outputByte = new byte[1024];
+            int readTmp = 0;
+            while ((readTmp = fileIn.read(outputByte)) != -1) {
+                out.write(outputByte, 0, readTmp); //并不是每次都能读到1024个字节，所有用readTmp作为每次读取数据的长度，否则会出现文件损坏的错误
             }
-
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
+            //log.error(e.getMessage());
             e.printStackTrace();
         }
+        finally {
+            try {
+                fileIn.close();
+                out.flush();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
+
 }

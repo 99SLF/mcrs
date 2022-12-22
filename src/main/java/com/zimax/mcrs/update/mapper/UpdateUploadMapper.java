@@ -50,10 +50,5 @@ public interface UpdateUploadMapper {
      */
      String getUploadFileName(String uuidFile);
 
-    /**
-     * 通过文件路径获取文件名
-     * @param
-     * @return
-     */
-    UpdateUpload getMajorVersion(String deviceSoType);
+
 }

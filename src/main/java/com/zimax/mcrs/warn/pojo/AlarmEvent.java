@@ -85,6 +85,6 @@ public class AlarmEvent {
     /**
      * 修改时间
      */
-    private String updateTime;
+    private Date updateTime;
 
 }

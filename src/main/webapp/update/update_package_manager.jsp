@@ -102,6 +102,10 @@
         elem: "#deviceSoType",
         dictTypeId: "DEVICE_SOFTWARE_TYPE"
     });
+    layui.admin.renderDictSelect({
+        elem: "#uploadStrategy",
+        dictTypeId: "UPDATESTRATEGY"
+    });
     //状态默认
     $("#deviceSoType").val("请选择");
     //数据字典项加载
@@ -348,10 +352,8 @@
             title: "更新包",
             align: "center",
             minWidth: 100,
-            hide: isHidden("fileName"),
-            templet:function (data) {
-                return layui.util.toDateString(data.versionUploadTime, "yyyy-MM-dd");
-            }
+            hide: isHidden("fileName")
+
         }, {
             field: "uploader",
             title: "上传人",
@@ -386,15 +388,15 @@
     //监听操作事件
     table.on("tool(LAY-app-device-list)", function (e) {
         //当前行数据
+        debugger;
         var data = e.data;
         //edit 下载
         if (e.event == "edit") {
-            debugger;
             var filePath = encodeURIComponent(e.data.downloadUrl);
-            // var filename = encodeURIComponent(e.data.fileName)
+            var filename = encodeURIComponent(e.data.fileName);
             var url = "<%= request.getContextPath() %>/upload/download?filePath=" + filePath ;
             //创建a标签，用于点击
-            var a = document.createElement('a');
+            var a = document.createElement("a");
                 a.download = filename;
                 a.href = url;
                 //兼容firefox

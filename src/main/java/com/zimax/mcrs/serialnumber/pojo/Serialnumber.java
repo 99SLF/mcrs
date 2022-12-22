@@ -21,9 +21,9 @@ public class Serialnumber {
     @TableId(type = IdType.AUTO)
     int id;
     String ruleName;
-    int digit;
-    int startvalue;
-    int currentvalue;
+    Integer digit;
+    Integer startvalue;
+    Integer currentvalue;
     String note;
     String functionNum;
     String functionName;
