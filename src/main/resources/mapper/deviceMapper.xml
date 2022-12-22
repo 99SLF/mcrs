@@ -50,14 +50,14 @@
                 #{updater}, #{updateTime})
     </insert>
 
-    <!--根据主键删除设备-->
+    <!--根据主键删除终端-->
     <delete id="logoutDevice" parameterType="int">
         delete
         from eqi_device
         where device_id = #{deviceId}
     </delete>
 
-    <!--更新1条设备信息-->
+    <!--更新1条终端信息-->
     <update id="updateDevice" parameterType="com.zimax.mcrs.device.pojo.Device">
         update eqi_device
         set app_id = #{APPId},
@@ -77,6 +77,7 @@
         select `equipment_id`,`app_id`,`device_software_type` ,`device_id`from eqi_device
     </select>
 
+<!--    批量删除-->
     <delete id="deleteDevices" parameterType="java.util.List">
         delete from eqi_device where device_id in
         <foreach collection="list" item="id" separator="," open="(" close=")">

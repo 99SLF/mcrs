@@ -50,4 +50,15 @@ public class PointDisposeController {
     public Result<?> getPointDispose(String appId) {
         return Result.success(pointDisposeService.getPointDispose(appId));
     }
+    @DeleteMapping("/delete")
+    public Result<?> delPointDispose(String appId) {
+        pointDisposeService.delPointDispose(appId);
+        return Result.success();
+    }
+
+    @PutMapping("/update")
+    public Result<?> updatePointDispose(@RequestBody PointDispose pointDispose) {
+        pointDisposeService.updatePointDispose(pointDispose);
+        return Result.success();
+    }
 }

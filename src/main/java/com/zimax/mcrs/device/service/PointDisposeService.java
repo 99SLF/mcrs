@@ -29,6 +29,9 @@ public class PointDisposeService {
      */
     public void addPoint(PointDispose pointDispose) {
         pointDisposeMapper.addPoint(pointDispose);
+        addPointother(pointDispose);
+    }
+    public void addPointother(PointDispose pointDispose) {
         if (pointDispose.getPlcGroupList().size() > 0) {
             for (PlcGroup plcGroup : pointDispose.getPlcGroupList()) {
                 plcGroup.setAppId(pointDispose.getAppId());
@@ -54,7 +57,6 @@ public class PointDisposeService {
             }
         }
     }
-
     /**
      * 查询所有点位信息
      *
@@ -115,4 +117,41 @@ public class PointDisposeService {
         return pointDispose;
 
     }
+    public void delPointDispose(String appId) {
+        List<PlcGroup>plcGroupList = pointDisposeMapper.queryPlcGroups(appId);
+        List<RfidGroup>rfidGroupList = pointDisposeMapper.queryRfidGroups(appId);
+        if(plcGroupList.size()>0){
+            for(PlcGroup plcGroup: plcGroupList){
+                pointDisposeMapper.delPlcPoints(plcGroup.getPlcGroupId());
+            }
+            pointDisposeMapper.delPlcGroups(appId);
+        }
+        if(rfidGroupList.size()>0){
+            for(RfidGroup rfidGroup: rfidGroupList){
+                pointDisposeMapper.delRfidPoints(rfidGroup.getRfidGroupId());
+            }
+            pointDisposeMapper.delRfidGroups(appId);
+        }
+        pointDisposeMapper.delPointDispose(appId);
+    }
+    public void updatePointDispose(PointDispose pointDispose) {
+        List<PlcGroup>plcGroupList = pointDisposeMapper.queryPlcGroups(pointDispose.getAppId());
+        List<RfidGroup>rfidGroupList = pointDisposeMapper.queryRfidGroups(pointDispose.getAppId());
+        if(plcGroupList.size()>0){
+            for(PlcGroup plcGroup: plcGroupList){
+                pointDisposeMapper.delPlcPoints(plcGroup.getPlcGroupId());
+            }
+            pointDisposeMapper.delPlcGroups(pointDispose.getAppId());
+        }
+        if(rfidGroupList.size()>0){
+            for(RfidGroup rfidGroup: rfidGroupList){
+                pointDisposeMapper.delRfidPoints(rfidGroup.getRfidGroupId());
+            }
+            pointDisposeMapper.delRfidGroups(pointDispose.getAppId());
+        }
+        pointDisposeMapper.updatePointDispose(pointDispose);
+        addPointother(pointDispose);
+
+    }
+
 }

@@ -180,6 +180,10 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.mcrs.basic.accPointResMaintain.processInfoMaintain.mapper.ProcessMapper"/>
     </bean>
+    <bean id="TreeMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.basic.treeStructure.mapper.TreeMapper"/>
+    </bean>
 
     <bean id="DeviceExchangeLogMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>

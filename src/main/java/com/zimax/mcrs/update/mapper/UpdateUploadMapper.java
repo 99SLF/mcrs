@@ -27,6 +27,8 @@ public interface UpdateUploadMapper {
 
     int count(@Param("version") String version, @Param("deviceSoType") String deviceSoType);
 
+
+    List<UpdateUpload> getUpdateUpload(Map map);
     /**
      * 批量删除更新包数据
      * @param
@@ -47,4 +49,11 @@ public interface UpdateUploadMapper {
      * @return
      */
      String getUploadFileName(String uuidFile);
+
+    /**
+     * 通过文件路径获取文件名
+     * @param
+     * @return
+     */
+    UpdateUpload getMajorVersion(String deviceSoType);
 }

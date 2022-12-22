@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>RFID点位配置</title>
+    <title>plc点位配置</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
@@ -23,31 +23,49 @@
 <div class="layui-fluid">
     <div class="layui-card">
         <h2>参数信息</h2>
-        <div class="layui-form" lay-filter="point-rfid-add" id="point-rfid-add" style="padding:20px;">
+        <div class="layui-form" lay-filter="point-plc-add" id="point-plc-add" style="padding:20px;">
             <div class="layui-row layui-col-space10 layui-form-item">
-                <div class="layui-col-sm4">
-                    <label class="layui-form-label"><span style="color:red">*</span>RFID编号：</label>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label">组别名称：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="rfidNum" id="rfidNum"
-                               autocomplete="off" placeholder="请输入RFID编号" lay-verify="required">
+                        <input type="text" class="layui-input" name="plcGroupName" id="plcGroupName"
+                               lay-verify="required"
+                               autocomplete="off" readonly>
                     </div>
                 </div>
-                <div class="layui-col-sm4">
-                    <label class="layui-form-label"><span style="color:red">*</span>连接IP：</label>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label">组别类型：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="ipAddr" id="ipAddr"
-                               autocomplete="off" lay-verify="required">
-                    </div>
-                </div>
-                <div class="layui-col-sm4">
-                    <label class="layui-form-label"><span style="color:red">*</span>端口号：</label>
-                    <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="port" id="port"
-                               autocomplete="off" lay-verify="required">
+                        <input type="text" class="layui-input" name="plcGroupType" id="plcGroupType"
+                               lay-verify="required"
+                               autocomplete="off"readonly>
                     </div>
                 </div>
             </div>
-
+            <div class="layui-row layui-col-space10 layui-form-item">
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label">组映射RFID名称：</label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input" name="plcGroupRname" id="plcGroupRname"
+                               lay-verify="required"
+                               autocomplete="off" readonly>
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label">RFID天线编码：</label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input" name="rfidNum" id="rfidNum" lay-verify="required"
+                               autocomplete="off"  readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row layui-col-space10 layui-form-item">
+                <label class="layui-form-label">备注：</label>
+                <div class="layui-input-block">
+                    <textarea class="layui-textarea" lay-verify="remarks"
+                              name="remarks" id="remarks" readonly></textarea>
+                </div>
+            </div>
             <div class="layui-form-item layui-hide">
                 <input type="button" lay-submit lay-filter="layuiadmin-app-form-submit" id="layuiadmin-app-form-submit"
                        value="确认添加">
@@ -56,21 +74,15 @@
         <div class="layui-card-body">
             <div class="layui-form layui-card-header layuiadmin-card-header-auto">
                 <div class="layui-row">
-                    <h2>RFID配置参数</h2>
+                    <h2>PLC配置参数</h2>
                 </div>
             </div>
             <div class="layui-card-body">
-                <table id="rfidParam" lay-filter="rfidParam" class="layui-table " lay-skin="none"></table>
+                <table id="plcParam" lay-filter="plcParam" class="layui-table " lay-skin="none"></table>
             </div>
         </div>
     </div>
 </div>
-<script type="text/html" id="table-list">
-    <button class="layui-btn layui-btn-primary layui-btn-xs" title="新增" lay-event="add"><i
-            class="layui-icon layui-icon-add-circle-fine layuiadmin-button-btn"></i></button>
-    <button class="layui-btn layui-btn-primary layui-btn-xs" title="删除" lay-event="del"><i
-            class="layui-icon layui-icon-reduce-circle layuiadmin-button-btn"></i></button>
-</script>
 <script src="<%=request.getContextPath()%>/common/layui/layui.all.js"></script>
 <script>
     layui.config({
@@ -88,26 +100,29 @@
     var laydate = layui.laydate;
     form.render();
     var dataJson = [];
-    var funName = "point_rfid_add";
+    var funName = "point_plc_add";
     //过滤字段
     var hiddenFields = [];
     var win = null;
     form.render();
 
-    function SetData(data){
+    function SetData(data) {
         win = data.win ? data.win : window;
-        var data = data.rfidGroup;
-        form.val('point-rfid-add', {
+        var data = data.plcGroup;
+        form.val('point-plc-add', {
+            "plcGroupName": data.plcGroupName,
+            "plcGroupType": data.plcGroupType,
+            "plcGroupRname": data.plcGroupRname,
             "rfidNum": data.rfidNum,
-            "ipAddr": data.ipAddr,
-            "port": data.port,
+            "remarks": data.remarks,
         });
         tables.reload({
-            data: data.rfidPointList
+            data: data.plcPointList
         });
     }
-    table.on('sort(rfidParam)', function (obj) { //注：sort 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
-        table.reload('rfidParam', {
+
+    table.on('sort(plcParam)', function (obj) { //注：sort 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+        table.reload('plcParam', {
             initSort: obj //记录初始排序，如果不设的话，将无法标记表头的排序状态。
             , where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
                 field: obj.field //排序字段
@@ -159,42 +174,27 @@
     }
 
     $(window).resize(function () {
-        table.reload("rfidParam", {
+        table.reload("plcParam", {
             height: "full-" + getFullSize()
         });
     });
 
-    table.on('toolbar(rfidParam)', function (obj) {
+    table.on('toolbar(plcParam)', function (obj) {
         var type = obj.event;
         active[type] ? active[type].call(this) : "";
     });
-    //监听提交
-    form.on("submit(layuiadmin-app-form-submit)", function (data) {
-        var rfidGroup = data.field;
-        if (submit == false) {
-            var rfidPointList = table.cache['rfidParam'];
-            rfidGroup.rfidPointList = rfidPointList;
-            win.setEditRfidGroup(rfidGroup);
-            var index = parent.layer.getFrameIndex(window.name);
-            top.layer.close(index);
-            submit = true;
-        } else {
-            layer.msg("请稍等");
-        }
-        return false;
-    });
+
 
     //监听按钮点击事件
-    var active = {
-
-    }
+    var active = {}
 
     /*   PLC */
 
     var tables = table.render({
-        elem: "#rfidParam",
-        id: "rfidParam",
+        elem: "#plcParam",
+        id: "plcParam",
         data: [],
+        limit: 99999,
         height: "full-" + getFullSize(),
         colHideChange: function (col, checked) {
             var field = col.field;
@@ -217,71 +217,45 @@
             type: 'numbers',
             hide: false
         }, {
-            field: "paramName",
-            title: "参数名称",
+            field: "shineAddr",
+            title: "映射地址",
             align: "center",
-            edit: 'text',
             minWidth: 100,
         }, {
-            field: "paramKey",
-            title: "参数主键(key)",
-            edit: 'text',
+            field: "lableName",
+            title: "标签名称",
             align: "left",
             minWidth: 100,
         }, {
-            field: "paramValue",
-            title: "参数值(value)",
-            edit: 'text',
+            field: "dataType",
+            title: "数据类型",
             align: "center",
             minWidth: 80,
         }, {
-            field: "paramMark",
-            title: "参数标记(mark)",
-            edit: 'text',
+            field: "paramLen",
+            title: "参数长度",
             align: "center",
             minWidth: 80,
         }, {
-            field: "remarks",
-            title: "备注",
-            edit: 'text',
+            field: "smallPoint",
+            title: "小数点（dp)",
             align: "center",
             minWidth: 120,
         }, {
-            title: "操作",
+            field: "chineseMean",
+            title: "中文释义",
             align: "center",
-            fixed: "right",
-            width: 120,
-            toolbar: "#table-list"
+            minWidth: 100,
+        }, {
+            field: "remarks",
+            title: "备注",
+            align: "center",
+            minWidth: 120,
         }]],
 
     });
 
-    table.on("tool(rfidParam)", function (obj) {
-        if (obj.event == 'add') {
-            var Data = table.cache["rfidParam"];
-            var datas = {
-                "paramName": "",
-                "paramKey": "",
-                "paramValue": "",
-                "paramMark": "",
-                "remarks": "",
-            }
-            Data.push(datas);
-            tables.reload({
-                data: Data
-            });
-        } else if(obj.event == "del") {
-            var Data = table.cache["rfidParam"];
-            if(Data.length>1){
-                if (obj.tr.data("index") >= -1) {
-                    Data.splice(obj.tr.data("index"), 1);	//根据索引删除当前行
-                    tables.reload({
-                        data: Data
-                    });
-                }
-            }
-        }
-    })
+
     //单击行事件
     $('body').on("click", ".layui-table-body table.layui-table tbody tr td", function () {
         if ($(this).attr("data-field") === "0")

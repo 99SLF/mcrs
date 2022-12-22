@@ -41,7 +41,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>设备属性:</label>
             <div class="layui-input-block">
-                <select name="equipmentProperties" id="equipmentProperties" lay-filter="" type="select">
+                <select name="equipmentProperties" id="equipmentProperties" lay-filter="required" type="select">
                     <option value=""></option>
                 </select>
             </div>
@@ -62,7 +62,7 @@
             <label class="layui-form-label">设备安装位置:</label>
             <div class="layui-input-block">
                 <input id="equipmentInstallLocation" type="text" name="equipmentInstallLocation"
-                       lay-verify="required|equipmentInstallLocation"
+                       lay-verify=""
                        placeholder="请输入设备安装位置" autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -171,11 +171,6 @@
         equipmentName: function (value, item) {
             if (value.length > 20) {
                 return "设备名称不能超过20字";
-            }
-        },
-        equipmentInstallLocation: function (value, item) {
-            if (value.length > 20) {
-                return "设备安装位置不能超过20字符";
             }
         },
         equipmentContinuePort: function (value, item) {

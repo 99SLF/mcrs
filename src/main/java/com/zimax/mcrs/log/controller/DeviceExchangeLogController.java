@@ -1,21 +1,25 @@
 package com.zimax.mcrs.log.controller;
 
 import com.zimax.mcrs.config.Result;
+import com.zimax.mcrs.log.pojo.DeviceExchangeLog;
+import com.zimax.mcrs.log.pojo.InterfaceLog;
 import com.zimax.mcrs.log.service.DeviceExchangeLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 设备交换日志管理
+ *
  * @author 林俊杰
  * @date 2022/11/30
  */
 @RestController
 @ResponseBody
 @RequestMapping("/log")
-public class  DeviceExchangeLogController {
+public class DeviceExchangeLogController {
 
     @Autowired
     private DeviceExchangeLogService deviceExchangeLogService;
@@ -23,25 +27,53 @@ public class  DeviceExchangeLogController {
 
     /**
      * 依据设备交换日志Id删除
+     *
      * @param deviceExchangeLogId 设备交换日志编号数组
      */
     @DeleteMapping("/delete/{deviceExchangeLogId}")
-    public Result<?> removeDeviceExchangeLog (@PathVariable("deviceExchangeLogId")int deviceExchangeLogId) {
+    public Result<?> removeDeviceExchangeLog(@PathVariable("deviceExchangeLogId") int deviceExchangeLogId) {
         return Result.success();
     }
 
 
     /**
-     * 初始化查询
-     * @param page 页码
-     * @return 设备交换日志列表
+     * 查询
+     *
+     * @param equipmentId           设备资源号
+     * @param equipmentContinuePort 设备连接端口
+     * @param processName           使用工序名称
+     * @param operator              操作人
+     * @param exchangeTime          交换时间
+     * @param limit                 记录数
+     * @param page                  页码
+     * @param field                 排序字段
+     * @param order                 排序方式
+     * @return 设备列表
      */
     @GetMapping("/deviceExchangeLog/query")
-    public Result<?> select(@RequestParam int limit, @RequestParam int page) {
+    public Result<?> queryDeviceExchange(String limit, String page, String equipmentId, String equipmentContinuePort, String processName, String operator, String exchangeTime, String order, String field) {
+        List deviceExchangeLogs = deviceExchangeLogService.queryDeviceExchangeLog(limit, page, equipmentId, equipmentContinuePort, processName, operator, exchangeTime, order, field);
+        return Result.success(deviceExchangeLogs, deviceExchangeLogService.count(equipmentId));
+    }
+
+    /**
+     * 添加设备交换日志
+     * @param deviceExchangeLog 设备交换日志
+     */
+    @PostMapping("/deviceExchangeLog/add")
+    public Result<?> addDeviceExchangeLog(@RequestBody DeviceExchangeLog deviceExchangeLog) {
+        deviceExchangeLogService.addDeviceExchangeLog(deviceExchangeLog);
         return Result.success();
     }
 
-
-
+    /**
+     * 删除设备交换日志
+     * @param deviceExchangeLogId 设备交换日志主键
+     */
+    @DeleteMapping("/deviceExchangeLog/delete/{deviceExchangeLogId}")
+    public Result<?> addDeviceExchangeLog(@PathVariable("deviceExchangeLogId") int deviceExchangeLogId) {
+        deviceExchangeLogService.removeDeviceExchangeLog(deviceExchangeLogId);
+        return Result.success();
+    }
 
 }

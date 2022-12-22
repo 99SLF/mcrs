@@ -53,7 +53,7 @@ public class HttpURLConnectionUtil {
         System.out.println("result = " + result);
     }
     public static void main(String str[]) {
-        System.out.println(HttpURLConnectionUtil.httpGet("http://localhost:8080/mcrs/framework/application/download?fileName=mcrs.txt"));
+        System.out.println(HttpURLConnectionUtil.httpGet("http://localhost:8080/mcrs/framework/application/download?fileName=text.txt"));
         //System.out.println(HttpURLConnectionUtil.httpGet("http://127.0.0.1:8080/mcrs/framework/application/query"));
         //UploadTest01();
 

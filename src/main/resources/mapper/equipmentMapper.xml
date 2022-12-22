@@ -67,9 +67,7 @@
             equipment_continue_port=#{equipmentContinuePort},
             mes_continue_ip=#{mesContinueIp},
             enabled_state=#{enabledState},
-            remarks=#{remarks},
-            equipmentIp=#{equipmentIp},
-            protocolCommunication = #{protocolCommunication}
+            remarks=#{remarks}
         where equipment_int=#{equipmentInt}
     </update>
 

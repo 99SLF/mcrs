@@ -76,5 +76,12 @@ public class InterfaceLogService {
         interfaceLogMapper.addInterfaceLog(interfaceLog);
     }
 
+    /**
+     * 删除接口日志
+     */
+    public void removeInterfaceLog(int interfaceLogId) {
+        interfaceLogMapper.removeInterfaceLog(interfaceLogId);
+    }
+
 
 }
