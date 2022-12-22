@@ -21,6 +21,9 @@
             <if test="functionName !=null and functionName !=''">
                 and function_name like '%${functionName}%'
             </if>
+            <if test="functionNum !=null and functionName !=''">
+                and function_num like '%${functionNum}%'
+            </if>
         </where>
         <if test="order !=null and order !=''">
             order by ${field} ${order}
