@@ -1,12 +1,17 @@
 package com.zimax.mcrs.warn.service;
 
+import com.zimax.cap.datacontext.DataContextManager;
+import com.zimax.cap.party.IUserObject;
+import com.zimax.mcrs.basic.logDeleteRule.pojo.LogDeleteRule;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.warn.mapper.AlarmEventMapper;
 import com.zimax.mcrs.warn.mapper.AlarmRuleMapper;
 import com.zimax.mcrs.warn.pojo.AlarmEvent;
+import com.zimax.mcrs.warn.pojo.AlarmEventVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +30,7 @@ public class AlarmEventService {
     /**
      * 查询全部预警信息
      */
-    public List<AlarmEvent> queryAll(String page, String limit, Integer alarmEventId, String alarmEventTitle, String alarmLevel, String alarmCategory, String alarmType, String makeFormPeople, String makeFormTime,String order, String field){
+    public List<AlarmEventVo> queryAll(String page, String limit, Integer alarmEventId, String alarmEventTitle, String alarmLevel, String alarmCategory, String alarmType, String makeFormPeople, String makeFormTime, String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -100,7 +105,15 @@ public class AlarmEventService {
      * 批量启用告警事件
      */
     public void enable(List<Integer> alarmEventInt) {
-        alarmEventMapper.enable(alarmEventInt);
+        AlarmEvent alarmEvent = new AlarmEvent();
+        IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
+        for (Integer integer:alarmEventInt){
+            alarmEvent.setAlarmEventInt(integer);
+            alarmEvent.setEnableStatus("on");
+            alarmEvent.setUpdatePeople(usetObject.getUserName());
+            alarmEvent.setUpdateTime(new Date());
+            alarmEventMapper.enable(alarmEvent);
+        }
     }
 
 }

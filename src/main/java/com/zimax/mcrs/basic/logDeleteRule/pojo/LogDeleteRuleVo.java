@@ -21,7 +21,7 @@ public class LogDeleteRuleVo {
     /**
      * 日志主键
      */
-    private int logId;
+    private int ruleDeleteId;
 
     /**
      * 删除规则编码
