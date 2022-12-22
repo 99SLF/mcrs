@@ -1,5 +1,5 @@
-package com.zimax.mcrs.basic.accPointResMaintain.factoryInfoMaintain.mapper;
-import com.zimax.mcrs.basic.accPointResMaintain.factoryInfoMaintain.pojo.FactoryInfo;
+package com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.mapper;
+import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

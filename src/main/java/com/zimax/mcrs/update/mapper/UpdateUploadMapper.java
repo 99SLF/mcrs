@@ -1,6 +1,5 @@
 package com.zimax.mcrs.update.mapper;
 
-import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.update.pojo.UpdateUpload;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

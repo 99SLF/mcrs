@@ -1,7 +1,7 @@
-package com.zimax.mcrs.basic.accPointResMaintain.factoryInfoMaintain.controller;
+package com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.controller;
 
-import com.zimax.mcrs.basic.accPointResMaintain.factoryInfoMaintain.pojo.FactoryInfo;
-import com.zimax.mcrs.basic.accPointResMaintain.factoryInfoMaintain.service.FactoryService;
+import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo;
+import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.service.FactoryService;
 import com.zimax.mcrs.config.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

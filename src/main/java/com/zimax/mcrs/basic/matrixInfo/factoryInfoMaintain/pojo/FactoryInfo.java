@@ -1,4 +1,4 @@
-package com.zimax.mcrs.basic.accPointResMaintain.factoryInfoMaintain.pojo;
+package com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -23,6 +23,11 @@ public class FactoryInfo {
      */
     @TableId(type = IdType.AUTO)
     private int factoryId;
+
+    /**
+     * 树id
+     */
+    private String infoId;
 
     /**
      * 工厂名称

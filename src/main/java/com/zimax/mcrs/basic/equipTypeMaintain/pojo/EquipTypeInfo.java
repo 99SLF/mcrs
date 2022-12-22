@@ -1,4 +1,4 @@
-package com.zimax.mcrs.basic.accPointResMaintain.equipTypeMaintain.pojo;
+package com.zimax.mcrs.basic.equipTypeMaintain.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 /**
  * 设备类型维护
@@ -15,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("bas_equipType_info")
+@TableName("base_equip_info")
 public class EquipTypeInfo {
 
     /**
@@ -25,12 +27,13 @@ public class EquipTypeInfo {
     private int equipTypeId;
 
     /**
-     * 设备类型
+     * 树id
      */
-    private String equipTypeName;
+    private String infoId;
+
 
     /**
-     * 厂家
+     * 设备类型代码
      */
     private String equipTypeCode;
 
@@ -40,9 +43,19 @@ public class EquipTypeInfo {
     private String equipTypeEnable;
 
     /**
+     * 厂家
+     */
+    private String manufacturer;
+
+    /**
+     *设备类型名称
+     */
+    private String equipTypeName;
+
+    /**
      * 使用控制器型号
      */
-    private String equipTypeModel;
+    private String equipControllerModel;
 
     /**
      * 支持通信协议
@@ -50,8 +63,34 @@ public class EquipTypeInfo {
     private String protocolCommunication;
 
     /**
+     *MES连接IP地址
+     */
+    private String mesIpAddress;
+
+    /**
      * 备注
      */
     private String remarks;
+
+    /**
+     * 制单人
+     */
+    private String creator;
+
+
+    /**
+     * 制单时间
+     */
+    private Date createTime;
+
+    /**
+     * 修改人
+     */
+    private String updater;
+
+    /**
+     * 修改时间
+     */
+    private Date updateTime;
 
 }

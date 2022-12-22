@@ -1,6 +1,6 @@
-package com.zimax.mcrs.basic.accPointResMaintain.processInfoMaintain.controller;
-import com.zimax.mcrs.basic.accPointResMaintain.processInfoMaintain.pojo.ProcessInfo;
-import com.zimax.mcrs.basic.accPointResMaintain.processInfoMaintain.service.ProcessService;
+package com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.controller;
+import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
+import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.service.ProcessService;
 import com.zimax.mcrs.config.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

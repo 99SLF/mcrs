@@ -2,7 +2,6 @@ package com.zimax.components.coframe.rights.service;
 
 import com.alibaba.excel.util.StringUtils;
 import com.zimax.cap.datacontext.DataContextManager;
-import com.zimax.cap.utility.CryptoUtil;
 import com.zimax.components.coframe.rights.DefaultUserManager;
 import com.zimax.components.coframe.rights.mapper.UserMapper;
 import com.zimax.components.coframe.rights.pojo.User;

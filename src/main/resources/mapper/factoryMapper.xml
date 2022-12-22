@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zimax.mcrs.basic.accPointResMaintain.factoryInfoMaintain.mapper.FactoryMapper">
     <!--添加工厂基础数据-->
-    <insert id="addFactoryInfo" parameterType="com.zimax.mcrs.basic.accPointResMaintain.factoryInfoMaintain.pojo.FactoryInfo">
+    <insert id="addFactoryInfo" parameterType="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo">
         insert into bas_factory_info
         values (#{factoryId}, #{factoryName}, #{factoryCode}, #{factoryEnable}, #{factoryAddress})
     </insert>

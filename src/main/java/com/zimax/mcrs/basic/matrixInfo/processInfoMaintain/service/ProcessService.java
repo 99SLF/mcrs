@@ -1,7 +1,7 @@
-package com.zimax.mcrs.basic.accPointResMaintain.processInfoMaintain.service;
+package com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.service;
 
-import com.zimax.mcrs.basic.accPointResMaintain.processInfoMaintain.mapper.ProcessMapper;
-import com.zimax.mcrs.basic.accPointResMaintain.processInfoMaintain.pojo.ProcessInfo;
+import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.mapper.ProcessMapper;
+import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

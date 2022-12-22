@@ -1,10 +1,85 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zimax.mcrs.basic.accPointResMaintain.equipTypeMaintain.mapper.EquipMapper">
+<mapper namespace="com.zimax.mcrs.basic.equipTypeMaintain.mapper.EquipMapper">
     <!--添加设备基础数据-->
-    <insert id="addEquipInfo" parameterType="com.zimax.mcrs.basic.accPointResMaintain.equipTypeMaintain.pojo.EquipTypeInfo">
-        insert into bas_equipType_info
-        values (#{equipTypeId}, #{equipTypeName}, #{equipTypeCode}, #{equipTypeEnable}, #{equipTypeModel},#{protocolCommunication},#{remarks})
+    <insert id="addEquipInfo" parameterType="com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo">
+        insert into base_equip_info
+        values (#{equipTypeId}, #{infoId}, #{equipTypeCode}, #{equipTypeEnable}, #{manufacturer}, #{equipTypeName},
+                #{equipControllerModel}, #{protocolCommunication},
+                #{mesIpAddress}, #{remarks},
+                #{creator}, #{createTime}, #{updater}, #{updateTime})
     </insert>
+
+    <!--    查询记录数-->
+    <select id="count" resultType="int">
+        select count(*) from base_equip_info
+        <where>
+            <if test="equipTypeCode !=null and equipTypeCode !=''">
+                and equip_type_code like '%${equipTypeCode}%'
+            </if>
+            <if test="equipTypeName !=null and equipTypeName !=''">
+                and equip_type_name like '%${equipTypeName}%'
+            </if>
+            <if test="creator !=null and creator !=''">
+                and creator like '%${creator}%'
+            </if>
+            <if test="createTime !=null and createTime !=''">
+                and create_time like #{createTime}
+            </if>
+        </where>
+    </select>
+
+    <!--列表显示-->
+    <select id="queryEquipInfos" parameterType="map"
+            resultType="com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfoVo">
+        select * from base_equip_info
+        <where>
+            <if test="equipTypeCode !=null and equipTypeCode !=''">
+                and equip_type_code like '%${equipTypeCode}%'
+            </if>
+            <if test="equipTypeName !=null and equipTypeName !=''">
+                and equip_type_name like '%${equipTypeName}%'
+            </if>
+            <if test="creator !=null and creator !=''">
+                and creator like '%${creator}%'
+            </if>
+            <if test="createTime !=null and createTime !=''">
+                and create_time = #{createTime}
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+    <!--更新一条选中信息-->
+    <update id="updateEquipInfo" parameterType="com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo">
+        UPDATE base_equip_info
+        SET info_id                = #{infoId},
+            equip_type_code        = #{equipTypeCode},
+            equip_type_enable      = #{equipTypeEnable},
+            manufacturer           = #{manufacturer},
+            equip_type_name        = #{equipTypeName},
+            equip_controller_model = #{equipControllerModel},
+            protocol_communication = #{protocolCommunication},
+            mes_ip_address         = #{mesIpAddress},
+            remarks                = #{remarks},
+            create_time            = #{creator},
+            create_time            = #{createTime,jdbcType=DATE},
+            updater                = #{updater},
+            update_time            = #{updateTime,jdbcType=DATE}
+        WHERE equip_type_id = ${equipTypeId}
+    </update>
+
+    <!--    批量删除-->
+    <delete id="deleteEquipInfos" parameterType="java.util.List">
+        delete from base_equip_info where equip_type_id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

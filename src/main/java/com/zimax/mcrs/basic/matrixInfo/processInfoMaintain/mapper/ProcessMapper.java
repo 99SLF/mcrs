@@ -1,6 +1,6 @@
-package com.zimax.mcrs.basic.accPointResMaintain.processInfoMaintain.mapper;
+package com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.mapper;
 
-import com.zimax.mcrs.basic.accPointResMaintain.processInfoMaintain.pojo.ProcessInfo;
+import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

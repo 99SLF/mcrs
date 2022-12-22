@@ -29,46 +29,47 @@
 
         }
     </style>
-<script src="common/layui/layui.all.js"></script>
-<script type="text/javascript">
+    <script src="common/layui/layui.all.js"></script>
+    <script type="text/javascript">
         var obj; //建立全局变量
-        function getTime()
-        {
-        obj=document.getElementById("myDiv"); //得到容器对象
-        var myDate=new Date(); //得到时间对象
-        var y=myDate.getFullYear(); //获取年
-        var m=myDate.getMonth()+1; //获取月
-        m=m>9?m:"0"+m; //如果月份小于10,则在前面加0补充为两位数字
-        var d=myDate.getDay(); //获取日
-        d=d>9?d:"0"+d; //如果天数小于10,则在前面加0补充为两位数字
-        var h=myDate.getHours(); //获取小时
-        h=h>9?h:"0"+h; //如果小时数字小于10,则在前面加0补充为两位数字
-        var M=myDate.getMinutes(); //获取分
-        M=M>9?M:"0"+M; //如果分钟小于10,则在前面加0补充为两位数字
-        var s=myDate.getSeconds(); //获取秒
-        s=s>9?s:"0"+s; //如果秒数小于10,则在前面加0补充为两位数字
-        var NowTime=y+"年"+m+"月"+d+"日"+h+":"+M+":"+s; //串联字符串用于输入
-        obj.value=NowTime;// 在文本框中输入时间
-        window.setTimeout("getTime()",1000); //每隔1秒自动变换时间
-}
-</script>
+        function getTime() {
+            obj = document.getElementById("myDiv"); //得到容器对象
+            var myDate = new Date(); //得到时间对象
+            var y = myDate.getFullYear(); //获取年
+            var m = myDate.getMonth() + 1; //获取月
+            m = m > 9 ? m : "0" + m; //如果月份小于10,则在前面加0补充为两位数字
+            var d = myDate.getDay(); //获取日
+            d = d > 9 ? d : "0" + d; //如果天数小于10,则在前面加0补充为两位数字
+            var h = myDate.getHours(); //获取小时
+            h = h > 9 ? h : "0" + h; //如果小时数字小于10,则在前面加0补充为两位数字
+            var M = myDate.getMinutes(); //获取分
+            M = M > 9 ? M : "0" + M; //如果分钟小于10,则在前面加0补充为两位数字
+            var s = myDate.getSeconds(); //获取秒
+            s = s > 9 ? s : "0" + s; //如果秒数小于10,则在前面加0补充为两位数字
+            var NowTime = y + "年" + m + "月" + d + "日" + h + ":" + M + ":" + s; //串联字符串用于输入
+            obj.value = NowTime;// 在文本框中输入时间
+            window.setTimeout("getTime()", 1000); //每隔1秒自动变换时间
+        }
+    </script>
 </head>
 <body onLoad="getTime()"><!--页面加载时候自动获取时间-->
-<div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" enctype="multipart/form-data" style="padding: 20px 30px 0 0;">
+<div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list"
+     enctype="multipart/form-data" style="padding: 20px 30px 0 0;">
     <div class="layui-form-item layui-row layui-col-space10">
-<%--        <div class="layui-col-md4">--%>
-<%--            <label class="layui-form-label"><span style="color:red">*</span>更新包单号:</label>--%>
-<%--            <div class="layui-input-block">--%>
-<%--                &lt;%&ndash;lay-verify="uploadNumber|required 自定义校验要有顺序&ndash;%&gt;--%>
-<%--                <input id="uploadNumber" type="text" name="uploadNumber" lay-verify="uploadNumber|required"--%>
-<%--                       placeholder="请先选择需要上传的更新包" autocomplete="off" class="layui-input" disabled>--%>
-<%--            </div>--%>
-<%--        </div>--%>
+        <%--        <div class="layui-col-md4">--%>
+        <%--            <label class="layui-form-label"><span style="color:red">*</span>更新包单号:</label>--%>
+        <%--            <div class="layui-input-block">--%>
+        <%--                &lt;%&ndash;lay-verify="uploadNumber|required 自定义校验要有顺序&ndash;%&gt;--%>
+        <%--                <input id="uploadNumber" type="text" name="uploadNumber" lay-verify="uploadNumber|required"--%>
+        <%--                       placeholder="请先选择需要上传的更新包" autocomplete="off" class="layui-input" disabled>--%>
+        <%--            </div>--%>
+        <%--        </div>--%>
         <div class="layui-col-sm4">
             <label class="layui-form-label"><span style="color:red">*</span>终端软件类型:</label>
             <div class="layui-input-block">
                 <%--下拉选择框--%>
-                <select name="deviceSoType" id="deviceSoType" lay-filter="deviceSoType"  lay-verify="deviceSoType|required" type="select">
+                <select name="deviceSoType" id="deviceSoType" lay-filter="deviceSoType"
+                        lay-verify="deviceSoType|required" type="select">
                     <option value=""></option>
                 </select>
             </div>
@@ -87,7 +88,8 @@
         <div class="layui-col-md4">
             <label class="layui-form-label"><span style="color:red">*</span>是否为主要版本</label>
             <div class="layui-input-block">
-                <select name="majorVersion" id="majorVersion" lay-filter="majorVersion"  lay-verify="majorVersion|required" type="select" disabled>
+                <select name="majorVersion" id="majorVersion" lay-filter="majorVersion"
+                        lay-verify="majorVersion|required" type="select" disabled>
                     <option value=""></option>
                 </select>
             </div>
@@ -108,20 +110,23 @@
             <label class="layui-form-label"><span style="color:red">*</span>更新策略:</label>
             <div class="layui-input-block">
                 <%--下拉选择框--%>
-                <select name="uploadStrategy" id="uploadStrategy" lay-filter="uploadStrategy" lay-verify="uploadStrategy|required" type="select">
+                <select name="uploadStrategy" id="uploadStrategy" lay-filter="uploadStrategy"
+                        lay-verify="uploadStrategy|required" type="select">
                     <option value=""></option>
                 </select>
             </div>
         </div>
+    </div>
     <div>
-    <div class="layui-form-item layui-row layui-col-space10">
-        <div class="layui-col-sm4">
-            <label class="layui-form-label"><span style="color:red">*</span>更新包</label>
-            <div class="layui-input-block layui-upload" style="width: 400px">
-                <button type="button" name="url" class="layui-btn layui-btn-sm"
-                        id="test1"><i class="layui-icon">&#xe67c;</i>附件上传
-                </button>
-                <span id="demoListView"></span>
+        <div class="layui-form-item layui-row layui-col-space10">
+            <div class="layui-col-sm4">
+                <label class="layui-form-label"><span style="color:red">*</span>更新包</label>
+                <div class="layui-input-block layui-upload" style="width: 400px">
+                    <button type="button" name="url" class="layui-btn layui-btn-sm"
+                            id="test1"><i class="layui-icon">&#xe67c;</i>附件上传
+                    </button>
+                    <span id="demoListView"></span>
+                </div>
             </div>
         </div>
     </div>
@@ -129,34 +134,36 @@
     <div class="layui-form-item layui-row layui-col-space10">
         <label class="layui-form-label">备注：</label>
         <div class="layui-input-block">
-<textarea class="layui-textarea field-effect field-content" name="remarks" id="remarks"
-          autocomplete="off" placeholder="" lay-verify="remarks"></textarea>
+                <textarea class="layui-textarea field-effect field-content" name="remarks" id="remarks"
+                          autocomplete="off" placeholder="" lay-verify="remarks"></textarea>
         </div>
-    <div>
+    </div>
 
     <div class="layui-form-item layui-row layui-col-space12">
         <div class="layui-col-sm4">
             <label class="layui-form-label" style="margin-top: 10px;">制单时间：</label>
-            <div class="layui-input-block" id="div" style="width: 200px;margin-top: 10px; " >
-<%--                <input type="text" class="layui-input" name="versionUploadTime"--%>
-<%--                       value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>"--%>
-<%--                       readonly/>--%>
-            <input type="text" class="layui-input" name="versionUploadTime" id="myDiv" size="150" readonly/>
+            <div class="layui-input-block" id="div" style="width: 200px;margin-top: 10px; ">
+                <%--                <input type="text" class="layui-input" name="versionUploadTime"--%>
+                <%--                       value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>"--%>
+                <%--                       readonly/>--%>
+                <input type="text" class="layui-input" name="versionUploadTime" id="myDiv" size="150"
+                       readonly/>
             </div>
         </div>
         <div class="layui-col-sm4">
             <label class="layui-form-label" style="margin-top: 10px;">制单人:</label>
-            <div class="layui-input-block" style="width: 200px;margin-top: 10px; " >
+            <div class="layui-input-block" style="width: 200px;margin-top: 10px; ">
                 <%
                     IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
                 %>
                 <input type="text" class="layui-input" id="uploader" name="uploader"
-                       value="<%=usetObject.getUserName()%>"   size="150" readonly/>
+                       value="<%=usetObject.getUserName()%>" size="150" readonly/>
             </div>
         </div>
     </div>
     <div class="layui-form-item layui-hide">
-        <input type="button" lay-submit lay-filter="layuiadmin-app-form-submit" id="layuiadmin-app-form-submit" value="确认添加">
+        <input type="button" lay-submit lay-filter="layuiadmin-app-form-submit"
+               id="layuiadmin-app-form-submit" value="确认添加">
     </div>
 </div>
 
@@ -207,39 +214,39 @@
 
     //表单填充校验，自定义lay-verify
     form.verify({
-        uploadNumber: function(value, item) { //value：表单的值、item：表单的DOM对象
-            if(value.length < 1 ) {
+        uploadNumber: function (value, item) { //value：表单的值、item：表单的DOM对象
+            if (value.length < 1) {
                 return '请选择附件';
             }
         },
     });
     form.verify({
-        majorVersion: function(value, item) { //value：表单的值、item：表单的DOM对象
-            if(value.length < 1 ) {
+        majorVersion: function (value, item) { //value：表单的值、item：表单的DOM对象
+            if (value.length < 1) {
                 return '请选择是否为主要版本';
             }
         },
     });
 
     form.verify({
-        version: function(value, item) { //value：表单的值、item：表单的DOM对象
-            if(value.length < 1 ) {
+        version: function (value, item) { //value：表单的值、item：表单的DOM对象
+            if (value.length < 1) {
                 return '请选择是否为主要版本';
             }
         },
     });
 
     form.verify({
-        deviceSoType: function(value, item) { //value：表单的值、item：表单的DOM对象
-            if(value.length < 1 ) {
+        deviceSoType: function (value, item) { //value：表单的值、item：表单的DOM对象
+            if (value.length < 1) {
                 return '请选择是终端软件类型';
             }
         },
     });
 
     form.verify({
-        uploadStrategy: function(value, item) { //value：表单的值、item：表单的DOM对象
-            if(value.length < 1 ) {
+        uploadStrategy: function (value, item) { //value：表单的值、item：表单的DOM对象
+            if (value.length < 1) {
                 return '请选择更新策略';
             }
         },
@@ -268,7 +275,7 @@
     }
 
 
-    form.on("select(deviceSoType)", function(data) {
+    form.on("select(deviceSoType)", function (data) {
         var deviceSoType = data.value;
         //调用终端软件类型后的后端
         $.ajax({
@@ -277,17 +284,17 @@
             async: false,//默认是true异步传输，false是同步传输
             cache: false,
             contentType: "text/json",
-            success: function(result) {
+            success: function (result) {
                 if (result) {
 
                     //从后端获取的返回值数据存储到到allDatas
                     debugger;
-                if(data.value == null || data.value == ""){
-                    $("#lastversion").val("");
-                    $("#version").val("");
-                    $("#majorVersion").val("");
-                    form.render();
-                }else if(result.data.length == 0 ) {
+                    if (data.value == null || data.value == "") {
+                        $("#lastversion").val("");
+                        $("#version").val("");
+                        $("#majorVersion").val("");
+                        form.render();
+                    } else if (result.data.length == 0) {
                         //无最新的版本
                         $("#majorVersion").val("001");
                         $("#lastversion").val("无最新版本");
@@ -295,7 +302,7 @@
                         form.render();
                         var value = "1.0";
                         $("#version").val(value)
-                    }else{
+                    } else {
                         //取消下拉选择框的经用
                         $("#majorVersion").removeAttr("disabled");
                         //渲染，很重要
@@ -320,19 +327,18 @@
         });
 
 
-
     });
     //通过选择的是否为主要版本来确定版本递增
-    form.on("select(majorVersion)", function(data) {
+    form.on("select(majorVersion)", function (data) {
         debugger;
-        if (data.value == "null"||data.value == ""){
+        if (data.value == "null" || data.value == "") {
             $("#version").val("");
-        }else if(data.value == '001') {
+        } else if (data.value == '001') {
             $("#version").val(Math.floor(Number(lastVersionVal) + 1).toFixed(1));
 
-        }else {
-            var result = (Number(lastVersionVal)+ 0.1).toString().substr(0,1)
-                +(Number(lastVersionVal)+ 0.1).toString().substring(1,1+(1+1));
+        } else {
+            var result = (Number(lastVersionVal) + 0.1).toString().substr(0, 1)
+                + (Number(lastVersionVal) + 0.1).toString().substring(1, 1 + (1 + 1));
             $("#version").val(result);
 
         }
@@ -355,28 +361,28 @@
         // exts: 'txt|rar|zip|doc|docx|pdf|xls|xlsx|jpg|png',//允许上传的文件类型
         exts: 'zip|rar|7z',
         //和后端接口命名相同的文件名
-        field:"file",
+        field: "file",
         //是否选完文件后自动上传。如果设定 false，那么需要设置 bindAction 参数来指向一个其它按钮提交上传
         auto: false,
-        dataType:'json',
+        dataType: 'json',
         //动态赋值表单值
         data: {
             // uploadNumber:()=>{
             //     return $('#uploadNumber').val();//实现动态传值
             // },
-            majorVersion:()=>{
+            majorVersion: () => {
                 return $('#majorVersion').val();//实现动态传值
             },
-            version:()=>{
+            version: () => {
                 return $('#version').val();//实现动态传值
             },
-            deviceSoType:()=>{
+            deviceSoType: () => {
                 return $('#deviceSoType').val();//实现动态传值
             },
-            uploadStrategy:()=>{
+            uploadStrategy: () => {
                 return $('#uploadStrategy').val();//实现动态传值
             },
-            remarks:()=>{
+            remarks: () => {
                 return $('#remarks').val();//实现动态传值
             },
             // versionUploadTime:()=>{//后端设置，前端不带了，前端只是显示
@@ -391,13 +397,13 @@
         // //指定允许上传时校验的文件类型，可选值有：images（图片）、file（所有文件）、video（视频）、audio（音频）
 
         //选择文件后的回调函数。返回一个object参数
-        choose: function(obj){
-            obj.preview(function(index, file, result){
+        choose: function (obj) {
+            obj.preview(function (index, file, result) {
                 uploadfileName = file.name;
                 //获取更新包的文件名，将文件名赋值到表单的资源包单号
-                document.getElementById("demoListView").innerHTML= uploadfileName;
+                document.getElementById("demoListView").innerHTML = uploadfileName;
                 /*将后端的流水单号绑定前端显示*/
-                value="<%="GX"+(new SimpleDateFormat("yyyy-MM-dd")).format(new Date())+""%>"
+                value = "<%="GX"+(new SimpleDateFormat("yyyy-MM-dd")).format(new Date())+""%>"
                 $("#uploadNumber").val(value);
 
             });
@@ -426,9 +432,9 @@
     //提交表单数据
     form.on('submit(layuiadmin-app-form-submit)', function (data) {
         debugger;
-        if(document.getElementById("demoListView").innerHTML==null || document.getElementById("demoListView").innerHTML==""){
+        if (document.getElementById("demoListView").innerHTML == null || document.getElementById("demoListView").innerHTML == "") {
             layer.msg("请选择文件");
-        }else {
+        } else {
             test.upload();
         }
     });

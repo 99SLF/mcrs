@@ -1,4 +1,4 @@
-package com.zimax.mcrs.basic.accPointResMaintain.processInfoMaintain.pojo;
+package com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -23,6 +23,11 @@ public class ProcessInfo {
      */
     @TableId(type = IdType.AUTO)
     private int processId;
+
+    /**
+     * 树id
+     */
+    private String infoId;
 
     /**
      * 工序名称
