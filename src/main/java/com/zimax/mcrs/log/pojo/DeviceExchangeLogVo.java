@@ -1,24 +1,21 @@
 package com.zimax.mcrs.log.pojo;
 
-import com.baomidou.mybatisplus.annotation.*;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 /**
  * 设备交换日志
  * @author 林俊杰
- * @date 2022/11/30
+ * @date 2022/12/21
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@TableName("log_device_exchange_log")
-public class DeviceExchangeLog {
+public class DeviceExchangeLogVo {
 
     /**
      * 设备交换日志主键
@@ -38,14 +35,24 @@ public class DeviceExchangeLog {
     private String logType;
 
     /**
-     * 设备主键
+     * 设备资源号
      */
-    private int equipmentInt;
+    private String equipmentId;
 
     /**
-     * 终端主键
+     * 设备连接IP
      */
-    private int deviceId;
+    private String equipmentIp;
+
+    /**
+     * 设备连接端口
+     */
+    private String equipmentContinuePort;
+
+    /**
+     * APPId
+     */
+    private String APPId;
 
     /**
      * 工厂名称
@@ -70,7 +77,7 @@ public class DeviceExchangeLog {
     /**
      * 交互时间
      */
-    private Date exchangeTime;
+    private String exchangeTime;
 
 
 }

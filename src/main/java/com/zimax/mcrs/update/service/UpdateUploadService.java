@@ -1,5 +1,6 @@
 package com.zimax.mcrs.update.service;
 
+import com.zimax.components.coframe.framework.pojo.Menu;
 import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.report.mapper.AbnProdPrcsReportMapper;
@@ -100,7 +101,7 @@ public class UpdateUploadService {
     }
 
     /**
-     * 通过uuid删除文件资料
+     * 通过uuid(对应的文件名)删除文件资料
      *
      * @param
      * @return
@@ -121,4 +122,21 @@ public class UpdateUploadService {
         }
         return flag;
     }
+
+    public UpdateUpload getMajorVersion(String deviceSoType) {
+        return updateUploadMapper.getMajorVersion(deviceSoType);
+    }
+
+
+    /**
+     * 查询所有更新包信息
+     */
+    public List<UpdateUpload> getUpdateUpload(String deviceSoType) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("deviceSoType", deviceSoType);
+        return updateUploadMapper.getUpdateUpload(map);
+
+    }
+
+
 }

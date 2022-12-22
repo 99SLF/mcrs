@@ -55,7 +55,7 @@
         </if>
     </select>
 
-    <!--添加设备-->
+    <!--添加接口日志-->
     <insert id="addInterfaceLog" parameterType="com.zimax.mcrs.log.pojo.InterfaceLog">
         insert into log_interface_log
         values (#{interfaceLogId}, #{interfaceLogNum}, #{logType}, #{source},
@@ -77,6 +77,12 @@
         from eqi_equipment
         where equipment_int = #{equipmentInt}
     </select>
+
+
+    <!--删除-->
+    <delete id="removeInterfaceLog" parameterType="int">
+        delete from log_interface_log where interface_log_id = #{interfaceLogId}
+    </delete>
 
 
 </mapper>

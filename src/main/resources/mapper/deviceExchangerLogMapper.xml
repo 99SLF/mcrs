@@ -5,46 +5,42 @@
 
     <!--    查询记录数-->
     <select id="count" resultType="int">
-        SELECT * FROM log_interface_log as inter
+        SELECT count(*) FROM
+        log_device_exchange_log as exchange
         LEFT JOIN eqi_equipment as eqi
-        on inter.equipment_int = eqi.equipment_int
-        LEFT JOIN eqi_device as dev
-        ON inter.device_id = dev.device_id
+        ON exchange.equipment_int = eqi.equipment_int
+        LEFT JOIN eqi_device AS dev
+        ON exchange.device_id = dev.device_id
         <where>
-            <if test="source !=null and source !=''">
-                and inter.source like '%${source}%'
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id like '%${equipmentId}%'
             </if>
         </where>
     </select>
 
     <!--查询所有-->
-    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.log.pojo.InterfaceLogVo">
-        SELECT * FROM log_interface_log as inter
+    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.log.pojo.DeviceExchangeLogVo">
+        SELECT * FROM
+        log_device_exchange_log as exchange
         LEFT JOIN eqi_equipment as eqi
-        on inter.equipment_int = eqi.equipment_int
-        LEFT JOIN eqi_device as dev
-        ON inter.device_id = dev.device_id
+        ON exchange.equipment_int = eqi.equipment_int
+        LEFT JOIN eqi_device AS dev
+        ON exchange.device_id = dev.device_id
         <where>
-            <if test="createTime !=null and createTime !=''">
-                and inter.create_time like '%${createTime}%'
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id like '%${equipmentId}%'
             </if>
-            <if test="source !=null and source !=''">
-                and inter.source like '%${source}%'
+            <if test="equipmentContinuePort !=null and equipmentContinuePort !=''">
+                and eqi.equipment_continue_port like '%${equipmentContinuePort}%'
             </if>
-            <if test="interfaceName !=null and interfaceName !=''">
-                and inter.interface_name like '%${interfaceName}%'
+            <if test="processName !=null and processName !=''">
+                and exchange.process_name like '%${processName}%'
             </if>
-            <if test="equipmentIp !=null and equipmentIp !=''">
-                and eqi.equipment_ip like '%${equipmentIp}%'
+            <if test="operator !=null and operator !=''">
+                and exchange.operator like '%${operator}%'
             </if>
-            <if test="invoker !=null and invoker !=''">
-                and inter.invoker like '%${invoker}%'
-            </if>
-            <if test="methodName !=null and methodName !=''">
-                and inter.method_name like '%${methodName}%'
-            </if>
-            <if test="disposeTime !=null and disposeTime !=''">
-                and inter.dispose_time like '%${disposeTime}%'
+            <if test="exchangeTime !=null and exchangeTime !=''">
+                and exchange.exchange_time like '%${exchangeTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -55,20 +51,20 @@
         </if>
     </select>
 
-    <!--添加设备-->
-    <insert id="addEquipment" parameterType="com.zimax.mcrs.device.pojo.Equipment">
-        insert into eqi_equipment
-        values (#{equipmentInt}, #{equipmentId}, #{equipmentName}, #{enabledState},
-                #{equipmentProperties}, #{mesContinueIp}, #{equipmentInstallLocation},
-                #{equipmentContinuePort}, #{createTime}, #{remarks}, #{creator})
+    <!--添加设备交换日志-->
+    <insert id="addDeviceExchangeLog" parameterType="com.zimax.mcrs.log.pojo.DeviceExchangeLog">
+        insert into log_device_exchange_log
+        values (#{deviceExchangeLogId}, #{deviceExchangeLogNum}, #{logType}, #{equipmentInt},
+                #{deviceId}, #{factoryName}, #{processName},
+                #{dataAcquisition}, #{operator}, #{exchangeTime})
     </insert>
 
-<!--    &lt;!&ndash;根据主键删除设备&ndash;&gt;-->
-<!--    <delete id="removeEquipment" parameterType="int">-->
-<!--        delete-->
-<!--        from eqi_equipment-->
-<!--        where equipment_int = #{equipmentInt}-->
-<!--    </delete>-->
+    <!--根据主键删除设备交换日志-->
+    <delete id="removeDeviceExchangeLog" parameterType="int">
+        delete
+        from log_device_exchange_log
+        where device_exchange_log_id = #{deviceExchangeLogId}
+    </delete>
 
 
 

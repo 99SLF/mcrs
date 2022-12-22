@@ -1,29 +1,25 @@
 package com.zimax.mcrs.log.pojo;
 
-import com.baomidou.mybatisplus.annotation.*;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 /**
  * 操作日志
  * @author 林俊杰
- * @date 2022/12/2
+ * @date 2022/12/21
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@TableName("log_operation_log")
-public class OperationLog {
+public class OperationLogVo {
 
     /**
      * 操作日志Id
      */
-    @TableId(type = IdType.AUTO)
     private int operationLogId;
 
     /**
@@ -64,7 +60,7 @@ public class OperationLog {
     /**
      * 操作时间
      */
-    private Date operationTime;
+    private String operationTime;
 
 
 

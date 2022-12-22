@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.basic.treeStructure.mapper.TreeMapper">
+    <!--    查询记录数-->
+    <select id="count" resultType="int">
+        select count(*) from bas_tree
+    </select>
+    <!--查询树信息-->
+    <select id="queryTreeInfo" parameterType="map" resultType="com.zimax.mcrs.basic.treeStructure.pojo.TreeTemplate">
+        select * from bas_tree
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+    </select>
+
+
+</mapper>
