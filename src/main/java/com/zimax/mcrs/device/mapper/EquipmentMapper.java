@@ -66,4 +66,11 @@ public interface EquipmentMapper {
      */
     void deleteEquipments(List<Integer> equipmentInt);
 
+
+
+    /**
+     * 检查当前设备资源号是否存在
+     */
+    int checkEquipmentId(@Param("equipmentId") String equipmentId);
+
 }

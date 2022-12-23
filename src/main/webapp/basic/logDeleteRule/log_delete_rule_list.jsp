@@ -216,9 +216,12 @@
             var checkStatus = table.checkStatus("LAY-app-logDeleteRule-list-reload");
             var data = checkStatus.data;
             if (data.length == 0) {
-                layer.msg("请至少选中一条记录！");
+                layer.msg("请至少选中一条规则！");
             }
-            if (data.length > 0) {
+            if (data.length >=2 ) {
+                layer.msg("只能启用一条规则");
+            }
+            if (data.length == 1 ) {
                 var ruleDeleteIds = new Array();
                 for (var i = 0; i < data.length; i++) {
                     ruleDeleteIds[i] = data[i].ruleDeleteId;
