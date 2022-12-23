@@ -703,10 +703,10 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 
     -- ----------------------------
-    -- Table structure for bas_tree
+    -- Table structure for base_tree
     -- ----------------------------
-    DROP TABLE IF EXISTS `bas_tree`;
-    CREATE TABLE `bas_tree` (
+    DROP TABLE IF EXISTS `base_tree`;
+    CREATE TABLE `base_tree` (
     `info_id` int(11) NOT NULL AUTO_INCREMENT,
     `info_name` varchar(40) DEFAULT NULL,
     `display_order` int(11) DEFAULT NULL,
@@ -719,7 +719,7 @@ SET FOREIGN_KEY_CHECKS = 1;
     ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
     -- ----------------------------
-    -- Records of bas_tree
+    -- Records of base_tree
     -- ----------------------------
 
     -- ----------------------------
