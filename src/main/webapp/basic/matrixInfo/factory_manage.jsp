@@ -64,14 +64,27 @@
 	var element = layui.element;
 	var node = {};
 	
-	var line_list = {
+	var factory_list = {
 		id: "list",
-		title: "产线列表",
-		path: '<%=request.getContextPath() %>factory_list.jsp'
+		title: "工厂列表",
+		path: '<%=request.getContextPath() %>/basic/matrixInfo/factoryInfo/factory_list.jsp'
+	};
+	var matrix_list = {
+		id: "list",
+		title: "基地列表",
+		path: '<%=request.getContextPath() %>/basic/matrixInfo/matrix/matrix_list.jsp'
+	};
+	var process_list = {
+		id: "list",
+		title: "工序列表",
+		path: '<%=request.getContextPath() %>/basic/matrixInfo/process/process_list.jsp'
 	};
 	
 	var categoryTabs = [];
-	categoryTabs.push(line_list);
+	categoryTabs.push(matrix_list);
+	categoryTabs.push(matrix_list);
+	categoryTabs.push(factory_list);
+	categoryTabs.push(process_list);
 	
 	var device = layui.device(); //获取设备来源
 	var source = 1;  // 默认电脑
@@ -97,11 +110,9 @@
 	
 	function refreshTab(node) {
 		var iframe = $(".layui-tab-item.layui-show").find("iframe");
-		for (var i = 0; i < categoryTabs.length; i++) {
-			var obj = categoryTabs[i];
-			var settingTab = $("#" + obj.id);		
-			settingTab.attr("url", setUrlParam(obj.path,node));
-		}
+		var obj = categoryTabs[Number(node.level) - 1];
+		var settingTab = $("#" + obj.id);
+		settingTab.attr("url", setUrlParam(obj.path,node));
 		iframe.attr("src", iframe.attr("url"));	
 	}
 
@@ -295,6 +306,9 @@
 	      			buttons.editToolbar = "";
 	      			buttons.delToolbar = "";
 	      		}
+				if (param.level == "4" ) {
+					buttons.addToolbar = "";
+				}
 	      		
 	      		return buttons; //将按钮对象返回
 	      		}
