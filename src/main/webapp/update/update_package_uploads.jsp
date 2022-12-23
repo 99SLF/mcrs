@@ -303,6 +303,8 @@
                         var value = "1.0";
                         $("#version").val(value)
                     } else {
+                        $("#majorVersion").val("");
+                        $("#version").val("");
                         //取消下拉选择框的经用
                         $("#majorVersion").removeAttr("disabled");
                         //渲染，很重要

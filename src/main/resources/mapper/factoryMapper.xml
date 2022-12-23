@@ -5,16 +5,56 @@
     <!--添加工厂基础数据-->
     <insert id="addFactoryInfo" parameterType="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo">
         insert into base_factory_info
-        values (#{factoryId}, #{infoId}, #{factoryName}, #{factoryCode},#{factoryAddress},
+        values (#{factoryId}, #{infoId}, #{factoryName}, #{factoryCode}, #{factoryAddress},
                 #{creator}, #{createTime}, #{updater}, #{updateTime})
     </insert>
 
-<!--    &lt;!&ndash;    主键删除&ndash;&gt;-->
-<!--    <delete id="deleteFactory" parameterType="int">-->
-<!--        delete-->
-<!--        from bas_factory_info-->
-<!--        where factory_id = #{factoryId}-->
-<!--    </delete>-->
+    <!--    &lt;!&ndash;    主键删除&ndash;&gt;-->
+    <!--    <delete id="deleteFactory" parameterType="int">-->
+    <!--        delete-->
+    <!--        from bas_factory_info-->
+    <!--        where factory_id = #{factoryId}-->
+    <!--    </delete>-->
+    <!--    查询记录数-->
+    <select id="count" resultType="int">
+        select count(*) from base_factory_info
+        <where>
+            <if test="infoId !=null and infoId !=''">
+                and info_id like '%${infoId}%'
+            </if>
+        </where>
+    </select>
+
+    <!--列表显示-->
+    <select id="queryFactoryInfos" parameterType="map"
+            resultType="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfoVo">
+        select * from base_factory_info
+        <where>
+            <if test="infoId !=null and infoId !=''">
+                and info_id like '%${infoId}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+    <!--更新一条选中信息-->
+    <update id="updateFactoryInfo" parameterType="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo">
+        UPDATE base_factory_info
+        SET info_id         = #{infoId},
+            factory_name    = #{factoryName},
+            factory_code    = #{factoryCode},
+            factory_address = #{factoryAddress},
+            create_time     = #{creator},
+            create_time     = #{createTime,jdbcType=DATE},
+            updater         = #{updater},
+            update_time     = #{updateTime,jdbcType=DATE}
+        WHERE factory_id = ${factoryId}
+    </update>
 
 </mapper>
 
