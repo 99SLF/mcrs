@@ -76,6 +76,24 @@
 						</div>
 					</div>
 
+					<div class="layui-form-item layui-row layui-hide">
+						<div class="layui-input-block">
+							<input type="text" class="layui-hide" name="createTime"
+								   value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>" readonly/>
+						</div>
+					</div>
+
+					<div class="layui-form-item layui-row layui-hide">
+						<div class="layui-input-block">
+							<%--java代码--%>
+							<%
+								IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
+							%>
+							<input type="text" class="layui-hide" name="creator" value="<%=usetObject.getUserName()%>"
+								   readonly/>
+						</div>
+					</div>
+
 
 
 

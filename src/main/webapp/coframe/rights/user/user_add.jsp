@@ -208,7 +208,6 @@
 
     //监听提交
     form.on("submit(layuiadmin-app-form-submit)", function (data) {
-        debugger;
         // var submitData = JSON.stringify(data.field);
         if (submit == false) {
             submit = true;
@@ -233,7 +232,7 @@
                 });
             } else if (isExist == true) {
                 submit = false;
-                layer.msg("角色已存在，请重新输入", {
+                layer.msg("用户已存在，请重新输入", {
                     icon: 2,
                     time: 2000
                 });
@@ -248,21 +247,20 @@
     // 判断角色是否已存在
     $("#userId").blur(function() {
     	var userId = $("#userId").val();
-    	// console.log(userId);
     	if (userId != null && userId != "") {
     		// var json = JSON.stringify({
     		// 	userId: userId});
     		$.ajax({
-    			url: "<%=request.getContextPath()%>/user/check/isExist",
+    			url: "<%=request.getContextPath()%>/user/check/isExist?userId=" + userId,
     			type: "GET",
     			// data: json,
-                data: userId,
+                // data: userId,
     			cache: false,
     			contentType: "text/json",
     			cache: false,
     			success: function(text) {
     			    //通过接口返回，返回检测用户记录条数
-    				if (text.data == "1") {
+    				if (text.code == "1") {
     					isExist = true;
     				} else {
     					isExist = false;
@@ -272,6 +270,7 @@
     	} else {
     		return;
     	}
+        console.log(isExist);
     });
 
 </script>

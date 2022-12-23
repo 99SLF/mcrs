@@ -1,5 +1,7 @@
 package com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.service;
 
+import com.zimax.cap.datacontext.DataContextManager;
+import com.zimax.cap.party.IUserObject;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfoVo;
 import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.MatrixVo;
@@ -11,6 +13,7 @@ import com.zimax.mcrs.serialnumber.service.SerialnumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +44,9 @@ public class ProcessService {
      * 编辑
      */
     public void updateProcessInfo(ProcessInfo processInfo) {
+        IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
+        processInfo.setUpdater(usetObject.getUserName());
+        processInfo.setUpdateTime(new Date());
         processMapper.updateProcessInfo(processInfo);
     }
 

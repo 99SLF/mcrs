@@ -1,6 +1,8 @@
 package com.zimax.mcrs.basic.matrixInfo.matrix.service;
 
 
+import com.zimax.cap.datacontext.DataContextManager;
+import com.zimax.cap.party.IUserObject;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfoVo;
 import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfoVo;
@@ -12,6 +14,7 @@ import com.zimax.mcrs.serialnumber.service.SerialnumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +48,10 @@ public class MatrixService {
      * 编辑
      */
     public void updateMatrix(Matrix matrix) {
+
+        IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
+        matrix.setUpdater(usetObject.getUserName());
+        matrix.setUpdateTime(new Date());
         matrixMapper.updateMatrix(matrix);
     }
 
