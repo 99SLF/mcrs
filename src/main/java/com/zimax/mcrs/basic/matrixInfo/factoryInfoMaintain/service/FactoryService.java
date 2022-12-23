@@ -6,6 +6,7 @@ import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.mapper.FactoryMapper;
 import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo;
 import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfoVo;
 import com.zimax.mcrs.config.ChangeString;
+import com.zimax.mcrs.serialnumber.service.SerialnumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +22,16 @@ import java.util.Map;
 public class FactoryService {
     @Autowired
     private FactoryMapper factoryMapper;
+    @Autowired
+    private SerialnumberService serialnumberService;
 
     /**
      * 添加工厂维护信息
      * @param factoryInfo 监控信息
      */
     public void addFactoryInfo(FactoryInfo factoryInfo){
+        String coding = serialnumberService.getSerialNum("gcCod").replace("_", "");
+        factoryInfo.setFactoryCode(coding);
 
         factoryMapper.addFactoryInfo(factoryInfo);
     }

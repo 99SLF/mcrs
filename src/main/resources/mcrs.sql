@@ -692,3 +692,140 @@ CREATE TABLE `bas_log_delete_rule`  (
     `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
     PRIMARY KEY (`rule_delete_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 78 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+    -- ----------------------------
+    -- Table structure for bas_tree
+    -- ----------------------------
+    DROP TABLE IF EXISTS `bas_tree`;
+    CREATE TABLE `bas_tree` (
+    `info_id` int(11) NOT NULL AUTO_INCREMENT,
+    `info_name` varchar(40) DEFAULT NULL,
+    `display_order` int(11) DEFAULT NULL,
+    `info_seq` varchar(255) DEFAULT NULL,
+    `sub_count` int(11) DEFAULT NULL,
+    `info_type` varchar(255) DEFAULT NULL,
+    `parent_id` int(11) DEFAULT NULL,
+    `logic_states` int(11) DEFAULT '0',
+    PRIMARY KEY (`info_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+    -- ----------------------------
+    -- Records of bas_tree
+    -- ----------------------------
+
+    -- ----------------------------
+    -- Table structure for base_coding_serialnumber
+    -- ----------------------------
+    DROP TABLE IF EXISTS `base_coding_serialnumber`;
+    CREATE TABLE `base_coding_serialnumber` (
+                `id` int(18) NOT NULL AUTO_INCREMENT,
+                `rule_name` varchar(255) DEFAULT NULL,
+                `digit` int(18) DEFAULT NULL,
+                `startvalue` int(18) DEFAULT NULL,
+                `currentvalue` int(18) DEFAULT NULL,
+                `note` varchar(255) DEFAULT NULL,
+                `function_num` varchar(255) DEFAULT NULL,
+                `function_name` varchar(255) DEFAULT NULL,
+                `number_rule` varchar(255) DEFAULT NULL,
+                `num_basis` varchar(255) DEFAULT NULL,
+                `title_rule` varchar(255) DEFAULT NULL,
+                PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=228 DEFAULT CHARSET=utf8;
+
+    -- ----------------------------
+    -- Records of base_coding_serialnumber
+    -- ----------------------------
+    INSERT INTO `base_coding_serialnumber` VALUES ('1', 'gxCod', '4', '1', '0', '备注', 'gxCod', '更新包单号', '{N}', 'WFprocess', 'GX-{Y}{M}{D}-');
+    INSERT INTO `base_coding_serialnumber` VALUES ('2', 'sbCod', '4', '1', '0', '备注', 'sbCod', '设备流水', '{N}', 'WFprocess', '_');
+    INSERT INTO `base_coding_serialnumber` VALUES ('3', 'jdCod', '4', '1', '1', '备注', 'jdCod', '基地编号', '{N}', 'WFprocess', 'CS-');
+    INSERT INTO `base_coding_serialnumber` VALUES ('4', 'gcCod', '4', '1', '2', '备注', 'gcCod', '工厂编号', '{N}', 'WFprocess', 'F-');
+    INSERT INTO `base_coding_serialnumber` VALUES ('5', 'gxpCod', '4', '1', '1', '备注', 'gxpCod', '工序编号', '{N}', 'WFprocess', 'P-');
+
+    -- ----------------------------
+    -- Table structure for base_equip_info
+    -- ----------------------------
+    DROP TABLE IF EXISTS `base_equip_info`;
+    CREATE TABLE `base_equip_info` (
+       `equip_type_id` int(11) NOT NULL AUTO_INCREMENT,
+       `info_id` int(11) DEFAULT NULL,
+       `equip_type_code` varchar(255) DEFAULT NULL,
+       `equip_type_enable` varchar(255) DEFAULT NULL,
+       `manufacturer` varchar(255) DEFAULT NULL,
+       `equip_type_name` varchar(255) DEFAULT NULL,
+       `equip_controller_model` varchar(255) DEFAULT NULL,
+       `protocol_communication` varchar(255) DEFAULT NULL,
+       `mes_ip_address` varchar(255) DEFAULT NULL,
+       `remarks` varchar(255) DEFAULT NULL,
+       `creator` varchar(255) DEFAULT NULL,
+       `create_time` datetime DEFAULT NULL,
+       `updater` varchar(255) DEFAULT NULL,
+       `update_time` datetime DEFAULT NULL,
+       PRIMARY KEY (`equip_type_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+
+    -- ----------------------------
+    -- Records of base_equip_info
+    -- ----------------------------
+
+    -- ----------------------------
+    -- Table structure for base_factory_info
+    -- ----------------------------
+    DROP TABLE IF EXISTS `base_factory_info`;
+    CREATE TABLE `base_factory_info` (
+         `factory_id` int(11) NOT NULL AUTO_INCREMENT,
+         `info_id` int(11) DEFAULT NULL,
+         `factory_name` varchar(255) DEFAULT NULL,
+         `factory_code` varchar(255) DEFAULT NULL,
+         `factory_address` varchar(255) DEFAULT NULL,
+         `creator` varchar(255) DEFAULT NULL,
+         `create_time` datetime DEFAULT NULL,
+         `updater` varchar(255) DEFAULT NULL,
+         `update_time` datetime DEFAULT NULL,
+         PRIMARY KEY (`factory_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
+
+    -- ----------------------------
+    -- Records of base_factory_info
+    -- ----------------------------
+
+    -- ----------------------------
+    -- Table structure for base_matrix_info
+    -- ----------------------------
+    DROP TABLE IF EXISTS `base_matrix_info`;
+    CREATE TABLE `base_matrix_info` (
+        `matrix_id` int(11) NOT NULL AUTO_INCREMENT,
+        `info_id` int(11) DEFAULT NULL,
+        `matrix_name` varchar(255) DEFAULT NULL,
+        `matrix_code` varchar(255) DEFAULT NULL,
+        `matrix_address` varchar(255) DEFAULT NULL,
+        `creator` varchar(255) DEFAULT NULL,
+        `create_time` datetime DEFAULT NULL,
+        `updater` varchar(255) DEFAULT NULL,
+        `update_time` datetime DEFAULT NULL,
+        PRIMARY KEY (`matrix_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8;
+
+    -- ----------------------------
+    -- Records of base_matrix_info
+    -- ----------------------------
+
+    -- ----------------------------
+    -- Table structure for base_process_info
+    -- ----------------------------
+    DROP TABLE IF EXISTS `base_process_info`;
+    CREATE TABLE `base_process_info` (
+         `process_id` int(11) NOT NULL AUTO_INCREMENT,
+         `info_id` int(11) DEFAULT NULL,
+         `process_name` varchar(255) DEFAULT NULL,
+         `process_code` varchar(255) DEFAULT NULL,
+         `process_remarks` varchar(255) DEFAULT NULL,
+         `creator` varchar(255) DEFAULT NULL,
+         `create_time` datetime DEFAULT NULL,
+         `updater` varchar(255) DEFAULT NULL,
+         `update_time` datetime DEFAULT NULL,
+         PRIMARY KEY (`process_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
+
+    -- ----------------------------
+    -- Records of base_process_info
+    -- ----------------------------

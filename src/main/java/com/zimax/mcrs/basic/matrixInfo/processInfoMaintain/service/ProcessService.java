@@ -7,6 +7,7 @@ import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.mapper.ProcessMapper;
 import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
 import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfoVo;
 import com.zimax.mcrs.config.ChangeString;
+import com.zimax.mcrs.serialnumber.service.SerialnumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,12 +24,16 @@ public class ProcessService {
 
     @Autowired
     private ProcessMapper processMapper;
+
+    @Autowired
+    private SerialnumberService serialnumberService;
     /**
      * 添加监控信息
      * @param processInfo 监控信息
      */
     public void addProcessInfo(ProcessInfo processInfo){
-
+        String coding = serialnumberService.getSerialNum("gxpCod").replace("_", "");
+        processInfo.setProcessCode(coding);
         processMapper.addProcessInfo(processInfo);
     }
 
