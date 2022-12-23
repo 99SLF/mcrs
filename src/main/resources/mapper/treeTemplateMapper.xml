@@ -4,12 +4,12 @@
 <mapper namespace="com.zimax.mcrs.basic.treeStructure.mapper.TreeMapper">
     <!--    查询记录数-->
     <select id="count" resultType="int">
-        select count(*) from bas_tree
+        select count(*) from base_tree
     </select>
 
     <!--查询树信息-->
     <select id="querySubTreeInfo" parameterType="map" resultType="com.zimax.mcrs.basic.treeStructure.pojo.TreeTemplate">
-        select * from bas_tree
+        select * from base_tree
         <where>
             <if test="parentId !=null and parentId !=''">
                 and parent_id = '${parentId}'
@@ -23,7 +23,7 @@
 
     <!--查询子类树信息-->
     <select id="queryTreeInfo" parameterType="map" resultType="com.zimax.mcrs.basic.treeStructure.pojo.TreeTemplate">
-        select * from bas_tree
+        select * from base_tree
         <where>
             <if test="infoId !=null and infoId !=''">
                 and info_id = '${infoId}'
@@ -38,14 +38,14 @@
 
     <!--    更新1条树信息-->
     <update id="updateTreeTemplate" parameterType="com.zimax.mcrs.basic.treeStructure.pojo.TreeTemplate">
-        update bas_tree set info_name=#{infoName},display_order=${displayOrder},info_seq=#{infoSeq},sub_count=#{subCount},
+        update base_tree set info_name=#{infoName},display_order=${displayOrder},info_seq=#{infoSeq},sub_count=#{subCount},
                             info_type=#{infoType},parent_id=#{parentId},logic_states=${logicStates}
         where info_id=#{infoId}
     </update>
 
 
     <insert id="addTreeTemplate" parameterType="com.zimax.mcrs.basic.treeStructure.pojo.TreeTemplate">
-        insert into bas_tree values(#{infoId},#{infoName},#{displayOrder},#{infoSeq},#{subCount},#{infoType},#{parentId},#{logicStates})
+        insert into base_tree values(#{infoId},#{infoName},#{displayOrder},#{infoSeq},#{subCount},#{infoType},#{parentId},#{logicStates})
     </insert>
 
 </mapper>

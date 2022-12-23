@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("bas_tree")
+@TableName("base_tree")
 public class TreeTemplate {
 
     /**
@@ -60,7 +60,7 @@ public class TreeTemplate {
     private Integer parentId;
 
     /**
-     * 逻辑状态
+     * 逻辑状态,0展示，1，被逻辑删除的，数据没删
      */
     private Integer logicStates;
 

@@ -702,11 +702,11 @@ CREATE TABLE `bas_log_delete_rule`  (
 SET FOREIGN_KEY_CHECKS = 1;
 
 
-    -- ----------------------------
-    -- Table structure for base_tree
-    -- ----------------------------
-    DROP TABLE IF EXISTS `base_tree`;
-    CREATE TABLE `base_tree` (
+-- ----------------------------
+-- Table structure for base_tree
+-- ----------------------------
+DROP TABLE IF EXISTS `base_tree`;
+CREATE TABLE `base_tree` (
     `info_id` int(11) NOT NULL AUTO_INCREMENT,
     `info_name` varchar(40) DEFAULT NULL,
     `display_order` int(11) DEFAULT NULL,
@@ -716,29 +716,32 @@ SET FOREIGN_KEY_CHECKS = 1;
     `parent_id` int(11) DEFAULT NULL,
     `logic_states` int(11) DEFAULT '0',
     PRIMARY KEY (`info_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
-    -- ----------------------------
-    -- Records of base_tree
-    -- ----------------------------
+-- ----------------------------
+-- Records of base_tree
+-- ----------------------------
+INSERT INTO `base_tree` VALUES ('1', '业务字典', '1', null, '0', null, null, '0');
+INSERT INTO `base_tree` VALUES ('2', '基地信息维护', '2', null, '0', null, null, '0');
+
 
     -- ----------------------------
     -- Table structure for base_coding_serialnumber
     -- ----------------------------
     DROP TABLE IF EXISTS `base_coding_serialnumber`;
     CREATE TABLE `base_coding_serialnumber` (
-                `id` int(18) NOT NULL AUTO_INCREMENT,
-                `rule_name` varchar(255) DEFAULT NULL,
-                `digit` int(18) DEFAULT NULL,
-                `startvalue` int(18) DEFAULT NULL,
-                `currentvalue` int(18) DEFAULT NULL,
-                `note` varchar(255) DEFAULT NULL,
-                `function_num` varchar(255) DEFAULT NULL,
-                `function_name` varchar(255) DEFAULT NULL,
-                `number_rule` varchar(255) DEFAULT NULL,
-                `num_basis` varchar(255) DEFAULT NULL,
-                `title_rule` varchar(255) DEFAULT NULL,
-                PRIMARY KEY (`id`)
+    `id` int(18) NOT NULL AUTO_INCREMENT,
+    `rule_name` varchar(255) DEFAULT NULL,
+    `digit` int(18) DEFAULT NULL,
+    `startvalue` int(18) DEFAULT NULL,
+    `currentvalue` int(18) DEFAULT NULL,
+    `note` varchar(255) DEFAULT NULL,
+    `function_num` varchar(255) DEFAULT NULL,
+    `function_name` varchar(255) DEFAULT NULL,
+    `number_rule` varchar(255) DEFAULT NULL,
+    `num_basis` varchar(255) DEFAULT NULL,
+    `title_rule` varchar(255) DEFAULT NULL,
+    PRIMARY KEY (`id`)
     ) ENGINE=InnoDB AUTO_INCREMENT=228 DEFAULT CHARSET=utf8;
 
     -- ----------------------------
