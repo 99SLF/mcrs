@@ -258,9 +258,9 @@
 	chartZhu4.setOption(optionchart, true);
 	chartZhu5.setOption(optionchartBing, true);
 	chartZhu6.setOption(optionchartZhe, true);
-	chartZhu7.setOption(optionchart, true);
-	chartZhu8.setOption(optionchartZhe, true);
-	chartZhu9.setOption(optionchartBing, true);
+	// chartZhu7.setOption(optionchart, true);
+	// chartZhu8.setOption(optionchartZhe, true);
+	// chartZhu9.setOption(optionchartBing, true);
 	var active = {
 		addAccessPoint:function(){
 			top.layui.index.openTabsPage( "<%=request.getContextPath() %>/basic/accPointResMaintain/accPointRes_list.jsp","接入点管理");
