@@ -118,7 +118,7 @@
     //获取规则类型的下拉值
     layui.admin.renderDictSelect({
         elem: "#deleteRuleType",
-        dictTypeId: "WRANING_TYPE",
+        dictTypeId: "LOG_DELETE_RULE_TYPE",
     });
     //设置预警类型的默认值
     form.render();
@@ -398,6 +398,12 @@
             align: "center",
             minWidth: 100,
             hide: isHidden("deleteRuleType")
+        }, {
+            field: "logType",
+            title: "日志类型",
+            align: "center",
+            minWidth: 100,
+            hide: isHidden("logType")
         }, {
             field: "ruleLevel",
             title: "规则级别",
