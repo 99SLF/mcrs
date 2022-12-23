@@ -45,7 +45,7 @@
     <insert id="addLogDeleteRule" parameterType="com.zimax.mcrs.basic.logDeleteRule.pojo.LogDeleteRule">
         insert into bas_log_delete_rule
         values (#{ruleDeleteId}, #{deleteRuleNum}, #{deleteRuleTitle}, #{enable},
-                #{ruleLevel}, #{deleteRuleType}, #{timeInterval},
+                #{ruleLevel}, #{deleteRuleType}, #{logType},#{timeInterval},
                 #{timeUnit}, #{creator}, #{createTime}, #{updater},
                 #{updateTime})
     </insert>
@@ -65,6 +65,7 @@
             enable=#{enable},
             rule_level=#{ruleLevel},
             delete_rule_type=#{deleteRuleType},
+            log_type=#{logType},
             time_interval=#{timeInterval},
             time_unit=#{timeUnit},
             updater=#{updater},

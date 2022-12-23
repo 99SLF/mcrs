@@ -97,6 +97,7 @@
 	
 	function refreshTab(node) {
 		var iframe = $(".layui-tab-item.layui-show").find("iframe");
+		debugger;
 		for (var i = 0; i < categoryTabs.length; i++) {
 			var obj = categoryTabs[i];
 			var settingTab = $("#" + obj.id);		

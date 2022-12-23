@@ -53,7 +53,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>日志删除规则类型:</label>
             <div class="layui-input-block">
-                <select name="deleteRuleType" id="deleteRuleType" lay-filter="required" lay-verify="required" type="select">
+                <select name="deleteRuleType" id="deleteRuleType" lay-filter="" lay-verify="required" type="select">
                     <option value=""></option>
                 </select>
             </div>
@@ -85,6 +85,14 @@
                 <select name="enable" id="enable" lay-filter="" lay-verify="required" type="select">
                     <option value="off">否</option>
                     <option value="on">是</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><span style="color:red">*</span>日志类型:</label>
+            <div class="layui-input-block">
+                <select name="logType" id="logType" lay-filter="" lay-verify="required" type="select">
+                    <option value=""></option>
                 </select>
             </div>
         </div>
@@ -145,6 +153,13 @@
     layui.admin.renderDictSelect({
         elem: "#timeUnit",
         dictTypeId: "TIME_UNIT",
+    });
+    form.render();
+
+    //获取日志类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#logType",
+        dictTypeId: "LOG_TYPE",
     });
     form.render();
 

@@ -14,7 +14,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
-	<title>基础基地数据</title>
+	<title>工序数据</title>
 	<link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
 	<style>
 		.layui-form-label {
@@ -32,12 +32,12 @@
 	<div class="layui-card-body">
 		<div class="layui-row layui-col-space10">
 			<div class="layui-col-md12">
-				<div class="layui-form" lay-filter="factory-add" id="factory-add" style="padding:20px;">
+				<div class="layui-form" lay-filter="process-add" id="process-add" style="padding:20px;">
 					<input type="hidden" name="processingMaterials" value="0"/>
 					<input type="hidden" name="supplierId" id="supplierId"/>
 					<div class="layui-row layui-col-space10 layui-form-item">
 						<div class="layui-col-sm4">
-							<label class="layui-form-label" ><h1>工厂详情</h1></label>
+							<label class="layui-form-label" ><h1>工序详情</h1></label>
 						</div>
 						<div class="layui-col-sm4">
 
@@ -53,26 +53,26 @@
 
 					<div class="layui-row layui-col-space10 layui-form-item">
 						<div class="layui-col-sm6">
-							<label class="layui-form-label" >工厂名称：</label>
+							<label class="layui-form-label" >工序名称：</label>
 							<div class="layui-input-block">
 								<input type="text" class="layui-input layui-hide" name="infoId" id="infoId"   autocomplete="off" >
-								<input type="text" class="layui-input layui-hide" name="factoryId" id="factoryId"   autocomplete="off" >
-								<input type="text" class="layui-input" name="factoryName" id="factoryName"   autocomplete="off" >
+								<input type="text" class="layui-input layui-hide" name="processId" id="processId"   autocomplete="off" >
+								<input type="text" class="layui-input" name="processName" id="processName"   autocomplete="off" >
 							</div>
 						</div>
 
 						<div class="layui-col-sm6">
-							<label class="layui-form-label" >工厂代码：</label>
+							<label class="layui-form-label" >工序代码：</label>
 							<div class="layui-input-block">
-								<input type="text" class="layui-input" name="factoryCode" id="factoryCode"  lay-verify="length11|float5" autocomplete="off" placeholder="数字，不能超过11个字符，小数位数5位">
+								<input type="text" class="layui-input" name="processCode" id="processCode"  lay-verify="length11|float5" autocomplete="off" placeholder="数字，不能超过11个字符，小数位数5位">
 							</div>
 						</div>
 					</div>
 
 					<div class="layui-row layui-col-space10 layui-form-item">
-						<label class="layui-form-label" >工厂地址：</label>
+						<label class="layui-form-label" >工序描述：</label>
 						<div class="layui-input-block">
-							<textarea class="layui-textarea" placeholder="" lay-verify="length255" name="factoryAddress" id="factoryAddress"></textarea>
+							<textarea class="layui-textarea" placeholder="" lay-verify="length255" name="processRemarks" id="processRemarks"></textarea>
 						</div>
 					</div>
 
@@ -105,12 +105,12 @@
 
 	//获取树页面传输的树id
 	var infoId = <%=request.getParameter("nodeId")%>;
-	getfactory(infoId);
-	function getfactory(infoId){
+	getprocess(infoId);
+	function getprocess(infoId){
 		debugger;
 		//获取数据
 		$.ajax({
-			url:"<%=request.getContextPath() %>/FactoryController/query?infoId=" + infoId,
+			url:"<%=request.getContextPath() %>/ProcessController/query?infoId=" + infoId,
 			type:"get",
 			cache: false,
 			contentType:"text/json",
@@ -118,17 +118,17 @@
 				debugger;
 				var data = rel.data;
 				if (data == null ||data.length < 1) {
-					form.val("factory-add", {
+					form.val("process-add", {
 						infoId: infoId,
 					});
 				} else {
 					var data = data[0];
-					form.val("factory-add", {
-						factoryId: data.factoryId,
+					form.val("process-add", {
+						processId: data.processId,
 						infoId: data.infoId,
-						factoryName: data.factoryName,
-						factoryCode: data.factoryCode,
-						factoryAddress: data.factoryAddress
+						processName: data.processName,
+						processCode: data.processCode,
+						processRemarks: data.processRemarks
 					});
 				}
 			}
@@ -140,14 +140,14 @@
 	form.on("submit(save_data)", function (data) {
 		debugger;
 		var data = data.field
-		if(data.factoryId == null || data.factoryId == "") {
+		if(data.processId == null || data.processId == "") {
 			//新增
-			var factory = JSON.stringify(data);
+			var process = JSON.stringify(data);
 			debugger;
 			$.ajax({
-				url: "<%=request.getContextPath() %>/FactoryController/add",
+				url: "<%=request.getContextPath() %>/ProcessController/add",
 				type: "post",
-				data: factory,
+				data: process,
 				cache: false,
 				contentType: "text/json",
 				success: function(result){
@@ -159,7 +159,7 @@
 					} else {
 						layer.msg("新增失败", {icon:2, time:2000});
 					}
-					getfactory(infoId);
+					getprocess(infoId);
 				},
 				error: function(){
 					layer.msg("新增失败", {
@@ -170,12 +170,12 @@
 			});
 		} else {
 			//修改
-			var factory = JSON.stringify(data);
+			var process = JSON.stringify(data);
 			debugger;
 			$.ajax({
-				url: "<%=request.getContextPath() %>/FactoryController/update",
+				url: "<%=request.getContextPath() %>/ProcessController/update",
 				type: "post",
-				data: factory,
+				data: process,
 				cache: false,
 				contentType: "text/json",
 				success: function(result){
@@ -187,7 +187,7 @@
 					} else {
 						layer.msg("修改失败", {icon:2, time:2000});
 					}
-					getfactory(infoId);
+					getprocess(infoId);
 				},
 				error: function(){
 					layer.msg("修改失败", {
@@ -205,8 +205,9 @@
 	//监听取消
 	form.on("submit(canle)", function (data) {
 		debugger;
-		getfactory(infoId);
+		getprocess(infoId);
 	});
+
 
 </script>
 </body>
