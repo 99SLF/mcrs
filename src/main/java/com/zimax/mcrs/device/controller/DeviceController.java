@@ -97,5 +97,9 @@ public class DeviceController {
         return Result.success();
 
     }
+    @GetMapping("/device/count")
+    public Result<?> queryCount(String equipmentId, String APPId) {
+        return Result.success(deviceService.count(equipmentId, APPId));
+    }
 
 }

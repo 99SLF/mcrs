@@ -37,34 +37,34 @@
 		</li>--%>
 	</ul>
 	<ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right" >
-		<li class="layui-nav-item" lay-unselect id="message" >
-			<a lay-href="/coframe/message/message_manage.jsp" layadmin-event="message" lay-text="消息中心">
-				<i class="layui-icon layui-icon-notice"></i>
-				<!-- 如果有新消息，则显示小圆点 -->
-				<span id="layui-badge-dot" ></span>
-			</a>
-		</li>
-		<li class="layui-nav-item layui-hide-xs" lay-unselect>
-			<a href="javascript:;" layadmin-event="theme">
-				<i class="layui-icon layui-icon-theme"></i>
-			</a>
-		</li>
-		<li class="layui-nav-item layui-hide-xs" lay-unselect>
-			<a href="javascript:;" layadmin-event="note">
-				<i class="layui-icon layui-icon-note"></i>
-			</a>
-		</li>
-		<li class="layui-nav-item layui-hide-xs" lay-unselect>
-			<a href="javascript:;" layadmin-event="fullscreen">
-				<i class="layui-icon layui-icon-screen-full"></i>
-			</a>
-		</li>
-		<li class="layui-nav-item layui-hide-xs" lay-unselect  id="replyFill">
-			<!-- 意见中心 -->
-			<a lay-href="<%=request.getContextPath()%>/proposal/proposalFrom.jsp"  lay-text="意见中心" >
-				<i class="layui-icon layui-icon-reply-fill" ></i>
-			</a>
-		</li>
+<%--		<li class="layui-nav-item" lay-unselect id="message" >--%>
+<%--			<a lay-href="/coframe/message/message_manage.jsp" layadmin-event="message" lay-text="消息中心">--%>
+<%--				<i class="layui-icon layui-icon-notice"></i>--%>
+<%--				<!-- 如果有新消息，则显示小圆点 -->--%>
+<%--				<span id="layui-badge-dot" ></span>--%>
+<%--			</a>--%>
+<%--		</li>--%>
+<%--		<li class="layui-nav-item layui-hide-xs" lay-unselect>--%>
+<%--			<a href="javascript:;" layadmin-event="theme">--%>
+<%--				<i class="layui-icon layui-icon-theme"></i>--%>
+<%--			</a>--%>
+<%--		</li>--%>
+<%--		<li class="layui-nav-item layui-hide-xs" lay-unselect>--%>
+<%--			<a href="javascript:;" layadmin-event="note">--%>
+<%--				<i class="layui-icon layui-icon-note"></i>--%>
+<%--			</a>--%>
+<%--		</li>--%>
+<%--		<li class="layui-nav-item layui-hide-xs" lay-unselect>--%>
+<%--			<a href="javascript:;" layadmin-event="fullscreen">--%>
+<%--				<i class="layui-icon layui-icon-screen-full"></i>--%>
+<%--			</a>--%>
+<%--		</li>--%>
+<%--		<li class="layui-nav-item layui-hide-xs" lay-unselect  id="replyFill">--%>
+<%--			<!-- 意见中心 -->--%>
+<%--			<a lay-href="<%=request.getContextPath()%>/proposal/proposalFrom.jsp"  lay-text="意见中心" >--%>
+<%--				<i class="layui-icon layui-icon-reply-fill" ></i>--%>
+<%--			</a>--%>
+<%--		</li>--%>
 		<li class="layui-nav-item" lay-unselect>
 			<script type="text/html" template lay-url="<%=request.getContextPath()%>/auth/session"
 						lay-done="layui.element.render('nav', 'layadmin-layout-right');">
