@@ -105,6 +105,14 @@ public class DeviceService {
         deviceMapper.deleteDevices(deviceId);
     }
 
+    /**
+     * 检测APPId是否存在
+     *
+     * @param APPId 设备资源号
+     */
+    public int checkAPPId(String APPId) {
+        return deviceMapper.checkAPPId(APPId);
+    }
 
 
 

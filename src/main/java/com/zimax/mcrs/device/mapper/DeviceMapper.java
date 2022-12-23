@@ -69,4 +69,9 @@ public interface DeviceMapper {
      */
     void deleteDevices(List<Integer> deviceId);
 
+    /**
+     * 检查当前APPId是否存在
+     */
+    int checkAPPId(@Param("APPId") String APPId);
+
 }
