@@ -1,5 +1,7 @@
 package com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.service;
 
+import com.zimax.cap.datacontext.DataContextManager;
+import com.zimax.cap.party.IUserObject;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfoVo;
 import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.mapper.FactoryMapper;
@@ -10,6 +12,7 @@ import com.zimax.mcrs.serialnumber.service.SerialnumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,11 +46,15 @@ public class FactoryService {
 //        factoryMapper.deleteFactory(factoryId);
 //    }
 
+
     /**
      * 编辑
      */
     public void updateFactoryInfo(FactoryInfo factoryInfo) {
 
+        IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
+        factoryInfo.setUpdater(usetObject.getUserName());
+        factoryInfo.setUpdateTime(new Date());
         factoryMapper.updateFactoryInfo(factoryInfo);
     }
 
