@@ -304,20 +304,24 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- Table structure for eqi_equipment
 -- ----------------------------
 DROP TABLE IF EXISTS `eqi_equipment`;
-CREATE TABLE `eqi_equipment` (
-    `equipment_int` int(255) NOT NULL AUTO_INCREMENT,
-    `equipment_id` varchar(255) DEFAULT NULL,
-    `equipment_name` varchar(255) DEFAULT NULL,
-    `enabled_state` varchar(255) DEFAULT NULL,
-    `equipment_properties` varchar(255) DEFAULT NULL,
-    `mes_continue_ip` varchar(255) DEFAULT NULL,
-    `equipment_install_location` varchar(255) DEFAULT NULL,
-    `equipment_continue_port` varchar(255) DEFAULT NULL,
-    `create_time` varchar(255) DEFAULT NULL,
-    `remarks` varchar(255) DEFAULT NULL,
-    `creator` varchar(255) DEFAULT NULL,
-    PRIMARY KEY (`equipment_int`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+CREATE TABLE `eqi_equipment`  (
+  `equipment_int` int(255) NOT NULL AUTO_INCREMENT,
+  `equipment_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `equipment_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `enabled_state` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `equipment_properties` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `mes_continue_ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `equipment_install_location` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `equipment_continue_port` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `create_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `creator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `equipment_ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `protocol_communication` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`equipment_int`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- ----------------------------
 -- Table structure for rep_abn_prod_prcs
@@ -673,6 +677,7 @@ CREATE TABLE `dev_rfidparam_dispose` (
     CONSTRAINT `dev_rfidparam_dispose_ibfk_1` FOREIGN KEY (`rfid_group_id`) REFERENCES `dev_rfid_group` (`rfid_group_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
+
 -- ----------------------------
 -- Table structure for bas_log_delete_rule
 -- ----------------------------
@@ -684,6 +689,7 @@ CREATE TABLE `bas_log_delete_rule`  (
     `enable` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否启用',
     `rule_level` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '规则级别',
     `delete_rule_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志删除规则类型',
+    `log_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志类型',
     `time_interval` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '时间间隔',
     `time_unit` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '时间单位',
     `creator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
@@ -691,4 +697,144 @@ CREATE TABLE `bas_log_delete_rule`  (
     `updater` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
     `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
     PRIMARY KEY (`rule_delete_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 78 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 86 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+    -- ----------------------------
+    -- Table structure for bas_tree
+    -- ----------------------------
+    DROP TABLE IF EXISTS `bas_tree`;
+    CREATE TABLE `bas_tree` (
+    `info_id` int(11) NOT NULL AUTO_INCREMENT,
+    `info_name` varchar(40) DEFAULT NULL,
+    `display_order` int(11) DEFAULT NULL,
+    `info_seq` varchar(255) DEFAULT NULL,
+    `sub_count` int(11) DEFAULT NULL,
+    `info_type` varchar(255) DEFAULT NULL,
+    `parent_id` int(11) DEFAULT NULL,
+    `logic_states` int(11) DEFAULT '0',
+    PRIMARY KEY (`info_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+    -- ----------------------------
+    -- Records of bas_tree
+    -- ----------------------------
+
+    -- ----------------------------
+    -- Table structure for base_coding_serialnumber
+    -- ----------------------------
+    DROP TABLE IF EXISTS `base_coding_serialnumber`;
+    CREATE TABLE `base_coding_serialnumber` (
+                `id` int(18) NOT NULL AUTO_INCREMENT,
+                `rule_name` varchar(255) DEFAULT NULL,
+                `digit` int(18) DEFAULT NULL,
+                `startvalue` int(18) DEFAULT NULL,
+                `currentvalue` int(18) DEFAULT NULL,
+                `note` varchar(255) DEFAULT NULL,
+                `function_num` varchar(255) DEFAULT NULL,
+                `function_name` varchar(255) DEFAULT NULL,
+                `number_rule` varchar(255) DEFAULT NULL,
+                `num_basis` varchar(255) DEFAULT NULL,
+                `title_rule` varchar(255) DEFAULT NULL,
+                PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=228 DEFAULT CHARSET=utf8;
+
+    -- ----------------------------
+    -- Records of base_coding_serialnumber
+    -- ----------------------------
+    INSERT INTO `base_coding_serialnumber` VALUES ('1', 'gxCod', '4', '1', '0', '备注', 'gxCod', '更新包单号', '{N}', 'WFprocess', 'GX-{Y}{M}{D}-');
+    INSERT INTO `base_coding_serialnumber` VALUES ('2', 'sbCod', '4', '1', '0', '备注', 'sbCod', '设备流水', '{N}', 'WFprocess', '_');
+    INSERT INTO `base_coding_serialnumber` VALUES ('3', 'jdCod', '4', '1', '1', '备注', 'jdCod', '基地编号', '{N}', 'WFprocess', 'CS-');
+    INSERT INTO `base_coding_serialnumber` VALUES ('4', 'gcCod', '4', '1', '2', '备注', 'gcCod', '工厂编号', '{N}', 'WFprocess', 'F-');
+    INSERT INTO `base_coding_serialnumber` VALUES ('5', 'gxpCod', '4', '1', '1', '备注', 'gxpCod', '工序编号', '{N}', 'WFprocess', 'P-');
+
+    -- ----------------------------
+    -- Table structure for base_equip_info
+    -- ----------------------------
+    DROP TABLE IF EXISTS `base_equip_info`;
+    CREATE TABLE `base_equip_info` (
+       `equip_type_id` int(11) NOT NULL AUTO_INCREMENT,
+       `info_id` int(11) DEFAULT NULL,
+       `equip_type_code` varchar(255) DEFAULT NULL,
+       `equip_type_enable` varchar(255) DEFAULT NULL,
+       `manufacturer` varchar(255) DEFAULT NULL,
+       `equip_type_name` varchar(255) DEFAULT NULL,
+       `equip_controller_model` varchar(255) DEFAULT NULL,
+       `protocol_communication` varchar(255) DEFAULT NULL,
+       `mes_ip_address` varchar(255) DEFAULT NULL,
+       `remarks` varchar(255) DEFAULT NULL,
+       `creator` varchar(255) DEFAULT NULL,
+       `create_time` datetime DEFAULT NULL,
+       `updater` varchar(255) DEFAULT NULL,
+       `update_time` datetime DEFAULT NULL,
+       PRIMARY KEY (`equip_type_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+
+    -- ----------------------------
+    -- Records of base_equip_info
+    -- ----------------------------
+
+    -- ----------------------------
+    -- Table structure for base_factory_info
+    -- ----------------------------
+    DROP TABLE IF EXISTS `base_factory_info`;
+    CREATE TABLE `base_factory_info` (
+         `factory_id` int(11) NOT NULL AUTO_INCREMENT,
+         `info_id` int(11) DEFAULT NULL,
+         `factory_name` varchar(255) DEFAULT NULL,
+         `factory_code` varchar(255) DEFAULT NULL,
+         `factory_address` varchar(255) DEFAULT NULL,
+         `creator` varchar(255) DEFAULT NULL,
+         `create_time` datetime DEFAULT NULL,
+         `updater` varchar(255) DEFAULT NULL,
+         `update_time` datetime DEFAULT NULL,
+         PRIMARY KEY (`factory_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
+
+    -- ----------------------------
+    -- Records of base_factory_info
+    -- ----------------------------
+
+    -- ----------------------------
+    -- Table structure for base_matrix_info
+    -- ----------------------------
+    DROP TABLE IF EXISTS `base_matrix_info`;
+    CREATE TABLE `base_matrix_info` (
+        `matrix_id` int(11) NOT NULL AUTO_INCREMENT,
+        `info_id` int(11) DEFAULT NULL,
+        `matrix_name` varchar(255) DEFAULT NULL,
+        `matrix_code` varchar(255) DEFAULT NULL,
+        `matrix_address` varchar(255) DEFAULT NULL,
+        `creator` varchar(255) DEFAULT NULL,
+        `create_time` datetime DEFAULT NULL,
+        `updater` varchar(255) DEFAULT NULL,
+        `update_time` datetime DEFAULT NULL,
+        PRIMARY KEY (`matrix_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8;
+
+    -- ----------------------------
+    -- Records of base_matrix_info
+    -- ----------------------------
+
+    -- ----------------------------
+    -- Table structure for base_process_info
+    -- ----------------------------
+    DROP TABLE IF EXISTS `base_process_info`;
+    CREATE TABLE `base_process_info` (
+         `process_id` int(11) NOT NULL AUTO_INCREMENT,
+         `info_id` int(11) DEFAULT NULL,
+         `process_name` varchar(255) DEFAULT NULL,
+         `process_code` varchar(255) DEFAULT NULL,
+         `process_remarks` varchar(255) DEFAULT NULL,
+         `creator` varchar(255) DEFAULT NULL,
+         `create_time` datetime DEFAULT NULL,
+         `updater` varchar(255) DEFAULT NULL,
+         `update_time` datetime DEFAULT NULL,
+         PRIMARY KEY (`process_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
+
+    -- ----------------------------
+    -- Records of base_process_info
+    -- ----------------------------

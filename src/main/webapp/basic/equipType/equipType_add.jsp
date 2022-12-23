@@ -214,7 +214,7 @@
                     cache: false,
                     contentType: "text/json",
                     success: function (result) {
-                        layer.msg("修改成功", {
+                        layer.msg("新增成功", {
                             icon: 1,
                             time: 500
                         }, function () {

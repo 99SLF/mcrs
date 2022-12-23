@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.basic.matrixInfo.matrix.mapper.MatrixMapper">
+    <!--添加基地基础数据-->
+    <insert id="addMatrix" parameterType="com.zimax.mcrs.basic.matrixInfo.matrix.pojo.Matrix">
+        insert into base_matrix_info
+        values (#{matrixId}, #{infoId}, #{matrixName}, #{matrixCode},#{matrixAddress},
+                #{creator}, #{createTime}, #{updater}, #{updateTime})
+    </insert>
+
+    <select id="count" resultType="int">
+        select count(*) from base_matrix_info
+        <where>
+            <if test="infoId !=null and infoId !=''">
+                and info_id like '%${infoId}%'
+            </if>
+        </where>
+    </select>
+
+    <!--列表显示-->
+    <select id="queryMatrix" parameterType="map" resultType="com.zimax.mcrs.basic.matrixInfo.matrix.pojo.MatrixVo">
+        select * from base_matrix_info
+        <where>
+            <if test="infoId !=null and infoId !=''">
+                and info_id like '%${infoId}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+    <!--更新一条选中信息-->
+    <update id="updateMatrix" parameterType="com.zimax.mcrs.basic.matrixInfo.matrix.pojo.Matrix">
+        UPDATE base_matrix_info
+        SET info_id         = #{infoId},
+            matrix_name    = #{matrixName},
+            matrix_code    = #{matrixCode},
+            matrix_address = #{matrixAddress},
+            create_time     = #{creator},
+            create_time     = #{createTime,jdbcType=DATE},
+            updater         = #{updater},
+            update_time     = #{updateTime,jdbcType=DATE}
+        WHERE matrix_id = ${matrixId}
+    </update>
+
+</mapper>

@@ -41,7 +41,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>设备属性:</label>
             <div class="layui-input-block">
-                <select name="equipmentProperties" id="equipmentProperties" lay-filter="required" type="select">
+                <select name="equipmentProperties" id="equipmentProperties" lay-verify="required"lay-filter="required" type="select">
                     <option value=""></option>
                 </select>
             </div>
@@ -81,7 +81,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>是否启用:</label>
             <div class="layui-input-block">
-                <select name="enabledState" id="enabledState" lay-filter="required" type="select">
+                <select name="enabledState" id="enabledState" lay-verify="required" type="select">
                     <option value="on">是</option>
                     <option value="off">否</option>
                 </select>
@@ -232,34 +232,63 @@
     // 		}
     // 	}
     // });
+    //判断设备资源号是否已存在
+    $("#equipmentId").blur(function() {
+        var equipmentId = $("#equipmentId").val();
+        if (equipmentId != null && equipmentId != "") {
+            $.ajax({
+                url: "<%= request.getContextPath() %>/equipment/equipment/check/isExist?equipmentId="+equipmentId,
+                type: "GET",
+                cache: false,
+                contentType: "text/json",
+                cache: false,
+                success: function (text) {
+                    if (text.code == "1") {
+                        isExist = true;
+                    } else {
+                        isExist = false;
+                    }
+                }
+            });
+        } else {
+            return;
+        }
+    });
 
     //监听提交
-    form.on("submit(layuiadmin-app-form-submit)", function (data) {
-        var submitData = JSON.stringify(data.field);
-        debugger;
+
+    form.on("submit(layuiadmin-app-form-submit)", function(data) {
         if (submit == false) {
             submit = true;
+            var submitData = JSON.stringify(data.field);
             if (isExist == false) {
                 $.ajax({
                     url: "<%= request.getContextPath() %>/equipment/equipment/add",
                     type: "POST",
                     data: submitData,
                     cache: false,
-                    contentType: "text/json",
-                    success: function (result) {
+                    contentType: 'text/json',
+                    success: function(result) {
                         layer.msg("添加成功", {
                             icon: 1,
-                            time: 500
-                        }, function () {
-                            var index = parent.layer.getFrameIndex(window.name);
+                            time: 2000
+                        }, function() {
+                            var index = top.layer.getFrameIndex(window.name);
                             win.layui.table.reload("LAY-app-equipment-list-reload");
                             top.layer.close(index);
+                            win.window.updata_select();
                         });
                     }
                 });
+            } else if ( isExist == true) {
+                layer.msg("设备资源号已存在，请重新输入", {
+                    icon: 2,
+                    time: 2000
+                });
+                submit = false;
             }
         } else {
-            layer.msg("请稍等");
+            layer.msg("正在添加...请稍等！");
         }
         return false;
     });

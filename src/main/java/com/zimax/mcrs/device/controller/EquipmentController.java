@@ -97,4 +97,20 @@ public class EquipmentController {
     }
 
 
+    /**
+     * 检测设备资源号是否存在
+     *
+     * @param equipmentId 设备资源号
+     */
+    @GetMapping("/equipment/check/isExist")
+    public Result<?> check(@RequestParam("equipmentId") String equipmentId) {
+        if(equipmentService.checkEquipmentId(equipmentId)>0){
+            return Result.error("1","当前设备资源号已存在，请输入正确的设备资源号");
+        }else {
+            return Result.success();
+        }
+
+    }
+
+
 }

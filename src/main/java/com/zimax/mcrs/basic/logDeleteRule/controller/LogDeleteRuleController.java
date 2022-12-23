@@ -101,7 +101,7 @@ public class LogDeleteRuleController {
 
 
     /**
-     * 批量启用日志删除规则
+     * 启用日志删除规则
      *
      * @param ruleDeleteIds 日志删除规则主键数组
      */

@@ -67,7 +67,7 @@
 	var line_list = {
 		id: "list",
 		title: "产线列表",
-		path: '<%=request.getContextPath() %>/basic/productionLine/dict_list.jsp'
+		path: '<%=request.getContextPath() %>/basic/productionLine/factory_list.jsp'
 	};
 	
 	var categoryTabs = [];
@@ -97,6 +97,7 @@
 	
 	function refreshTab(node) {
 		var iframe = $(".layui-tab-item.layui-show").find("iframe");
+		debugger;
 		for (var i = 0; i < categoryTabs.length; i++) {
 			var obj = categoryTabs[i];
 			var settingTab = $("#" + obj.id);		

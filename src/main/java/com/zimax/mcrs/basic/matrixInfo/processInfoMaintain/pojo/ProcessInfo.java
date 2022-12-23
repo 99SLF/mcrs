@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * 工序信息
  * @author 李伟杰
@@ -15,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("bas_process_info")
+@TableName("base_process_info")
 public class ProcessInfo {
 
     /**
@@ -40,12 +42,28 @@ public class ProcessInfo {
     private String processCode;
 
     /**
-     * 工序是否启用
-     */
-    private String processEnable;
-
-    /**
      * 工序信息描述
      */
     private String processRemarks;
+
+    /**
+     * 制单人
+     */
+    private String creator;
+
+
+    /**
+     * 制单时间
+     */
+    private Date createTime;
+
+    /**
+     * 修改人
+     */
+    private String updater;
+
+    /**
+     * 修改时间
+     */
+    private Date updateTime;
 }

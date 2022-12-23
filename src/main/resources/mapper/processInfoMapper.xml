@@ -1,17 +1,57 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zimax.mcrs.basic.accPointResMaintain.processInfoMaintain.mapper.ProcessMapper">
+<mapper namespace="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.mapper.ProcessMapper">
     <!--添加工序基础数据-->
     <insert id="addProcessInfo" parameterType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo">
-        insert into bas_process_info
-        values (#{processId}, #{processName}, #{processCode}, #{processEnable}, #{processRemarks})
+        insert into base_process_info
+        values (#{processId}, #{infoId}, #{processName}, #{processCode}, #{processRemarks},
+                #{creator}, #{createTime}, #{updater}, #{updateTime})
     </insert>
 
     <!--    主键删除-->
     <delete id="deleteProcess" parameterType="int">
         delete
-        from bas_process_info
+        from base_process_info
         where process_id = #{processId}
     </delete>
+
+    <select id="count" resultType="int">
+        select count(*) from base_process_info
+        <where>
+            <if test="infoId !=null and infoId !=''">
+                and info_id like '%${infoId}%'
+            </if>
+        </where>
+    </select>
+
+    <!--列表显示-->
+    <select id="queryProcessInfo" parameterType="map" resultType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfoVo">
+        select * from base_process_info
+        <where>
+            <if test="infoId !=null and infoId !=''">
+                and info_id like '%${infoId}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+    <!--更新一条选中信息-->
+    <update id="updateProcessInfo" parameterType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo">
+        UPDATE base_process_info
+        SET info_id         = #{infoId},
+            process_name    = #{processName},
+            process_code    = #{processCode},
+            process_remarks = #{processRemarks},
+            create_time     = #{creator},
+            create_time     = #{createTime,jdbcType=DATE},
+            updater         = #{updater},
+            update_time     = #{updateTime,jdbcType=DATE}
+        WHERE process_id = ${processId}
+    </update>
 </mapper>

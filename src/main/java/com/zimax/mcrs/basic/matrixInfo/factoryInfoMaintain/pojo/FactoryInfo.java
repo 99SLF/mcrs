@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * 工厂信息维护
  * @author 李伟杰
@@ -15,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("bas_factory_info")
+@TableName("base_factory_info")
 public class FactoryInfo {
 
     /**
@@ -27,7 +29,7 @@ public class FactoryInfo {
     /**
      * 树id
      */
-    private String infoId;
+    private int infoId;
 
     /**
      * 工厂名称
@@ -39,13 +41,30 @@ public class FactoryInfo {
      */
     private String factoryCode;
 
-    /**
-     * 工厂是否启用
-     */
-    private String factoryEnable;
 
     /**
      * 工厂地址
      */
     private String factoryAddress;
+
+    /**
+     * 制单人
+     */
+    private String creator;
+
+
+    /**
+     * 制单时间
+     */
+    private Date createTime;
+
+    /**
+     * 修改人
+     */
+    private String updater;
+
+    /**
+     * 修改时间
+     */
+    private Date updateTime;
 }

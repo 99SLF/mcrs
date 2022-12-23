@@ -118,7 +118,7 @@
     //获取规则类型的下拉值
     layui.admin.renderDictSelect({
         elem: "#deleteRuleType",
-        dictTypeId: "WRANING_TYPE",
+        dictTypeId: "LOG_DELETE_RULE_TYPE",
     });
     //设置预警类型的默认值
     form.render();
@@ -216,9 +216,12 @@
             var checkStatus = table.checkStatus("LAY-app-logDeleteRule-list-reload");
             var data = checkStatus.data;
             if (data.length == 0) {
-                layer.msg("请至少选中一条记录！");
+                layer.msg("请至少选中一条规则！");
             }
-            if (data.length > 0) {
+            if (data.length >=2 ) {
+                layer.msg("只能启用一条规则");
+            }
+            if (data.length == 1 ) {
                 var ruleDeleteIds = new Array();
                 for (var i = 0; i < data.length; i++) {
                     ruleDeleteIds[i] = data[i].ruleDeleteId;
@@ -395,6 +398,12 @@
             align: "center",
             minWidth: 100,
             hide: isHidden("deleteRuleType")
+        }, {
+            field: "logType",
+            title: "日志类型",
+            align: "center",
+            minWidth: 100,
+            hide: isHidden("logType")
         }, {
             field: "ruleLevel",
             title: "规则级别",

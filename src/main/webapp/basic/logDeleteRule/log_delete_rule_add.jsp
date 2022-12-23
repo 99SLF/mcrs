@@ -53,7 +53,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>日志删除规则类型:</label>
             <div class="layui-input-block">
-                <select name="deleteRuleType" id="deleteRuleType" lay-filter="required" lay-verify="required" type="select">
+                <select name="deleteRuleType" id="deleteRuleType" lay-filter="" lay-verify="required" type="select">
                     <option value=""></option>
                 </select>
             </div>
@@ -83,8 +83,16 @@
             <label class="layui-form-label"><span style="color:red">*</span>是否启用：</label>
             <div class="layui-input-block">
                 <select name="enable" id="enable" lay-filter="" lay-verify="required" type="select">
-                    <option value="on">是</option>
                     <option value="off">否</option>
+                    <option value="on">是</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><span style="color:red">*</span>日志类型:</label>
+            <div class="layui-input-block">
+                <select name="logType" id="logType" lay-filter="" lay-verify="required" type="select">
+                    <option value=""></option>
                 </select>
             </div>
         </div>
@@ -145,6 +153,13 @@
     layui.admin.renderDictSelect({
         elem: "#timeUnit",
         dictTypeId: "TIME_UNIT",
+    });
+    form.render();
+
+    //获取日志类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#logType",
+        dictTypeId: "LOG_TYPE",
     });
     form.render();
 
@@ -211,35 +226,101 @@
     // 	}
     // });
 
+    <%--//监听提交--%>
+    <%--form.on("submit(layuiadmin-app-form-submit)", function (data) {--%>
+    <%--    var submitData = JSON.stringify(data.field);--%>
+    <%--    if (submit == false) {--%>
+    <%--        submit = true;--%>
+    <%--        if (isExist == false) {--%>
+    <%--            $.ajax({--%>
+    <%--                url: "<%= request.getContextPath() %>/logDeleteRule/logDeleteRule/add",--%>
+    <%--                type: "POST",--%>
+    <%--                data: submitData,--%>
+    <%--                cache: false,--%>
+    <%--                contentType: "text/json",--%>
+    <%--                success: function (result) {--%>
+    <%--                    layer.msg("添加成功", {--%>
+    <%--                        icon: 1,--%>
+    <%--                        time: 500--%>
+    <%--                    }, function () {--%>
+    <%--                        var index = parent.layer.getFrameIndex(window.name);--%>
+    <%--                        win.layui.table.reload("LAY-app-logDeleteRule-list-reload");--%>
+    <%--                        top.layer.close(index);--%>
+    <%--                    });--%>
+    <%--                }--%>
+    <%--            });--%>
+    <%--        }--%>
+    <%--    } else if (isExist == true) {--%>
+    <%--        submit = false;--%>
+    <%--        layer.msg("当前删除规则编码已存在，请重新输入", {--%>
+    <%--            icon: 2,--%>
+    <%--            time: 2000--%>
+    <%--        });--%>
+    <%--        submit = false;--%>
+    <%--    }else {--%>
+    <%--        layer.msg("请稍等");--%>
+    <%--    }--%>
+    <%--    return false;--%>
+    <%--});--%>
+
     //监听提交
-    form.on("submit(layuiadmin-app-form-submit)", function (data) {
-        var submitData = JSON.stringify(data.field);
-        debugger;
+    form.on("submit(layuiadmin-app-form-submit)", function(data) {
         if (submit == false) {
             submit = true;
+            var submitData = JSON.stringify(data.field);
             if (isExist == false) {
                 $.ajax({
                     url: "<%= request.getContextPath() %>/logDeleteRule/logDeleteRule/add",
                     type: "POST",
                     data: submitData,
                     cache: false,
-                    contentType: "text/json",
-                    success: function (result) {
+                    contentType: 'text/json',
+                    success: function(result) {
                         layer.msg("添加成功", {
                             icon: 1,
-                            time: 500
-                        }, function () {
-                            var index = parent.layer.getFrameIndex(window.name);
-                            win.layui.table.reload("LAY-app-logDeleteRule-list-reload");
+                            time: 2000
+                        }, function() {
+                            var index = top.layer.getFrameIndex(window.name);
+                            win.layui.table.reload('LAY-app-logDeleteRule-list-reload');
                             top.layer.close(index);
+                            win.window.updata_select();
                         });
                     }
                 });
+            } else if ( isExist == true) {
+                layer.msg("当前日志删除规则编码已存在，请重新输入", {
+                    icon: 2,
+                    time: 2000
+                });
+                submit = false;
             }
         } else {
-            layer.msg("请稍等");
+            layer.msg("正在添加...请稍等！");
         }
         return false;
+    });
+
+    //判断菜单代码是否已存在
+    $("#deleteRuleNum").blur(function() {
+        var deleteRuleNum = $("#deleteRuleNum").val();
+        if (deleteRuleNum != null && deleteRuleNum != "") {
+            $.ajax({
+                url: "<%= request.getContextPath() %>/logDeleteRule/logDeleteRule/check/isExist?deleteRuleNum="+deleteRuleNum,
+                type: "GET",
+                cache: false,
+                contentType: "text/json",
+                cache: false,
+                success: function (text) {
+                    if (text.code == "1") {
+                        isExist = true;
+                    } else {
+                        isExist = false;
+                    }
+                }
+            });
+        } else {
+            return;
+        }
     });
 </script>
 </body>

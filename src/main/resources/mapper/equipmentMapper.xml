@@ -79,4 +79,12 @@
         </foreach>
     </delete>
 
+
+    <!--查询设备资源号-->
+    <select id="checkEquipmentId" resultType="int">
+        select count(*)
+        from eqi_equipment
+        where equipment_id = #{equipmentId}
+    </select>
+
 </mapper>

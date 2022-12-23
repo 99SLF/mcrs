@@ -30,6 +30,7 @@ public class EquipController {
     @Autowired
     private EquipService equipService;
 
+
     /**
      * 设备信息维护
      *
