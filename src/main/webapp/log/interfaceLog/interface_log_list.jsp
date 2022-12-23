@@ -12,8 +12,6 @@
     <meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
     <title>接口日志页面</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
 </head>
 <body>
 <div class="layui-fluid">
