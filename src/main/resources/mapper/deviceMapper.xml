@@ -85,6 +85,13 @@
         </foreach>
     </delete>
 
+    <!--查询APPId-->
+    <select id="checkAPPId" resultType="int">
+        select count(*)
+        from eqi_device
+        where app_id = MD5(#{APPId})
+    </select>
+
 
 
 </mapper>

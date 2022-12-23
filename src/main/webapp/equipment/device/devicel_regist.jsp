@@ -69,7 +69,6 @@
     </div>
 
 
-
     <%--// 后续会添加，暂不显示--%>
     <%--        <div class="layui-col-sm4">--%>
     <%--            &lt;%&ndash;            <label class="layui-form-label">接入方式:<span style="color:red">*</span></label>&ndash;%&gt;--%>
@@ -95,7 +94,7 @@
     </div>
 
     <div class="layui-input-block">
-        <input id="APPId" type="text" name="APPId" lay-verify="required|APPId" placeholder=""
+        <input id="APPId" type="text" name="APPId" lay-verify="required" placeholder=""
                autocomplete="off" class="layui-hide">
     </div>
     <div class="layui-form-item layui-hide">
@@ -103,12 +102,6 @@
                value="确认添加">
     </div>
 </div>
-
-
-
-
-
-
 
 
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
@@ -234,37 +227,70 @@
                 $("#equipmentId").val(data.equipmentId);
                 top.layer.close(index);
                 check();
-                debugger;
+                Exist();
             }
         });
     });
+
+
+    //判断设备资源号是否已存在
+    function Exist() {
+        var APPId = $("#APPId").val();
+
+        if (APPId != null && APPId != "") {
+            $.ajax({
+                url: "<%= request.getContextPath() %>/equipment/device/check/isExist?APPId=" + APPId,
+                type: "GET",
+                cache: false,
+                contentType: "text/json",
+                cache: false,
+                success: function (text) {
+                    if (text.code == "1") {
+                        isExist = true;
+                    } else {
+                        isExist = false;
+                    }
+                }
+            });
+        } else {
+            return;
+        }
+        console.log(isExist);
+    };
+
     //监听提交
     form.on("submit(layuiadmin-app-form-submit)", function (data) {
-        var submitData = JSON.stringify(data.field);
         if (submit == false) {
             submit = true;
+            var submitData = JSON.stringify(data.field);
             if (isExist == false) {
-                debugger;
                 $.ajax({
                     url: "<%= request.getContextPath() %>/equipment/device/registrationDevice",
                     type: "POST",
                     data: submitData,
                     cache: false,
-                    contentType: "text/json",
+                    contentType: 'text/json',
                     success: function (result) {
                         layer.msg("添加成功", {
                             icon: 1,
-                            time: 500
+                            time: 2000
                         }, function () {
-                            var index = parent.layer.getFrameIndex(window.name);
+                            var index = top.layer.getFrameIndex(window.name);
                             win.layui.table.reload("LAY-app-device-list-reload");
                             top.layer.close(index);
+                            win.window.updata_select();
                         });
                     }
                 });
+            } else if (isExist == true) {
+                layer.msg("APPId已存在，请重新选择正确的设备资源号与终端软件类型", {
+                    icon: 2,
+                    time: 2000
+                });
+                submit = false;
             }
         } else {
-            layer.msg("请稍等");
+            layer.msg("正在添加...请稍等！");
         }
         return false;
     });

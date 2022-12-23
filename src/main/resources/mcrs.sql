@@ -304,20 +304,24 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- Table structure for eqi_equipment
 -- ----------------------------
 DROP TABLE IF EXISTS `eqi_equipment`;
-CREATE TABLE `eqi_equipment` (
-    `equipment_int` int(255) NOT NULL AUTO_INCREMENT,
-    `equipment_id` varchar(255) DEFAULT NULL,
-    `equipment_name` varchar(255) DEFAULT NULL,
-    `enabled_state` varchar(255) DEFAULT NULL,
-    `equipment_properties` varchar(255) DEFAULT NULL,
-    `mes_continue_ip` varchar(255) DEFAULT NULL,
-    `equipment_install_location` varchar(255) DEFAULT NULL,
-    `equipment_continue_port` varchar(255) DEFAULT NULL,
-    `create_time` varchar(255) DEFAULT NULL,
-    `remarks` varchar(255) DEFAULT NULL,
-    `creator` varchar(255) DEFAULT NULL,
-    PRIMARY KEY (`equipment_int`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+CREATE TABLE `eqi_equipment`  (
+  `equipment_int` int(255) NOT NULL AUTO_INCREMENT,
+  `equipment_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `equipment_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `enabled_state` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `equipment_properties` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `mes_continue_ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `equipment_install_location` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `equipment_continue_port` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `create_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `creator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `equipment_ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `protocol_communication` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`equipment_int`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- ----------------------------
 -- Table structure for rep_abn_prod_prcs

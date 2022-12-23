@@ -98,4 +98,21 @@ public class DeviceController {
 
     }
 
+
+    /**
+     * 检测APPId是否存在
+     *
+     * @param APPId 设备资源号
+     */
+    @GetMapping("/device/check/isExist")
+    public Result<?> check(@RequestParam("APPId") String APPId) {
+        if(deviceService.checkAPPId(APPId)>0){
+            return Result.error("1","当前APPId已存在，请重新选择正确的设备和终端软件类型");
+        }else {
+            return Result.success();
+        }
+
+    }
+
+
 }
