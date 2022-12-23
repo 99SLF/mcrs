@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zimax.mcrs.basic.accPointResMaintain.processInfoMaintain.mapper.ProcessMapper">
+<mapper namespace="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.mapper.ProcessMapper">
     <!--添加工序基础数据-->
     <insert id="addProcessInfo" parameterType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo">
-        insert into bas_process_info
-        values (#{processId}, #{processName}, #{processCode}, #{processEnable}, #{processRemarks})
+        insert into base_process_info
+        values (#{processId}, #{infoId}, #{processName}, #{processCode},#{processRemarks},
+                #{creator}, #{createTime}, #{updater}, #{updateTime})
     </insert>
 
     <!--    主键删除-->

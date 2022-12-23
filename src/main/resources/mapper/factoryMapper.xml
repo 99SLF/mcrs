@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zimax.mcrs.basic.accPointResMaintain.factoryInfoMaintain.mapper.FactoryMapper">
+<mapper namespace="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.mapper.FactoryMapper">
     <!--添加工厂基础数据-->
     <insert id="addFactoryInfo" parameterType="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo">
-        insert into bas_factory_info
-        values (#{factoryId}, #{factoryName}, #{factoryCode}, #{factoryEnable}, #{factoryAddress})
+        insert into base_factory_info
+        values (#{factoryId}, #{infoId}, #{factoryName}, #{factoryCode},#{factoryAddress},
+                #{creator}, #{createTime}, #{updater}, #{updateTime})
     </insert>
 
-    <!--    主键删除-->
-    <delete id="deleteFactory" parameterType="int">
-        delete
-        from bas_factory_info
-        where factory_id = #{factoryId}
-    </delete>
+<!--    &lt;!&ndash;    主键删除&ndash;&gt;-->
+<!--    <delete id="deleteFactory" parameterType="int">-->
+<!--        delete-->
+<!--        from bas_factory_info-->
+<!--        where factory_id = #{factoryId}-->
+<!--    </delete>-->
+
 </mapper>
 

@@ -1,12 +1,14 @@
-package com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.service;
+package com.zimax.mcrs.basic.matrixInfo.matrix.service;
+
 
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfoVo;
+import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfoVo;
+import com.zimax.mcrs.basic.matrixInfo.matrix.mapper.MatrixMapper;
+import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.Matrix;
 import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.MatrixVo;
-import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.mapper.ProcessMapper;
-import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
-import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfoVo;
 import com.zimax.mcrs.config.ChangeString;
+import com.zimax.mcrs.serialnumber.service.SerialnumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,40 +18,40 @@ import java.util.Map;
 
 /**
  * @author 李伟杰
- * @date 2022/12/19 14:17
+ * @date 2022/12/23 10:35
  */
 @Service
-public class ProcessService {
+public class MatrixService {
 
     @Autowired
-    private ProcessMapper processMapper;
-    /**
-     * 添加监控信息
-     * @param processInfo 监控信息
-     */
-    public void addProcessInfo(ProcessInfo processInfo){
+    private MatrixMapper matrixMapper;
 
-        processMapper.addProcessInfo(processInfo);
+    @Autowired
+    private SerialnumberService serialnumberService;
+    /**
+     * 添加设备维护信息
+     *
+     * @param matrix 基地信息
+     */
+    public void addMatrix(Matrix matrix) {
+
+        String coding = serialnumberService.getSerialNum("jdCod").replace("_", "");
+        matrix.setMatrixCode(coding);
+        matrixMapper.addMatrix(matrix);
+
     }
 
     /**
      * 编辑
      */
-    public void updateProcessInfo(ProcessInfo processInfo) {
-        processMapper.updateProcessInfo(processInfo);
+    public void updateMatrix(Matrix matrix) {
+        matrixMapper.updateMatrix(matrix);
     }
-
-//    /**
-//     *主键删除一条工序信息
-//     */
-//    public void deleteProcess(int processId) {
-//        processMapper.deleteProcess(processId);
-//    }
 
     /**
      * 查询所有信息
      */
-    public List<ProcessInfoVo> queryProcessInfo(String page, String limit, String infoId, String order, String field) {
+    public List<MatrixVo> queryMatrix(String page, String limit, String infoId, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -64,7 +66,7 @@ public class ProcessService {
             map.put("limit", Integer.parseInt(limit));
         }
         map.put("infoId", infoId);
-        return processMapper.queryProcessInfo(map);
+        return matrixMapper.queryMatrix(map);
 
     }
 
@@ -75,7 +77,7 @@ public class ProcessService {
      * @return
      */
     public int count(String infoId) {
-        return processMapper.count(infoId);
+        return matrixMapper.count(infoId);
     }
 
 }

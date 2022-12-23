@@ -1,4 +1,4 @@
-package com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo;
+package com.zimax.mcrs.basic.matrixInfo.matrix.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -10,21 +10,21 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * 工序信息
+ * 基础基地信息
  * @author 李伟杰
- * @date 2022/12/19 11:33
+ * @date 2022/12/23 10:11
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("base_process_info")
-public class ProcessInfo {
+@TableName("base_matrix_info")
+public class Matrix {
 
     /**
-     * 工序信息数据的主键
+     * 基础基地数据的主键
      */
     @TableId(type = IdType.AUTO)
-    private int processId;
+    private int matrixId;
 
     /**
      * 树id
@@ -32,19 +32,19 @@ public class ProcessInfo {
     private String infoId;
 
     /**
-     * 工序名称
+     * 基地名称
      */
-    private String processName;
+    private String matrixName;
 
     /**
-     * 工序代号
+     * 基地代号
      */
-    private String processCode;
+    private String matrixCode;
 
     /**
-     * 工序信息描述
+     *基地地址
      */
-    private String processRemarks;
+    private String matrixAddress;
 
     /**
      * 制单人

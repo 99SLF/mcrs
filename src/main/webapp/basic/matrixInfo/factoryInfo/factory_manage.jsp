@@ -67,7 +67,7 @@
 	var line_list = {
 		id: "list",
 		title: "产线列表",
-		path: '<%=request.getContextPath() %>/basic/productionLine/factory_list.jsp'
+		path: '<%=request.getContextPath() %>factory_list.jsp'
 	};
 	
 	var categoryTabs = [];

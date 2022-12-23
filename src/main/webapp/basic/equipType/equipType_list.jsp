@@ -70,6 +70,7 @@
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
                         class="layui-icon layui-icon-delete"></i>删除</a>
             </script>
+
         </div>
     </div>
 </div>
@@ -301,10 +302,16 @@
             type: "numbers"
         }, {
             field: "equipTypeCode",
-            title: "设备类型代码",
+            title: '设备类型代码',
             align: "center",
             minWidth: 120,
-            hide: isHidden("equipTypeCode")
+            //打开监听
+            event: "view",
+            hide: isHidden("equipTypeCode"),
+            //监听打开详情页面
+            templet: function (d) {
+                return '<span style="color: #09bbfd">' + d.equipTypeCode +'</span>';
+            }
         }, {
             field: "equipTypeName",
             title: "设备类型名称",
@@ -460,6 +467,27 @@
                         });
                     }
                 });
+            });
+        }else if (e.event == "view") {
+            top.layer.open({
+                type: 2,
+                title: "编辑设备类型信息维护",
+                content: "<%= request.getContextPath() %>/basic/equipType/equipType_detailed.jsp",
+                area: ["1000px", "800px"],
+                resize: false,
+                btn: ["确定", "取消"],
+                success: function (layero, index) {
+                    var dataJson = {
+                        data: data,
+                        win: window
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function (index, layero) {
+                    var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");
+                    edit.click();
+                }
+
             });
         }
     });

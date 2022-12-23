@@ -1,29 +1,21 @@
 package com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import lombok.Data;
+
+
 
 /**
- * 工序信息
  * @author 李伟杰
- * @date 2022/12/19 11:33
+ * @date 2022/12/23 13:49
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@TableName("base_process_info")
-public class ProcessInfo {
+public class ProcessInfoVo {
 
     /**
      * 工序信息数据的主键
      */
-    @TableId(type = IdType.AUTO)
+
     private int processId;
 
     /**
@@ -55,7 +47,7 @@ public class ProcessInfo {
     /**
      * 制单时间
      */
-    private Date createTime;
+    private String createTime;
 
     /**
      * 修改人
@@ -65,5 +57,5 @@ public class ProcessInfo {
     /**
      * 修改时间
      */
-    private Date updateTime;
+    private String updateTime;
 }

@@ -1,12 +1,10 @@
 package com.zimax.mcrs.basic.equipTypeMaintain.service;
 
-import com.zimax.cap.datacontext.DataContextManager;
-import com.zimax.cap.party.IUserObject;
-import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.mcrs.basic.equipTypeMaintain.mapper.EquipMapper;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfoVo;
 import com.zimax.mcrs.config.ChangeString;
+import com.zimax.mcrs.serialnumber.service.SerialnumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +22,16 @@ public class EquipService {
     @Autowired
     private EquipMapper equipMapper;
 
+    @Autowired
+    private SerialnumberService serialnumberService;
+
+
     /**
      * 添加设备维护信息
+     *
      * @param equipTypeInfo 设备信息
      */
-    public void addEquipInfo(EquipTypeInfo equipTypeInfo){
+    public void addEquipInfo(EquipTypeInfo equipTypeInfo) {
 //        try {
 //            String creator = DataContextManager.current().getMUODataContext().getUserObject().getUserId();
 //            equipTypeInfo.setCreator(creator);
@@ -42,7 +45,11 @@ public class EquipService {
 //        } catch (Exception e) {
 //            throw new RuntimeException(e);
 //        }
-           equipMapper.addEquipInfo(equipTypeInfo);
+
+        //编码规则，参数是编码规则表功能编码functionNum,title_rule 不能为空,function_name 唯一编码  currentvalue 当前流水号 number_rule {流水规则} 接受方式，num_basis
+        String coding = serialnumberService.getSerialNum("sbCod").replace("_", "");
+        equipTypeInfo.setEquipTypeCode(coding);
+        equipMapper.addEquipInfo(equipTypeInfo);
 
     }
 
@@ -73,11 +80,12 @@ public class EquipService {
 
     /**
      * 记录条数
+     *
      * @param
      * @return
      */
     public int count(String equipTypeCode, String equipTypeName, String creator, String createTime) {
-        return equipMapper.count(equipTypeCode, equipTypeName,creator, createTime);
+        return equipMapper.count(equipTypeCode, equipTypeName, creator, createTime);
     }
 
     /**
