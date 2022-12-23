@@ -80,7 +80,7 @@
         </foreach>
     </delete>
 
-
+<!--查询当前日志删除规则编号-->
     <select id="checkLogDeleteRule" resultType="int">
         select count(*)
         from bas_log_delete_rule

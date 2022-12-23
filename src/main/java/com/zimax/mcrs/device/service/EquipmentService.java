@@ -84,5 +84,14 @@ public class EquipmentService {
         equipmentMapper.deleteEquipments(equipmentInt);
     }
 
+    /**
+     * 检测设备资源号是否存在
+     *
+     * @param equipmentId 设备资源号
+     */
+    public int checkEquipmentId(String equipmentId) {
+        return equipmentMapper.checkEquipmentId(equipmentId);
+    }
+
 
 }

@@ -40,7 +40,7 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label"><span style="color:red">*</span>设备属性:</label>
 			<div class="layui-input-block">
-				<select name="equipmentProperties" id="equipmentProperties" lay-filter="required" type="select">
+				<select name="equipmentProperties" id="equipmentProperties" lay-verify="required" lay-filter="" type="select">
 					<option value=""></option>
 				</select>
 			</div>
@@ -80,7 +80,7 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label"><span style="color:red">*</span>是否启用:</label>
 			<div class="layui-input-block">
-				<select name="enabledState" id="enabledState" lay-filter="required" type="select">
+				<select name="enabledState" id="enabledState" lay-verify="required" lay-filter="" type="select">
 					<option value="on">是</option>
 					<option value="off">否</option>
 				</select>
