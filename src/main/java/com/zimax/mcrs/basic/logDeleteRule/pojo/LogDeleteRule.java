@@ -52,6 +52,11 @@ public class LogDeleteRule {
     private String deleteRuleType;
 
     /**
+     * 日志类型
+     */
+    private String logType;
+
+    /**
      * 时间间隔
      */
     private String  timeInterval;

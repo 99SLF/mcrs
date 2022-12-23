@@ -677,6 +677,7 @@ CREATE TABLE `dev_rfidparam_dispose` (
     CONSTRAINT `dev_rfidparam_dispose_ibfk_1` FOREIGN KEY (`rfid_group_id`) REFERENCES `dev_rfid_group` (`rfid_group_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
+
 -- ----------------------------
 -- Table structure for bas_log_delete_rule
 -- ----------------------------
@@ -688,6 +689,7 @@ CREATE TABLE `bas_log_delete_rule`  (
     `enable` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否启用',
     `rule_level` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '规则级别',
     `delete_rule_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志删除规则类型',
+    `log_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志类型',
     `time_interval` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '时间间隔',
     `time_unit` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '时间单位',
     `creator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
@@ -695,7 +697,10 @@ CREATE TABLE `bas_log_delete_rule`  (
     `updater` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
     `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
     PRIMARY KEY (`rule_delete_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 78 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 86 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
 
     -- ----------------------------
     -- Table structure for bas_tree
