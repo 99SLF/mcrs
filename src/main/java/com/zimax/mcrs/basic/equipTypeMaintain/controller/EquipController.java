@@ -1,8 +1,6 @@
 package com.zimax.mcrs.basic.equipTypeMaintain.controller;
 
-import com.zimax.cap.datacontext.DataContextManager;
-import com.zimax.cap.party.IUserObject;
-import com.zimax.components.coframe.rights.pojo.User;
+
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo;
 import com.zimax.mcrs.basic.equipTypeMaintain.service.EquipService;
 import com.zimax.mcrs.config.Result;
@@ -10,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 /**

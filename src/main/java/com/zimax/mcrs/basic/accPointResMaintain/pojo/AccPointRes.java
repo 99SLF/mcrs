@@ -2,6 +2,10 @@ package com.zimax.mcrs.basic.accPointResMaintain.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -10,73 +14,74 @@ import java.util.Date;
  * @author 李伟杰
  * @date 2022/12/23 9:42
  */
-public class accPoinRes {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@TableName("base_access_info")
+public class AccPointRes {
 
 
     /**
      * 接入点资源维护数据的主键
      */
     @TableId(type = IdType.AUTO)
-    private int accPoinResId;
+    private int accPointResId;
 
     /**
      * 树id
      */
-    private String infoId;
+    private int infoId;
 
     /**
      * 接入点代码
      */
-    private String equipTypeCode;
+    private String accPointResCode;
 
     /**
      *接入点名称
      */
-    private String equipTypeName;
+    private String accPointResName;
 
 
     /**
      *是否启用
      */
-    //private String equipTypeName;
+    private String isEnable;
 
     /**
      *基地代码
      */
-
-
-    /**
-     * 厂家
-     */
-    private String manufacturer;
-
-
+    private String matrixCode;
 
     /**
-     * 使用控制器型号
+     * 工厂代码
      */
-    private String equipControllerModel;
+    private String factoryCode;
 
     /**
-     * 支持通信协议
+     * 工厂名称
      */
-    private String protocolCommunication;
+    private String factoryName;
 
     /**
-     *MES连接IP地址
+     * 工序代码
      */
-    private String mesIpAddress;
+    private String processCode;
 
     /**
-     * 备注
+     * 工序名称
      */
-    private String remarks;
+    private String processName;
+
+    /**
+     * 工序描述
+     */
+    private String processRemarks;
 
     /**
      * 制单人
      */
     private String creator;
-
 
     /**
      * 制单时间
@@ -92,4 +97,5 @@ public class accPoinRes {
      * 修改时间
      */
     private Date updateTime;
+
 }
