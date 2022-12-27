@@ -7,6 +7,8 @@ import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfoVo;
 import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.mapper.FactoryMapper;
 import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo;
 import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfoVo;
+import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.Matrix;
+import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.MatrixVo;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.serialnumber.service.SerialnumberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +68,7 @@ public class FactoryService {
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
             map.put("order", "asc");
-            map.put("field", "create_time");
+            map.put("field", "factory_code");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));
@@ -89,5 +91,33 @@ public class FactoryService {
     public int count(String infoId) {
         return factoryMapper.count(infoId);
     }
+
+
+
+    /**
+     * 查询所有工厂信息（工厂代码和工厂名称）
+     * 代码
+     */
+    public List<FactoryInfoVo> selectList(String infoId) {
+        return factoryMapper.selectList(infoId);
+
+    }
+
+    /**
+     * 通过工厂代码获取
+     * 查询所有工厂信息（工厂名称）
+     * 不能用vo映射
+     * 名称
+     */
+    public List<FactoryInfo> getFactoryName(String factoryCode) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("factoryCode", factoryCode);
+        return factoryMapper.getFactoryName(map);
+
+    }
+//    public int countFactory(String infoId) {
+//
+//        return factoryMapper.countFactory(infoId);
+//    }
 
 }

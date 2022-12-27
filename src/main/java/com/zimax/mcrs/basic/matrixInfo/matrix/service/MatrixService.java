@@ -11,6 +11,7 @@ import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.Matrix;
 import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.MatrixVo;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.serialnumber.service.SerialnumberService;
+import com.zimax.mcrs.update.pojo.UpdateUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,7 +64,7 @@ public class MatrixService {
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
             map.put("order", "asc");
-            map.put("field", "create_time");
+            map.put("field", "matrix_code");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));
@@ -78,6 +79,19 @@ public class MatrixService {
     }
 
     /**
+     * 查询所有基地代码
+     */
+    public List<MatrixVo> selectList() {
+        return matrixMapper.selectList();
+
+    }
+    public int countMatrix() {
+
+        return matrixMapper.countMatrix();
+    }
+
+
+    /**
      * 记录条数
      *
      * @param
@@ -86,5 +100,19 @@ public class MatrixService {
     public int count(String infoId) {
         return matrixMapper.count(infoId);
     }
+
+
+    /**
+     * 通过基地代码获取
+     * 查询所有基地信息
+     * 不能用vo映射
+     */
+    public List<Matrix> getMatrixName(String matrixCode) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("matrixCode", matrixCode);
+        return matrixMapper.getMatrixName(map);
+
+    }
+
 
 }

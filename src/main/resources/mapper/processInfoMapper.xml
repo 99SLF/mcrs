@@ -54,4 +54,19 @@
             update_time     = #{updateTime,jdbcType=DATE}
         WHERE process_id = ${processId}
     </update>
+    <!--列表显示-->
+    <select id="selectList" parameterType="map" resultType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfoVo">
+        SELECT a.info_id, a.process_code, a.process_name
+        FROM base_process_info a LEFT JOIN base_tree b ON a.info_id = b.info_id
+        WHERE logic_states = "0" AND parent_id=#{infoId}
+    </select>
+
+    <select id="getProcessNameDe" resultType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo">
+        SELECT * FROM base_process_info
+        <where>
+            <if test="processCode !=null and processCode !=''">
+                and process_code like '%${processCode}%'
+            </if>
+        </where>
+    </select>
 </mapper>

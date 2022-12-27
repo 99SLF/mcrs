@@ -57,8 +57,11 @@
                 <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i
                         class="layui-icon layui-icon-add-circle-fine"></i>新增接入点
                 </button>
-                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i
+                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="qiyong"><i
                         class="layui-icon layui-icon-refresh" readonly></i>启用
+                </button>
+                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i
+                        class="layui-icon layui-icon-delete"></i>删除
                 </button>
             </div>
 
@@ -123,7 +126,7 @@
         add: function () {
             top.layer.open({
                 type: 2,
-                title: "新增设备类型",
+                title: "新增接入点信息",
                 content: "<%= request.getContextPath() %>/basic/accPointResMaintain/accPointRes_add.jsp",
                 area: ["1000px", "800px"],
                 resize: false,
@@ -140,56 +143,59 @@
                 }
             });
         },
-        <%--//批量删除--%>
-        <%--batchdel: function () {--%>
-        <%--    var checkStatus = table.checkStatus("LAY-app-device-list-reload");--%>
-        <%--    var data = checkStatus.data;--%>
-        <%--    if (data.length == 0) {--%>
-        <%--        layer.msg("请至少选中一条记录！");--%>
-        <%--    }--%>
-        <%--    if (data.length > 0) {--%>
-        <%--        var deviceIds = new Array();--%>
-        <%--        for (var i = 0; i < data.length; i++) {--%>
-        <%--            deviceIds[i] = data[i].deviceId;--%>
-        <%--        }--%>
-        <%--        layer.confirm("确定删除所选终端信息？", {--%>
-        <%--            icon: 3,--%>
-        <%--            title: "系统提示"--%>
-        <%--        }, function (index) {--%>
-        <%--            $.ajax({--%>
-        <%--                url: "<%= request.getContextPath() %>/equipment/device/batchDelete",--%>
-        <%--                type: "DELETE",--%>
-        <%--                data: JSON.stringify(deviceIds),--%>
-        <%--                cache: false,--%>
-        <%--                contentType: "text/json",--%>
-        <%--                success: function (result) {--%>
-        <%--                    if (result.exception) {--%>
-        <%--                        layer.alert(result.exception.message, {--%>
-        <%--                            icon: 2,--%>
-        <%--                            title: "系统提示"--%>
-        <%--                        });--%>
-        <%--                    } else if (result) {--%>
-        <%--                        layer.msg("删除成功", {--%>
-        <%--                            icon: 1,--%>
-        <%--                            time: 2000--%>
-        <%--                        }, function () {--%>
-        <%--                            table.reload("LAY-app-device-list-reload");--%>
-        <%--                        });--%>
-        <%--                    } else {--%>
-        <%--                        layer.msg("删除失败");--%>
-        <%--                    }--%>
+        //启用
+        qiyong: function () {
+        },
+        //批量删除
+        batchdel: function () {
+            var checkStatus = table.checkStatus("LAY-app-device-list-reload");
+            var data = checkStatus.data;
+            if (data.length == 0) {
+                layer.msg("请至少选中一条记录！");
+            }
+            if (data.length > 0) {
+                var accPointResIds = new Array();
+                for (var i = 0; i < data.length; i++) {
+                    accPointResIds[i] = data[i].accPointResId;
+                }
+                layer.confirm("确定删除所选接入点信息？", {
+                    icon: 3,
+                    title: "系统提示"
+                }, function (index) {
+                    $.ajax({
+                        url: "<%= request.getContextPath() %>/accPointResController/batchDelete",
+                        type: "DELETE",
+                        data: JSON.stringify(accPointResIds),
+                        cache: false,
+                        contentType: "text/json",
+                        success: function (result) {
+                            if (result.exception) {
+                                layer.alert(result.exception.message, {
+                                    icon: 2,
+                                    title: "系统提示"
+                                });
+                            } else if (result) {
+                                layer.msg("删除成功", {
+                                    icon: 1,
+                                    time: 2000
+                                }, function () {
+                                    table.reload("LAY-app-device-list-reload");
+                                });
+                            } else {
+                                layer.msg("删除失败");
+                            }
 
-        <%--                },--%>
-        <%--                error: function (jqXHR, textStatus, errorThrown) {--%>
-        <%--                    layer.msg(jqXHR.responseText, {--%>
-        <%--                        time: 2000,--%>
-        <%--                        icon: 5--%>
-        <%--                    });--%>
-        <%--                }--%>
-        <%--            });--%>
-        <%--        });--%>
-        <%--    }--%>
-        <%--},--%>
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            layer.msg(jqXHR.responseText, {
+                                time: 2000,
+                                icon: 5
+                            });
+                        }
+                    });
+                });
+            }
+        },
     };
 
     table.on('sort(LAY-app-device-list)', function (obj) {
@@ -304,7 +310,7 @@
             field: "accPointResCode",
             title: '接入点代码',
             align: "center",
-            minWidth: 120,
+            minWidth: 100,
             //打开监听
             event: "view",
             hide: isHidden("accPointResCode"),
@@ -322,7 +328,7 @@
             field: "isEnable",
             title: "是否启用",
             align: "center",
-            minWidth: 90,
+            minWidth: 80,
             hide: isHidden("isEnable")
         }, {
             field: "matrixCode",
@@ -331,10 +337,16 @@
             minWidth: 100,
             hide: isHidden("matrixCode")
         }, {
+            field: "matrixName",
+            title: "基地名称",
+            align: "center",
+            minWidth: 120,
+            hide: isHidden("matrixName")
+        }, {
             field: "factoryCode",
             title: "工厂代码",
             align: "center",
-            minWidth: 150,
+            minWidth: 100,
             hide: isHidden("factoryCode")
         }, {
             field: "factoryName",
@@ -358,7 +370,7 @@
             field: "processRemarks",
             title: "工序描述",
             align: "center",
-            minWidth: 120,
+            minWidth: 150,
             hide: isHidden("processRemarks")
         }, {
             field: "creator",
@@ -370,7 +382,7 @@
             field: "createTime",
             title: "制单时间",
             align: "center",
-            minWidth: 100,
+            minWidth: 160,
             hide: isHidden("createTime"),
             templet:function (data) {
                 return layui.util.toDateString(data.createTime, "yyyy-MM-dd HH:mm:ss");
@@ -385,19 +397,13 @@
             field: "updateTime",
             title: "修改时间",
             align: "center",
-            minWidth: 100,
+            minWidth: 160,
             hide: isHidden("updateTime")
-            // templet:function (data) {
-            //     if (data.updateTime !==null || data.updateTime !=="") {
-            //         return layui.util.toDateString(data.updateTime, "yyyy-MM-dd HH:mm:ss");
-            //     }
-            // }
-
         }, {
             title: "操作",
             align: "center",
             fixed: "right",
-            width: 200,
+            width: 150,
             toolbar: "#table-device-list"
         }]]
     });

@@ -3,6 +3,8 @@ import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfoVo;
 import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo;
 import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfoVo;
+import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.Matrix;
+import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.MatrixVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -42,4 +44,21 @@ public interface FactoryMapper {
      * 更新
      */
     void updateFactoryInfo(FactoryInfo factoryInfo);
+
+    /**
+     * 查询代码和名称
+     * @param infoId
+     */
+    List<FactoryInfoVo> selectList(@Param("infoId") String infoId);
+
+//    int countFactory(@Param("infoId") String infoId);
+
+
+    /**
+     * 通过工厂代码获取工厂信息（名称）
+     * @param
+     * @return
+     */
+
+    List<FactoryInfo> getFactoryName(Map map);
 }

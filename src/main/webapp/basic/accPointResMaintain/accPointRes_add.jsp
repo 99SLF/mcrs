@@ -47,48 +47,61 @@
                        placeholder="请输入接入点名称(必填)" autocomplete="off" class="layui-input">
             </div>
         </div>
-    </div>
 
-    <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>是否启用:</label>
             <div class="layui-input-block">
-                <select name="equipTypeEnable" id="equipTypeEnable" lay-filter="required" type="select">
-                    <option value="on">是</option>
-                    <option value="off">否</option>
+                <select name="isEnable" id="iseEnable" lay-filter="isEnable"
+                        lay-verify="required|isEnable" type="select">
+                    <option value=""></option>
+                    <option value="是">是</option>
+                    <option value="否">否</option>
                 </select>
             </div>
         </div>
-        <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>基地代码:</label>
-                <div class="layui-input-block">
-                    <select name="matrixCode" id="matrixCode" lay-filter="required" type="select">
-<%--                        <option value="on">是</option>--%>
-<%--                        <option value="off">否</option>--%>
-                    </select>
-                </div>
-        </div>
-
     </div>
+
 
     <div class="layui-form-item layui-row layui-col-space10">
 
         <div class="layui-col-sm6">
+            <label class="layui-form-label"><span style="color:red">*</span>基地代码:</label>
+            <div class="layui-input-block">
+                <%--   lay-filter 对应下面的form.on事件过滤         --%>
+                <select name="matrixCode" id="matrixCode" lay-filter="matrixCode" lay-verify=""
+                        type="select">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label">基地名称:</label>
+            <div class="layui-input-block">
+                <input id="matrixName" type="text" name="matrixName"
+                       lay-verify=""
+                       placeholder="请先选择基地代码" autocomplete="off" class="layui-input"
+                       readonly>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-row layui-col-space10">
+        <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>工厂代码:</label>
             <div class="layui-input-block">
-                <select name="factoryCode" id="factoryCode" lay-filter="required" type="select">
-                    <%--                        <option value="on">是</option>--%>
-                    <%--                        <option value="off">否</option>--%>
+                <select name="factoryCode" id="factoryCode" lay-filter="factoryCode" lay-verify=""
+                        type="select">
+                    <option value=""></option>
                 </select>
             </div>
         </div>
 
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>工厂名称:</label>
+            <label class="layui-form-label">工厂名称:</label>
             <div class="layui-input-block">
                 <input id="factoryName" type="text" name="factoryName"
-                       lay-verify="required|factoryName"
-                       placeholder="工厂名称" autocomplete="off" class="layui-input">
+                       lay-verify=""
+                       placeholder="请先选择工厂代码" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -97,18 +110,18 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>工序代码：</label>
             <div class="layui-input-block">
-                <select name="processCode" id="processCode" lay-filter="required" type="select">
-                    <%--                        <option value="on">是</option>--%>
-                    <%--                        <option value="off">否</option>--%>
+                <select name="processCode" id="processCode" lay-filter="processCode" lay-verify=""
+                        type="select">
+                    <option value=""></option>
                 </select>
             </div>
         </div>
 
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>工序名称：</label>
+            <label class="layui-form-label">工序名称：</label>
             <div class="layui-input-block">
-                <input id="processName" type="text" name="processName" lay-verify="required|processName"
-                       placeholder="工序名称" autocomplete="off" class="layui-input">
+                <input id="processName" type="text" name="processName" lay-verify=""
+                       placeholder="请先选择工序代码" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
     </div>
@@ -117,8 +130,9 @@
         <div class="layui-col-sm12">
             <label class="layui-form-label">工序描述:</label>
             <div class="layui-input-block">
-            <textarea cols="50" rows="10" style="width:100%;height:100px" name="processRemarks" id="processRemarks" autocomplete="off"
-                      class="layui-input" lay-verify="processRemarks"></textarea>
+            <textarea cols="50" rows="10" style="width:100%;height:100px" name="processRemarks" id="processRemarks"
+                      autocomplete="off"
+                      class="layui-input" lay-verify="" readonly></textarea>
             </div>
         </div>
     </div>
@@ -132,10 +146,7 @@
 
     <div class="layui-form-item layui-row layui-hide">
         <div class="layui-input-block">
-            <%--java代码--%>
-            <%
-                IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
-            %>
+            <%IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();%>
             <input type="text" class="layui-hide" name="creator" value="<%=usetObject.getUserName()%>"
                    readonly/>
         </div>
@@ -147,10 +158,8 @@
                value="确认添加">
     </div>
 
-
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
-
 <script>
     layui.config({
         base: "<%=request.getContextPath()%>/"
@@ -168,6 +177,7 @@
     var isExist = false;
     var win = null;
 
+    // 全局变量，用户从存储从后端查询出来的结果数据
     function SetData(data) {
         win = data.win ? data.win : window;
     }
@@ -178,73 +188,204 @@
             if (value.length > 20) {
                 return "接入点名称不能超过20字符";
             }
+        },
+
+        equipTypeEnable: function (value, item) {
+            if (value.length = 0) {
+                return "请确定是否启用";
+            }
         }
     });
 
+    //下拉选择框动态赋值，将基地代码赋值给下拉选择框
+    $.ajax({
+        url: "<%= request.getContextPath() %>/MatrixController/selectMatrixCode",
+        dataType: "json",
+        type: "get",
+        success: function (data) { //注意后端代码返回数据key值必须同名 为data
+            console.log(data)
+            //使用循环遍历，给下拉列表赋值
+            $.each(data.data, function (index, value) {
+                $("#matrixCode").append(new Option(value.matrixCode, value.id))//对应映射字段名 第一个为显示的值  第二个为value值
+            });
+            layui.form.render("select")//重新渲染 固定写法
 
-    <%--rendTree();--%>
-    <%--function rendTree() {--%>
-    <%--    $.ajax({--%>
-    <%--        url:"<%=request.getContextPath() %>/TreeInfo/queryCategoryTreeNode",--%>
-    <%--        type:"get",--%>
-    <%--        cache: false,--%>
-    <%--        contentType:"text/json",--%>
-    <%--        success: function(rel) {--%>
-    <%--            debugger;--%>
-    <%--            var data = rel;--%>
-    <%--            var dataJson = toTreeData(data);--%>
-    <%--        }--%>
-    <%--    });--%>
-    <%--}--%>
+        }
+    })
 
+    //对应lay-verify事件过滤，选择下拉值相应的基地代码获取相应的基地名称返回给基地名称输入框
+    form.on("select(matrixCode)", function (data) {
+        debugger;
+        var matrixCode = data.value;
+        if (data.value == null || data.value == "") {
+            $("#matrixName").val("");
+            $("#factoryCode").empty();
+            $("#factoryName").val("");
+            $("#processCode").empty();
+            $("#processName").val("");
+            $("#processRemarks").val("");
+            //执行清空
+            form.render("select");
+            form.render();
+        } else {
+            //调用查询的后端
+            $.ajax({
+                //获取到基地名称
+                url: "<%= request.getContextPath() %>/MatrixController/getMatrixName?matrixCode=" + matrixCode,
+                type: "GET",
+                async: false,//默认是true异步传输，false是同步传输,转全局变量的第一条件
+                cache: false,
+                contentType: "text/json",
+                dataType: "json",//
+                success: function (result) {
+                    if (result) {
+                        $("#matrixName").val("");
+                        $("#factoryCode").empty();
+                        $("#factoryName").val("");
+                        $("#processCode").empty();
+                        $("#processName").val("");
+                        $("#processRemarks").val("");
+                        //从后端获取的返回值数据存储到到allDatas
+                        var allDatas = result.data;
+                        var matrixNameVal = allDatas[0].matrixName;
+                        //将后端获取的版本号赋值给最新版本号的输入框
+                        $("#matrixName").val(matrixNameVal);
+                        var parentid = allDatas[0].infoId;
+                        //下拉选择框动态赋值，将工厂代码赋值给下拉选择框
+                        $.ajax({
+                            url: "<%= request.getContextPath() %>/FactoryController/selectFactoryCode?infoId=" + parentid,
+                            dataType: "json",
+                            async: false,
+                            type: "get",
+                            success: function (data) { //注意后端代码返回数据key值必须同名 为data
+                                console.log(data)
+                                //使用循环遍历，给下拉列表赋值
+                                // $("#factoryCode").empty();
+                                // $("#processCode").empty();
+                                $("#factoryCode").find("option").remove();
+                                $("#factoryName").val("");
+                                $("#processCode").find("option").remove();
+                                $("#processName").val("");
+                                $("#processRemarks").val("");
+                                $.each(data.data, function (index, value) {
+                                    $("#factoryCode").append(new Option("", ""));
+                                    $("#factoryCode").append(new Option(value.factoryCode, value.id))//对应映射字段名 第一个为显示的值  第二个为value值
+                                });
+                                layui.form.render("select")//重新渲染 固定写法
 
+                            }
+                        })
+                    } else {
+                        layer.msg("找不到数据");
+                    }
+                }
+            });
 
+        }
 
-    <%--function toTreeData(data) {--%>
-    <%--    debugger;--%>
-    <%--    var tree = [];--%>
-    <%--    var resData = data;--%>
-    <%--    for (var i = 0; i < resData.length; i++){--%>
-    <%--        if (resData[i].id == 2) {--%>
-    <%--            var obj = {--%>
-    <%--                id: resData[i].id,--%>
-    <%--                title: resData[i].text,--%>
-    <%--                parentId: "0",--%>
-    <%--                children: []--%>
-    <%--            };--%>
-    <%--            tree.push(obj);--%>
-    <%--            resData.splice(i,1);--%>
-    <%--            i--;--%>
-    <%--        }--%>
-    <%--    }--%>
+    });
 
-    <%--    var run = function(treeAttrs){--%>
-    <%--        if (resData.length > 0 ) {--%>
-    <%--            for (var i = 0; i < treeAttrs.length; i++) {--%>
-    <%--                for (var j = 0; j < resData.length; j++) {--%>
-    <%--                    if (resData[j]) {--%>
-    <%--                        if (treeAttrs[i].id === resData[j].pid) {--%>
-    <%--                            var obj = {--%>
-    <%--                                id: resData[j].id,--%>
-    <%--                                title: resData[j].text,--%>
-    <%--                                parentId: resData[j].pid,--%>
-    <%--                                children: []--%>
-    <%--                            };--%>
-    <%--                            treeAttrs[i].children.push(obj);--%>
-    <%--                            resData.splice(j,1);--%>
-    <%--                            j--;--%>
-    <%--                        }--%>
-    <%--                    }--%>
-    <%--                    run(treeAttrs[i].children);--%>
-    <%--                }--%>
-    <%--            }--%>
-    <%--        }--%>
-    <%--    };--%>
-    <%--    run(tree);--%>
-    <%--    return tree;--%>
-    <%--}--%>
+    form.on("select(factoryCode)", function (data) {
+        var factoryCode = data.value;
+        if (data.value == null || data.value == "") {
+            $("#factoryName").val("");
+            $("#processCode").find("option").remove();
+            $("#processName").val("");
+            $("#processRemarks").val("");
+            form.render();
+        } else {
+            //调用查询的后端
+            $.ajax({
+
+                //查询出工厂名称
+                url: "<%= request.getContextPath() %>/FactoryController/getFactoryName?factoryCode=" + factoryCode,
+                type: "GET",
+                async: false,//默认是true异步传输，false是同步传输,转全局变量的第一条件
+                cache: false,
+                contentType: "text/json",
+                dataType: "json",//
+                success: function (result) {
+                    if (result) {
+                        $("#factoryName").val("");
+                        $("#processCode").find("option").remove();
+                        $("#processName").val("");
+                        $("#processRemarks").val("");
+                        var allDatas = result.data;
+                        var factoryNameVal = allDatas[0].factoryName;
+                        //将后端获取的版本号赋值给最新版本号的输入框
+                        $("#factoryName").val(factoryNameVal);
+                        var parentid = allDatas[0].infoId;
+                        //下拉选择框动态赋值，得到工序代码赋值给下拉选择框
+                        $.ajax({
+                            url: "<%= request.getContextPath() %>/ProcessController/selectProcessCode?infoId=" + parentid,
+                            dataType: "json",
+                            async: false,
+                            type: "get",
+                            success: function (data) { //注意后端代码返回数据key值必须同名 为data
+                                console.log(data)
+                                //使用循环遍历，给下拉列表赋值
+                                $("#processCode").find("option").remove();
+                                $("#processName").val("");
+                                $("#processRemarks").val("");
+                                $.each(data.data, function (index, value) {
+                                    $("#processCode").append(new Option("", ""));
+                                    $("#processCode").append(new Option(value.processCode, value.id))//对应映射字段名 第一个为显示的值  第二个为value值
+                                });
+                                layui.form.render("select")//重新渲染 固定写法
+
+                            }
+                        })
+                    } else {
+                        layer.msg("找不到数据");
+                    }
+
+                }
+            });
+        }
+    });
 
     form.render();
+
+    //监听工序代码，自动填充上工序名称和工序描述
+    form.on("select(processCode)", function (data) {
+        var processCode = data.value;
+        if (data.value == null || data.value == "") {
+            $("#processName").val("");
+            $("#processRemarks").val("");
+            form.render();
+        } else {
+            //调用查询的后端
+            debugger;
+            $.ajax({
+                //获取出工序名称和工序描述
+                url: "<%= request.getContextPath() %>/ProcessController/getProcessNameDe?processCode=" + processCode,
+                type: "GET",
+                async: false,//默认是true异步传输，false是同步传输,转全局变量的第一条件
+                cache: false,
+                contentType: "text/json",
+                dataType: "json",//
+                success: function (result) {
+                    if (result) {
+                        $("#processName").val("");
+                        $("#processRemarks").val("");
+                        var allDatas = result.data;
+                        var processNameVal = allDatas[0].processName;
+                        var processRemarksVal = allDatas[0].processRemarks;
+                        $("#processName").val(processNameVal);
+                        $("#processRemarks").val(processRemarksVal);
+
+
+                    } else {
+                        layer.msg("找不到数据");
+                    }
+
+                }
+            });
+        }
+
+    });
+    form.render();
+
 
     //监听提交
     form.on("submit(layuiadmin-app-form-submit)", function (data) {

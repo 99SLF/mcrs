@@ -4,6 +4,8 @@ import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfoVo;
+import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo;
+import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfoVo;
 import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.MatrixVo;
 import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.mapper.ProcessMapper;
 import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
@@ -31,8 +33,8 @@ public class ProcessService {
     @Autowired
     private SerialnumberService serialnumberService;
     /**
-     * 添加监控信息
-     * @param processInfo 监控信息
+     * 添加工序信息
+     * @param processInfo 工序信息
      */
     public void addProcessInfo(ProcessInfo processInfo){
         String coding = serialnumberService.getSerialNum("gxpCod").replace("_", "");
@@ -65,7 +67,7 @@ public class ProcessService {
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
             map.put("order", "asc");
-            map.put("field", "create_time");
+            map.put("field", "process_code");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));
@@ -89,4 +91,25 @@ public class ProcessService {
         return processMapper.count(infoId);
     }
 
+
+    /**
+     * 查询所有工序信息（工序代码和工序名称）
+     */
+    public List<ProcessInfoVo> selectList(String infoId) {
+        return processMapper.selectList(infoId);
+
+    }
+
+    /**
+     * 通过工序代码获取
+     * 查询所有工序信息（工厂名称）
+     * 不能用vo映射
+     * 工序名称和工序描述
+     */
+    public List<ProcessInfo> getProcessNameDe(String processCode) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("processCode", processCode);
+        return processMapper.getProcessNameDe(map);
+
+    }
 }

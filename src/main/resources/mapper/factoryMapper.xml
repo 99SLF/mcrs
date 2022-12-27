@@ -56,5 +56,26 @@
         WHERE factory_id = ${factoryId}
     </update>
 
+<!--    <select id="countFactory" resultType="int">-->
+<!--        select count(*) from FROM base_factory_info a LEFT JOIN base_tree b ON a.info_id = b.info_id-->
+<!--        WHERE logic_states = "0" AND parent_id=#{infoId}-->
+<!--    </select>-->
+
+    <!--列表显示-->
+    <select id="selectList" parameterType="map" resultType="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfoVo">
+        SELECT a.info_id, a.factory_code, a.factory_name
+        FROM base_factory_info a LEFT JOIN base_tree b ON a.info_id = b.info_id
+        WHERE logic_states = "0" AND parent_id=#{infoId}
+
+    </select>
+
+    <select id="getFactoryName" resultType="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo">
+        SELECT * FROM base_factory_info
+        <where>
+            <if test="factoryCode !=null and factoryCode !=''">
+                and factory_code like '%${factoryCode}%'
+            </if>
+        </where>
+    </select>
 </mapper>
 

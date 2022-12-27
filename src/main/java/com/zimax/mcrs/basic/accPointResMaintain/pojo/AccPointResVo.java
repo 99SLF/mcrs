@@ -42,6 +42,12 @@ public class AccPointResVo {
     private String matrixCode;
 
     /**
+     * 基地名称
+     */
+    private String matrixName;
+
+
+    /**
      * 工厂代码
      */
     private String factoryCode;

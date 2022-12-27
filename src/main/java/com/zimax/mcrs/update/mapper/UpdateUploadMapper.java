@@ -26,7 +26,11 @@ public interface UpdateUploadMapper {
 
     int count(@Param("version") String version, @Param("deviceSoType") String deviceSoType);
 
-
+    /**
+     * 通过设备类型编号获取更新包信息
+     * @param
+     * @return
+     */
     List<UpdateUpload> getUpdateUpload(Map map);
     /**
      * 批量删除更新包数据

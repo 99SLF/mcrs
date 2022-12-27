@@ -37,8 +37,8 @@ public class AccPointResService {
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
-            map.put("order","desc");
-            map.put("field","create_time");
+            map.put("order","asc");
+            map.put("field","acc_point_res_code");
         }else{
             map.put("order",order);
             map.put("field",changeString.camelUnderline(field));
@@ -84,6 +84,7 @@ public class AccPointResService {
      * 更新
      */
     public void updateAccPointRes(AccPointRes accPointRes) {
+        //域名要一致才可以，127.0.0.1和localhost不一样
         IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
         accPointRes.setUpdater(usetObject.getUserName());
         accPointRes.setUpdateTime(new Date());

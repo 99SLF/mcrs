@@ -3,7 +3,9 @@ package com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.controller;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfoVo;
 import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo;
+import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfoVo;
 import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.service.FactoryService;
+import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.MatrixVo;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.config.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +55,7 @@ public class FactoryController {
     }
 
     /**
-     * 分页查询所有设备信息
+     * 分页查询所有工厂信息
      *
      * @param page          页记录数
      * @param limit         页码
@@ -69,6 +71,34 @@ public class FactoryController {
     public Result<?> queryFactoryInfos(String page, String limit, String infoId, String order, String field) {
         List FactoryInfos = factoryService.queryFactoryInfos(page, limit, infoId, order, field);
         return Result.success(FactoryInfos, factoryService.count(infoId));
+    }
+
+    /**
+     * 通过父节点id查询工厂信息(工厂代号),父节点id等于基地节点的值
+     * 用户选择框下拉值
+     * @param
+     * @return
+     */
+
+    @GetMapping("/selectFactoryCode")
+    public Result<?> selectList(String infoId){
+        Map<String,Object> maps = new HashMap<>();
+        List<FactoryInfoVo> List = factoryService.selectList(infoId);//查询出数据
+        maps.put("data",List);
+        return Result.success(List);
+    }
+
+    /**
+     * 通过工厂代码查询出相应的工厂信息（名称）
+     *
+     * @param
+     * @return
+     */
+    @GetMapping("/getFactoryName")
+    public Result<?> getFactoryName(String factoryCode){
+        List getFactory = factoryService.getFactoryName(factoryCode);
+        return Result.success(getFactory);
+
     }
 
 //    /**
