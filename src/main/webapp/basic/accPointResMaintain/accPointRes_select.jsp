@@ -22,15 +22,15 @@
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">设备类型名称：</label>
+                    <label class="layui-form-label">接入点名称：</label>
                     <div class="layui-input-inline">
-                        <input name="equipTypeName" class="layui-input"/>
+                        <input name="accPointResName" class="layui-input"/>
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">支持通信协议：</label>
+                    <label class="layui-form-label">基地代码：</label>
                     <div class="layui-input-inline">
-                        <input name="protocolCommunication" class="layui-input"/>
+                        <input name="matrixCode" class="layui-input"/>
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -59,18 +59,18 @@
     var $ = layui.jquery;
     var active={};
     form.render();
-    var EquipData = {};
+    var accPointResData = {};
 
     //监听搜索
     form.on("submit(LAY-app-menuInfo-search)", function(data) {
         var field = data.field;
         var dataJson = {
-            "equipTypeName": field.equipTypeName,
-            "protocolCommunication":field.protocolCommunication,
-            "isEquipType": "1"
+            "accPointResName": field.accPointResName,
+            "matrixCode":field.matrixCode,
+            "isAccPointRes": "1"
         };
         table.reload("LAY-app-menu-list", {
-            url: "<%= request.getContextPath() %>/EquipController/query",
+            url: "<%= request.getContextPath() %>/accPointResController/query",
             where: field
         });
     });
@@ -119,13 +119,13 @@
 
     table.render({
         elem: "#LAY-app-menu-list",
-        url: "<%= request.getContextPath() %>/EquipController/query",
+        url: "<%= request.getContextPath() %>/accPointResController/query",
         method: "GET",
         height: "full-" + getFullSize(),
         page: true,
         limit: 10,
         limits: [10, 15, 20, 30],
-        where:{"isEquipType": "1"},
+        where:{"isAccPointRes": "1"},
         parseData: function(res) {
             return {
                 code: "0",
@@ -141,38 +141,38 @@
             type: "numbers"
         },
             {
-                field: "equipTypeCode",
-                title: "设备类型代码",
+                field: "accPointResCode",
+                title: "接入点代码",
                 align: "center",
                 minWidth: 120
             }, {
-                field: "equipTypeName",
-                title: "设备类型名称",
+                field: "accPointResName",
+                title: "接入点名称",
                 align: "center",
                 minWidth: 150
             }, {
-                field: "equipTypeEnable",
+                field: "isEnable",
                 title: "是否启用",
                 align: "center",
                 minWidth: 100
             }, {
-                field: "manufacturer",
-                title: "厂家",
+                field: "matrixCode",
+                title: "基地代码",
                 align: "center",
                 minWidth: 150,
             }, {
-                field: "equipControllerModel",
-                title: "使用控制器型号",
+                field: "factoryCode",
+                title: "工厂代码",
                 align: "center",
                 minWidth: 150,
             }, {
-                field: "protocolCommunication",
-                title: "支持通信协议",
+                field: "factoryName",
+                title: "工厂名称",
                 align: "center",
                 minWidth: 150,
             }, {
-                field: "mesIpAddress",
-                title: "MES连接IP地址",
+                field: "processName",
+                title: "使用工序",
                 align: "center",
                 minWidth: 150,
             }]]

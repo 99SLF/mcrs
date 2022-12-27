@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.basic.accPointResMaintain.mapper.AccPointResMapper">
+
+
+    <!--新增用户-->
+    <insert id="addAccPointRes" parameterType="com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes">
+        insert into base_access_info
+        values (#{accPointResId}, #{infoId}, #{accPointResCode}, #{accPointResName}, #{isEnable}, #{matrixCode},
+                #{factoryCode}, #{factoryName},
+                #{processCode}, #{processName},
+                #{processRemarks}, #{creator}, #{createTime}, #{updater}, #{updateTime})
+    </insert>
+
+    <!--    查询记录数-->
+    <select id="count" resultType="int">
+        select count(*) from base_access_info
+        <where>
+            <if test="accPointResCode !=null and accPointResCode !=''">
+                and acc_point_res_code like '%${accPointResCode}%'
+            </if>
+            <if test="accPointResName !=null and accPointResName !=''">
+                and acc_point_res_name like '%${accPointResName}%'
+            </if>
+            <if test="creator !=null and creator !=''">
+                and creator like '%${creator}%'
+            </if>
+            <if test="createTime !=null and createTime !=''">
+                and create_time like '%${createTime}%'
+            </if>
+        </where>
+    </select>
+
+    <!--更新一条选信息-->
+    <update id="updateAccPointRes" parameterType="com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes">
+        UPDATE base_access_info
+        SET info_id          = #{infoId},
+            acc_point_res_code = #{accPointResCode},
+            acc_point_res_name = #{accPointResName},
+            is_enable        = #{isEnable},
+            matrix_code      = #{matrixCode},
+            factory_code     = #{factoryCode},
+            factory_name     = #{factoryName},
+            process_code     = #{processCode},
+            process_name     = #{processName},
+            process_remarks  = #{processRemarks},
+            creator         = #{creator},
+            create_time      = #{createTime,jdbcType=DATE},
+            updater         = #{updater},
+            update_time      =#{updateTime,jdbcType=DATE}
+        WHERE acc_point_res_id = ${accPointResId}
+    </update>
+
+    <!--列表显示-->
+    <select id="queryAccPointRes" parameterType="map" resultType="com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointResVo">
+        select * from base_access_info
+        <where>
+            <if test="accPointResCode !=null and accPointResCode !=''">
+                and acc_point_res_code like '%${accPointResCode}%'
+            </if>
+            <if test="accPointResName !=null and accPointResName !=''">
+                and acc_point_res_name like '%${accPointResName}%'
+            </if>
+            <if test="creator !=null and creator !=''">
+                and creator like '%${creator}%'
+            </if>
+            <if test="createTime !=null and createTime !=''">
+                and create_time like '%${createTime}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+    <!--根据主键删除-->
+    <delete id="deleteAccPointRes" parameterType="int">
+        delete
+        from base_access_info
+        where acc_point_res_id = #{accPointResId}
+    </delete>
+
+
+    <!--    批量删除-->
+    <delete id="batchDelete" parameterType="java.util.List">
+        delete from base_access_info where acc_point_res_id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+</mapper>

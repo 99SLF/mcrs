@@ -620,116 +620,116 @@ CREATE TABLE `dev_plcparam_dispose` (
     CONSTRAINT `dev_plcparam_dispose_ibfk_1` FOREIGN KEY (`plc_group_id`) REFERENCES `dev_plc_group` (`plc_group_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 
-# 点位配置
--- ----------------------------
--- Table structure for dev_point_dispose
--- ----------------------------
-DROP TABLE IF EXISTS `dev_point_dispose`;
-CREATE TABLE `dev_point_dispose` (
-    `app_id` varchar(255) NOT NULL,
-    `down_work` varchar(255) DEFAULT NULL COMMENT '下料执行作业',
-    `up_work` varchar(255) DEFAULT NULL COMMENT '上料执行作业',
-    `up_model` varchar(255) DEFAULT NULL COMMENT '上料过账模式',
-    `down_model` varchar(255) DEFAULT NULL COMMENT '下料过账模式',
-    `data_unit` varchar(32) DEFAULT NULL,
-    `data_method` varchar(32) DEFAULT NULL COMMENT '数据计算方法',
-    `chip_length` int(10) DEFAULT NULL COMMENT '单片机长度',
-    `scale` int(10) DEFAULT NULL COMMENT '比例',
-    `ratio` int(10) DEFAULT NULL COMMENT '系数',
-    `check_param` int(10) DEFAULT NULL COMMENT '检查参数',
-    `roll_diameter` int(10) DEFAULT NULL COMMENT '放卷卸料设定',
-    `lable_cycle` int(10) DEFAULT NULL,
-    `monitor_date` int(9) DEFAULT NULL,
-    PRIMARY KEY (`app_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    # 点位配置
+    -- ----------------------------
+    -- Table structure for dev_point_dispose
+    -- ----------------------------
+    DROP TABLE IF EXISTS `dev_point_dispose`;
+    CREATE TABLE `dev_point_dispose` (
+        `app_id` varchar(255) NOT NULL,
+        `down_work` varchar(255) DEFAULT NULL COMMENT '下料执行作业',
+        `up_work` varchar(255) DEFAULT NULL COMMENT '上料执行作业',
+        `up_model` varchar(255) DEFAULT NULL COMMENT '上料过账模式',
+        `down_model` varchar(255) DEFAULT NULL COMMENT '下料过账模式',
+        `data_unit` varchar(32) DEFAULT NULL,
+        `data_method` varchar(32) DEFAULT NULL COMMENT '数据计算方法',
+        `chip_length` int(10) DEFAULT NULL COMMENT '单片机长度',
+        `scale` int(10) DEFAULT NULL COMMENT '比例',
+        `ratio` int(10) DEFAULT NULL COMMENT '系数',
+        `check_param` int(10) DEFAULT NULL COMMENT '检查参数',
+        `roll_diameter` int(10) DEFAULT NULL COMMENT '放卷卸料设定',
+        `lable_cycle` int(10) DEFAULT NULL,
+        `monitor_date` int(9) DEFAULT NULL,
+        PRIMARY KEY (`app_id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-# rfid点位组
--- ----------------------------
--- Table structure for dev_rfid_group
--- ----------------------------
-DROP TABLE IF EXISTS `dev_rfid_group`;
-CREATE TABLE `dev_rfid_group` (
-    `rfid_group_id` int(9) NOT NULL AUTO_INCREMENT,
-    `rfid_num` varchar(32) DEFAULT NULL,
-    `ip_addr` varchar(64) DEFAULT NULL,
-    `port` varchar(32) DEFAULT NULL,
-    `app_id` varchar(255) DEFAULT NULL,
-    PRIMARY KEY (`rfid_group_id`),
-    KEY `app_id` (`app_id`),
-    CONSTRAINT `dev_rfid_group_ibfk_1` FOREIGN KEY (`app_id`) REFERENCES `dev_point_dispose` (`app_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+    # rfid点位组
+    -- ----------------------------
+    -- Table structure for dev_rfid_group
+    -- ----------------------------
+    DROP TABLE IF EXISTS `dev_rfid_group`;
+    CREATE TABLE `dev_rfid_group` (
+        `rfid_group_id` int(9) NOT NULL AUTO_INCREMENT,
+        `rfid_num` varchar(32) DEFAULT NULL,
+        `ip_addr` varchar(64) DEFAULT NULL,
+        `port` varchar(32) DEFAULT NULL,
+        `app_id` varchar(255) DEFAULT NULL,
+        PRIMARY KEY (`rfid_group_id`),
+        KEY `app_id` (`app_id`),
+        CONSTRAINT `dev_rfid_group_ibfk_1` FOREIGN KEY (`app_id`) REFERENCES `dev_point_dispose` (`app_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
-# rfid点位参数配置
--- ----------------------------
--- Table structure for dev_rfidparam_dispose
--- ----------------------------
-DROP TABLE IF EXISTS `dev_rfidparam_dispose`;
-CREATE TABLE `dev_rfidparam_dispose` (
-    `rfid_param_id` int(9) NOT NULL AUTO_INCREMENT,
-    `param_name` varchar(32) DEFAULT '' COMMENT '参数名称',
-    `param_key` varchar(64) DEFAULT '' COMMENT '参数主键',
-    `param_value` varchar(32) DEFAULT NULL COMMENT '参数值',
-    `param_mark` varchar(32) DEFAULT NULL COMMENT '参数标记',
-    `remarks` varchar(255) DEFAULT NULL COMMENT '备注',
-    `rfid_group_id` int(9) DEFAULT NULL,
-    PRIMARY KEY (`rfid_param_id`),
-    KEY `rfid_group_id` (`rfid_group_id`),
-    CONSTRAINT `dev_rfidparam_dispose_ibfk_1` FOREIGN KEY (`rfid_group_id`) REFERENCES `dev_rfid_group` (`rfid_group_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
-
-
--- ----------------------------
--- Table structure for bas_log_delete_rule
--- ----------------------------
-DROP TABLE IF EXISTS `bas_log_delete_rule`;
-CREATE TABLE `bas_log_delete_rule`  (
-    `rule_delete_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '日志主键',
-    `delete_rule_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '删除规则编码',
-    `delete_rule_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '删除规则标题',
-    `enable` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否启用',
-    `rule_level` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '规则级别',
-    `delete_rule_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志删除规则类型',
-    `log_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志类型',
-    `time_interval` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '时间间隔',
-    `time_unit` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '时间单位',
-    `creator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
-    `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-    `updater` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
-    `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
-    PRIMARY KEY (`rule_delete_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 86 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
-
-SET FOREIGN_KEY_CHECKS = 1;
-
-
--- ----------------------------
--- Table structure for base_tree
--- ----------------------------
-DROP TABLE IF EXISTS `base_tree`;
-CREATE TABLE `base_tree` (
-    `info_id` int(11) NOT NULL AUTO_INCREMENT,
-    `info_name` varchar(40) DEFAULT NULL,
-    `display_order` int(11) DEFAULT NULL,
-    `info_seq` varchar(255) DEFAULT NULL,
-    `sub_count` int(11) DEFAULT NULL,
-    `info_type` varchar(255) DEFAULT NULL,
-    `parent_id` int(11) DEFAULT NULL,
-    `logic_states` int(11) DEFAULT '0',
-    PRIMARY KEY (`info_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of base_tree
--- ----------------------------
-INSERT INTO `base_tree` VALUES ('1', '业务字典', '1', null, '0', null, null, '0');
-INSERT INTO `base_tree` VALUES ('2', '基地信息维护', '2', null, '0', null, null, '0');
+    # rfid点位参数配置
+    -- ----------------------------
+    -- Table structure for dev_rfidparam_dispose
+    -- ----------------------------
+    DROP TABLE IF EXISTS `dev_rfidparam_dispose`;
+    CREATE TABLE `dev_rfidparam_dispose` (
+        `rfid_param_id` int(9) NOT NULL AUTO_INCREMENT,
+        `param_name` varchar(32) DEFAULT '' COMMENT '参数名称',
+        `param_key` varchar(64) DEFAULT '' COMMENT '参数主键',
+        `param_value` varchar(32) DEFAULT NULL COMMENT '参数值',
+        `param_mark` varchar(32) DEFAULT NULL COMMENT '参数标记',
+        `remarks` varchar(255) DEFAULT NULL COMMENT '备注',
+        `rfid_group_id` int(9) DEFAULT NULL,
+        PRIMARY KEY (`rfid_param_id`),
+        KEY `rfid_group_id` (`rfid_group_id`),
+        CONSTRAINT `dev_rfidparam_dispose_ibfk_1` FOREIGN KEY (`rfid_group_id`) REFERENCES `dev_rfid_group` (`rfid_group_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 
     -- ----------------------------
-    -- Table structure for base_coding_serialnumber
+    -- Table structure for bas_log_delete_rule
     -- ----------------------------
-    DROP TABLE IF EXISTS `base_coding_serialnumber`;
-    CREATE TABLE `base_coding_serialnumber` (
+    DROP TABLE IF EXISTS `bas_log_delete_rule`;
+    CREATE TABLE `bas_log_delete_rule`  (
+        `rule_delete_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '日志主键',
+        `delete_rule_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '删除规则编码',
+        `delete_rule_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '删除规则标题',
+        `enable` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否启用',
+        `rule_level` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '规则级别',
+        `delete_rule_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志删除规则类型',
+        `log_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志类型',
+        `time_interval` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '时间间隔',
+        `time_unit` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '时间单位',
+        `creator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+        `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+        `updater` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
+        `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
+        PRIMARY KEY (`rule_delete_id`) USING BTREE
+    ) ENGINE = InnoDB AUTO_INCREMENT = 86 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+    SET FOREIGN_KEY_CHECKS = 1;
+
+
+    -- ----------------------------
+    -- Table structure for base_tree
+    -- ----------------------------
+    DROP TABLE IF EXISTS `base_tree`;
+    CREATE TABLE `base_tree` (
+        `info_id` int(11) NOT NULL AUTO_INCREMENT,
+        `info_name` varchar(40) DEFAULT NULL,
+        `display_order` int(11) DEFAULT NULL,
+        `info_seq` varchar(255) DEFAULT NULL,
+        `sub_count` int(11) DEFAULT NULL,
+        `info_type` varchar(255) DEFAULT NULL,
+        `parent_id` int(11) DEFAULT NULL,
+        `logic_states` int(11) DEFAULT '0',
+        PRIMARY KEY (`info_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+    -- ----------------------------
+    -- Records of base_tree
+    -- ----------------------------
+    INSERT INTO `base_tree` VALUES ('1', '业务字典', '1', null, '0', null, null, '0');
+    INSERT INTO `base_tree` VALUES ('2', 'MCRS基地信息维护', '2', null, '0', null, null, '0');
+
+
+-- ----------------------------
+-- Table structure for base_coding_serialnumber
+-- ----------------------------
+DROP TABLE IF EXISTS `base_coding_serialnumber`;
+CREATE TABLE `base_coding_serialnumber` (
     `id` int(18) NOT NULL AUTO_INCREMENT,
     `rule_name` varchar(255) DEFAULT NULL,
     `digit` int(18) DEFAULT NULL,
@@ -742,16 +742,17 @@ INSERT INTO `base_tree` VALUES ('2', '基地信息维护', '2', null, '0', null,
     `num_basis` varchar(255) DEFAULT NULL,
     `title_rule` varchar(255) DEFAULT NULL,
     PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=228 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=228 DEFAULT CHARSET=utf8;
 
-    -- ----------------------------
-    -- Records of base_coding_serialnumber
-    -- ----------------------------
-    INSERT INTO `base_coding_serialnumber` VALUES ('1', 'gxCod', '4', '1', '0', '备注', 'gxCod', '更新包单号', '{N}', 'WFprocess', 'GX-{Y}{M}{D}-');
-    INSERT INTO `base_coding_serialnumber` VALUES ('2', 'sbCod', '4', '1', '0', '备注', 'sbCod', '设备流水', '{N}', 'WFprocess', '_');
-    INSERT INTO `base_coding_serialnumber` VALUES ('3', 'jdCod', '4', '1', '1', '备注', 'jdCod', '基地编号', '{N}', 'WFprocess', 'CS-');
-    INSERT INTO `base_coding_serialnumber` VALUES ('4', 'gcCod', '4', '1', '2', '备注', 'gcCod', '工厂编号', '{N}', 'WFprocess', 'F-');
-    INSERT INTO `base_coding_serialnumber` VALUES ('5', 'gxpCod', '4', '1', '1', '备注', 'gxpCod', '工序编号', '{N}', 'WFprocess', 'P-');
+-- ----------------------------
+-- Records of base_coding_serialnumber
+-- ----------------------------
+INSERT INTO `base_coding_serialnumber` VALUES ('1', 'gxCod', '4', '1', '0', '备注', 'gxCod', '更新包单号', '{N}', 'WFprocess', 'GX-{Y}{M}{D}-');
+INSERT INTO `base_coding_serialnumber` VALUES ('2', 'sbCod', '4', '1', '0', '备注', 'sbCod', '设备流水', '{N}', 'WFprocess', '_');
+INSERT INTO `base_coding_serialnumber` VALUES ('3', 'jdCod', '4', '1', '3', '备注', 'jdCod', '基地编号', '{N}', 'WFprocess', 'CS-');
+INSERT INTO `base_coding_serialnumber` VALUES ('4', 'gcCod', '4', '1', '3', '备注', 'gcCod', '工厂编号', '{N}', 'WFprocess', 'F-');
+INSERT INTO `base_coding_serialnumber` VALUES ('5', 'gxpCod', '4', '1', '1', '备注', 'gxpCod', '工序编号', '{N}', 'WFprocess', 'P-');
+INSERT INTO `base_coding_serialnumber` VALUES ('6', 'jrdCod', '4', '1', '1', '备注', 'jrdCod', '接入点编号', '{N}', 'WFprocess', 'A-');
 
     -- ----------------------------
     -- Table structure for base_equip_info
@@ -841,3 +842,25 @@ INSERT INTO `base_tree` VALUES ('2', '基地信息维护', '2', null, '0', null,
     -- ----------------------------
     -- Records of base_process_info
     -- ----------------------------
+
+    -- ----------------------------
+    -- Table structure for base_access_info
+    -- ----------------------------
+    DROP TABLE IF EXISTS `base_access_info`;
+    CREATE TABLE `base_access_info` (
+        `acc_point_res_id` int(11) DEFAULT NULL,
+        `info_id` int(11) DEFAULT NULL,
+        `acc_point_res_code` varchar(255) DEFAULT NULL,
+        `acc_point_res_name` varchar(255) DEFAULT NULL,
+        `is_enable` varchar(255) DEFAULT NULL,
+        `matrix_code` varchar(255) DEFAULT NULL,
+        `factory_code` varchar(255) DEFAULT NULL,
+        `factory_name` varchar(255) DEFAULT NULL,
+        `process_code` varchar(255) DEFAULT NULL,
+        `process_name` varchar(255) DEFAULT NULL,
+        `process_remarks` varchar(255) DEFAULT NULL,
+        `creator` varchar(255) DEFAULT NULL,
+        `create_time` datetime DEFAULT NULL,
+        `updater` varchar(255) DEFAULT NULL,
+        `update_time` datetime DEFAULT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

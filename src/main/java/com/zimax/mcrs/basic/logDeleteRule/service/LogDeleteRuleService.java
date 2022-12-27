@@ -10,6 +10,8 @@ import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.device.pojo.DeviceVo;
 import com.zimax.mcrs.device.pojo.Equipment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +20,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ScheduledFuture;
 
 /**
  * 日志删除规则
@@ -123,4 +126,6 @@ public class LogDeleteRuleService {
             logDeleteRuleMapper.enable(logDeleteRule);
         }
     }
+
+
 }

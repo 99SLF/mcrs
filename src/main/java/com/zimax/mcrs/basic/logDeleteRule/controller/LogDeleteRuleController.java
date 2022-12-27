@@ -2,12 +2,16 @@ package com.zimax.mcrs.basic.logDeleteRule.controller;
 
 import com.zimax.mcrs.basic.logDeleteRule.pojo.LogDeleteRule;
 import com.zimax.mcrs.basic.logDeleteRule.service.LogDeleteRuleService;
+import com.zimax.mcrs.basic.logDeleteRule.service.TimeApp;
 import com.zimax.mcrs.config.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Timer;
+import java.util.concurrent.ScheduledFuture;
 
 /**
  * 日志删除规则
@@ -110,6 +114,67 @@ public class LogDeleteRuleController {
         logDeleteRuleService.enable(ruleDeleteIds);
         return Result.success();
 
+    }
+
+
+    /**
+     * 线程储存
+     */
+    @Autowired
+    private TimeApp timeApp;
+    private ScheduledFuture future;
+
+    /**
+     * 开启线程
+     * @param name
+     */
+    @GetMapping("/testStart")
+    public void startCron(String name) {
+        //时间处理
+        String cron = "0/1 * * * * ?";
+        //线程名称
+        System.out.println(Thread.currentThread().getName());
+        //开启线程
+        future = timeApp.threadPoolTaskScheduler().schedule(new myTask(name), new CronTrigger(cron));
+       //线程存储
+        timeApp.map.put(name, future);
+    }
+
+
+    /**
+     * 关闭线程
+     * @param name
+     * @throws Exception
+     */
+    @GetMapping("/testStoop")
+    public void stopName(String name) throws Exception {
+        // 用线程名获取线程
+        ScheduledFuture scheduledFuture = timeApp.map.get(name);
+        //线程关闭
+        scheduledFuture.cancel(true);
+        // 查看任务是否在正常执行之前结束,正常true
+        boolean cancelled = scheduledFuture.isCancelled();
+        while (!cancelled) {
+            scheduledFuture.cancel(true);
+        }
+    }
+
+
+    /**
+     * 线程任务处理
+     */
+    private class myTask implements Runnable {
+        private String name;
+
+        myTask(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public void run() {
+            //线程执行
+            System.out.println("test" + name);
+        }
     }
 
 
