@@ -51,7 +51,7 @@
 		<div class="layui-col-md4">
 			<div class="layui-card-body" style=margin:30px>
 				<button class="layui-btn layuiadmin-btn-list layui-btn-sm" data-type="addAccessPoint"><i class="layui-icon layui-icon-add-circle-fine"></i>接入点管理</button>
-				<button class="layui-btn layuiadmin-btn-list layui-btn-warm layui-btn-sm" data-type="addEquipment"><i class="layui-icon layui-icon-add-circle-fine"></i>设备管理</button>
+				<button class="layui-btn layuiadmin-btn-list layui-btn-warm layui-btn-sm" data-type="addEquipment"><i class="layui-icon layui-icon-add-circle-fine"></i>zi管理</button>
 				<button class="layui-btn layuiadmin-btn-list layui-btn-normal layui-btn-sm" data-type="addDevice"><i class="layui-icon layui-icon-add-circle-fine"></i>终端管理</button>
 
 			</div>
@@ -81,36 +81,38 @@
 	</div>
 	<br/>
 	<div class="layui-row">
-		<div class="layui-col-md4">
+		<div class="layui-col-md3">
 			<div class="layui-card-body">
-				<div id="EchartZhu4" style="width: 500px;height: 500px;"></div>
+				<div id="EchartZhu4" style="width: 300px;height: 250px;"></div>
 			</div>
 		</div>
-		<div class="layui-col-md4">
+		<div class="layui-col-md6" >
+			<div class="layui-card-header" style=text-align:center>设备交互日志</div>
 			<div class="layui-card-body">
-				<div id="EchartZhu5" style="width: 500px;height: 500px;"></div>
+				<table id="equipmentChangeLog" lay-filter="equipmentChangeLog"></table>
 			</div>
 		</div>
-		<div class="layui-col-md4">
+		<div class="layui-col-md3">
 			<div class="layui-card-body">
-				<div id="EchartZhu6" style="width: 500px;height: 500px;"></div>
+				<div id="EchartZhu6" style="width: 320px;height: 250px;float:right;"></div>
 			</div>
 		</div>
 	</div>
 	<div class="layui-row">
-		<div class="layui-col-md4">
+		<div class="layui-col-md3">
 			<div class="layui-card-body">
-				<div id="EchartZhu7" style="width: 500px;height: 500px;"></div>
+				<div id="EchartZhu7" style="width: 300px;height: 250px;"></div>
 			</div>
 		</div>
-		<div class="layui-col-md4">
+		<div class="layui-col-md6">
+			<div class="layui-card-header" style=text-align:center>操作日志</div>
 			<div class="layui-card-body">
-				<div id="EchartZhu8" style="width: 500px;height: 500px;"></div>
+				<table id="operationLog" lay-filter="operationLog"></table>
 			</div>
 		</div>
-		<div class="layui-col-md4">
+		<div class="layui-col-md3">
 			<div class="layui-card-body">
-				<div id="EchartZhu9" style="width: 500px;height: 500px;"></div>
+				<div id="EchartZhu9" style="width: 300px;height: 250px;"></div>
 			</div>
 		</div>
 	</div>
@@ -126,11 +128,13 @@
 <script type="text/javascript">
 	var echarts = layui.echarts;
 	var $ = layui.jquery;
+	var layer = layui.layer;
+	var table = layui.table;
+	var activeWarn = [],hardWarn = [],recordDate = [];
+	var form = layui.form;
 	var chartZhu4 = echarts.init(document.getElementById('EchartZhu4'));
-	var chartZhu5 = echarts.init(document.getElementById('EchartZhu5'));
 	var chartZhu6 = echarts.init(document.getElementById('EchartZhu6'));
 	var chartZhu7 = echarts.init(document.getElementById('EchartZhu7'));
-	var chartZhu8 = echarts.init(document.getElementById('EchartZhu8'));
 	var chartZhu9 = echarts.init(document.getElementById('EchartZhu9'));
 	$("#deviceOnumber").html("99")
 	$("#accessPointNumber").html("99");
@@ -141,7 +145,7 @@
 	$.ajax({
 		url: "<%=request.getContextPath() %>/equipment/device/count",
 		type: "GET",
-		async: false,
+		async: true,
 		cache: false,
 		contentType: "text/json",
 		success: function (result) {
@@ -151,6 +155,61 @@
 				layer.msg("查询失败");
 			}
 		}
+	});
+	$.ajax({
+		url: "<%=request.getContextPath() %>/DeviceAbnormalAlarm/groupQueryBydate",
+		type: "GET",
+		async: true,
+		cache: false,
+		contentType: "text/json",
+		success: function (result) {
+			activeWarn = [],hardWarn = [],recordDate = []
+			if (result) {
+				var data = result.data;
+				debugger;
+				if(data.length>0){
+					for(var i=0;i<data.length;i++){
+						var date= new Date(data[i].recordDate)
+						var month = date.getMonth() + 1;
+						var day = date.getDate();
+						var str = month+'-'+day;
+						recordDate.push(str);
+						activeWarn.push(data[i].activeWarn);
+						hardWarn.push(data[i].hardWarn);
+					}
+				}
+				echartZhe();
+			} else {
+				layer.msg("查询失败");
+			}
+		}
+	});
+	$.ajax({
+		url: "<%=request.getContextPath() %>/DeviceAbnormalAlarm/groupQueryByproduction",
+		type: "GET",
+		async: true,
+		cache: false,
+		contentType: "text/json",
+		success: function (result) {
+			if (result) {
+				$("#deviceNumber").html(result.data)
+			} else {
+				layer.msg("查询失败");
+			}
+		}
+	});
+	function getFullSize() {
+		var fluid = $(".layui-fluid");
+		var header = $(".layui-card-header");
+		var cardbody = $(".layui-card-body");
+		return header.outerHeight(true) + (cardbody.outerHeight(true) - cardbody.height()) + (fluid.outerHeight(true) - fluid.height()) + 2;
+	}
+
+
+	$(window).resize(function () {
+		table.reload("LAY-app-deviceExchangeLog-list-reload", {
+			height: "full-" + getFullSize()
+		});
 	});
 	//指定图表配置项和数据
 	var optionchart = {
@@ -188,30 +247,35 @@
 		}]
 	};
 
-	var optionchartZhe = {
-		title: {
-			text: '告警信息'
-		},
-		tooltip: {},
-		legend: { //顶部显示 与series中的数据类型的name一致
-			data: ['硬件告警', '行为告警']
-		},
-		xAxis: {
-			data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-		},
-		yAxis: {
-			type: 'value'
-		},
-		series: [{
-			name: '硬件告警',
-			type: 'line', //线性
-			data: [145, 230, 701, 734, 1090, 1130, 1120],
-		}, {
-			name: '行为告警',
-			type: 'line', //线性
-			data: [720, 832, 801, 834, 1190, 1230, 1220],
-		}]
-	};
+	function echartZhe(){
+		var optionchartZhe = {
+			title: {
+				text: '告警信息'
+			},
+			tooltip: {},
+			legend: { //顶部显示 与series中的数据类型的name一致
+				data: ['硬件告警', '行为告警'],
+				left: 'right',
+			},
+			xAxis: {
+				data: recordDate
+			},
+			yAxis: {
+				type: 'value'
+			},
+			series: [{
+				name: '硬件告警',
+				type: 'line', //线性
+				data: hardWarn,
+			}, {
+				name: '行为告警',
+				type: 'line', //线性
+				data: activeWarn,
+			}]
+		};
+		chartZhu6.setOption(optionchartZhe, true);
+	}
+
 
 	var optionchartBing = {
 		title: {
@@ -229,7 +293,7 @@
 		},
 		series: [{
 			type: 'pie', //饼状
-			radius: '60%', //圆的大小
+			radius: ['40%', '60%'],
 			center: ['50%', '50%'], //居中
 			data: [{
 				value: 335,
@@ -256,11 +320,8 @@
 		active[event] ? active[event].call(this) : "";
 	});
 	chartZhu4.setOption(optionchart, true);
-	chartZhu5.setOption(optionchartBing, true);
-	chartZhu6.setOption(optionchartZhe, true);
-	// chartZhu7.setOption(optionchart, true);
-	// chartZhu8.setOption(optionchartZhe, true);
-	// chartZhu9.setOption(optionchartBing, true);
+	chartZhu7.setOption(optionchart, true);
+	chartZhu9.setOption(optionchartBing, true);
 	var active = {
 		addAccessPoint:function(){
 			top.layui.index.openTabsPage( "<%=request.getContextPath() %>/basic/accPointResMaintain/accPointRes_list.jsp","接入点管理");
@@ -273,6 +334,93 @@
 		},
 
 	}
+
+	table.render({
+		elem: "#equipmentChangeLog",
+		id: "equipmentChangeLog",
+		url: "<%= request.getContextPath() %>/log/deviceExchangeLog/query",
+		method: "GET",
+		height: "full-" + getFullSize+500,
+		limit: 10,
+		defaultToolbar: [""],
+		parseData: function (res) {
+			return {
+				code: res.code,
+				msg: res.msg,
+				count: res.total,
+				data: res.data
+			};
+		},
+		cols: [[{
+			field: "equipmentId",
+			title: "操作时间",
+			align: "center",
+			minWidth: 100,
+		},{
+			field: "equipmentId",
+			title: "设备资源号",
+			align: "center",
+			minWidth: 100,
+		},{
+			field: "aPPId",
+			title: "终端名称",
+			align: "center",
+			minWidth: 90,
+		}, {
+			field: "aPPId",
+			title: "操作内容",
+			align: "center",
+			minWidth: 100,
+		}, {
+			field: "aPPId",
+			title: "操作结果",
+			align: "center",
+			minWidth: 90,
+		},{
+			field: "operator",
+			title: "操作人员",
+			align: "center",
+			minWidth: 90,
+		}]]
+	});
+	table.render({
+		elem: "#operationLog",
+		id: "operationLog",
+		url: "<%= request.getContextPath() %>/log/operationLog/query",
+		method: "GET",
+		height: "full-" + getFullSize+500,
+		limit: 10,
+		defaultToolbar: [""],
+		parseData: function (res) {
+			return {
+				code: res.code,
+				msg: res.msg,
+				count: res.total,
+				data: res.data
+			};
+		},
+		cols: [[{
+			field: "operationTime",
+			title: "操作时间",
+			align: "center",
+			minWidth: 100,
+		},{
+			field: "operationContent",
+			title: "操作内容",
+			align: "center",
+			minWidth: 150,
+		}, {
+			field: "operationResult",
+			title: "操作结果",
+			align: "center",
+			minWidth: 120,
+		}, {
+			field: "operator",
+			title: "操作人",
+			align: "center",
+			minWidth: 120,
+		}]]
+	});
 
 </script>
 </body>

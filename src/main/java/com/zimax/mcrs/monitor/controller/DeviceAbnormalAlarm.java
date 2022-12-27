@@ -1,6 +1,8 @@
 package com.zimax.mcrs.monitor.controller;
 
 import com.zimax.mcrs.config.Result;
+import com.zimax.mcrs.monitor.pojo.vo.GroupByDate;
+import com.zimax.mcrs.monitor.pojo.vo.GroupByProduction;
 import com.zimax.mcrs.monitor.service.AccessMonitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,5 +49,15 @@ public class DeviceAbnormalAlarm {
                                               String order, String field) {
         List DeviceAbnormalAlarms = accessMonitorService.queryDeviceAbnormalAlarm(page, limit, equipmentId, warningTitle, warningType, warningLevel, occurTime, order, field);
         return Result.success(DeviceAbnormalAlarms, accessMonitorService.countAA(equipmentId, warningTitle, warningType, warningLevel,occurTime));
+    }
+    @GetMapping("/groupQueryByproduction")
+    public Result<?> groupQueryByproduction() {
+        List<GroupByProduction>groupByProductionList = accessMonitorService.groupQueryByproduction();
+        return Result.success(groupByProductionList);
+    }
+    @GetMapping("/groupQueryBydate")
+    public Result<?> groupQueryBydate() {
+        List<GroupByDate>dateList = accessMonitorService.groupQueryBydate();
+        return Result.success(dateList);
     }
 }
