@@ -2,6 +2,8 @@ package com.zimax.mcrs.monitor.mapper;
 
 import com.zimax.mcrs.monitor.pojo.AccessStatus;
 import com.zimax.mcrs.monitor.pojo.vo.AccessStatusVo;
+import com.zimax.mcrs.monitor.pojo.vo.GroupByDate;
+import com.zimax.mcrs.monitor.pojo.vo.GroupByProduction;
 import com.zimax.mcrs.report.pojo.AbnProdPrcs;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -119,4 +121,6 @@ public interface AccessMonitorMapper {
                 @Param("deviceSoType") String deviceSoType, @Param("deviceSoRuntime") String deviceSoRuntime
     );
 
+    List<GroupByProduction> groupQueryByproduction();
+    List<GroupByDate> groupQueryBydate();
 }

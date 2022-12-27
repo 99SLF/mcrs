@@ -4,9 +4,12 @@ import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.monitor.pojo.AccessStatus;
 import com.zimax.mcrs.monitor.mapper.AccessMonitorMapper;
 import com.zimax.mcrs.monitor.pojo.vo.AccessStatusVo;
+import com.zimax.mcrs.monitor.pojo.vo.GroupByDate;
+import com.zimax.mcrs.monitor.pojo.vo.GroupByProduction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -246,7 +249,19 @@ public class AccessMonitorService {
                        String deviceSoType, String deviceSoRuntime) {
         return accessMonitorMapper.countDR(equipmentId, APPId, deviceSoType, deviceSoRuntime);
     }
+    public List<GroupByProduction> groupQueryByproduction() {
+        return accessMonitorMapper.groupQueryByproduction();
+    }
+    public List<GroupByDate> groupQueryBydate() {
+        List<GroupByDate> groupByDates = accessMonitorMapper.groupQueryBydate();
+        List<GroupByDate> groupByDateList = new ArrayList<>();
+        if(groupByDates.size()>0){
+            for(int i=groupByDates.size()-1;i>=0;i--){
+                groupByDateList.add(groupByDates.get(i));
+            }
+        }
+        return groupByDateList;
 
-
+    }
 
 }
