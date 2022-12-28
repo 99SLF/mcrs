@@ -35,7 +35,7 @@
                     <label class="layui-form-label"><span style="color:red">*</span>APPID：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="appId" id="appId"
-                               autocomplete="off" readonly>
+                               autocomplete="off" readonly lay-verify="required">
                         <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="selectAppId"
                                 style="position:absolute;top:0px;right:0px;height:37px">
                             <i class="layui-icon layui-icon-more"></i>
@@ -144,8 +144,8 @@
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">数量单位：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="dataUnit" id="dataUnit"
-                               autocomplete="off">
+                        <select name="dataUnit" id="dataUnit" lay-filter="dataUnit" type="select">
+                        </select>
                     </div>
                 </div>
             </div>
@@ -153,8 +153,8 @@
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">数据计算方法：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="dataMethod" id="dataMethod"
-                               autocomplete="off">
+                        <select name="dataMethod" id="dataMethod" lay-filter="dataMethod" type="select">
+                        </select>
                     </div>
                 </div>
                 <div class="layui-col-sm4">
@@ -208,7 +208,9 @@
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="monitorDate" id="monitorDate"
                                autocomplete="off" lay-verify=”int” value="0">
-
+                        <lable style="position:absolute;top:10px;left:220px;height:37px">
+                            S
+                        </lable>
                     </div>
                 </div>
             </div>
@@ -288,6 +290,15 @@
     function SetData(data){
         win = data.win ? data.win : window;
     }
+    layui.admin.renderDictSelect({
+        elem: "#dataUnit",
+        dictTypeId: "dataUnit"
+    });
+    layui.admin.renderDictSelect({
+        elem: "#dataMethod",
+        dictTypeId: "CALCULATE_METHOD"
+    });
+    form.render()
     //查询过滤字段
     $.ajax({
         url: "<%=request.getContextPath() %>/cols/filter/query/" + funName,
