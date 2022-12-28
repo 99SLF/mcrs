@@ -1,7 +1,9 @@
 package com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.controller;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfoVo;
+import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.MatrixVo;
 import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
+import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfoVo;
 import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.service.ProcessService;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.config.Result;
@@ -60,7 +62,7 @@ public class ProcessController {
 //    }
 
     /**
-     * 分页查询所有设备信息
+     * 分页查询所有工序信息
      *
      * @param page          页记录数
      * @param limit         页码
@@ -76,5 +78,33 @@ public class ProcessController {
     public Result<?> queryProcessInfo(String page, String limit, String infoId, String order, String field) {
         List ProcessInfos = processService.queryProcessInfo(page, limit, infoId, order, field);
         return Result.success(ProcessInfos, processService.count(infoId));
+    }
+
+
+    /**
+     * 获取工序代码
+     * 下拉选择框
+     * @param
+     * @return
+     */
+    @GetMapping("/selectProcessCode")
+    public Result<?> selectList(String infoId){
+        Map<String,Object> maps = new HashMap<>();
+        List<ProcessInfoVo> processList = processService.selectList(infoId);//查询出数据
+        maps.put("data",processList);
+        return Result.success(processList);
+    }
+
+    /**
+     * 通过工序代码查询出相应的工序信息（名称和描述）
+     *名称和描述
+     * @param
+     * @return
+     */
+    @GetMapping("/getProcessNameDe")
+    public Result<?> getProcessNameDe(String processCode){
+        List Process = processService.getProcessNameDe(processCode);
+        return Result.success(Process);
+
     }
 }

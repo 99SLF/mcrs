@@ -2,6 +2,8 @@ package com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.mapper;
 
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfoVo;
+import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo;
+import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfoVo;
 import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.MatrixVo;
 import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
 import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfoVo;
@@ -26,7 +28,7 @@ public interface ProcessMapper {
     void addProcessInfo(ProcessInfo processInfo);
 
     /**
-     * 主键删除工厂信息
+     * 主键删除工序信息
      */
     void deleteProcess(int processId);
 
@@ -42,4 +44,18 @@ public interface ProcessMapper {
      * 更新
      */
     void updateProcessInfo(ProcessInfo processInfo);
+
+    /**
+     * 查询代码和名称
+     * @param infoId
+     */
+    List<ProcessInfoVo> selectList(@Param("infoId") String infoId);
+
+    /**
+     * 通过工序代码获取工序信息（名称和工序描述）
+     * @param
+     * @return
+     */
+
+    List<ProcessInfo> getProcessNameDe(Map map);
 }

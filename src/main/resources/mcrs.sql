@@ -749,10 +749,10 @@ CREATE TABLE `base_coding_serialnumber` (
 -- ----------------------------
 INSERT INTO `base_coding_serialnumber` VALUES ('1', 'gxCod', '4', '1', '0', '备注', 'gxCod', '更新包单号', '{N}', 'WFprocess', 'GX-{Y}{M}{D}-');
 INSERT INTO `base_coding_serialnumber` VALUES ('2', 'sbCod', '4', '1', '0', '备注', 'sbCod', '设备流水', '{N}', 'WFprocess', '_');
-INSERT INTO `base_coding_serialnumber` VALUES ('3', 'jdCod', '4', '1', '3', '备注', 'jdCod', '基地编号', '{N}', 'WFprocess', 'CS-');
-INSERT INTO `base_coding_serialnumber` VALUES ('4', 'gcCod', '4', '1', '3', '备注', 'gcCod', '工厂编号', '{N}', 'WFprocess', 'F-');
-INSERT INTO `base_coding_serialnumber` VALUES ('5', 'gxpCod', '4', '1', '1', '备注', 'gxpCod', '工序编号', '{N}', 'WFprocess', 'P-');
-INSERT INTO `base_coding_serialnumber` VALUES ('6', 'jrdCod', '4', '1', '1', '备注', 'jrdCod', '接入点编号', '{N}', 'WFprocess', 'A-');
+INSERT INTO `base_coding_serialnumber` VALUES ('3', 'jdCod', '4', '1', '0', '备注', 'jdCod', '基地编号', '{N}', 'WFprocess', 'CS-');
+INSERT INTO `base_coding_serialnumber` VALUES ('4', 'gcCod', '4', '1', '0', '备注', 'gcCod', '工厂编号', '{N}', 'WFprocess', 'F-');
+INSERT INTO `base_coding_serialnumber` VALUES ('5', 'gxpCod', '4', '1', '0', '备注', 'gxpCod', '工序编号', '{N}', 'WFprocess', 'P-');
+INSERT INTO `base_coding_serialnumber` VALUES ('6', 'jrdCod', '4', '1', '0', '备注', 'jrdCod', '接入点编号', '{N}', 'WFprocess', 'A-');
 
     -- ----------------------------
     -- Table structure for base_equip_info
@@ -846,21 +846,26 @@ INSERT INTO `base_coding_serialnumber` VALUES ('6', 'jrdCod', '4', '1', '1', '�
     -- ----------------------------
     -- Table structure for base_access_info
     -- ----------------------------
-    DROP TABLE IF EXISTS `base_access_info`;
-    CREATE TABLE `base_access_info` (
-        `acc_point_res_id` int(11) DEFAULT NULL,
-        `info_id` int(11) DEFAULT NULL,
-        `acc_point_res_code` varchar(255) DEFAULT NULL,
-        `acc_point_res_name` varchar(255) DEFAULT NULL,
-        `is_enable` varchar(255) DEFAULT NULL,
-        `matrix_code` varchar(255) DEFAULT NULL,
-        `factory_code` varchar(255) DEFAULT NULL,
-        `factory_name` varchar(255) DEFAULT NULL,
-        `process_code` varchar(255) DEFAULT NULL,
-        `process_name` varchar(255) DEFAULT NULL,
-        `process_remarks` varchar(255) DEFAULT NULL,
-        `creator` varchar(255) DEFAULT NULL,
-        `create_time` datetime DEFAULT NULL,
-        `updater` varchar(255) DEFAULT NULL,
-        `update_time` datetime DEFAULT NULL
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- ----------------------------
+-- Table structure for base_access_info
+-- ----------------------------
+DROP TABLE IF EXISTS `base_access_info`;
+CREATE TABLE `base_access_info` (
+    `acc_point_res_id` int(11) NOT NULL AUTO_INCREMENT,
+    `info_id` int(11) DEFAULT NULL,
+    `acc_point_res_code` varchar(255) DEFAULT NULL,
+    `acc_point_res_name` varchar(255) DEFAULT NULL,
+    `is_enable` varchar(255) DEFAULT NULL,
+    `matrix_code` varchar(255) DEFAULT NULL,
+    `matrix_name` varchar(255) DEFAULT NULL,
+    `factory_code` varchar(255) DEFAULT NULL,
+    `factory_name` varchar(255) DEFAULT NULL,
+    `process_code` varchar(255) DEFAULT NULL,
+    `process_name` varchar(255) DEFAULT NULL,
+    `process_remarks` varchar(255) DEFAULT NULL,
+    `creator` varchar(255) DEFAULT NULL,
+    `create_time` datetime DEFAULT NULL,
+    `updater` varchar(255) DEFAULT NULL,
+    `update_time` datetime DEFAULT NULL,
+    PRIMARY KEY (`acc_point_res_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;

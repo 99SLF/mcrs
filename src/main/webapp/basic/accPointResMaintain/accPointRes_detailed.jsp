@@ -47,12 +47,20 @@
                        placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
+    </div>
+    <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>基地代码:</label>
             <div class="layui-input-block">
                 <input id="matrixCode" type="text" name="matrixCode"
                        lay-verify="required|matrixCode"
                        placeholder="" autocomplete="off" class="layui-input" readonly>
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label">基地名称:</label>
+            <div class="layui-input-block">
+                <input id="matrixName" type="text" name="matrixName" lay-verify="" placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
 
@@ -134,6 +142,7 @@
             "accPointResCode": data.accPointResCode,
             "isEnable": data.isEnable,
             "matrixCode": data.matrixCode,
+            "matrixName": data.matrixName,
             "factoryCode": data.factoryCode,
             "factoryName": data.factoryName,
             "processCode": data.processCode,

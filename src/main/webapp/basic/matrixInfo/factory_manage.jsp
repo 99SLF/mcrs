@@ -1,6 +1,11 @@
 <%@ page pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<!--
+  - Author(s): 李伟杰
+  - Date: 2022-12-21 22:10:17
+  - Description:
+-->
 <head>
 <title>管理</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -24,7 +29,7 @@
 <body class="layui-layout-body">
 <div id="LAY_app">
 		<div class="layui-side layui-side-menu" style="width:280px">
-			<div class="layui-card" style="height:100%;width:280px;auto;border-radius:0px;">		
+			<div class="layui-card" style="height:100%;width:280px; border-radius:0px;">
 				<div class="layui-card-body" style="margin-left: -20px" id="toolbarDiv">
 		      		<ul id="demoTree" class="dtree" data-id="0"></ul>
 				</div>
@@ -63,7 +68,12 @@
  	var util = layui.util;
 	var element = layui.element;
 	var node = {};
-	
+	debugger;
+	var basic_list = {
+		id: "list",
+		title: "基础数据",
+		path: '<%=request.getContextPath() %>/basic/matrixInfo/basic_show.jsp'
+	};
 	var factory_list = {
 		id: "list",
 		title: "工厂列表",
@@ -81,7 +91,7 @@
 	};
 	
 	var categoryTabs = [];
-	categoryTabs.push(matrix_list);
+	categoryTabs.push(basic_list);
 	categoryTabs.push(matrix_list);
 	categoryTabs.push(factory_list);
 	categoryTabs.push(process_list);
@@ -109,14 +119,17 @@
 	}
 	
 	function refreshTab(node) {
+		debugger;
 		var iframe = $(".layui-tab-item.layui-show").find("iframe");
 		var obj = categoryTabs[Number(node.level) - 1];
 		var settingTab = $("#" + obj.id);
-		settingTab.attr("url", setUrlParam(obj.path,node));
-		iframe.attr("src", iframe.attr("url"));	
+		settingTab.attr("url", setUrlParam(obj.path, node));
+		iframe.attr("src", iframe.attr("url"));
 	}
 
 	rendTree();
+
+	debugger;
 	function rendTree() {
 		$.ajax({
 			url:"<%=request.getContextPath() %>/TreeInfo/queryCategoryTreeNode",
@@ -167,18 +180,18 @@
 	  		verify: "required"
 	  	}]],
 		toolbarStyle: {
-			title: "基地",
-			area: ["50%", "400px"]
+			title: "子项",
+			area: ["70%", "600px"]
 		},
       	toolbarFun: {   //工具栏事件加载
-			addTreeNode: function(treeNode, $div){
+			addTreeNode: function(treeNode, $div) {
 				var dataJson = {
 					parentId: (treeNode.parentId == "root" ? null : treeNode.parentId),
 					infoName: treeNode.context,
-					displayOrder: treeNode.displayOrder
+					displayOrder: treeNode.displayOrder,
+					infoType: treeNode.level == 2 ? "matrix" : treeNode.level == 3 ? "factory" : "process"
 				};
 				var treeTemplate = JSON.stringify(dataJson);
-				debugger;
 				$.ajax({
 					url: "<%=request.getContextPath() %>/TreeInfo/save",
 					type : 'POST',
@@ -213,6 +226,7 @@
 						});
 					}
 				});
+
 			},
 				//编辑树节点之后的回调
 			editTreeNode: function(treeNode, $div){
@@ -252,6 +266,7 @@
 						});
 					}
 				});
+				form.render();
 			},
 			//删除树节点之后的回调
 			delTreeNode: function(treeNode, $div){
@@ -298,6 +313,7 @@
 						DTree.changeTreeNodeDel(false); // 删除失败
 					}
 				});
+
 			},	
 				//右键菜单加载前的函数
 		    loadToolbarBefore:function(buttons,param,$div){
@@ -326,13 +342,13 @@
 		  	}
 		});
 	}
-	
+	debugger;
 	function toTreeData(data) {
 		debugger;
 		var tree = [];
 		var resData = data;
 		for (var i = 0; i < resData.length; i++){
-			if (resData[i].id == 2) {
+			// if (resData[i].id == 2) {
 				var obj = {
 					id: resData[i].id,
 					title: resData[i].text,
@@ -340,11 +356,11 @@
 					children: []
 				};
 				tree.push(obj);
-				resData.splice(i,1);
-				i--;
-			}		
+				// resData.splice(i,1);
+				// i--;
+			// }
 		}
-		
+		debugger;
 		var run = function(treeAttrs){
 			if (resData.length > 0 ) {
 				for (var i = 0; i < treeAttrs.length; i++) {
@@ -368,6 +384,13 @@
 			}	
 		};
 		run(tree);
+		for (var i = 0; i < tree.length; i++) {
+			if (tree[i].id !== "root") {
+				tree.splice(i,1);
+				i--;
+			}
+		}
+
 		return tree;
 	}
 

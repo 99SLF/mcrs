@@ -1,10 +1,10 @@
 package com.zimax.mcrs.basic.matrixInfo.matrix.controller;
 
-import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo;
-import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfoVo;
+
 import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.Matrix;
+import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.MatrixVo;
 import com.zimax.mcrs.basic.matrixInfo.matrix.service.MatrixService;
-import com.zimax.mcrs.config.ChangeString;
+
 import com.zimax.mcrs.config.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,14 +22,14 @@ import java.util.Map;
 @RequestMapping("/MatrixController")
 public class MatrixController {
     /**
-     * 设备信息维护
+     * 基地信息维护
      */
     @Autowired
     private MatrixService matrixService;
 
 
     /**
-     * 设备信息维护
+     * 基地信息维护
      *
      * @param matrix 基地信息
      */
@@ -41,7 +41,7 @@ public class MatrixController {
     }
 
     /**
-     * 更新用户
+     * 更新基地信息
      *
      * @param matrix 基地维护信息
      * @return
@@ -53,7 +53,7 @@ public class MatrixController {
     }
 
      /**
-     * 分页查询所有设备信息
+     * 分页查询所有基地信息
      *
      * @param page          页记录数
      * @param limit         页码
@@ -73,9 +73,32 @@ public class MatrixController {
 
 
     /**
-     * 查询基地代码
+     * 获取基地代码
      * @param
      * @return
      */
+    @GetMapping("/selectMatrixCode")
+    public Result<?> selectList(){
+        Map<String,Object> maps = new HashMap<>();
+        List<MatrixVo> matrixList = matrixService.selectList();//查询出数据
+        maps.put("data",matrixList);
+        return Result.success(matrixList, matrixService.countMatrix());
+    }
+
+
+    /**
+     * 通过基地代码查询出相应的基地信息（名称）
+     *
+     * @param
+     * @return
+     */
+    @GetMapping("/getMatrixName")
+    public Result<?> getMatrixName(String matrixCode){
+        List Matrix = matrixService.getMatrixName(matrixCode);
+        return Result.success(Matrix);
+
+    }
+
+
 
 }

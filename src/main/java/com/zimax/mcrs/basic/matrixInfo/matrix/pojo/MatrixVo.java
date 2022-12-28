@@ -22,12 +22,13 @@ public class MatrixVo {
     private String infoId;
 
     /**
-     * 工厂名称
+     * 基地名称
      */
     private String matrixName;
 
+
     /**
-     * 工厂代号
+     * 基地代号
      */
     private String matrixCode;
 

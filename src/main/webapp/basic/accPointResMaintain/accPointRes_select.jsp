@@ -67,6 +67,7 @@
         var dataJson = {
             "accPointResName": field.accPointResName,
             "matrixCode":field.matrixCode,
+            //表中暂未由该字段
             "isAccPointRes": "1"
         };
         table.reload("LAY-app-menu-list", {
@@ -144,37 +145,42 @@
                 field: "accPointResCode",
                 title: "接入点代码",
                 align: "center",
-                minWidth: 120
+                minWidth: 100
             }, {
                 field: "accPointResName",
                 title: "接入点名称",
                 align: "center",
-                minWidth: 150
+                minWidth: 120
             }, {
                 field: "isEnable",
                 title: "是否启用",
                 align: "center",
-                minWidth: 100
+                minWidth: 80
             }, {
                 field: "matrixCode",
                 title: "基地代码",
                 align: "center",
-                minWidth: 150,
+                minWidth: 100,
+            },{
+                field: "matrixName",
+                title: "基地名称",
+                align: "center",
+                minWidth: 120,
             }, {
                 field: "factoryCode",
                 title: "工厂代码",
                 align: "center",
-                minWidth: 150,
+                minWidth: 100,
             }, {
                 field: "factoryName",
                 title: "工厂名称",
                 align: "center",
-                minWidth: 150,
+                minWidth: 120,
             }, {
                 field: "processName",
                 title: "使用工序",
                 align: "center",
-                minWidth: 150,
+                minWidth: 140,
             }]]
     });
 

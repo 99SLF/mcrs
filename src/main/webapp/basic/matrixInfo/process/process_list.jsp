@@ -64,7 +64,7 @@
 						<div class="layui-col-sm6">
 							<label class="layui-form-label" >工序代码：</label>
 							<div class="layui-input-block">
-								<input type="text" class="layui-input" name="processCode" id="processCode"  lay-verify="length11|float5" autocomplete="off" placeholder="数字，不能超过11个字符，小数位数5位">
+								<input type="text" class="layui-input" name="processCode" id="processCode"  lay-verify="length11|float5" autocomplete="off" placeholder="点击保存，自动生成" readonly>
 							</div>
 						</div>
 					</div>

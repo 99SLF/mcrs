@@ -7,7 +7,7 @@
     <!--新增用户-->
     <insert id="addAccPointRes" parameterType="com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes">
         insert into base_access_info
-        values (#{accPointResId}, #{infoId}, #{accPointResCode}, #{accPointResName}, #{isEnable}, #{matrixCode},
+        values (#{accPointResId}, #{infoId}, #{accPointResCode}, #{accPointResName}, #{isEnable}, #{matrixCode},#{matrixName},
                 #{factoryCode}, #{factoryName},
                 #{processCode}, #{processName},
                 #{processRemarks}, #{creator}, #{createTime}, #{updater}, #{updateTime})
@@ -40,6 +40,7 @@
             acc_point_res_name = #{accPointResName},
             is_enable        = #{isEnable},
             matrix_code      = #{matrixCode},
+            matrix_name      = #{matrixName},
             factory_code     = #{factoryCode},
             factory_name     = #{factoryName},
             process_code     = #{processCode},

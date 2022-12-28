@@ -277,7 +277,7 @@
 
     form.on("select(deviceSoType)", function (data) {
         var deviceSoType = data.value;
-        //调用终端软件类型后的后端
+        //调用更新包查询的后端
         $.ajax({
             url: "<%= request.getContextPath() %>/upload/getUpdateUpload?deviceSoType=" + deviceSoType,
             type: "GET",
