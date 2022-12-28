@@ -140,8 +140,8 @@
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">数量单位：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="dataUnit" id="dataUnit"
-                               autocomplete="off">
+                        <select name="dataUnit" id="dataUnit" lay-filter="dataUnit" type="select">
+                        </select>
                     </div>
                 </div>
             </div>
@@ -149,8 +149,8 @@
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">数据计算方法：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="dataMethod" id="dataMethod"
-                               autocomplete="off">
+                        <select name="dataMethod" id="dataMethod" lay-filter="dataMethod" type="select">
+                        </select>
                     </div>
                 </div>
                 <div class="layui-col-sm4">
@@ -281,6 +281,14 @@
     var win = null;
     //过滤字段
     var hiddenFields = [];
+    layui.admin.renderDictSelect({
+        elem: "#dataUnit",
+        dictTypeId: "dataUnit"
+    });
+    layui.admin.renderDictSelect({
+        elem: "#dataMethod",
+        dictTypeId: "CALCULATE_METHOD"
+    });
     function SetData(data){
         win = data.win ? data.win : window;
         var pointDispose = data.data;
@@ -328,6 +336,7 @@
                 }
             }
         });
+        form.render();
     }
     //查询过滤字段
     $.ajax({
