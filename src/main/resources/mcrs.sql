@@ -451,8 +451,10 @@ CREATE TABLE `mon_access_status` (
      `access_type` varchar(255) NOT NULL,
      `access_status` varchar(255) NOT NULL,
      `antenna_status` varchar(255) DEFAULT NULL,
+     `device_name` varchar(255) NOT NULL,
      `device_so_type` varchar(255) NOT NULL,
      `device_so_runtime` varchar(255) NOT NULL,
+     `use_process` varchar(255) NOT NULL,
      `cpu_rate` varchar(255) NOT NULL,
      `storage_rate` varchar(255) NOT NULL,
      `occur_time` datetime NOT NULL,
@@ -462,8 +464,9 @@ CREATE TABLE `mon_access_status` (
      `warning_level` varchar(255) NOT NULL,
      `warning_content` varchar(255) NOT NULL,
      `remarks` varchar(255) DEFAULT NULL,
+     `create_time` datetime DEFAULT NULL,
      PRIMARY KEY (`access_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
 
 
 -- ----------------------------

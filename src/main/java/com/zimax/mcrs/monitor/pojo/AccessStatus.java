@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * 监测接入状态
  * @author 李伟杰
@@ -50,6 +52,11 @@ public class AccessStatus {
     private String antennaStatus;
 
     /**
+     * 终端名称
+     */
+    private String deviceName;
+
+    /**
      * 终端软件类型
      */
     private String deviceSoType;
@@ -58,6 +65,11 @@ public class AccessStatus {
      * 终端软件运行状态
      */
     private String deviceSoRuntime;
+
+    /**
+     * 终端
+     */
+    private String useProcess;
 
     /**
      * cup使用率
@@ -73,7 +85,7 @@ public class AccessStatus {
      * 发生时间
      *
      */
-    private String occurTime;
+    private Date occurTime;
 
     /**
      * 误读率
@@ -111,4 +123,10 @@ public class AccessStatus {
      *
      */
     private String remarks;
+
+    /**
+     * 创建时间
+     *
+     */
+    private Date createTime;
 }

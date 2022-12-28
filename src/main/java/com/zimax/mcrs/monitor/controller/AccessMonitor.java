@@ -27,7 +27,10 @@ public class AccessMonitor {
     @PostMapping("/add")
     public Result<?> addAccessMonitor(@RequestBody AccessStatus accessStatus) {
         /**
-         * @param 设备资源号,APPID,接入类型,接入状态,天线状态（非必填）,终端软件类型,终端软件运行状态,CPU使用率,内存使用量,发生时间
+         * @param
+         * 设备资源号,APPID,接入类型,接入状态,天线状态（非必填）,终端名称，终端软件类型,终端软件运行状态,使用工序，CPU使用率,内存使用量,发生时间
+         * 误读率，预警标题，预警类型，预警等级，预警内容，备注
+         *
          * @return
          */
         accessMonitorService.addAccessMonitor(accessStatus);

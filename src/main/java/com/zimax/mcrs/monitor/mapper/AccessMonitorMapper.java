@@ -77,7 +77,7 @@ public interface AccessMonitorMapper {
      * @param
      * @return
      */
-    List<AccessStatus> queryDeviceAbnormalAlarm(Map map);
+    List<AccessStatusVo> queryDeviceAbnormalAlarm(Map map);
 
     /**
      * 终端告警信息记录数
@@ -94,7 +94,7 @@ public interface AccessMonitorMapper {
      * @param
      * @return
      */
-    List<AccessStatus> querySystemMonitorAlarm(Map map);
+    List<AccessStatusVo> querySystemMonitorAlarm(Map map);
 
     /**
      * 查询系统监控告警信息记录数

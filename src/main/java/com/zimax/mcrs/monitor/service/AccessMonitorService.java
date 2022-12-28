@@ -9,10 +9,7 @@ import com.zimax.mcrs.monitor.pojo.vo.GroupByProduction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author 李伟杰
@@ -28,6 +25,7 @@ public class AccessMonitorService {
      */
     public void addAccessMonitor(AccessStatus accessStatus){
 
+        accessStatus.setCreateTime(new Date());
         accessMonitorMapper.addAccessMonitor(accessStatus);
     }
 
@@ -140,7 +138,7 @@ public class AccessMonitorService {
     /**
      * 分页查询终端告警信息状态
      */
-    public List<AccessStatus> queryDeviceAbnormalAlarm(String page, String limit,
+    public List<AccessStatusVo> queryDeviceAbnormalAlarm(String page, String limit,
                                                        String equipmentId, String warningTitle,
                                                        String warningType, String warningLevel,
                                                        String occurTime,
@@ -181,7 +179,7 @@ public class AccessMonitorService {
     /**
      * 分页查询系统监测预警
      */
-    public List<AccessStatus> querySystemMonitorAlarm(String page, String limit,
+    public List<AccessStatusVo> querySystemMonitorAlarm(String page, String limit,
                                                       String warningTitle, String warningType,
                                                       String warningLevel, String occurTime,
                                                       String order, String field) {
