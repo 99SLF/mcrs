@@ -47,7 +47,7 @@ public class Feeding {
     private String vehicleCode;
 
     /**
-     * 上账SFC编码
+     * 生产SFC编码
      */
     private String prodSFCId;
 

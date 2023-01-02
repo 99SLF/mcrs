@@ -30,10 +30,10 @@
                 and vehicle_code like '%${vehicleCode}%'
             </if>
             <if test="startProdTime !=null and startProdTime !=''">
-                and start_prod_time = #{startProdTime}
+                and DATE (start_prod_time) = #{startProdTime}
             </if>
             <if test="endProdTime !=null and endProdTime !=''">
-                and end_prod_time	= #{endProdTime}
+                and  DATE (end_prod_time)	= #{endProdTime}
             </if>
         </where>
     </select>
@@ -59,10 +59,10 @@
                 and vehicle_code like '%${vehicleCode}%'
             </if>
             <if test="startProdTime !=null and startProdTime !=''">
-                and start_prod_time = #{startProdTime}
+                and DATE (start_prod_time) = #{startProdTime}
             </if>
             <if test="endProdTime !=null and endProdTime !=''">
-                and end_prod_time = #{endProdTime}
+                and  DATE (end_prod_time)	= #{endProdTime}
             </if>
         </where>
         <if test="order !=null and order !=''">

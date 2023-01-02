@@ -1,12 +1,11 @@
 package com.zimax.mcrs.device.controller;
 
+import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.mcrs.config.Result;
+import com.zimax.mcrs.device.pojo.DeviceUpgrade;
 import com.zimax.mcrs.device.service.DeviceUpgradeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,4 +39,16 @@ public class DeviceUpgradeController {
         List deviceUpgrade = deviceUpgradeService.queryDeviceUpgrades(page, limit, equipmentId, upgradeVersion,versionUpdater,versionUpdateTime, order, field);
         return Result.success(deviceUpgrade, deviceUpgradeService.count(equipmentId, upgradeVersion));
     }
+
+
+
+    /**
+     * 修改升级记录的升级状态
+     */
+    @PostMapping("/update")
+    public Result<?> updateDeviceUpgrade(@RequestBody DeviceUpgrade deviceUpgrade) {
+        deviceUpgradeService.updateDeviceUpgrade(deviceUpgrade);
+        return Result.success();
+    }
+
 }

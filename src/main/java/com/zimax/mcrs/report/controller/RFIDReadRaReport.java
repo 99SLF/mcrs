@@ -54,10 +54,10 @@ public class RFIDReadRaReport {
      */
     @GetMapping("/rfidReadRa/query")
     public Result<?> queryRFIDs(String page, String limit,
-                                String equipmentId, String RFIDId,
+                                String equipmentId, String rfidId,
                                 String antennaId, String readRate,
                                 String recordTime, String order, String field) {
-        List RFIDs = rfidReadRaService.queryRFIDs(page, limit, equipmentId, RFIDId, antennaId, readRate, recordTime, order, field);
-        return Result.success(RFIDs, rfidReadRaService.count(equipmentId, RFIDId, antennaId, readRate, recordTime));
+        List RFIDs = rfidReadRaService.queryRFIDs(page, limit, equipmentId, rfidId, antennaId, readRate, recordTime, order, field);
+        return Result.success(RFIDs, rfidReadRaService.count(equipmentId, rfidId, antennaId, readRate, recordTime));
     }
 }

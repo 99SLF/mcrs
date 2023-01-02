@@ -1,5 +1,6 @@
 package com.zimax.mcrs.device.mapper;
 
+import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.mcrs.device.pojo.Device;
 import com.zimax.mcrs.device.pojo.DeviceUpgrade;
 import com.zimax.mcrs.device.pojo.DeviceUpgradeVo;
@@ -31,5 +32,6 @@ public interface DeviceUpgradeMapper {
     int count(@Param("equipmentId") String equipmentId, @Param("upgradeVersion") String upgradeVersion);
 
 
+    void updateDeviceUpgrade(DeviceUpgrade deviceUpgrade);
 
 }

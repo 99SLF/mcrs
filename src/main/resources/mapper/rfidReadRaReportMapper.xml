@@ -6,7 +6,7 @@
     <!--添加RFID读取率报表-->
     <insert id="addRFIDReadRa" parameterType="com.zimax.mcrs.report.pojo.RFIDReadRa">
         insert into rep_rfid
-        values (#{RFIDReadId}, #{equipmentId}, #{RFIDId}, #{antennaId}, #{readRate},#{recordTime})
+        values (#{rfidReadId}, #{equipmentId}, #{rfidId}, #{antennaId}, #{readRate},#{recordTime})
     </insert>
 
     <!--    查询记录数-->
@@ -16,8 +16,8 @@
             <if test="equipmentId !=null and equipmentId !=''">
                 and equipment_id like '%${equipmentId}%'
             </if>
-            <if test="RFIDId !=null and RFIDId !=''">
-                and RFID_id like '%${RFIDId}%'
+            <if test="rfidId !=null and rfidId !=''">
+                and rfid_id like '%${rfidId}%'
             </if>
             <if test="antennaId !=null and antennaId !=''">
                 and antenna_id like '%${antennaId}%'
@@ -26,7 +26,7 @@
                 and read_rate like '%${readRate}%'
             </if>
             <if test="recordTime !=null and recordTime !=''">
-                and record_time like '%${recordTime}%'
+                and DATE (record_time)=#{recordTime}
             </if>
         </where>
     </select>
@@ -39,8 +39,8 @@
             <if test="equipmentId !=null and equipmentId !=''">
                 and equipment_id like '%${equipmentId}%'
             </if>
-            <if test="RFIDId !=null and RFIDId !=''">
-                and RFID_id like '%${RFIDId}%'
+            <if test="rfidId !=null and rfidId !=''">
+                and rfid_id like '%${rfidId}%'
             </if>
             <if test="antennaId !=null and antennaId !=''">
                 and antenna_id like '%${antennaId}%'
@@ -49,7 +49,7 @@
                 and read_rate like '%${readRate}%'
             </if>
             <if test="recordTime !=null and recordTime !=''">
-                and record_time like '%${recordTime}%'
+                and DATE (record_time)=#{recordTime}
             </if>
         </where>
         <if test="order !=null and order !=''">

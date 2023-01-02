@@ -88,6 +88,14 @@ public class Result<T> {
 
         return result;
     }
+
+    public static Result success(String code, String msg) {
+        Result result = new Result<>();
+        result.setCode(code);
+        result.setMsg(msg);
+        return result;
+    }
+
     public static <T> Result<T> success(T data,Integer total) {
         Result<T> result = new Result<>(data,total);
         result.setCode("0");
@@ -98,6 +106,13 @@ public class Result<T> {
         Result<T> result = new Result<>(data);
         result.setCode("0");
         result.setMsg("成功");
+        return result;
+    }
+
+    public static <T> Result<T> success(T data ,String code, String msg) {
+        Result<T> result = new Result<>(data);
+        result.setCode(code);
+        result.setMsg(msg);
         return result;
     }
 

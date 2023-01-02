@@ -34,7 +34,7 @@
 
             <div class="layui-inline">
                 <div class="layui-input-inline">
-                    <input type="text" name="RFIDId" value="" placeholder="请输入RFID编码" autocomplete="off"
+                    <input type="text" name="rfidId" value="" placeholder="请输入RFID编码" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
@@ -56,7 +56,7 @@
 
             <div class="layui-inline">
                 <div class="layui-input-inline">
-                    <input type="text" name="startProdTime" value="" placeholder="请选择记录时间" id="test1" autocomplete="off"
+                    <input type="text" name="recordTime" value="" placeholder="请选择记录时间" id="test1" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
@@ -103,7 +103,7 @@
     //日期时间选择器
     laydate.render({
         elem: '#test1'
-        , type: 'datetime'
+        , type: 'date'
     });
 
     //监听搜索
@@ -234,11 +234,11 @@
             minWidth: 100
         }, {
             //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
-            field: "RFIDId",
+            field: "rfidId",
             title: "RFID编码",
             align: "center",
             minWidth: 100,
-            hide: isHidden("RFIDId")
+            hide: isHidden("rfidId")
         }, {
             field: "antennaId",
             title: "天线ID",

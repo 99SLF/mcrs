@@ -41,21 +41,21 @@
 
             <div class="layui-inline">
                 <div class="layui-input-inline">
-                    <input type="text" name="antennaLoc" value="" placeholder="请输入来料SFC编码" autocomplete="off"
+                    <input type="text" name="inSFCId" value="" placeholder="请输入来料SFC编码" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
 
             <div class="layui-inline">
                 <div class="layui-input-inline">
-                    <input type="text" name="inSFCId" value="" placeholder="请输入生产SFC编码" autocomplete="off"
+                    <input type="text" name="prodSFCId" value="" placeholder="请输入生产SFC编码" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
 
             <div class="layui-inline">
                 <div class="layui-input-inline">
-                    <input type="text" name="prodSFCId" value="" placeholder="请输入载具码" autocomplete="off"
+                    <input type="text" name="vehicleCode" value="" placeholder="请输入载具码" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
@@ -111,13 +111,13 @@
     //日期时间选择器
     laydate.render({
         elem: '#test0'
-        , type: 'datetime'
+        , type: 'date'
     });
 
     //日期时间选择器
     laydate.render({
         elem: '#test1'
-        , type: 'datetime'
+        , type: 'date'
     });
     //监听搜索
     form.on("submit(LAY-app-rolelist-search)", function (data) {

@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * 升级记录
  * @author 李伟杰
@@ -29,22 +31,23 @@ public class RecordUpdateMsg {
      */
     private int deviceId;
 
-
     /**
      * 更新包管理编号(主键)
      */
     private int uploadId;
 
-
     /**
      *创建时间
      */
 
+    private Date createTime;
     /**
      * 创建人
      */
+    private String creator;
 
     /**
      * 升级状态（未升级，升级中，已升级）
      */
+    private String updateStatus;
 }

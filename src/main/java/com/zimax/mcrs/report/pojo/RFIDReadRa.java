@@ -26,7 +26,7 @@ public class RFIDReadRa {
      * RFID读取编码
      */
     @TableId(type = IdType.AUTO)
-    private int RFIDReadId;
+    private int rfidReadId;
 
     /**
      * 设备资源号
@@ -36,7 +36,7 @@ public class RFIDReadRa {
     /**
      * RFID编码
      */
-    private String RFIDId;
+    private String rfidId;
 
     /**
      * 天线ID

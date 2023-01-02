@@ -17,6 +17,7 @@
 </head>
 <body>
 <div class="layui-fluid">
+
     <div class="layui-card">
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item">
@@ -320,7 +321,13 @@
             title: "更新包单号",
             align: "center",
             minWidth: 120,
-            hide: isHidden("uploadNumber")
+            hide: isHidden("uploadNumber"),
+            //打开监听
+            event: "view",
+            //监听打开详情页面
+            templet: function (d) {
+                return '<span style="color: #09bbfd">' + d.uploadNumber +'</span>';
+            }
         }, {
             field: "version",
             title: "版本号",
@@ -344,7 +351,6 @@
             minWidth: 120,
             hide: isHidden("uploadStrategy"),
             templet:function(d) {
-
                 return layui.admin.getDictText("UPDATESTRATEGY", d.uploadStrategy);
             }
         }, {
@@ -444,6 +450,28 @@
                         });
                     }
                 });
+            });
+        }
+        else if (e.event == "view") {
+            top.layer.open({
+                type: 2,
+                title: "查看更新包详情",
+                content: "<%= request.getContextPath() %>/update/update_package_detailed.jsp",
+                area: ["1000px", "800px"],
+                resize: false,
+                btn: ["确定", "取消"],
+                success: function (layero, index) {
+                    var dataJson = {
+                        data: data,
+                        win: window
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function (index, layero) {
+                    var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");
+                    edit.click();
+                }
+
             });
         }
     });
