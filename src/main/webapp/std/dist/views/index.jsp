@@ -192,7 +192,7 @@
 		contentType: "text/json",
 		success: function (result) {
 			if (result) {
-				$("#deviceNumber").html(result.data)
+				//$("#deviceNumber").html(result.data)
 			} else {
 				layer.msg("查询失败");
 			}
