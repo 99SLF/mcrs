@@ -18,7 +18,7 @@ import java.util.Date;
  */
 
 @RestController
-@RequestMapping("/update")
+@RequestMapping("/updateInter")
 public class UpdatePackage {
 
     @Autowired
@@ -29,23 +29,25 @@ public class UpdatePackage {
      * 是否升级，是否强制升级，版本号
      */
     @PostMapping("/checkResult")
-    public Result<?> checkResult(@PathVariable("APPId") String APPId, @PathVariable("uploadId") String uploadId) {
+    public Result<?> checkResult(String APPId) {
 
-        //查询表eqi_device，upd_record，通过终端主键关联，如果appid查询的升级状态是空，或者是未升级的话，就返回信息，问终端“是否升级”
-        if (updatePackageService.getDevice(APPId).getUpdateStatus() == "" || updatePackageService.getDevice(APPId).getUpdateStatus() == null || updatePackageService.getDevice(APPId).getUpdateStatus() == "未升级") {
+        //查询表eqi_device，upd_record，upd_upload ，通过终端主键，更新包主键关联，中间表是upd_record，如果appid查询的升级状态是空，或者是未升级的话，就返回信息，问终端“是否升级”
+        if (updatePackageService.getDevice(APPId).getUpdateStatus() == "" || updatePackageService.getDevice(APPId).getUpdateStatus() == null || updatePackageService.
+                getDevice(APPId).getUpdateStatus() == "未升级") {
 
-            //查询表upd_record，upd_upload，通过更新包管理主键关联，查询该条更新包的版本号和升级策略
-            String version = updatePackageService.getVersionUploadStrategy(uploadId).getVersion();
-            String uploadStrategy = updatePackageService.getVersionUploadStrategy(uploadId).getUploadStrategy();
+            //查询表eqi_device，upd_record，upd_upload ，通过终端主键，更新包主键关联，中间表是upd_record，查询该条更新包的版本号和升级策略
+            String version = updatePackageService.getDevice(APPId).getVersion();
+            String uploadStrategy = updatePackageService.getDevice(APPId).getUploadStrategy();
 
             // 通过appid查询，一条终端的一条数据获取主键
-            int deviceIdVal = updatePackageService.getDevice(APPId).getDeviceId();
+            int deviceId = updatePackageService.getDevice(APPId).getDeviceId();
+            int uploadId = updatePackageService.getDevice(APPId).getUploadId();
 
             //新增一条数据到upd_record表，将勾选的appid和勾选的更新包id，和前端页面传过来的创建人和创建时间（或者是后端)，将更新状态改为未升级
             RecordUpdateMsg recordUpdateMsg = new RecordUpdateMsg();
-            recordUpdateMsg.setDeviceId(deviceIdVal);
-            int uploadIdVal = Integer.parseInt(uploadId);
-            recordUpdateMsg.setUploadId(uploadIdVal);
+            recordUpdateMsg.setDeviceId(deviceId);
+//            int uploadIdVal = Integer.parseInt(uploadId);
+            recordUpdateMsg.setUploadId(uploadId);
             String creator = DataContextManager.current().getMUODataContext().getUserObject().getUserId();
             recordUpdateMsg.setCreator(creator);
             recordUpdateMsg.setCreateTime(new Date());
@@ -72,6 +74,7 @@ public class UpdatePackage {
     @GetMapping("/loaderInterface")
     public Result<?> loaderInterface(@PathVariable("APPId") String APPId, @PathVariable("uploadId") String uploadId) {
         //通过uploadId，获取更新包存储地址，得到文件
+
         //文件的解压，自动运行
 
         //更新upd_record表，将更新状态改为升级中

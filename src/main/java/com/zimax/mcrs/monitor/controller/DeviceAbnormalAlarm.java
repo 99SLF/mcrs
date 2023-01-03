@@ -4,6 +4,7 @@ import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.monitor.pojo.vo.GroupByDate;
 import com.zimax.mcrs.monitor.pojo.vo.GroupByProduction;
 import com.zimax.mcrs.monitor.service.AccessMonitorService;
+import com.zimax.mcrs.monitor.service.DeviceAbnormalAlarmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * 终端告警信息
+ * 终端异常预警信息
  *
  * @author 李伟杰
  * @date 2022/12/3 0:22
@@ -22,17 +23,21 @@ import java.util.List;
 public class DeviceAbnormalAlarm {
 
     @Autowired
+    private DeviceAbnormalAlarmService deviceAbnormalAlarmService;
+
+    @Autowired
     private AccessMonitorService accessMonitorService;
 
     /**
-     * 分页查询终端告警信息状态
+     * 分页查询终端异常预警信息
      *
      * @param page         页记录数
      * @param limit        页码
      * @param equipmentId  设备资源号
-     * @param warningTitle 告警标题
-     * @param warningType  告警类型
-     * @param warningLevel 告警等级
+     * @param deviceName 终端名称
+     * @param useProcess  使用工序
+     * @param warningType 预警类型
+     * @param warningLevel 预警等级
      * @param occurTime    发生时间
      * @param order        排序方式
      * @param field        排序字段
@@ -43,13 +48,22 @@ public class DeviceAbnormalAlarm {
      */
     @GetMapping("/query")
     public Result<?> queryDeviceAbnormalAlarm(String page, String limit,
-                                              String equipmentId, String warningTitle,
-                                              String warningType, String warningLevel,
+                                              String equipmentId, String deviceName,
+                                              String useProcess, String warningType,
+                                              String warningLevel,
                                               String occurTime,
                                               String order, String field) {
-        List DeviceAbnormalAlarms = accessMonitorService.queryDeviceAbnormalAlarm(page, limit, equipmentId, warningTitle, warningType, warningLevel, occurTime, order, field);
-        return Result.success(DeviceAbnormalAlarms, accessMonitorService.countAA(equipmentId, warningTitle, warningType, warningLevel,occurTime));
+        List DeviceAbnormalAlarms = deviceAbnormalAlarmService.queryDeviceAbnormalAlarm(page, limit, equipmentId, deviceName, useProcess, warningType, warningLevel, occurTime, order, field);
+        return Result.success(DeviceAbnormalAlarms, deviceAbnormalAlarmService.countAA(equipmentId, deviceName, useProcess, warningType,warningLevel, occurTime));
     }
+
+
+
+
+
+
+
+
     @GetMapping("/groupQueryByproduction")
     public Result<?> groupQueryByproduction() {
         List<GroupByProduction>groupByProductionList = accessMonitorService.groupQueryByproduction();

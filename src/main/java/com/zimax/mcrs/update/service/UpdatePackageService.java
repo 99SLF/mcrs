@@ -1,16 +1,10 @@
 package com.zimax.mcrs.update.service;
 
-import com.zimax.cap.datacontext.DataContextManager;
-import com.zimax.cap.party.IUserObject;
-import com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes;
 import com.zimax.mcrs.update.mapper.UpdatePackageMapper;
 import com.zimax.mcrs.update.pojo.DeviceRecordUpdateMsgVo;
 import com.zimax.mcrs.update.pojo.RecordUpdateMsg;
-import com.zimax.mcrs.update.pojo.VersionUploadStrategyVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
 
 /**
  * @author 李伟杰
@@ -23,7 +17,7 @@ public class UpdatePackageService {
     private UpdatePackageMapper updatePackageMapper;
 
     /**
-     * 通过appid查询终端信息
+     * 通过appid查询终端，升级记录表，更新包信息
      * @param
      * @return
      */
@@ -33,13 +27,13 @@ public class UpdatePackageService {
 
     }
 
-    /**
-     * 通过更新包id查询记录
-     * @param uploadId
-     */
-    public VersionUploadStrategyVo getVersionUploadStrategy(String uploadId) {
-        return updatePackageMapper.getVersionUploadStrategy(uploadId);
-    }
+//    /**
+//     * 通过更新包id查询记录
+//     * @param uploadId
+//     */
+//    public VersionUploadStrategyVo getVersionUploadStrategy(String uploadId) {
+//        return updatePackageMapper.getVersionUploadStrategy(uploadId);
+//    }
 
     /**
      * 新增

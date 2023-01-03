@@ -2,6 +2,7 @@ package com.zimax.mcrs.monitor.controller;
 
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.monitor.service.AccessMonitorService;
+import com.zimax.mcrs.monitor.service.DeviceRuntimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ import java.util.List;
 public class DeviceRuntime {
 
     @Autowired
-    private AccessMonitorService accessMonitorService;
+    private DeviceRuntimeService deviceRuntimeService;
 
     /**
      * 分页查询终端运行状态
@@ -43,7 +44,7 @@ public class DeviceRuntime {
                                      String deviceSoType, String deviceSoRuntime,
                                      String order, String field) {
 
-        List DeviceRuntime = accessMonitorService.queryDeviceRuntime(page, limit, equipmentId, APPId, deviceSoType, deviceSoRuntime,order, field);
-        return Result.success(DeviceRuntime, accessMonitorService.countDR(equipmentId, APPId, deviceSoType, deviceSoRuntime));
+        List DeviceRuntime = deviceRuntimeService.queryDeviceRuntime(page, limit, equipmentId, APPId, deviceSoType, deviceSoRuntime,order, field);
+        return Result.success(DeviceRuntime, deviceRuntimeService.countDR(equipmentId, APPId, deviceSoType, deviceSoRuntime));
     }
 }

@@ -440,34 +440,6 @@ CREATE TABLE `war_alarm_rule`  (
 
 SET FOREIGN_KEY_CHECKS = 1;
 
--- ----------------------------
--- Table structure for mon_access_status
--- ----------------------------
-DROP TABLE IF EXISTS `mon_access_status`;
-CREATE TABLE `mon_access_status` (
-     `access_id` int(11) NOT NULL AUTO_INCREMENT,
-     `equipment_id` varchar(255) NOT NULL,
-     `app_id` varchar(255) NOT NULL,
-     `access_type` varchar(255) NOT NULL,
-     `access_status` varchar(255) NOT NULL,
-     `antenna_status` varchar(255) DEFAULT NULL,
-     `device_name` varchar(255) NOT NULL,
-     `device_so_type` varchar(255) NOT NULL,
-     `device_so_runtime` varchar(255) NOT NULL,
-     `use_process` varchar(255) NOT NULL,
-     `cpu_rate` varchar(255) NOT NULL,
-     `storage_rate` varchar(255) NOT NULL,
-     `occur_time` datetime NOT NULL,
-     `error_rate` varchar(255) NOT NULL,
-     `warning_title` varchar(255) NOT NULL,
-     `warning_type` varchar(255) NOT NULL,
-     `warning_level` varchar(255) NOT NULL,
-     `warning_content` varchar(255) NOT NULL,
-     `remarks` varchar(255) DEFAULT NULL,
-     `create_time` datetime DEFAULT NULL,
-     PRIMARY KEY (`access_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
-
 
 -- ----------------------------
 -- Table structure for upd_upload

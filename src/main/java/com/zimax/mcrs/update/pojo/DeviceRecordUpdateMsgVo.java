@@ -1,5 +1,6 @@
 package com.zimax.mcrs.update.pojo;
 
+
 import lombok.Data;
 
 import java.util.Date;
@@ -23,9 +24,25 @@ public class DeviceRecordUpdateMsgVo {
     private int uploadId;
 
     /**
+     *升级记录
+     */
+
+    private int recordUpdateId;
+
+    /**
      * APPId
      */
     private String APPId;
+
+    /**
+     * 更新策略
+     */
+    private String uploadStrategy;
+
+    /**
+     * 版本号
+     */
+    private String version;
 
     /**
      * 升级状态（未升级，升级中，已升级）

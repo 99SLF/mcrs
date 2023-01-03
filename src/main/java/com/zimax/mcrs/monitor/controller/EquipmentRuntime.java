@@ -2,6 +2,7 @@ package com.zimax.mcrs.monitor.controller;
 
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.monitor.service.AccessMonitorService;
+import com.zimax.mcrs.monitor.service.EquipmentRuntimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ import java.util.List;
 public class EquipmentRuntime {
 
     @Autowired
-    private AccessMonitorService accessMonitorService;
+    private EquipmentRuntimeService equipmentRuntimeService;
     /**
      * 分页查询plc设备接入状态
      *
@@ -38,8 +39,8 @@ public class EquipmentRuntime {
     public Result<?> queryEquipmentAccessP(String page, String limit,
                                           String equipmentId, String accessStatus,
                                           String order, String field) {
-        List EquipmentAccess = accessMonitorService.queryEquipmentAccessP(page, limit, equipmentId, accessStatus,order, field);
-        return Result.success(EquipmentAccess, accessMonitorService.countEQP(equipmentId, accessStatus));
+        List EquipmentAccess = equipmentRuntimeService.queryEquipmentAccessP(page, limit, equipmentId, accessStatus,order, field);
+        return Result.success(EquipmentAccess, equipmentRuntimeService.countEQP(equipmentId, accessStatus));
     }
 
     /**
@@ -62,7 +63,7 @@ public class EquipmentRuntime {
                                           String equipmentId, String accessStatus,
                                           String antennaStatus,
                                           String order, String field) {
-        List EquipmentAccess = accessMonitorService.queryEquipmentAccessR(page, limit, equipmentId, accessStatus,antennaStatus, order, field);
-        return Result.success(EquipmentAccess, accessMonitorService.countEQR(equipmentId, accessStatus,antennaStatus));
+        List EquipmentAccess = equipmentRuntimeService.queryEquipmentAccessR(page, limit, equipmentId, accessStatus,antennaStatus, order, field);
+        return Result.success(EquipmentAccess, equipmentRuntimeService.countEQR(equipmentId, accessStatus,antennaStatus));
     }
 }

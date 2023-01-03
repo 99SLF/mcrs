@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.monitor.mapper.DeviceAbnormalAlarmMapper">
+
+
+    <!--终端告警信息记录数-->
+    <select id="countAA" resultType="int">
+        select count(*) from mon_device_abn
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="deviceName !=null and deviceName !=''">
+                and device_name like '%${deviceName}%'
+            </if>
+            <if test="useProcess !=null and useProcess !=''">
+                and use_process like '%${useProcess}%'
+            </if>
+            <if test="warningType !=null and warningType !=''">
+                and warning_type like '%${warningType}%'
+            </if>
+            <if test="warningLevel !=null and warningLevel !=''">
+                and warning_level like '%${warningLevel}%'
+            </if>
+            <if test="occurTime !=null and occurTime !=''">
+                and DATE (occur_time) =#{occurTime}
+            </if>
+        </where>
+
+    </select>
+    <!--查询终端告警信息-->
+    <select id="queryDeviceAbnormalAlarm" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.vo.DeviceAbnVo">
+        select * from mon_device_abn
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="deviceName !=null and deviceName !=''">
+                and device_name like '%${deviceName}%'
+            </if>
+            <if test="useProcess !=null and useProcess !=''">
+                and use_process like '%${useProcess}%'
+            </if>
+            <if test="warningType !=null and warningType !=''">
+                and warning_type like '%${warningType}%'
+            </if>
+            <if test="warningLevel !=null and warningLevel !=''">
+                and warning_level like '%${warningLevel}%'
+            </if>
+            <if test="occurTime !=null and occurTime !=''">
+                and DATE (occur_time) =#{occurTime}
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+</mapper>

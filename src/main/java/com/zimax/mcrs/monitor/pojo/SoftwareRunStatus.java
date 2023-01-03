@@ -10,21 +10,20 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * 监测接入状态
  * @author 李伟杰
- * @date 2022/12/12 0:02
+ * @date 2023/1/3 10:29
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("mon_access_status")
-public class AccessStatus {
+@TableName("mon_soft_status")
+public class SoftwareRunStatus {
 
     /**
-     * 监测终端类型接入状态编号
+     * 软件运行状态编号
      */
     @TableId(type = IdType.AUTO)
-    private int accessId;
+    private int softwareRunId;
 
     /**
      * 设备资源号
@@ -35,21 +34,6 @@ public class AccessStatus {
      * APPID
      */
     private String APPId;
-
-    /**
-     * 接入类型
-     */
-    private String accessType;
-
-    /**
-     * 接入状态
-     */
-    private String accessStatus;
-
-    /**
-     * 天线状态
-     */
-    private String antennaStatus;
 
     /**
      * 终端名称
@@ -64,12 +48,7 @@ public class AccessStatus {
     /**
      * 终端软件运行状态
      */
-    private String deviceSoRuntime;
-
-    /**
-     * 终端
-     */
-    private String useProcess;
+    private String deviceSoRunStatus;
 
     /**
      * cup使用率
@@ -82,47 +61,10 @@ public class AccessStatus {
     private String storageRate;
 
     /**
-     * 发生时间
-     *
-     */
-    private Date occurTime;
-
-    /**
      * 误读率
      *
      */
     private String errorRate;
-
-
-    /**
-     * 预警标题
-     *
-     */
-    private String warningTitle;
-
-    /**
-     * 预警类型
-     *
-     */
-    private String warningType;
-
-    /**
-     * 预警等级
-     *
-     */
-    private String warningLevel;
-
-    /**
-     * 预警内容
-     *
-     */
-    private String warningContent;
-
-    /**
-     * 备注
-     *
-     */
-    private String remarks;
 
     /**
      * 创建时间

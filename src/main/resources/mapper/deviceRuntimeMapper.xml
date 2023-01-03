@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.monitor.mapper.DeviceRuntimeMapper">
+
+    <!--    查询终端运行状态记录数-->
+    <select id="countDR" resultType="int">
+        select count(*) from mon_access_status
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="APPId !=null and APPId !=''">
+                and app_id like '%${APPId}%'
+            </if>
+            <if test="deviceSoType !=null and deviceSoType !=''">
+                and device_so_type like '%${deviceSoType}%'
+            </if>
+            <if test="deviceSoRuntime !=null and deviceSoRuntime !=''">
+                and device_so_runtime like '%${deviceSoRuntime}%'
+            </if>
+        </where>
+    </select>
+    <!--查询终端软件运行状态-->
+    <select id="queryDeviceRuntime" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.vo.DeviceMonitorInfoVo">
+        SELECT * ,COUNT(*) AS device_warning
+        FROM (SELECT * FROM mon_access_status ORDER BY create_time DESC) a
+        GROUP BY equipment_id
+        <trim prefix="having" suffixOverrides="and">
+            <if test="equipmentId != null and equipmentId !=''">
+                equipment_id = #{equipmentId} and
+            </if>
+            <if test="APPId != null and APPId !=''">
+                app_id = #{APPId} and
+            </if>
+            <if test="deviceSoType != null and deviceSoType !=''">
+                device_so_type = #{deviceSoType} and
+            </if>
+            <if test="deviceSoRuntime != null and deviceSoRuntime !=''">
+                device_so_runtime = #{deviceSoRuntime} and
+            </if>
+        </trim>
+        <if test="order !=null and order !=''">
+            order by access_id DESC,${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+
+    </select>
+</mapper>

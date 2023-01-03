@@ -2,6 +2,7 @@ package com.zimax.mcrs.monitor.controller;
 
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.monitor.service.AccessMonitorService;
+import com.zimax.mcrs.monitor.service.SoftwareRuntimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ import java.util.List;
 public class SoftwareRuntime {
 
     @Autowired
-    private AccessMonitorService accessMonitorService;
+    private SoftwareRuntimeService softwareRuntimeService;
 
     /**
      * 分页查询软件运行状态
@@ -29,7 +30,7 @@ public class SoftwareRuntime {
      * @param equipmentId 设备资源号
      * @param APPId       APPId
      * @param deviceSoType   终端软件类型
-     * @param deviceSoRuntime      终端软件运行状态
+     * @param deviceSoRunStatus      终端软件运行状态
      * @param order       排序方式
      * @param field       排序字段
      * @return 信息列表
@@ -40,9 +41,9 @@ public class SoftwareRuntime {
     @GetMapping("/querySoRuntimes")
     public Result<?> querySoRuntimes(String page, String limit,
                                      String equipmentId, String APPId,
-                                     String deviceSoType, String deviceSoRuntime,
+                                     String deviceSoType, String deviceSoRunStatus,
                                      String order, String field) {
-        List SoRuntimes = accessMonitorService.querySoRuntimes(page, limit, equipmentId, APPId, deviceSoType, deviceSoRuntime,order, field);
-        return Result.success(SoRuntimes, accessMonitorService.countSO(equipmentId, APPId, deviceSoType, deviceSoRuntime));
+        List SoRuntimes = softwareRuntimeService.querySoRuntimes(page, limit, equipmentId, APPId, deviceSoType, deviceSoRunStatus,order, field);
+        return Result.success(SoRuntimes, softwareRuntimeService.countSO(equipmentId, APPId, deviceSoType, deviceSoRunStatus));
     }
 }
