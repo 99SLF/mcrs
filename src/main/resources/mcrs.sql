@@ -859,3 +859,56 @@ CREATE TABLE `upd_record` (
       `update_status` varchar(255) DEFAULT NULL,
       PRIMARY KEY (`record_update_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for mon_device_abn
+-- ----------------------------
+DROP TABLE IF EXISTS `mon_device_abn`;
+CREATE TABLE `mon_device_abn` (
+      `device_abn_id` int(11) NOT NULL AUTO_INCREMENT,
+      `equipment_id` varchar(255) DEFAULT NULL,
+      `app_id` varchar(255) DEFAULT NULL,
+      `device_name` varchar(255) DEFAULT NULL,
+      `use_process` varchar(255) DEFAULT NULL,
+      `warning_title` varchar(255) DEFAULT NULL,
+      `warning_type` varchar(255) DEFAULT NULL,
+      `warning_level` varchar(255) DEFAULT NULL,
+      `warning_content` varchar(255) DEFAULT NULL,
+      `occur_time` datetime DEFAULT NULL,
+      `remarks` varchar(255) DEFAULT NULL,
+      `create_time` datetime DEFAULT NULL,
+      PRIMARY KEY (`device_abn_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for mon_equipment_status
+-- ----------------------------
+DROP TABLE IF EXISTS `mon_equipment_status`;
+CREATE TABLE `mon_equipment_status` (
+    `equipment_status_id` int(11) NOT NULL AUTO_INCREMENT,
+    `equipment_id` varchar(255) DEFAULT NULL,
+    `access_type` varchar(255) DEFAULT NULL,
+    `access_status` varchar(255) DEFAULT NULL,
+    `antenna_status` varchar(255) DEFAULT NULL,
+    `create_time` datetime DEFAULT NULL,
+    PRIMARY KEY (`equipment_status_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for mon_soft_status
+-- ----------------------------
+DROP TABLE IF EXISTS `mon_soft_status`;
+CREATE TABLE `mon_soft_status` (
+       `software_run_id` int(11) NOT NULL AUTO_INCREMENT,
+       `equipment_id` varchar(255) DEFAULT NULL,
+       `app_id` varchar(255) DEFAULT NULL,
+       `device_name` varchar(255) DEFAULT NULL,
+       `device_so_type` varchar(255) DEFAULT NULL,
+       `device_so_run_status` varchar(255) DEFAULT NULL,
+       `cpu_rate` varchar(255) DEFAULT NULL,
+       `storage_rate` varchar(255) DEFAULT NULL,
+       `error_rate` varchar(255) DEFAULT NULL,
+       `create_time` datetime DEFAULT NULL,
+       PRIMARY KEY (`software_run_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
