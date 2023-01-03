@@ -388,7 +388,7 @@ DROP TABLE IF EXISTS `rep_rfid`;
 CREATE TABLE `rep_rfid` (
     `rfid_read_id` int(11) NOT NULL AUTO_INCREMENT,
     `equipment_id` varchar(255) NOT NULL,
-    `RFID_id` varchar(255) NOT NULL,
+    `rfid_id` varchar(255) NOT NULL,
     `antenna_id` varchar(255) NOT NULL,
     `read_rate` int(11) NOT NULL,
     `record_time` datetime NOT NULL,
@@ -451,8 +451,10 @@ CREATE TABLE `mon_access_status` (
      `access_type` varchar(255) NOT NULL,
      `access_status` varchar(255) NOT NULL,
      `antenna_status` varchar(255) DEFAULT NULL,
+     `device_name` varchar(255) NOT NULL,
      `device_so_type` varchar(255) NOT NULL,
      `device_so_runtime` varchar(255) NOT NULL,
+     `use_process` varchar(255) NOT NULL,
      `cpu_rate` varchar(255) NOT NULL,
      `storage_rate` varchar(255) NOT NULL,
      `occur_time` datetime NOT NULL,
@@ -462,8 +464,9 @@ CREATE TABLE `mon_access_status` (
      `warning_level` varchar(255) NOT NULL,
      `warning_content` varchar(255) NOT NULL,
      `remarks` varchar(255) DEFAULT NULL,
+     `create_time` datetime DEFAULT NULL,
      PRIMARY KEY (`access_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
 
 
 -- ----------------------------
@@ -869,3 +872,18 @@ CREATE TABLE `base_access_info` (
     `update_time` datetime DEFAULT NULL,
     PRIMARY KEY (`acc_point_res_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for upd_record
+-- ----------------------------
+DROP TABLE IF EXISTS `upd_record`;
+CREATE TABLE `upd_record` (
+      `record_update_id` int(11) NOT NULL AUTO_INCREMENT,
+      `device_id` int(11) DEFAULT NULL,
+      `upload_id` int(11) DEFAULT NULL,
+      `create_time` datetime DEFAULT NULL,
+      `creator` varchar(255) DEFAULT NULL,
+      `update_status` varchar(255) DEFAULT NULL,
+      PRIMARY KEY (`record_update_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

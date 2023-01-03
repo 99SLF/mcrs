@@ -39,7 +39,7 @@ public class RFIDReadRaService {
      * 查询所有RFID报表信息
      */
     public List<RFIDReadRa> queryRFIDs(String page, String limit,
-                                       String equipmentId, String RFIDId,
+                                       String equipmentId, String rfidId,
                                        String antennaId, String readRate,
                                        String recordTime, String order, String field) {
         ChangeString changeString = new ChangeString();
@@ -56,7 +56,7 @@ public class RFIDReadRaService {
             map.put("limit", Integer.parseInt(limit));
         }
         map.put("equipmentId", equipmentId);
-        map.put("RFIDId", RFIDId);
+        map.put("rfidId", rfidId);
         map.put("antennaId", antennaId);
         map.put("readRate", readRate);
         map.put("recordTime", recordTime);
@@ -65,9 +65,9 @@ public class RFIDReadRaService {
 
     }
 
-    public int count(String equipmentId, String RFIDId,
+    public int count(String equipmentId, String rfidId,
                      String antennaId, String readRate,
                      String recordTime) {
-        return rfidReadRaReportMapper.count(equipmentId, RFIDId, antennaId, readRate, recordTime);
+        return rfidReadRaReportMapper.count(equipmentId, rfidId, antennaId, readRate, recordTime);
     }
 }

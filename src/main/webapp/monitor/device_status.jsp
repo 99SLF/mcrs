@@ -216,39 +216,57 @@
 				align: "center",
 				// sort: true,
 				hide: isHidden("equipmentId"),
-				minWidth: 100
+				minWidth: 120
 			}, {
 				//field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
 				field: "aPPId",
 				title: "APPID",
 				align: "center",
 				hide: isHidden("aPPId"),
-				minWidth: 100
+				minWidth: 120
 			}, {
 				field: "deviceSoType",
 				title: "终端软件类型",
 				align: "center",
 				hide: isHidden("deviceSoType"),
-				minWidth: 100
+				minWidth: 80
 			}, {
 				field: "deviceSoRuntime",
 				title: "软件运行",
 				align: "center",
 				hide: isHidden("deviceSoRuntime"),
-				minWidth: 150
+				minWidth: 80
 			}
 			, {
 				field: "accessStatus",
 				title: "设备接入",
 				align: "center",
 				hide: isHidden("accessStatus"),
-				minWidth: 100
+				minWidth: 80
 			}, {
 				field: "deviceWarning",
-				title: "终端告警",
+				title: "设备资源号累计终端告警",
 				align:"center",
 				hide: isHidden("deviceWarning"),
-				minWidth: 100
+				minWidth: 220
+			}, {
+				field: "cpuRate",
+				title: "cup运行率",
+				align:"center",
+				hide: isHidden("cpuRate"),
+				minWidth: 60
+			}, {
+				field: "storageRate",
+				title: "内存使用量",
+				align:"center",
+				hide: isHidden("storageRate"),
+				minWidth: 60
+			}, {
+				field: "errorRate",
+				title: "误读率",
+				align:"center",
+				hide: isHidden("errorRate"),
+				minWidth: 60
 			}
 		]]
 	});

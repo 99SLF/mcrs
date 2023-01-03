@@ -1,6 +1,6 @@
 package com.zimax.components.coframe.rights.controller;
 
-import com.zimax.components.coframe.rights.DefaultUserManager;
+
 import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.components.coframe.rights.service.UserService;
 import com.zimax.mcrs.config.Result;

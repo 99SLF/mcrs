@@ -14,7 +14,6 @@ import java.util.List;
  * @author 李伟杰
  * @date 2022/12/3
  */
-
 @RestController
 @RequestMapping("/DeviceRuntime")
 public class DeviceRuntime {

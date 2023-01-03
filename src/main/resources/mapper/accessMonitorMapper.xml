@@ -6,8 +6,9 @@
     <insert id="addAccessMonitor" parameterType="com.zimax.mcrs.monitor.pojo.AccessStatus">
         insert into mon_access_status
         values (#{accessId}, #{equipmentId}, #{APPId}, #{accessType}, #{accessStatus},
-                #{antennaStatus}, #{deviceSoType}, #{deviceSoRuntime}, #{cpuRate}, #{storageRate}, #{occurTime},
-                #{errorRate}, #{warningTitle}, #{warningType}, #{warningLevel}, #{warningContent}, #{remarks})
+                #{antennaStatus},#{deviceName}, #{deviceSoType}, #{deviceSoRuntime}, #{useProcess},#{cpuRate}, #{storageRate}, #{occurTime},
+                #{errorRate}, #{warningTitle}, #{warningType}, #{warningLevel}, #{warningContent}, #{remarks},
+                #{createTime})
     </insert>
     <!--    查询软件运行状态记录数-->
     <select id="countSO" resultType="int">
@@ -144,13 +145,13 @@
                 and warning_level like '%${warningLevel}%'
             </if>
             <if test="occurTime !=null and occurTime !=''">
-                and occur_time =#{occurTime}
+                and DATE (occur_time) =#{occurTime}
             </if>
         </where>
 
     </select>
     <!--查询终端告警信息-->
-    <select id="queryDeviceAbnormalAlarm" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.AccessStatus">
+    <select id="queryDeviceAbnormalAlarm" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.vo.AccessStatusVo">
         select * from mon_access_status
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
@@ -166,7 +167,7 @@
                 and warning_level like '%${warningLevel}%'
             </if>
             <if test="occurTime !=null and occurTime !=''">
-                and occur_time =#{occurTime}
+                and DATE (occur_time) =#{occurTime}
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -192,13 +193,13 @@
                 and warning_level like '%${warningLevel}%'
             </if>
             <if test="occurTime !=null and occurTime !=''">
-                and occur_time =#{occurTime}
+                and DATE (occur_time) =#{occurTime}
             </if>
         </where>
 
     </select>
     <!--查询系统监控告警信息-->
-    <select id="querySystemMonitorAlarm" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.AccessStatus">
+    <select id="querySystemMonitorAlarm" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.vo.AccessStatusVo">
         select * from mon_access_status
         <where>
             <if test="warningTitle !=null and warningTitle !=''">
@@ -211,7 +212,7 @@
                 and warning_level like '%${warningLevel}%'
             </if>
             <if test="occurTime !=null and occurTime !=''">
-                and occur_time =#{occurTime}
+                and DATE (occur_time) =#{occurTime}
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -240,47 +241,46 @@
             </if>
         </where>
     </select>
+    <!--查询终端软件运行状态-->
     <select id="queryDeviceRuntime" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.vo.AccessStatusVo">
-        SELECT equipment_id, app_id, device_so_type, device_so_runtime, access_status, cpu_rate, storage_rate,
-        error_rate,
-        COUNT(*) AS device_warning FROM mon_access_status
-        <where>
-            <if test="equipmentId !=null and equipmentId !=''">
-                and equipment_id like '%${equipmentId}%'
-            </if>
-            <if test="APPId !=null and APPId !=''">
-                and app_id like '%${APPId}%'
-            </if>
-            <if test="deviceSoType !=null and deviceSoType !=''">
-                and device_so_type like '%${deviceSoType}%'
-            </if>
-            <if test="deviceSoRuntime !=null and deviceSoRuntime !=''">
-                and device_so_runtime like '%${deviceSoRuntime}%'
-            </if>
-        </where>
+        SELECT * ,COUNT(*) AS device_warning
+        FROM (SELECT * FROM mon_access_status ORDER BY create_time DESC) a
         GROUP BY equipment_id
+        <trim prefix="having" suffixOverrides="and">
+            <if test="equipmentId != null and equipmentId !=''">
+                equipment_id = #{equipmentId} and
+            </if>
+            <if test="APPId != null and APPId !=''">
+                app_id = #{APPId} and
+            </if>
+            <if test="deviceSoType != null and deviceSoType !=''">
+                device_so_type = #{deviceSoType} and
+            </if>
+            <if test="deviceSoRuntime != null and deviceSoRuntime !=''">
+                device_so_runtime = #{deviceSoRuntime} and
+            </if>
+        </trim>
         <if test="order !=null and order !=''">
-            order by ${field} ${order}
+            order by access_id DESC,${field} ${order}
         </if>
         <if test="limit !=null and limit !=''">
             limit ${begin},${limit}
         </if>
+
     </select>
 
     <select id="groupQueryByproduction" resultType="com.zimax.mcrs.monitor.pojo.vo.GroupByProduction">
-        SELECT warning_type as name ,count(warning_type) as value
+        SELECT warning_type as name, count(warning_type) as value
         FROM mon_access_status
         GROUP BY warning_type
     </select>
     <select id="groupQueryBydate" resultType="com.zimax.mcrs.monitor.pojo.vo.GroupByDate">
-        select
-            date_format(t1.occur_time, '%Y-%m-%d') as recordDate ,
-            sum(CASE warning_type WHEN "1" THEN 1 ELSE 0 END) AS "activeWarn",
-            sum(CASE warning_type WHEN "2" THEN 1 ELSE 0 END) AS "hardWarn"
+        select date_format(t1.occur_time, '%Y-%m-%d')            as recordDate,
+               sum(CASE warning_type WHEN "1" THEN 1 ELSE 0 END) AS "activeWarn",
+               sum(CASE warning_type WHEN "2" THEN 1 ELSE 0 END) AS "hardWarn"
         from mon_access_status t1
         group by date_format(t1.occur_time, '%Y-%m-%d')
-        ORDER BY t1.occur_time desc
-            limit 0,7
+        ORDER BY t1.occur_time desc limit 0,7
     </select>
 
 </mapper>

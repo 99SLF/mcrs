@@ -26,37 +26,33 @@
 		<div class="layui-form-item">
 
 			<div class="layui-inline">
-				<%--                <label class="layui-form-label">站点号：</label>--%>
 				<div class="layui-input-inline" >
-					<input type="text" name="equipmentId" value="" placeholder="请输入设备资源号" autocomplete="off" class="layui-input">
+					<input type="text" name="equipmentId" placeholder="请输入设备资源号" autocomplete="off" class="layui-input">
 				</div>
 			</div>
 
 			<div class="layui-inline">
-				<%--                <label class="layui-form-label">膜卷号：</label>--%>
 				<div class="layui-input-inline" >
-					<input type="text" name="" value="" placeholder="请输入告警标题" autocomplete="off" class="layui-input">
+					<input type="text" name="warningTitle"  placeholder="请输入预警标题" autocomplete="off" class="layui-input">
 				</div>
 			</div>
 
 			<div class="layui-inline">
-				<%--                <label class="layui-form-label">设备资源号：</label>--%>
 				<div class="layui-input-inline" >
-					<input type="text" name="" value="" placeholder="请输入告警类型" autocomplete="off" class="layui-input">
+					<input type="text" name="warningType"  placeholder="请输入预警类型" autocomplete="off" class="layui-input">
 				</div>
 			</div>
 
 			<div class="layui-inline">
-				<%--                <label class="layui-form-label">轴名称：</label>--%>
 				<div class="layui-input-inline" >
-					<input type="text" name="" value="" placeholder="请输入告警等级" autocomplete="off" class="layui-input">
+					<input type="text" name="warningLevel"  placeholder="请输入预警等级" autocomplete="off" class="layui-input">
 				</div>
 			</div>
 
 			<div class="layui-inline">
-				<%--                <label class="layui-form-label">创建时间：</label>--%>
+
 				<div class="layui-input-inline" >
-					<input type="text" name="" value="" placeholder="请选择发生时间" id="test0" autocomplete="off" class="layui-input">
+					<input type="text" name="occurTime"  placeholder="请选择发生时间" id="test0" autocomplete="" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-inline layui-search">
@@ -93,7 +89,7 @@
 	//日期时间选择器
 	laydate.render({
 		elem: '#test0'
-		,type: 'datetime'
+		,type: 'date'
 	});
 	//
 	// //日期时间选择器
@@ -229,47 +225,67 @@
 				align: "center",
 				// sort: true,
 				hide: isHidden("equipmentId"),
-				minWidth: 100
-			}, {
+				minWidth: 120
+			},{
+				//field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
+				field: "aPPId",
+				title: "APPID",
+				align: "center",
+				hide: isHidden("aPPId"),
+				minWidth: 120
+			},{
+				//field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
+				field: "deviceName",
+				title: "终端名称",
+				align: "center",
+				hide: isHidden("deviceName"),
+				minWidth: 120
+			},{
+				//field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
+				field: "useProcess",
+				title: "使用工序",
+				align: "center",
+				hide: isHidden("useProcess"),
+				minWidth: 80
+			},{
 				//field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
 				field: "warningTitle",
-				title: "告警标题",
+				title: "预警标题",
 				align: "center",
 				minWidth: 100,
 				hide: isHidden("warningTitle")
 
-			}, {
+			},{
 				field: "warningType",
-				title: "告警类型",
+				title: "预警类型",
 				align: "center",
 				hide: isHidden("warningType"),
 				minWidth: 100
 
-			}, {
+			},{
 				field: "warningLevel",
-				title: "告警等级",
+				title: "预警等级",
 				align: "center",
 				hide: isHidden("warningLevel"),
 				minWidth: 150
-			}
-			, {
+			},{
 				field: "warningContent",
-				title: "告警内容",
+				title: "预警内容",
 				align: "center",
 				hide: isHidden("warningContent"),
 				minWidth: 100
-			}, {
+			},{
 				field: "occurTime",
 				title: "发生时间",
 				align:"center",
 				hide: isHidden("occurTime"),
-				minWidth: 100
-			}, {
+				minWidth: 180
+			},{
 				field: "remarks",
 				title: "备注",
 				align: "center",
 				hide: isHidden("remarks"),
-				minWidth: 80
+				minWidth: 150
 			}]]
 	});
 

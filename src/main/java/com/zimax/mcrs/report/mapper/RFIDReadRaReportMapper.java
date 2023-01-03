@@ -25,7 +25,7 @@ public interface RFIDReadRaReportMapper {
      * @param
      * @return
      */
-    int count(@Param("equipmentId") String equipmentId, @Param("RFIDId") String RFIDId,
+    int count(@Param("equipmentId") String equipmentId, @Param("rfidId") String RFIDId,
               @Param("antennaId") String antennaId, @Param("readRate") String readRate,
               @Param("recordTime") String recordTime
     );

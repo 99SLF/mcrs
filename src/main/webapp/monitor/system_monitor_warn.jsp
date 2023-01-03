@@ -86,7 +86,7 @@
 	//日期时间选择器
 	laydate.render({
 		elem: '#test0'
-		,type: 'datetime'
+		,type: 'date'
 	});
 	//
 	// //日期时间选择器

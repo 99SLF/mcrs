@@ -31,10 +31,10 @@
                 and perform_step like '%${performStep}%'
             </if>
             <if test="createTime !=null and createTime !=''">
-                and create_time = #{createTime}
+                and DATE (create_time) = #{createTime}
             </if>
             <if test="updateTime !=null and updateTime !=''">
-                and update_time	= #{updateTime}
+                and DATE (update_time)	= #{updateTime}
             </if>
         </where>
     </select>
@@ -58,10 +58,10 @@
                 and perform_step like '%${performStep}%'
             </if>
             <if test="createTime !=null and createTime !=''">
-                and create_time = #{createTime}
+                and DATE (create_time) = #{createTime}
             </if>
             <if test="updateTime !=null and updateTime !=''">
-                and update_time	= #{updateTime}
+                and DATE (update_time)	= #{updateTime}
             </if>
         </where>
         <if test="order !=null and order !=''">

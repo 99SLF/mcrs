@@ -12,10 +12,11 @@ import lombok.Data;
 @Data
 public class AccessStatusVo {
 
-//    /**
-//     * 监测终端类型接入状态编号
-//     */
-//    private int accessId;
+
+    /**
+     * 监测终端类型接入状态编号
+     */
+    private int accessId;
 
     /**
      * 设备资源号
@@ -28,6 +29,26 @@ public class AccessStatusVo {
     private String APPId;
 
     /**
+     * 接入类型
+     */
+    private String accessType;
+
+    /**
+     * 接入状态
+     */
+    private String accessStatus;
+
+    /**
+     * 天线状态
+     */
+    private String antennaStatus;
+
+    /**
+     * 终端名称
+     */
+    private String deviceName;
+
+    /**
      * 终端软件类型
      */
     private String deviceSoType;
@@ -38,9 +59,9 @@ public class AccessStatusVo {
     private String deviceSoRuntime;
 
     /**
-     * 接入状态
+     * 使用工序
      */
-    private String accessStatus;
+    private String useProcess;
 
     /**
      * cup使用率
@@ -53,10 +74,53 @@ public class AccessStatusVo {
     private String storageRate;
 
     /**
+     * 发生时间
+     *
+     */
+    private String occurTime;
+
+    /**
      * 误读率
      *
      */
     private String errorRate;
+
+
+    /**
+     * 预警标题
+     *
+     */
+    private String warningTitle;
+
+    /**
+     * 预警类型
+     *
+     */
+    private String warningType;
+
+    /**
+     * 预警等级
+     *
+     */
+    private String warningLevel;
+
+    /**
+     * 预警内容
+     *
+     */
+    private String warningContent;
+
+    /**
+     * 备注
+     *
+     */
+    private String remarks;
+
+    /**
+     * 创建时间
+     *
+     */
+    private String createTime;
 
     /**
      * 终端告警

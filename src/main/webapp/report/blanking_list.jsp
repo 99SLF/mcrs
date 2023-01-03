@@ -108,13 +108,13 @@
     //日期时间选择器
     laydate.render({
         elem: '#test0'
-        , type: 'datetime'
+        , type: 'date'
     });
 
     //日期时间选择器
     laydate.render({
         elem: '#test1'
-        , type: 'datetime'
+        , type: 'date'
     });
     //监听搜索
     form.on("submit(LAY-app-rolelist-search)", function (data) {

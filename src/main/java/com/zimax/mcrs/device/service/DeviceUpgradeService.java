@@ -1,5 +1,6 @@
 package com.zimax.mcrs.device.service;
 
+import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.device.mapper.DeviceUpgradeMapper;
 import com.zimax.mcrs.device.pojo.DeviceUpgrade;
@@ -50,6 +51,10 @@ public class DeviceUpgradeService {
      */
     public int count(String equipmentId, String upgradeVersion){
         return deviceUpgradeMapper.count(equipmentId,upgradeVersion);
+    }
+
+    public void updateDeviceUpgrade(DeviceUpgrade deviceUpgrade) {
+        deviceUpgradeMapper.updateDeviceUpgrade(deviceUpgrade);
     }
 
 }
