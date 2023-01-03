@@ -12,39 +12,64 @@
     <meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
     <title>接口日志页面</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/custom.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/layout.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/iconfont/iconfont.css">
 </head>
 <body>
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
-            <div class="layui-form-item layui-col-space12">
-                <div class="layui-input-inline">
-                    <input type="text" name="createTime" id="createTime" placeholder="请输入创建时间" autocomplete="off"
-                           class="layui-input">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input type="text" name="createTime" id="createTime" placeholder="请输入创建时间"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
                 </div>
-                <div class="layui-input-inline">
-                    <input type="text" name="source" placeholder="请输入来源" autocomplete="off"
-                           class="layui-input">
+
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input type="text" name="source" placeholder="请输入来源" autocomplete="off"
+                               class="layui-input">
+                    </div>
                 </div>
-                <div class="layui-input-inline">
-                    <input type="text" name="interfaceName" placeholder="请输入接口名称" autocomplete="off"
-                           class="layui-input">
+
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input type="text" name="interfaceName" placeholder="请输入接口名称" autocomplete="off"
+                               class="layui-input">
+                    </div>
                 </div>
-                <div class="layui-input-inline">
-                    <input type="text" name="equipmentIp" placeholder="请输入接入Ip" autocomplete="off"
-                           class="layui-input">
+
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input type="text" name="equipmentIp" placeholder="请输入接入Ip" autocomplete="off"
+                               class="layui-input">
+                    </div>
                 </div>
-                <div class="layui-input-inline">
-                    <input type="text" name="invoker" placeholder="请输入调用者" autocomplete="off"
-                           class="layui-input">
+
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input type="text" name="invoker" placeholder="请输入调用者" autocomplete="off"
+                               class="layui-input">
+                    </div>
                 </div>
-                <div class="layui-input-inline">
-                    <input type="text" name="methodName" placeholder="请输入方法名" autocomplete="off"
-                           class="layui-input">
+
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input type="text" name="methodName" placeholder="请输入方法名" autocomplete="off"
+                               class="layui-input">
+                    </div>
                 </div>
-                <div class="layui-input-inline">
-                    <input type="text" name="disposeTime" placeholder="请输入处理时长" autocomplete="off"
-                           class="layui-input">
+
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input type="text" name="disposeTime" placeholder="请输入处理时长" autocomplete="off"
+                               class="layui-input">
+                    </div>
                 </div>
 
                 <div class="layui-inline layui-search">
@@ -55,30 +80,27 @@
                     </button>
                 </div>
             </div>
-
-
         </div>
-    </div>
+        <div class="layui-card-body">
 
-    <div class="layui-card-body">
-        <%--        <div class="layui-toolbar" id="toolbar" hidden="true">--%>
-        <%--            <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i--%>
-        <%--                    class="layui-icon layui-icon-add-circle-fine"></i>新增规则--%>
-        <%--            </button>--%>
-        <%--            <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i--%>
-        <%--                    class="layui-icon layui-icon-delete"></i>删除--%>
-        <%--            </button>--%>
-        <%--        </div>--%>
+<%--                    <div class="layui-toolbar" id="toolbar" hidden="true">--%>
+<%--                        <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i--%>
+<%--                                class="layui-icon layui-icon-add-circle-fine"></i>新增规则--%>
+<%--                        </button>--%>
+<%--                        <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i--%>
+<%--                                class="layui-icon layui-icon-delete"></i>删除--%>
+<%--                        </button>--%>
+<%--                    </div>--%>
 
+            <table id="LAY-app-interfaceLog-list" lay-filter="LAY-app-interfaceLog-list"></table>
 
-        <table id="LAY-app-interfaceLog-list" lay-filter="LAY-app-interfaceLog-list"></table>
-
-        <%--        <script type="text/html" id="table-interfaceLog-list">--%>
-        <%--            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i--%>
-        <%--                    class="layui-icon layui-icon-edit"></i>编辑</a>--%>
-        <%--            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i--%>
-        <%--                    class="layui-icon layui-icon-delete"></i>删除</a>--%>
-        <%--        </script>--%>
+            <%--        <script type="text/html" id="table-interfaceLog-list">--%>
+            <%--            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i--%>
+            <%--                    class="layui-icon layui-icon-edit"></i>编辑</a>--%>
+            <%--            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i--%>
+            <%--                    class="layui-icon layui-icon-delete"></i>删除</a>--%>
+            <%--        </script>--%>
+        </div>
     </div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
@@ -300,7 +322,6 @@
             });
         },
         parseData: function (res) {
-            debugger;
             return {
                 code: res.code,
                 msg: res.msg,
@@ -385,13 +406,13 @@
             align: "center",
             minWidth: 100,
             hide: isHidden("startTime")
-        },  {
+        }, {
             field: "endTime",
             title: "处理结束时间",
             align: "center",
             minWidth: 100,
             hide: isHidden("endTime")
-        },  {
+        }, {
             field: "invoker",
             title: "调用者",
             align: "center",
