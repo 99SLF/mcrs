@@ -240,7 +240,6 @@
     //监听提交
     form.on("submit(layuiadmin-app-form-edit)", function (data) {
         var submitData = JSON.stringify(data.field);
-        debugger;
         if (submit == false) {
             submit = true;
             if (isExist == false) {
@@ -262,7 +261,14 @@
                     }
                 });
             }
-        } else {
+        }else if ( isExist == true) {
+            layer.msg("当前日志删除规则编码已存在，请重新输入", {
+                icon: 2,
+                time: 2000
+            });
+            submit = false;
+        }
+        else {
             layer.msg("修改失败",
                 function () {
                     var index = parent.layer.getFrameIndex(window.name);
@@ -271,6 +277,28 @@
                 });
         }
         return false;
+    });
+    //判断日志删除规则是否已存在
+    $("#deleteRuleNum").blur(function() {
+        var deleteRuleNum = $("#deleteRuleNum").val();
+        if (deleteRuleNum != null && deleteRuleNum != "") {
+            $.ajax({
+                url: "<%= request.getContextPath() %>/logDeleteRule/logDeleteRule/check/isExist?deleteRuleNum="+deleteRuleNum,
+                type: "GET",
+                cache: false,
+                contentType: "text/json",
+                cache: false,
+                success: function (text) {
+                    if (text.code == "1") {
+                        isExist = true;
+                    } else {
+                        isExist = false;
+                    }
+                }
+            });
+        } else {
+            return;
+        }
     });
 </script>
 </body>
