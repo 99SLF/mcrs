@@ -197,8 +197,8 @@
                     icon: 3,
                     title: "系统提示"
                 }, function (index) {
-                    close()
-                    top.layui.index.openTabsPage( "<%=request.getContextPath() %>/update/update_package_manager.jsp","选择更新包");
+                    top.layui.index.openTabsPage("<%=request.getContextPath() %>/update/update_package_manager.jsp", "选择更新包");
+
                     <%--$.ajax({--%>
                     <%--    url: "<%= request.getContextPath() %>/equipment/device/batchDelete",--%>
                     <%--    type: "DELETE",--%>
@@ -231,6 +231,7 @@
                     <%--    }--%>
                     <%--});--%>
                 });
+
             }
         },
     };
@@ -366,7 +367,10 @@
             title: "终端软件类型",
             align: "center",
             minWidth: 120,
-            hide: isHidden("deviceSoftwareType")
+            hide: isHidden("deviceSoftwareType"),
+            templet: function (d) {
+                return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoftwareType);
+            }
         }, {
             field: "deviceName",
             title: "终端名称",
