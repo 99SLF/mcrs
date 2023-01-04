@@ -161,14 +161,14 @@
                     <label class="layui-form-label">单片机总长度：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="chipLength" id="chipLength"
-                               autocomplete="off" lay-verify=”int” value="0">
+                               autocomplete="off" lay-verify="number|length9" value="0">
                     </div>
                 </div>
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">比例：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="scale" id="scale"
-                               autocomplete="off" lay-verify=”int” value="0">
+                               autocomplete="off" lay-verify="number|length9" value="0">
                     </div>
                 </div>
             </div>
@@ -177,21 +177,21 @@
                     <label class="layui-form-label">系数：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="ratio" id="ratio"
-                               autocomplete="off" lay-verify=”int” value="0">
+                               autocomplete="off" lay-verify="number|length9" value="0">
                     </div>
                 </div>
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">数采检查参数：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="checkParam" id="checkParam"
-                               autocomplete="off"lay-verify=”int” value="0">
+                               autocomplete="off"lay-verify="number|length9" value="0">
                     </div>
                 </div>
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">放卷卸料设定卷径：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="rollDiameter" id="rollDiameter"
-                                autocomplete="off"lay-verify=”int” value="0">
+                                autocomplete="off"lay-verify="number|length9" value="0">
                     </div>
                 </div>
             </div>
@@ -200,14 +200,14 @@
                     <label class="layui-form-label">标签验证周期：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="lableCycle" id="lableCycle"
-                               autocomplete="off"lay-verify=”int” value="0">
+                               autocomplete="off"lay-verify="number|length9" value="0">
                     </div>
                 </div>
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">防串读监测时间：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="monitorDate" id="monitorDate"
-                               autocomplete="off" lay-verify=”int” value="0">
+                               autocomplete="off" lay-verify="number|length9" value="0">
                         <lable style="position:absolute;top:10px;left:220px;height:37px">
                             S
                         </lable>
@@ -299,6 +299,13 @@
         dictTypeId: "CALCULATE_METHOD"
     });
     form.render()
+    form.verify({
+        length9: function(value, item){ //value：表单的值、item：表单的DOM对象
+            if(value.length>9){
+                return '字数已达上限';
+            }
+        }
+    });
     //查询过滤字段
     $.ajax({
         url: "<%=request.getContextPath() %>/cols/filter/query/" + funName,
