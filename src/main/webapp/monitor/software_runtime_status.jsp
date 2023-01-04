@@ -48,7 +48,7 @@
 			<div class="layui-inline">
 
 				<div class="layui-input-inline" >
-					<input type="text" name="deviceSoRuntime" value="" placeholder="请输入终端软件运行状态" autocomplete="off" class="layui-input">
+					<input type="text" name="deviceSoRunStatus" value="" placeholder="请输入终端软件运行状态" autocomplete="off" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-inline layui-search">
@@ -244,10 +244,10 @@
 			minWidth: 100
 
 		}, {
-			field: "deviceSoRuntime",
+			field: "deviceSoRunStatus",
 			title: "终端软件运行状态",
 			align: "center",
-			hide: isHidden("deviceSoRuntime"),
+			hide: isHidden("deviceSoRunStatus"),
 			minWidth: 150
 		}
 		]]

@@ -10,7 +10,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>终端异常预警</title>
+	<title>系统监控预警</title>
 	<link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
 	<link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css" />
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v1">
@@ -77,6 +77,9 @@
 	var table = layui.table;
 	var form = layui.form;
 	var $ = layui.jquery;
+
+	//时间工具类引用
+	var util =layui.util;
 	//过滤字段
 	var hiddenFields = [];
 	//功能名
@@ -275,7 +278,10 @@
 				title: "发生时间",
 				align: "center",
 				hide: isHidden("occurTime"),
-				minWidth: 100
+				minWidth: 100,
+				templet:function(d){
+					return util.toDateString(d.occurTime,'yyyy-MM-dd HH:mm:ss');
+				}
 			}, {
 				field: "remarks",
 				title: "备注",

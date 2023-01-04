@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.monitor.mapper.SoftwareRuntimeMapper">
+
+    <!--    查询软件运行状态记录数-->
+    <select id="countSO" resultType="int">
+        select count(*) from mon_soft_status
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="APPId !=null and APPId !=''">
+                and app_id like '%${APPId}%'
+            </if>
+            <if test="deviceSoType !=null and deviceSoType !=''">
+                and device_so_type like '%${deviceSoType}%'
+            </if>
+            <if test="deviceSoRunStatus !=null and deviceSoRunStatus !=''">
+                and device_so_run_status like '%${deviceSoRunStatus}%'
+            </if>
+        </where>
+    </select>
+
+    <!--查询软件运行状态信息-->
+    <select id="querySoRuntimes" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.SoftwareRunStatus">
+        select * from mon_soft_status
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="APPId !=null and APPId !=''">
+                and app_id like '%${APPId}%'
+            </if>
+            <if test="deviceSoType !=null and deviceSoType !=''">
+                and device_so_type like '%${deviceSoType}%'
+            </if>
+            <if test="deviceSoRunStatus !=null and deviceSoRunStatus !=''">
+                and device_so_run_status like '%${deviceSoRunStatus}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+</mapper>

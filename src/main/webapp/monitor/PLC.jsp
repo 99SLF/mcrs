@@ -10,7 +10,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>软件运行状态</title>
+    <title>PLC运行状态</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css" />
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v1">

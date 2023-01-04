@@ -11,7 +11,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
 <title>设备交换日志</title>
-	<link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
+	<link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
+	<link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css" />
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v1">
 </head>
 <body>
 <div class="layui-fluid">
@@ -50,27 +52,26 @@
 
 
 		</div>
-	</div>
-
-	<div class="layui-card-body">
-		<%--        <div class="layui-toolbar" id="toolbar" hidden="true">--%>
-		<%--            <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i--%>
-		<%--                    class="layui-icon layui-icon-add-circle-fine"></i>新增规则--%>
-		<%--            </button>--%>
-		<%--            <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i--%>
-		<%--                    class="layui-icon layui-icon-delete"></i>删除--%>
-		<%--            </button>--%>
-		<%--        </div>--%>
+		<div class="layui-card-body">
+			<%--        <div class="layui-toolbar" id="toolbar" hidden="true">--%>
+			<%--            <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i--%>
+			<%--                    class="layui-icon layui-icon-add-circle-fine"></i>新增规则--%>
+			<%--            </button>--%>
+			<%--            <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i--%>
+			<%--                    class="layui-icon layui-icon-delete"></i>删除--%>
+			<%--            </button>--%>
+			<%--        </div>--%>
 
 
-		<table id="LAY-app-deviceExchangeLog-list" lay-filter="LAY-app-deviceExchangeLog-list"></table>
+			<table id="LAY-app-deviceExchangeLog-list" lay-filter="LAY-app-deviceExchangeLog-list"></table>
 
-		<%--        <script type="text/html" id="table-deviceExchangeLog-list">--%>
-		<%--            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i--%>
-		<%--                    class="layui-icon layui-icon-edit"></i>编辑</a>--%>
-		<%--            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i--%>
-		<%--                    class="layui-icon layui-icon-delete"></i>删除</a>--%>
-		<%--        </script>--%>
+			<%--        <script type="text/html" id="table-deviceExchangeLog-list">--%>
+			<%--            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i--%>
+			<%--                    class="layui-icon layui-icon-edit"></i>编辑</a>--%>
+			<%--            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i--%>
+			<%--                    class="layui-icon layui-icon-delete"></i>删除</a>--%>
+			<%--        </script>--%>
+		</div>
 	</div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>

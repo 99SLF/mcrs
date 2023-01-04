@@ -215,6 +215,31 @@
         <property name="mapperInterface" value="com.zimax.mcrs.basic.accPointResMaintain.mapper.AccPointResMapper"/>
     </bean>
 
+    <bean id="SystemMonitorAlarmMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.monitor.mapper.SystemMonitorAlarmMapper"/>
+    </bean>
+
+    <bean id="DeviceAbnormalAlarmMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.monitor.mapper.DeviceAbnormalAlarmMapper"/>
+    </bean>
+
+    <bean id="EquipmentRuntimeMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.monitor.mapper.EquipmentRuntimeMapper"/>
+    </bean>
+
+    <bean id="SoftwareRuntimeMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.monitor.mapper.SoftwareRuntimeMapper"/>
+    </bean>
+
+    <bean id="DeviceRuntimeMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.monitor.mapper.DeviceRuntimeMapper"/>
+    </bean>
+
     <bean id="GradeAuthBean" class="com.zimax.components.coframe.rights.gradeauth.GradeAuthService"></bean>
 
     <bean id="PartyAuthService" class="com.zimax.components.coframe.auth.service.PartyAuthService"></bean>

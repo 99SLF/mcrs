@@ -33,7 +33,13 @@
 
 			<div class="layui-inline">
 				<div class="layui-input-inline" >
-					<input type="text" name="warningTitle"  placeholder="请输入预警标题" autocomplete="off" class="layui-input">
+					<input type="text" name="deviceName"  placeholder="请输入终端名称" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+
+			<div class="layui-inline">
+				<div class="layui-input-inline" >
+					<input type="text" name="useProcess"  placeholder="请输入使用工序" autocomplete="off" class="layui-input">
 				</div>
 			</div>
 
@@ -86,6 +92,10 @@
 	var funName = "application_list";
 
 	var laydate = layui.laydate;
+
+	//时间工具类引用
+	var util =layui.util;
+
 	//日期时间选择器
 	laydate.render({
 		elem: '#test0'
@@ -279,7 +289,10 @@
 				title: "发生时间",
 				align:"center",
 				hide: isHidden("occurTime"),
-				minWidth: 180
+				minWidth: 180,
+				templet:function(d){
+					return util.toDateString(d.occurTime,'yyyy-MM-dd HH:mm:ss');
+				}
 			},{
 				field: "remarks",
 				title: "备注",

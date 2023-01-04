@@ -238,10 +238,10 @@
 				minWidth: 80
 			}
 			, {
-				field: "accessStatus",
+				field: "deviceStatus",
 				title: "设备接入",
 				align: "center",
-				hide: isHidden("accessStatus"),
+				hide: isHidden("deviceStatus"),
 				minWidth: 80
 			}, {
 				field: "deviceWarning",

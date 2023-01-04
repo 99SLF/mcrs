@@ -2,6 +2,7 @@ package com.zimax.mcrs.monitor.controller;
 
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.monitor.service.AccessMonitorService;
+import com.zimax.mcrs.monitor.service.SystemMonitorAlarmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * 查询系统监测预警
+ * 查询系统监控预警
  * @author 李伟杰
  * @date 2022/12/3
  */
@@ -19,7 +20,7 @@ import java.util.List;
 public class SystemMonitorAlarm {
 
     @Autowired
-    private AccessMonitorService accessMonitorService;
+    private SystemMonitorAlarmService systemMonitorAlarmService;
 
     /**
      * 分页查询系统监测预警
@@ -42,7 +43,7 @@ public class SystemMonitorAlarm {
                                      String warningTitle, String warningType,
                                      String warningLevel, String occurTime,
                                      String order, String field) {
-        List SystemMonitorAlarm = accessMonitorService.querySystemMonitorAlarm(page, limit, warningTitle, warningType, warningLevel, occurTime,order, field);
-        return Result.success(SystemMonitorAlarm, accessMonitorService.countSys(warningTitle, warningType, warningLevel, occurTime));
+        List SystemMonitorAlarm = systemMonitorAlarmService.querySystemMonitorAlarm(page, limit, warningTitle, warningType, warningLevel, occurTime,order, field);
+        return Result.success(SystemMonitorAlarm, systemMonitorAlarmService.countSys(warningTitle, warningType, warningLevel, occurTime));
     }
 }

@@ -4,17 +4,15 @@
 <mapper namespace="com.zimax.mcrs.update.mapper.UpdatePackageMapper">
 
     <select id="getDevice" resultType="com.zimax.mcrs.update.pojo.DeviceRecordUpdateMsgVo">
-        SELECT *
-        FROM eqi_device a
-                 LEFT JOIN upd_record b ON a.device_id = b.device_id
-        where app_id = #{APPId}
+        SELECT * FROM upd_record INNER JOIN eqi_device ON eqi_device.device_id = upd_record.device_id INNER JOIN upd_upload ON upd_upload.upload_id=upd_record.upload_id
+        WHERE app_id = #{APPId}
     </select>
 
-    <select id="getVersionUploadStrategy" resultType="com.zimax.mcrs.update.pojo.VersionUploadStrategyVo">
-        select *
-        from upd_upload
-        where upload_id = #{uploadId}
-    </select>
+<!--    <select id="getVersionUploadStrategy" resultType="com.zimax.mcrs.update.pojo.VersionUploadStrategyVo">-->
+<!--        select *-->
+<!--        from upd_upload-->
+<!--        where upload_id = #{uploadId}-->
+<!--    </select>-->
 
     <!--新增-->
     <insert id="addRecordUpdateMsg" parameterType="com.zimax.mcrs.update.pojo.RecordUpdateMsg">
