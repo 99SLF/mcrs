@@ -313,7 +313,10 @@
             title: "设备属性",
             align: "center",
             minWidth: 100,
-            hide: isHidden("equipmentProperties")
+            hide: isHidden("equipmentProperties"),
+            templet:function(d) {
+                return layui.admin.getDictText("EQUIPMENT_PROPERTY", d.equipmentProperties);
+            }
         }, {
             field: "equipmentInstallLocation",
             title: "设备安装位置",

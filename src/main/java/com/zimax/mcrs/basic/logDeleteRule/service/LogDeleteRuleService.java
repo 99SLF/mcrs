@@ -10,8 +10,6 @@ import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.device.pojo.DeviceVo;
 import com.zimax.mcrs.device.pojo.Equipment;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
-import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +18,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ScheduledFuture;
 
 /**
  * 日志删除规则
@@ -113,18 +110,32 @@ public class LogDeleteRuleService {
 
 
     /**
-     * 批量启用日志删除规则
+     * 启用日志删除规则
      */
-    public void enable(List<Integer> ruleDeleteIds) {
+    public void enable(List<LogDeleteRule> logDeleteRules) {
         LogDeleteRule logDeleteRule = new LogDeleteRule();
         IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
-        for (Integer integer:ruleDeleteIds){
-            logDeleteRule.setRuleDeleteId(integer);
+        for (LogDeleteRule i:logDeleteRules){
+            logDeleteRule.setRuleDeleteId(i.getRuleDeleteId());
             logDeleteRule.setEnable("on");
             logDeleteRule.setUpdater(usetObject.getUserName());
             logDeleteRule.setUpdateTime(new Date());
             logDeleteRuleMapper.enable(logDeleteRule);
         }
+    }
+
+    /**
+     * 查询启用日志类型的日志删除规则是否存在已启用规则
+     */
+    public int countLogType(String logType){
+        return logDeleteRuleMapper.checkEnable(logType);
+    }
+
+    /**
+     * 接口日志定时删除
+     */
+    public void deleteInterfaceLog(Date logInterfaceTime){
+        logDeleteRuleMapper.deleteInterfaceLog(logInterfaceTime);
     }
 
 

@@ -5,6 +5,7 @@ import com.zimax.mcrs.basic.logDeleteRule.pojo.LogDeleteRuleVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -64,8 +65,18 @@ public interface LogDeleteRuleMapper {
 
 
     /**
-     * 批量启用
+     * 启用
      */
-    int enable(LogDeleteRule logDeleteRule);
+    void enable(LogDeleteRule logDeleteRule);
+
+    /**
+     * 判断当前启用是否唯一
+     */
+    int checkEnable(@Param("logType") String logType);
+
+    /**
+     * 接口日志定时删除
+     */
+    void deleteInterfaceLog(Date logInterfaceTime);
 
 }

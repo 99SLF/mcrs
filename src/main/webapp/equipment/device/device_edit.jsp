@@ -184,6 +184,7 @@
         form.render('select');
     });
 
+    //禁用选择设备资源号按钮
     $('#onButtonEdit').addClass("layui-btn-disabled").attr("disabled",true);
 
     function SetData(data) {
@@ -210,7 +211,7 @@
     //获取软件类型的下拉值
     layui.admin.renderDictSelect({
         elem: "#deviceSoftwareType",
-        dictTypeId: "SOFTWARE_TYPE",
+        dictTypeId: "DEVICE_SOFTWARE_TYPE",
     });
     form.render();
 
