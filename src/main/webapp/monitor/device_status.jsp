@@ -37,12 +37,12 @@
 			</div>
 			<div class="layui-inline">
 				<div class="layui-input-inline" >
-					<input type="text" name="deviceSoType" value="" placeholder="请输入终端软件类型" autocomplete="off" class="layui-input">
+					<input type="text" name="deviceSoftwareType" value="" placeholder="请输入终端软件类型" autocomplete="off" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-inline">
 				<div class="layui-input-inline" >
-					<input type="text" name="deviceSoRuntime" value="" placeholder="请输入终端软件运行状态" autocomplete="off" class="layui-input">
+					<input type="text" name="deviceSoRunStatus" value="" placeholder="请输入终端软件运行状态" autocomplete="off" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-inline layui-search">
@@ -225,23 +225,23 @@
 				hide: isHidden("aPPId"),
 				minWidth: 120
 			}, {
-				field: "deviceSoType",
+				field: "deviceSoftwareType",
 				title: "终端软件类型",
 				align: "center",
-				hide: isHidden("deviceSoType"),
+				hide: isHidden("deviceSoftwareType"),
 				minWidth: 80
 			}, {
-				field: "deviceSoRuntime",
+				field: "deviceSoRunStatus",
 				title: "软件运行",
 				align: "center",
-				hide: isHidden("deviceSoRuntime"),
+				hide: isHidden("deviceSoRunStatus"),
 				minWidth: 80
 			}
 			, {
-				field: "deviceStatus",
+				field: "accessStatus",
 				title: "设备接入",
 				align: "center",
-				hide: isHidden("deviceStatus"),
+				hide: isHidden("accessStatus"),
 				minWidth: 80
 			}, {
 				field: "deviceWarning",

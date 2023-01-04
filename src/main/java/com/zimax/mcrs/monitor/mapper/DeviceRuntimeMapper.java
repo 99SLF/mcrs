@@ -27,7 +27,7 @@ public interface DeviceRuntimeMapper {
      * @return
      */
     int countDR(@Param("equipmentId") String equipmentId, @Param("APPId") String APPId,
-                @Param("deviceSoType") String deviceSoType, @Param("deviceSoRuntime") String deviceSoRuntime
+                @Param("deviceSoftwareType") String deviceSoftwareType, @Param("deviceSoRunStatus") String deviceSoRunStatus
     );
 
 }
