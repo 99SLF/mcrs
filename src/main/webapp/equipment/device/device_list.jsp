@@ -62,8 +62,6 @@
                         class="layui-icon layui-icon-edit"></i>编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
                         class="layui-icon layui-icon-delete"></i>删除</a>
-                <a class="layui-btn layui-btn-port layui-btn-xs" lay-event="point"><i
-                        class="layui-icon layui-icon-port"></i>点位</a>
             </script>
         </div>
     </div>
@@ -199,6 +197,7 @@
                     icon: 3,
                     title: "系统提示"
                 }, function (index) {
+                    close()
                     top.layui.index.openTabsPage( "<%=request.getContextPath() %>/update/update_package_manager.jsp","选择更新包");
                     <%--$.ajax({--%>
                     <%--    url: "<%= request.getContextPath() %>/equipment/device/batchDelete",--%>

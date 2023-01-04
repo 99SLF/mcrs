@@ -100,8 +100,10 @@
     var $ = layui.jquery;
     var util = layui.util;
 
+
     //全局参数
     var req_data;
+    var isExist = false;
 
     //功能名
     var funName = "list";
@@ -213,27 +215,30 @@
             }
         },
         enable: function () {
+            checkEnable();
             var checkStatus = table.checkStatus("LAY-app-logDeleteRule-list-reload");
-            var data = checkStatus.data;
-            if (data.length == 0) {
+            var datas= checkStatus.data;
+            if (datas.length == 0) {
                 layer.msg("请至少选中一条规则！");
             }
-            if (data.length >=2 ) {
+            if (datas.length >=2 ) {
                 layer.msg("只能启用一条规则");
             }
-            if (data.length == 1 ) {
+            if (datas.length == 1 ) {
                 var ruleDeleteIds = new Array();
-                for (var i = 0; i < data.length; i++) {
-                    ruleDeleteIds[i] = data[i].ruleDeleteId;
+                for (var i = 0; i < datas.length; i++) {
+
+                    ruleDeleteIds[i] = datas[i].ruleDeleteId;
                 }
                 layer.confirm("确定启用所选日志删除规则？", {
                     icon: 3,
                     title: "系统提示"
                 }, function (index) {
+                    if (isExist == false) {
                     $.ajax({
                         url: "<%= request.getContextPath() %>/logDeleteRule/logDeleteRule/enable",
                         type: "POSt",
-                        data: JSON.stringify(ruleDeleteIds),
+                        data: JSON.stringify(datas),
                         cache: false,
                         contentType: "text/json",
                         success: function (result) {
@@ -260,10 +265,42 @@
                             });
                         }
                     });
+                    } else if ( isExist == true) {
+                        layer.msg("当前日志类型存在启用状态删除规则，请先关闭已启用规则", {
+                            icon: 2,
+                            time: 2000
+                        });
+                    }
                 });
             }
         }
     };
+
+    //判断日志删除规则是否已存在启用状态
+   function checkEnable() {
+
+       var checkStatus = table.checkStatus("LAY-app-logDeleteRule-list-reload");
+       var datas= checkStatus.data;
+        if (datas[0].logType != null && datas[0].logType != "") {
+            $.ajax({
+                url: "<%= request.getContextPath() %>/logDeleteRule/logDeleteRule/check/enable?logType="+datas[0].logType,
+                type: "GET",
+                cache: false,
+                contentType: "text/json",
+                cache: false,
+                success: function (result) {
+                    debugger;
+                    if (result.code == "1") {
+                        isExist = true;
+                    } else {
+                        isExist = false;
+                    }
+                }
+            });
+        } else {
+            return;
+        }
+    }
 
     table.on('sort(LAY-app-logDeleteRule-list)', function (obj) {
         table.reload('LAY-app-logDeleteRule-list-reload', {
@@ -361,7 +398,6 @@
             });
         },
         parseData: function (res) {
-            debugger;
             return {
                 code: res.code,
                 msg: res.msg,
