@@ -415,7 +415,13 @@
             title: "日志删除规则编码",
             align: "center",
             minWidth: 120,
-            hide: isHidden("deleteRuleNum")
+            hide: isHidden("deleteRuleNum"),
+            //打开监听
+            event: "view",
+            //监听打开详情页面
+            templet: function (data) {
+                return '<span style="color: #09bbfd">' + data.deleteRuleNum +'</span>';
+            }
         }, {
             field: "deleteRuleTitle",
             title: "日志删除标题",
@@ -433,13 +439,19 @@
             title: "日志删除规则类型",
             align: "center",
             minWidth: 100,
-            hide: isHidden("deleteRuleType")
+            hide: isHidden("deleteRuleType"),
+            templet:function(d) {
+                return layui.admin.getDictText("LOG_DELETE_RULE_TYPE", d.deleteRuleType);
+            }
         }, {
             field: "logType",
             title: "日志类型",
             align: "center",
             minWidth: 100,
-            hide: isHidden("logType")
+            hide: isHidden("logType"),
+            templet:function(d) {
+                return layui.admin.getDictText("LOG_TYPE", d.logType);
+            }
         }, {
             field: "ruleLevel",
             title: "规则级别",
@@ -457,7 +469,10 @@
             title: "时间单位",
             align: "center",
             minWidth: 120,
-            hide: isHidden("timeUnit")
+            hide: isHidden("timeUnit"),
+            templet:function(d) {
+                return layui.admin.getDictText("TIME_UNIT", d.timeUnit);
+            }
         }, {
             field: "creator",
             title: "制单人",
@@ -555,6 +570,28 @@
                         });
                     }
                 });
+            });
+        }
+        else if (e.event == "view") {
+            top.layer.open({
+                type: 2,
+                title: "查看日志删除规则详情",
+                content: "<%= request.getContextPath() %>/basic/logDeleteRule/log_delete_rule_view.jsp",
+                area: ["800px", "560px"],
+                resize: false,
+                // btn: ["确定", "取消"],
+                success: function (layero, index) {
+                    var dataJson = {
+                        data: data,
+                        win: window
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function (index, layero) {
+                    var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");
+                    edit.click();
+                }
+
             });
         }
     });

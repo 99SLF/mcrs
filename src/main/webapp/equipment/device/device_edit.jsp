@@ -184,6 +184,7 @@
         form.render('select');
     });
 
+    //禁用选择设备资源号按钮
     $('#onButtonEdit').addClass("layui-btn-disabled").attr("disabled",true);
 
     function SetData(data) {
