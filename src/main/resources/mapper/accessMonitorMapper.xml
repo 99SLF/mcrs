@@ -39,7 +39,7 @@
         SELECT count(*) FROM mon_device_abn
     </select>
 
-    <select id="getWarnAHtotal" resultType="com.zimax.mcrs.monitor.pojo.vo.WarnTotalInfo">
+    <select id="getWarnHardtotal" resultType="Int">
         SELECT warning_type as name, count(warning_type) as value
         FROM mon_device_abn
         GROUP BY warning_type
