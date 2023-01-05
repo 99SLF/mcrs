@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.log.mapper.AbnLogMapper">
+
+    <!--    查询记录数-->
+    <select id="count" resultType="int">
+        SELECT  count(*) FROM log_abn_log AS abn
+        LEFT JOIN eqi_equipment AS eqi ON abn.equipment_int = eqi.equipment_int
+        LEFT JOIN eqi_device AS dev ON abn.device_id = dev.device_id
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id like '%${equipmentId}%'
+            </if>
+        </where>
+    </select>
+
+    <!--查询所有-->
+    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.log.pojo.AbnLogVo">
+        SELECT * FROM log_abn_log AS abn
+        LEFT JOIN eqi_equipment AS eqi ON abn.equipment_int = eqi.equipment_int
+        LEFT JOIN eqi_device AS dev ON abn.device_id = dev.device_id
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="deviceName !=null and deviceName !=''">
+                and dev.device_name like '%${deviceName}%'
+            </if>
+            <if test="abnType !=null and abnType !=''">
+                and abn.abn_type like '%${abnType}%'
+            </if>
+            <if test="abnLevel !=null and abnLevel !=''">
+                and abn.abn_level like '%${abnLevel}%'
+            </if>
+            <if test="exchangeTime !=null and exchangeTime !=''">
+                and abn.exchange_time like '%${exchangeTime}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+    <!--添加接口日志-->
+    <insert id="addAbnLog" parameterType="com.zimax.mcrs.log.pojo.AbnLog">
+        insert into log_abn_log
+        values (#{abnLogId}, #{abnLogNum}, #{logType}, #{equipmentInt},
+                #{deviceId}, #{abnTitle}, #{abnType},
+                #{abnLevel}, #{abnContent}, #{exchangeTime})
+    </insert>
+
+
+    <!--依据设备资源号获取设备信息-->
+    <select id="checkEquipment" resultType="int">
+        select count(*)
+        from eqi_equipment
+        where equipment_int = #{equipmentInt}
+    </select>
+
+
+    <!--删除-->
+    <delete id="removeAbnLog" parameterType="int">
+        delete from log_abn_log where abn_log_id = #{abnLogId}
+    </delete>
+
+
+</mapper>

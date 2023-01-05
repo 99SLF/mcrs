@@ -405,7 +405,10 @@
             title: "预警类型",
             align: "center",
             minWidth: 150,
-            hide: isHidden("alarmType")
+            hide: isHidden("alarmType"),
+            templet: function (d) {
+                return layui.admin.getDictText("WRANING_TYPE", d.alarmType);
+            }
         }, {
             field: "alarmEventContent",
             title: "内容",
