@@ -18,7 +18,7 @@ import java.util.Date;
  */
 
 @RestController
-@RequestMapping("/updateInter")
+@RequestMapping("/update")
 public class UpdatePackage {
 
     @Autowired
