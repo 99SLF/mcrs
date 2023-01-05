@@ -94,6 +94,7 @@
     var layer = layui.layer;
     var table = layui.table;
     var form = layui.form;
+    var admin = layui.admin;
     var submit = false;
     var $ = layui.jquery;
     var reg = /^\d+$|^\d*\.\d+$/;
@@ -111,7 +112,7 @@
         var data = data.plcGroup;
         form.val('point-plc-add', {
             "plcGroupName": data.plcGroupName,
-            "plcGroupType": data.plcGroupType,
+            "plcGroupType": admin.getDictText("plc_group_type", data.plcGroupType),
             "plcGroupRname": data.plcGroupRname,
             "rfidNum": data.rfidNum,
             "remarks": data.remarks,
@@ -195,7 +196,6 @@
         id: "plcParam",
         data: [],
         limit: 99999,
-        height: "full-" + getFullSize(),
         colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;

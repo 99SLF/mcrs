@@ -188,6 +188,8 @@
                 yes: function (index, layero) {
                     var submit = layero.find("iframe").contents().find("#layuiadmin-app-form-submit");
                     submit.click();
+                    table.reload("pointDispose");
+
                 }
             })
         }
@@ -240,7 +242,7 @@
             minWidth: 120,
             templet: function(data) {
                 data.appId = data.appId == null ? "" : data.appId;
-                var html = '<div><a rel="nofollow" href="javascript:void(0);" style="color:#1E9FFF" lay-event="showView">' + data.appId+ '</a></div>';
+                var html = '<div><a rel="nofollow" href="javascript:void(0);" style="color:#1e69ff" lay-event="showView">' + data.appId+ '</a></div>';
                 return html;
             }
         }, {

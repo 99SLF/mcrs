@@ -36,14 +36,14 @@
                     <label class="layui-form-label"><span style="color:red">*</span>连接IP：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="ipAddr" id="ipAddr"
-                               autocomplete="off" lay-verify="required">
+                               autocomplete="off" readonly>
                     </div>
                 </div>
                 <div class="layui-col-sm4">
                     <label class="layui-form-label"><span style="color:red">*</span>端口号：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="port" id="port"
-                               autocomplete="off" lay-verify="required">
+                               autocomplete="off" readonly>
                     </div>
                 </div>
             </div>
@@ -96,6 +96,10 @@
 
     function SetData(data){
         win = data.win ? data.win : window;
+        form.val('point-rfid-add', {
+            "ipAddr": data.ipAddr,
+            "port": data.ipPort,
+        });
     }
     table.on('sort(rfidParam)', function (obj) { //注：sort 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
         table.reload('rfidParam', {
@@ -186,7 +190,6 @@
         elem: "#rfidParam",
         id: "rfidParam",
         data: [],
-        height: "full-" + getFullSize(),
         colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;

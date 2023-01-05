@@ -196,7 +196,6 @@
         elem: "#rfidParam",
         id: "rfidParam",
         data: [],
-        height: "full-" + getFullSize(),
         colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;

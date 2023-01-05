@@ -51,7 +51,7 @@
 		<div class="layui-col-md4">
 			<div class="layui-card-body" style=margin:30px>
 				<button class="layui-btn layuiadmin-btn-list layui-btn-sm" data-type="addAccessPoint"><i class="layui-icon layui-icon-add-circle-fine"></i>接入点管理</button>
-				<button class="layui-btn layuiadmin-btn-list layui-btn-warm layui-btn-sm" data-type="addEquipment"><i class="layui-icon layui-icon-add-circle-fine"></i>zi管理</button>
+				<button class="layui-btn layuiadmin-btn-list layui-btn-warm layui-btn-sm" data-type="addEquipment"><i class="layui-icon layui-icon-add-circle-fine"></i>资产管理</button>
 				<button class="layui-btn layuiadmin-btn-list layui-btn-normal layui-btn-sm" data-type="addDevice"><i class="layui-icon layui-icon-add-circle-fine"></i>终端管理</button>
 
 			</div>
@@ -130,6 +130,7 @@
 	var $ = layui.jquery;
 	var layer = layui.layer;
 	var table = layui.table;
+	var util = layui.util;
 	var activeWarn = [],hardWarn = [],recordDate = [];
 	var form = layui.form;
 	var chartZhu4 = echarts.init(document.getElementById('EchartZhu4'));
@@ -142,6 +143,52 @@
 	$("#warnTotal").html("99");
 	$("#hardWarnTotal").html("99");
 	$("#activeWarnTotal").html("99");
+	// 终端数量
+	$.ajax({
+		url: "<%=request.getContextPath() %>/equipment/device/count",
+		type: "GET",
+		async: true,
+		cache: false,
+		contentType: "text/json",
+		success: function (result) {
+			if (result) {
+				$("#deviceNumber").html(result.data)
+			} else {
+				layer.msg("查询失败");
+			}
+		}
+	});
+	// 接入点数量
+	$.ajax({
+		url: "<%=request.getContextPath() %>/accPointResController/getCount",
+		type: "GET",
+		async: true,
+		cache: false,
+		contentType: "text/json",
+		success: function (result) {
+			if (result) {
+				$("#accessPointNumber").html(result.data)
+			} else {
+				layer.msg("查询失败");
+			}
+		}
+	});
+// 告警总数
+	$.ajax({
+		url: "<%=request.getContextPath() %>/equipment/device/count",
+		type: "GET",
+		async: true,
+		cache: false,
+		contentType: "text/json",
+		success: function (result) {
+			if (result) {
+				$("#deviceNumber").html(result.data)
+			} else {
+				layer.msg("查询失败");
+			}
+		}
+	});
+
 	$.ajax({
 		url: "<%=request.getContextPath() %>/equipment/device/count",
 		type: "GET",
@@ -352,10 +399,13 @@
 			};
 		},
 		cols: [[{
-			field: "equipmentId",
+			field: "exchange_time",
 			title: "操作时间",
 			align: "center",
 			minWidth: 100,
+			templet:function(d){
+				return util.toDateString(d.exchangeTime);
+			},
 		},{
 			field: "equipmentId",
 			title: "设备资源号",
@@ -404,6 +454,9 @@
 			title: "操作时间",
 			align: "center",
 			minWidth: 100,
+			templet:function(d){
+				return util.toDateString(d.operationTime);
+			},
 		},{
 			field: "operationContent",
 			title: "操作内容",

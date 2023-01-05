@@ -5,6 +5,7 @@ import com.zimax.mcrs.monitor.pojo.EquipmentStatus;
 import com.zimax.mcrs.monitor.pojo.SoftwareRunStatus;
 import com.zimax.mcrs.monitor.pojo.vo.GroupByDate;
 import com.zimax.mcrs.monitor.pojo.vo.GroupByProduction;
+import com.zimax.mcrs.monitor.pojo.vo.WarnTotalInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -36,4 +37,7 @@ public interface AccessMonitorMapper {
 
     List<GroupByProduction> groupQueryByproduction();
     List<GroupByDate> groupQueryBydate();
+
+    int getWarnTotal();
+    WarnTotalInfo getWarnAHtotal();
 }

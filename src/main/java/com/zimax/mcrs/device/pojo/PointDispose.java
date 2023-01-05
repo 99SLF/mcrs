@@ -103,6 +103,12 @@ public class PointDispose {
      * 工厂名称
      */
     private String factoryName;
+    //通信协议
+    @TableField(exist = false)
+    private String protocolCommunication;
+    //  设备类型
+    @TableField(exist = false)
+    private String equipmentProperties;
     @TableField(exist = false)
     private List<PlcGroup> plcGroupList;
     @TableField(exist = false)

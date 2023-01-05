@@ -161,8 +161,8 @@ public class DictService {
      *
      * @param dictId 字典项代码
      */
-    public void removeDict(String dictId) {
-        dictMapper.removeDict(dictId);
+    public void removeDict(String dictId,String dictTypeId) {
+        dictMapper.removeDict(dictId,dictTypeId);
     }
 
     /**
@@ -213,15 +213,14 @@ public class DictService {
                 DictType dictType2 = dictMapper.getDictType(dictEntryList.get(i).getDictTypeId());
                 String child_dict_seqno = dictType2.getSeqNo();
                 if (child_dict_seqno.indexOf(parent_dict_seqno) == 0) {
-                    dictMapper.removeDict(dictEntryList.get(i).getDictId());
+                    dictMapper.removeDict(dictEntryList.get(i).getDictId(),dictEntryList.get(i).getDictTypeId());
                 }
             }
         }
         List<String> list = new ArrayList<>();
         for (int i = 0; i < dictEntrys.length; i++) {
-            list.add(dictEntrys[i].getDictId());
+            dictMapper.removeDict(dictEntrys[i].getDictId(),dictEntrys[i].getDictTypeId());
         }
-        dictMapper.deleteDicts(list);
     }
 
     /**

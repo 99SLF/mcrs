@@ -48,11 +48,25 @@
     </select>
 
     <select id="queryPointDisposes" parameterType="map" resultType="com.zimax.mcrs.device.pojo.PointDispose">
-        SELECT *FROM dev_point_dispose as a
-        LEFT JOIN (SELECT dev.app_id as devAppId,dev.device_name,eqi.equipment_id FROM eqi_device AS dev
-        LEFT JOIN eqi_equipment AS eqi
-        ON dev.equipment_int=eqi.equipment_int) as b
-        ON a.app_id=b.devAppId
+        SELECT
+        *
+        FROM
+        dev_point_dispose AS a
+        LEFT JOIN (
+        SELECT
+        dev.app_id AS devAppId,
+        dev.device_name,
+        eqi.equipment_name,
+        eqi.equipment_id,
+        eqi.equipment_ip,
+        eqi.equipment_continue_port,
+        dev.factory_name,
+        eqi.protocol_communication,
+        eqi.equipment_properties
+        FROM
+        eqi_device AS dev
+        LEFT JOIN eqi_equipment AS eqi ON dev.equipment_int = eqi.equipment_int
+        ) AS b ON a.app_id = b.devAppId
         <where>
             <if test="deviceName !=null and deviceName !=''">
                 and device_name like '%${deviceName}%'

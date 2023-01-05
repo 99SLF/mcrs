@@ -29,16 +29,15 @@
                     <label class="layui-form-label"><span style="color:red">*</span>组别名称：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="plcGroupName" id="plcGroupName"
-                               lay-verify="required"
+                               lay-verify="required|length20"
                                autocomplete="off" placeholder="请输入组别名称">
                     </div>
                 </div>
                 <div class="layui-col-sm6">
                     <label class="layui-form-label"><span style="color:red">*</span>组别类型：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="plcGroupType" id="plcGroupType"
-                               lay-verify="required"
-                               autocomplete="off" placeholder="请输入组别类型">
+                        <select name="plcGroupType" id="plcGroupType" lay-filter="plcGroupType" lay-verify="required" type="select">
+                        </select>
                     </div>
                 </div>
             </div>
@@ -47,14 +46,14 @@
                     <label class="layui-form-label"><span style="color:red">*</span>组映射RFID名称：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="plcGroupRname" id="plcGroupRname"
-                               lay-verify="required"
+                               lay-verify="required|length20"
                                autocomplete="off" placeholder="请输入组映射RFID名称">
                     </div>
                 </div>
                 <div class="layui-col-sm6">
                     <label class="layui-form-label"><span style="color:red">*</span>RFID天线编码：</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" name="rfidNum" id="rfidNum" lay-verify="required"
+                        <input type="text" class="layui-input" name="rfidNum" id="rfidNum" lay-verify="required|length20"
                                autocomplete="off" placeholder="请输入RFID天线编码">
                     </div>
                 </div>
@@ -62,7 +61,7 @@
             <div class="layui-row layui-col-space10 layui-form-item">
                 <label class="layui-form-label">备注：</label>
                 <div class="layui-input-block">
-                    <textarea class="layui-textarea" placeholder="备注，不超过255个字符，可输入中英文、数字、符号" lay-verify="remarks"
+                    <textarea class="layui-textarea" placeholder="备注，不超过255个字符，可输入中英文、数字、符号" lay-verify="remarks|length255"
                               name="remarks" id="remarks"></textarea>
                 </div>
             </div>
@@ -110,8 +109,23 @@
     //过滤字段
     var hiddenFields = [];
     var win = null;
+    layui.admin.renderDictSelect({
+        elem: "#plcGroupType",
+        dictTypeId: "plc_group_type"
+    });
     form.render();
-
+    form.verify({
+        length20: function(value, item){ //value：表单的值、item：表单的DOM对象
+            if(value.length>20){
+                return '字数已达上限';
+            }
+        },
+        length255: function(value, item){ //value：表单的值、item：表单的DOM对象
+            if(value.length>255){
+                return '字数已达上限';
+            }
+        }
+    });
     function SetData(data) {
         win = data.win ? data.win : window;
     }
@@ -204,7 +218,6 @@
         id: "plcParam",
         data: [],
         limit: 99999,
-        height: "full-" + getFullSize(),
         colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;
@@ -315,6 +328,18 @@
                         data: Data
                     });
                 }
+            }
+        }
+    })
+    table.on('edit(plcParam)',function (obj) {
+        var that = this;
+        var reg = /^\d+$|^\d*\.\d+$/;
+        if(that.parentElement.cellIndex==4||that.parentElement.cellIndex==5){
+            var oldText = $(that).prev().text();
+            if(!reg.test(obj.value)){
+                top.layer.alert("数量必须为整数!",{icon : 2, title : '系统提示'});
+                $(that).val(oldText);
+                return;
             }
         }
     })

@@ -157,14 +157,14 @@
                     <label class="layui-form-label">单片机总长度：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="chipLength" id="chipLength"
-                               autocomplete="off" lay-verify=”int” value="0">
+                               autocomplete="off" lay-verify="number|length9" value="0">
                     </div>
                 </div>
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">比例：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="scale" id="scale"
-                               autocomplete="off" lay-verify=”int” value="0">
+                               autocomplete="off" lay-verify="number|length9" value="0">
                     </div>
                 </div>
             </div>
@@ -173,21 +173,21 @@
                     <label class="layui-form-label">系数：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="ratio" id="ratio"
-                               autocomplete="off" lay-verify=”int” value="0">
+                               autocomplete="off" lay-verify="number|length9" value="0">
                     </div>
                 </div>
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">数采检查参数：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="checkParam" id="checkParam"
-                               autocomplete="off"lay-verify=”int” value="0">
+                               autocomplete="off"lay-verify="number|length9" value="0">
                     </div>
                 </div>
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">放卷卸料设定卷径：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="rollDiameter" id="rollDiameter"
-                               autocomplete="off"lay-verify=”int” value="0">
+                               autocomplete="off"lay-verify="number|length9" value="0">
                     </div>
                 </div>
             </div>
@@ -196,15 +196,17 @@
                     <label class="layui-form-label">标签验证周期：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="lableCycle" id="lableCycle"
-                               autocomplete="off"lay-verify=”int” value="0">
+                               autocomplete="off"lay-verify="number|length9" value="0">
                     </div>
                 </div>
                 <div class="layui-col-sm4">
                     <label class="layui-form-label">防串读监测时间：</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" name="monitorDate" id="monitorDate"
-                               autocomplete="off" lay-verify=”int” value="0">
-
+                               autocomplete="off" lay-verify="number|length9" value="0">
+                        <lable style="position:absolute;top:10px;left:220px;height:37px">
+                            S
+                        </lable>
                     </div>
                 </div>
             </div>
@@ -298,6 +300,7 @@
             "equipmentId": pointDispose.equipmentId,
             "equipmentIp":pointDispose.equipmentIp,
             "equipmentContinuePort": pointDispose.equipmentContinuePort,
+            "protocolCommunication": pointDispose.protocolCommunication,
             "equipmentName":pointDispose.equipmentName,
             "factoryName":pointDispose.factoryName,
             "production": pointDispose.production,
@@ -484,6 +487,8 @@
                 success: function (layero, index) {
                     var dataJson = {
                         win: window,
+                        ipAddr: document.getElementById("equipmentIp").value,
+                        ipPort: document.getElementById("equipmentContinuePort").value,
                     };
                     layero.find("iframe")[0].contentWindow.SetData(dataJson);
                 },

@@ -7,6 +7,7 @@ import com.zimax.mcrs.monitor.pojo.EquipmentStatus;
 import com.zimax.mcrs.monitor.pojo.SoftwareRunStatus;
 import com.zimax.mcrs.monitor.pojo.vo.GroupByDate;
 import com.zimax.mcrs.monitor.pojo.vo.GroupByProduction;
+import com.zimax.mcrs.monitor.pojo.vo.WarnTotalInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,6 +63,13 @@ public class AccessMonitorService {
         }
         return groupByDateList;
 
+    }
+
+    public int getWarnTotal() {
+        return accessMonitorMapper.getWarnTotal();
+    }
+    public WarnTotalInfo getWarnAHtotal() {
+        return accessMonitorMapper.getWarnAHtotal();
     }
 
 }

@@ -72,7 +72,7 @@ public interface DictMapper {
      *
      * @param dictId 字典项代码
      */
-    void removeDict(String dictId);
+    void removeDict(@Param("dictId") String dictId,@Param("dictTypeId")String dictTypeId);
 
     /**
      * 批量删除字典类型

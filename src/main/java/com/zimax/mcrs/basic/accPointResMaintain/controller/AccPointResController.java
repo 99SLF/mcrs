@@ -88,6 +88,9 @@ public class AccPointResController {
         return Result.success();
 
     }
+    @GetMapping("/getCount")
+    public Result<?> getCount() {
+        return Result.success(accPointResService.count(null,null,null,null));
 
-
+    }
 }
