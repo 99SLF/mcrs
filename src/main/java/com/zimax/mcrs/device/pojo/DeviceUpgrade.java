@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * 终端升级信息
  *
@@ -58,7 +60,7 @@ public class DeviceUpgrade {
     /**
      * 版本更改时间
      */
-    private String versionUpdateTime;
+    private Date versionUpdateTime;
 
 
 }

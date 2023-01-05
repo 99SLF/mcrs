@@ -131,6 +131,74 @@
             });
         },
 
+        upgrade: function () {
+            var checkStatus = table.checkStatus("LAY-app-device-list-reload");
+                var data = checkStatus.data;
+                if (data.length == 0) {
+                    layer.msg("请至少选中一条记录！");
+                }
+                if (data.length > 0) {
+                    var deviceIds = new Array();
+                    for (var i = 0; i < data.length; i++) {
+                        deviceIds[i] = data[i].deviceId;
+                    }
+                    layer.confirm("确定升级所选终端？", {
+                        icon: 3,
+                        title: "系统提示"
+                    }, function (index) {
+                        top.layer.open({
+                            //弹窗
+                            type: 2,
+                            title: "选择更新版本",
+                            content: "<%=request.getContextPath() %>/update/update_package_selectVersion.jsp",
+                            area: ["800px", "560px"],
+                            resize: false,
+                            btn: ["确定", "取消"],
+                            success: function(layero, index) {
+                                    var dataJson = {
+                                        win: window,
+                                        deviceIds: deviceIds
+                                    };
+                                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                            },
+                            yes: function(index, layero) {
+                                var submit = layero.find("iframe").contents().find("#upgrade");
+                                submit.click();
+
+                                //top.layer.close(index);
+                                <%--top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");--%>
+                            }
+                        });
+                        layer.close(index);
+                        table.reload("LAY-app-device-list-reload");
+                    });
+        }
+
+        },
+        //升级跳转
+        <%--upgrade: function () {--%>
+        <%--    var checkStatus = table.checkStatus("LAY-app-device-list-reload");--%>
+        <%--    var data = checkStatus.data;--%>
+        <%--    if (data.length == 0) {--%>
+        <%--        layer.msg("请至少选中一条记录！");--%>
+        <%--    }--%>
+        <%--    if (data.length > 0) {--%>
+        <%--        var deviceIds = new Array();--%>
+        <%--        for (var i = 0; i < data.length; i++) {--%>
+        <%--            deviceIds[i] = data[i].deviceId;--%>
+        <%--        }--%>
+        <%--        layer.confirm("确定升级所选终端？", {--%>
+        <%--            icon: 3,--%>
+        <%--            title: "系统提示"--%>
+        <%--        }, function (index) {--%>
+        <%--            top.layui.index.openTabsPage("<%=request.getContextPath() %>/update/update_package_selectVersion.jsp?deviceIds=" + deviceIds.toString().replace(",","_"), "选择更新包");--%>
+        <%--            layer.close(index);--%>
+        <%--            table.reload("LAY-app-device-list-reload");--%>
+        <%--        });--%>
+
+        <%--    }--%>
+        <%--},--%>
+
         //批量删除
         batchdel: function () {
             var checkStatus = table.checkStatus("LAY-app-device-list-reload");
@@ -179,61 +247,6 @@
                         }
                     });
                 });
-            }
-        },
-        //升级跳转
-        upgrade: function () {
-            var checkStatus = table.checkStatus("LAY-app-device-list-reload");
-            var data = checkStatus.data;
-            if (data.length == 0) {
-                layer.msg("请至少选中一条记录！");
-            }
-            if (data.length > 0) {
-                var deviceIds = new Array();
-                for (var i = 0; i < data.length; i++) {
-                    deviceIds[i] = data[i].deviceId;
-                }
-                layer.confirm("确定升级所选终端？", {
-                    icon: 3,
-                    title: "系统提示"
-                }, function (index) {
-                    // top.layer.clone(index);
-                    top.layui.index.openTabsPage("<%=request.getContextPath() %>/update/update_package_selectVersion.jsp?deviceIds=" + deviceIds.toString().replace(",","_"), "选择更新包");
-                    layer.close(index);
-                    table.reload("LAY-app-device-list-reload");
-                    <%--$.ajax({--%>
-                    <%--    url: "<%= request.getContextPath() %>/equipment/device/batchDelete",--%>
-                    <%--    type: "DELETE",--%>
-                    <%--    data: JSON.stringify(deviceIds),--%>
-                    <%--    cache: false,--%>
-                    <%--    contentType: "text/json",--%>
-                    <%--    success: function (result) {--%>
-                    <%--        if (result.exception) {--%>
-                    <%--            layer.alert(result.exception.message, {--%>
-                    <%--                icon: 2,--%>
-                    <%--                title: "系统提示"--%>
-                    <%--            });--%>
-                    <%--        } else if (result) {--%>
-                    <%--            layer.msg("删除成功", {--%>
-                    <%--                icon: 1,--%>
-                    <%--                time: 2000--%>
-                    <%--            }, function () {--%>
-                    <%--                table.reload("LAY-app-device-list-reload");--%>
-                    <%--            });--%>
-                    <%--        } else {--%>
-                    <%--            layer.msg("删除失败");--%>
-                    <%--        }--%>
-
-                    <%--    },--%>
-                    <%--    error: function (jqXHR, textStatus, errorThrown) {--%>
-                    <%--        layer.msg(jqXHR.responseText, {--%>
-                    <%--            time: 2000,--%>
-                    <%--            icon: 5--%>
-                    <%--        });--%>
-                    <%--    }--%>
-                    <%--});--%>
-                });
-
             }
         },
     };

@@ -32,6 +32,14 @@ public interface UpdateUploadMapper {
      * @return
      */
     List<UpdateUpload> getUpdateUpload(Map map);
+
+    /**
+     * 通过更新包编号获取更新包信息
+     * @param
+     * @return
+     */
+     UpdateUpload getUpdateUploadRecord(int uploadId);
+
     /**
      * 批量删除更新包数据
      * @param

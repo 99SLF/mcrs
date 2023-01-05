@@ -1,7 +1,10 @@
 package com.zimax.mcrs.device.mapper;
 
 import com.zimax.mcrs.device.pojo.Device;
+import com.zimax.mcrs.device.pojo.DeviceEquipmentVo;
 import com.zimax.mcrs.device.pojo.DeviceVo;
+import com.zimax.mcrs.device.pojo.Equipment;
+import com.zimax.mcrs.update.pojo.UpdateUpload;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -73,5 +76,13 @@ public interface DeviceMapper {
      * 检查当前APPId是否存在
      */
     int checkAPPId(@Param("APPId") String APPId);
+
+
+    /**
+     * 通过终端主键获取设备信息
+     * @param
+     * @return
+     */
+    DeviceEquipmentVo getEquipment(int deviceId);
 
 }

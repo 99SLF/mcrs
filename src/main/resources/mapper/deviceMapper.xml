@@ -92,6 +92,15 @@
         where app_id = MD5(#{APPId})
     </select>
 
+    <select id="getEquipment" resultType="com.zimax.mcrs.device.pojo.DeviceEquipmentVo">
+        SELECT *
+        FROM
+            eqi_device a
+                LEFT JOIN  eqi_equipment b
+                           ON a.equipment_int = b.equipment_int
+        WHERE device_id = #{deviceId}
+
+    </select>
 
 
 </mapper>

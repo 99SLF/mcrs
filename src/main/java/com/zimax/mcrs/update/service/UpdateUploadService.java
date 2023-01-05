@@ -137,5 +137,16 @@ public class UpdateUploadService {
 
     }
 
+    /**
+     * 通过更新包id获取更新包信息
+     * @param
+     * @return
+     */
+    public UpdateUpload getUpdateUploadRecord(int uploadId) {
+
+        return updateUploadMapper.getUpdateUploadRecord(uploadId);
+    }
+
+
 
 }

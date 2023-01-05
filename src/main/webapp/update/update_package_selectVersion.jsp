@@ -55,10 +55,10 @@
 
             <table id="LAY-app-device-list" lay-filter="LAY-app-device-list"></table>
 
-            <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form layui-card-header layuiadmin-card-header-auto layui-hide">
                 <div class="layui-form-item">
                     <div class="layui-inline" style="float: right">
-                        <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn" data-type="upgrade">确定
+                        <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn" data-type="upgrade" id="upgrade">确定
                         </button>
                         <button class="layui-btn layui-btn-normal layui-btn ">取消
                         </button>
@@ -86,8 +86,15 @@
     var util = layui.util;
 
     //获取传过来的终端主键
-    var deviceIds = "<%=request.getParameter("deviceIds")%>";
+    <%--var deviceIds = "<%=request.getParameter("deviceIds")%>";--%>
 
+    var deviceIds = [];
+    var win = null;
+
+    function SetData(dataJson) {
+        win = dataJson.win ? dataJson.win : window;
+        deviceIds = dataJson.deviceIds ? dataJson.deviceIds : [];
+    }
     //全局参数
     var req_data;
 
@@ -169,8 +176,9 @@
         var fluid = $(".layui-fluid");
         var header = $(".layui-card-header");
         var cardbody = $(".layui-card-body");
-        var form = $(".layui-form");
-        return form.outerHeight(true) + header.outerHeight(true) + (cardbody.outerHeight(true) - cardbody.height()) + (fluid.outerHeight(true) - fluid.height()) + 2;
+        //var form = $(".layui-form");
+       // return form.outerHeight(true) + header.outerHeight(true) + (cardbody.outerHeight(true) - cardbody.height()) + (fluid.outerHeight(true) - fluid.height()) + 2;
+        return  header.outerHeight(true) + (cardbody.outerHeight(true) - cardbody.height()) + (fluid.outerHeight(true) - fluid.height()) + 2;
     }
 
 
@@ -308,7 +316,6 @@
 
         //升级跳转
         upgrade: function () {
-            debugger;
             var checkStatus = table.checkStatus("LAY-app-device-list-reload");
             var data = checkStatus.data;
             if (data.length == 0) {
@@ -317,12 +324,14 @@
             if (data.length > 0) {
                 var uploadIds = data[0].uploadId;
                 var ids =new Array();
-                ids = deviceIds.split("_");
+                //ids = deviceIds.split("_");
+                ids = deviceIds
+
 
                 //组合成json数据
                 var json = {};
-                json.ids = ids;
-                json.upload = uploadIds;
+                json.DeviceIds = ids;
+                json.UploadId = uploadIds;
                 layer.confirm("确定升级所选更新版本？", {
                     icon: 3,
                     title: "系统提示"
@@ -340,14 +349,14 @@
                                     title: "系统提示"
                                 });
                             } else if (result) {
-                                layer.msg("删除成功", {
+                                layer.msg("选择成功", {
                                     icon: 1,
                                     time: 500
                                 }, function () {
                                     table.reload("LAY-app-device-list-reload");
                                 });
                             } else {
-                                layer.msg("删除失败！", {
+                                layer.msg("选择失败！", {
                                     icon: 2,
                                     time: 2000
                                 });
@@ -360,8 +369,10 @@
                             });
                         }
                     });
+
+                    var index = top.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    top.layer.close(index); //再执行关闭,先关闭选择的弹窗，不然会top占用，有关闭顺序
                     top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");
-                    layer.close(index);
                     table.reload("LAY-app-device-list-reload");
                 });
 

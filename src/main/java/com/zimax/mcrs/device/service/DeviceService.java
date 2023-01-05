@@ -5,7 +5,10 @@ import com.zimax.components.coframe.rights.pojo.Role;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.device.mapper.DeviceMapper;
 import com.zimax.mcrs.device.pojo.Device;
+import com.zimax.mcrs.device.pojo.DeviceEquipmentVo;
 import com.zimax.mcrs.device.pojo.DeviceVo;
+import com.zimax.mcrs.device.pojo.Equipment;
+import com.zimax.mcrs.update.pojo.UpdateUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -115,6 +118,16 @@ public class DeviceService {
     }
 
 
+
+    /**
+     * 通过终端主键id获取设备信息信息
+     * @param
+     * @return
+     */
+    public DeviceEquipmentVo getEquipment(int deviceId) {
+
+        return deviceMapper.getEquipment(deviceId);
+    }
 
 
 }

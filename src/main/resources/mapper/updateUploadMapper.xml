@@ -78,4 +78,11 @@
     LIMIT 1;
     </select>
 
+    <!--获取一个更新包信息-->
+    <select id="getUpdateUploadRecord" resultType="com.zimax.mcrs.update.pojo.UpdateUpload">
+        select *
+        from upd_upload
+        where upload_id = #{uploadId}
+    </select>
+
 </mapper>
