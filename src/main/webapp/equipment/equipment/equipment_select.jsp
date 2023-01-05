@@ -27,9 +27,11 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">设备属性：</label>
+                    <label class="layui-form-label">设备类型：</label>
                     <div class="layui-input-inline">
-                        <input name="equipmentProperties" class="layui-input" onenter="search"/>
+                        <select name="equipTypeName" id="equipTypeName" lay-filter="" type="select" onenter="search">
+                            <option value=""></option>
+                        </select>
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -52,6 +54,14 @@
     </div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
+
+<script>
+    layui.config({
+        base: "<%=request.getContextPath()%>/"
+    });
+</script>
+
+<script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
 <script type="text/javascript">
     var layer = layui.layer;
     var table = layui.table;
@@ -61,13 +71,20 @@
     form.render();
     var deviceData = {};
 
+    //获取设备类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#equipTypeName",
+        dictTypeId: "EQUIPMENT_PROPERTY",
+    });
+    form.render();
+
     //监听搜索
     form.on("submit(LAY-app-deviceInfo-search)", function (data) {
         var field = data.field;
         var dataJson = {
             "equipmentInt": field.equipmentInt,
             "equipmentId": field.equipmentId,
-            "equipmentProperties": field.equipmentProperties,
+            "equipTypeName": field.equipTypeName,
             "isEquipment": "1"
         };
         table.reload("LAY-app-device-list", {
@@ -138,17 +155,20 @@
             align: "center",
             minWidth: 100
         }, {
-            field: "equipmentProperties",
-            title: "设备属性",
+            field: "equipTypeName",
+            title: "设备类型",
             align: "center",
-            minWidth: 120
+            minWidth: 120,
+            templet:function(d) {
+                return layui.admin.getDictText("EQUIPMENT_PROPERTY", d.equipTypeName);
+            }
         }, {
             field: "equipmentInstallLocation",
             title: "设备安装位置",
             align: "center",
             minWidth: 150
         }, {
-            field: "mesContinueIp",
+            field: "equipmentIp",
             title: "设备连接IP",
             align: "center",
             minWidth: 150,

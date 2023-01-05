@@ -39,71 +39,123 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>设备属性:</label>
+            <label class="layui-form-label">设备安装位置:</label>
             <div class="layui-input-block">
-                <select name="equipmentProperties" id="equipmentProperties" lay-verify="required"lay-filter="required" type="select">
-                    <option value=""></option>
-                </select>
+                <input id="equipmentInstallLocation" type="text" name="equipmentInstallLocation"
+                       lay-verify="" placeholder="请输入设备安装位置" autocomplete="off" class="layui-input">
             </div>
         </div>
-
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>设备连接端口:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>设备类型:</label>
             <div class="layui-input-block">
-                <input id="equipmentContinuePort" type="text" name="equipmentContinuePort"
-                       lay-verify="required|equipmentContinuePort"
-                       placeholder="请输入设备连接端口" autocomplete="off" class="layui-input">
+                <input id="equipTypeId" name="equipTypeId" type="hidden"/>
+                <input type="text" class="layui-input" name="equipTypeName" id="equipTypeName"
+                       lay-verify="required"
+                       autocomplete="off" placeholder="" readonly>
+                <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="selectequipType"
+                        style="position:absolute;top:0px;right:0px;height:37px"><i
+                        class="layui-icon layui-icon-more"></i></button>
             </div>
         </div>
     </div>
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">设备安装位置:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>MES连接IP:</label>
             <div class="layui-input-block">
-                <input id="equipmentInstallLocation" type="text" name="equipmentInstallLocation"
-                       lay-verify=""
-                       placeholder="请输入设备安装位置" autocomplete="off" class="layui-input">
+                <input id="mesIpAddress" type="text" name="mesIpAddress" lay-verify="required"
+                       placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
 
-
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>MES连接IP:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>支持通信协议:</label>
             <div class="layui-input-block">
-                <input id="mesContinueIp" type="text" name="mesContinueIp" lay-verify="required|mesContinueIp"
-                       placeholder="请输入MES连接IP" autocomplete="off" class="layui-input">
+                <input id="protocolCommunication" type="text" name="protocolCommunication" lay-verify="required"
+                       placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
     </div>
+
+    <div class="layui-form-item layui-row layui-col-space10">
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><span style="color:red">*</span>设备连接端口:</label>
+            <div class="layui-input-block">
+                <input id="equipmentContinuePort" type="text" name="equipmentContinuePort" lay-verify="required"
+                       placeholder="" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><span style="color:red">*</span>设备连接IP:</label>
+            <div class="layui-input-block">
+                <input id="equipmentIp" type="text" name="equipmentIp" lay-verify="required"
+                       placeholder="" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-row layui-col-space10">
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><span style="color:red">*</span>接入点名称:</label>
+            <div class="layui-input-block">
+                <input id="accPointResId" name="accPointResId" type="hidden"/>
+                <input type="text" class="layui-input" name="accPointResName" id="accPointResName"
+                       lay-verify="required"
+                       autocomplete="off" placeholder="" readonly>
+                <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="selectAcc"
+                        style="position:absolute;top:0px;right:0px;height:37px"><i
+                        class="layui-icon layui-icon-more"></i></button>
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label">基地代码:</label>
+            <div class="layui-input-block">
+                <input id="matrixCode" type="text" name="matrixCode" lay-verify=""
+                       placeholder="" autocomplete="off" class="layui-input" readonly>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-row layui-col-space10">
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><span style="color:red">*</span>工厂代码:</label>
+            <div class="layui-input-block">
+                <input id="factoryCode" type="text" name="factoryCode" lay-verify="required"
+                       placeholder="" autocomplete="off" class="layui-input" readonly>
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <label class="layui-form-label">使用工序:</label>
+            <div class="layui-input-block">
+                <input id="processName" type="text" name="processName" lay-verify=""
+                       placeholder="" autocomplete="off" class="layui-input" readonly>
+            </div>
+        </div>
+    </div>
+
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>是否启用:</label>
             <div class="layui-input-block">
-                <select name="enabledState" id="enabledState" lay-verify="required" type="select">
+                <select name="enable" id="enable" lay-verify="required" type="select">
                     <option value="on">是</option>
                     <option value="off">否</option>
                 </select>
             </div>
         </div>
 
-<%--        <div class="layui-col-sm6">--%>
-<%--            <label class="layui-form-label">接入点名称:<span style="color:red">*</span></label>--%>
-<%--            <div class="layui-input-block">--%>
-<%--                <input id="assessType" type="text" name="assessType" lay-verify=""--%>
-<%--                       placeholder="请输入接入点名称" autocomplete="off" class="layui-input">--%>
-<%--            </div>--%>
-<%--        </div>--%>
     </div>
     <div class="layui-form-item layui-row layui-col-space10">
-    <div class="layui-col-sm12">
-        <label class="layui-form-label">备注:</label>
-        <div class="layui-input-block">
+        <div class="layui-col-sm12">
+            <label class="layui-form-label">备注:</label>
+            <div class="layui-input-block">
             <textarea cols="50" rows="10" style="width:100%;height:100px" name="remarks" id="remarks" autocomplete="off"
                       class="layui-input" lay-verify="remarks"></textarea>
+            </div>
         </div>
-    </div>
     </div>
 
     <div class="layui-input-block">
@@ -151,15 +203,15 @@
     function SetData(data) {
         win = data.win ? data.win : window;
     }
+    //
+    // //获取设备类型的下拉值
+    // layui.admin.getDictText("ORDER_STATUS",data.orderStatus);
+    // layui.admin.renderDictSelect({
+    //     elem: "#equipTypeName",
+    //     dictTypeId: "EQUIPMENT_PROPERTY",
+    // });
+    // form.render();
 
-    //获取设备属性的下拉值
-    layui.admin.renderDictSelect({
-        elem: "#equipmentProperties",
-        dictTypeId: "EQUIPMENT_PROPERTY",
-    });
-    //设置设备属性的默认值
-    $("#equipmentProperties").val("101");
-    form.render();
 
     // 判断字符
     form.verify({
@@ -191,53 +243,56 @@
     });
 
     form.render();
-    // //日期
-    // laydate.render({
-    // 	elem: '#invaldate',
-    // 	format: 'yyyy-MM-dd',
-    // 	//解决时间选择器一闪而过的情况
-    // 	trigger: 'click',
-    // });
 
-    // var startDate = laydate.render({
-    // 	elem: '#star_time',
-    // 	//设置日期的类型
-    // 	type: 'date',
-    // 	trigger:'click',
-    // 	done: function(value, date) {
-    // 		if (value != "") {
-    // 			date.month = date.month - 1;
-    // 			date.date = date.date + 1;
-    // 			endDate.config.min = date;
-    // 		} else {
-    // 			endDate.config.min = startDate.config.min;
-    // 		}
-    // 	},
-    // });
+    //选择设备类型入口
+    $("#selectequipType").click(function () {
+        top.layer.open({
+            type: 2,
+            title: "选择设备类型",
+            area: ["850px", "470px"],
+            btn: ["确定", "取消"],
+            content: "<%= request.getContextPath() %>/basic/equipType/equipType_select.jsp",
+            yes: function (index, layero) {
+                var data = layero.find('iframe')[0].contentWindow.getData();
+                $("#equipTypeId").val(data.equipTypeId);
+                $("#equipTypeName").val(layui.admin.getDictText("EQUIPMENT_PROPERTY",data.equipTypeName));
+                $("#mesIpAddress").val(data.mesIpAddress);
+                $("#protocolCommunication").val(data.protocolCommunication);
+                top.layer.close(index);
+                check();
+                Exist();
+            }
+        });
+    });
 
-    // var endDate = laydate.render({
-    // 	//绑定的控件名称
-    // 	elem: '#end_time',
-    // 	//设置日期的类型
-    // 	type: 'date',
-    // 	//theme: '#2c78da',
-    // 	trigger: 'click',
-    // 	done: function(value, date) {
-    // 		if (value != "") {
-    // 			date.month = date.month - 1;
-    // 			date.date = date.date - 1;
-    // 			startDate.config.max = date;
-    // 		} else {
-    // 			startDate.config.max = endDate.config.max;
-    // 		}
-    // 	}
-    // });
+    //选择接入点资源入口
+    $("#selectAcc").click(function () {
+        top.layer.open({
+            type: 2,
+            title: "选择接入点资源",
+            area: ["850px", "470px"],
+            btn: ["确定", "取消"],
+            content: "<%= request.getContextPath() %>/basic/accPointResMaintain/accPointRes_select.jsp",
+            yes: function (index, layero) {
+                var data = layero.find('iframe')[0].contentWindow.getData();
+                $("#accPointResId").val(data.accPointResId);
+                $("#accPointResName").val(data.accPointResName);
+                $("#matrixCode").val(data.matrixCode);
+                $("#factoryCode").val(data.factoryCode);
+                $("#processName").val(data.processName);
+                top.layer.close(index);
+                check();
+                Exist();
+            }
+        });
+    });
+
     //判断设备资源号是否已存在
-    $("#equipmentId").blur(function() {
+    $("#equipmentId").blur(function () {
         var equipmentId = $("#equipmentId").val();
         if (equipmentId != null && equipmentId != "") {
             $.ajax({
-                url: "<%= request.getContextPath() %>/equipment/equipment/check/isExist?equipmentId="+equipmentId,
+                url: "<%= request.getContextPath() %>/equipment/equipment/check/isExist?equipmentId=" + equipmentId,
                 type: "GET",
                 cache: false,
                 contentType: "text/json",
@@ -257,7 +312,7 @@
 
     //监听提交
 
-    form.on("submit(layuiadmin-app-form-submit)", function(data) {
+    form.on("submit(layuiadmin-app-form-submit)", function (data) {
         if (submit == false) {
             submit = true;
             var submitData = JSON.stringify(data.field);
@@ -268,11 +323,11 @@
                     data: submitData,
                     cache: false,
                     contentType: 'text/json',
-                    success: function(result) {
+                    success: function (result) {
                         layer.msg("添加成功", {
                             icon: 1,
                             time: 2000
-                        }, function() {
+                        }, function () {
                             var index = top.layer.getFrameIndex(window.name);
                             win.layui.table.reload("LAY-app-equipment-list-reload");
                             top.layer.close(index);
@@ -280,7 +335,7 @@
                         });
                     }
                 });
-            } else if ( isExist == true) {
+            } else if (isExist == true) {
                 layer.msg("设备资源号已存在，请重新输入", {
                     icon: 2,
                     time: 2000

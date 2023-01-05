@@ -115,7 +115,7 @@
                 type: 2,
                 title: "设备新建",
                 content: "<%= request.getContextPath() %>/equipment/equipment/equipment_add.jsp",
-                area: ["1000px", "560px"],
+                area: ["1000px", "600px"],
                 resize: false,
                 btn: ["确定", "取消"],
                 success: function (layero, index) {
@@ -295,7 +295,13 @@
             title: "设备资源号",
             align: "center",
             minWidth: 120,
-            hide: isHidden("equipmentId")
+            hide: isHidden("equipmentId"),
+            //打开监听
+            event: "view",
+            //监听打开详情页面
+            templet: function (data) {
+                return '<span style="color: #09bbfd">' + data.equipmentId +'</span>';
+            }
         }, {
             field: "equipmentName",
             title: "设备名称",
@@ -303,32 +309,32 @@
             minWidth: 120,
             hide: isHidden("equipmentName")
         }, {
-            field: "enabledState",
-            title: "是否启用",
-            align: "center",
-            minWidth: 120,
-            hide: isHidden("enabledState")
-        }, {
-            field: "equipmentProperties",
-            title: "设备属性",
-            align: "center",
-            minWidth: 100,
-            hide: isHidden("equipmentProperties"),
-            templet:function(d) {
-                return layui.admin.getDictText("EQUIPMENT_PROPERTY", d.equipmentProperties);
-            }
-        }, {
             field: "equipmentInstallLocation",
             title: "设备安装位置",
             align: "center",
-            minWidth: 150,
+            minWidth: 120,
             hide: isHidden("equipmentInstallLocation")
         }, {
-            field: "equipmentIp",
-            title: "设备连接Ip",
+            field: "equipTypeName",
+            title: "设备类型",
+            align: "center",
+            minWidth: 100,
+            hide: isHidden("equipTypeName"),
+            templet:function(d) {
+                return layui.admin.getDictText("EQUIPMENT_PROPERTY", d.equipTypeName);
+            }
+        }, {
+            field: "mesIpAddress",
+            title: "MES连接IP",
             align: "center",
             minWidth: 150,
-            hide: isHidden("equipmentIp")
+            hide: isHidden("mesIpAddress")
+        }, {
+            field: "protocolCommunication",
+            title: "支持通信协议",
+            align: "center",
+            minWidth: 150,
+            hide: isHidden("protocolCommunication")
         }, {
             field: "equipmentContinuePort",
             title: "设备连接端口",
@@ -336,36 +342,54 @@
             minWidth: 150,
             hide: isHidden("equipmentContinuePort")
         }, {
-            field: "mesContinueIp",
-            title: "MES连接IP",
+            field: "equipmentIp",
+            title: "设备连接IP",
             align: "center",
             minWidth: 120,
-            hide: isHidden("mesContinueIp")
+            hide: isHidden("equipmentIp")
         }, {
-            field: "protocolCommunication",
-            title: "通讯协议",
+            field: "accPointResName",
+            title: "接入点名称",
             align: "center",
             minWidth: 120,
-            hide: isHidden("protocolCommunication")
+            hide: isHidden("accPointResName")
         }, {
+            field: "matrixCode",
+            title: "基地代码",
+            align: "center",
+            minWidth: 100,
+            hide: isHidden("matrixCode")
+        }, {
+            field: "factoryCode",
+            title: "工厂代码",
+            align: "center",
+            minWidth: 120,
+            hide: isHidden("factoryCode")
+        }, {
+            field: "processName",
+            title: "使用工序",
+            align: "center",
+            minWidth: 100,
+            hide: isHidden("processName")
+        }, {
+            field: "enable",
+            title: "是否启用",
+            align: "center",
+            minWidth: 100,
+            hide: isHidden("enable")
+        },{
             field: "creator",
             title: "创建人",
             align: "center",
             minWidth: 100,
             hide: isHidden("creator")
-        }, {
+        },{
             field: "createTime",
             title: "创建时间",
             align: "center",
-            minWidth: 120,
+            minWidth: 150,
             hide: isHidden("createTime")
-        }, {
-            field: "remarks",
-            title: "备注",
-            align: "center",
-            minWidth: 100,
-            hide: isHidden("remarks")
-        }, {
+        },{
             title: "操作",
             align: "center",
             fixed: "right",
@@ -438,6 +462,28 @@
                         });
                     }
                 });
+            });
+        }
+        else if (e.event == "view") {
+            top.layer.open({
+                type: 2,
+                title: "查看日志删除规则详情",
+                content: "<%= request.getContextPath() %>/equipment/equipment/equipment_view.jsp",
+                area: ["1000px", "560px"],
+                resize: false,
+                // btn: ["确定", "取消"],
+                success: function (layero, index) {
+                    var dataJson = {
+                        data: data,
+                        win: window
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function (index, layero) {
+                    var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");
+                    edit.click();
+                }
+
             });
         }
     });
