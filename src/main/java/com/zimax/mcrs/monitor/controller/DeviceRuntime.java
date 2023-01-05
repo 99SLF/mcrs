@@ -29,8 +29,8 @@ public class DeviceRuntime {
      * @param limit       页码
      * @param equipmentId 设备资源号
      * @param APPId       APPId
-     * @param deviceSoType   终端软件类型
-     * @param deviceSoRuntime      终端软件运行状态
+     * @param deviceSoftwareType   终端软件类型
+     * @param deviceSoRunStatus      终端软件运行状态
      * @param order       排序方式
      * @param field       排序字段
      * @return 信息列表
@@ -41,10 +41,10 @@ public class DeviceRuntime {
     @GetMapping("/query")
     public Result<?> queryDeviceRuntime(String page, String limit,
                                      String equipmentId, String APPId,
-                                     String deviceSoType, String deviceSoRuntime,
+                                     String deviceSoftwareType, String deviceSoRunStatus,
                                      String order, String field) {
 
-        List DeviceRuntime = deviceRuntimeService.queryDeviceRuntime(page, limit, equipmentId, APPId, deviceSoType, deviceSoRuntime,order, field);
-        return Result.success(DeviceRuntime, deviceRuntimeService.countDR(equipmentId, APPId, deviceSoType, deviceSoRuntime));
+        List DeviceRuntime = deviceRuntimeService.queryDeviceRuntime(page, limit, equipmentId, APPId, deviceSoftwareType, deviceSoRunStatus,order, field);
+        return Result.success(DeviceRuntime, deviceRuntimeService.countDR(equipmentId, APPId, deviceSoftwareType, deviceSoRunStatus));
     }
 }

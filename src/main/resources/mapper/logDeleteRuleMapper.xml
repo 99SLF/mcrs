@@ -88,7 +88,7 @@
         where delete_rule_num = #{deleteRuleNum}
     </select>
 
-    <!--批量启用-->
+    <!--启用-->
     <update id="enable" parameterType="com.zimax.mcrs.basic.logDeleteRule.pojo.LogDeleteRule">
         update bas_log_delete_rule
         set enable = #{enable},
@@ -96,5 +96,18 @@
         update_time=#{updateTime}
         where rule_delete_id = #{ruleDeleteId}
     </update>
+
+    <!--查询当前日志删除启用规则是否唯一-->
+    <select id="checkEnable" resultType="int">
+        SELECT COUNT(*) FROM bas_log_delete_rule
+        where log_type = #{logType} AND `enable` = 'on'
+    </select>
+
+
+    <!-- 接口日志定时删除-->
+    <delete id="deleteInterfaceLog" parameterType="date">
+        delete from log_interface_log where create_time > #{interfaceLogTime}
+    </delete>
+
 
 </mapper>

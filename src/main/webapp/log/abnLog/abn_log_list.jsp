@@ -1,6 +1,6 @@
 <!--
-- Author(s): 李伟杰
-- Date: 2022-12-05 14:08:11
+- Author(s): 林俊杰
+- Date: 2023-1-4 16:06:11
 - Description:
 -->
 <%@page pageEncoding="UTF-8"%>
@@ -10,7 +10,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>终端状态</title>
+	<title>异常日志页面</title>
 	<link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
 	<link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css" />
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v1">
@@ -26,23 +26,38 @@
 		<div class="layui-form-item">
 
 			<div class="layui-inline">
+
 				<div class="layui-input-inline" >
 					<input type="text" name="equipmentId" value="" placeholder="请输入设备资源号" autocomplete="off" class="layui-input">
 				</div>
 			</div>
+
 			<div class="layui-inline">
+
 				<div class="layui-input-inline" >
-					<input type="text" name="APPId" value="" placeholder="请输入APPId" autocomplete="off" class="layui-input">
+					<input type="text" name="deviceName" value="" placeholder="请输入终端名称" autocomplete="off" class="layui-input">
 				</div>
 			</div>
+
 			<div class="layui-inline">
 				<div class="layui-input-inline" >
-					<input type="text" name="deviceSoftwareType" value="" placeholder="请输入终端软件类型" autocomplete="off" class="layui-input">
+					<select name="abnType" id="abnType" lay-filter="" type="select">
+						<option value=""></option>
+					</select>
 				</div>
 			</div>
+
 			<div class="layui-inline">
+
 				<div class="layui-input-inline" >
-					<input type="text" name="deviceSoRunStatus" value="" placeholder="请输入终端软件运行状态" autocomplete="off" class="layui-input">
+					<input type="text" name="abnLevel" value="" placeholder="请输入预警等级" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+
+			<div class="layui-inline">
+
+				<div class="layui-input-inline" >
+					<input type="text" name="exchangeTime" value="" placeholder="请选择交互时间" id="exchangeTime" autocomplete="off" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-inline layui-search">
@@ -65,29 +80,40 @@
 	</div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
+<script>
+	layui.config({
+		base: "<%=request.getContextPath()%>/"
+	});
+</script>
+<script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
+
 <script type="text/javascript">
 	var layer = layui.layer;
 	var table = layui.table;
 	var form = layui.form;
 	var $ = layui.jquery;
+
+	//时间工具类引用
+	var util =layui.util;
 	//过滤字段
 	var hiddenFields = [];
 	//功能名
 	var funName = "application_list";
 
 	var laydate = layui.laydate;
-
 	//日期时间选择器
-	// laydate.render({
-	// 	elem: '#test0'
-	// 	,type: 'datetime'
-	// });
-	//
-	// //日期时间选择器
-	// laydate.render({
-	// 	elem: '#test1'
-	// 	,type: 'datetime'
-	// });
+	laydate.render({
+		elem: '#exchangeTime'
+		,type: 'date'
+	});
+
+	//获取预警类型的下拉值
+	layui.admin.renderDictSelect({
+		elem: "#abnType",
+		dictTypeId: "WRANING_TYPE",
+	});
+	form.render();
+
 
 	//监听搜索
 	form.on("submit(LAY-app-rolelist-search)", function(data) {
@@ -172,8 +198,8 @@
 	table.render({
 		elem: "#LAY-app-application-list",
 		id: "LAY-app-application-list-reload",
-		url: "<%= request.getContextPath() %>/DeviceRuntime/query",
-		method: "GET",
+		url: "<%= request.getContextPath() %>/log/abnLog/query",
+		method: "get",
 		height: "full-" + getFullSize(),
 		page: true,
 		limit: 10,
@@ -196,6 +222,31 @@
 				}
 			});
 		},
+		// toolbar: "#toolbar",
+		// defaultToolbar: ["filter"],
+		// colHideChange: function(col, checked) {
+		// 	var field = col.field;
+		// 	var hidden = col.hide;
+		// 	$.ajax({
+		// 		url: "com.zimax.components.coframe.tools.ColsFilter.setHiddenField.biz.ext",
+		// 		type: "POST",
+		// 		data: JSON.stringify({
+		// 			hidden: hidden,
+		// 			colsFilter: {
+		// 				funName: funName,
+		// 				field: field
+		// 			}
+		// 		}),
+		// 		cache: false,
+		// 		contentType: "text/json",
+		// 		success: function(result) {
+		// 			if (result) {
+		// 			} else{
+		// 				layer.msg("列筛选失败");
+		// 			}
+		// 		}
+		// 	});
+		// },
 		limits: [10, 15, 20, 30],
 		parseData: function(res) {
 			return {
@@ -211,63 +262,74 @@
 			// 	type: "checkbox"
 			// },
 			{
+				field: "abnLogNum",
+				title: "日志编号",
+				align: "center",
+				// sort: true,
+				hide: isHidden("abnLogNum"),
+				minWidth: 100
+			}, {
+				//field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
+				field: "logType",
+				title: "日志类型",
+				align: "center",
+				minWidth: 100,
+				hide: isHidden("logType")
+
+			}, {
 				field: "equipmentId",
 				title: "设备资源号",
 				align: "center",
-				// sort: true,
 				hide: isHidden("equipmentId"),
-				minWidth: 120
+				minWidth: 100
+
 			}, {
-				//field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
 				field: "aPPId",
-				title: "APPID",
+				title: "APPId",
 				align: "center",
 				hide: isHidden("aPPId"),
-				minWidth: 120
+				minWidth: 150
 			}, {
-				field: "deviceSoftwareType",
-				title: "终端软件类型",
+				field: "deviceName",
+				title: "终端名称",
 				align: "center",
-				hide: isHidden("deviceSoftwareType"),
-				minWidth: 80
+				hide: isHidden("deviceName"),
+				minWidth: 100
 			}, {
-				field: "deviceSoRunStatus",
-				title: "软件运行",
-				align: "center",
-				hide: isHidden("deviceSoRunStatus"),
-				minWidth: 80
+				field: "abnTitle",
+				title: "预警标题",
+				align:"center",
+				hide: isHidden("abnTitle"),
+				minWidth: 100
+			}, {
+				field: "abnType",
+				title: "预警类型",
+				align:"center",
+				hide: isHidden("abnType"),
+				minWidth: 100,
+				templet: function (d) {
+					return layui.admin.getDictText("WRANING_TYPE", d.abnType);
+				}
+			}, {
+				field: "abnLevel",
+				title: "预警等级",
+				align:"center",
+				hide: isHidden("abnLevel"),
+				minWidth: 100
+			}, {
+				field: "abnContent",
+				title: "预警内容",
+				align:"center",
+				hide: isHidden("abnContent"),
+				minWidth: 100
+			}, {
+				field: "exchangeTime",
+				title: "交互时间",
+				align:"center",
+				hide: isHidden("exchangeTime"),
+				minWidth: 100
 			}
-			, {
-				field: "accessStatus",
-				title: "设备接入",
-				align: "center",
-				hide: isHidden("accessStatus"),
-				minWidth: 80
-			}, {
-				field: "deviceWarning",
-				title: "设备资源号累计终端告警",
-				align:"center",
-				hide: isHidden("deviceWarning"),
-				minWidth: 220
-			}, {
-				field: "cpuRate",
-				title: "cup运行率",
-				align:"center",
-				hide: isHidden("cpuRate"),
-				minWidth: 60
-			}, {
-				field: "storageRate",
-				title: "内存使用量",
-				align:"center",
-				hide: isHidden("storageRate"),
-				minWidth: 60
-			}, {
-				field: "errorRate",
-				title: "误读率",
-				align:"center",
-				hide: isHidden("errorRate"),
-				minWidth: 60
-			}
+
 		]]
 	});
 
@@ -276,6 +338,7 @@
 			height: "full-" + getFullSize()
 		});
 	});
+
 
 
 	$("body").on("click", ".layui-table-body table.layui-table tbody tr td", function() {

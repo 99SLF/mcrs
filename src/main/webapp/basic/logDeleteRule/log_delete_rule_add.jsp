@@ -300,7 +300,7 @@
         return false;
     });
 
-    //判断菜单代码是否已存在
+    //判断日志删除规则是否已存在
     $("#deleteRuleNum").blur(function() {
         var deleteRuleNum = $("#deleteRuleNum").val();
         if (deleteRuleNum != null && deleteRuleNum != "") {

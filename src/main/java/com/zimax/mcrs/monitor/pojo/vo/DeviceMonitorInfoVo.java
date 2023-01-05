@@ -70,7 +70,7 @@ public class DeviceMonitorInfoVo {
     private String accessStatus;
 
     /**
-     * cup使用率
+     * cup运行率
      */
     private String cpuRate;
 

@@ -5,7 +5,23 @@
 
     <!--    查询终端运行状态记录数-->
     <select id="countDR" resultType="int">
-        select count(*) from mon_access_status
+        SELECT COUNT(*)
+        FROM (
+        SELECT
+        a.app_id ,b.equipment_id ,a.device_software_type ,
+        d.access_status ,e.device_so_run_status,
+        e.cpu_rate ,e.storage_rate ,
+        e.error_rate ,
+        MAX(e.create_time) time ,
+        (SELECT COUNT(*) FROM mon_device_abn f WHERE f.equipment_id = b.equipment_id) as device_warning
+        FROM
+        eqi_device a
+        RIGHT JOIN eqi_equipment b on a.equipment_int = b.equipment_int
+        LEFT JOIN mon_soft_status e ON e.equipment_id = b.equipment_id
+        LEFT  JOIN mon_equipment_status d ON d.equipment_id = b.equipment_id
+        LEFT  JOIN mon_device_abn c ON c.equipment_id = b.equipment_id
+        GROUP BY  b.equipment_id
+        ) total
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and equipment_id like '%${equipmentId}%'
@@ -13,19 +29,60 @@
             <if test="APPId !=null and APPId !=''">
                 and app_id like '%${APPId}%'
             </if>
-            <if test="deviceSoType !=null and deviceSoType !=''">
-                and device_so_type like '%${deviceSoType}%'
+            <if test="deviceSoftwareType !=null and deviceSoftwareType !=''">
+                and device_software_type like '%${deviceSoftwareType}%'
             </if>
-            <if test="deviceSoRuntime !=null and deviceSoRuntime !=''">
-                and device_so_runtime like '%${deviceSoRuntime}%'
+            <if test="deviceSoRunStatus !=null and deviceSoRunStatus !=''">
+                and device_so_run_status like '%${deviceSoRunStatus}%'
             </if>
         </where>
     </select>
+<!--    &lt;!&ndash;查询终端软件运行状态&ndash;&gt;-->
+<!--    <select id="queryDeviceRuntime" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.vo.DeviceMonitorInfoVo">-->
+<!--        SELECT * ,COUNT(*) AS device_warning-->
+<!--        FROM (SELECT * FROM mon_access_status ORDER BY create_time DESC) a-->
+<!--        GROUP BY equipment_id-->
+<!--        -->
+<!--        <trim prefix="having" suffixOverrides="and">-->
+<!--            <if test="equipmentId != null and equipmentId !=''">-->
+<!--                equipment_id = #{equipmentId} and-->
+<!--            </if>-->
+<!--            <if test="APPId != null and APPId !=''">-->
+<!--                app_id = #{APPId} and-->
+<!--            </if>-->
+<!--            <if test="deviceSoType != null and deviceSoType !=''">-->
+<!--                device_so_type = #{deviceSoType} and-->
+<!--            </if>-->
+<!--            <if test="deviceSoRuntime != null and deviceSoRuntime !=''">-->
+<!--                device_so_runtime = #{deviceSoRuntime} and-->
+<!--            </if>-->
+<!--        </trim>-->
+<!--        <if test="order !=null and order !=''">-->
+<!--            order by access_id DESC,${field} ${order}-->
+<!--        </if>-->
+<!--        <if test="limit !=null and limit !=''">-->
+<!--            limit ${begin},${limit}-->
+<!--        </if>-->
+
+<!--    </select>-->
+
+
     <!--查询终端软件运行状态-->
     <select id="queryDeviceRuntime" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.vo.DeviceMonitorInfoVo">
-        SELECT * ,COUNT(*) AS device_warning
-        FROM (SELECT * FROM mon_access_status ORDER BY create_time DESC) a
-        GROUP BY equipment_id
+        SELECT
+        a.app_id ,b.equipment_id ,a.device_software_type ,
+        d.access_status ,e.device_so_run_status,
+        e.cpu_rate ,e.storage_rate ,
+        e.error_rate ,
+        MAX(e.create_time) time ,
+        (SELECT COUNT(*) FROM mon_device_abn f WHERE f.equipment_id = b.equipment_id) as device_warning
+        FROM
+        eqi_device a
+        RIGHT JOIN eqi_equipment b on a.equipment_int = b.equipment_int
+        LEFT JOIN mon_soft_status e ON e.equipment_id = b.equipment_id
+        LEFT  JOIN mon_equipment_status d ON d.equipment_id = b.equipment_id
+        LEFT  JOIN mon_device_abn c ON c.equipment_id = b.equipment_id
+        GROUP BY  b.equipment_id
         <trim prefix="having" suffixOverrides="and">
             <if test="equipmentId != null and equipmentId !=''">
                 equipment_id = #{equipmentId} and
@@ -33,19 +90,18 @@
             <if test="APPId != null and APPId !=''">
                 app_id = #{APPId} and
             </if>
-            <if test="deviceSoType != null and deviceSoType !=''">
-                device_so_type = #{deviceSoType} and
+            <if test="deviceSoftwareType != null and deviceSoftwareType !=''">
+                device_software_type = #{deviceSoftwareType} and
             </if>
-            <if test="deviceSoRuntime != null and deviceSoRuntime !=''">
-                device_so_runtime = #{deviceSoRuntime} and
+            <if test="deviceSoRunStatus != null and deviceSoRunStatus !=''">
+                device_so_run_status = #{deviceSoRunStatus} and
             </if>
         </trim>
         <if test="order !=null and order !=''">
-            order by access_id DESC,${field} ${order}
+            order by ${field} ${order}
         </if>
         <if test="limit !=null and limit !=''">
             limit ${begin},${limit}
         </if>
-
     </select>
 </mapper>

@@ -14,6 +14,14 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
+    <style>
+         .layui-table-page {
+            border-width: 0px;
+            border-style: solid;
+            border-color: rgb(230, 230, 230);
+        }
+
+    </style>
 </head>
 <body>
 <div class="layui-fluid">
@@ -47,6 +55,16 @@
 
             <table id="LAY-app-device-list" lay-filter="LAY-app-device-list"></table>
 
+            <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+                <div class="layui-form-item">
+                    <div class="layui-inline" style="float: right">
+                        <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn" data-type="upgrade">确定
+                        </button>
+                        <button class="layui-btn layui-btn-normal layui-btn ">取消
+                        </button>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -66,6 +84,9 @@
     var form = layui.form;
     var $ = layui.jquery;
     var util = layui.util;
+
+    //获取传过来的终端主键
+    var deviceIds = "<%=request.getParameter("deviceIds")%>";
 
     //全局参数
     var req_data;
@@ -148,7 +169,8 @@
         var fluid = $(".layui-fluid");
         var header = $(".layui-card-header");
         var cardbody = $(".layui-card-body");
-        return header.outerHeight(true) + (cardbody.outerHeight(true) - cardbody.height()) + (fluid.outerHeight(true) - fluid.height()) + 2;
+        var form = $(".layui-form");
+        return form.outerHeight(true) + header.outerHeight(true) + (cardbody.outerHeight(true) - cardbody.height()) + (fluid.outerHeight(true) - fluid.height()) + 2;
     }
 
 
@@ -192,6 +214,7 @@
         method: "GET",
         height: "full-" + getFullSize(),
         page: true,
+        //skin: 'nob',
         limit: 10,
         limits: [10, 15, 20, 30],
         toolbar: "#toolbar",
@@ -275,6 +298,76 @@
         }
         ]]
     });
+
+
+    $(".layui-btn").on("click", function() {
+        var type = $(this).data("type");
+        active[type] ? active[type].call(this) : "";
+    });
+    var active = {
+
+        //升级跳转
+        upgrade: function () {
+            debugger;
+            var checkStatus = table.checkStatus("LAY-app-device-list-reload");
+            var data = checkStatus.data;
+            if (data.length == 0) {
+                layer.msg("请至少选中一条记录！");
+            }
+            if (data.length > 0) {
+                var uploadIds = data[0].uploadId;
+                var ids =new Array();
+                ids = deviceIds.split("_");
+
+                //组合成json数据
+                var json = {};
+                json.ids = ids;
+                json.upload = uploadIds;
+                layer.confirm("确定升级所选更新版本？", {
+                    icon: 3,
+                    title: "系统提示"
+                }, function (index) {
+                    $.ajax({
+                        url: "<%= request.getContextPath() %>/equipment/add",
+                        type: "post",
+                        data: JSON.stringify(json),
+                        cache: false,
+                        contentType: "text/json",
+                        success: function (result) {
+                            if (result.exception) {
+                                layer.alert(result.exception.message, {
+                                    icon: 2,
+                                    title: "系统提示"
+                                });
+                            } else if (result) {
+                                layer.msg("删除成功", {
+                                    icon: 1,
+                                    time: 500
+                                }, function () {
+                                    table.reload("LAY-app-device-list-reload");
+                                });
+                            } else {
+                                layer.msg("删除失败！", {
+                                    icon: 2,
+                                    time: 2000
+                                });
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            layer.msg(jqXHR.responseText, {
+                                time: 500,
+                                icon: 5
+                            });
+                        }
+                    });
+                    top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");
+                    layer.close(index);
+                    table.reload("LAY-app-device-list-reload");
+                });
+
+            }
+        },
+    };
 
 
 

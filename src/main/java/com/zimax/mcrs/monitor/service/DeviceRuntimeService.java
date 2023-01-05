@@ -27,12 +27,12 @@ public class DeviceRuntimeService {
      */
     public List<DeviceMonitorInfoVo> queryDeviceRuntime(String page, String limit,
                                                         String equipmentId, String APPId,
-                                                        String deviceSoType, String deviceSoRuntime,
+                                                        String deviceSoftwareType, String deviceSoRunStatus,
                                                         String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
-            map.put("order", "desc");
+            map.put("order", "asc");
             map.put("field", "equipment_id");
         } else {
             map.put("order", order);
@@ -44,15 +44,15 @@ public class DeviceRuntimeService {
         }
         map.put("equipmentId", equipmentId);
         map.put("APPId", APPId);
-        map.put("deviceSoType", deviceSoType);
-        map.put("deviceSoRuntime", deviceSoRuntime);
+        map.put("deviceSoType", deviceSoftwareType);
+        map.put("deviceSoRunStatus", deviceSoRunStatus);
         return deviceRuntimeMapper.queryDeviceRuntime(map);
 
     }
 
     public int countDR(String equipmentId, String APPId,
-                       String deviceSoType, String deviceSoRuntime) {
-        return deviceRuntimeMapper.countDR(equipmentId, APPId, deviceSoType, deviceSoRuntime);
+                       String deviceSoftwareType, String deviceSoRunStatus) {
+        return deviceRuntimeMapper.countDR(equipmentId, APPId, deviceSoftwareType, deviceSoRunStatus);
     }
 
 }

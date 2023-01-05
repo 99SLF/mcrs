@@ -62,8 +62,6 @@
                         class="layui-icon layui-icon-edit"></i>编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
                         class="layui-icon layui-icon-delete"></i>删除</a>
-                <a class="layui-btn layui-btn-port layui-btn-xs" lay-event="point"><i
-                        class="layui-icon layui-icon-port"></i>点位</a>
             </script>
         </div>
     </div>
@@ -199,7 +197,10 @@
                     icon: 3,
                     title: "系统提示"
                 }, function (index) {
-                    top.layui.index.openTabsPage( "<%=request.getContextPath() %>/update/update_package_manager.jsp","选择更新包");
+                    // top.layer.clone(index);
+                    top.layui.index.openTabsPage("<%=request.getContextPath() %>/update/update_package_selectVersion.jsp?deviceIds=" + deviceIds.toString().replace(",","_"), "选择更新包");
+                    layer.close(index);
+                    table.reload("LAY-app-device-list-reload");
                     <%--$.ajax({--%>
                     <%--    url: "<%= request.getContextPath() %>/equipment/device/batchDelete",--%>
                     <%--    type: "DELETE",--%>
@@ -232,6 +233,7 @@
                     <%--    }--%>
                     <%--});--%>
                 });
+
             }
         },
     };
@@ -367,7 +369,10 @@
             title: "终端软件类型",
             align: "center",
             minWidth: 120,
-            hide: isHidden("deviceSoftwareType")
+            hide: isHidden("deviceSoftwareType"),
+            templet: function (d) {
+                return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoftwareType);
+            }
         }, {
             field: "deviceName",
             title: "终端名称",
