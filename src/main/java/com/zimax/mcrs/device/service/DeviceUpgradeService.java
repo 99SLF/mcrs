@@ -53,8 +53,22 @@ public class DeviceUpgradeService {
         return deviceUpgradeMapper.count(equipmentId,upgradeVersion);
     }
 
+
+
+
+
     public void updateDeviceUpgrade(DeviceUpgrade deviceUpgrade) {
         deviceUpgradeMapper.updateDeviceUpgrade(deviceUpgrade);
     }
 
+//    public void addDeviceUpgrade(List<Integer> ids,String uploadIds) {
+////        for (){
+////
+////        }
+//        deviceUpgradeMapper.addDeviceUpgrade(ids,uploadIds);
+//    }
+
+    public void addDeviceUpgrade(DeviceUpgrade deviceUpgrade) {
+        deviceUpgradeMapper.addDeviceUpgrade(deviceUpgrade);
+    }
 }

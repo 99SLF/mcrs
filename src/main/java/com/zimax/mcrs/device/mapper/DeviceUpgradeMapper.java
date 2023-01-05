@@ -1,7 +1,5 @@
 package com.zimax.mcrs.device.mapper;
 
-import com.zimax.components.coframe.rights.pojo.User;
-import com.zimax.mcrs.device.pojo.Device;
 import com.zimax.mcrs.device.pojo.DeviceUpgrade;
 import com.zimax.mcrs.device.pojo.DeviceUpgradeVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -33,5 +31,9 @@ public interface DeviceUpgradeMapper {
 
 
     void updateDeviceUpgrade(DeviceUpgrade deviceUpgrade);
+
+//    void addDeviceUpgrade(List<Integer> ids, String uploadIds);
+    void addDeviceUpgrade(DeviceUpgrade deviceUpgrade);
+
 
 }

@@ -7,7 +7,9 @@ import com.zimax.mcrs.device.service.DeviceUpgradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 终端管理
@@ -51,4 +53,26 @@ public class DeviceUpgradeController {
         return Result.success();
     }
 
+
+//    /**
+//     * 新增升级记录的升级状态
+//     */
+//    @PostMapping("/add")
+//    public Result<?> addDeviceUpgrade(@RequestBody Integer[] ids,@PathVariable("uploadIds") String uploadIds) {
+//        deviceUpgradeService.addDeviceUpgrade(Arrays.asList(ids),uploadIds);
+//        return Result.success();
+//    }
+
+    /**
+     * 新增升级记录的升级状态
+     */
+    @PostMapping("/add")
+    public Result<?> addDeviceUpgrade(@RequestBody Map json) {
+
+        System.out.println(json);
+
+
+       // deviceUpgradeService.addDeviceUpgrade(deviceUpgrade);
+        return Result.success();
+    }
 }
