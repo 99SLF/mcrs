@@ -173,7 +173,36 @@
 			}
 		}
 	});
+// 告警总数
+	$.ajax({
+		url: "<%=request.getContextPath() %>/equipment/device/count",
+		type: "GET",
+		async: true,
+		cache: false,
+		contentType: "text/json",
+		success: function (result) {
+			if (result) {
+				$("#deviceNumber").html(result.data)
+			} else {
+				layer.msg("查询失败");
+			}
+		}
+	});
 
+	$.ajax({
+		url: "<%=request.getContextPath() %>/equipment/device/count",
+		type: "GET",
+		async: true,
+		cache: false,
+		contentType: "text/json",
+		success: function (result) {
+			if (result) {
+				$("#deviceNumber").html(result.data)
+			} else {
+				layer.msg("查询失败");
+			}
+		}
+	});
 	$.ajax({
 		url: "<%=request.getContextPath() %>/DeviceAbnormalAlarm/groupQueryBydate",
 		type: "GET",

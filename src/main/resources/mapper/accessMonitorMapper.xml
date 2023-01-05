@@ -23,16 +23,26 @@
 
     <select id="groupQueryByproduction" resultType="com.zimax.mcrs.monitor.pojo.vo.GroupByProduction">
         SELECT warning_type as name, count(warning_type) as value
-        FROM mon_access_status
+        FROM mon_device_abn
         GROUP BY warning_type
     </select>
     <select id="groupQueryBydate" resultType="com.zimax.mcrs.monitor.pojo.vo.GroupByDate">
         select date_format(t1.occur_time, '%Y-%m-%d')            as recordDate,
-               sum(CASE warning_type WHEN "1" THEN 1 ELSE 0 END) AS "activeWarn",
-               sum(CASE warning_type WHEN "2" THEN 1 ELSE 0 END) AS "hardWarn"
-        from mon_access_status t1
+               sum(CASE warning_type WHEN "101" THEN 1 ELSE 0 END) AS "activeWarn",
+               sum(CASE warning_type WHEN "100" THEN 1 ELSE 0 END) AS "hardWarn"
+        from mon_device_abn t1
         group by date_format(t1.occur_time, '%Y-%m-%d')
         ORDER BY t1.occur_time desc limit 0,7
+    </select>
+<!--    告警总数-->
+    <select id="getWarnTotal" resultType="Int">
+        SELECT count(*) FROM mon_device_abn
+    </select>
+
+    <select id="getWarnAHtotal" resultType="com.zimax.mcrs.monitor.pojo.vo.WarnTotalInfo">
+        SELECT warning_type as name, count(warning_type) as value
+        FROM mon_device_abn
+        GROUP BY warning_type
     </select>
 
 </mapper>

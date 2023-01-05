@@ -4,6 +4,7 @@ import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.monitor.pojo.DeviceAbn;
 import com.zimax.mcrs.monitor.pojo.EquipmentStatus;
 import com.zimax.mcrs.monitor.pojo.SoftwareRunStatus;
+import com.zimax.mcrs.monitor.pojo.vo.WarnTotalInfo;
 import com.zimax.mcrs.monitor.service.AccessMonitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -69,6 +70,13 @@ public class AccessMonitor {
 
         accessMonitorService.addDeviceAbn(deviceAbn);
         return Result.success();
+    }
+    @GetMapping("/getWarnInfo")
+    public Result<?> getWarnInfo() {
+        int warn = accessMonitorService.getWarnTotal();
+        WarnTotalInfo warnTotalInfo = accessMonitorService.getWarnAHtotal();
+        warnTotalInfo.setWarnTotal(warn);
+        return Result.success(warnTotalInfo);
     }
 
 }
