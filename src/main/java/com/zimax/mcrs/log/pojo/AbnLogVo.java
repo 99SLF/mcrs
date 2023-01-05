@@ -3,10 +3,8 @@ package com.zimax.mcrs.log.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
 
 /**
  * 异常日志
@@ -15,9 +13,6 @@ import lombok.NoArgsConstructor;
  * @date 2023/1/4
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@TableName("log_abn_log")
 public class AbnLogVo {
 
     /**

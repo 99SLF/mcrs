@@ -912,3 +912,24 @@ CREATE TABLE `mon_soft_status` (
        `create_time` datetime DEFAULT NULL,
        PRIMARY KEY (`software_run_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for log_abn_log
+-- ----------------------------
+DROP TABLE IF EXISTS `log_abn_log`;
+CREATE TABLE `log_abn_log`  (
+    `abn_log_id` int(9) NOT NULL AUTO_INCREMENT COMMENT '异常日志Id',
+    `abn_log_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '异常日志编号',
+    `log_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志类型',
+    `equipment_int` int(255) NULL DEFAULT NULL COMMENT '设备主键',
+    `device_id` int(255) NULL DEFAULT NULL COMMENT '终端主键',
+    `abn_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预警标题',
+    `abn_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预警类型',
+    `abn_level` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预警等级',
+    `abn_content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预警内容',
+    `exchange_time` datetime NULL DEFAULT NULL COMMENT '交互时间',
+    PRIMARY KEY (`abn_log_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 101 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
