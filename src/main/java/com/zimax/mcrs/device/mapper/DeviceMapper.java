@@ -49,6 +49,13 @@ public interface DeviceMapper {
     void updateDevice(Device device);
 
     /**
+     * 修改终端状态
+     *
+     * @return
+     */
+    void updateDeviceStatus(Device device);
+
+    /**
      * 终端配置
      * @return
      */

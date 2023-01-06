@@ -98,12 +98,12 @@ public class UpdatePackageService {
 
     /**
      * 通过IP\端口查询终端信息
-     * @param ip
-     * @param port
+     * @param equipmentIp
+     * @param equipmentContinuePort
      * @return
      */
-    public DeviceEquipmentVo getDeviceEquipmentVo(String ip, String port){
-        return deviceEquipmentVoMapper.getDeviceEquipmentVo(ip, port);
+    public DeviceEquipmentVo getDeviceEquipmentVo(String equipmentIp, String equipmentContinuePort){
+        return deviceEquipmentVoMapper.getDeviceEquipmentVo(equipmentIp, equipmentContinuePort);
     }
 
     /**
@@ -124,11 +124,11 @@ public class UpdatePackageService {
     }
 
     /**
-     * 修改注册表
+     * 修改注册表状态
      * @param device
      */
-    public void updateDevice(Device device){
-        deviceMapper.updateDevice(device);
+    public void updateDeviceStatus(Device device){
+        deviceMapper.updateDeviceStatus(device);
     }
 
 

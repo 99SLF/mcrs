@@ -11,7 +11,7 @@
         JOIN upd_upload c ON b.upload_id = c.upload_id
         <where>
             <if test="appId !=null and appId !=''">
-                and a.app_id = '${appId}%'
+                and a.app_id = '${appId}'
             </if>
         </where>
         ORDER BY b.version_rollback_time DESC

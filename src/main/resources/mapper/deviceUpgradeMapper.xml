@@ -81,13 +81,7 @@
 
     <update id="updateDeviceUpgrade" parameterType="com.zimax.mcrs.device.pojo.DeviceUpgrade">
         UPDATE dev_upgrade
-        SET equipment_int      = #{equipmentInt},
-            device_id          = #{deviceId},
-            upload_id          = #{uploadId},
-            upgrade_version    = #{upgradeVersion},
-            upgrade_status     = #{upgradeStatus},
-            version_updater    = #{versionUpdater},
-            version_update_time = #{versionUpdateTime},
+        SET upgrade_status = #{upgradeStatus}
             WHERE device_upgrade_id = ${deviceUpgradeId}
     </update>
 
