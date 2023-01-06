@@ -245,6 +245,21 @@
         <property name="mapperInterface" value="com.zimax.mcrs.log.mapper.AbnLogMapper"/>
     </bean>
 
+    <bean id="DeviceEquipmentVoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.update.mapper.DeviceEquipmentVoMapper"/>
+    </bean>
+
+    <bean id="DeviceRollbackVoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.update.mapper.DeviceRollbackVoMapper"/>
+    </bean>
+
+    <bean id="DeviceUpgradeVoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.update.mapper.DeviceUpgradeVoMapper"/>
+    </bean>
+
     <bean id="GradeAuthBean" class="com.zimax.components.coframe.rights.gradeauth.GradeAuthService"></bean>
 
     <bean id="PartyAuthService" class="com.zimax.components.coframe.auth.service.PartyAuthService"></bean>
@@ -294,8 +309,12 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.mcrs.serialnumber.mapper.SerialnumberMapper"/>
     </bean>
+
     <bean id="DefaultPartyAuthManagerBean" class="com.zimax.components.coframe.rights.partyauth.DefaultPartyAuthManager">
         <property name="partyAuthMapper" ref="PartyAuthMapper"/>
     </bean>
+
+
+
 
 </beans>
