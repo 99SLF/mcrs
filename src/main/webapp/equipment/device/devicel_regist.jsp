@@ -58,6 +58,16 @@
             </div>
         </div>
     </div>
+
+    <div class="layui-form-item layui-row layui-col-space6">
+        <label class="layui-form-label">接入方式:<span style="color:red">*</span></label>
+        <div class="layui-input-block">
+            <select name="accessMethod" id="accessMethod" lay-filter="accessMethod" type="select">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+
     <div class="layui-form-item layui-row layui-col-space6">
         <div class="layui-col-sm6">
             <label class="layui-form-label">备注:</label>
@@ -69,14 +79,6 @@
     </div>
 
 
-    <%--// 后续会添加，暂不显示--%>
-    <%--        <div class="layui-col-sm4">--%>
-    <%--            &lt;%&ndash;            <label class="layui-form-label">接入方式:<span style="color:red">*</span></label>&ndash;%&gt;--%>
-    <%--            <div class="layui-input-block">--%>
-    <%--                <input id="accessMethod" type="text" name="accessMethod" lay-verify="accessMethod"--%>
-    <%--                       placeholder="请输入接入方式" autocomplete="off" class="layui-hide">--%>
-    <%--            </div>--%>
-    <%--        </div>--%>
 
     <%--            <label class="layui-form-label">注册人:</label>--%>
     <div class="layui-input-block">
@@ -146,6 +148,14 @@
         }
     }
 
+//获取接入方式的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#accessMethod",
+        dictTypeId: "ACCESS_METHOD",
+    });
+    //设置接入方式的默认值
+    $("#accessMethod").val("101");
+    form.render();
 
     //获取软件类型的下拉值
     layui.admin.renderDictSelect({
@@ -233,7 +243,7 @@
     });
 
 
-    //判断设备资源号是否已存在
+    //判断APPId是否已存在
     function Exist() {
         var APPId = $("#APPId").val();
 

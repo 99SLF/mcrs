@@ -38,10 +38,19 @@ public class DeviceVo {
     private String needUpdate;
 
     /**
+     * 是否启用
+     */
+    private String enable;
+
+    /**
+     * 注册状态
+     */
+    private String registerStatus;
+
+    /**
      * 终端软件类型
      */
     private String deviceSoftwareType;
-
 
     /**
      * 终端名称
@@ -49,51 +58,54 @@ public class DeviceVo {
     private String  deviceName;
 
     /**
-     * 设备主键
+     * 接入点资源维护数据的主键
      */
-    private int equipmentInt;
+    private int accPointResId;
 
     /**
-     * 接入点名称
+     *接入点名称
      */
-    private String equipmentName;
+    private String accPointResName;
 
     /**
      * 工厂名称
      */
     private String factoryName;
 
-
     /**
-     * 接入点种类
+     * 设备主键
      */
-    private String assessType;
+    private int equipmentInt;
 
     /**
-     * 接入点Ip
-     */
-    private String mesContinueIp;
-
-    /**
-     * 接入点资源号
+     * 设备资源号
      */
     private String equipmentId;
 
     /**
-     * 接入点属性
+     * 设备连接IP
      */
-    private String equipmentProperties;
-
+    private String equipmentIp;
 
     /**
-     * 接入点安装位置
+     * 设备连接端口
+     */
+    private String equipmentContinuePort;
+
+    /**
+     * 工序名称
+     */
+    private String processName;
+
+    /**
+     * 设备安装位置
      */
     private String equipmentInstallLocation;
 
     /**
      * 接入方式
      */
-    private String equipmentContinuePort;
+    private String accessMethod;
 
     /**
      * 备注
@@ -106,19 +118,18 @@ public class DeviceVo {
     private String creator;
 
     /**
-     * 创建角色
-     */
-    private String createRole;
-
-    /**
      * 创建时间
      */
     private String createTime;
 
     /**
-     * 是否启用
+     *设备类型名称
      */
-    private String enable;
+    private String equipTypeName;
 
+    /**
+     * 支持通信协议
+     */
+    private String protocolCommunication;
 
 }
