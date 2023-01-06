@@ -95,7 +95,6 @@
     //全局参数
     var req_data;
 
-
     //功能名，查询过滤字段和列筛选
     var funName = "list";
 

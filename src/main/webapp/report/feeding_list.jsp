@@ -24,36 +24,34 @@
 <div class="layui-card">
     <div class="layui-form layui-card-header layuiadmin-card-header-auto">
         <div class="layui-form-item">
-
             <div class="layui-inline">
+                <label class="layui-form-label">设备资源号：</label>
                 <div class="layui-input-inline">
                     <input type="text" name="equipmentId" value="" placeholder="请输入设备资源号" autocomplete="off"
                            class="layui-input">
                 </div>
-            </div>
-
-            <div class="layui-inline">
+                <label class="layui-form-label">轴名称：</label>
                 <div class="layui-input-inline">
                     <input type="text" name="axisName" value="" placeholder="请输入轴名称" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
 
-            <div class="layui-inline">
-                <div class="layui-input-inline">
-                    <input type="text" name="inSFCId" value="" placeholder="请输入来料SFC编码" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
+<%--            <div class="layui-inline">--%>
+<%--                <label class="layui-form-label">来料SFC编码：</label>--%>
+<%--                <div class="layui-input-inline">--%>
+<%--                    <input type="text" name="inSFCId" value="" placeholder="请输入来料SFC编码" autocomplete="off"--%>
+<%--                           class="layui-input">--%>
+<%--                </div>--%>
+<%--            </div>--%>
 
             <div class="layui-inline">
+                <label class="layui-form-label">生产SFC编码：</label>
                 <div class="layui-input-inline">
                     <input type="text" name="prodSFCId" value="" placeholder="请输入生产SFC编码" autocomplete="off"
                            class="layui-input">
                 </div>
-            </div>
-
-            <div class="layui-inline">
+                <label class="layui-form-label">载具码：</label>
                 <div class="layui-input-inline">
                     <input type="text" name="vehicleCode" value="" placeholder="请输入载具码" autocomplete="off"
                            class="layui-input">
@@ -61,26 +59,25 @@
             </div>
 
             <div class="layui-inline">
+                <label class="layui-form-label">开始时间：</label>
                 <div class="layui-input-inline">
                     <input type="text" name="startProdTime" value="" placeholder="请选择开始时间" id="test0" autocomplete="off"
                            class="layui-input">
                 </div>
-            </div>
-
-            <div class="layui-inline">
+                <label class="layui-form-label">结束时间：</label>
                 <div class="layui-input-inline">
                     <input type="text" name="endProdTime" value="" placeholder="请选择结束时间" id="test1" autocomplete="off"
                            class="layui-input">
                 </div>
+
+                <div class="layui-inline layui-search" style="padding-left:15px">
+                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-rolelist-search"
+                            id="LAY-app-rolelist-search" >
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
             </div>
 
-
-            <div class="layui-inline layui-search">
-                <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-rolelist-search"
-                        id="LAY-app-rolelist-search">
-                    <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                </button>
-            </div>
         </div>
     </div>
     <div class="layui-card-body">
@@ -104,6 +101,9 @@
     var $ = layui.jquery;
     //过滤字段
     var hiddenFields = [];
+
+    //时间工具类引用
+    var util =layui.util;
     //功能名
     var funName = "application_list";
 
@@ -236,6 +236,8 @@
         },
         //设置表头。值是一个二维数组。方法渲染方式必填
         cols: [[{
+            type: "checkbox"
+        }, {
             title: "序号",
             type: "numbers"
         }, {
@@ -244,13 +246,13 @@
             align: "center",
             // sort: true,
             hide: isHidden("equipmentId"),
-            minWidth: 100
+            minWidth: 150
         }, {
             //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
             field: "axisName",
             title: "轴名称",
             align: "center",
-            minWidth: 100,
+            minWidth: 150,
             hide: isHidden("axisName")
 
         }, {
@@ -258,43 +260,52 @@
             title: "来料SFC编码",
             align: "center",
             hide: isHidden("inSFCId"),
-            minWidth: 100
+            minWidth: 150
         }, {
             field: "vehicleCode",
             title: "载具码",
             align: "center",
             hide: isHidden("vehicleCode"),
-            minWidth: 100
+            minWidth: 150
         }, {
             field: "prodSFCId",
             title: "生产SFC编码",
             align: "center",
             hide: isHidden("prodSFCId"),
-            minWidth: 100
+            minWidth: 150
         }, {
             field: "prodNumber",
             title: "生产数量",
             align: "center",
             hide: isHidden("prodNumber"),
-            minWidth: 80
+            minWidth: 60
         }, {
             field: "createTime",
             title: "创建时间",
             align: "center",
             hide: isHidden("createTime"),
-            minWidth: 80
+            minWidth: 200,
+            templet:function(d){
+                return util.toDateString(d.createTime,'yyyy-MM-dd HH:mm:ss');
+            }
         }, {
             field: "startProdTime",
             title: "开始生产时间",
             align: "center",
             hide: isHidden("startProdTime"),
-            minWidth: 60
+            minWidth: 200,
+            templet:function(d){
+                return util.toDateString(d.startProdTime,'yyyy-MM-dd HH:mm:ss');
+            }
         }, {
             field: "endProdTime",
             title: "结束生产时间",
             align: "center",
             hide: isHidden("endProdTime"),
-            minWidth: 80
+            minWidth: 200,
+            templet:function(d){
+                return util.toDateString(d.endProdTime,'yyyy-MM-dd HH:mm:ss');
+            }
         }
         ]]
     });

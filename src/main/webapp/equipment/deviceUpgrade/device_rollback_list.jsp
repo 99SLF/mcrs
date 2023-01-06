@@ -31,14 +31,16 @@
                         <input type="text" name="upgradeVersion" placeholder="请输入版本号" autocomplete="off"
                                class="layui-input">
                     </div>
-                    <label class="layui-form-label">回退人：</label>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">版本回退人：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="versionRollbackPeople" placeholder="请输入回退人" autocomplete="off"
+                        <input type="text" name="versionRollbackPeople" placeholder="请输入版本更改人" autocomplete="off"
                                class="layui-input">
                     </div>
-                    <label class="layui-form-label">回退时间：</label>
+                    <label class="layui-form-label">版本回退时间：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="versionRollbackTime"  id="versionRollbackTime" placeholder="请输入版本更改时间"
+                        <input type="text" name="versionRollbackTime"  id="versionRollbackTime" placeholder="请选择版本回退时间"
                                autocomplete="off" id="test"
                                class="layui-input">
                     </div>
@@ -102,6 +104,11 @@
     laydate.render({
         elem: '#versionRollbackTime',
         type: 'date'
+    });
+
+    layui.admin.renderDictSelect({
+        elem: "#deviceSoftwareType",
+        dictTypeId: "DEVICE_SOFTWARE_TYPE"
     });
 
     //监听搜索
@@ -289,7 +296,11 @@
             title: "终端软件类型",
             align: "center",
             minWidth: 120,
-            hide: isHidden("deviceSoftwareType")
+            hide: isHidden("deviceSoftwareType"),
+            templet:function(d) {
+
+                return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoftwareType);
+            }
         }, {
             field: "equipmentId",
             title: "设备资源号",
@@ -306,20 +317,23 @@
             field: "uploadNumber",
             title: "资源包单号",
             align: "center",
-            minWidth: 120,
+            minWidth: 180,
             hide: isHidden("uploadNumber")
         }, {
             field: "upgradeVersion",
             title: "升级版本号",
             align: "center",
-            minWidth: 120,
+            minWidth: 100,
             hide: isHidden("upgradeVersion")
         }, {
             field: "upgradeStatus",
             title: "升级状态",
             align: "center",
             minWidth: 150,
-            hide: isHidden("upgradeStatus")
+            hide: isHidden("upgradeStatus"),
+            templet:function(d) {
+                return layui.admin.getDictText("UPGRADE_STATUS", d.upgradeStatus);
+            }
         },
             //     {
             //     field: "mesContinueIp",
@@ -351,78 +365,78 @@
                 field: "versionRollbackTime",
                 title: "版本回退时间",
                 align: "center",
-                minWidth: 150,
+                minWidth: 200,
                 hide: isHidden("versionRollbackTime")
             }]]
     });
 
-    //监听操作事件
-    table.on("tool(LAY-app-deviceUpgrade-list)", function (e) {
-        var data = e.data;
-        if (e.event == "edit") {
-            top.layer.open({
-                type: 2,
-                title: "编辑设备信息",
-                content: "<%= request.getContextPath() %>/deviceUpgrade/deviceUpgrade/deviceUpgrade_edit.jsp",
-                area: ["1000px", "560px"],
-                resize: false,
-                btn: ["确定", "取消"],
-                success: function (layero, index) {
-                    var dataJson = {
-                        data: data,
-                        win: window
-                    };
-                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
-                },
-                yes: function (index, layero) {
-                    var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");
-                    edit.click();
-                }
+    <%--//监听操作事件--%>
+    <%--table.on("tool(LAY-app-deviceUpgrade-list)", function (e) {--%>
+    <%--    var data = e.data;--%>
+    <%--    if (e.event == "edit") {--%>
+    <%--        top.layer.open({--%>
+    <%--            type: 2,--%>
+    <%--            title: "编辑设备信息",--%>
+    <%--            content: "<%= request.getContextPath() %>/deviceUpgrade/deviceUpgrade/deviceUpgrade_edit.jsp",--%>
+    <%--            area: ["1000px", "560px"],--%>
+    <%--            resize: false,--%>
+    <%--            btn: ["确定", "取消"],--%>
+    <%--            success: function (layero, index) {--%>
+    <%--                var dataJson = {--%>
+    <%--                    data: data,--%>
+    <%--                    win: window--%>
+    <%--                };--%>
+    <%--                layero.find("iframe")[0].contentWindow.SetData(dataJson);--%>
+    <%--            },--%>
+    <%--            yes: function (index, layero) {--%>
+    <%--                var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");--%>
+    <%--                edit.click();--%>
+    <%--            }--%>
 
-            });
-        } else if (e.event == "del") {
-            layer.confirm("确定删除该设备？", {
-                icon: 3,
-                title: "系统提示"
-            }, function (index) {
-                $.ajax({
-                    url: "<%= request.getContextPath() %>/deviceUpgrade/deviceUpgrade/delete/" + data.deviceUpgradeInt,
-                    type: "DElETE",
-                    data: JSON.stringify({
-                        deviceUpgrade: data
-                    }),
-                    cache: false,
-                    contentType: "text/json",
-                    success: function (result) {
-                        if (result.exception) {
-                            layer.alert(result.exception.message, {
-                                icon: 2,
-                                title: "系统提示"
-                            });
-                        } else if (result) {
-                            layer.msg("删除成功", {
-                                icon: 1,
-                                time: 500
-                            }, function () {
-                                table.reload("LAY-app-deviceUpgrade-list-reload");
-                            });
-                        } else {
-                            layer.msg("删除失败！", {
-                                icon: 2,
-                                time: 2000
-                            });
-                        }
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        layer.msg(jqXHR.responseText, {
-                            time: 500,
-                            icon: 5
-                        });
-                    }
-                });
-            });
-        }
-    });
+    <%--        });--%>
+    <%--    } else if (e.event == "del") {--%>
+    <%--        layer.confirm("确定删除该设备？", {--%>
+    <%--            icon: 3,--%>
+    <%--            title: "系统提示"--%>
+    <%--        }, function (index) {--%>
+    <%--            $.ajax({--%>
+    <%--                url: "<%= request.getContextPath() %>/deviceUpgrade/deviceUpgrade/delete/" + data.deviceUpgradeInt,--%>
+    <%--                type: "DElETE",--%>
+    <%--                data: JSON.stringify({--%>
+    <%--                    deviceUpgrade: data--%>
+    <%--                }),--%>
+    <%--                cache: false,--%>
+    <%--                contentType: "text/json",--%>
+    <%--                success: function (result) {--%>
+    <%--                    if (result.exception) {--%>
+    <%--                        layer.alert(result.exception.message, {--%>
+    <%--                            icon: 2,--%>
+    <%--                            title: "系统提示"--%>
+    <%--                        });--%>
+    <%--                    } else if (result) {--%>
+    <%--                        layer.msg("删除成功", {--%>
+    <%--                            icon: 1,--%>
+    <%--                            time: 500--%>
+    <%--                        }, function () {--%>
+    <%--                            table.reload("LAY-app-deviceUpgrade-list-reload");--%>
+    <%--                        });--%>
+    <%--                    } else {--%>
+    <%--                        layer.msg("删除失败！", {--%>
+    <%--                            icon: 2,--%>
+    <%--                            time: 2000--%>
+    <%--                        });--%>
+    <%--                    }--%>
+    <%--                },--%>
+    <%--                error: function (jqXHR, textStatus, errorThrown) {--%>
+    <%--                    layer.msg(jqXHR.responseText, {--%>
+    <%--                        time: 500,--%>
+    <%--                        icon: 5--%>
+    <%--                    });--%>
+    <%--                }--%>
+    <%--            });--%>
+    <%--        });--%>
+    <%--    }--%>
+    <%--});--%>
 
     //批量选中
     $("body").on("click", ".layui-table-body table.layui-table tbody tr td", function () {

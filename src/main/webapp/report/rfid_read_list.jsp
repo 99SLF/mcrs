@@ -24,49 +24,43 @@
 <div class="layui-card">
     <div class="layui-form layui-card-header layuiadmin-card-header-auto">
         <div class="layui-form-item">
-
             <div class="layui-inline">
+                <label class="layui-form-label">设备资源号：</label>
                 <div class="layui-input-inline">
                     <input type="text" name="equipmentId" value="" placeholder="请输入设备资源号" autocomplete="off"
                            class="layui-input">
                 </div>
-            </div>
-
-            <div class="layui-inline">
+                <label class="layui-form-label">RFID编码：</label>
                 <div class="layui-input-inline">
                     <input type="text" name="rfidId" value="" placeholder="请输入RFID编码" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
 
-            <div class="layui-inline">
-                <div class="layui-input-inline">
-                    <input type="text" name="antennaId" value="" placeholder="请输入天线ID" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
+<%--            <div class="layui-inline">--%>
+<%--                <div class="layui-input-inline">--%>
+<%--                    <input type="text" name="antennaId" value="" placeholder="请输入天线ID" autocomplete="off"--%>
+<%--                           class="layui-input">--%>
+<%--                </div>--%>
+<%--            </div>--%>
 
             <div class="layui-inline">
+                <label class="layui-form-label">读取率：</label>
                 <div class="layui-input-inline">
                     <input type="text" name="readRate" value="" placeholder="请选择读取率" autocomplete="off"
                            class="layui-input">
                 </div>
-            </div>
-
-
-            <div class="layui-inline">
+                <label class="layui-form-label">记录时间：</label>
                 <div class="layui-input-inline">
                     <input type="text" name="recordTime" value="" placeholder="请选择记录时间" id="test1" autocomplete="off"
                            class="layui-input">
                 </div>
-            </div>
-
-
-            <div class="layui-inline layui-search">
-                <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-rolelist-search"
-                        id="LAY-app-rolelist-search">
-                    <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                </button>
+                <div class="layui-inline layui-search" style="padding-left:15px">
+                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-rolelist-search"
+                            id="LAY-app-rolelist-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -92,7 +86,8 @@
     var hiddenFields = [];
     //功能名
     var funName = "application_list";
-
+    //时间工具类引用
+    var util =layui.util;
     var laydate = layui.laydate;
     //日期时间选择器
     // laydate.render({
@@ -223,6 +218,8 @@
         },
         //设置表头。值是一个二维数组。方法渲染方式必填
         cols: [[{
+            type: "checkbox"
+        },{
             title: "序号",
             type: "numbers"
         }, {
@@ -231,33 +228,36 @@
             align: "center",
             // sort: true,
             hide: isHidden("equipmentId"),
-            minWidth: 100
+            minWidth: 150
         }, {
             //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
             field: "rfidId",
             title: "RFID编码",
             align: "center",
-            minWidth: 100,
+            minWidth: 150,
             hide: isHidden("rfidId")
         }, {
             field: "antennaId",
             title: "天线ID",
             align: "center",
             hide: isHidden("antennaId"),
-            minWidth: 100
+            minWidth: 150
 
         }, {
             field: "readRate",
             title: "读取率",
             align: "center",
             hide: isHidden("readRate"),
-            minWidth: 100
+            minWidth: 60
         }, {
             field: "recordTime",
             title: "记录时间",
             align: "center",
             hide: isHidden("recordTime"),
-            minWidth: 80
+            minWidth: 200,
+            templet:function(d){
+                return util.toDateString(d.recordTime,'yyyy-MM-dd HH:mm:ss');
+            }
         }]]
     });
 

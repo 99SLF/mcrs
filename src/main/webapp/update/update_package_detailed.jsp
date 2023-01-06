@@ -16,6 +16,17 @@
     <meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
     <title>设备类型信息维护详情</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
+    <style>
+        .layui-form-label {
+            width: 120px;
+        }
+
+        .layui-input-block {
+            margin-left: 150px;
+            min-height: 36px;
+
+        }
+    </style>
 </head>
 <body>
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list"
@@ -23,7 +34,7 @@
     <input id="uploadId" name="uploadId" type="hidden"/>
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>更新包单号:</label>
+            <label class="layui-form-label">更新包单号:</label>
             <div class="layui-input-block">
                 <input id="uploadNumber" type="text" name="uploadNumber" lay-verify="required|uploadNumber"
                        placeholder="" autocomplete="off" class="layui-input" readonly>
@@ -31,7 +42,7 @@
         </div>
 
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>版本号:</label>
+            <label class="layui-form-label">版本号:</label>
             <div class="layui-input-block">
                 <input id="version" type="text" name="version" lay-verify="required|version"
                        placeholder="" autocomplete="off" class="layui-input" readonly>
@@ -41,7 +52,7 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>终端软件类型:</label>
+            <label class="layui-form-label">终端软件类型:</label>
             <div class="layui-input-block">
                 <input id="deviceSoType" type="text" name="deviceSoType" lay-verify="required|deviceSoType"
                        placeholder="" autocomplete="off" class="layui-input" readonly>
@@ -49,7 +60,7 @@
         </div>
 
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>更新策略:</label>
+            <label class="layui-form-label">更新策略:</label>
             <div class="layui-input-block">
                 <input id="uploadStrategy" type="text" name="uploadStrategy"
                        lay-verify="required|uploadStrategy"
@@ -99,6 +110,12 @@
         elem: "#uploadStrategy",
         dictTypeId: "UPDATESTRATEGY"
     });
+
+    layui.admin.renderDictSelect({    //获取终端软件类型
+        elem: "#deviceSoType",
+        dictTypeId: "DEVICE_SOFTWARE_TYPE",
+    });
+
     form.render();
     function SetData(data) {
         win = data.win ? data.win : window;
@@ -108,7 +125,7 @@
             "uploadId": data.uploadId,
             "uploadNumber": data.uploadNumber,
             "version": data.version,
-            "deviceSoType": data.deviceSoType,
+            "deviceSoType": layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", data.deviceSoType),
             "uploadStrategy": layui.admin.getDictText("UPDATESTRATEGY", data.uploadStrategy),
             "fileName": data.fileName,
             "remarks": data.remarks,
