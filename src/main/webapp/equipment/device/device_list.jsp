@@ -109,7 +109,7 @@
     });
 
     var active = {
-        //设备新建
+        //终端注册
         add: function () {
             top.layer.open({
                 type: 2,
@@ -133,46 +133,46 @@
 
         upgrade: function () {
             var checkStatus = table.checkStatus("LAY-app-device-list-reload");
-                var data = checkStatus.data;
-                if (data.length == 0) {
-                    layer.msg("请至少选中一条记录！");
+            var data = checkStatus.data;
+            if (data.length == 0) {
+                layer.msg("请至少选中一条记录！");
+            }
+            if (data.length > 0) {
+                var deviceIds = new Array();
+                for (var i = 0; i < data.length; i++) {
+                    deviceIds[i] = data[i].deviceId;
                 }
-                if (data.length > 0) {
-                    var deviceIds = new Array();
-                    for (var i = 0; i < data.length; i++) {
-                        deviceIds[i] = data[i].deviceId;
-                    }
-                    layer.confirm("确定升级所选终端？", {
-                        icon: 3,
-                        title: "系统提示"
-                    }, function (index) {
-                        top.layer.open({
-                            //弹窗
-                            type: 2,
-                            title: "选择更新版本",
-                            content: "<%=request.getContextPath() %>/update/update_package_selectVersion.jsp",
-                            area: ["800px", "560px"],
-                            resize: false,
-                            btn: ["确定", "取消"],
-                            success: function(layero, index) {
-                                    var dataJson = {
-                                        win: window,
-                                        deviceIds: deviceIds
-                                    };
-                                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
-                            },
-                            yes: function(index, layero) {
-                                var submit = layero.find("iframe").contents().find("#upgrade");
-                                submit.click();
+                layer.confirm("确定升级所选终端？", {
+                    icon: 3,
+                    title: "系统提示"
+                }, function (index) {
+                    top.layer.open({
+                        //弹窗
+                        type: 2,
+                        title: "选择更新版本",
+                        content: "<%=request.getContextPath() %>/update/update_package_selectVersion.jsp",
+                        area: ["800px", "560px"],
+                        resize: false,
+                        btn: ["确定", "取消"],
+                        success: function (layero, index) {
+                            var dataJson = {
+                                win: window,
+                                deviceIds: deviceIds
+                            };
+                            layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                        },
+                        yes: function (index, layero) {
+                            var submit = layero.find("iframe").contents().find("#upgrade");
+                            submit.click();
 
-                                //top.layer.close(index);
-                                <%--top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");--%>
-                            }
-                        });
-                        layer.close(index);
-                        table.reload("LAY-app-device-list-reload");
+                            //top.layer.close(index);
+                            <%--top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");--%>
+                        }
                     });
-        }
+                    layer.close(index);
+                    table.reload("LAY-app-device-list-reload");
+                });
+            }
 
         },
         //升级跳转
@@ -363,7 +363,7 @@
             field: "aPPId",
             title: "APPID",
             align: "center",
-            minWidth: 100,
+            minWidth: 300,
             hide: isHidden("aPPId")
         }, {
             field: "version",
@@ -378,6 +378,18 @@
             minWidth: 120,
             hide: isHidden("needUpdate")
         }, {
+            field: "enable",
+            title: "是否启用",
+            align: "center",
+            minWidth: 120,
+            hide: isHidden("enable")
+        }, {
+            field: "registerStatus",
+            title: "注册状态",
+            align: "center",
+            minWidth: 120,
+            hide: isHidden("registerStatus")
+        }, {
             field: "deviceSoftwareType",
             title: "终端软件类型",
             align: "center",
@@ -391,55 +403,64 @@
             title: "终端名称",
             align: "center",
             minWidth: 150,
-            hide: isHidden("deviceName")
+            hide: isHidden("deviceName"),
+            //打开监听
+            event: "view",
+            //监听打开详情页面
+            templet: function (data) {
+                return '<span style="color: #09bbfd">' + data.deviceName + '</span>';
+            }
         }, {
-            field: "equipmentName",
+            field: "accPointResName",
             title: "接入点名称",
             align: "center",
             minWidth: 100,
-            hide: isHidden("equipmentName")
+            hide: isHidden("accPointResName")
         }, {
             field: "factoryName",
             title: "工厂名称",
             align: "center",
-            minWidth: 100,
+            minWidth: 150,
             hide: isHidden("factoryName")
         }, {
-            field: "assessType",
-            title: "接入点种类",
+            field: "equipmentId",
+            title: "设备资源号",
             align: "center",
             minWidth: 140,
-            hide: isHidden("assessType")
-        }, {
-            field: "mesContinueIp",
-            title: "接入点IP",
-            align: "center",
-            minWidth: 120,
-            hide: isHidden("mesContinueIp")
-        }, {
-            field: "equipmentId",
-            title: "接入点资源号",
-            align: "center",
-            minWidth: 150,
             hide: isHidden("equipmentId")
         }, {
-            field: "equipmentProperties",
-            title: "接入点属性",
+            field: "equipmentIp",
+            title: "设备连接IP",
             align: "center",
-            minWidth: 100,
-            hide: isHidden("equipmentProperties")
+            minWidth: 120,
+            hide: isHidden("equipmentIp")
+        }, {
+            field: "equipmentContinuePort",
+            title: "设备连接端口",
+            align: "center",
+            minWidth: 150,
+            hide: isHidden("equipmentContinuePort")
+        }, {
+            field: "processName",
+            title: "工序名称",
+            align: "center",
+            minWidth: 150,
+            hide: isHidden("processName")
         }, {
             field: "equipmentInstallLocation",
-            title: "接入点安装位置",
+            title: "设备安装位置",
             align: "center",
             minWidth: 150,
             hide: isHidden("equipmentInstallLocation")
         }, {
-            field: "equipmentContinuePort",
+            field: "accessMethod",
             title: "接入方式",
             align: "center",
             minWidth: 100,
-            hide: isHidden("equipmentContinuePort")
+            hide: isHidden("accessMethod"),
+            templet: function (d) {
+                return layui.admin.getDictText("ACCESS_METHOD", d.accessMethod);
+            }
         }, {
             field: "creator",
             title: "创建人",
@@ -450,14 +471,8 @@
             field: "createTime",
             title: "创建时间",
             align: "center",
-            minWidth: 100,
+            minWidth: 200,
             hide: isHidden("createTime")
-        }, {
-            field: "enable",
-            title: "是否启用",
-            align: "center",
-            minWidth: 100,
-            hide: isHidden("enable")
         }, {
             field: "remarks",
             title: "备注",
@@ -538,6 +553,28 @@
                         });
                     }
                 });
+            });
+        }
+        else if (e.event == "view") {
+            top.layer.open({
+                type: 2,
+                title: "查看终端详情",
+                content: "<%= request.getContextPath() %>/equipment/device/device_view.jsp",
+                area: ["1000px", "560px"],
+                resize: false,
+                // btn: ["确定", "取消"],
+                success: function (layero, index) {
+                    var dataJson = {
+                        data: data,
+                        win: window
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function (index, layero) {
+                    var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");
+                    edit.click();
+                }
+
             });
         }
     });

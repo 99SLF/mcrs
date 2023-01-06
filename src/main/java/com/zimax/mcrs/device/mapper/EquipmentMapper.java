@@ -1,6 +1,7 @@
 package com.zimax.mcrs.device.mapper;
 
 import com.zimax.mcrs.device.pojo.Equipment;
+import com.zimax.mcrs.device.pojo.EquipmentVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,7 +22,7 @@ public interface EquipmentMapper {
      *
      * @return
      */
-    List<Equipment> queryAll(Map map);
+    List<EquipmentVo> queryAll(Map map);
 
 
     /**

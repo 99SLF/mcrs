@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
+
 </head>
 <body>
 <div class="layui-fluid">
@@ -29,8 +30,10 @@
                     </div>
                     <label class="layui-form-label">终端软件类型：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="deviceSoType" placeholder="请输入终端软件类型" autocomplete="off"
-                               class="layui-input">
+                        <select name="deviceSoType" id="deviceSoType" lay-filter="deviceSoType"
+                                 type="select">
+                            <option value=""></option>
+                        </select>
                     </div>
                 </div>
 
@@ -85,6 +88,10 @@
     var $ = layui.jquery;
     var util = layui.util;
 
+    layui.admin.renderDictSelect({    //获取终端软件类型
+        elem: "#deviceSoType",
+        dictTypeId: "DEVICE_SOFTWARE_TYPE",
+    });
     //全局参数
     var req_data;
 
@@ -138,7 +145,7 @@
                 type: 2,
                 title: "上传",
                 content: "<%= request.getContextPath() %>/update/update_package_uploads.jsp",
-                area: ["1000px", "560px"],
+                area: ["800px", "560px"],
                 resize: false,
                 btn: ["确定", "取消"],
                 success: function (layero, index) {
@@ -320,7 +327,7 @@
             field: "uploadNumber",
             title: "更新包单号",
             align: "center",
-            minWidth: 120,
+            minWidth: 180,
             hide: isHidden("uploadNumber"),
             //打开监听
             event: "view",
@@ -357,14 +364,14 @@
             field: "fileName",
             title: "更新包",
             align: "center",
-            minWidth: 100,
+            minWidth: 150,
             hide: isHidden("fileName")
 
         }, {
             field: "uploader",
             title: "上传人",
             align: "center",
-            minWidth: 80,
+            minWidth: 150,
             hide: isHidden("uploader")
         }, {
             field: "versionUploadTime",
@@ -457,7 +464,7 @@
                 type: 2,
                 title: "查看更新包详情",
                 content: "<%= request.getContextPath() %>/update/update_package_detailed.jsp",
-                area: ["1000px", "800px"],
+                area: ["800px", "560px"],
                 resize: false,
                 btn: ["确定", "取消"],
                 success: function (layero, index) {

@@ -14,6 +14,22 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
+
+    <style>
+
+        .layui-form-label {
+            padding-left: 0px;
+            width: 85px;
+        }
+        .layui-input{
+
+            width: 180px;
+        }
+        zdr{
+            width: 80px;
+        }
+
+    </style>
 </head>
 <body>
 <div class="layui-fluid">
@@ -31,7 +47,9 @@
                         <input type="text" name="accPointResName" placeholder="请输入接入点名称" autocomplete="off"
                                class="layui-input">
                     </div>
-                    <label class="layui-form-label">制单人：</label>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label" id="zdr">制单人：</label>
                     <div class="layui-input-inline">
                         <input type="text" name="creator" placeholder="请输入" autocomplete="off"
                                class="layui-input">
@@ -128,7 +146,7 @@
                 type: 2,
                 title: "新增接入点信息",
                 content: "<%= request.getContextPath() %>/basic/accPointResMaintain/accPointRes_add.jsp",
-                area: ["1000px", "800px"],
+                area: ["800px", "500px"],
                 resize: false,
                 btn: ["确定", "取消"],
                 success: function (layero, index) {
@@ -417,7 +435,7 @@
                 type: 2,
                 title: "编辑接入点信息维护",
                 content: "<%= request.getContextPath() %>/basic/accPointResMaintain/accPointRes_edit.jsp",
-                area: ["1000px", "800px"],
+                area: ["800px", "500px"],
                 resize: false,
                 btn: ["确定", "取消"],
                 success: function (layero, index) {
@@ -479,7 +497,7 @@
                 type: 2,
                 title: "查看接入点信息维护",
                 content: "<%= request.getContextPath() %>/basic/accPointResMaintain/accPointRes_detailed.jsp",
-                area: ["1000px", "800px"],
+                area: ["800px", "500px"],
                 resize: false,
                 btn: ["确定", "取消"],
                 success: function (layero, index) {

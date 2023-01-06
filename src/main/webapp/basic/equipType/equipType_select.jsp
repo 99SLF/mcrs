@@ -52,6 +52,14 @@
     </div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
+
+<script>
+    layui.config({
+        base: "<%=request.getContextPath()%>/"
+    });
+</script>
+
+<script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
 <script type="text/javascript">
     var layer = layui.layer;
     var table = layui.table;
@@ -149,7 +157,10 @@
                 field: "equipTypeName",
                 title: "设备类型名称",
                 align: "center",
-                minWidth: 150
+                minWidth: 150,
+                templet:function(d) {
+                    return layui.admin.getDictText("EQUIPMENT_PROPERTY", d.equipTypeName);
+                }
             }, {
                 field: "equipTypeEnable",
                 title: "是否启用",

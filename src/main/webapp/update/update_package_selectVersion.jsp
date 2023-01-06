@@ -37,8 +37,11 @@
                     </div>
                     <label class="layui-form-label">终端软件类型：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="deviceSoType" placeholder="请输入终端软件类型" autocomplete="off"
-                               class="layui-input">
+                        <%--下拉选择框--%>
+                        <select name="deviceSoType" id="deviceSoType" lay-filter="deviceSoType"
+                                lay-verify="deviceSoType|required" type="select">
+                            <option value=""></option>
+                        </select>
                     </div>
                 </div>
 

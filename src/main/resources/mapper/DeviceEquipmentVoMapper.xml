@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.update.mapper.DeviceEquipmentVoMapper">
+
+    <select id="getDeviceEquipmentVo" resultType="com.zimax.mcrs.update.pojo.DeviceEquipmentVo">
+        SELECT *
+        FROM eqi_device a
+        join eqi_equipment b ON b.equipment_int = a.equipment_int
+        <where>
+            <if test="equipmentIp !=null and equipmentIp !=''">
+                b.equipment_ip =  '${equipmentIp}'
+            </if>
+            <if test="equipmentContinuePort !=null and equipmentContinuePort !=''">
+                and b.equipment_continue_port like '${equipmentContinuePort}'
+            </if>
+        </where>
+
+    </select>
+
+</mapper>

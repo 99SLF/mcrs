@@ -58,6 +58,16 @@
             </div>
         </div>
     </div>
+
+    <div class="layui-form-item layui-row layui-col-space6">
+        <label class="layui-form-label">接入方式:<span style="color:red">*</span></label>
+        <div class="layui-input-block">
+            <select name="accessMethod" id="accessMethod" lay-filter="accessMethod" type="select">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+
     <div class="layui-form-item layui-row layui-col-space6">
         <div class="layui-col-sm6">
             <label class="layui-form-label">备注:</label>
@@ -68,30 +78,26 @@
         </div>
     </div>
 
+<%--    <div class="layui-inline">--%>
+<%--        <div class="layui-col-sm1">--%>
+<%--            &lt;%&ndash;            <label class="layui-form-label">注册人:</label>&ndash;%&gt;--%>
+<%--            <div class="layui-input-block">--%>
+<%--                <%--%>
+<%--                    IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();--%>
+<%--                %>--%>
+<%--                &lt;%&ndash; <input id="creator" type="text" name="creator" lay-verify="" placeholder="" autocomplete="off" class="layui-input">&ndash;%&gt;--%>
+<%--                <input type="text" class="layui-input" id="creator" name="creator"--%>
+<%--                       value="<%=usetObject.getUserName()%>"/>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div class="layui-col-sm1">--%>
+<%--            <div class="layui-input-block">--%>
+<%--                <input type="text" class="layui-input" name="createTime"--%>
+<%--                       value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>" readonly/>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
-    <%--// 后续会添加，暂不显示--%>
-    <%--        <div class="layui-col-sm4">--%>
-    <%--            &lt;%&ndash;            <label class="layui-form-label">接入方式:<span style="color:red">*</span></label>&ndash;%&gt;--%>
-    <%--            <div class="layui-input-block">--%>
-    <%--                <input id="accessMethod" type="text" name="accessMethod" lay-verify="accessMethod"--%>
-    <%--                       placeholder="请输入接入方式" autocomplete="off" class="layui-hide">--%>
-    <%--            </div>--%>
-    <%--        </div>--%>
-
-    <%--            <label class="layui-form-label">注册人:</label>--%>
-    <div class="layui-input-block">
-        <%
-            IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
-        %>
-        <%-- <input id="creator" type="text" name="creator" lay-verify="" placeholder="" autocomplete="off" class="layui-input">--%>
-        <input type="text" class="layui-hide" id="creator" name="creator"
-               value="<%=usetObject.getUserName()%>" readonly/>
-    </div>
-
-    <div class="layui-input-block">
-        <input type="text" class="layui-hide" name="createTime"
-               value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>" readonly/>
-    </div>
 
     <div class="layui-input-block">
         <input id="APPId" type="text" name="APPId" lay-verify="required" placeholder=""
@@ -146,6 +152,14 @@
         }
     }
 
+    //获取接入方式的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#accessMethod",
+        dictTypeId: "ACCESS_METHOD",
+    });
+    //设置接入方式的默认值
+    $("#accessMethod").val("101");
+    form.render();
 
     //获取软件类型的下拉值
     layui.admin.renderDictSelect({
@@ -220,7 +234,7 @@
             title: "选择设备资源",
             area: ["850px", "470px"],
             btn: ["确定", "取消"],
-            content: "<%= request.getContextPath() %>/equipment/device/device_equipment.jsp",
+            content: "<%= request.getContextPath() %>/equipment/equipment/equipment_select.jsp",
             yes: function (index, layero) {
                 var data = layero.find('iframe')[0].contentWindow.getData();
                 $("#equipmentInt").val(data.equipmentInt);
@@ -233,7 +247,7 @@
     });
 
 
-    //判断设备资源号是否已存在
+    //判断APPId是否已存在
     function Exist() {
         var APPId = $("#APPId").val();
 

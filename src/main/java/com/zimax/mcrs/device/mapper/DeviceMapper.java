@@ -35,7 +35,7 @@ public interface DeviceMapper {
     void registrationDevice(Device device);
 
     /**
-     * 依据Appid注销终端
+     * 依据deviceId注销终端
      *
      * @return
      */
@@ -47,6 +47,13 @@ public interface DeviceMapper {
      * @return
      */
     void updateDevice(Device device);
+
+    /**
+     * 修改终端状态
+     *
+     * @return
+     */
+    void updateDeviceStatus(Device device);
 
     /**
      * 终端配置

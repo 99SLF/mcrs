@@ -120,5 +120,10 @@
 <!--        select `equipment_id`,`app_id`,`device_software_type` ,`device_id`from eqi_device-->
 <!--    </select>-->
 
+    <update id="updateDeviceRollback" parameterType="com.zimax.mcrs.device.pojo.DeviceRollback">
+        UPDATE dev_rollback
+        SET upgrade_status  = #{upgradeStatus}
+            WHERE device_rollback_id = ${deviceRollbackId}
+    </update>
 
 </mapper>

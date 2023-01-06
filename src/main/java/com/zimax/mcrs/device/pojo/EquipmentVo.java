@@ -1,25 +1,20 @@
 package com.zimax.mcrs.device.pojo;
 
-import com.baomidou.mybatisplus.annotation.*;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.util.Date;
 
 /**
  * 设备
  *
  * @author 林俊杰
- * @date 2022/11/28
+ * @date 2023/1/5
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@TableName("eqi_equipment")
-public class Equipment {
+public class EquipmentVo {
 
     /**
      * 设备主键
@@ -48,6 +43,21 @@ public class Equipment {
     private int equipTypeId;
 
     /**
+     *设备类型名称
+     */
+    private String equipTypeName;
+
+    /**
+     *MES连接IP地址
+     */
+    private String mesIpAddress;
+
+    /**
+     * 支持通信协议
+     */
+    private String protocolCommunication;
+
+    /**
      * 设备连接端口
      */
     private String equipmentContinuePort;
@@ -63,6 +73,26 @@ public class Equipment {
     private int accPointResId;
 
     /**
+     *接入点名称
+     */
+    private String accPointResName;
+
+    /**
+     *基地代码
+     */
+    private String matrixCode;
+
+    /**
+     * 工厂代码
+     */
+    private String factoryCode;
+
+    /**
+     * 工序名称
+     */
+    private String processName;
+
+    /**
      * 是否启用
      */
     private String enable;
@@ -75,7 +105,7 @@ public class Equipment {
     /**
      * 创建时间
      */
-    private Date createTime;
+    private String createTime;
 
     /**
      * 备注

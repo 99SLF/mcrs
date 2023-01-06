@@ -1,5 +1,7 @@
 package com.zimax.mcrs.device.controller;
 
+import com.zimax.cap.datacontext.DataContextManager;
+import com.zimax.cap.party.IUserObject;
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.device.pojo.Equipment;
 import com.zimax.mcrs.device.service.EquipmentService;
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,7 +30,7 @@ public class EquipmentController {
      *
      * @param equipmentId   设备资源号
      * @param equipmentName 设备名称
-     * @param equipmentProperties 设备名称
+     * @param processName 工序名称
      * @param limit         记录数
      * @param page          页码
      * @param field         排序字段
@@ -35,9 +38,9 @@ public class EquipmentController {
      * @return 设备列表
      */
     @GetMapping("/equipment/query")
-    public Result<?> query( String limit,  String page, String equipmentId, String equipmentName, String equipmentProperties,String order, String field) {
-        List equipments = equipmentService.queryEquipments(limit, page, equipmentId, equipmentName,equipmentProperties ,order, field);
-        return Result.success(equipments, equipmentService.count(equipmentId, equipmentName,equipmentProperties));
+    public Result<?> query( String limit,  String page, String equipmentId, String equipmentName, String processName,String order, String field) {
+        List equipments = equipmentService.queryEquipments(limit, page, equipmentId, equipmentName,processName ,order, field);
+        return Result.success(equipments, equipmentService.count(equipmentId, equipmentName,processName));
     }
 
     /**
@@ -47,6 +50,15 @@ public class EquipmentController {
      */
     @PostMapping("/equipment/add")
     public Result<?> addEquipment(@RequestBody Equipment equipment) {
+//        //获取当前用户信息
+//        IUserObject userName = DataContextManager.current().getMUODataContext().getUserObject();
+//        System.out.println("=============================================================");
+//        System.out.println(userName);
+        //设置创建人为当前用户的姓名
+//        equipment.setCreator(creator.get());
+//        //设置创建日期为当前时间
+//        equipment.setCreateTime(new Date());
+        //调用方法添加设备
         equipmentService.addEquipment(equipment);
         return Result.success();
     }
@@ -109,8 +121,8 @@ public class EquipmentController {
         }else {
             return Result.success();
         }
-
     }
+
 
 
 }

@@ -3,9 +3,11 @@ package com.zimax.mcrs.device.service;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.device.mapper.EquipmentMapper;
 import com.zimax.mcrs.device.pojo.Equipment;
+import com.zimax.mcrs.device.pojo.EquipmentVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,12 +27,12 @@ public class EquipmentService {
     /**
      * 查询所有
      */
-    public List<Equipment> queryEquipments(String limit, String page, String equipmentId, String equipmentName, String equipmentProperties,String order, String field) {
+    public List<EquipmentVo> queryEquipments(String limit, String page, String equipmentId, String equipmentName, String processName, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
             map.put("order", "desc");
-            map.put("field", "create_time");
+            map.put("field", "eqi.create_time");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));
@@ -41,7 +43,7 @@ public class EquipmentService {
         }
         map.put("equipmentId", equipmentId);
         map.put("equipmentName", equipmentName);
-        map.put("equipmentProperties", equipmentProperties);
+        map.put("processName", processName);
         return equipmentMapper.queryAll(map);
     }
 

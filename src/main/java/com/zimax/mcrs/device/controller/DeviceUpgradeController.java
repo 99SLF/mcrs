@@ -89,7 +89,8 @@ public class DeviceUpgradeController {
             IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
             deviceUpgrade.setVersionUpdater(userObject.getUserName());
             deviceUpgrade.setVersionUpdateTime(new Date());
-            deviceUpgrade.setUpgradeStatus("未升级");
+            //100为未升级，101为升级中，102已升级
+            deviceUpgrade.setUpgradeStatus("100");
             //List<UpdateUpload> list = updateUploadService.getUpdateUploadRecord(uploadId);
             String version = updateUploadService.getUpdateUploadRecord(uploadId).getVersion();
             deviceUpgrade.setUpgradeVersion(version);
