@@ -33,11 +33,11 @@ public interface AccessMonitorMapper {
      * 新增终端异常预警信息
      */
     void addDeviceAbn(DeviceAbn deviceAbn);
+    int getEqiOnline();
+    int getAccessOnline();
 
-
-    List<GroupByProduction> groupQueryByproduction();
+    GroupByProduction getWarnByproduction();
     List<GroupByDate> groupQueryBydate();
 
-    int getWarnTotal();
-    WarnTotalInfo getWarnAHtotal();
+    WarnTotalInfo getWarnInfo();
 }

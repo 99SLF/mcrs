@@ -64,14 +64,18 @@ public class DeviceAbnormalAlarm {
 
 
 
-    @GetMapping("/groupQueryByproduction")
-    public Result<?> groupQueryByproduction() {
-        List<GroupByProduction>groupByProductionList = accessMonitorService.groupQueryByproduction();
-        return Result.success(groupByProductionList);
+    @GetMapping("/getWarnByproduction")
+    public Result<?> getWarnByproduction() {
+        return Result.success(accessMonitorService.getWarnByproduction());
     }
     @GetMapping("/groupQueryBydate")
     public Result<?> groupQueryBydate() {
         List<GroupByDate>dateList = accessMonitorService.groupQueryBydate();
         return Result.success(dateList);
+    }
+
+    @GetMapping("/getWarnInfo")
+    public Result<?> getWarnInfo() {
+        return Result.success(accessMonitorService.getWarnInfo());
     }
 }
