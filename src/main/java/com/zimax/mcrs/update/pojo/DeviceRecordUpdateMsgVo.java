@@ -1,7 +1,9 @@
 package com.zimax.mcrs.update.pojo;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -10,6 +12,8 @@ import java.util.Date;
  * @date 2023/1/2 19:54
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class DeviceRecordUpdateMsgVo {
 
     /**

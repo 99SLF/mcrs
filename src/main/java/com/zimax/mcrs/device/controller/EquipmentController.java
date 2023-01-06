@@ -121,8 +121,8 @@ public class EquipmentController {
         }else {
             return Result.success();
         }
-
     }
+
 
 
 }

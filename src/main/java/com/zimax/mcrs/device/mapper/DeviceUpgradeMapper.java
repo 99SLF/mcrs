@@ -1,5 +1,6 @@
 package com.zimax.mcrs.device.mapper;
 
+import com.zimax.mcrs.device.pojo.DeviceUpdate;
 import com.zimax.mcrs.device.pojo.DeviceUpgrade;
 import com.zimax.mcrs.device.pojo.DeviceUpgradeVo;
 import org.apache.ibatis.annotations.Mapper;
