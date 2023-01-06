@@ -11,7 +11,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
-    <title>选择设备类型</title>
+    <title>选择接入点资源类型</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css" />
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css" media="all">

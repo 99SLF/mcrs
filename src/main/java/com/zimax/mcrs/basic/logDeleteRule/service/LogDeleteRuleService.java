@@ -108,7 +108,6 @@ public class LogDeleteRuleService {
         return logDeleteRuleMapper.checkLogDeleteRule(deleteRuleNum);
     }
 
-
     /**
      * 启用日志删除规则
      */
