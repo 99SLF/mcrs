@@ -7,8 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 public interface DeviceUpgradeVoMapper {
     /**
      * 通过APPID查询终端升级信息
-     * @param APPId
+     * @param appId
      * @return
      */
-    DeviceUpgradeVo getDevice(String APPId);
+    DeviceUpgradeVo getDevice(String appId);
 }

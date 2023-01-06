@@ -5,7 +5,8 @@ import com.zimax.components.coframe.framework.service.ApplicationService;
 import com.zimax.mcrs.config.Result;
 import com.zimax.components.coframe.framework.pojo.Application;
 import net.bytebuddy.implementation.bind.annotation.BindingPriority;
-import org.apache.commons.compress.utils.IOUtils;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

@@ -8,8 +8,8 @@ import org.apache.ibatis.annotations.Mapper;
 public interface DeviceRollbackVoMapper {
     /**
      * 通过APPID查询终端回退信息
-     * @param APPId
+     * @param appId
      * @return
      */
-    DeviceRollbackVo getDevice(String APPId);
+    DeviceRollbackVo getDevice(String appId);
 }
