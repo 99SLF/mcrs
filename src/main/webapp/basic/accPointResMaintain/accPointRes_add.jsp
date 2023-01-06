@@ -23,7 +23,7 @@
 
         .layui-input-block {
             margin-left: 150px;
-            min-height: 36px
+            min-height: 30px
         }
     </style>
 </head>

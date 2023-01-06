@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.mcrs.config.Result;
+import com.zimax.mcrs.update.pojo.DeviceRecordUpdateMsgVo;
 import com.zimax.mcrs.update.pojo.RecordUpdateMsg;
 import com.zimax.mcrs.update.service.UpdatePackageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,11 @@ public class UpdatePackage {
     public Result<?> checkResult(String APPId) {
 
         //查询表eqi_device，upd_record，upd_upload ，通过终端主键，更新包主键关联，中间表是upd_record，如果appid查询的升级状态是空，或者是未升级的话，就返回信息，问终端“是否升级”
-        if (updatePackageService.getDevice(APPId).getUpdateStatus() == "" || updatePackageService.getDevice(APPId).getUpdateStatus() == null || updatePackageService.
-                getDevice(APPId).getUpdateStatus() == "未升级") {
+        DeviceRecordUpdateMsgVo deviceRecordUpdateMsgVo = updatePackageService.getDevice(APPId);
+
+
+        if (deviceRecordUpdateMsgVo!= null && deviceRecordUpdateMsgVo.getUpdateStatus()=="") {
+
 
             //查询表eqi_device，upd_record，upd_upload ，通过终端主键，更新包主键关联，中间表是upd_record，查询该条更新包的版本号和升级策略
             String version = updatePackageService.getDevice(APPId).getVersion();

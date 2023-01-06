@@ -64,7 +64,7 @@
         <%--                       placeholder="请先选择需要上传的更新包" autocomplete="off" class="layui-input" disabled>--%>
         <%--            </div>--%>
         <%--        </div>--%>
-        <div class="layui-col-sm4">
+        <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>终端软件类型:</label>
             <div class="layui-input-block">
                 <%--下拉选择框--%>
@@ -75,7 +75,7 @@
             </div>
         </div>
 
-        <div class="layui-col-md4">
+        <div class="layui-col-sm4">
             <label class="layui-form-label">最新版本号：</label>
             <div class="layui-input-block">
                 <input id="lastversion" type="text" name="lastversion" lay-verify="lastversion|required" placeholder=""
@@ -85,7 +85,7 @@
     </div>
 
     <div class="layui-form-item layui-row layui-col-space10">
-        <div class="layui-col-md4">
+        <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>是否为主要版本</label>
             <div class="layui-input-block">
                 <select name="majorVersion" id="majorVersion" lay-filter="majorVersion"
@@ -94,7 +94,7 @@
                 </select>
             </div>
         </div>
-        <div class="layui-col-md4">
+        <div class="layui-col-sm4">
             <label class="layui-form-label">版本号：</label>
             <div class="layui-input-block">
                 <%--从上往下加载顺序--%>
@@ -106,7 +106,7 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
 
-        <div class="layui-col-sm4">
+        <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>更新策略:</label>
             <div class="layui-input-block">
                 <%--下拉选择框--%>
@@ -119,7 +119,7 @@
     </div>
     <div>
         <div class="layui-form-item layui-row layui-col-space10">
-            <div class="layui-col-sm4">
+            <div class="layui-col-sm6">
                 <label class="layui-form-label"><span style="color:red">*</span>更新包</label>
                 <div class="layui-input-block layui-upload" style="width: 400px">
                     <button type="button" name="url" class="layui-btn layui-btn-sm"
@@ -140,7 +140,7 @@
     </div>
 
     <div class="layui-form-item layui-row layui-col-space12">
-        <div class="layui-col-sm4">
+        <div class="layui-col-sm6">
             <label class="layui-form-label" style="margin-top: 10px;">制单时间：</label>
             <div class="layui-input-block" id="div" style="width: 200px;margin-top: 10px; ">
                 <%--                <input type="text" class="layui-input" name="versionUploadTime"--%>
@@ -150,7 +150,7 @@
                        readonly/>
             </div>
         </div>
-        <div class="layui-col-sm4">
+        <div class="layui-col-sm6">
             <label class="layui-form-label" style="margin-top: 10px;">制单人:</label>
             <div class="layui-input-block" style="width: 200px;margin-top: 10px; ">
                 <%
