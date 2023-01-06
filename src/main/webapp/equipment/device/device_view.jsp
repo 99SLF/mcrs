@@ -81,7 +81,7 @@
             <label class="layui-form-label"><span style="color:red">*</span>终端名称:</label>
             <div class="layui-input-block">
                 <input id="deviceName" type="text" name="deviceName" lay-verify="required|deviceName" placeholder=""
-                       autocomplete="off" class="layui-input">
+                       autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
         <div class="layui-col-sm6">
@@ -170,7 +170,7 @@
             <label class="layui-form-label">备注:</label>
             <div class="layui-input-block">
             <textarea cols="50" rows="10" style="width:100%;height:100px" name="remarks" id="remarks" autocomplete="off"
-                      class="layui-input" lay-verify="remarks"></textarea>
+                      class="layui-input" lay-verify="remarks" readonly></textarea>
             </div>
         </div>
     </div>
@@ -209,10 +209,22 @@
 
     var win = null;
 
-    //禁用规则级别下拉选择框
+    //禁用启用下拉选择框
     layui.use('form', function(){
         var form = layui.form;
         $("#enable").attr("disabled","disabled");
+        form.render('select');
+    });
+    //禁用终端软件类型下拉选择框
+    layui.use('form', function(){
+        var form = layui.form;
+        $("#deviceSoftwareType").attr("disabled","disabled");
+        form.render('select');
+    });
+    //禁用接入方式下拉选择框
+    layui.use('form', function(){
+        var form = layui.form;
+        $("#accessMethod").attr("disabled","disabled");
         form.render('select');
     });
 
@@ -221,6 +233,25 @@
 
     //禁用选择接入点资源
     $('#accPoint').addClass("layui-btn-disabled").attr("disabled",true);
+
+    //获取接入方式的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#accessMethod",
+        dictTypeId: "ACCESS_METHOD",
+    });
+    //设置接入方式的默认值
+    $("#accessMethod").val("101");
+    form.render();
+
+    //获取软件类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#deviceSoftwareType",
+        dictTypeId: "DEVICE_SOFTWARE_TYPE",
+    });
+    //设置软件类型的默认值
+    $("#deviceSoftwareType").val("101");
+    form.render();
+
 
     function SetData(data) {
         win = data.win ? data.win : window;

@@ -78,22 +78,26 @@
         </div>
     </div>
 
+<%--    <div class="layui-inline">--%>
+<%--        <div class="layui-col-sm1">--%>
+<%--            &lt;%&ndash;            <label class="layui-form-label">注册人:</label>&ndash;%&gt;--%>
+<%--            <div class="layui-input-block">--%>
+<%--                <%--%>
+<%--                    IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();--%>
+<%--                %>--%>
+<%--                &lt;%&ndash; <input id="creator" type="text" name="creator" lay-verify="" placeholder="" autocomplete="off" class="layui-input">&ndash;%&gt;--%>
+<%--                <input type="text" class="layui-input" id="creator" name="creator"--%>
+<%--                       value="<%=usetObject.getUserName()%>"/>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div class="layui-col-sm1">--%>
+<%--            <div class="layui-input-block">--%>
+<%--                <input type="text" class="layui-input" name="createTime"--%>
+<%--                       value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>" readonly/>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
-
-    <%--            <label class="layui-form-label">注册人:</label>--%>
-    <div class="layui-input-block">
-        <%
-            IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
-        %>
-        <%-- <input id="creator" type="text" name="creator" lay-verify="" placeholder="" autocomplete="off" class="layui-input">--%>
-        <input type="text" class="layui-hide" id="creator" name="creator"
-               value="<%=usetObject.getUserName()%>" readonly/>
-    </div>
-
-    <div class="layui-input-block">
-        <input type="text" class="layui-hide" name="createTime"
-               value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>" readonly/>
-    </div>
 
     <div class="layui-input-block">
         <input id="APPId" type="text" name="APPId" lay-verify="required" placeholder=""
@@ -148,7 +152,7 @@
         }
     }
 
-//获取接入方式的下拉值
+    //获取接入方式的下拉值
     layui.admin.renderDictSelect({
         elem: "#accessMethod",
         dictTypeId: "ACCESS_METHOD",

@@ -467,7 +467,7 @@
         else if (e.event == "view") {
             top.layer.open({
                 type: 2,
-                title: "查看日志删除规则详情",
+                title: "查看设备详情",
                 content: "<%= request.getContextPath() %>/equipment/equipment/equipment_view.jsp",
                 area: ["1000px", "560px"],
                 resize: false,

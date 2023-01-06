@@ -101,7 +101,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label">工厂名称:</label>
             <div class="layui-input-block">
-                <input id="factoryName" type="text" name="factoryName" lay-verify="factoryName" placeholder=""
+                <input id="factoryName" type="text" name="factoryName" lay-verify="" placeholder=""
                        autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
@@ -130,7 +130,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label">设备接入IP:</label>
             <div class="layui-input-block">
-                <input id="equipmentIp" type="text" name="equipmentIp" lay-verify="equipmentIp" placeholder=""
+                <input id="equipmentIp" type="text" name="equipmentIp" lay-verify="" placeholder=""
                        autocomplete="off"
                        class="layui-input" readonly>
             </div>
@@ -149,7 +149,7 @@
             <label class="layui-form-label">设备安装位置:</label>
             <div class="layui-input-block">
                 <input id="equipmentInstallLocation" type="text" name="equipmentInstallLocation"
-                       lay-verify="assessInstallLocation" placeholder="" autocomplete="off" class="layui-input"
+                       lay-verify="" placeholder="" autocomplete="off" class="layui-input"
                        readonly>
             </div>
         </div>

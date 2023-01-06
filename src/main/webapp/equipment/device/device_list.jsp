@@ -555,6 +555,28 @@
                 });
             });
         }
+        else if (e.event == "view") {
+            top.layer.open({
+                type: 2,
+                title: "查看终端详情",
+                content: "<%= request.getContextPath() %>/equipment/device/device_view.jsp",
+                area: ["1000px", "560px"],
+                resize: false,
+                // btn: ["确定", "取消"],
+                success: function (layero, index) {
+                    var dataJson = {
+                        data: data,
+                        win: window
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function (index, layero) {
+                    var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");
+                    edit.click();
+                }
+
+            });
+        }
     });
 
     //批量选中
