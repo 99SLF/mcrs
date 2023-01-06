@@ -6,6 +6,8 @@
     <!--查询记录数-->
     <select id="count" resultType="int">
         SELECT count(*) FROM eqi_device AS dev
+        LEFT JOIN base_access_info AS bai
+        ON dev.acc_point_res_id = bai.acc_point_res_id
         LEFT JOIN eqi_equipment AS eqi
         ON dev.equipment_int=eqi.equipment_int
         <where>
@@ -21,14 +23,27 @@
     <!--查询所有-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.device.pojo.DeviceVo">
         SELECT * FROM eqi_device AS dev
+        LEFT JOIN base_access_info AS bai
+        ON dev.acc_point_res_id = bai.acc_point_res_id
         LEFT JOIN eqi_equipment AS eqi
         ON dev.equipment_int=eqi.equipment_int
+        LEFT JOIN base_equip_info AS bei
+        ON eqi.equip_type_id= bei.equip_type_id
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
             </if>
             <if test="APPId !=null and APPId !=''">
                 and dev.app_id like '%${APPId}%'
+            </if>
+            <if test="deviceName !=null and deviceName !=''">
+                and dev.device_name like '%${deviceName}%'
+            </if>
+            <if test="processName !=null and processName !=''">
+                and bai.process_name like '%${processName}%'
+            </if>
+            <if test="factoryName !=null and factoryName !=''">
+                and bai.factory_name like '%${factoryName}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -42,12 +57,13 @@
     <!--注册终端-->
     <insert id="registrationDevice" parameterType="com.zimax.mcrs.device.pojo.Device">
         insert into eqi_device
-        values (#{deviceId}, MD5(#{APPId}), #{version}, #{needUpdate},
-                #{deviceSoftwareType}, #{deviceName},#{equipmentInt},
-                #{factoryName},
-                #{remarks}, #{creator},
-                #{createTime}, #{enable}, #{createRole},
-                #{updater}, #{updateTime})
+        values (#{deviceId}, MD5(#{APPId}),
+                #{version}, #{needUpdate},
+                #{enable}, #{registerStatus},
+                #{deviceSoftwareType}, #{deviceName},
+                #{accPointResId},#{equipmentInt},
+                #{accessMethod}, #{remarks},
+                #{creator}, #{createTime})
     </insert>
 
     <!--根据主键删除终端-->
@@ -60,14 +76,15 @@
     <!--更新1条终端信息-->
     <update id="updateDevice" parameterType="com.zimax.mcrs.device.pojo.Device">
         update eqi_device
-        set app_id = #{APPId},
+        set version=#{version},
+            need_update=#{needUpdate},
+            enable=#{enable},
+            register_status=#{registerStatus},
             device_software_type=#{deviceSoftwareType},
             device_name=#{deviceName},
-            factory_name=#{factoryName},
+            acc_point_res_id=#{accPointResId},
             equipment_int=#{equipmentInt},
-            enable=#{enable},
-            updater=#{updater},
-            update_time=#{updateTime},
+            access_method=#{accessMethod},
             remarks=#{remarks}
         where device_id = #{deviceId}
     </update>
@@ -99,7 +116,6 @@
                 LEFT JOIN  eqi_equipment b
                            ON a.equipment_int = b.equipment_int
         WHERE device_id = #{deviceId}
-
     </select>
 
 

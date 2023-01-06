@@ -1,6 +1,8 @@
 package com.zimax.mcrs.device.controller;
 
 
+import com.zimax.cap.datacontext.DataContextManager;
+import com.zimax.cap.party.IUserObject;
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.device.pojo.Device;
 import com.zimax.mcrs.device.service.DeviceService;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,6 +34,11 @@ public class DeviceController {
      */
     @PostMapping("/device/registrationDevice")
     public Result<?> registrationDevice(@RequestBody Device device) {
+        IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
+        device.setEnable("off");
+        device.setRegisterStatus("未注册");
+        device.setCreator(usetObject.getUserName());
+        device.setCreateTime(new Date());
         deviceService.registrationDevice(device);
         return Result.success();
     }
@@ -71,8 +79,8 @@ public class DeviceController {
      * @return 终端列表
      */
     @GetMapping("/device/query")
-    public Result<?> queryDevice(String page, String limit, String equipmentId, String APPId, String order, String field) {
-        List devices = deviceService.queryDevices(page, limit, equipmentId, APPId, order, field);
+    public Result<?> queryDevice(String  page, String limit, String equipmentId, String APPId, String deviceName, String processName, String factoryName, String order, String field) {
+        List devices = deviceService.queryDevices(page, limit, equipmentId, APPId, deviceName,processName,factoryName,order, field);
         return Result.success(devices, deviceService.count(equipmentId, APPId));
     }
 

@@ -1,6 +1,8 @@
 package com.zimax.mcrs.device.mapper;
 
+import com.zimax.mcrs.device.pojo.DeviceRollback;
 import com.zimax.mcrs.device.pojo.DeviceRollbackVo;
+import com.zimax.mcrs.device.pojo.DeviceUpdate;
 import com.zimax.mcrs.device.pojo.DeviceUpgradeVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -29,6 +31,12 @@ public interface DeviceRollbackMapper {
      */
     int count(@Param("equipmentId") String equipmentId, @Param("upgradeVersion") String upgradeVersion);
 
+
+    /**
+     * 修改回滚表
+     * @param deviceRollback
+     */
+    void updateDeviceRollback(DeviceRollback deviceRollback);
 
 
 }

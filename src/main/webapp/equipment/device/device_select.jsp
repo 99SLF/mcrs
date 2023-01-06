@@ -26,11 +26,10 @@
                         <input name="deviceName" class="layui-input" onenter="search"/>
                     </div>
                 </div>
-<%--             由于原型修改   暂时还没有这个字段--%>
                 <div class="layui-inline">
                     <label class="layui-form-label">使用工序：</label>
                     <div class="layui-input-inline">
-                        <input name="equipmentProperties" class="layui-input" onenter="search"/>
+                        <input name="processName" class="layui-input" onenter="search"/>
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -59,6 +58,14 @@
     </div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
+
+<script>
+    layui.config({
+        base: "<%=request.getContextPath()%>/"
+    });
+</script>
+
+<script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
 <script type="text/javascript">
     var layer = layui.layer;
     var table = layui.table;
@@ -73,7 +80,7 @@
         var field = data.field;
         var dataJson = {
             "deviceName": field.deviceName,
-            // "equipmentId": field.equipmentId,
+            "processName": field.processName,
             "factoryName": field.factoryName,
             "isDevice": "1"
         };
@@ -155,28 +162,29 @@
             align: "center",
             minWidth: 150
         }, {
-            field: "equipmentProperties",
+            field: "equipTypeName",
             title: "设备类型",
             align: "center",
             minWidth: 100,
+            templet:function(d) {
+                return layui.admin.getDictText("EQUIPMENT_PROPERTY", d.equipTypeName);
+            }
         }, {
             field: "protocolCommunication",
             title: "通信协议",
             align: "center",
             minWidth: 120,
         }, {
-            field: "equipmentName",
+            field: "accPointResName",
             title: "接入点名称",
             align: "center",
             minWidth: 120,
+        }, {
+            field: "processName",
+            title: "使用工序",
+            align: "center",
+            minWidth: 120,
         },
-        //    由于原型修改，暂时还没有这个字段
-        //     {
-        //     field: "mesContinueIp",
-        //     title: "使用工序",
-        //     align: "center",
-        //     minWidth: 120,
-        // },
             {
             field: "factoryName",
             title: "工厂名称",

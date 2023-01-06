@@ -1,6 +1,7 @@
 package com.zimax.mcrs.device.mapper;
 
 import com.zimax.mcrs.device.pojo.DeviceUpdate;
+import com.zimax.mcrs.update.pojo.UpdateUpload;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,6 +28,7 @@ public interface DeviceUpdateMapper {
      * 计算条数
      */
     int count(@Param("equipmentId") String equipmentId, @Param("version") String version);
+
 
 
     /**

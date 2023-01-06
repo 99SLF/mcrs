@@ -35,7 +35,7 @@ public interface DeviceMapper {
     void registrationDevice(Device device);
 
     /**
-     * 依据Appid注销终端
+     * 依据deviceId注销终端
      *
      * @return
      */

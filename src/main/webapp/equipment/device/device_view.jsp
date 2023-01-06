@@ -6,15 +6,15 @@
          pageEncoding="UTF-8" session="false" %>
 <!DOCTYPE html>
 <html>
-<!-- 
+<!--
   - Author(s): 林俊杰
-  - Date: 2022-12-01 16:13:14
+  - Date: 2023-1-6 11:56:14
   - Description:
 -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
-    <title>终端编辑</title>
+    <title>终端详情</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
 </head>
 <body>
@@ -81,7 +81,7 @@
             <label class="layui-form-label"><span style="color:red">*</span>终端名称:</label>
             <div class="layui-input-block">
                 <input id="deviceName" type="text" name="deviceName" lay-verify="required|deviceName" placeholder=""
-                       autocomplete="off" class="layui-input">
+                       autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
         <div class="layui-col-sm6">
@@ -101,7 +101,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label">工厂名称:</label>
             <div class="layui-input-block">
-                <input id="factoryName" type="text" name="factoryName" lay-verify="" placeholder=""
+                <input id="factoryName" type="text" name="factoryName" lay-verify="factoryName" placeholder=""
                        autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
@@ -130,7 +130,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label">设备接入IP:</label>
             <div class="layui-input-block">
-                <input id="equipmentIp" type="text" name="equipmentIp" lay-verify="" placeholder=""
+                <input id="equipmentIp" type="text" name="equipmentIp" lay-verify="equipmentIp" placeholder=""
                        autocomplete="off"
                        class="layui-input" readonly>
             </div>
@@ -149,7 +149,7 @@
             <label class="layui-form-label">设备安装位置:</label>
             <div class="layui-input-block">
                 <input id="equipmentInstallLocation" type="text" name="equipmentInstallLocation"
-                       lay-verify="" placeholder="" autocomplete="off" class="layui-input"
+                       lay-verify="assessInstallLocation" placeholder="" autocomplete="off" class="layui-input"
                        readonly>
             </div>
         </div>
@@ -170,13 +170,26 @@
             <label class="layui-form-label">备注:</label>
             <div class="layui-input-block">
             <textarea cols="50" rows="10" style="width:100%;height:100px" name="remarks" id="remarks" autocomplete="off"
-                      class="layui-input" lay-verify="remarks"></textarea>
+                      class="layui-input" lay-verify="remarks" readonly></textarea>
             </div>
         </div>
     </div>
-    <div class="layui-form-item layui-hide">
-        <input type="button" lay-submit lay-filter="layuiadmin-app-form-edit" id="layuiadmin-app-form-edit"
-               value="确认修改">
+    <div class="layui-form-item layui-row layui-col-space10">
+        <div class="layui-col-sm6">
+            <label class="layui-form-label">创建人:</label>
+            <div class="layui-input-block">
+                <input id="creator" type="text" name="creator" lay-verify="required"
+                       placeholder="" autocomplete="off" class="layui-input" readonly>
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <label class="layui-form-label">创建时间:</label>
+            <div class="layui-input-block">
+                <input id="createTime" type="text" name="createTime" lay-verify="required"
+                       placeholder="" autocomplete="off" class="layui-input" readonly>
+            </div>
+        </div>
     </div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
@@ -193,17 +206,52 @@
     var $ = layui.jquery;
     var isExist = false;
     var submit = false;
+
     var win = null;
 
-    //禁用终端软件类型下拉框
-    layui.use('form', function () {
+    //禁用启用下拉选择框
+    layui.use('form', function(){
         var form = layui.form;
-        $("#deviceSoftwareType").attr("disabled", "disabled");
+        $("#enable").attr("disabled","disabled");
+        form.render('select');
+    });
+    //禁用终端软件类型下拉选择框
+    layui.use('form', function(){
+        var form = layui.form;
+        $("#deviceSoftwareType").attr("disabled","disabled");
+        form.render('select');
+    });
+    //禁用接入方式下拉选择框
+    layui.use('form', function(){
+        var form = layui.form;
+        $("#accessMethod").attr("disabled","disabled");
         form.render('select');
     });
 
-    //禁用选择设备资源号按钮
-    $('#selectEquipment').addClass("layui-btn-disabled").attr("disabled", true);
+    //禁用选择设备
+    $('#selectEquipment').addClass("layui-btn-disabled").attr("disabled",true);
+
+    //禁用选择接入点资源
+    $('#accPoint').addClass("layui-btn-disabled").attr("disabled",true);
+
+    //获取接入方式的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#accessMethod",
+        dictTypeId: "ACCESS_METHOD",
+    });
+    //设置接入方式的默认值
+    $("#accessMethod").val("101");
+    form.render();
+
+    //获取软件类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#deviceSoftwareType",
+        dictTypeId: "DEVICE_SOFTWARE_TYPE",
+    });
+    //设置软件类型的默认值
+    $("#deviceSoftwareType").val("101");
+    form.render();
+
 
     function SetData(data) {
         win = data.win ? data.win : window;
@@ -229,188 +277,13 @@
             "equipmentInstallLocation": data.equipmentInstallLocation,
             "accessMethod": data.accessMethod,
             "remarks": data.remarks,
+            "creator": data.creator,
+            "createTime": data.createTime,
         });
     }
 
-    //获取接入方式的下拉值
-    layui.admin.renderDictSelect({
-        elem: "#accessMethod",
-        dictTypeId: "ACCESS_METHOD",
-    });
-    form.render();
-    //获取软件类型的下拉值
-    layui.admin.renderDictSelect({
-        elem: "#deviceSoftwareType",
-        dictTypeId: "DEVICE_SOFTWARE_TYPE",
-    });
     form.render();
 
-
-    //判断字符
-    form.verify({
-        deviceName: function (value, item) {
-            if (value.length > 20) {
-                return "终端名称不能超过20个字符";
-            }
-        },
-        // equipmentName: function (value, item) {
-        //     if (value.length > 20) {
-        //         return "接入点名称不能超过20个字符";
-        //     }
-        // },
-        deviceSoftwareType: function (value, item) {
-            if (value.length > 10) {
-                return "终端软件类型不能超过10字符";
-            }
-        },
-        assessType: function (value, item) {
-            if (value.length > 10) {
-                return "接入点类型不能超过10字符";
-            }
-        },
-        assessIp: function (value, item) {
-            if (value.length > 50) {
-                return "接入点Ip不能超过50字符";
-            }
-        },
-        equipmentId: function (value, item) {
-            if (value.length > 30) {
-                return "接入点资源号不能超过30字符";
-            }
-        },
-        assessAttributes: function (value, item) {
-            if (value.length > 30) {
-                return "接入点属性不能超30字符";
-            }
-        },
-        assessInstallLocation: function (value, item) {
-            if (value.length > 30) {
-                return "接入点安装位置不能超30字符";
-            }
-        },
-        factoryName: function (value, item) {
-            if (value.length > 20) {
-                return "工厂名称不能超20字符";
-            }
-        },
-        accessMethod: function (value, item) {
-            if (value.length > 20) {
-                return "接入方式不能超20字符";
-            }
-        }
-
-    });
-
-    //选择设备资源号入口
-    $("#selectEquipment").click(function () {
-        top.layer.open({
-            type: 2,
-            title: "选择设备资源",
-            area: ["850px", "470px"],
-            btn: ["确定", "取消"],
-            content: "<%= request.getContextPath() %>/equipment/equipment/equipment_select.jsp",
-            yes: function (index, layero) {
-                var data = layero.find('iframe')[0].contentWindow.getData();
-                $("#equipmentInt").val(data.equipmentInt);
-                $("#equipmentId").val(data.equipmentId);
-                $("#equipmentIp").val(data.equipmentIp);
-                $("#equipmentContinuePort").val(data.equipmentContinuePort);
-                $("#equipmentInstallLocation").val(data.equipmentInstallLocation);
-                top.layer.close(index);
-            }
-        });
-    });
-    //选择接入点资源入口
-    $("#accPoint").click(function () {
-        top.layer.open({
-            type: 2,
-            title: "选择接入点资源",
-            area: ["850px", "470px"],
-            btn: ["确定", "取消"],
-            content: "<%= request.getContextPath() %>/basic/accPointResMaintain/accPointRes_select.jsp",
-            yes: function (index, layero) {
-                var data = layero.find('iframe')[0].contentWindow.getData();
-                $("#accPointResId").val(data.accPointResId);
-                $("#accPointResName").val(data.accPointResName);
-                $("#factoryName").val(data.factoryName);
-                $("#processName").val(data.processName);
-                top.layer.close(index);
-            }
-        });
-    });
-    form.render();
-    // //日期
-    // laydate.render({
-    // 	elem: '#invaldate',
-    // 	format: 'yyyy-MM-dd',
-    // 	//解决时间选择器一闪而过的情况
-    // 	trigger: 'click',
-    // });
-    //
-    // var startDate = laydate.render({
-    // 	elem: '#star_time',
-    // 	//设置日期的类型
-    // 	type: 'date',
-    // 	trigger:'click',
-    // 	done: function(value, date) {
-    // 		if (value != "") {
-    // 			date.month = date.month - 1;
-    // 			date.date = date.date + 1;
-    // 			endDate.config.min = date;
-    // 		} else {
-    // 			endDate.config.min = startDate.config.min;
-    // 		}
-    // 	},
-    // });
-    //
-    // var endDate = laydate.render({
-    // 	//绑定的控件名称
-    // 	elem: '#end_time',
-    // 	//设置日期的类型
-    // 	type: 'date',
-    // 	//theme: '#2c78da',
-    // 	trigger: 'click',
-    // 	done: function(value, date) {
-    // 		if (value != "") {
-    // 			date.month = date.month - 1;
-    // 			date.date = date.date - 1;
-    // 			startDate.config.max = date;
-    // 		} else {
-    // 			startDate.config.max = endDate.config.max;
-    // 		}
-    // 	}
-    // });
-
-    //监听提交
-    form.on("submit(layuiadmin-app-form-edit)", function (data) {
-        var submitData = JSON.stringify(data.field);
-        debugger;
-        if (submit == false) {
-            submit = true;
-            if (isExist == false) {
-                $.ajax({
-                    url: "<%= request.getContextPath() %>/equipment/device/update",
-                    type: "POST",
-                    data: submitData,
-                    cache: false,
-                    contentType: "text/json",
-                    success: function (result) {
-                        layer.msg("修改成功", {
-                            icon: 1,
-                            time: 500
-                        }, function () {
-                            var index = parent.layer.getFrameIndex(window.name);
-                            win.layui.table.reload("LAY-app-device-list-reload");
-                            top.layer.close(index);
-                        });
-                    }
-                });
-            }
-        } else {
-            layer.msg("请稍等");
-        }
-        return false;
-    });
 </script>
 </body>
 </html>

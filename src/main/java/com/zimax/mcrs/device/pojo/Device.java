@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * 终端
@@ -18,7 +19,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("eqi_device")
-public class Device {
+public class Device extends HashMap {
 
     /**
      * 终端主键
@@ -42,10 +43,19 @@ public class Device {
     private String needUpdate;
 
     /**
+     * 是否启用
+     */
+    private String enable;
+
+    /**
+     * 注册状态
+     */
+    private String registerStatus;
+
+    /**
      * 终端软件类型
      */
     private String deviceSoftwareType;
-
 
     /**
      * 终端名称
@@ -53,51 +63,19 @@ public class Device {
     private String  deviceName;
 
     /**
+     * 接入点资源维护数据的主键
+     */
+    private int accPointResId;
+
+    /**
      * 设备主键
      */
     private int equipmentInt;
 
-//    /**
-//     * 接入点名称
-//     */
-//    private String assessName;
-
     /**
-     * 工厂名称
+     * 接入方式
      */
-    private String factoryName;
-
-
-//    /**
-//     * 接入点种类
-//     */
-//    private String assessType;
-
-//    /**
-//     * 接入点Ip
-//     */
-//    private String assessIp;
-
-//    /**
-//     * 接入点资源号
-//     */
-//    private String equipmentId;
-
-//    /**
-//     * 接入点属性
-//     */
-//    private String assessAttributes;
-
-
-//    /**
-//     * 接入点安装位置
-//     */
-//    private String assessInstallLocation;
-
-//    /**
-//     * 接入方式
-//     */
-//    private String accessMethod;
+    private String accessMethod;
 
     /**
      * 备注
@@ -110,37 +88,8 @@ public class Device {
     private String creator;
 
     /**
-     * 创建角色
-     */
-    private String createRole;
-
-    /**
      * 创建时间
      */
-    private String createTime;
+    private Date createTime;
 
-    /**
-     * 是否启用
-     */
-    private String enable;
-
-    /**
-     * 修改角色
-     */
-    private String updater;
-
-    /**
-     * 修改时间
-     */
-    private String updateTime;
-
-    /**
-     * 设备连接IP
-     */
-    private String equipmentIp;
-
-    /**
-     * 通讯协议
-     */
-    private String protocolCommunication;
 }
