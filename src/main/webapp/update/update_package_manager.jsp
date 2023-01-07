@@ -407,7 +407,8 @@
         if (e.event == "edit") {
             var filePath = encodeURIComponent(e.data.downloadUrl);
             var filename = encodeURIComponent(e.data.fileName);
-            var url = "<%= request.getContextPath() %>/upload/download?filePath=" + filePath ;
+            //var url = "<%= request.getContextPath() %>/upload/download?filePath=" + filePath ;
+            var url =  "<%= request.getContextPath() %>/update/loaderInterface?APPId=1";
             //创建a标签，用于点击
             var a = document.createElement("a");
                 a.download = filename;

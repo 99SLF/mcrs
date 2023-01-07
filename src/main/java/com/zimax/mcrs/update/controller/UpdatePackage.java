@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.zip.ZipInputStream;
 
 /**
  *@author 李伟杰
@@ -108,8 +111,8 @@ public class UpdatePackage {
      * 终端用appid调用提供提供的更新包下载接口
      * 返回zip文件下载路径，更新资源包版本号
      */
-    @PostMapping("/loaderInterface")
-    public Result<?> loaderInterface( String APPId) {
+    @GetMapping("/loaderInterface")
+    public Result<?>  loaderInterface(String APPId, HttpServletRequest request, HttpServletResponse response) {
         //1、通过APPID查询更新表（关联3）
         DeviceUpgradeVo deviceUpgradeVo = updatePackageService.getUpgradeVoDevice(APPId);
 
@@ -126,7 +129,8 @@ public class UpdatePackage {
 
             //2.1.1数据不存在则返回APPID信息有误
             if (deviceRollbackVo == null){
-                return Result.error("0", "");
+//                return Result.error("0", "");
+                return null;
             }
 
             //2.1.2、数据存在，获取更新包主键
@@ -143,7 +147,8 @@ public class UpdatePackage {
         UpdateUpload updateUpload = updatePackageService.getUpload(uploadId);
         if (updateUpload == null) {
             //更新包查询出错
-            return Result.error("0", "更新包查询出错");
+           // return Result.error("0", "更新包查询出错");
+            return null;
         }
 
         //3、修改升级表、回退表状态（升级中）（1个）
@@ -167,8 +172,12 @@ public class UpdatePackage {
         //4、文件发送，解压，运行
         //文件
         String filePath = updateUpload.getDownloadUrl();
+        String fileName = updateUpload.getFileName();
 
         byte[] data = null;
+
+        //5、返回信息
+        //return Result.success(data,"200", "正在升级");
         try {
             FileInputStream fis = new FileInputStream(filePath);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -184,9 +193,13 @@ public class UpdatePackage {
             e.printStackTrace();
         }
 
-        //5、返回信息
-        return Result.success(data,"200", "正在升级");
 
+        HashMap map = new HashMap();
+        map.put("data",data);
+        map.put("fileName",fileName);
+
+        //return data;
+        return Result.success(map,"200", "正在升级");
     }
 
 
