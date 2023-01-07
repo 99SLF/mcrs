@@ -186,7 +186,7 @@ public class UpdatePackage {
         if (deviceRollbackId != 0) {
             DeviceRollback deviceRollback = new DeviceRollback();
             deviceRollback.setDeviceRollbackId(deviceRollbackId);
-            deviceRollback.setUpgradeStatus("101");
+            deviceRollback.setUpgradeStatus("103");
 
             //更新
             updatePackageService.updateDeviceRollback(deviceRollback);
@@ -288,6 +288,9 @@ public class UpdatePackage {
         if (deviceRollbackId != 0) {
             DeviceRollback deviceRollback = new DeviceRollback();
             deviceRollback.setDeviceRollbackId(deviceRollbackId);
+            if (isCode.equals("102")) {
+                isCode = "104";
+            }
             deviceRollback.setUpgradeStatus(isCode);
             //更新
             updatePackageService.updateDeviceRollback(deviceRollback);
