@@ -112,7 +112,7 @@ public class UpdatePackage {
      * 返回zip文件下载路径，更新资源包版本号
      */
     @GetMapping("/loaderInterface")
-    public Result<?>  loaderInterface(String APPId, HttpServletRequest request, HttpServletResponse response) {
+    public void  loaderInterface(String APPId, HttpServletRequest request, HttpServletResponse response) {
         //1、通过APPID查询更新表（关联3）
         DeviceUpgradeVo deviceUpgradeVo = updatePackageService.getUpgradeVoDevice(APPId);
 
@@ -130,7 +130,7 @@ public class UpdatePackage {
             //2.1.1数据不存在则返回APPID信息有误
             if (deviceRollbackVo == null){
 //                return Result.error("0", "");
-                return null;
+               // return null;
             }
 
             //2.1.2、数据存在，获取更新包主键
@@ -148,7 +148,7 @@ public class UpdatePackage {
         if (updateUpload == null) {
             //更新包查询出错
            // return Result.error("0", "更新包查询出错");
-            return null;
+           // return null;
         }
 
         //3、修改升级表、回退表状态（升级中）（1个）
@@ -176,30 +176,40 @@ public class UpdatePackage {
 
         byte[] data = null;
 
-        //5、返回信息
-        //return Result.success(data,"200", "正在升级");
+        FileInputStream fileIn = null;
+        ServletOutputStream out = null;
         try {
-            FileInputStream fis = new FileInputStream(filePath);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            int len;
-            byte[] buffer = new byte[1024];
-            while ((len = fis.read(buffer)) != -1) {
-                baos.write(buffer, 0, len);
+            //String fileName = new String(fileNameString.getBytes("ISO8859-1"), "UTF-8");
+            response.setContentType("application/octet-stream");
+            // URLEncoder.encode(fileNameString, "UTF-8") 下载文件名为中文的，文件名需要经过url编码
+            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            File file;
+            String filePathString = filePath;
+            file = new File(filePathString);
+            fileIn = new FileInputStream(file);
+            out = response.getOutputStream();
+
+            byte[] outputByte = new byte[1024];
+            int readTmp = 0;
+            while ((readTmp = fileIn.read(outputByte)) != -1) {
+                out.write(outputByte, 0, readTmp); //并不是每次都能读到1024个字节，所有用readTmp作为每次读取数据的长度，否则会出现文件损坏的错误
             }
-            data = baos.toByteArray();
-            fis.close();
-            baos.close();
-        } catch (Exception e) {
+            data = outputByte;
+        }
+        catch (Exception e) {
+            //log.error(e.getMessage());
             e.printStackTrace();
         }
+        finally {
+            try {
+                fileIn.close();
+                out.flush();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-
-        HashMap map = new HashMap();
-        map.put("data",data);
-        map.put("fileName",fileName);
-
-        //return data;
-        return Result.success(map,"200", "正在升级");
     }
 
 
