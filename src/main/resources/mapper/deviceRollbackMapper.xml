@@ -7,7 +7,7 @@
     <select id="count" resultType="int">
         select
         count(*)
-      FROM
+        FROM
         dev_rollback AS rol
         LEFT JOIN
         eqi_equipment AS eqi
@@ -78,55 +78,74 @@
         </if>
     </select>
 
-<!--    &lt;!&ndash;注册终端&ndash;&gt;-->
-<!--    <insert id="registrationDevice" parameterType="com.zimax.mcrs.device.pojo.Device">-->
-<!--        insert into eqi_device-->
-<!--        values (#{deviceId}, #{APPId}, #{version}, #{needUpdate},-->
-<!--                #{deviceSoftwareType}, #{deviceName},-->
-<!--                #{assessName}, #{factoryName}, #{assessType},-->
-<!--                #{assessIp}, #{equipmentId},-->
-<!--                #{assessAttributes}, #{assessInstallLocation},-->
-<!--                #{accessMethod}, #{remarks}, #{creator},-->
-<!--                #{createTime}, #{enable}, #{createRole},-->
-<!--                #{updater}, #{updateTime})-->
-<!--    </insert>-->
+    <!--    &lt;!&ndash;注册终端&ndash;&gt;-->
+    <!--    <insert id="registrationDevice" parameterType="com.zimax.mcrs.device.pojo.Device">-->
+    <!--        insert into eqi_device-->
+    <!--        values (#{deviceId}, #{APPId}, #{version}, #{needUpdate},-->
+    <!--                #{deviceSoftwareType}, #{deviceName},-->
+    <!--                #{assessName}, #{factoryName}, #{assessType},-->
+    <!--                #{assessIp}, #{equipmentId},-->
+    <!--                #{assessAttributes}, #{assessInstallLocation},-->
+    <!--                #{accessMethod}, #{remarks}, #{creator},-->
+    <!--                #{createTime}, #{enable}, #{createRole},-->
+    <!--                #{updater}, #{updateTime})-->
+    <!--    </insert>-->
 
-<!--    &lt;!&ndash;根据主键删除设备&ndash;&gt;-->
-<!--    <delete id="logoutDevice" parameterType="int">-->
-<!--        delete-->
-<!--        from eqi_device-->
-<!--        where device_id = #{deviceId}-->
-<!--    </delete>-->
+    <!--    &lt;!&ndash;根据主键删除设备&ndash;&gt;-->
+    <!--    <delete id="logoutDevice" parameterType="int">-->
+    <!--        delete-->
+    <!--        from eqi_device-->
+    <!--        where device_id = #{deviceId}-->
+    <!--    </delete>-->
 
-<!--    &lt;!&ndash;更新1条设备信息&ndash;&gt;-->
-<!--    <update id="updateDevice" parameterType="com.zimax.mcrs.device.pojo.Device">-->
-<!--        update eqi_device-->
-<!--        set app_id = #{APPId},-->
-<!--            device_software_type=#{deviceSoftwareType},-->
-<!--            device_name=#{deviceName},-->
-<!--            assess_name=#{assessName},-->
-<!--            factory_name=#{factoryName},-->
-<!--            assess_type=#{assessType},-->
-<!--            assess_ip=#{assessIp},-->
-<!--            equipment_id=#{equipmentId},-->
-<!--            assess_attributes=#{assessAttributes},-->
-<!--            assess_install_location=#{assessInstallLocation},-->
-<!--            access_method=#{accessMethod},-->
-<!--            enable=#{enable},-->
-<!--            updater=#{updater},-->
-<!--            update_time=#{updateTime}-->
-<!--        where device_id = #{deviceId}-->
-<!--    </update>-->
+    <!--    &lt;!&ndash;更新1条设备信息&ndash;&gt;-->
+    <!--    <update id="updateDevice" parameterType="com.zimax.mcrs.device.pojo.Device">-->
+    <!--        update eqi_device-->
+    <!--        set app_id = #{APPId},-->
+    <!--            device_software_type=#{deviceSoftwareType},-->
+    <!--            device_name=#{deviceName},-->
+    <!--            assess_name=#{assessName},-->
+    <!--            factory_name=#{factoryName},-->
+    <!--            assess_type=#{assessType},-->
+    <!--            assess_ip=#{assessIp},-->
+    <!--            equipment_id=#{equipmentId},-->
+    <!--            assess_attributes=#{assessAttributes},-->
+    <!--            assess_install_location=#{assessInstallLocation},-->
+    <!--            access_method=#{accessMethod},-->
+    <!--            enable=#{enable},-->
+    <!--            updater=#{updater},-->
+    <!--            update_time=#{updateTime}-->
+    <!--        where device_id = #{deviceId}-->
+    <!--    </update>-->
 
-<!--    &lt;!&ndash;查询数据给监控&ndash;&gt;-->
-<!--    <select id="toMonitor" parameterType="map" resultType="com.zimax.mcrs.device.pojo.Device">-->
-<!--        select `equipment_id`,`app_id`,`device_software_type` ,`device_id`from eqi_device-->
-<!--    </select>-->
+    <!--    &lt;!&ndash;查询数据给监控&ndash;&gt;-->
+    <!--    <select id="toMonitor" parameterType="map" resultType="com.zimax.mcrs.device.pojo.Device">-->
+    <!--        select `equipment_id`,`app_id`,`device_software_type` ,`device_id`from eqi_device-->
+    <!--    </select>-->
 
     <update id="updateDeviceRollback" parameterType="com.zimax.mcrs.device.pojo.DeviceRollback">
         UPDATE dev_rollback
-        SET upgrade_status  = #{upgradeStatus}
-            WHERE device_rollback_id = ${deviceRollbackId}
+        SET upgrade_status = #{upgradeStatus}
+        WHERE device_rollback_id = ${deviceRollbackId}
     </update>
+
+    <insert id="addDeviceRollback" parameterType="com.zimax.mcrs.device.pojo.DeviceRollback">
+        insert into dev_rollback
+        values (#{deviceRollbackId}, #{deviceUpgradeId}, #{equipmentInt},
+                #{deviceId}, #{uploadId},
+                #{upgradeVersion}, #{upgradeStatus},
+                #{versionRollbackPeople}, #{versionRollbackTime})
+    </insert>
+
+    <select id="check" resultType="int">
+        select count(*)
+        from dev_rollback
+        where device_upgrade_id = #{deviceUpgradeId}
+    </select>
+
+    <select id="queryRollbackMsg" parameterType="map" resultType="com.zimax.mcrs.device.pojo.DeviceRollback">
+        select * from dev_rollback
+        where device_upgrade_id = #{deviceUpgradeId}
+    </select>
 
 </mapper>

@@ -13,10 +13,7 @@ import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 终端管理
@@ -67,6 +64,10 @@ public class DeviceUpgradeController {
         deviceUpgradeService.updateDeviceUpgrade(deviceUpgrade);
         return Result.success();
     }
+
+
+
+
 //    /**
 //     * 新增升级记录的升级状态
 //     */
@@ -149,6 +150,8 @@ public class DeviceUpgradeController {
         }
         return Result.success();
     }
+
+
 
 
 }

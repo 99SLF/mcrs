@@ -130,7 +130,7 @@
                 }
             });
         },
-
+        //升级
         upgrade: function () {
             var checkStatus = table.checkStatus("LAY-app-device-list-reload");
             var data = checkStatus.data;

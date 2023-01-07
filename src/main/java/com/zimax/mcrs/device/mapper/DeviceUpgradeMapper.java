@@ -1,5 +1,6 @@
 package com.zimax.mcrs.device.mapper;
 
+import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.mcrs.device.pojo.DeviceUpdate;
 import com.zimax.mcrs.device.pojo.DeviceUpgrade;
 import com.zimax.mcrs.device.pojo.DeviceUpgradeVo;
@@ -38,7 +39,18 @@ public interface DeviceUpgradeMapper {
 
     void addDeviceUpgrade(DeviceUpgrade deviceUpgrade);
 
+    /**
+     * 获取升级记录
+     */
+    DeviceUpgrade getDeviceUpgrade(int deviceUpgradeId);
+
+    /**
+     * 更新升级记录表
+     * @param
+     * @return
+     */
     void updateDeviceUploadId(DeviceUpgrade deviceUpgrade);
+
     /**
      * 通过终端id获取记录数
      */

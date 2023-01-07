@@ -66,6 +66,16 @@ public class DeviceUpgradeService {
 
 
     /**
+     * 通过升级记录表的id获取该条升级记录
+     * @param
+     * @return
+     */
+    public DeviceUpgrade getDeviceUpgrade(int deviceUpgradeId) {
+        return deviceUpgradeMapper.getDeviceUpgrade(deviceUpgradeId);
+    }
+
+
+    /**
      * 通过终端id获取升级记录为未更新的List(三个主键数据)
      * @param
      * @return

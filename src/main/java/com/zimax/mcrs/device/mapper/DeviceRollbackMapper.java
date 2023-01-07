@@ -1,9 +1,6 @@
 package com.zimax.mcrs.device.mapper;
 
-import com.zimax.mcrs.device.pojo.DeviceRollback;
-import com.zimax.mcrs.device.pojo.DeviceRollbackVo;
-import com.zimax.mcrs.device.pojo.DeviceUpdate;
-import com.zimax.mcrs.device.pojo.DeviceUpgradeVo;
+import com.zimax.mcrs.device.pojo.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -39,4 +36,18 @@ public interface DeviceRollbackMapper {
     void updateDeviceRollback(DeviceRollback deviceRollback);
 
 
+    void addDeviceRollback(DeviceRollback deviceRollback);
+
+
+    /**
+     * 检查当前APPId是否存在
+     */
+    int check(@Param("deviceUpgradeId") String deviceUpgradeId);
+
+
+    /**
+     * 通过升级表id获取记录数
+     */
+    List<DeviceRollback> queryRollbackMsg(Map map);
 }
+

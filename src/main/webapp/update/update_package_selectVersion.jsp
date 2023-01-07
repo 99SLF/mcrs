@@ -378,14 +378,14 @@
                                     title: "系统提示"
                                 });
                             } else if (result) {
-                                layer.msg("选择成功", {
+                                layer.msg("选择记录添加成功", {
                                     icon: 1,
                                     time: 500
                                 }, function () {
                                     table.reload("LAY-app-device-list-reload");
                                 });
                             } else {
-                                layer.msg("选择失败！", {
+                                layer.msg("选择记录添加失败！", {
                                     icon: 2,
                                     time: 2000
                                 });
