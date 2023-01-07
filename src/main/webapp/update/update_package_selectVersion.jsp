@@ -407,6 +407,7 @@
                     });
                     top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");
                     table.reload("LAY-app-device-list-reload");
+
                 });
 
             }

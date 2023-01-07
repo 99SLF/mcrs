@@ -3,6 +3,7 @@ package com.zimax.mcrs.device.mapper;
 import com.zimax.mcrs.device.pojo.DeviceUpdate;
 import com.zimax.mcrs.device.pojo.DeviceUpgrade;
 import com.zimax.mcrs.device.pojo.DeviceUpgradeVo;
+import com.zimax.mcrs.device.pojo.DeviceUploadUpgradeVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -33,8 +34,18 @@ public interface DeviceUpgradeMapper {
 
     void updateDeviceUpgrade(DeviceUpgrade deviceUpgrade);
 
-//    void addDeviceUpgrade(List<Integer> ids, String uploadIds);
+//  void addDeviceUpgrade(List<Integer> ids, String uploadIds);
+
     void addDeviceUpgrade(DeviceUpgrade deviceUpgrade);
 
+    void updateDeviceUploadId(DeviceUpgrade deviceUpgrade);
+    /**
+     * 通过终端id获取记录数
+     */
+    List<DeviceUploadUpgradeVo> queryRecordId(Map map);
 
+
+    DeviceUploadUpgradeVo queryRecordIdObject(int deviceId);
+
+    int queryRecordIdCount(int deviceId);
 }

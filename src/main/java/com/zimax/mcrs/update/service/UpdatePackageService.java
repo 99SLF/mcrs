@@ -114,13 +114,12 @@ public class UpdatePackageService {
         deviceUpgradeMapper.updateDeviceUpgrade(deviceUpgrade);
     }
 
-
     /**
-     * 修改升级表
-     * @param deviceRollback
+     * 修改升级表的uploadid
+     * @param deviceUpgrade
      */
-    public void updateDeviceRollback(DeviceRollback deviceRollback) {
-        deviceRollbackMapper.updateDeviceRollback(deviceRollback);
+    public void updateDeviceUploadId(DeviceUpgrade deviceUpgrade) {
+        deviceUpgradeMapper.updateDeviceUploadId(deviceUpgrade);
     }
 
     /**
@@ -130,6 +129,17 @@ public class UpdatePackageService {
     public void updateDevice(Device device){
         deviceMapper.updateDevice(device);
     }
+
+    /**
+     * 修改回退表
+     * @param deviceRollback
+     */
+    public void updateDeviceRollback(DeviceRollback deviceRollback) {
+        deviceRollbackMapper.updateDeviceRollback(deviceRollback);
+    }
+
+
+
 
 
 //    /**

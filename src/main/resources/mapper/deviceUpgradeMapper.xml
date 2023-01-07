@@ -43,7 +43,7 @@
         eqi.equipment_name,
         dev.device_name,
         dev.device_software_type,
-        dev.factory_name,
+        bai.factory_name,
         upl.upload_number
         FROM
         dev_upgrade AS upg
@@ -56,6 +56,9 @@
         LEFT JOIN
         upd_upload AS upl
         ON upg.upload_id=upl.upload_id
+        LEFT JOIN
+        base_access_info AS bai
+        ON dev.acc_point_res_id = bai.acc_point_res_id
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id LIKE '%${equipmentId}%'
@@ -87,14 +90,55 @@
             upgrade_version    = #{upgradeVersion},
             upgrade_status     = #{upgradeStatus},
             version_updater    = #{versionUpdater},
-            version_update_time = #{versionUpdateTime},
-            WHERE device_upgrade_id = ${deviceUpgradeId}
+            version_update_time = #{versionUpdateTime}
+        WHERE device_upgrade_id = #{deviceUpgradeId}
     </update>
 
-    <!--新增用户-->
+    <update id="updateDeviceUploadId" parameterType="com.zimax.mcrs.device.pojo.DeviceUpgrade">
+        UPDATE dev_upgrade
+        SET
+            upload_id          = #{uploadId},
+            WHERE device_upgrade_id = #{deviceUpgradeId}
+    </update>
+
+    <!--新增-->
     <insert id="addDeviceUpgrade" parameterType="com.zimax.mcrs.device.pojo.DeviceUpgrade">
         insert into dev_upgrade
         values (#{deviceUpgradeId}, #{equipmentInt}, #{deviceId}, #{uploadId}, #{upgradeVersion}, #{upgradeStatus}, #{versionUpdater}, #{versionUpdateTime})
     </insert>
 
+
+    <!--通过终端id获取当前的升级表主键-->
+    <select id="queryRecordId" parameterType="map" resultType="com.zimax.mcrs.device.pojo.DeviceUploadUpgradeVo">
+        SELECT
+            *
+        FROM
+            dev_upgrade a
+                LEFT JOIN eqi_device b ON a.device_id = b.device_id
+                LEFT JOIN upd_upload c ON a.upload_id = c.upload_id
+        WHERE
+            upgrade_status = "100" AND a.device_id = #{deviceId}
+    </select>
+
+    <select id="queryRecordIdObject" resultType="com.zimax.mcrs.device.pojo.DeviceUploadUpgradeVo">
+        SELECT
+            *
+        FROM
+            dev_upgrade a
+                LEFT JOIN eqi_device b ON a.device_id = b.device_id
+                LEFT JOIN upd_upload c ON a.upload_id = c.upload_id
+        WHERE
+            upgrade_status = "100" AND a.device_id = #{deviceId}
+    </select>
+
+    <!--获取一个用户信息条数-->
+    <select id="queryRecordIdCount" resultType="int">
+        select count(*)
+        FROM
+            dev_upgrade a
+                LEFT JOIN eqi_device b ON a.device_id = b.device_id
+                LEFT JOIN upd_upload c ON a.upload_id = c.upload_id
+        WHERE
+            upgrade_status = "100" AND a.device_id = #{deviceId}
+    </select>
 </mapper>

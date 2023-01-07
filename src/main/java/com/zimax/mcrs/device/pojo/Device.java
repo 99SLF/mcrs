@@ -19,7 +19,7 @@ import java.util.HashMap;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("eqi_device")
-public class Device extends HashMap {
+public class Device {
 
     /**
      * 终端主键
