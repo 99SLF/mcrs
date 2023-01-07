@@ -94,6 +94,12 @@
         WHERE device_upgrade_id = #{deviceUpgradeId}
     </update>
 
+    <update id="updateDeviceUpgradeStatus" parameterType="com.zimax.mcrs.device.pojo.DeviceUpgrade">
+        UPDATE dev_upgrade
+        SET upgrade_status = #{upgradeStatus}
+        WHERE device_upgrade_id = #{deviceUpgradeId}
+    </update>
+
     <update id="updateDeviceUploadId" parameterType="com.zimax.mcrs.device.pojo.DeviceUpgrade">
         UPDATE dev_upgrade
         SET

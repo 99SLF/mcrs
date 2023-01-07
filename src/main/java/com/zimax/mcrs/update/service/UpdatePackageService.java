@@ -111,7 +111,7 @@ public class UpdatePackageService {
      * @param deviceUpgrade
      */
     public void updateDeviceUpdate(DeviceUpgrade deviceUpgrade) {
-        deviceUpgradeMapper.updateDeviceUpgrade(deviceUpgrade);
+        deviceUpgradeMapper.updateDeviceUpgradeStatus(deviceUpgrade);
     }
 
     /**
