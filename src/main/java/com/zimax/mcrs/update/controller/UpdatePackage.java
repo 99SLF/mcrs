@@ -64,27 +64,41 @@ public class UpdatePackage {
         //1、根据APPID查询升级关联表（关联3 设备、升级、更新）
         DeviceUpgradeVo deviceUpgradeVo = updatePackageService.getUpgradeVoDevice(APPId);
 
+
+        UpgradeData upgradeData = new UpgradeData();
+
         //2.1、数据不存在，返回不升级
         if (deviceUpgradeVo == null) {
             //2.1.1、根据APPID查询回退关联表（关联3，设备，资源，回退）
             DeviceRollbackVo deviceRollbackVo = updatePackageService.getRollbackVoDevice(APPId);
-
             //2.1.2.1、数据不存在，返回不升级
             if (deviceRollbackVo == null) {
-                return Result.error("0", "数据不存在，无法升级");
+                upgradeData.setStatusCode("101");
+                upgradeData.setIsUpdate("100");
+                return Result.success(upgradeData,"0", "数据不存在，无法升级");
             } else {
                 //2.1.2.2、存在，但状态为升级，返回已经是最新版本
                 String upgradeStatus = deviceRollbackVo.getUpgradeStatus();
                 if (upgradeStatus.equals("102") || upgradeStatus.equals("101") ) {
-                    return Result.error("0", "已经是最新版本，无法升级");
+                    upgradeData.setStatusCode("102");
+                    upgradeData.setIsUpdate("100");
+                    return Result.success(upgradeData,"0", "已经是最新版本，无法升级");
                 } else {    //2.1.2.3、存在，但状态为未升级
                     //2.1.3、查询更新策略
                     //2.1.3.1、更新策略为手动更新，返回 是否升级、版本号、更新策略
                     String version = deviceRollbackVo.getVersion();
                     if (deviceRollbackVo.getUploadStrategy().equals("002")) {
-                        return Result.success("200", "是否回滚" + "；" + "即将回滚的版本号为" + version + "；" + "是否强制回滚");
+                        upgradeData.setStatusCode("103");
+                        upgradeData.setVersionID(version);
+                        upgradeData.setIsUpdate("101");
+                        upgradeData.setIsForcedUpdate("100");
+                        return Result.success(upgradeData,"200", "是否回滚");
                     } else {//2.1.3.2、更新策略为强制更新，返回 是否升级、版本号、更新策略
-                        return Result.success("200", "是否回滚" + "；" + "即将回滚的版本号为" + version + "；" + "是否强制回滚");
+                        upgradeData.setStatusCode("103");
+                        upgradeData.setVersionID(version);
+                        upgradeData.setIsUpdate("101");
+                        upgradeData.setIsForcedUpdate("101");
+                        return Result.success(upgradeData,"200", "是否回滚");
                     }
                 }
             }
@@ -92,15 +106,25 @@ public class UpdatePackage {
             //2.2、存在，但状态为升级，返回已经是最新版本
             String upgradeStatus = deviceUpgradeVo.getUpgradeStatus();
             if (upgradeStatus.equals("102") || upgradeStatus.equals("101")) {
-                return Result.error("0", "已经是最新版本，无法升级");
+                upgradeData.setStatusCode("102");
+                upgradeData.setIsUpdate("100");
+                return Result.success(upgradeData,"0", "已经是最新版本，无法升级");
             } else {    //2.3、存在，但状态为未升级
                 //3、查询更新策略
                 //3.1、更新策略为手动更新，返回 是否升级、版本号、更新策略
                 String version = deviceUpgradeVo.getVersion();
                 if (deviceUpgradeVo.getUploadStrategy().equals("002")) {
-                    return Result.success("200", "是否升级" + "；" + "即将升级的版本号为" + version + "；" + "是否强制升级");
+                    upgradeData.setStatusCode("104");
+                    upgradeData.setVersionID(version);
+                    upgradeData.setIsUpdate("101");
+                    upgradeData.setIsForcedUpdate("101");
+                    return Result.success(upgradeData,"200", "是否升级");
                 } else {//3.2、更新策略为强制更新，返回 是否升级、版本号、更新策略
-                    return Result.success("200", "是否升级" + "；" + "即将升级的版本号为" + version + "；" + "是否强制升级");
+                    upgradeData.setStatusCode("104");
+                    upgradeData.setVersionID(version);
+                    upgradeData.setIsUpdate("101");
+                    upgradeData.setIsForcedUpdate("101");
+                    return Result.success(upgradeData,"200", "是否升级");
                 }
             }
         }
@@ -221,6 +245,7 @@ public class UpdatePackage {
      */
     @PostMapping("/loaderResult")
     public Result<?> loaderResult(String APPId,String isCode) {
+        UpgradeData upgradeData = new UpgradeData();
         //1、通过APPID查询更新表（关联3）
         DeviceUpgradeVo deviceUpgradeVo = updatePackageService.getUpgradeVoDevice(APPId);
 
@@ -270,9 +295,11 @@ public class UpdatePackage {
 
         //4、返回终端信息
         if (isCode.equals("100")) {
-            return Result.error("0", "升级失败");
+            upgradeData.setStatusCode("105");
+            return Result.success(upgradeData,"0", "升级失败");
         } else {
-            return Result.success("200", "该终端已完成升级");
+            upgradeData.setStatusCode("106");
+            return Result.success(upgradeData,"200", "该终端已完成升级");
         }
 
     }
