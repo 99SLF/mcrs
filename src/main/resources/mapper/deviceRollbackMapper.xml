@@ -40,7 +40,7 @@
         eqi.equipment_name,
         dev.device_name,
         dev.device_software_type,
-        dev.factory_name,
+        bai.factory_name,
         upl.upload_number
         FROM
         dev_rollback AS rol
@@ -53,6 +53,9 @@
         LEFT JOIN
         upd_upload AS upl
         ON rol.upload_id=upl.upload_id
+        LEFT JOIN
+        base_access_info AS bai
+        ON dev.acc_point_res_id = bai.acc_point_res_id
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id LIKE '%${equipmentId}%'

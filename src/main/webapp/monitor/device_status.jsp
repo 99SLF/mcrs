@@ -26,29 +26,29 @@
 		<div class="layui-form-item">
 
 			<div class="layui-inline">
+				<label class="layui-form-label">设备资源号：</label>
 				<div class="layui-input-inline" >
 					<input type="text" name="equipmentId" value="" placeholder="请输入设备资源号" autocomplete="off" class="layui-input">
 				</div>
-			</div>
-			<div class="layui-inline">
+				<label class="layui-form-label">APPID：</label>
 				<div class="layui-input-inline" >
-					<input type="text" name="APPId" value="" placeholder="请输入APPId" autocomplete="off" class="layui-input">
+					<input type="text" name="APPId" value="" placeholder="请输入APPID" autocomplete="off" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-inline">
+				<label class="layui-form-label">终端软件类型：</label>
 				<div class="layui-input-inline" >
 					<input type="text" name="deviceSoftwareType" value="" placeholder="请输入终端软件类型" autocomplete="off" class="layui-input">
 				</div>
-			</div>
-			<div class="layui-inline">
+				<label class="layui-form-label">终端软件运行状态：</label>
 				<div class="layui-input-inline" >
 					<input type="text" name="deviceSoRunStatus" value="" placeholder="请输入终端软件运行状态" autocomplete="off" class="layui-input">
 				</div>
-			</div>
-			<div class="layui-inline layui-search">
-				<button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-rolelist-search" id="LAY-app-rolelist-search">
-					<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-				</button>
+				<div class="layui-inline layui-search"style="padding-left:15px">
+					<button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-rolelist-search" id="LAY-app-rolelist-search">
+						<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -74,7 +74,8 @@
 	var hiddenFields = [];
 	//功能名
 	var funName = "application_list";
-
+	//时间工具类引用
+	var util =layui.util;
 	var laydate = layui.laydate;
 
 	//日期时间选择器
@@ -88,6 +89,11 @@
 	// 	elem: '#test1'
 	// 	,type: 'datetime'
 	// });
+
+	layui.admin.renderDictSelect({
+		elem: "#deviceSoftwareType",
+		dictTypeId: "DEVICE_SOFTWARE_TYPE"
+	});
 
 	//监听搜索
 	form.on("submit(LAY-app-rolelist-search)", function(data) {

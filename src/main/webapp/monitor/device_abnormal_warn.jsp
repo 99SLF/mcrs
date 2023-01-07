@@ -235,21 +235,21 @@
 				align: "center",
 				// sort: true,
 				hide: isHidden("equipmentId"),
-				minWidth: 120
+				minWidth: 150
 			},{
 				//field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
 				field: "aPPId",
 				title: "APPID",
 				align: "center",
 				hide: isHidden("aPPId"),
-				minWidth: 120
+				minWidth: 150
 			},{
 				//field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
 				field: "deviceName",
 				title: "终端名称",
 				align: "center",
 				hide: isHidden("deviceName"),
-				minWidth: 120
+				minWidth: 150
 			},{
 				//field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
 				field: "useProcess",
@@ -262,7 +262,7 @@
 				field: "warningTitle",
 				title: "预警标题",
 				align: "center",
-				minWidth: 100,
+				minWidth: 150,
 				hide: isHidden("warningTitle")
 
 			},{
@@ -270,7 +270,7 @@
 				title: "预警类型",
 				align: "center",
 				hide: isHidden("warningType"),
-				minWidth: 100
+				minWidth: 150
 
 			},{
 				field: "warningLevel",
@@ -283,13 +283,13 @@
 				title: "预警内容",
 				align: "center",
 				hide: isHidden("warningContent"),
-				minWidth: 100
+				minWidth: 150
 			},{
 				field: "occurTime",
 				title: "发生时间",
 				align:"center",
 				hide: isHidden("occurTime"),
-				minWidth: 180,
+				minWidth: 200,
 				templet:function(d){
 					return util.toDateString(d.occurTime,'yyyy-MM-dd HH:mm:ss');
 				}

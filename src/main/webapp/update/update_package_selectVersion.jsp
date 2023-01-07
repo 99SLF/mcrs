@@ -39,7 +39,7 @@
                     <div class="layui-input-inline">
                         <%--下拉选择框--%>
                         <select name="deviceSoType" id="deviceSoType" lay-filter="deviceSoType"
-                                lay-verify="deviceSoType|required" type="select">
+                                type="select">
                             <option value=""></option>
                         </select>
                     </div>
@@ -255,7 +255,7 @@
             };
         },
         cols: [[{
-            type: "checkbox",
+            type: "radio",
         }, {
             title: "序号",
             type: "numbers",
@@ -263,7 +263,7 @@
             field: "uploadNumber",
             title: "更新包单号",
             align: "center",
-            minWidth: 120,
+            minWidth: 180,
             hide: isHidden("uploadNumber"),
             //打开监听
             event: "view",
@@ -275,7 +275,7 @@
             field: "version",
             title: "版本号",
             align: "center",
-            minWidth: 80,
+            minWidth: 70,
             hide: isHidden("version")
         }, {
             field: "uploadStrategy",
@@ -296,7 +296,6 @@
 
                 return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoType);
             }
-
         }, {
             field: "versionUploadTime",
             title: "版本上传时间",
@@ -315,6 +314,34 @@
         var type = $(this).data("type");
         active[type] ? active[type].call(this) : "";
     });
+
+    table.on("tool(LAY-app-device-list)", function (e) {
+        //当前行数据
+        var data = e.data;
+        if (e.event == "view") {
+            top.layer.open({
+                type: 2,
+                title: "查看更新包详情",
+                content: "<%= request.getContextPath() %>/update/update_package_detailed.jsp",
+                area: ["700px", "560px"],
+                resize: false,
+                btn: ["确定", "取消"],
+                success: function (layero, index) {
+                    var dataJson = {
+                        data: data,
+                        win: window
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function (index, layero) {
+                    var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");
+                    edit.click();
+                }
+
+            });
+        }
+    });
+
     var active = {
 
         //升级跳转
@@ -322,14 +349,13 @@
             var checkStatus = table.checkStatus("LAY-app-device-list-reload");
             var data = checkStatus.data;
             if (data.length == 0) {
-                layer.msg("请至少选中一条记录！");
+                layer.msg("请选中一条更新版本信息！");
             }
             if (data.length > 0) {
                 var uploadIds = data[0].uploadId;
                 var ids =new Array();
                 //ids = deviceIds.split("_");
                 ids = deviceIds
-
 
                 //组合成json数据
                 var json = {};
@@ -375,8 +401,13 @@
 
                     var index = top.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                     top.layer.close(index); //再执行关闭,先关闭选择的弹窗，不然会top占用，有关闭顺序
+                    top.layer.msg("选择成功！", {
+                        icon: 1,
+                        time: 2000
+                    });
                     top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");
                     table.reload("LAY-app-device-list-reload");
+
                 });
 
             }
