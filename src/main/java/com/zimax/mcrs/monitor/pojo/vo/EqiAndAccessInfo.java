@@ -6,14 +6,13 @@ import lombok.NoArgsConstructor;
 
 /**
  * @Author 施林丰
- * @Date:2023/1/4 17:14
+ * @Date:2023/1/6 17:22
  * @Description
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WarnTotalInfo {
-    int warnTotal;
-    int hardWarn;
-    int activeWarn;
+public class EqiAndAccessInfo {
+    int eqiOnline;
+    int accessOnline;
 }
