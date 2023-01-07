@@ -21,11 +21,6 @@
     </insert>
 
 
-    <select id="groupQueryByproduction" resultType="com.zimax.mcrs.monitor.pojo.vo.GroupByProduction">
-        SELECT warning_type as name, count(warning_type) as value
-        FROM mon_device_abn
-        GROUP BY warning_type
-    </select>
     <select id="groupQueryBydate" resultType="com.zimax.mcrs.monitor.pojo.vo.GroupByDate">
         select date_format(t1.occur_time, '%Y-%m-%d')            as recordDate,
                sum(CASE warning_type WHEN "101" THEN 1 ELSE 0 END) AS "activeWarn",
@@ -34,15 +29,34 @@
         group by date_format(t1.occur_time, '%Y-%m-%d')
         ORDER BY t1.occur_time desc limit 0,7
     </select>
-<!--    告警总数-->
-    <select id="getWarnTotal" resultType="Int">
-        SELECT count(*) FROM mon_device_abn
+<!--    告警信息-->
+    <select id="getWarnInfo" resultType="com.zimax.mcrs.monitor.pojo.vo.WarnTotalInfo">
+        select
+            count(*) as "warnTotal",
+            sum(CASE warning_type WHEN "101" THEN 1 ELSE 0 END) AS "activeWarn",
+            sum(CASE warning_type WHEN "100" THEN 1 ELSE 0 END) AS "hardWarn"
+        from mon_device_abn
     </select>
 
-    <select id="getWarnHardtotal" resultType="Int">
-        SELECT warning_type as name, count(warning_type) as value
-        FROM mon_device_abn
-        GROUP BY warning_type
+    <select id="getWarnByproduction" resultType="com.zimax.mcrs.monitor.pojo.vo.GroupByProduction">
+        select
+            sum(CASE use_process WHEN "101" THEN 1 ELSE 0 END) AS "coldPress",
+            sum(CASE use_process WHEN "102" THEN 1 ELSE 0 END) AS "dieCut",
+            sum(CASE use_process WHEN "103" THEN 1 ELSE 0 END) AS "wind",
+            sum(CASE use_process WHEN "104" THEN 1 ELSE 0 END) AS "coat"
+        from mon_device_abn
+    </select>
+
+    <select id="getEqiOnline" resultType="Int">
+        select
+            count(*) as eqiOnline
+        from mon_soft_status where device_so_run_status="101"
+    </select>
+
+    <select id="getAccessOnline" resultType="Int">
+        select
+            count(*) as accessOnline
+        from mon_equipment_status where access_status="101"
     </select>
 
 </mapper>

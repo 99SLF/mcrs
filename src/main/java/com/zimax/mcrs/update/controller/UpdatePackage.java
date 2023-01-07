@@ -13,7 +13,16 @@ import com.zimax.mcrs.update.service.UpdatePackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.InetAddress;
+import java.net.URLEncoder;
+import java.net.UnknownHostException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.zip.ZipInputStream;
 
 /**
  *@author 李伟杰
@@ -62,20 +71,20 @@ public class UpdatePackage {
 
             //2.1.2.1、数据不存在，返回不升级
             if (deviceRollbackVo == null) {
-                return Result.error("0", "");
+                return Result.error("0", "数据不存在，无法升级");
             } else {
                 //2.1.2.2、存在，但状态为升级，返回已经是最新版本
                 String upgradeStatus = deviceRollbackVo.getUpgradeStatus();
                 if (upgradeStatus.equals("102") || upgradeStatus.equals("101") ) {
-                    return Result.error("0", "");
+                    return Result.error("0", "已经是最新版本，无法升级");
                 } else {    //2.1.2.3、存在，但状态为未升级
                     //2.1.3、查询更新策略
                     //2.1.3.1、更新策略为手动更新，返回 是否升级、版本号、更新策略
                     String version = deviceRollbackVo.getVersion();
                     if (deviceRollbackVo.getUploadStrategy().equals("002")) {
-                        return Result.success("200", "是否升级" + "；" + "即将升级的版本号为" + version + "；" + "是否强制升级");
+                        return Result.success("200", "是否回滚" + "；" + "即将回滚的版本号为" + version + "；" + "是否强制回滚");
                     } else {//2.1.3.2、更新策略为强制更新，返回 是否升级、版本号、更新策略
-                        return Result.success("200", "是否升级" + "；" + "即将升级的版本号为" + version + "；" + "是否强制升级");
+                        return Result.success("200", "是否回滚" + "；" + "即将回滚的版本号为" + version + "；" + "是否强制回滚");
                     }
                 }
             }
@@ -83,7 +92,7 @@ public class UpdatePackage {
             //2.2、存在，但状态为升级，返回已经是最新版本
             String upgradeStatus = deviceUpgradeVo.getUpgradeStatus();
             if (upgradeStatus.equals("102") || upgradeStatus.equals("101")) {
-                return Result.error("0", "");
+                return Result.error("0", "已经是最新版本，无法升级");
             } else {    //2.3、存在，但状态为未升级
                 //3、查询更新策略
                 //3.1、更新策略为手动更新，返回 是否升级、版本号、更新策略
@@ -103,7 +112,7 @@ public class UpdatePackage {
      * 返回zip文件下载路径，更新资源包版本号
      */
     @GetMapping("/loaderInterface")
-    public Result<?> loaderInterface(@PathVariable("APPId") String APPId) {
+    public void  loaderInterface(String APPId, HttpServletRequest request, HttpServletResponse response) {
         //1、通过APPID查询更新表（关联3）
         DeviceUpgradeVo deviceUpgradeVo = updatePackageService.getUpgradeVoDevice(APPId);
 
@@ -120,7 +129,8 @@ public class UpdatePackage {
 
             //2.1.1数据不存在则返回APPID信息有误
             if (deviceRollbackVo == null){
-                return Result.error("0", "");
+//                return Result.error("0", "");
+               // return null;
             }
 
             //2.1.2、数据存在，获取更新包主键
@@ -137,7 +147,8 @@ public class UpdatePackage {
         UpdateUpload updateUpload = updatePackageService.getUpload(uploadId);
         if (updateUpload == null) {
             //更新包查询出错
-            return Result.error("0", "");
+           // return Result.error("0", "更新包查询出错");
+           // return null;
         }
 
         //3、修改升级表、回退表状态（升级中）（1个）
@@ -158,12 +169,46 @@ public class UpdatePackage {
 
         }
 
-
         //4、文件发送，解压，运行
-        updateUpload.getFileName();
+        //文件
+        String filePath = updateUpload.getDownloadUrl();
+        String fileName = updateUpload.getFileName();
 
-        //5、返回信息
-        return Result.success("200", "正在升级");
+        byte[] data = null;
+
+        FileInputStream fileIn = null;
+        ServletOutputStream out = null;
+        try {
+            //String fileName = new String(fileNameString.getBytes("ISO8859-1"), "UTF-8");
+            response.setContentType("application/octet-stream");
+            // URLEncoder.encode(fileNameString, "UTF-8") 下载文件名为中文的，文件名需要经过url编码
+            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            File file;
+            String filePathString = filePath;
+            file = new File(filePathString);
+            fileIn = new FileInputStream(file);
+            out = response.getOutputStream();
+
+            byte[] outputByte = new byte[1024];
+            int readTmp = 0;
+            while ((readTmp = fileIn.read(outputByte)) != -1) {
+                out.write(outputByte, 0, readTmp); //并不是每次都能读到1024个字节，所有用readTmp作为每次读取数据的长度，否则会出现文件损坏的错误
+            }
+            data = outputByte;
+        }
+        catch (Exception e) {
+            //log.error(e.getMessage());
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                fileIn.close();
+                out.flush();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 
@@ -175,7 +220,7 @@ public class UpdatePackage {
      * @return
      */
     @PostMapping("/loaderResult")
-    public Result<?> loaderResult(@RequestBody String APPId,@RequestBody String isCode) {
+    public Result<?> loaderResult(String APPId,String isCode) {
         //1、通过APPID查询更新表（关联3）
         DeviceUpgradeVo deviceUpgradeVo = updatePackageService.getUpgradeVoDevice(APPId);
 
@@ -233,19 +278,62 @@ public class UpdatePackage {
     }
 
     /**
+     * 获取ip地址
+     */
+    public static String getIpAddress(HttpServletRequest request) {
+        String ip = request.getHeader("x-forwarded-for");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_CLIENT_IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+        // 本机访问
+        if ("localhost".equalsIgnoreCase(ip) || "127.0.0.1".equalsIgnoreCase(ip) || "0:0:0:0:0:0:0:1".equalsIgnoreCase(ip)){
+            // 根据网卡取本机配置的IP
+            InetAddress inet;
+            try {
+                inet = InetAddress.getLocalHost();
+                ip = inet.getHostAddress();
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+        }
+        // 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
+        if (null != ip && ip.length() > 15) {
+            if (ip.indexOf(",") > 15) {
+                ip = ip.substring(0, ip.indexOf(","));
+            }
+        }
+        return ip;
+    }
+
+
+    /**
      *终端注册
-     * @param ip 终端IP
-     * @param port 终端端口
      * @return 注册成功返回APPID
      */
-    public Result<?> register(String ip, String port) {
-        String appId = null;
+    @PostMapping("/register")
+    public Result<?> register(HttpServletRequest request) {
+        String equipmentIp = "";
+        equipmentIp = getIpAddress(request);
+        String equipmentContinuePort = "";
 
+        String appId = null;
         //1.通过IP、端口查询设备资源 （关联2 设备、资源）
-        DeviceEquipmentVo deviceEquipmentVo= updatePackageService.getDeviceEquipmentVo(ip,port);
+        DeviceEquipmentVo deviceEquipmentVo= updatePackageService.getDeviceEquipmentVo(equipmentIp,equipmentContinuePort);
         //2.1不存在资源，返回录入信息
-        if (deviceEquipmentVo == null) {
-            return Result.error("0", "");
+        if (deviceEquipmentVo == null || equipmentIp == "") {
+            return Result.error("0", "不存在设备资源");
         } else {//2.2存在资源
             appId = deviceEquipmentVo.getAppId();
 
@@ -255,14 +343,14 @@ public class UpdatePackage {
 
             if(registerStatus.equals("101")) {
                 //3.1注册存在，但终端已注册，返回终端已经注册，不能重复注册,返回已注册APPID
-                return Result.success(appId,"0", "");
+                return Result.success(appId,"0", "终端已经注册，不能重复注册");
             } else {
                 //3.2注册存在，终端未注册，进行终端注册（修改注册表），返回APPID （1，注册表）
                 Device device = new Device();
                 device.setDeviceId(deviceId);
                 device.setRegisterStatus("101");
-                updatePackageService.updateDevice(device);
-                return Result.success(appId,"200", "");
+                updatePackageService.updateDeviceStatus(device);
+                return Result.success(appId,"200", "终端注册成功");
             }
         }
     }

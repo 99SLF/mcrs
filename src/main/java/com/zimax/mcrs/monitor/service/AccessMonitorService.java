@@ -5,6 +5,7 @@ import com.zimax.mcrs.monitor.mapper.AccessMonitorMapper;
 import com.zimax.mcrs.monitor.pojo.DeviceAbn;
 import com.zimax.mcrs.monitor.pojo.EquipmentStatus;
 import com.zimax.mcrs.monitor.pojo.SoftwareRunStatus;
+import com.zimax.mcrs.monitor.pojo.vo.EqiAndAccessInfo;
 import com.zimax.mcrs.monitor.pojo.vo.GroupByDate;
 import com.zimax.mcrs.monitor.pojo.vo.GroupByProduction;
 import com.zimax.mcrs.monitor.pojo.vo.WarnTotalInfo;
@@ -50,8 +51,8 @@ public class AccessMonitorService {
     }
 
 
-    public List<GroupByProduction> groupQueryByproduction() {
-        return accessMonitorMapper.groupQueryByproduction();
+    public GroupByProduction getWarnByproduction() {
+        return accessMonitorMapper.getWarnByproduction();
     }
     public List<GroupByDate> groupQueryBydate() {
         List<GroupByDate> groupByDates = accessMonitorMapper.groupQueryBydate();
@@ -65,11 +66,16 @@ public class AccessMonitorService {
 
     }
 
-    public int getWarnTotal() {
-        return accessMonitorMapper.getWarnTotal();
+    public WarnTotalInfo getWarnInfo() {
+        return accessMonitorMapper.getWarnInfo();
     }
-    public WarnTotalInfo getWarnAHtotal() {
-        return accessMonitorMapper.getWarnAHtotal();
+    public EqiAndAccessInfo getEqiAndAccess() {
+        int eqiOnline = accessMonitorMapper.getEqiOnline();
+        int accessOnline = accessMonitorMapper.getAccessOnline();
+        EqiAndAccessInfo eqiAndAccessInfo = new EqiAndAccessInfo();
+        eqiAndAccessInfo.setAccessOnline(accessOnline);
+        eqiAndAccessInfo.setEqiOnline(eqiOnline);
+        return eqiAndAccessInfo;
     }
 
 }

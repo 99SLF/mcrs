@@ -89,6 +89,13 @@
         where device_id = #{deviceId}
     </update>
 
+    <!--更新1条终端信息-->
+    <update id="updateDeviceStatus" parameterType="com.zimax.mcrs.device.pojo.Device">
+        update eqi_device
+        set register_status = #{registerStatus}
+        where device_id = #{deviceId}
+    </update>
+
     <!--查询数据给监控-->
     <select id="toMonitor" parameterType="map" resultType="com.zimax.mcrs.device.pojo.Device">
         select `equipment_id`,`app_id`,`device_software_type` ,`device_id`from eqi_device

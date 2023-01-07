@@ -71,12 +71,8 @@ public class AccessMonitor {
         accessMonitorService.addDeviceAbn(deviceAbn);
         return Result.success();
     }
-    @GetMapping("/getWarnInfo")
-    public Result<?> getWarnInfo() {
-        int warn = accessMonitorService.getWarnTotal();
-        WarnTotalInfo warnTotalInfo = accessMonitorService.getWarnAHtotal();
-        warnTotalInfo.setWarnTotal(warn);
-        return Result.success(warnTotalInfo);
+    @GetMapping("/deviceAndaccess")
+    public Result<?> getEqiAndAccess() {
+        return Result.success(accessMonitorService.getEqiAndAccess());
     }
-
 }
