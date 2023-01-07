@@ -34,6 +34,12 @@ public interface DeviceUpgradeMapper {
 
     void updateDeviceUpgrade(DeviceUpgrade deviceUpgrade);
 
+    /**
+     * 修改升级状态
+     * @param deviceUpgrade
+     */
+    void updateDeviceUpgradeStatus(DeviceUpgrade deviceUpgrade);
+
 //  void addDeviceUpgrade(List<Integer> ids, String uploadIds);
 
     void addDeviceUpgrade(DeviceUpgrade deviceUpgrade);
