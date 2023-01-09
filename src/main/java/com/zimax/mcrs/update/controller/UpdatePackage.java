@@ -1,5 +1,6 @@
 package com.zimax.mcrs.update.controller;
 
+import com.alibaba.excel.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.zimax.cap.datacontext.DataContextManager;
@@ -311,65 +312,41 @@ public class UpdatePackage {
      * 获取ip地址
      */
     public static String getIpAddress(HttpServletRequest request) {
-//        String ip = request.getHeader("x-forwarded-for");
-//        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-//            ip = request.getHeader("Proxy-Client-IP");
-//        }
-//        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-//            ip = request.getHeader("WL-Proxy-Client-IP");
-//        }
-//        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-//            ip = request.getHeader("HTTP_CLIENT_IP");
-//        }
-//        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-//            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-//        }
-//        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-//            ip = request.getRemoteAddr();
-//        }
-//        // 本机访问
-//         if ("localhost".equalsIgnoreCase(ip) || "127.0.0.1".equalsIgnoreCase(ip) || "0:0:0:0:0:0:0:1".equalsIgnoreCase(ip)){
-//            // 根据网卡取本机配置的IP
-//            InetAddress inet;
-//            try {
-//                inet = InetAddress.getLocalHost();
-//                ip = inet.getHostAddress();
-//            } catch (UnknownHostException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        // 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
-//        if (null != ip && ip.length() > 15) {
-//            if (ip.indexOf(",") > 15) {
-//                ip = ip.substring(0, ip.indexOf(","));
-//            }
-//        }
-//        return ip;
-
-        String ip;
-        for (String header : HEADERS_TO_TRY) {
-            ip = request.getHeader(header);
-            if (ip != null && ip.length() != 0 && !"unknown".equalsIgnoreCase(ip)) {
-                return ip;
+        String ip = request.getHeader("x-forwarded-for");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_CLIENT_IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+        // 本机访问
+         if ("localhost".equalsIgnoreCase(ip) || "127.0.0.1".equalsIgnoreCase(ip) || "0:0:0:0:0:0:0:1".equalsIgnoreCase(ip)){
+            // 根据网卡取本机配置的IP
+            InetAddress inet;
+            try {
+                inet = InetAddress.getLocalHost();
+                ip = inet.getHostAddress();
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
             }
         }
-        ip = request.getRemoteAddr();
+        // 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
+        if (null != ip && ip.length() > 15) {
+            if (ip.indexOf(",") > 15) {
+                ip = ip.substring(0, ip.indexOf(","));
+            }
+        }
         return ip;
     }
-
-
-    private static final String[] HEADERS_TO_TRY = {
-            "X-Forwarded-For",
-            "Proxy-Client-IP",
-            "WL-Proxy-Client-IP",
-            "HTTP_X_FORWARDED_FOR",
-            "HTTP_X_FORWARDED",
-            "HTTP_X_CLUSTER_CLIENT_IP",
-            "HTTP_CLIENT_IP",
-            "HTTP_FORWARDED_FOR",
-            "HTTP_FORWARDED",
-            "HTTP_VIA",
-            "REMOTE_ADDR"};
 
 
 
@@ -378,9 +355,9 @@ public class UpdatePackage {
      * @return 注册成功返回APPID
      */
     @PostMapping("/register")
-    public Result<?> register(HttpServletRequest request) {
-        String equipmentIp = "";
-        equipmentIp = getIpAddress(request);
+    public Result<?> register(HttpServletRequest request,String equipmentIp) {
+//        String equipmentIp = ip;
+        //equipmentIp = getIpAddress(request);
         String equipmentContinuePort = "";
 
         String appId = null;
