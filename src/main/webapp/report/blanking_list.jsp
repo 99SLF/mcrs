@@ -13,7 +13,7 @@
     <title>下料报表</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v1">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
     <style type="text/css">
         .layui-card {
             margin-bottom: 0px
@@ -50,7 +50,10 @@
 <%--                </div>--%>
                 <label class="layui-form-label">完工情况：</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="isEnd" value="" placeholder="是否完工" autocomplete="off" class="layui-input">
+                    <select name="isEnd" id="isEnd" lay-filter="isEnd"
+                            type="select">
+                        <option value=""></option>
+                    </select>
                 </div>
             </div>
 
@@ -88,6 +91,14 @@
     </div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
+
+<script>
+    layui.config({
+        base: "<%=request.getContextPath()%>/"
+    });
+</script>
+<%--字典--%>
+<script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
 <script type="text/javascript">
     var layer = layui.layer;
     var table = layui.table;
@@ -105,6 +116,12 @@
         elem: '#test0'
         , type: 'date'
     });
+    layui.admin.renderDictSelect({
+        elem: "#isEnd",
+        dictTypeId: "IS_END"
+    });
+    //数据字典项加载
+    form.render();
 
     //日期时间选择器
     laydate.render({
@@ -282,7 +299,11 @@
             title: "是否完工",
             align: "center",
             hide: isHidden("isEnd"),
-            minWidth: 60
+            minWidth: 60,
+            templet:function(d) {
+
+                return layui.admin.getDictText("IS_END", d.isEnd);
+            }
         }, {
             field: "createTime",
             title: "创建时间",

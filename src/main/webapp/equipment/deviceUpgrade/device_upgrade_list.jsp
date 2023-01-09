@@ -284,7 +284,7 @@
             minWidth: 150,
             hide: isHidden("upgradeStatus"),
             templet: function (d) {
-                return layui.admin.getDictText("UPGRADE_STATUS", d.upgradeStatus);
+                return layui.admin.getDictText("UPDATE_STATUS", d.upgradeStatus);
             }
         }, {
             field: "factoryName",

@@ -216,6 +216,7 @@ INSERT INTO `cap_user` VALUES ('1', 'default', 'sysadmin', 'k2xvHUmCHWw=', '2028
 DROP TABLE IF EXISTS `dev_rollback`;
 CREATE TABLE `dev_rollback` (
     `device_rollback_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '终端升级主键',
+    `device_upgrade_id` int(11) DEFAULT NULL,
     `equipment_int` int(255) DEFAULT NULL COMMENT '设备主键',
     `device_id` int(255) DEFAULT NULL COMMENT '终端主键',
     `upload_id` int(255) DEFAULT NULL COMMENT '更新包主键',
@@ -223,8 +224,8 @@ CREATE TABLE `dev_rollback` (
     `upgrade_status` varchar(255) DEFAULT NULL COMMENT '升级状态',
     `version_rollback_people` varchar(255) DEFAULT NULL COMMENT '版本更改人',
     `version_rollback_time` varchar(255) DEFAULT NULL COMMENT '版本更改时间',
-    PRIMARY KEY (`device_rollback_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+    PRIMARY KEY (`device_rollback_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Table structure for dev_upgrade
