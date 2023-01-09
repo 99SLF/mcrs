@@ -79,7 +79,7 @@
         base: "<%=request.getContextPath()%>/"
     });
 </script>
-
+<%--字典--%>
 <script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
 <script type="text/javascript">
     var layer = layui.layer;
@@ -90,7 +90,7 @@
 
     layui.admin.renderDictSelect({    //获取终端软件类型
         elem: "#deviceSoType",
-        dictTypeId: "DEVICE_SOFTWARE_TYPE",
+        dictTypeId: "DEVICE_SOFTWARE_TYPE"
     });
     //全局参数
     var req_data;

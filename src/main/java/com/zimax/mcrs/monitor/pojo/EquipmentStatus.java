@@ -31,18 +31,39 @@ public class EquipmentStatus {
     private String equipmentId;
 
     /**
-     * 接入类型(plc或rfid)
+     * 接入类型(plc或rfid)   ACCESS_TYPE
+     * 101
+     * PLC
+     *
+     * 102
+     * RFID
+     *
      */
     private String accessType;
 
 
     /**
      * 接入状态(正常异常)
+     * EQUIPMENT_ACCESS_STATUS
+     * 101
+     * 正常
+     *
+     * 102
+     * 异常
+     *
      */
     private String accessStatus;
 
     /**
      * 天线状态（plc可以可以为空，rfid必填）
+     *
+     * ANTENNA_TYPE
+     * 101
+     * 正常
+     *
+     * 102
+     * 异常
+     *
      */
     private String antennaStatus;
 

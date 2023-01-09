@@ -23,7 +23,7 @@ public class SoftwareRuntimeService {
      * 查询软件运行状态信息
      */
     public List<SoftwareRunStatus> querySoRuntimes(String page, String limit,
-                                                   String equipmentId, String APPId,
+                                                   String equipmentId, String deviceName,
                                                    String deviceSoType, String deviceSoRunStatus,
                                                    String order, String field) {
         ChangeString changeString = new ChangeString();
@@ -40,16 +40,16 @@ public class SoftwareRuntimeService {
             map.put("limit", Integer.parseInt(limit));
         }
         map.put("equipmentId", equipmentId);
-        map.put("APPId", APPId);
+        map.put("deviceName", deviceName);
         map.put("deviceSoType", deviceSoType);
         map.put("deviceSoRunStatus", deviceSoRunStatus);
         return softwareRuntimeMapper.querySoRuntimes(map);
 
     }
 
-    public int countSO(String equipmentId, String APPId,
+    public int countSO(String equipmentId, String deviceName,
                        String deviceSoType, String deviceSoRunStatus) {
-        return softwareRuntimeMapper.countSO(equipmentId, APPId, deviceSoType, deviceSoRunStatus);
+        return softwareRuntimeMapper.countSO(equipmentId, deviceName, deviceSoType, deviceSoRunStatus);
     }
 
 }

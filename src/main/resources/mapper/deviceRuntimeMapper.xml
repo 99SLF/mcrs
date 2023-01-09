@@ -30,10 +30,10 @@
                 and app_id like '%${APPId}%'
             </if>
             <if test="deviceSoftwareType !=null and deviceSoftwareType !=''">
-                and device_software_type like '%${deviceSoftwareType}%'
+                and device_software_type = #{deviceSoftwareType}
             </if>
             <if test="deviceSoRunStatus !=null and deviceSoRunStatus !=''">
-                and device_so_run_status like '%${deviceSoRunStatus}%'
+                and device_so_run_status = #{deviceSoRunStatus}
             </if>
         </where>
     </select>
@@ -85,10 +85,10 @@
         GROUP BY  b.equipment_id
         <trim prefix="having" suffixOverrides="and">
             <if test="equipmentId != null and equipmentId !=''">
-                equipment_id = #{equipmentId} and
+                equipment_id like '%${equipmentId}%' and
             </if>
             <if test="APPId != null and APPId !=''">
-                app_id = #{APPId} and
+                app_id like '%${APPId}%' and
             </if>
             <if test="deviceSoftwareType != null and deviceSoftwareType !=''">
                 device_software_type = #{deviceSoftwareType} and

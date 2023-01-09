@@ -27,7 +27,7 @@ public interface SoftwareRuntimeMapper {
      * @param
      * @return
      */
-    int countSO(@Param("equipmentId") String equipmentId, @Param("APPId") String APPId,
+    int countSO(@Param("equipmentId") String equipmentId, @Param("deviceName") String deviceName,
                 @Param("deviceSoType") String deviceSoType, @Param("deviceSoRunStatus") String deviceSoRunStatus
     );
 

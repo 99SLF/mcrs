@@ -10,8 +10,8 @@
             <if test="equipmentId !=null and equipmentId !=''">
                 and equipment_id like '%${equipmentId}%'
             </if>
-            <if test="APPId !=null and APPId !=''">
-                and app_id like '%${APPId}%'
+            <if test="deviceName !=null and deviceName !=''">
+                and device_name like '%${deviceName}%'
             </if>
             <if test="deviceSoType !=null and deviceSoType !=''">
                 and device_so_type like '%${deviceSoType}%'
@@ -29,8 +29,8 @@
             <if test="equipmentId !=null and equipmentId !=''">
                 and equipment_id like '%${equipmentId}%'
             </if>
-            <if test="APPId !=null and APPId !=''">
-                and app_id like '%${APPId}%'
+            <if test="deviceName !=null and deviceName !=''">
+                and device_name like '%${deviceName}%'
             </if>
             <if test="deviceSoType !=null and deviceSoType !=''">
                 and device_so_type like '%${deviceSoType}%'

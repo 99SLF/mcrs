@@ -7,7 +7,7 @@
     <select id="countEQP" resultType="int">
         select count(*) from mon_equipment_status
         <where>
-            access_type="PLC"
+            access_type="101"
             <if test="equipmentId !=null and equipmentId !=''">
                 and equipment_id like '%${equipmentId}%'
             </if>
@@ -21,7 +21,7 @@
     <select id="queryEquipmentAccessP" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.EquipmentStatus">
         select * from mon_equipment_status
         <where>
-            access_type="PLC"
+            access_type="101"
             <if test="equipmentId !=null and equipmentId !=''">
                 and equipment_id like '%${equipmentId}%'
             </if>
@@ -41,7 +41,7 @@
     <select id="countEQR" resultType="int">
         select count(*) from mon_equipment_status
         <where>
-            access_type="RFID"
+            access_type="102"
             <if test="equipmentId !=null and equipmentId !=''">
                 and equipment_id like '%${equipmentId}%'
             </if>
@@ -58,7 +58,7 @@
     <select id="queryEquipmentAccessR" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.EquipmentStatus">
         select * from mon_equipment_status
         <where>
-            access_type="RFID"
+            access_type="102"
             <if test="equipmentId !=null and equipmentId !=''">
                 and equipment_id like '%${equipmentId}%'
             </if>
