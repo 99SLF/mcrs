@@ -363,7 +363,7 @@ public class UpdatePackage {
         DeviceEquipmentVo deviceEquipmentVo= updatePackageService.getDeviceEquipmentVo(equipmentIp,equipmentContinuePort);
         //2.1不存在资源，返回录入信息
         if (deviceEquipmentVo == null || equipmentIp == "") {
-            return Result.error("0", "不存在设备资源");
+            return Result.error("0", "不存在设备资源:"+equipmentIp);
         } else {//2.2存在资源
             appId = deviceEquipmentVo.getAppId();
 
