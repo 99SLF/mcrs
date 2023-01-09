@@ -1,5 +1,6 @@
 package com.zimax.mcrs.update.controller;
 
+import com.alibaba.excel.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.zimax.cap.datacontext.DataContextManager;
@@ -328,7 +329,7 @@ public class UpdatePackage {
             ip = request.getRemoteAddr();
         }
         // 本机访问
-        if ("localhost".equalsIgnoreCase(ip) || "127.0.0.1".equalsIgnoreCase(ip) || "0:0:0:0:0:0:0:1".equalsIgnoreCase(ip)){
+         if ("localhost".equalsIgnoreCase(ip) || "127.0.0.1".equalsIgnoreCase(ip) || "0:0:0:0:0:0:0:1".equalsIgnoreCase(ip)){
             // 根据网卡取本机配置的IP
             InetAddress inet;
             try {
@@ -348,14 +349,15 @@ public class UpdatePackage {
     }
 
 
+
     /**
      *终端注册
      * @return 注册成功返回APPID
      */
     @PostMapping("/register")
-    public Result<?> register(HttpServletRequest request) {
-        String equipmentIp = "";
-        equipmentIp = getIpAddress(request);
+    public Result<?> register(HttpServletRequest request,String equipmentIp) {
+//        String equipmentIp = ip;
+        //equipmentIp = getIpAddress(request);
         String equipmentContinuePort = "";
 
         String appId = null;
@@ -363,7 +365,7 @@ public class UpdatePackage {
         DeviceEquipmentVo deviceEquipmentVo= updatePackageService.getDeviceEquipmentVo(equipmentIp,equipmentContinuePort);
         //2.1不存在资源，返回录入信息
         if (deviceEquipmentVo == null || equipmentIp == "") {
-            return Result.error("0", "不存在设备资源");
+            return Result.error("0", "不存在设备资源:"+equipmentIp);
         } else {//2.2存在资源
             appId = deviceEquipmentVo.getAppId();
 
@@ -383,6 +385,7 @@ public class UpdatePackage {
                 return Result.success(appId,"200", "终端注册成功");
             }
         }
+
     }
 
 
