@@ -113,6 +113,12 @@
         values (#{deviceUpgradeId}, #{equipmentInt}, #{deviceId}, #{uploadId}, #{upgradeVersion}, #{upgradeStatus}, #{versionUpdater}, #{versionUpdateTime})
     </insert>
 
+    <!--获取一条记录表信息-->
+    <select id="getDeviceUpgrade" resultType="com.zimax.mcrs.device.pojo.DeviceUpgrade">
+        select *
+        from dev_upgrade
+        WHERE device_upgrade_id = #{deviceUpgradeId}
+    </select>
 
     <!--通过终端id获取当前的升级表主键-->
     <select id="queryRecordId" parameterType="map" resultType="com.zimax.mcrs.device.pojo.DeviceUploadUpgradeVo">

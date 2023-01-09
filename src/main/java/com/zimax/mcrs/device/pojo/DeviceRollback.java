@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * 终端回退信息
  *
@@ -24,6 +26,13 @@ public class DeviceRollback {
      */
     @TableId(type = IdType.AUTO)
     private int deviceRollbackId;
+
+
+    /**
+     * 终端升级信息（升级记录表）主键
+     */
+
+    private int deviceUpgradeId;
 
     /**
      * 设备资产主键
@@ -58,7 +67,7 @@ public class DeviceRollback {
     /**
      * 版本回退时间
      */
-    private String versionRollbackTime;
+    private Date versionRollbackTime;
 
 
 }

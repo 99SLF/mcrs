@@ -2,9 +2,9 @@ package com.zimax.mcrs.device.service;
 
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.device.mapper.DeviceRollbackMapper;
-import com.zimax.mcrs.device.mapper.DeviceUpgradeMapper;
+import com.zimax.mcrs.device.pojo.DeviceRollback;
 import com.zimax.mcrs.device.pojo.DeviceRollbackVo;
-import com.zimax.mcrs.device.pojo.DeviceUpgradeVo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,4 +53,34 @@ public class DeviceRollbackService {
         return deviceRollbackMapper.count(equipmentId,upgradeVersion);
     }
 
+    /**
+     * 新增回退记录
+     * @param
+     * @return
+     */
+    public void addDeviceRollback(DeviceRollback deviceRollback){
+        deviceRollbackMapper.addDeviceRollback(deviceRollback);
+
+    }
+
+    /**
+     * 检测存在信息
+     *
+     * @param deviceUpgradeId
+     */
+    public int check(String deviceUpgradeId) {
+        return deviceRollbackMapper.check(deviceUpgradeId);
+    }
+
+
+    /**
+     * 通过升级表id获取回退记录表的已回退数据的List
+     * @param
+     * @return
+     */
+    public List<DeviceRollback> queryRollbackMsg(String deviceUpgradeId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("deviceUpgradeId", deviceUpgradeId);
+        return deviceRollbackMapper.queryRollbackMsg(map) ;
+    }
 }

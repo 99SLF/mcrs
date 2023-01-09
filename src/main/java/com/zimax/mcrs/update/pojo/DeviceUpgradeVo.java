@@ -10,7 +10,7 @@ public class DeviceUpgradeVo {
     /**
      * 设备APPID
      */
-    private int appId;
+    private String appId;
 
     /**
      * 更新包主键
