@@ -51,7 +51,7 @@
 
     <!--查询所用户信息-->
     <!--列表显示-->
-    <select id="queryUsers" parameterType="map" resultType="com.zimax.components.coframe.rights.pojo.User">
+    <select id="queryUsers" parameterType="map" resultType="com.zimax.components.coframe.rights.pojo.UserVo">
         select * from cap_user
         <where>
             <if test="status !=null and status !=''">

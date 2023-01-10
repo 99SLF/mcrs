@@ -14,7 +14,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
-    <title>设备类型信息维护详情</title>
+    <title>更新包详情</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <style>
         .layui-form-label {

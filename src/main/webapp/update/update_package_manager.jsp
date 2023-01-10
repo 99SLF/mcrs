@@ -79,7 +79,7 @@
         base: "<%=request.getContextPath()%>/"
     });
 </script>
-
+<%--字典--%>
 <script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
 <script type="text/javascript">
     var layer = layui.layer;
@@ -90,7 +90,7 @@
 
     layui.admin.renderDictSelect({    //获取终端软件类型
         elem: "#deviceSoType",
-        dictTypeId: "DEVICE_SOFTWARE_TYPE",
+        dictTypeId: "DEVICE_SOFTWARE_TYPE"
     });
     //全局参数
     var req_data;
@@ -125,6 +125,12 @@
         table.reload("LAY-app-device-list-reload", {
             where: field
         });
+    });
+
+    //下拉框监听事件
+    form.on("select(deviceSoType)", function(data) {
+        var submit = $("#LAY-app-devicelist-search");
+        submit.click();
     });
 
 

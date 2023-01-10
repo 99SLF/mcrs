@@ -28,7 +28,7 @@ public class SoftwareRuntime {
      * @param page        页记录数
      * @param limit       页码
      * @param equipmentId 设备资源号
-     * @param APPId       APPId
+     * @param deviceName       终端名称
      * @param deviceSoType   终端软件类型
      * @param deviceSoRunStatus      终端软件运行状态
      * @param order       排序方式
@@ -40,10 +40,10 @@ public class SoftwareRuntime {
      */
     @GetMapping("/querySoRuntimes")
     public Result<?> querySoRuntimes(String page, String limit,
-                                     String equipmentId, String APPId,
+                                     String equipmentId, String deviceName,
                                      String deviceSoType, String deviceSoRunStatus,
                                      String order, String field) {
-        List SoRuntimes = softwareRuntimeService.querySoRuntimes(page, limit, equipmentId, APPId, deviceSoType, deviceSoRunStatus,order, field);
-        return Result.success(SoRuntimes, softwareRuntimeService.countSO(equipmentId, APPId, deviceSoType, deviceSoRunStatus));
+        List SoRuntimes = softwareRuntimeService.querySoRuntimes(page, limit, equipmentId, deviceName, deviceSoType, deviceSoRunStatus,order, field);
+        return Result.success(SoRuntimes, softwareRuntimeService.countSO(equipmentId, deviceName, deviceSoType, deviceSoRunStatus));
     }
 }

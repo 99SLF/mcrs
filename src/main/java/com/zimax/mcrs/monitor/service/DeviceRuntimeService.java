@@ -44,7 +44,7 @@ public class DeviceRuntimeService {
         }
         map.put("equipmentId", equipmentId);
         map.put("APPId", APPId);
-        map.put("deviceSoType", deviceSoftwareType);
+        map.put("deviceSoftwareType", deviceSoftwareType);
         map.put("deviceSoRunStatus", deviceSoRunStatus);
         return deviceRuntimeMapper.queryDeviceRuntime(map);
 

@@ -3,7 +3,7 @@
 - Date: 2022-12-05 14:08:11
 - Description:
 -->
-<%@page pageEncoding="UTF-8"%>
+<%@page pageEncoding="UTF-8" %>
 <%--<%@page import="com.mes.foundation.eoscommon.ResourcesMessageUtil"%>--%>
 <!DOCTYPE html>
 <html>
@@ -11,9 +11,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>RFID设备运行状态</title>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css" />
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v1">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
     <style type="text/css">
         .layui-card {
             margin-bottom: 0px
@@ -26,31 +26,33 @@
         <div class="layui-form-item">
 
             <div class="layui-inline">
-
-                <div class="layui-input-inline" >
-                    <input type="text" name="equipmentId" value="" placeholder="请输入设备资源号" autocomplete="off" class="layui-input">
+                <label class="layui-form-label">设备资源号：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="equipmentId" value="" placeholder="请输入设备资源号" autocomplete="off"
+                           class="layui-input">
                 </div>
-            </div>
-
-            <div class="layui-inline">
-
-                <div class="layui-input-inline" >
-                    <input type="text" name="accessStatus" value="" placeholder="请输入RFID接入状态" autocomplete="off" class="layui-input">
+                <label class="layui-form-label">设备接入状态：</label>
+                <div class="layui-input-inline">
+                    <select name="accessStatus" id="accessStatus" lay-filter="accessStatus"
+                            type="select">
+                        <option value=""></option>
+                    </select>
                 </div>
-            </div>
-
-            <div class="layui-inline">
-
-                <div class="layui-input-inline" >
-                    <input type="text" name="antennaStatus" value="" placeholder="请输入天线状态" autocomplete="off" class="layui-input">
+<%--            </div>--%>
+<%--            <div class="layui-inline">--%>
+<%--                <label class="layui-form-label">天线状态：</label>--%>
+<%--                <div class="layui-input-inline">--%>
+<%--                    <select name="antennaStatus" id="antennaStatus" lay-filter="antennaStatus"--%>
+<%--                            type="select">--%>
+<%--                        <option value=""></option>--%>
+<%--                    </select>--%>
+<%--                </div>--%>
+                <div class="layui-inline layui-search"style="padding-left:15px">
+                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-rolelist-search"
+                            id="LAY-app-rolelist-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
                 </div>
-            </div>
-
-
-            <div class="layui-inline layui-search">
-                <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-rolelist-search" id="LAY-app-rolelist-search">
-                    <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                </button>
             </div>
         </div>
     </div>
@@ -67,7 +69,15 @@
     </div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
+<script>
+    layui.config({
+        base: "<%=request.getContextPath()%>/"
+    });
+</script>
+<%--字典--%>
+<script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
 <script type="text/javascript">
+
     var layer = layui.layer;
     var table = layui.table;
     var form = layui.form;
@@ -89,9 +99,14 @@
     // 	elem: '#test1'
     // 	,type: 'datetime'
     // });
-
+    layui.admin.renderDictSelect({
+        elem: "#accessStatus",
+        dictTypeId: "EQUIPMENT_ACCESS_STATUS"
+    });
+    //需要加载字典项
+    form.render();
     //监听搜索
-    form.on("submit(LAY-app-rolelist-search)", function(data) {
+    form.on("submit(LAY-app-rolelist-search)", function (data) {
         var field = data.field;
         table.reload("LAY-app-application-list-reload", {
             where: field
@@ -99,20 +114,19 @@
     });
 
     //下拉框监听事件
-    form.on('select(appType)', function(data){
+    form.on('select(accessStatus)', function (data) {
         var submit = $("#LAY-app-rolelist-search");
         submit.click();
     });
 
     //文本框回车事件
-    $(".layui-input").on("keydown", function(event) {
+    $(".layui-input").on("keydown", function (event) {
         if (event.keyCode == 13) {
             var submit = $("#LAY-app-rolelist-search");
             submit.click();
             return false;
         }
     });
-
 
 
     /* //按钮事件监听
@@ -124,7 +138,7 @@
     function getFullSize() {
         var header = $(".layui-card-header");
         var cardbody = $(".layui-card-body");
-        return header.outerHeight(true) + (cardbody.outerHeight(true) - cardbody.height())+1;
+        return header.outerHeight(true) + (cardbody.outerHeight(true) - cardbody.height()) + 1;
     }
 
     // //左侧表头按钮事件监听
@@ -134,9 +148,9 @@
     // });
 
     //表格排序
-    table.on('sort(LAY-app-application-list)', function(obj){
+    table.on('sort(LAY-app-application-list)', function (obj) {
         table.reload('LAY-app-application-list-reload', {
-            initSort: obj ,
+            initSort: obj,
             where: {
                 field: obj.field,
                 order: obj.type
@@ -151,7 +165,7 @@
         async: false,
         cache: false,
         contentType: "text/json",
-        success: function(result) {
+        success: function (result) {
             if (result) {
                 hiddenFields = result.data
             } else {
@@ -163,7 +177,7 @@
     //判断是否隐藏函数
     function isHidden(field) {
         for (var i = 0; i < hiddenFields.length; i++) {
-            if (hiddenFields[i].field == field ) {
+            if (hiddenFields[i].field == field) {
                 return true;
             }
         }
@@ -182,7 +196,7 @@
         toolbar: "#toolbar",
         defaultToolbar: ["filter"],
         //列筛选
-        colHideChange: function(col, checked) {
+        colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;
             $.ajax({
@@ -190,16 +204,16 @@
                 type: "GET",
                 cache: false,
                 contentType: "text/json",
-                success: function(result) {
+                success: function (result) {
                     if (result) {
-                    } else{
+                    } else {
                         layer.msg("列筛选失败");
                     }
                 }
             });
         },
         limits: [10, 15, 20, 30],
-        parseData: function(res) {
+        parseData: function (res) {
             return {
                 code: res.code,
                 msg: res.msg,
@@ -208,33 +222,53 @@
             };
         },
         //设置表头。值是一个二维数组。方法渲染方式必填
-        cols:[[
-            // 		{
-            // 	type: "checkbox"
-            // },
-            {
-                field: "equipmentId",
-                title: "设备资源号",
-                align: "center",
-                // sort: true,
-                hide: isHidden("equipmentId"),
-                minWidth: 100
-            }, {
-                //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
-                field: "accessStatus",
-                title: "RFID接入状态",
-                align: "center",
-                minWidth: 100,
-                hide: isHidden("accessStatus")
+        cols: [[{
+            type: "checkbox",
+        }, {
+            title: "序号",
+            type: "numbers",
+        }, {
+            field: "equipmentId",
+            title: "设备资源号",
+            align: "center",
+            // sort: true,
+            hide: isHidden("equipmentId"),
+            minWidth: 100
+        } ,{
+            field: "accessType",
+            title: "接入类型",
+            align: "center",
+            // sort: true,
+            hide: isHidden("accessType"),
+            minWidth: 100,
+            templet: function (d) {
 
-            }, {
-                field: "antennaStatus",
-                title: "天线状态",
-                align: "center",
-                hide: isHidden("antennaStatus"),
-                minWidth: 100
-
+                return layui.admin.getDictText("ACCESS_TYPE", d.accessType);
             }
+        }, {
+            //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
+            field: "accessStatus",
+            title: "接入状态",
+            align: "center",
+            minWidth: 100,
+            hide: isHidden("accessStatus"),
+            templet: function (d) {
+
+                return layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", d.accessStatus);
+            }
+
+        }, {
+            field: "antennaStatus",
+            title: "天线状态",
+            align: "center",
+            hide: isHidden("antennaStatus"),
+            minWidth: 100,
+            templet: function (d) {
+
+                return layui.admin.getDictText("ANTENNA_TYPE", d.antennaStatus);
+            }
+
+        }
 
         ]]
     });
@@ -246,8 +280,7 @@
     });
 
 
-
-    $("body").on("click", ".layui-table-body table.layui-table tbody tr td", function() {
+    $("body").on("click", ".layui-table-body table.layui-table tbody tr td", function () {
         if ($(this).attr("data-field") === "0") return;
         $(this).siblings().eq(0).find('i').click();
     });

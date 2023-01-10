@@ -2,9 +2,11 @@ package com.zimax.components.coframe.rights.service;
 
 import com.alibaba.excel.util.StringUtils;
 import com.zimax.cap.datacontext.DataContextManager;
+import com.zimax.cap.party.IUserObject;
 import com.zimax.components.coframe.rights.DefaultUserManager;
 import com.zimax.components.coframe.rights.mapper.UserMapper;
 import com.zimax.components.coframe.rights.pojo.User;
+import com.zimax.components.coframe.rights.pojo.UserVo;
 import com.zimax.mcrs.config.ChangeString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +37,9 @@ public class UserService {
 	public void addUser(User user) {
 		try {
 			String creator = DataContextManager.current().getMUODataContext().getUserObject().getUserId();
-			user.setCreator(creator);
+//			IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
+//			user.setCreateor(usetObject.getUserName());
+			user.setUserId(creator);
 			user.setPassword(encrypt(user.getPassword()));
 			user.setCreateTime(new Date());
 			user.setLastLogin(new Date());
@@ -65,7 +69,7 @@ public class UserService {
 	/**
 	 * 查询所有用户信息
 	 */
-	public List<User> queryUsers(String page, String limit, String status, String userName, String order, String field) {
+	public List<UserVo> queryUsers(String page, String limit, String status, String userName, String order, String field) {
 		ChangeString changeString = new ChangeString();
 		Map<String, Object> map = new HashMap<>();
 		if (order == null) {

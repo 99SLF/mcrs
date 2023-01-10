@@ -13,7 +13,7 @@
     <title>RFID报表</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v1">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
     <style type="text/css">
         .layui-card {
             margin-bottom: 0px
@@ -77,6 +77,14 @@
     </div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
+
+<script>
+    layui.config({
+        base: "<%=request.getContextPath()%>/"
+    });
+</script>
+<%--字典--%>
+<script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
 <script type="text/javascript">
     var layer = layui.layer;
     var table = layui.table;
