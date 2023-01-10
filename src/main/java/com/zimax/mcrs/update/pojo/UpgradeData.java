@@ -1,9 +1,20 @@
 package com.zimax.mcrs.update.pojo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UpgradeData {
+
+    /**
+     * 是否升级:
+     *  100否
+     *  101是
+     */
+    private boolean ifUpdate;
 
     /**
      * 状态码：
@@ -17,13 +28,6 @@ public class UpgradeData {
     private String statusCode;
 
     /**
-     * 是否升级:
-     *  100否
-     *  101是
-     */
-    private String isUpdate;
-
-    /**
      * 是否强制升级：
      *  100：否
      *  101：是
@@ -34,9 +38,5 @@ public class UpgradeData {
      * 版本号：
      */
     private String versionID;
-
-
-
-
 
 }
