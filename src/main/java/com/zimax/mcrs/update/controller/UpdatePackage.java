@@ -159,18 +159,28 @@ public class UpdatePackage {
             DeviceRollbackVo deviceRollbackVo = updatePackageService.getRollbackVoDevice(APPId);
 
             //2.1.1数据不存在则返回APPID信息有误
-            if (deviceRollbackVo == null){
+            if (deviceRollbackVo == null || deviceRollbackVo.getUpgradeStatus().equals("104")){
 //                return Result.error("0", "");
                // return null;
+                return;
             }
 
             //2.1.2、数据存在，获取更新包主键
             uploadId = deviceRollbackVo.getUploadId();
             deviceRollbackId = deviceRollbackVo.getDeviceRollbackId();
         } else {
-            //2.2、数据存在，获取更新包主键
-            uploadId = deviceUpgradeVo.getUploadId();
-            deviceUpgradeId = deviceUpgradeVo.getDeviceUpgradeId();
+            if (deviceUpgradeVo.getUpgradeStatus().equals("102")) {
+                DeviceRollbackVo deviceRollbackVo = updatePackageService.getRollbackVoDevice(APPId);
+                if (deviceRollbackVo == null || deviceRollbackVo.getUpgradeStatus().equals("104")) {
+                    return;
+                }
+                uploadId = deviceRollbackVo.getUploadId();
+                deviceRollbackId = deviceRollbackVo.getDeviceRollbackId();
+            } else {
+                //2.2、数据存在，获取更新包主键
+                uploadId = deviceUpgradeVo.getUploadId();
+                deviceUpgradeId = deviceUpgradeVo.getDeviceUpgradeId();
+            }
         }
 
 
@@ -269,17 +279,26 @@ public class UpdatePackage {
             DeviceRollbackVo deviceRollbackVo = updatePackageService.getRollbackVoDevice(APPId);
 
             //2.1.1数据不存在则返回APPID信息有误
-            if (deviceRollbackVo == null){
-                return Result.error("0", "");
+            if (deviceRollbackVo == null || deviceRollbackVo.getUpgradeStatus().equals("104")){
+                return Result.error("0", "升级失败");
             }
 
             //2.1.2、数据存在，获取更新包主键
             uploadId = deviceRollbackVo.getUploadId();
             deviceRollbackId = deviceRollbackVo.getDeviceRollbackId();
         } else {
-            //2.2、数据存在，获取更新包主键
-            uploadId = deviceUpgradeVo.getUploadId();
-            deviceUpgradeId = deviceUpgradeVo.getDeviceUpgradeId();
+            if (deviceUpgradeVo.getUpgradeStatus().equals("102")) {
+                DeviceRollbackVo deviceRollbackVo = updatePackageService.getRollbackVoDevice(APPId);
+                if (deviceRollbackVo == null || deviceRollbackVo.getUpgradeStatus().equals("104")) {
+                    return Result.error("0", "升级失败");
+                }
+                uploadId = deviceRollbackVo.getUploadId();
+                deviceRollbackId = deviceRollbackVo.getDeviceRollbackId();
+            } else {
+                //2.2、数据存在，获取更新包主键
+                uploadId = deviceUpgradeVo.getUploadId();
+                deviceUpgradeId = deviceUpgradeVo.getDeviceUpgradeId();
+            }
         }
 
 
