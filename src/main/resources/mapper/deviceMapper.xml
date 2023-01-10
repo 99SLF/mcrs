@@ -125,5 +125,10 @@
         WHERE device_id = #{deviceId}
     </select>
 
+    <select id="checkDeviceSoftwareType" resultType="int">
+        SELECT COUNT(*) FROM upd_upload
+        WHERE device_so_type = '${deviceSoftwareType}'
+    </select>
+
 
 </mapper>

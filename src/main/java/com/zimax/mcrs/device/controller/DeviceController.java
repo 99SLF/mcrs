@@ -127,6 +127,22 @@ public class DeviceController {
     }
 
 
+    /**
+     * 检测是否存在终端软件类型对应的更新包
+     *
+     * @param deviceSoftwareType 终端软件类型
+     */
+    @GetMapping("/device/checkDST/isExist")
+    public Result<?> checkDeviceSoftwareType(@RequestParam("deviceSoftwareType") String deviceSoftwareType) {
+        if(deviceService.checkDeviceSoftwareType(deviceSoftwareType)>0){
+            return Result.success();
+        }else {
+            return Result.error("1","当前终端软件类型不存在更新包，请上传更新包后重新注册");
+        }
+
+    }
+
+
 
 
 }

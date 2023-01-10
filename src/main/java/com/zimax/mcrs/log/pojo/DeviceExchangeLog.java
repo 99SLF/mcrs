@@ -30,7 +30,7 @@ public class DeviceExchangeLog {
     /**
      * 设备交换日志编号
      */
-    private int deviceExchangeLogNum;
+    private String deviceExchangeLogNum;
 
     /**
      * 日志类型

@@ -39,7 +39,7 @@
                 <input id="equipmentInt" name="equipmentInt" type="hidden"/>
                 <input type="text" class="layui-input" name="equipmentId" id="equipmentId"
                        lay-verify=""
-                       autocomplete="off" placeholder="" readonly>
+                       autocomplete="off" placeholder="请选择设备" readonly>
                 <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="onButtonEdit"
                         style="position:absolute;top:0px;right:0px;height:37px"><i
                         class="layui-icon layui-icon-more"></i></button>
@@ -127,6 +127,7 @@
     var $ = layui.jquery;
     var submit = false;
     var isExist = false;
+    var isExistDSW = false;
     var win = null;
 
     function SetData(data) {
@@ -260,6 +261,7 @@
                 cache: false,
                 success: function (text) {
                     if (text.code == "1") {
+
                         isExist = true;
                     } else {
                         isExist = false;
@@ -272,12 +274,40 @@
         console.log(isExist);
     };
 
+
+    //判断是否已存在终端软件类型对应更新包
+    function deviceSoftwareType() {
+        var deviceSoftwareType = $("#deviceSoftwareType").val();
+debugger;
+        if (deviceSoftwareType != null && deviceSoftwareType != "") {
+            $.ajax({
+                url: "<%= request.getContextPath() %>/equipment/device/checkDST/isExist?deviceSoftwareType=" + deviceSoftwareType,
+                type: "GET",
+                cache: false,
+                contentType: "text/json",
+                cache: false,
+                async: false,
+                success: function (text) {
+                    if (text.code == "1") {
+                        isExistDSW = true;
+                    } else {
+                        isExistDSW = false;
+                    }
+                }
+            });
+        } else {
+            return;
+        }
+        console.log(isExistDSW);
+    };
+
     //监听提交
     form.on("submit(layuiadmin-app-form-submit)", function (data) {
+        deviceSoftwareType();
         if (submit == false) {
             submit = true;
             var submitData = JSON.stringify(data.field);
-            if (isExist == false) {
+            if (isExist == false && isExistDSW == false) {
                 $.ajax({
                     url: "<%= request.getContextPath() %>/equipment/device/registrationDevice",
                     type: "POST",
@@ -296,8 +326,15 @@
                         });
                     }
                 });
-            } else if (isExist == true) {
+            } else if (isExist == true && isExistDSW==false) {
                 layer.msg("APPId已存在，请重新选择正确的设备资源号与终端软件类型", {
+                    icon: 2,
+                    time: 2000
+                });
+                submit = false;
+            }
+            else if (isExist == false && isExistDSW==true) {
+                layer.msg("当前终端软件类型不存在更新包，请上传更新包后重试", {
                     icon: 2,
                     time: 2000
                 });
