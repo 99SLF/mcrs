@@ -96,7 +96,7 @@
     });
 
     //下拉框监听事件
-    form.on('select(appType)', function (data) {
+    form.on('select(accessStatus)', function (data) {
         var submit = $("#LAY-app-rolelist-search");
         submit.click();
     });

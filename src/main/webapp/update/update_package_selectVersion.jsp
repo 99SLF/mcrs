@@ -144,6 +144,11 @@
         }
     });
 
+    //下拉框监听事件
+    form.on("select(deviceSoType)", function(data) {
+        var submit = $("#LAY-app-devicelist-search");
+        submit.click();
+    });
 
 
 

@@ -146,10 +146,22 @@
     });
 
     //下拉框监听事件
-    form.on('select(appType)', function (data) {
+    form.on('select(useProcess)', function (data) {
         var submit = $("#LAY-app-rolelist-search");
         submit.click();
     });
+
+    form.on('select(warningType)', function (data) {
+        var submit = $("#LAY-app-rolelist-search");
+        submit.click();
+    });
+    //下拉框监听事件
+    form.on('select(warningLevel)', function (data) {
+        var submit = $("#LAY-app-rolelist-search");
+        submit.click();
+    });
+
+
 
     //文本框回车事件
     $(".layui-input").on("keydown", function (event) {
