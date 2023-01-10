@@ -19,62 +19,67 @@
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
-            <div class="layui-form-item layui-col-space12" >
-                <div class="layui-inline">
-                    <label class="layui-form-label">预警规则编码：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="alarmRuleId" placeholder="请输入编码" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                    <label class="layui-form-label">预警规则标题：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="alarmRuleTitle" placeholder="请输入预警规则标题" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                    <label class="layui-form-label">监控层级：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="monitorLevel" placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">预警规则编码：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="alarmRuleId" placeholder="请输入编码" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">预警规则标题：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="alarmRuleTitle" placeholder="请输入预警规则标题" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">监控层级：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="monitorLevel" placeholder="" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">状态：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="enable" placeholder="" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">预警事件编码：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="alarmEventId" placeholder="" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">制单人：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="ruleMakeFormPeople" placeholder="" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">制单时间：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="ruleMakeFormTime" id="ruleMakeFormTime" placeholder=""
+                           autocomplete="off"
+                           class="layui-input">
                 </div>
 
-                <div class="layui-inline">
-                    <label class="layui-form-label">状态：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="enable" placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                    <label class="layui-form-label">预警事件编码：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="alarmEventId" placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                    <label class="layui-form-label">监控对象：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="monitorObject" placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                </div>
-
-                <div class="layui-inline" >
-                    <label class="layui-form-label">制单人：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="ruleMakeFormPeople" placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                    <label class="layui-form-label">制单时间：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="ruleMakeFormTime" id="ruleMakeFormTime" placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline layui-search">
+                <div class="layui-inline layui-search" style="padding-left: 50px">
                     <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-alarmRulelist-search"
                             id="LAY-app-alarmRulelist-search">
                         <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                     </button>
                 </div>
             </div>
+
+
         </div>
 
         <div class="layui-card-body">
@@ -114,6 +119,8 @@
     var form = layui.form;
     var $ = layui.jquery;
     var util = layui.util;
+    var submit = false;
+    var isExist = false;
 
     //全局参数
     var req_data;
@@ -133,6 +140,7 @@
 
     //监听搜索
     form.on("submit(LAY-app-alarmRulelist-search)", function (data) {
+        debugger;
         var field = data.field;
         table.reload("LAY-app-alarmRule-list-reload", {
             where: field
@@ -150,7 +158,7 @@
     });
 
     var active = {
-        //设备新建
+        //预警规则新建
         add: function () {
             top.layer.open({
                 type: 2,
@@ -172,7 +180,7 @@
             });
         },
         //批量删除
-        batchdel: function() {
+        batchdel: function () {
             var checkStatus = table.checkStatus("LAY-app-alarmRule-list-reload");
             var data = checkStatus.data;
             if (data.length == 0) {
@@ -180,20 +188,20 @@
             }
             if (data.length > 0) {
                 var alarmRuleInts = new Array();
-                for (var i=0; i<data.length;i++) {
+                for (var i = 0; i < data.length; i++) {
                     alarmRuleInts[i] = data[i].alarmRuleInt;
                 }
                 layer.confirm("确定删除所选预警规则？", {
                     icon: 3,
                     title: "系统提示"
-                }, function(index) {
+                }, function (index) {
                     $.ajax({
                         url: "<%= request.getContextPath() %>/warn/alarmRule/batchDelete",
                         type: "DELETE",
                         data: JSON.stringify(alarmRuleInts),
                         cache: false,
                         contentType: "text/json",
-                        success: function(result) {
+                        success: function (result) {
                             if (result.exception) {
                                 layer.alert(result.exception.message, {
                                     icon: 2,
@@ -203,14 +211,14 @@
                                 layer.msg("删除成功", {
                                     icon: 1,
                                     time: 2000
-                                }, function() {
+                                }, function () {
                                     table.reload("LAY-app-alarmRule-list-reload");
                                 });
                             } else {
                                 layer.msg("删除失败");
                             }
                         },
-                        error: function(jqXHR, textStatus, errorThrown) {
+                        error: function (jqXHR, textStatus, errorThrown) {
                             layer.msg(jqXHR.responseText, {
                                 time: 2000,
                                 icon: 5
@@ -270,7 +278,7 @@
         async: false,
         cache: false,
         contentType: "text/json",
-        success: function(result) {
+        success: function (result) {
             if (result) {
                 hiddenFields = result.data
             } else {
@@ -301,7 +309,7 @@
         limits: [10, 15, 20, 30],
         toolbar: "#toolbar",
         defaultToolbar: ["filter"],
-        colHideChange: function(col, checked) {
+        colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;
             $.ajax({
@@ -309,9 +317,9 @@
                 type: "GET",
                 cache: false,
                 contentType: "text/json",
-                success: function(result) {
+                success: function (result) {
                     if (result) {
-                    } else{
+                    } else {
                         layer.msg("列筛选失败");
                     }
                 }
@@ -335,8 +343,14 @@
             field: "alarmRuleId",
             title: "预警规则编码",
             align: "center",
-            minWidth: 120,
-            hide: isHidden("alarmRuleId")
+            minWidth: 150,
+            hide: isHidden("alarmRuleId"),
+            //打开监听
+            event: "view",
+            //监听打开详情页面
+            templet: function (data) {
+                return '<span style="color: #09bbfd">' + data.alarmRuleId + '</span>';
+            }
         }, {
             field: "alarmRuleTitle",
             title: "预警规则标题",
@@ -383,7 +397,7 @@
             field: "ruleMakeFormTime",
             title: "制单时间",
             align: "center",
-            minWidth: 100,
+            minWidth: 200,
             hide: isHidden("ruleMakeFormTime")
         }, {
             field: "ruleUpdatePeople",
@@ -395,7 +409,7 @@
             field: "ruleUpdateTime",
             title: "修改时间",
             align: "center",
-            minWidth: 100,
+            minWidth: 200,
             hide: isHidden("ruleUpdateTime")
         }, {
             title: "操作",
@@ -470,6 +484,28 @@
                         });
                     }
                 });
+            });
+        }
+        else if (e.event == "view") {
+            top.layer.open({
+                type: 2,
+                title: "查看预警规则详情",
+                content: "<%= request.getContextPath() %>/warn/alarmRule/alarm_rule_view.jsp",
+                area: ["1000px", "560px"],
+                resize: false,
+                // btn: ["确定", "取消"],
+                success: function (layero, index) {
+                    var dataJson = {
+                        data: data,
+                        win: window
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function (index, layero) {
+                    var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");
+                    edit.click();
+                }
+
             });
         }
     });

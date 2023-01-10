@@ -1,9 +1,15 @@
 package com.zimax.mcrs.warn.service;
 
 import com.zimax.mcrs.config.ChangeString;
+import com.zimax.mcrs.device.pojo.PlcGroup;
+import com.zimax.mcrs.device.pojo.PlcPoint;
+import com.zimax.mcrs.device.pojo.PointDispose;
+import com.zimax.mcrs.device.pojo.RfidGroup;
 import com.zimax.mcrs.warn.mapper.AlarmRuleMapper;
 import com.zimax.mcrs.warn.pojo.AlarmRule;
 import com.zimax.mcrs.warn.pojo.AlarmRuleVo;
+import com.zimax.mcrs.warn.pojo.MonitorEquipment;
+import com.zimax.mcrs.warn.pojo.MonitorEquipmentVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +31,7 @@ public class AlarmRuleService {
     /**
      * 查询所有预警规则
      */
-    public List<AlarmRuleVo> queryAlarmRule(String  page, String limit, Integer alarmRuleId, String alarmRuleTitle, String monitorLevel, String enable, String alarmEventId, String monitorObject, String ruleMakeFormPeople, String ruleMakeFormTime, String order, String field){
+    public List<AlarmRuleVo> queryAlarmRule(String  page, String limit, Integer alarmRuleId, String alarmRuleTitle, String monitorLevel, String enable, String alarmEventId, String ruleMakeFormPeople, String ruleMakeFormTime, String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -44,7 +50,6 @@ public class AlarmRuleService {
         map.put("monitorLevel",monitorLevel);
         map.put("enable",enable);
         map.put("alarmEventId",alarmEventId);
-        map.put("monitorObject",monitorObject);
         map.put("ruleMakeFormPeople",ruleMakeFormPeople);
         map.put("ruleMakeFormTime",ruleMakeFormTime);
         return alarmRuleMapper.queryAll(map);
@@ -63,6 +68,13 @@ public class AlarmRuleService {
      */
     public void addAlarmRule(AlarmRule alarmRule ){
         alarmRuleMapper.addAlarmRule(alarmRule);
+        //添加预警规则对应的监控对象
+        if (alarmRule.getMonitorEquipmentList().size() > 0) {
+            for (MonitorEquipment monitorEquipment : alarmRule.getMonitorEquipmentList()) {
+                monitorEquipment.setAlarmRuleInt(alarmRule.getAlarmRuleInt());
+                alarmRuleMapper.addMonitorEquipment(monitorEquipment);
+            }
+        }
     }
 
     /**
@@ -70,6 +82,14 @@ public class AlarmRuleService {
      * @param  alarmRuleInt 预警规则主键
      */
     public void removeAlarmRule(int alarmRuleInt){
+        //从表中获取预警规则的对应监控对象
+        List<MonitorEquipment> monitorEquipmentList = alarmRuleMapper.queryMonitorEquipment(alarmRuleInt);
+        //如果存在监控对象，删除
+        if(monitorEquipmentList.size()>0){
+            for(MonitorEquipment monitorEquipment: monitorEquipmentList){
+                alarmRuleMapper.removeMonitorEquipment(monitorEquipment.getMonitorEquipmentId());
+            }
+        }
         alarmRuleMapper.removeAlarmRule(alarmRuleInt);
     }
 
@@ -78,7 +98,22 @@ public class AlarmRuleService {
      * @param alarmRule 预警规则
      */
     public void updateAlarmRule(AlarmRule alarmRule){
+        //修改子表顺序，先删除规则对应的监控对象，再从请求中获取修改后的监控对象，重新添加
+        //从表中获取预警规则的对应监控对象
+        List<MonitorEquipment> monitorEquipmentList = alarmRuleMapper.queryMonitorEquipment(alarmRule.getAlarmRuleInt());
+        if(monitorEquipmentList.size()>0){
+            for(MonitorEquipment monitorEquipment: monitorEquipmentList){
+                alarmRuleMapper.removeMonitorEquipment(monitorEquipment.getMonitorEquipmentId());
+            }
+        }
         alarmRuleMapper.updateAlarmRule(alarmRule);
+        //添加预警规则新的对应监控对象
+        if (alarmRule.getMonitorEquipmentList().size() > 0) {
+            for (MonitorEquipment monitorEquipment : alarmRule.getMonitorEquipmentList()) {
+                monitorEquipment.setAlarmRuleInt(alarmRule.getAlarmRuleInt());
+                alarmRuleMapper.addMonitorEquipment(monitorEquipment);
+            }
+        }
 
     }
 
@@ -86,6 +121,37 @@ public class AlarmRuleService {
      * 批量删除告警规则
      */
     public void deleteAlarmRules(List<Integer> alarmRuleInt) {
+
+        //从表中获取预警规则的对应监控对象
+        for (Integer a: alarmRuleInt) {
+            List<MonitorEquipment> monitorEquipmentList = alarmRuleMapper.queryMonitorEquipment(a);
+            //如果存在监控对象，删除
+            if(monitorEquipmentList.size()>0){
+                for(MonitorEquipment monitorEquipment: monitorEquipmentList){
+                    alarmRuleMapper.removeMonitorEquipment(monitorEquipment.getMonitorEquipmentId());
+                }
+            }
+        }
         alarmRuleMapper.deleteAlarmRules(alarmRuleInt);
+    }
+
+    /**
+     * 查询预警规则对应的监控对象
+     */
+    public AlarmRule getMonitorEquipmentVo(int alarmRuleInt) {
+        AlarmRule alarmRule = new AlarmRule();
+        List<MonitorEquipmentVo> monitorEquipmentVoList = alarmRuleMapper.queryMonitorEquipmentVo(alarmRuleInt);
+        if (monitorEquipmentVoList!= null && monitorEquipmentVoList.size()>0){
+            alarmRule.setMonitorEquipmentVoList(monitorEquipmentVoList);
+        }
+        return alarmRule;
+    }
+
+
+    /**
+     * 查询当前预警规则编码编码是否已经存在
+     */
+    public int countAlarmRule(String alarmRuleId){
+        return alarmRuleMapper.countAlarmRule(alarmRuleId);
     }
 }

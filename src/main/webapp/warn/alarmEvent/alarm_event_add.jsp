@@ -249,11 +249,43 @@
                     }
                 });
             }
+            else if (isExist == true) {
+                layer.msg("预警事件编码已存在，请重新输入", {
+                    icon: 2,
+                    time: 2000
+                });
+                submit = false;
+            }
         } else {
-            layer.msg("请稍等");
+            layer.msg("正在添加...请稍等！");
         }
         return false;
     });
+
+
+    //判断预警事件编码是否已存在
+    $("#alarmEventId").blur(function () {
+        var alarmEventId = $("#alarmEventId").val();
+        if (alarmEventId != null && alarmEventId != "") {
+            $.ajax({
+                url: "<%= request.getContextPath() %>/warn/alarmEvent/check/isExist?alarmEventId=" + alarmEventId,
+                type: "GET",
+                cache: false,
+                contentType: "text/json",
+                cache: false,
+                success: function (text) {
+                    if (text.code == "1") {
+                        isExist = true;
+                    } else {
+                        isExist = false;
+                    }
+                }
+            });
+        } else {
+            return;
+        }
+    });
+
 </script>
 </body>
 </html>

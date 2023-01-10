@@ -2,12 +2,14 @@ package com.zimax.mcrs.warn.pojo;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.zimax.mcrs.device.pojo.RfidPoint;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 预警规则
@@ -54,11 +56,6 @@ public class AlarmRule {
     private int alarmEventInt;
 
     /**
-     * 监控对象
-     */
-    private String monitorObject;
-
-    /**
      * 预警规则描述
      */
     private String alarmRuleDescribe;
@@ -83,5 +80,17 @@ public class AlarmRule {
      * 修改时间
      */
     private String ruleUpdateTime;
+
+    /**
+     *监控对象列表
+     */
+    @TableField(exist = false)
+    List<MonitorEquipmentVo> monitorEquipmentVoList;
+
+    /**
+     *监控对象列表
+     */
+    @TableField(exist = false)
+    List<MonitorEquipment> monitorEquipmentList;
 
 }
