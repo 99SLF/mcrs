@@ -116,4 +116,12 @@ public class AlarmEventService {
         }
     }
 
+    /**
+     * 判断当前预警事件编码是否已存在
+     */
+    public int checkAlarmEvent(String alarmEventId){
+        return alarmEventMapper.checkAlarmEvent(alarmEventId);
+    }
+
+
 }

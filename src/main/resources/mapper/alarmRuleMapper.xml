@@ -18,7 +18,7 @@
         </where>
     </select>
 
-    <!--查询所有-->
+    <!--查询所有监控规则表-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.warn.pojo.AlarmRuleVo">
         SELECT *FROM war_alarm_rule as rul
         LEFT JOIN war_alarm_event as eve
@@ -37,10 +37,7 @@
                 and rul.enable like '%${enable}%'
             </if>
             <if test="alarmEventId !=null and alarmEventId !=''">
-                and rul.alarm_event_id like '%${alarmEventId}%'
-            </if>
-            <if test="monitorObject !=null and monitorObject !=''">
-                and rul.monitor_object like '%${monitorObject}%'
+                and eve.alarm_event_id like '%${alarmEventId}%'
             </if>
             <if test="ruleMakeFormPeople !=null and ruleMakeFormPeople !=''">
                 and rul.rule_make_form_People like '%${ruleMakeFormPeople}%'
@@ -58,7 +55,8 @@
     </select>
 
     <!--添加预警规则-->
-    <insert id="addAlarmRule" parameterType="com.zimax.mcrs.warn.pojo.AlarmRule">
+    <insert id="addAlarmRule" parameterType="com.zimax.mcrs.warn.pojo.AlarmRule" keyProperty="alarmRuleInt"
+            useGeneratedKeys="true">
         insert into war_alarm_rule
         values (#{alarmRuleInt},
                 #{alarmRuleId},
@@ -66,7 +64,6 @@
                 #{enable},
                 #{monitorLevel},
                 #{alarmEventInt},
-                #{monitorObject},
                 #{alarmRuleDescribe},
                 #{ruleMakeFormPeople},
                 #{ruleMakeFormTime},
@@ -74,27 +71,26 @@
                 #{ruleUpdateTime})
     </insert>
 
-    <!--根据主键删除预警谷子额-->
+    <!--根据主键删除预警规则-->
     <delete id="removeAlarmRule" parameterType="int">
         delete
         from war_alarm_rule
         where alarm_rule_int = #{alarmRuleInt}
     </delete>
 
-        <!--更新1条预警规则-->
-        <update id="updateAlarmRule" parameterType="com.zimax.mcrs.warn.pojo.AlarmRule">
-            update war_alarm_rule
-            set alarm_rule_id = #{alarmRuleId},
-                alarm_rule_title=#{alarmRuleTitle},
-                enable=#{enable},
-                monitor_level=#{monitorLevel},
-                alarm_event_int=#{alarmEventInt},
-                monitor_object=#{monitorObject},
-                alarm_rule_describe=#{alarmRuleDescribe},
-                rule_update_people=#{ruleUpdatePeople},
-                rule_update_time=#{ruleUpdateTime}
-            where alarm_rule_int =  #{alarmRuleInt}
-        </update>
+    <!--更新1条预警规则-->
+    <update id="updateAlarmRule" parameterType="com.zimax.mcrs.warn.pojo.AlarmRule">
+        update war_alarm_rule
+        set alarm_rule_id      = #{alarmRuleId},
+            alarm_rule_title=#{alarmRuleTitle},
+            enable=#{enable},
+            monitor_level=#{monitorLevel},
+            alarm_event_int=#{alarmEventInt},
+            alarm_rule_describe=#{alarmRuleDescribe},
+            rule_update_people=#{ruleUpdatePeople},
+            rule_update_time=#{ruleUpdateTime}
+        where alarm_rule_int = #{alarmRuleInt}
+    </update>
 
     <!--    批量删除-->
     <delete id="deleteAlarmRules" parameterType="java.util.List">
@@ -104,6 +100,45 @@
         </foreach>
     </delete>
 
+    <!--查询与预警规则对应的监控对象-->
+    <select id="queryMonitorEquipmentVo" resultType="com.zimax.mcrs.warn.pojo.MonitorEquipmentVo">
+        SELECT *
+        FROM war_monitor_equipment AS wme
+                 LEFT JOIN eqi_equipment AS eqi
+                           ON wme.equipment_int = eqi.equipment_int
+                 LEFT JOIN base_access_info AS bai
+                           ON eqi.acc_point_res_id = bai.acc_point_res_id
+        WHERE wme.alarm_rule_int = #{alarmRuleInt}
+    </select>
+
+    <!--添加与预警规则对应的监控对象-->
+    <insert id="addMonitorEquipment" parameterType="com.zimax.mcrs.warn.pojo.MonitorEquipment" keyProperty="monitorEquipmentId"
+            useGeneratedKeys="true">
+        insert into war_monitor_equipment
+        values (#{monitorEquipmentId},
+                #{alarmRuleInt},
+                #{equipmentInt})
+    </insert>
+
+    <!--查询与监控对象-->
+    <select id="queryMonitorEquipment" resultType="com.zimax.mcrs.warn.pojo.MonitorEquipment">
+        SELECT *
+        FROM war_monitor_equipment
+        WHERE alarm_rule_int = #{alarmRuleInt}
+    </select>
+
+    <!--删除监控对象-->
+    <delete id="removeMonitorEquipment" parameterType="int">
+        delete
+        from war_monitor_equipment
+        where monitor_equipment_id = #{monitorEquipmentId}
+    </delete>
 
 
+<!--    根据预警规则编号查询该预警编号是否已经存在-->
+    <select id="countAlarmRule"  resultType="int">
+        SELECT count(*)
+        FROM war_alarm_rule
+        WHERE alarm_rule_id = #{alarmRuleId}
+    </select>
 </mapper>

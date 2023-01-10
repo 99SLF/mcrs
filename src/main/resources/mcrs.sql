@@ -422,20 +422,19 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- ----------------------------
 DROP TABLE IF EXISTS `war_alarm_rule`;
 CREATE TABLE `war_alarm_rule`  (
-   `alarm_rule_int` int(255) NOT NULL AUTO_INCREMENT COMMENT '预警规则主键',
-   `alarm_rule_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预警规则编码',
-   `alarm_rule_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预警规则标题',
-   `enable` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否启用',
-   `monitor_level` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '监控层级',
-   `alarm_event_int` int(255) NULL DEFAULT NULL COMMENT '预警事件主键',
-   `monitor_object` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '监控对象',
-   `alarm_rule_describe` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预警规则描述',
-   `rule_make_form_people` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '制单人',
-   `rule_make_form_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '制单时间',
-   `rule_update_people` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
-   `rule_update_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ruleUpdateTime',
-   PRIMARY KEY (`alarm_rule_int`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1239 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+    `alarm_rule_int` int(255) NOT NULL AUTO_INCREMENT COMMENT '预警规则主键',
+    `alarm_rule_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预警规则编码',
+    `alarm_rule_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预警规则标题',
+    `enable` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否启用',
+    `monitor_level` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '监控层级',
+    `alarm_event_int` int(255) NULL DEFAULT NULL COMMENT '预警事件主键',
+    `alarm_rule_describe` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预警规则描述',
+    `rule_make_form_people` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '制单人',
+    `rule_make_form_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '制单时间',
+    `rule_update_people` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
+    `rule_update_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ruleUpdateTime',
+    PRIMARY KEY (`alarm_rule_int`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1250 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -930,5 +929,21 @@ CREATE TABLE `log_abn_log`  (
     `exchange_time` datetime NULL DEFAULT NULL COMMENT '交互时间',
     PRIMARY KEY (`abn_log_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 101 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+
+
+    -- ----------------------------
+-- Table structure for war_monitor_equipment
+-- ----------------------------
+DROP TABLE IF EXISTS `war_monitor_equipment`;
+CREATE TABLE `war_monitor_equipment`  (
+  `monitor_equipment_id` int(9) NOT NULL AUTO_INCREMENT COMMENT '监控对象主键',
+  `alarm_rule_int` int(9) NULL DEFAULT NULL COMMENT '预警规则主键',
+  `equipment_int` int(9) NULL DEFAULT NULL COMMENT '监控对象主键（监控对象为设备，即为设备主键）',
+  PRIMARY KEY (`monitor_equipment_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 90 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -100,4 +100,10 @@
         where alarm_event_int = #{alarmEventInt}
     </update>
 
+    <!--查询记录数-->
+    <select id="checkAlarmEvent" resultType="int">
+        select count(*) from war_alarm_event
+        where alarm_event_id = #{alarmEventId}
+    </select>
+
 </mapper>
