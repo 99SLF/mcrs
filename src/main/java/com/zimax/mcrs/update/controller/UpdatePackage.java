@@ -54,6 +54,42 @@ public class UpdatePackage {
      */
 
 
+    public Result<?> checkRollback(String APPId) {
+        DeviceRollbackVo deviceRollbackVo = updatePackageService.getRollbackVoDevice(APPId);
+        UpgradeData upgradeData = new UpgradeData();
+        //2.1.2.1、数据不存在，返回不升级
+        if (deviceRollbackVo == null) {
+            upgradeData.setStatusCode("101");
+            upgradeData.setIfUpdate(false);
+            return Result.success(upgradeData,"0", "数据不存在，无法升级");
+        } else {
+            //2.1.2.2、存在，但状态为升级，返回已经是最新版本
+            String upgradeStatus = deviceRollbackVo.getUpgradeStatus();
+            if (upgradeStatus.equals("102") || upgradeStatus.equals("101") ) {
+                upgradeData.setStatusCode("102");
+                upgradeData.setIfUpdate(false);
+                return Result.success(upgradeData,"0", "已经是最新版本，无法升级");
+            } else {    //2.1.2.3、存在，但状态为未升级
+                //2.1.3、查询更新策略
+                //2.1.3.1、更新策略为手动更新，返回 是否升级、版本号、更新策略
+                String version = deviceRollbackVo.getVersion();
+                if (deviceRollbackVo.getUploadStrategy().equals("002")) {
+                    upgradeData.setStatusCode("103");
+                    upgradeData.setVersionID(version);
+                    upgradeData.setIfUpdate(true);
+                    upgradeData.setIsForcedUpdate("100");
+                    return Result.success(upgradeData,"200", "是否回滚");
+                } else {//2.1.3.2、更新策略为强制更新，返回 是否升级、版本号、更新策略
+                    upgradeData.setStatusCode("103");
+                    upgradeData.setVersionID(version);
+                    upgradeData.setIfUpdate(true);
+                    upgradeData.setIsForcedUpdate("101");
+                    return Result.success(upgradeData,"200", "是否回滚");
+                }
+            }
+        }
+    }
+
 
     /**
      * 接受APPId
@@ -71,45 +107,15 @@ public class UpdatePackage {
         //2.1、数据不存在，返回不升级
         if (deviceUpgradeVo == null) {
             //2.1.1、根据APPID查询回退关联表（关联3，设备，资源，回退）
-            DeviceRollbackVo deviceRollbackVo = updatePackageService.getRollbackVoDevice(APPId);
-            //2.1.2.1、数据不存在，返回不升级
-            if (deviceRollbackVo == null) {
-                upgradeData.setStatusCode("101");
-                upgradeData.setIfUpdate(false);
-                return Result.success(upgradeData,"0", "数据不存在，无法升级");
-            } else {
-                //2.1.2.2、存在，但状态为升级，返回已经是最新版本
-                String upgradeStatus = deviceRollbackVo.getUpgradeStatus();
-                if (upgradeStatus.equals("102") || upgradeStatus.equals("101") ) {
-                    upgradeData.setStatusCode("102");
-                    upgradeData.setIfUpdate(false);
-                    return Result.success(upgradeData,"0", "已经是最新版本，无法升级");
-                } else {    //2.1.2.3、存在，但状态为未升级
-                    //2.1.3、查询更新策略
-                    //2.1.3.1、更新策略为手动更新，返回 是否升级、版本号、更新策略
-                    String version = deviceRollbackVo.getVersion();
-                    if (deviceRollbackVo.getUploadStrategy().equals("002")) {
-                        upgradeData.setStatusCode("103");
-                        upgradeData.setVersionID(version);
-                        upgradeData.setIfUpdate(true);
-                        upgradeData.setIsForcedUpdate("100");
-                        return Result.success(upgradeData,"200", "是否回滚");
-                    } else {//2.1.3.2、更新策略为强制更新，返回 是否升级、版本号、更新策略
-                        upgradeData.setStatusCode("103");
-                        upgradeData.setVersionID(version);
-                        upgradeData.setIfUpdate(true);
-                        upgradeData.setIsForcedUpdate("101");
-                        return Result.success(upgradeData,"200", "是否回滚");
-                    }
-                }
-            }
+            return checkRollback(APPId);
         } else {
             //2.2、存在，但状态为升级，返回已经是最新版本
             String upgradeStatus = deviceUpgradeVo.getUpgradeStatus();
             if (upgradeStatus.equals("102") || upgradeStatus.equals("101")) {
                 upgradeData.setStatusCode("102");
                 upgradeData.setIfUpdate(false);
-                return Result.success(upgradeData,"0", "已经是最新版本，无法升级");
+                return checkRollback(APPId);
+                //return Result.success(upgradeData,"0", "已经是最新版本，无法升级");
             } else {    //2.3、存在，但状态为未升级
                 //3、查询更新策略
                 //3.1、更新策略为手动更新，返回 是否升级、版本号、更新策略
