@@ -52,7 +52,7 @@ public class Feeding {
     private String prodSFCId;
 
     /**
-     * 上账数量
+     * 上账数量（生产数量）
      */
     private int prodNumber;
 

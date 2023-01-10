@@ -80,13 +80,13 @@ public class DeviceAbn {
      * 1级
      * 102
      * 2级
-     *
+     * <p>
      * 103
      * 3级
-     *
+     * <p>
      * 104
      * 4级
-     *
+     * <p>
      * 105
      * 5级
      */
@@ -101,7 +101,6 @@ public class DeviceAbn {
      * 发生时间
      */
     private Date occurTime;
-
 
     /**
      * 备注
