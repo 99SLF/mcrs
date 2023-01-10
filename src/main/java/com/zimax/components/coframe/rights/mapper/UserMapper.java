@@ -1,6 +1,7 @@
 package com.zimax.components.coframe.rights.mapper;
 
 import com.zimax.components.coframe.rights.pojo.User;
+import com.zimax.components.coframe.rights.pojo.UserVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,7 +23,7 @@ public interface UserMapper {
      /**
       * 查询所有用户
       */
-     List<User> queryUsers(Map map);
+     List<UserVo> queryUsers(Map map);
 
      int count(@Param("status") String status, @Param("userName") String userName);
 
