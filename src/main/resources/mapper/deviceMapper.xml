@@ -63,7 +63,8 @@
                 #{deviceSoftwareType}, #{deviceName},
                 #{accPointResId},#{equipmentInt},
                 #{accessMethod}, #{remarks},
-                #{creator}, #{createTime})
+                #{creator}, #{createTime},
+                #{programInstallationPath}, #{executorInstallationPath})
     </insert>
 
     <!--根据主键删除终端-->
@@ -85,7 +86,9 @@
             acc_point_res_id=#{accPointResId},
             equipment_int=#{equipmentInt},
             access_method=#{accessMethod},
-            remarks=#{remarks}
+            remarks=#{remarks},
+            program_installation_path=#{programInstallationPath},
+            executor_installation_path=#{executorInstallationPath}
         where device_id = #{deviceId}
     </update>
 

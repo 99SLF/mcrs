@@ -60,11 +60,27 @@
     </div>
 
     <div class="layui-form-item layui-row layui-col-space6">
-        <label class="layui-form-label">接入方式:<span style="color:red">*</span></label>
+        <label class="layui-form-label"><span style="color:red">*</span>接入方式:</label>
         <div class="layui-input-block">
             <select name="accessMethod" id="accessMethod" lay-filter="accessMethod" type="select">
                 <option value=""></option>
             </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-row layui-col-space6">
+        <label class="layui-form-label"><span style="color:red">*</span>终端程序安装路径</label>
+        <div class="layui-input-block">
+            <input id="programInstallationPath" type="text" name="programInstallationPath" lay-verify="required"
+                   placeholder="终端程序安装路径(必填)" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-row layui-col-space6">
+        <label class="layui-form-label">终端执行程序安装路径:</label>
+        <div class="layui-input-block">
+            <input id="executorInstallationPath" type="text" name="executorInstallationPath" lay-verify=""
+                   placeholder="" autocomplete="off" class="layui-input">
         </div>
     </div>
 
@@ -278,7 +294,6 @@
     //判断是否已存在终端软件类型对应更新包
     function deviceSoftwareType() {
         var deviceSoftwareType = $("#deviceSoftwareType").val();
-debugger;
         if (deviceSoftwareType != null && deviceSoftwareType != "") {
             $.ajax({
                 url: "<%= request.getContextPath() %>/equipment/device/checkDST/isExist?deviceSoftwareType=" + deviceSoftwareType,

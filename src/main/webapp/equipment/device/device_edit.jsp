@@ -154,6 +154,24 @@
             </div>
         </div>
     </div>
+
+    <div class="layui-form-item layui-row layui-col-space10">
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><span style="color:red">*</span>终端程序安装路径:</label>
+            <div class="layui-input-block">
+                <input id="programInstallationPath" type="text" name="programInstallationPath" lay-verify="required"
+                       placeholder="" autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label">终端执行程序安装路径:</label>
+            <div class="layui-input-block">
+                <input id="executorInstallationPath" type="text" name="executorInstallationPath"
+                       lay-verify="" placeholder="" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>接入方式:</label>
@@ -229,6 +247,8 @@
             "equipmentInstallLocation": data.equipmentInstallLocation,
             "accessMethod": data.accessMethod,
             "remarks": data.remarks,
+            "programInstallationPath": data.programInstallationPath,
+            "executorInstallationPath": data.executorInstallationPath,
         });
     }
 
