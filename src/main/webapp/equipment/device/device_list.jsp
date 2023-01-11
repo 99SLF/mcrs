@@ -23,12 +23,12 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">设备资源号：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="equipmentId" placeholder="请输入设备资源号" autocomplete="off"
+                        <input type="text" name="equipmentId" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">终端软件类型：</label>
+                    <label class="layui-form-label">终端类型：</label>
                     <div class="layui-input-inline">
                         <select name="deviceSoftwareType" id="deviceSoftwareType" lay-filter="deviceSoftwareType" type="select">
                             <option value=""></option>
