@@ -30,6 +30,11 @@ public class ConfigurationFile {
     private String filePath;
 
     /**
+     * 配置文件路径
+     */
+    private String configPath;
+
+    /**
      * 配置文件状态
      */
     private String fileStatus;

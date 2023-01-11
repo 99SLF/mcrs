@@ -564,13 +564,16 @@ public class UpdatePackage {
                 String terminalTime = configurationFile.getTerminalTime();
                 String webTime =configurationFile.getWebTime();
                 String fileStatus = configurationFile.getFileStatus();
+                String configPath = configurationFile.getConfigPath();
                 if (webTime == null || webTime == "" || terminalTime == null || terminalTime == "") {
                     map.put("fileName",configurationFile.getFileName());
                     map.put("ifUpdate",0);
+                    map.put("configPath",configPath);
                     list.add(map);
                 } else {
                     map.put("terminalTime",terminalTime);
                     map.put("webTime",webTime);
+                    map.put("configPath",configPath);
                     map.put("fileName",configurationFile.getFileName());
                     //未同步
                     if (fileStatus.equals("101")) {
