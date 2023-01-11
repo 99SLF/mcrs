@@ -958,6 +958,7 @@ CREATE TABLE `dev_config_file` (
     `terminal_time` varchar(255) DEFAULT NULL,
     `web_time` varchar(255) DEFAULT NULL,
     `app_id` varchar(255) DEFAULT NULL,
+    `config_path` varchar(255) DEFAULT NULL,
     PRIMARY KEY (`file_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
