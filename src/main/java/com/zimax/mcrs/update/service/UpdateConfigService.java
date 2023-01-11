@@ -1,5 +1,7 @@
 package com.zimax.mcrs.update.service;
 
+import com.zimax.cap.datacontext.DataContextManager;
+import com.zimax.cap.party.IUserObject;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.device.mapper.DeviceMapper;
 import com.zimax.mcrs.device.mapper.DeviceRollbackMapper;
@@ -58,6 +60,10 @@ public class UpdateConfigService {
         String fileName = path.substring(path.lastIndexOf("/")+1);
         configurationFile.setFileName(fileName);
         configurationFile.setFileStatus("101");
+        IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
+        //将当期的用户信息存储到数据库表里
+        configurationFile.setCreator(usetObject.getUserName());
+
         configurationFileMapper.addConfigurationFile(configurationFile);
 
     }
