@@ -47,6 +47,8 @@ public class UpdatePackageService {
     @Autowired
     private DeviceMapper deviceMapper;
 
+    @Autowired
+    private ConfigurationFileMapper configurationFileMapper;
 
     /**
      * 通过APPID查询终端，升级表，更新包信息
@@ -146,21 +148,16 @@ public class UpdatePackageService {
      * @return
      */
     public List<ConfigurationFile> getConfigurationFile(String appId, String fileName) {
-        return null;
+        return configurationFileMapper.getConfigurationFile(appId,fileName);
     }
 
-    /**
-     * 新增配置文件
-     * @param configurationFile
-     */
-    public void addConfigurationFile(ConfigurationFile configurationFile) {
-    }
 
     /**
      * 修改配置文件
      * @param configurationFile
      */
     public void updateConfigurationFile(ConfigurationFile configurationFile) {
+        configurationFileMapper.updateConfigurationFile(configurationFile);
     }
 
 

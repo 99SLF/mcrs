@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.update.mapper.ConfigurationFileMapper">
+
+    <!-- 查询列筛选列表 -->
+    <select id="getConfigurationFile" resultType="com.zimax.mcrs.update.pojo.ConfigurationFile">
+        select * from dev_config_file
+        <where>
+            <if test="appId !=null and appId !=''">
+                and app_id = '${appId}'
+            </if>
+            <if test="fileName !=null and fileName !=''">
+                and file_name = '${fileName}'
+            </if>
+        </where>
+    </select>
+
+    <update id="updateConfigurationFile" parameterType="com.zimax.mcrs.update.pojo.ConfigurationFile">
+        UPDATE dev_config_file
+        SET
+            file_status=  #{fileStatus}
+            <if test="terminalTime !=null and terminalTime !=''">
+                , terminal_time = #{terminalTime}
+            </if>
+
+            <if test="webTime !=null and webTime !=''">
+                , web_time = #{webTime}
+            </if>
+        WHERE app_id = ${appId} and file_name = ${fileName}
+    </update>
+
+
+</mapper>

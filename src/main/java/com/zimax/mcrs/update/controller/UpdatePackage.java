@@ -429,7 +429,7 @@ public class UpdatePackage {
      * @throws IOException
      */
     @PostMapping("/configurationUploading")
-    public Result<?> configurationUploading (String appId,MultipartFile file,HttpServletRequest request) throws IOException {
+    public Result<?> configurationUploading (String appId,MultipartFile file, String time,HttpServletRequest request) throws IOException {
         //1、根据APPID查询配置文件
         // 1.获取原始文件名
         String fileName = file.getOriginalFilename();
@@ -439,18 +439,12 @@ public class UpdatePackage {
         String filePath = request.getSession().getServletContext().getRealPath("/configurationFile/"+ appId);
         //判断数据是否存在，存在则修改，不存在则新增
         if(configurationFiles.size() < 1) {
-            //新增
-            configurationFile.setAppId(appId);
-            configurationFile.setFileName(fileName);
-            configurationFile.setFilePath(filePath + "/" + fileName);
-            configurationFile.setTerminalTime(String.valueOf(new Date()));
-            //已同步
-            configurationFile.setFileStatus("102");
-            updatePackageService.addConfigurationFile(configurationFile);
+            return Result.error("0", "上传失败");
         } else {
             configurationFile = configurationFiles.get(0);
             //修改
-            configurationFile.setTerminalTime(String.valueOf(new Date()));
+            configurationFile.setTerminalTime(time);
+            configurationFile.setWebTime(time);
             //已同步
             configurationFile.setFileStatus("102");
             updatePackageService.updateConfigurationFile(configurationFile);
@@ -489,20 +483,21 @@ public class UpdatePackage {
         ConfigurationFile configurationFile = new ConfigurationFile();
         List<ConfigurationFile> configurationFiles = new ArrayList<>();
         configurationFiles = updatePackageService.getConfigurationFile(appId,fileName);
-        //4、文件发送，解压，运行
-        //文件
-        //String filePath = updateUpload.getDownloadUrl();
-        //String fileName = updateUpload.getFileName();
+
+        //修改状态
         if (configurationFiles.size() < 1) {
             return;
         } else {
             configurationFile = configurationFiles.get(0);
+            String webTime = configurationFile.getWebTime();
             //修改
-            configurationFile.setTerminalTime(String.valueOf(new Date()));
+            configurationFile.setTerminalTime(webTime);
             //已同步
             configurationFile.setFileStatus("102");
             updatePackageService.updateConfigurationFile(configurationFile);
         }
+
+        //文件处理
         String filePath = configurationFile.getFilePath();
         //fileName = "";
 
@@ -547,50 +542,46 @@ public class UpdatePackage {
      *
      * @param appId
      * @return
+     *  ifUpdate    0内容为空；
+     *              1内容不为空，且状态不同步
+     *              2内容不为空，且状态已同步
      */
     @GetMapping("/configurationInformation")
     public Result<?> configurationInformation (String appId) {
         List<ConfigurationFile> configurationFiles = new ArrayList<>();
         configurationFiles = updatePackageService.getConfigurationFile(appId,null);
-
-
-        String[] fileNames= {"a","b"};
-
         List<HashMap> list = new ArrayList();
 
-
+        //查询内容为空
         if (configurationFiles.size() < 1) {
-            HashMap<String,Object> map = new HashMap<>();
-            map.put("fileNames",null);
-            map.put("ifUpdate",1);
-            list.add(map);
+            //返回空数组
+            return Result.success(list,"200","请求成功");
         } else {
             for (ConfigurationFile configurationFile : configurationFiles) {
-                HashMap<String,Object> map = new HashMap<>();
-                if (configurationFile.getFileStatus().equals("101")) {
-                    String terminalTime = configurationFile.getTerminalTime();
-                    LocalDateTime terminalTimes = LocalDateTime.parse(terminalTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                    String webTime =configurationFile.getWebTime();
-                    LocalDateTime webTimes = LocalDateTime.parse(webTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                    String fileStatus = configurationFile.getFileStatus();
-                    if (terminalTimes.isBefore(webTimes)) {
-                        map.put("fileNames",configurationFile.getFileName());
-                        map.put("ifUpdate",1);
-                        list.add(map);
-                    } else {
-                        map.put("fileNames",configurationFile.getFileName());
-                        map.put("ifUpdate",2);
-                        list.add(map);
-                    }
-                }
-            }
-        }
 
-        if (list.size() < 1) {
-            HashMap<String,Object> map = new HashMap<>();
-            map.put("fileNames",null);
-            map.put("ifUpdate",0);
-            list.add(map);
+                HashMap<String,Object> map = new HashMap<>();
+                String terminalTime = configurationFile.getTerminalTime();
+                String webTime =configurationFile.getWebTime();
+                String fileStatus = configurationFile.getFileStatus();
+                if (webTime == null || webTime == "" || terminalTime == null || terminalTime == "") {
+                    map.put("fileName",configurationFile.getFileName());
+                    map.put("ifUpdate",0);
+                    list.add(map);
+                } else {
+                    map.put("terminalTime",terminalTime);
+                    map.put("webTime",webTime);
+                    map.put("fileName",configurationFile.getFileName());
+                    //未同步
+                    if (fileStatus.equals("101")) {
+                        map.put("ifUpdate",1);
+                    } else {
+                        //同步
+                        map.put("ifUpdate",2);
+                    }
+                    list.add(map);
+                }
+
+            }
         }
         //0: 不操作
         //1: 终端上传

@@ -1,11 +1,17 @@
 package com.zimax.mcrs.update.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 配置文件信息
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@TableName("dev_config_file")
 public class ConfigurationFile {
 
     /**
@@ -47,5 +53,4 @@ public class ConfigurationFile {
      * APPID
      */
     private String appId;
-
 }
