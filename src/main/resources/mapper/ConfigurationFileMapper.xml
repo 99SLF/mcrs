@@ -27,7 +27,10 @@
             <if test="webTime !=null and webTime !=''">
                 , web_time = #{webTime}
             </if>
-        WHERE app_id = ${appId} and file_name = ${fileName}
+            <if test="filePath !=null and filePath !=''">
+                , file_path = #{filePath}
+            </if>
+        WHERE app_id = '${appId}' and file_name = '${fileName}'
     </update>
 
 
