@@ -22,19 +22,26 @@
 
     <!--查询所有-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.device.pojo.DeviceVo">
-        SELECT * FROM eqi_device AS dev
+        SELECT  *, if(dev.version = upd.version,"否","是")as need_update
+        ,MAX(upd.version_upload_time)
+        FROM eqi_device AS dev
         LEFT JOIN base_access_info AS bai
         ON dev.acc_point_res_id = bai.acc_point_res_id
         LEFT JOIN eqi_equipment AS eqi
         ON dev.equipment_int=eqi.equipment_int
         LEFT JOIN base_equip_info AS bei
         ON eqi.equip_type_id= bei.equip_type_id
+        LEFT JOIN upd_upload AS upd
+        ON dev.device_software_type = upd.device_so_type
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
             </if>
-            <if test="APPId !=null and APPId !=''">
-                and dev.app_id like '%${APPId}%'
+            <if test="deviceSoftwareType !=null and deviceSoftwareType !=''">
+                and dev.device_software_type like '%${deviceSoftwareType}%'
+            </if>
+            <if test="enable !=null and enable !=''">
+                and dev.enable like '%${enable}%'
             </if>
             <if test="deviceName !=null and deviceName !=''">
                 and dev.device_name like '%${deviceName}%'
@@ -46,12 +53,15 @@
                 and bai.factory_name like '%${factoryName}%'
             </if>
         </where>
+        GROUP BY
+        dev.device_id
         <if test="order !=null and order !=''">
             order by ${field} ${order}
         </if>
         <if test="limit !=null and limit !=''">
             limit ${begin},${limit}
         </if>
+
     </select>
 
     <!--注册终端-->
@@ -59,7 +69,7 @@
             useGeneratedKeys="true">
         insert into eqi_device
         values (#{deviceId}, MD5(#{APPId}),
-                #{version}, #{needUpdate},
+                #{version},
                 #{enable}, #{registerStatus},
                 #{deviceSoftwareType}, #{deviceName},
                 #{accPointResId},#{equipmentInt},
@@ -79,7 +89,6 @@
     <update id="updateDevice" parameterType="com.zimax.mcrs.device.pojo.Device">
         update eqi_device
         set version=#{version},
-            need_update=#{needUpdate},
             enable=#{enable},
             register_status=#{registerStatus},
             device_software_type=#{deviceSoftwareType},

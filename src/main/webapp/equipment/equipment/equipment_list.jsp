@@ -23,12 +23,12 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">设备资源号：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="equipmentId" placeholder="请输入设备资源号" autocomplete="off"
+                        <input type="text" name="equipmentId" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                     <label class="layui-form-label">设备名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="equipmentName" placeholder="请输入设备名称" autocomplete="off"
+                        <input type="text" name="equipmentName" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -98,6 +98,13 @@
         });
     });
 
+
+    //获取启用类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#enable",
+        dictTypeId: "IS_USE",
+    });
+    form.render();
 
     //文本框回车事件
     $(".layui-input").on("keydown", function (event) {
@@ -309,6 +316,15 @@
             minWidth: 120,
             hide: isHidden("equipmentName")
         }, {
+            field: "enable",
+            title: "启用",
+            align: "center",
+            minWidth: 100,
+            hide: isHidden("enable"),
+            templet:function(d) {
+                return layui.admin.getDictText("IS_USE", d.enable);
+            }
+        },{
             field: "equipmentInstallLocation",
             title: "设备安装位置",
             align: "center",
@@ -336,17 +352,17 @@
             minWidth: 150,
             hide: isHidden("protocolCommunication")
         }, {
-            field: "equipmentContinuePort",
-            title: "设备连接端口",
-            align: "center",
-            minWidth: 150,
-            hide: isHidden("equipmentContinuePort")
-        }, {
             field: "equipmentIp",
             title: "设备连接IP",
             align: "center",
             minWidth: 120,
             hide: isHidden("equipmentIp")
+        }, {
+            field: "equipmentContinuePort",
+            title: "设备连接端口",
+            align: "center",
+            minWidth: 150,
+            hide: isHidden("equipmentContinuePort")
         }, {
             field: "accPointResName",
             title: "接入点名称",
@@ -358,37 +374,31 @@
             title: "基地代码",
             align: "center",
             minWidth: 100,
-            hide: isHidden("matrixCode")
+            hide: true
         }, {
             field: "factoryCode",
             title: "工厂代码",
             align: "center",
             minWidth: 120,
-            hide: isHidden("factoryCode")
+            hide: true
         }, {
             field: "processName",
             title: "使用工序",
             align: "center",
             minWidth: 100,
-            hide: isHidden("processName")
+            hide: true
         }, {
-            field: "enable",
-            title: "是否启用",
-            align: "center",
-            minWidth: 100,
-            hide: isHidden("enable")
-        },{
             field: "creator",
             title: "创建人",
             align: "center",
             minWidth: 100,
-            hide: isHidden("creator")
+            hide: true
         },{
             field: "createTime",
             title: "创建时间",
             align: "center",
             minWidth: 150,
-            hide: isHidden("createTime")
+            hide: true
         },{
             title: "操作",
             align: "center",

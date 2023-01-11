@@ -143,8 +143,7 @@
             <label class="layui-form-label"><span style="color:red">*</span>是否启用:</label>
             <div class="layui-input-block">
                 <select name="enable" id="enable" lay-verify="required" type="select">
-                    <option value="on">是</option>
-                    <option value="off">否</option>
+                    <option value=""></option>
                 </select>
             </div>
         </div>
@@ -194,7 +193,7 @@
 
     var win = null;
 
-    //禁用规则级别下拉选择框
+    //禁用启用下拉选择框
     layui.use('form', function(){
         var form = layui.form;
         $("#enable").attr("disabled","disabled");
@@ -206,6 +205,13 @@
 
     //禁用选择接入点资源入口
     $('#selectAcc').addClass("layui-btn-disabled").attr("disabled",true);
+
+    //获取启用类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#enable",
+        dictTypeId: "IS_USE",
+    });
+    form.render();
 
     function SetData(data) {
         win = data.win ? data.win : window;

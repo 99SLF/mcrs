@@ -19,12 +19,16 @@
 <div class="layui-fluid">
     <div class="layui-form" lay-filter="coding-add" id="coding-add" style="padding: 20px 30px 0 0;">
         <div class="layui-row layui-col-space10 layui-form-item" >
-            <label class="layui-form-label" >配置文件路径：</label>
+            <input type="text"  class="layui-hide" name="configPath" id="configPath">
+            <input type="text"  class="layui-hide" name="appId" id="appId">
+            <input type="text"  class="layui-hide" name="fileName" id="fileName">
+            <input type="text"  class="layui-hide" name="fileId" id="fileId">
+            <input type="text"  class="layui-hide" name="filePath" id="filePath">
             <div class="layui-input-block">
-                <input type="text"  class="layui-input" name="configPath" id="configPath" lay-verify="required|length255" autocomplete="off" placeholder="英文、数字、符号，不能超过255个字符">
-                <input type="text"  class="layui-hide" name="appId" id="appId" lay-verify="required">
+                <textarea class="layui-textarea" id="fileCont" name="fileCont" style="height: 350px"></textarea>
             </div>
         </div>
+
         <div class="layui-form-item layui-hide">
             <button class="layui-btn layui-btn-normal layui-hide" id='save_data' lay-submit lay-filter="save_data"></button>
         </div>
@@ -101,9 +105,15 @@
     var win=null;
     function SetData(obj) {
         win = obj.win ? obj.win : window;
-        appId = obj.appId ? obj.appId : null;
+        data = obj.data ? obj.data : null;
+        fileCont = obj.fileCont ? obj.fileCont : null;
         form.val("coding-add",{
-            "appId": appId
+            "appId": data.appId,
+            "fileCont" : fileCont,
+            "fileId": data.fileId,
+            "configPath": data.configPath,
+            "filePath": data.filePath,
+            "fileName": data.fileName
         });
     }
 
@@ -112,11 +122,14 @@
     form.on('submit(save_data)', function(data) {
         if(submit == false){
             submit = true ;
-            var configurationFile = JSON.stringify(data.field);
+            //JSON.stringify(data.field)
+
             $.ajax({
-                url : "<%=request.getContextPath() %>/updateConfig/add",
+                url : "<%=request.getContextPath() %>/updateConfig/updatefile",
                 type : 'POST',
-                data : configurationFile,
+                data : JSON.stringify(
+                    data.field
+                ),
                 cache : false,
                 contentType : 'text/json',
                 success : function(result) {

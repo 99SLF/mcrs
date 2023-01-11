@@ -202,7 +202,10 @@
             align:'center',
             hide: isHidden("fileStatus"),
             minWidth: 200,
-            sort: true
+            sort: true,
+            templet: function (d) {
+                return  layui.admin.getDictText("FileStatus", d.fileStatus);
+            }
         }, {
             field:'creator',
             title:'配置人',
@@ -211,17 +214,17 @@
             minWidth: 160,
             sort: true
         },  {
-            field:'digit',
+            field:'terminalTime',
             title:'终端配置时间',
             align:'center',
-            hide: isHidden("digit"),
+            hide: isHidden("terminalTime"),
             minWidth: 160,
             sort: true
         }, {
-            field:'startvalue',
+            field:'webTime',
             title:'Web更新时间',
             align:'center',
-            hide: isHidden("startvalue"),
+            hide: isHidden("webTime"),
             minWidth: 160,
             sort: true
         },  {
@@ -248,48 +251,72 @@
     table.on('tool(config-file-list)', function(obj) {
         var data = obj.data;
         if (obj.event == "edit") {
-            var url = '<%=request.getContextPath() %>/updateConfigFile/add.jsp';
+            var fileCont = null;
+
+            var configurationFile = JSON.stringify(obj.data);
+            $.ajax({
+                url: "<%=request.getContextPath() %>/updateConfig/getfile",
+                type: 'post',
+                data: configurationFile,
+                cache: false,
+                async: false,
+                contentType: 'text/json',
+                success: function (result) {
+                    if (result.code == "0") {
+                        fileCont = result.data;
+                    } else {
+                       return;
+                    }
+                }
+            });
+            var url = '<%=request.getContextPath() %>/updateConfigFile/edit.jsp';
             top.layer.open({
                 type: 2,
-                title: "编辑编码规则",
+                title: "修改配置文件",
                 content: [url, 'yes'],
-                area: ['300px', '520px'],
+                area: ['800px', '520px'],
                 resize: false,
                 maxmin: true,
                 btn: ["确定", "取消"],
                 success: function(layero, index) {
                     var dataJson = {
-                        data : data,
+                        fileCont : fileCont,
+                        data: obj.data,
                         win: window
                     };
                     layero.find("iframe")[0].contentWindow.SetData(dataJson);
                 },
                 yes: function(index, layero) {
-                    var submit = layero.find('iframe').contents().find("#save_data");
-                    submit.click();
+                    top.layer.confirm('修改会导致终端重新启动，是否确定修改？', {icon: 3, title:'系统提示'}, function(index) {
+                        var submit = layero.find('iframe').contents().find("#save_data");
+                        submit.click();
+                        top.layer.close(index);
+                    });
                 }
             });
         }else if (obj.event == "del") {
-            var configurationFile = JSON.stringify(obj.data);
-            $.ajax({
-                url: "<%=request.getContextPath() %>/updateConfig/del",
-                type: 'delete',
-                data: configurationFile,
-                cache: false,
-                contentType: 'text/json',
-                success: function (result) {
-                    if (result.code == "200") {
-                        layer.msg(result.msg, {icon: 1, time: 1500}, function () {
-                            table.reload('tableReload');
-                            top.layer.close(index);
-                        });
-                    } else {
-                        layer.msg(result.msg, {icon: 2, time: 1500}, function () {
-                            table.reload('tableReload');
-                            top.layer.close(index);
-                        });
+            top.layer.confirm('是否确定删除？', {icon: 3, title:'系统提示'}, function(index) {
+                var configurationFile = JSON.stringify(obj.data);
+                $.ajax({
+                    url: "<%=request.getContextPath() %>/updateConfig/del",
+                    type: 'delete',
+                    data: configurationFile,
+                    cache: false,
+                    contentType: 'text/json',
+                    success: function (result) {
+                        if (result.code == "0") {
+                            layer.msg(result.msg, {icon: 1, time: 1500}, function () {
+                                table.reload('tableReload');
+                                top.layer.close(index);
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1500}, function () {
+                                table.reload('tableReload');
+                                top.layer.close(index);
+                            });
+                        }
                     }
-                }
+                });
             });
         }
     });

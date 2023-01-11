@@ -23,17 +23,26 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">设备资源号：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="equipmentId" placeholder="请输入设备资源号" autocomplete="off"
+                        <input type="text" name="equipmentId" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">APPID：</label>
+                    <label class="layui-form-label">终端类型：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="APPId" placeholder="请输入APPID" autocomplete="off"
-                               class="layui-input">
+                        <select name="deviceSoftwareType" id="deviceSoftwareType" lay-filter="deviceSoftwareType" type="select">
+                            <option value=""></option>
+                        </select>
                     </div>
-                    <div class="layui-inline layui-search">
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">启用：</label>
+                    <div class="layui-input-inline">
+                        <select name="enable" id="enable" lay-filter="enable" type="select">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <div class="layui-inline layui-search" style="padding-left: 50px">
                         <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-devicelist-search"
                                 id="LAY-app-devicelist-search">
                             <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
@@ -106,7 +115,32 @@
         });
     });
 
+    //软件类型下拉框监听事件
+    form.on("select(deviceSoftwareType)", function(data) {
+        var submit = $("#LAY-app-devicelist-search");
+        submit.click();
+    });
 
+    //启用下拉框监听事件
+    form.on("select(enable)", function(data) {
+        var submit = $("#LAY-app-devicelist-search");
+        submit.click();
+    });
+
+    //获取软件类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#deviceSoftwareType",
+        dictTypeId: "DEVICE_SOFTWARE_TYPE",
+    });
+    form.render();
+
+
+    //获取启用类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#enable",
+        dictTypeId: "IS_USE",
+    });
+    form.render();
     //文本框回车事件
     $(".layui-input").on("keydown", function (event) {
         if (event.keyCode == 13) {
@@ -350,6 +384,7 @@
                                 minVersion: minVersion,
                                 deviceSoftwareType: deviceSoftwareType
                             };
+                            debugger;
                             layero.find("iframe")[0].contentWindow.SetData(dataJson);
                         },
                         yes: function (index, layero) {
@@ -529,11 +564,26 @@
             title: "序号",
             type: "numbers"
         }, {
-            field: "aPPId",
-            title: "APPID",
+            field: "deviceName",
+            title: "终端名称",
+            align: "left",
+            minWidth: 150,
+            hide: isHidden("deviceName"),
+            //打开监听
+            event: "view",
+            //监听打开详情页面
+            templet: function (data) {
+                return '<span style="color: #09bbfd">' + data.deviceName + '</span>';
+            }
+        }, {
+            field: "deviceSoftwareType",
+            title: "终端类型",
             align: "center",
-            minWidth: 300,
-            hide: isHidden("aPPId")
+            minWidth: 120,
+            hide: isHidden("deviceSoftwareType"),
+            templet: function (d) {
+                return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoftwareType);
+            }
         }, {
             field: "version",
             title: "版本号",
@@ -547,50 +597,32 @@
             minWidth: 120,
             hide: isHidden("needUpdate")
         }, {
-            field: "enable",
-            title: "是否启用",
-            align: "center",
-            minWidth: 120,
-            hide: isHidden("enable")
-        }, {
             field: "registerStatus",
             title: "注册状态",
             align: "center",
             minWidth: 120,
             hide: isHidden("registerStatus")
         }, {
-            field: "deviceSoftwareType",
-            title: "终端软件类型",
+            field: "enable",
+            title: "启用",
             align: "center",
             minWidth: 120,
-            hide: isHidden("deviceSoftwareType"),
+            hide: isHidden("enable"),
             templet: function (d) {
-                return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoftwareType);
+                return layui.admin.getDictText("IS_USE", d.enable);
             }
         }, {
-            field: "deviceName",
-            title: "终端名称",
+            field: "aPPId",
+            title: "APPID",
             align: "center",
-            minWidth: 150,
-            hide: isHidden("deviceName"),
-            //打开监听
-            event: "view",
-            //监听打开详情页面
-            templet: function (data) {
-                return '<span style="color: #09bbfd">' + data.deviceName + '</span>';
-            }
+            minWidth: 300,
+            hide: isHidden("aPPId")
         }, {
             field: "accPointResName",
             title: "接入点名称",
             align: "center",
             minWidth: 100,
             hide: isHidden("accPointResName")
-        }, {
-            field: "factoryName",
-            title: "工厂名称",
-            align: "center",
-            minWidth: 150,
-            hide: isHidden("factoryName")
         }, {
             field: "equipmentId",
             title: "设备资源号",
@@ -610,18 +642,26 @@
             minWidth: 150,
             hide: isHidden("equipmentContinuePort")
         }, {
+            field: "equipmentInstallLocation",
+            title: "设备安装位置",
+            align: "center",
+            minWidth: 150,
+            hide:true
+            // hide: isHidden("equipmentInstallLocation")
+        }, {
             field: "processName",
             title: "工序名称",
             align: "center",
             minWidth: 150,
             hide: true,
             // hide: isHidden("processName")
-        }, {
-            field: "equipmentInstallLocation",
-            title: "设备安装位置",
+        },   {
+            field: "factoryName",
+            title: "工厂名称",
             align: "center",
             minWidth: 150,
-            hide: isHidden("equipmentInstallLocation")
+            hide:true
+            // hide: isHidden("factoryName")
         }, {
             field: "accessMethod",
             title: "接入方式",
@@ -673,7 +713,7 @@
                 content: "<%= request.getContextPath() %>/equipment/device/device_edit.jsp",
                 area: ["800px", "560px"],
                 resize: false,
-                // btn: ["确定", "取消"],
+                btn: ["确定", "取消"],
                 success: function (layero, index) {
                     var dataJson = {
                         data: data,
