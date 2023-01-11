@@ -111,42 +111,46 @@ public class UpdatePackage {
             return Result.success("0", "数据不存在，无法升级");
         }
 
-        //1、根据APPID查询升级关联表（关联3 设备、升级、更新）
-        DeviceUpgradeVo deviceUpgradeVo = updatePackageService.getUpgradeVoDevice(APPId);
+        try {
+            //1、根据APPID查询升级关联表（关联3 设备、升级、更新）
+            DeviceUpgradeVo deviceUpgradeVo = updatePackageService.getUpgradeVoDevice(APPId);
 
 
-        UpgradeData upgradeData = new UpgradeData();
+            UpgradeData upgradeData = new UpgradeData();
 
-        //2.1、数据不存在，返回不升级
-        if (deviceUpgradeVo == null) {
-            //2.1.1、根据APPID查询回退关联表（关联3，设备，资源，回退）
-            return checkRollback(APPId);
-        } else {
-            //2.2、存在，但状态为升级，返回已经是最新版本
-            String upgradeStatus = deviceUpgradeVo.getUpgradeStatus();
-            if (upgradeStatus.equals("102") || upgradeStatus.equals("101")) {
-                upgradeData.setUpdatetype("0");
-                upgradeData.setIfUpdate(false);
+            //2.1、数据不存在，返回不升级
+            if (deviceUpgradeVo == null) {
+                //2.1.1、根据APPID查询回退关联表（关联3，设备，资源，回退）
                 return checkRollback(APPId);
-                //return Result.success(upgradeData,"0", "已经是最新版本，无法升级");
-            } else {    //2.3、存在，但状态为未升级
-                //3、查询更新策略
-                //3.1、更新策略为手动更新，返回 是否升级、版本号、更新策略
-                String version = deviceUpgradeVo.getVersion();
-                if (deviceUpgradeVo.getUploadStrategy().equals("002")) {
+            } else {
+                //2.2、存在，但状态为升级，返回已经是最新版本
+                String upgradeStatus = deviceUpgradeVo.getUpgradeStatus();
+                if (upgradeStatus.equals("102") || upgradeStatus.equals("101")) {
                     upgradeData.setUpdatetype("0");
-                    upgradeData.setVersionID(version);
-                    upgradeData.setIfUpdate(true);
-                    upgradeData.setIsForcedUpdate("false");
-                    return Result.success(upgradeData,"200", "是否升级");
-                } else {//3.2、更新策略为强制更新，返回 是否升级、版本号、更新策略
-                    upgradeData.setUpdatetype("0");
-                    upgradeData.setVersionID(version);
-                    upgradeData.setIfUpdate(true);
-                    upgradeData.setIsForcedUpdate("true");
-                    return Result.success(upgradeData,"200", "是否升级");
+                    upgradeData.setIfUpdate(false);
+                    return checkRollback(APPId);
+                    //return Result.success(upgradeData,"0", "已经是最新版本，无法升级");
+                } else {    //2.3、存在，但状态为未升级
+                    //3、查询更新策略
+                    //3.1、更新策略为手动更新，返回 是否升级、版本号、更新策略
+                    String version = deviceUpgradeVo.getVersion();
+                    if (deviceUpgradeVo.getUploadStrategy().equals("002")) {
+                        upgradeData.setUpdatetype("0");
+                        upgradeData.setVersionID(version);
+                        upgradeData.setIfUpdate(true);
+                        upgradeData.setIsForcedUpdate("false");
+                        return Result.success(upgradeData,"200", "是否升级");
+                    } else {//3.2、更新策略为强制更新，返回 是否升级、版本号、更新策略
+                        upgradeData.setUpdatetype("0");
+                        upgradeData.setVersionID(version);
+                        upgradeData.setIfUpdate(true);
+                        upgradeData.setIsForcedUpdate("true");
+                        return Result.success(upgradeData,"200", "是否升级");
+                    }
                 }
             }
+        }catch (Exception e){
+            return Result.error("0", "请求失败");
         }
 
     }
@@ -162,111 +166,115 @@ public class UpdatePackage {
             return;
         }
 
-        //1、通过APPID查询更新表（关联3）
-        DeviceUpgradeVo deviceUpgradeVo = updatePackageService.getUpgradeVoDevice(APPId);
+        try {
+            //1、通过APPID查询更新表（关联3）
+            DeviceUpgradeVo deviceUpgradeVo = updatePackageService.getUpgradeVoDevice(APPId);
 
-        //更新包主键
-        int uploadId = 0;
-        //升级表主键
-        int deviceUpgradeId = 0;
-        //回退表主键
-        int deviceRollbackId = 0;
+            //更新包主键
+            int uploadId = 0;
+            //升级表主键
+            int deviceUpgradeId = 0;
+            //回退表主键
+            int deviceRollbackId = 0;
 
-        //2.1、数据不存在，查询回退表
-        if (deviceUpgradeVo == null) {
-            DeviceRollbackVo deviceRollbackVo = updatePackageService.getRollbackVoDevice(APPId);
-
-            //2.1.1数据不存在则返回APPID信息有误
-            if (deviceRollbackVo == null || deviceRollbackVo.getUpgradeStatus().equals("102")){
-//                return Result.error("0", "");
-               // return null;
-                return;
-            }
-
-            //2.1.2、数据存在，获取更新包主键
-            uploadId = deviceRollbackVo.getUploadId();
-            deviceRollbackId = deviceRollbackVo.getDeviceRollbackId();
-        } else {
-            if (deviceUpgradeVo.getUpgradeStatus().equals("102")) {
+            //2.1、数据不存在，查询回退表
+            if (deviceUpgradeVo == null) {
                 DeviceRollbackVo deviceRollbackVo = updatePackageService.getRollbackVoDevice(APPId);
-                if (deviceRollbackVo == null || deviceRollbackVo.getUpgradeStatus().equals("102")) {
+
+                //2.1.1数据不存在则返回APPID信息有误
+                if (deviceRollbackVo == null || deviceRollbackVo.getUpgradeStatus().equals("102")){
+//                return Result.error("0", "");
+                    // return null;
                     return;
                 }
+
+                //2.1.2、数据存在，获取更新包主键
                 uploadId = deviceRollbackVo.getUploadId();
                 deviceRollbackId = deviceRollbackVo.getDeviceRollbackId();
             } else {
-                //2.2、数据存在，获取更新包主键
-                uploadId = deviceUpgradeVo.getUploadId();
-                deviceUpgradeId = deviceUpgradeVo.getDeviceUpgradeId();
+                if (deviceUpgradeVo.getUpgradeStatus().equals("102")) {
+                    DeviceRollbackVo deviceRollbackVo = updatePackageService.getRollbackVoDevice(APPId);
+                    if (deviceRollbackVo == null || deviceRollbackVo.getUpgradeStatus().equals("102")) {
+                        return;
+                    }
+                    uploadId = deviceRollbackVo.getUploadId();
+                    deviceRollbackId = deviceRollbackVo.getDeviceRollbackId();
+                } else {
+                    //2.2、数据存在，获取更新包主键
+                    uploadId = deviceUpgradeVo.getUploadId();
+                    deviceUpgradeId = deviceUpgradeVo.getDeviceUpgradeId();
+                }
             }
-        }
 
 
-        //2.3、通过更新包主键获取文件数据
-        UpdateUpload updateUpload = updatePackageService.getUpload(uploadId);
-        if (updateUpload == null) {
-            //更新包查询出错
-           // return Result.error("0", "更新包查询出错");
-           // return null;
-        }
-
-        //3、修改升级表、回退表状态（升级中）（1个）
-        if (deviceUpgradeId != 0) {
-            DeviceUpgrade deviceUpgrade = new DeviceUpgrade();
-            deviceUpgrade.setDeviceUpgradeId(deviceUpgradeId);
-            deviceUpgrade.setUpgradeStatus("101");
-            //更新
-            updatePackageService.updateDeviceUpdate(deviceUpgrade);
-        }
-        if (deviceRollbackId != 0) {
-            DeviceRollback deviceRollback = new DeviceRollback();
-            deviceRollback.setDeviceRollbackId(deviceRollbackId);
-            deviceRollback.setUpgradeStatus("101");
-
-            //更新
-            updatePackageService.updateDeviceRollback(deviceRollback);
-
-        }
-
-        //4、文件发送，解压，运行
-        //文件
-        String filePath = updateUpload.getDownloadUrl();
-        String fileName = updateUpload.getFileName();
-
-        byte[] data = null;
-
-        FileInputStream fileIn = null;
-        ServletOutputStream out = null;
-        try {
-            //String fileName = new String(fileNameString.getBytes("ISO8859-1"), "UTF-8");
-            response.setContentType("application/octet-stream");
-            // URLEncoder.encode(fileNameString, "UTF-8") 下载文件名为中文的，文件名需要经过url编码
-            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
-            File file;
-            String filePathString = filePath;
-            file = new File(filePathString);
-            fileIn = new FileInputStream(file);
-            out = response.getOutputStream();
-
-            byte[] outputByte = new byte[1024];
-            int readTmp = 0;
-            while ((readTmp = fileIn.read(outputByte)) != -1) {
-                out.write(outputByte, 0, readTmp); //并不是每次都能读到1024个字节，所有用readTmp作为每次读取数据的长度，否则会出现文件损坏的错误
+            //2.3、通过更新包主键获取文件数据
+            UpdateUpload updateUpload = updatePackageService.getUpload(uploadId);
+            if (updateUpload == null) {
+                //更新包查询出错
+                // return Result.error("0", "更新包查询出错");
+                // return null;
             }
-            data = outputByte;
-        }
-        catch (Exception e) {
-            //log.error(e.getMessage());
-            e.printStackTrace();
-        }
-        finally {
+
+            //3、修改升级表、回退表状态（升级中）（1个）
+            if (deviceUpgradeId != 0) {
+                DeviceUpgrade deviceUpgrade = new DeviceUpgrade();
+                deviceUpgrade.setDeviceUpgradeId(deviceUpgradeId);
+                deviceUpgrade.setUpgradeStatus("101");
+                //更新
+                updatePackageService.updateDeviceUpdate(deviceUpgrade);
+            }
+            if (deviceRollbackId != 0) {
+                DeviceRollback deviceRollback = new DeviceRollback();
+                deviceRollback.setDeviceRollbackId(deviceRollbackId);
+                deviceRollback.setUpgradeStatus("101");
+
+                //更新
+                updatePackageService.updateDeviceRollback(deviceRollback);
+
+            }
+
+            //4、文件发送，解压，运行
+            //文件
+            String filePath = updateUpload.getDownloadUrl();
+            String fileName = updateUpload.getFileName();
+
+            byte[] data = null;
+
+            FileInputStream fileIn = null;
+            ServletOutputStream out = null;
             try {
-                fileIn.close();
-                out.flush();
-                out.close();
-            } catch (IOException e) {
+                //String fileName = new String(fileNameString.getBytes("ISO8859-1"), "UTF-8");
+                response.setContentType("application/octet-stream");
+                // URLEncoder.encode(fileNameString, "UTF-8") 下载文件名为中文的，文件名需要经过url编码
+                response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+                File file;
+                String filePathString = filePath;
+                file = new File(filePathString);
+                fileIn = new FileInputStream(file);
+                out = response.getOutputStream();
+
+                byte[] outputByte = new byte[1024];
+                int readTmp = 0;
+                while ((readTmp = fileIn.read(outputByte)) != -1) {
+                    out.write(outputByte, 0, readTmp); //并不是每次都能读到1024个字节，所有用readTmp作为每次读取数据的长度，否则会出现文件损坏的错误
+                }
+                data = outputByte;
+            }
+            catch (Exception e) {
+                //log.error(e.getMessage());
                 e.printStackTrace();
             }
+            finally {
+                try {
+                    fileIn.close();
+                    out.flush();
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }catch (Exception e){
+            return;
         }
 
     }
@@ -283,75 +291,80 @@ public class UpdatePackage {
         if (APPId == null || APPId == "" || isCode == null ||isCode =="") {
             return Result.success("0", "数据不存在，无法升级");
         }
-        UpgradeData upgradeData = new UpgradeData();
-        //1、通过APPID查询更新表（关联3）
-        DeviceUpgradeVo deviceUpgradeVo = updatePackageService.getUpgradeVoDevice(APPId);
 
-        //更新包主键
-        int uploadId = 0;
-        //升级表主键
-        int deviceUpgradeId = 0;
-        //回退表主键
-        int deviceRollbackId = 0;
+        try {
+            UpgradeData upgradeData = new UpgradeData();
+            //1、通过APPID查询更新表（关联3）
+            DeviceUpgradeVo deviceUpgradeVo = updatePackageService.getUpgradeVoDevice(APPId);
+
+            //更新包主键
+            int uploadId = 0;
+            //升级表主键
+            int deviceUpgradeId = 0;
+            //回退表主键
+            int deviceRollbackId = 0;
 
 
-        //2.1、数据不存在，查询回退表
-        if (deviceUpgradeVo == null) {
-            DeviceRollbackVo deviceRollbackVo = updatePackageService.getRollbackVoDevice(APPId);
-
-            //2.1.1数据不存在则返回APPID信息有误
-            if (deviceRollbackVo == null || deviceRollbackVo.getUpgradeStatus().equals("102")){
-                return Result.error("0", "升级失败");
-            }
-
-            //2.1.2、数据存在，获取更新包主键
-            uploadId = deviceRollbackVo.getUploadId();
-            deviceRollbackId = deviceRollbackVo.getDeviceRollbackId();
-        } else {
-            if (deviceUpgradeVo.getUpgradeStatus().equals("102")) {
+            //2.1、数据不存在，查询回退表
+            if (deviceUpgradeVo == null) {
                 DeviceRollbackVo deviceRollbackVo = updatePackageService.getRollbackVoDevice(APPId);
-                if (deviceRollbackVo == null || deviceRollbackVo.getUpgradeStatus().equals("102")) {
+
+                //2.1.1数据不存在则返回APPID信息有误
+                if (deviceRollbackVo == null || deviceRollbackVo.getUpgradeStatus().equals("102")){
                     return Result.error("0", "升级失败");
                 }
+
+                //2.1.2、数据存在，获取更新包主键
                 uploadId = deviceRollbackVo.getUploadId();
                 deviceRollbackId = deviceRollbackVo.getDeviceRollbackId();
             } else {
-                //2.2、数据存在，获取更新包主键
-                uploadId = deviceUpgradeVo.getUploadId();
-                deviceUpgradeId = deviceUpgradeVo.getDeviceUpgradeId();
+                if (deviceUpgradeVo.getUpgradeStatus().equals("102")) {
+                    DeviceRollbackVo deviceRollbackVo = updatePackageService.getRollbackVoDevice(APPId);
+                    if (deviceRollbackVo == null || deviceRollbackVo.getUpgradeStatus().equals("102")) {
+                        return Result.error("0", "升级失败");
+                    }
+                    uploadId = deviceRollbackVo.getUploadId();
+                    deviceRollbackId = deviceRollbackVo.getDeviceRollbackId();
+                } else {
+                    //2.2、数据存在，获取更新包主键
+                    uploadId = deviceUpgradeVo.getUploadId();
+                    deviceUpgradeId = deviceUpgradeVo.getDeviceUpgradeId();
+                }
             }
-        }
 
 
-        //3.1、升级不成功，修改升级表状态（升级中-->升级失败-->未升级）（1升级）
-        //3.2、升级成功，修改升级表状态（升级中-->升级成功-->已升级）
-        if (deviceUpgradeId != 0) {
-            DeviceUpgrade deviceUpgrade = new DeviceUpgrade();
-            deviceUpgrade.setDeviceUpgradeId(deviceUpgradeId);
-            deviceUpgrade.setUpgradeStatus(isCode);
-            upgradeData.setUpdatetype("0");
-            //更新
-            updatePackageService.updateDeviceUpdate(deviceUpgrade);
-        }
-        if (deviceRollbackId != 0) {
-            DeviceRollback deviceRollback = new DeviceRollback();
-            deviceRollback.setDeviceRollbackId(deviceRollbackId);
-            if (isCode.equals("102")) {
-                isCode = "102";
+            //3.1、升级不成功，修改升级表状态（升级中-->升级失败-->未升级）（1升级）
+            //3.2、升级成功，修改升级表状态（升级中-->升级成功-->已升级）
+            if (deviceUpgradeId != 0) {
+                DeviceUpgrade deviceUpgrade = new DeviceUpgrade();
+                deviceUpgrade.setDeviceUpgradeId(deviceUpgradeId);
+                deviceUpgrade.setUpgradeStatus(isCode);
+                upgradeData.setUpdatetype("0");
+                //更新
+                updatePackageService.updateDeviceUpdate(deviceUpgrade);
             }
-            deviceRollback.setUpgradeStatus(isCode);
-            upgradeData.setUpdatetype("1");
-            //更新
-            updatePackageService.updateDeviceRollback(deviceRollback);
-        }
+            if (deviceRollbackId != 0) {
+                DeviceRollback deviceRollback = new DeviceRollback();
+                deviceRollback.setDeviceRollbackId(deviceRollbackId);
+                if (isCode.equals("102")) {
+                    isCode = "102";
+                }
+                deviceRollback.setUpgradeStatus(isCode);
+                upgradeData.setUpdatetype("1");
+                //更新
+                updatePackageService.updateDeviceRollback(deviceRollback);
+            }
 
-        //4、返回终端信息
-        if (isCode.equals("100")) {
+            //4、返回终端信息
+            if (isCode.equals("100")) {
 
-            return Result.success(upgradeData,"0", "升级失败");
-        } else {
+                return Result.success(upgradeData,"0", "升级失败");
+            } else {
 
-            return Result.success(upgradeData,"200", "该终端已完成升级");
+                return Result.success(upgradeData,"200", "该终端已完成升级");
+            }
+        }catch (Exception e){
+            return  Result.error("0","请求失败");
         }
 
     }
@@ -407,35 +420,41 @@ public class UpdatePackage {
         if (equipmentIp == null || equipmentIp == "" ) {
             return Result.error("0", "数据不存在");
         }
+
+        try {
+            String equipmentContinuePort = "";
+
+            String appId = null;
+            //1.通过IP、端口查询设备资源 （关联2 设备、资源）
+            DeviceEquipmentVo deviceEquipmentVo= updatePackageService.getDeviceEquipmentVo(equipmentIp,equipmentContinuePort);
+            //2.1不存在资源，返回录入信息
+            if (deviceEquipmentVo == null || equipmentIp == "") {
+                return Result.error("0", "不存在设备资源:"+equipmentIp);
+            } else {//2.2存在资源
+                appId = deviceEquipmentVo.getAppId();
+
+
+                String registerStatus = deviceEquipmentVo.getRegisterStatus();
+                int deviceId = deviceEquipmentVo.getDeviceId();
+
+                if(registerStatus.equals("101")) {
+                    //3.1注册存在，但终端已注册，返回终端已经注册，不能重复注册,返回已注册APPID
+                    return Result.success(appId,"0", "终端已经注册，不能重复注册");
+                } else {
+                    //3.2注册存在，终端未注册，进行终端注册（修改注册表），返回APPID （1，注册表）
+                    Device device = new Device();
+                    device.setDeviceId(deviceId);
+                    device.setRegisterStatus("101");
+                    updatePackageService.updateDeviceStatus(device);
+                    return Result.success(appId,"200", "终端注册成功");
+                }
+            }
+        }catch ( Exception e){
+            return Result.error("0","请求失败");
+        }
+
 //        String equipmentIp = ip;
         //equipmentIp = getIpAddress(request);
-        String equipmentContinuePort = "";
-
-        String appId = null;
-        //1.通过IP、端口查询设备资源 （关联2 设备、资源）
-        DeviceEquipmentVo deviceEquipmentVo= updatePackageService.getDeviceEquipmentVo(equipmentIp,equipmentContinuePort);
-        //2.1不存在资源，返回录入信息
-        if (deviceEquipmentVo == null || equipmentIp == "") {
-            return Result.error("0", "不存在设备资源:"+equipmentIp);
-        } else {//2.2存在资源
-            appId = deviceEquipmentVo.getAppId();
-
-
-            String registerStatus = deviceEquipmentVo.getRegisterStatus();
-            int deviceId = deviceEquipmentVo.getDeviceId();
-
-            if(registerStatus.equals("101")) {
-                //3.1注册存在，但终端已注册，返回终端已经注册，不能重复注册,返回已注册APPID
-                return Result.success(appId,"0", "终端已经注册，不能重复注册");
-            } else {
-                //3.2注册存在，终端未注册，进行终端注册（修改注册表），返回APPID （1，注册表）
-                Device device = new Device();
-                device.setDeviceId(deviceId);
-                device.setRegisterStatus("101");
-                updatePackageService.updateDeviceStatus(device);
-                return Result.success(appId,"200", "终端注册成功");
-            }
-        }
 
     }
 
@@ -453,47 +472,53 @@ public class UpdatePackage {
         if (appId == null || appId == "" || file == null) {
             return Result.error("0", "数据不存在");
         }
-        //1、根据APPID查询配置文件
-        // 1.获取原始文件名
-        String fileName = file.getOriginalFilename();
-        ConfigurationFile configurationFile = new ConfigurationFile();
-        List<ConfigurationFile> configurationFiles = new ArrayList<>();
-        configurationFiles = updatePackageService.getConfigurationFile(appId,fileName);
-        String filePath = request.getSession().getServletContext().getRealPath("/configurationFile/"+ appId);
-        //判断数据是否存在，存在则修改，不存在则新增
-        if(configurationFiles.size() < 1) {
-            return Result.error("0", "上传失败");
-        } else {
-            configurationFile = configurationFiles.get(0);
-            //修改
-            configurationFile.setTerminalTime(time);
-            configurationFile.setWebTime(time);
-            configurationFile.setFilePath(filePath+"/"+fileName);
-            //已同步
-            configurationFile.setFileStatus("102");
-            updatePackageService.updateConfigurationFile(configurationFile);
-        }
-        if (file != null) {
-            //4.文件大小
-            double uploadFileSize = file.getSize();
-            //5.获取文件类型
-            String uploadFileType = file.getContentType();
 
-            //创建文件夹，存放文件
-            String realPath = filePath;
-            File dir = new File(realPath);
-            if (!dir.exists()) {
-                dir.mkdirs();
+        try {
+            //1、根据APPID查询配置文件
+            // 1.获取原始文件名
+            String fileName = file.getOriginalFilename();
+            ConfigurationFile configurationFile = new ConfigurationFile();
+            List<ConfigurationFile> configurationFiles = new ArrayList<>();
+            configurationFiles = updatePackageService.getConfigurationFile(appId,fileName);
+            String filePath = request.getSession().getServletContext().getRealPath("/configurationFile/"+ appId);
+            //判断数据是否存在，存在则修改，不存在则新增
+            if(configurationFiles.size() < 1) {
+                return Result.error("0", "上传失败");
+            } else {
+                configurationFile = configurationFiles.get(0);
+                //修改
+                configurationFile.setTerminalTime(time);
+                configurationFile.setWebTime(time);
+                configurationFile.setFilePath(filePath+"/"+fileName);
+                //已同步
+                configurationFile.setFileStatus("102");
+                updatePackageService.updateConfigurationFile(configurationFile);
             }
-            // 1.创建空文件
-            File newFile = new File(dir, fileName);
-            // 2.将参数file（上传文件）写入空文件中
-            file.transferTo(newFile);
-        } else {
-            return Result.error("0", "上传失败");
+            if (file != null) {
+                //4.文件大小
+                double uploadFileSize = file.getSize();
+                //5.获取文件类型
+                String uploadFileType = file.getContentType();
 
+                //创建文件夹，存放文件
+                String realPath = filePath;
+                File dir = new File(realPath);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                // 1.创建空文件
+                File newFile = new File(dir, fileName);
+                // 2.将参数file（上传文件）写入空文件中
+                file.transferTo(newFile);
+            } else {
+                return Result.error("0", "上传失败");
+
+            }
+            return Result.success("200","上传成功");
+        }catch (Exception e){
+            return Result.error("0","请求失败");
         }
-        return Result.success("200","上传成功");
+
     }
 
 
@@ -575,50 +600,51 @@ public class UpdatePackage {
      */
     @GetMapping("/configurationInformation")
     public Result<?> configurationInformation (String appId) {
-        if (appId == null || appId == "") {
-            return Result.error("0","数据不存在");
-        }
-        List<ConfigurationFile> configurationFiles = new ArrayList<>();
-        configurationFiles = updatePackageService.getConfigurationFile(appId,null);
-        List<HashMap> list = new ArrayList();
-
-        //查询内容为空
-        if (configurationFiles.size() < 1) {
-            //返回空数组
-            return Result.success(list,"200","请求成功");
-        } else {
-            for (ConfigurationFile configurationFile : configurationFiles) {
-
-                HashMap<String,Object> map = new HashMap<>();
-                String terminalTime = configurationFile.getTerminalTime();
-                String webTime =configurationFile.getWebTime();
-                String fileStatus = configurationFile.getFileStatus();
-                String configPath = configurationFile.getConfigPath();
-                if (webTime == null || webTime == "" || terminalTime == null || terminalTime == "") {
-                    map.put("fileName",configurationFile.getFileName());
-                    map.put("ifUpdate",0);
-                    map.put("configPath",configPath);
-                    list.add(map);
-                } else {
-                    map.put("terminalTime",terminalTime);
-                    map.put("webTime",webTime);
-                    map.put("configPath",configPath);
-                    map.put("fileName",configurationFile.getFileName());
-                    //未同步
-                    if (fileStatus.equals("101")) {
-                        map.put("ifUpdate",1);
-                    } else {
-                        //同步
-                        map.put("ifUpdate",2);
-                    }
-                    list.add(map);
-                }
-
+        try {
+            if (appId == null || appId == "") {
+                return Result.error("0","数据不存在");
             }
+            List<ConfigurationFile> configurationFiles = new ArrayList<>();
+            configurationFiles = updatePackageService.getConfigurationFile(appId,null);
+            List<HashMap> list = new ArrayList();
+
+            //查询内容为空
+            if (configurationFiles.size() < 1) {
+                //返回空数组
+                return Result.success(list,"200","请求成功");
+            } else {
+                for (ConfigurationFile configurationFile : configurationFiles) {
+
+                    HashMap<String,Object> map = new HashMap<>();
+                    String terminalTime = configurationFile.getTerminalTime();
+                    String webTime =configurationFile.getWebTime();
+                    String fileStatus = configurationFile.getFileStatus();
+                    String configPath = configurationFile.getConfigPath();
+                    if (webTime == null || webTime == "" || terminalTime == null || terminalTime == "") {
+                        map.put("fileName",configurationFile.getFileName());
+                        map.put("ifUpdate",0);
+                        map.put("configPath",configPath);
+                        list.add(map);
+                    } else {
+                        map.put("terminalTime",terminalTime);
+                        map.put("webTime",webTime);
+                        map.put("configPath",configPath);
+                        map.put("fileName",configurationFile.getFileName());
+                        //未同步
+                        if (fileStatus.equals("101")) {
+                            map.put("ifUpdate",1);
+                        } else {
+                            //同步
+                            map.put("ifUpdate",2);
+                        }
+                        list.add(map);
+                    }
+
+                }
+            }
+            return Result.success(list,"200","请求成功");
+        }catch (Exception e){
+            return Result.error("0","请求失败");
         }
-        //0: 不操作
-        //1: 终端上传
-        //2: 服务端下载
-        return Result.success(list,"200","请求成功");
     }
 }
