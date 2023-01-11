@@ -92,4 +92,11 @@ public interface DeviceMapper {
      */
     DeviceEquipmentVo getEquipment(int deviceId);
 
+
+    /**
+     * 验证当前终端软件类型是否存在更新包
+     *
+     * @return
+     */
+    int checkDeviceSoftwareType(@Param("deviceSoftwareType") String deviceSoftwareType);
 }

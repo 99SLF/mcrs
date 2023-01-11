@@ -68,6 +68,7 @@ public class DeviceService {
     public void registrationDevice(Device device) {
         //调用方法加密，不使用，使用数据库MD5加密
 //        device.setAPPId(encrypt(device.getAPPId()));
+        device.setVersion("V1.0");
         deviceMapper.registrationDevice(device);
     }
 
@@ -131,6 +132,17 @@ public class DeviceService {
 
         return deviceMapper.getEquipment(deviceId);
     }
+
+
+    /**
+     * 检测是否存在与终端软件类型对应更新包是否存在
+     *
+     * @param deviceSoftwareType 终端软件类型
+     */
+    public int checkDeviceSoftwareType(String deviceSoftwareType) {
+        return deviceMapper.checkDeviceSoftwareType(deviceSoftwareType);
+    }
+
 
 
 }

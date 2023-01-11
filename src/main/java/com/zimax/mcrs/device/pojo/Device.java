@@ -92,4 +92,14 @@ public class Device{
      */
     private Date createTime;
 
+    /**
+     * 终端程序安装路径
+     */
+    private String programInstallationPath;
+
+    /**
+     * 终端执行程序安装路径
+     */
+    private String executorInstallationPath;
+
 }
