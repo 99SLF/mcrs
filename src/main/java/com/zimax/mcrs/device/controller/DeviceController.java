@@ -70,7 +70,7 @@ public class DeviceController {
     /**
      * 条件查询
      *
-     * @param APPId       APPId
+     * @param deviceSoftwareType    终端软件类型
      * @param equipmentId 设备资源号
      * @param limit       记录数
      * @param page        页码
@@ -79,9 +79,9 @@ public class DeviceController {
      * @return 终端列表
      */
     @GetMapping("/device/query")
-    public Result<?> queryDevice(String  page, String limit, String equipmentId, String APPId, String deviceName, String processName, String factoryName, String order, String field) {
-        List devices = deviceService.queryDevices(page, limit, equipmentId, APPId, deviceName,processName,factoryName,order, field);
-        return Result.success(devices, deviceService.count(equipmentId, APPId));
+    public Result<?> queryDevice(String  page, String limit, String equipmentId, String deviceSoftwareType,String enable, String deviceName, String processName, String factoryName, String order, String field) {
+        List devices = deviceService.queryDevices(page, limit, equipmentId, deviceSoftwareType,enable, deviceName,processName,factoryName,order, field);
+        return Result.success(devices, deviceService.count(equipmentId, deviceSoftwareType));
     }
 
     /**

@@ -44,8 +44,7 @@
             <label class="layui-form-label">是否启用：</label>
             <div class="layui-input-block">
                 <select name="enable" id="enable" lay-filter="" type="select">
-                    <option value="on">是</option>
-                    <option value="off">否</option>
+                    <option value=""></option>
                 </select>
             </div>
         </div>
@@ -262,6 +261,13 @@
     layui.admin.renderDictSelect({
         elem: "#deviceSoftwareType",
         dictTypeId: "DEVICE_SOFTWARE_TYPE",
+    });
+    form.render();
+
+    //获取启用类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#enable",
+        dictTypeId: "IS_USE",
     });
     form.render();
 
