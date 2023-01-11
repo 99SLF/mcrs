@@ -3,6 +3,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zimax.mcrs.update.mapper.ConfigurationFileMapper">
 
+    <delete id="delConfigurationFile" parameterType="com.zimax.mcrs.update.pojo.ConfigurationFile">
+        delete from dev_config_file where file_id = '${fileId}'
+    </delete>
     <!-- 查询列筛选列表 -->
     <select id="getConfigurationFile" resultType="com.zimax.mcrs.update.pojo.ConfigurationFile">
         select * from dev_config_file
@@ -32,6 +35,41 @@
             </if>
         WHERE app_id = '${appId}' and file_name = '${fileName}'
     </update>
+
+
+    <insert id="addConfigurationFile" parameterType="com.zimax.mcrs.update.pojo.ConfigurationFile">
+        insert into dev_config_file
+        (file_name,file_path,file_status,creator,terminal_time,web_time,app_id,config_path)
+        values (#{fileName}, #{filePath}, #{fileStatus}, #{creator}, #{terminalTime},
+                #{webTime}, #{appId}, #{configPath})
+    </insert>
+
+
+    <!--    查询记录数-->
+    <select id="count" resultType="int">
+        select count(*) from dev_config_file
+        <where>
+            <if test="appId !=null and appId !=''">
+                and app_id = '${appId}'
+            </if>
+        </where>
+    </select>
+    <!--查询角色信息-->
+    <select id="queryConfigurationFile" parameterType="map"  resultType="com.zimax.mcrs.update.pojo.ConfigurationFile">
+        select * from dev_config_file
+        <where>
+            <if test="appId !=null and appId !=''">
+                and app_id = '${appId}'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+
+    </select>
 
 
 </mapper>

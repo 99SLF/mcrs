@@ -1,5 +1,7 @@
 package com.zimax.mcrs.update.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +19,7 @@ public class ConfigurationFile {
     /**
      * 主键
      */
+    @TableId(type = IdType.AUTO)
     private  Integer fileId;
 
     /**
@@ -28,6 +31,11 @@ public class ConfigurationFile {
      * 获取路径
      */
     private String filePath;
+
+    /**
+     * 配置文件路径
+     */
+    private String configPath;
 
     /**
      * 配置文件状态

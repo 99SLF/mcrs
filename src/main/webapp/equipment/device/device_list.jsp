@@ -26,18 +26,19 @@
                         <input type="text" name="equipmentId" placeholder="请输入设备资源号" autocomplete="off"
                                class="layui-input">
                     </div>
+                    </div>
+                <div class="layui-inline">
                     <label class="layui-form-label">APPID：</label>
                     <div class="layui-input-inline">
                         <input type="text" name="APPId" placeholder="请输入APPID" autocomplete="off"
                                class="layui-input">
                     </div>
-                </div>
-
-                <div class="layui-inline layui-search">
-                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-devicelist-search"
-                            id="LAY-app-devicelist-search">
-                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                    </button>
+                    <div class="layui-inline layui-search">
+                        <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-devicelist-search"
+                                id="LAY-app-devicelist-search">
+                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -536,7 +537,8 @@
             title: "工序名称",
             align: "center",
             minWidth: 150,
-            hide: isHidden("processName")
+            hide:true,
+            // hide: isHidden("processName")
         }, {
             field: "equipmentInstallLocation",
             title: "设备安装位置",
@@ -548,7 +550,8 @@
             title: "接入方式",
             align: "center",
             minWidth: 100,
-            hide: isHidden("accessMethod"),
+            hide:true,
+            // hide: isHidden("accessMethod"),
             templet: function (d) {
                 return layui.admin.getDictText("ACCESS_METHOD", d.accessMethod);
             }
@@ -557,19 +560,22 @@
             title: "创建人",
             align: "center",
             minWidth: 100,
-            hide: isHidden("creator")
+            hide:true,
+            // hide: isHidden("creator")
         }, {
             field: "createTime",
             title: "创建时间",
             align: "center",
             minWidth: 200,
-            hide: isHidden("createTime")
+            hide:true,
+            // hide: isHidden("createTime")
         }, {
             field: "remarks",
             title: "备注",
             align: "center",
             minWidth: 100,
-            hide: isHidden("remarks")
+            hide:true
+            // hide: isHidden("remarks")
         }, {
             title: "操作",
             align: "center",
