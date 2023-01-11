@@ -30,9 +30,9 @@
         </div>
 
         <div class="layui-col-sm6">
-            <label class="layui-form-label">预警事件标题:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>预警事件标题:</label>
             <div class="layui-input-block">
-                <input id="alarmEventTitle" type="text" name="alarmEventTitle" lay-verify="alarmEventTitle"
+                <input id="alarmEventTitle" type="text" name="alarmEventTitle" lay-verify="required|alarmEventTitle"
                        placeholder="预警事件标题" autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -53,7 +53,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>预警类型:</label>
             <div class="layui-input-block">
-                <select name="alarmType" id="alarmType" lay-filter="" type="select">
+                <select name="alarmType" id="alarmType" lay-filter="required" type="select">
                     <option value=""></option>
                 </select>
             </div>

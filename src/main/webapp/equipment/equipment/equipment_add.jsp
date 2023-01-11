@@ -224,6 +224,10 @@
             if (value.length > 20) {
                 return "设备名称不能超过20字";
             }
+        }, equipmentInstallLocation: function (value, item) {
+            if (value.length > 50) {
+                return "设备安装位置不能超过50字";
+            }
         },
         equipmentContinuePort: function (value, item) {
             if (value.length > 20) {

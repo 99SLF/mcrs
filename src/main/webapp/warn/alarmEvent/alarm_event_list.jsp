@@ -26,11 +26,15 @@
                         <input type="text" name="alarmEventId" placeholder="请输入编码" autocomplete="off"
                                class="layui-input">
                     </div>
+                </div>
+                <div class="layui-inline">
                     <label class="layui-form-label">预警事件标题：</label>
                     <div class="layui-input-inline">
                         <input type="text" name="alarmEventTitle" placeholder="请输入标题" autocomplete="off"
                                class="layui-input">
                     </div>
+                </div>
+                <div class="layui-inline">
                     <label class="layui-form-label">预警级别：</label>
                     <div class="layui-input-inline">
                         <input type="text" name="alarmLevel" placeholder="请输入预警级别" autocomplete="off"
@@ -38,30 +42,36 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <div class="layui-col-sm4">
-                        <label class="layui-form-label">预警类型：</label>
-                        <div class="layui-input-block">
-                            <select name="alarmType" id="alarmType" lay-filter="" type="select">
-                                <option value=""></option>
-                            </select>
-                        </div>
+
+                    <label class="layui-form-label">预警类型：</label>
+                    <div class="layui-input-block">
+                        <select name="alarmType" id="alarmType" lay-filter="alarmType" type="select">
+                            <option value=""></option>
+                        </select>
                     </div>
+                </div>
+                <div class="layui-inline">
                     <label class="layui-form-label">制单人：</label>
                     <div class="layui-input-inline">
                         <input type="text" name="makeFormPeople" placeholder="请输入制单人" autocomplete="off"
                                class="layui-input">
                     </div>
+                </div>
+                <div class="layui-inline">
                     <label class="layui-form-label">制单时间：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="makeFormTime" placeholder="请输入制单时间" id="makeFormTime" autocomplete="off"
+                        <input type="text" name="makeFormTime" placeholder="请输入制单时间" id="makeFormTime"
+                               autocomplete="off"
                                class="layui-input">
                     </div>
-                </div>
-                <div class="layui-inline layui-search">
-                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-alarmEventlist-search"
-                            id="LAY-app-alarmEventlist-search">
-                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                    </button>
+
+                    <div class="layui-inline layui-search">
+                        <button class="layui-btn layuiadmin-btn-list" lay-submit
+                                lay-filter="LAY-app-alarmEventlist-search"
+                                id="LAY-app-alarmEventlist-search">
+                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -137,6 +147,11 @@
         });
     });
 
+    //下拉框监听事件
+    form.on("select(alarmType)", function(data) {
+        var submit = $("#LAY-app-alarmEventlist-search");
+        submit.click();
+    });
 
     //文本框回车事件
     $(".layui-input").on("keydown", function (event) {
@@ -170,7 +185,7 @@
             });
         },
         //批量删除
-        batchdel: function() {
+        batchdel: function () {
             var checkStatus = table.checkStatus("LAY-app-alarmEvent-list-reload");
             var data = checkStatus.data;
             if (data.length == 0) {
@@ -178,20 +193,20 @@
             }
             if (data.length > 0) {
                 var alarmEventInts = new Array();
-                for (var i=0; i<data.length;i++) {
+                for (var i = 0; i < data.length; i++) {
                     alarmEventInts[i] = data[i].alarmEventInt;
                 }
                 layer.confirm("确定删除所选预警信息？", {
                     icon: 3,
                     title: "系统提示"
-                }, function(index) {
+                }, function (index) {
                     $.ajax({
                         url: "<%= request.getContextPath() %>/warn/alarmEvent/batchDelete",
                         type: "DELETE",
                         data: JSON.stringify(alarmEventInts),
                         cache: false,
                         contentType: "text/json",
-                        success: function(result) {
+                        success: function (result) {
                             if (result.exception) {
                                 layer.alert(result.exception.message, {
                                     icon: 2,
@@ -201,14 +216,14 @@
                                 layer.msg("删除成功", {
                                     icon: 1,
                                     time: 2000
-                                }, function() {
+                                }, function () {
                                     table.reload("LAY-app-alarmEvent-list-reload");
                                 });
                             } else {
                                 layer.msg("删除失败");
                             }
                         },
-                        error: function(jqXHR, textStatus, errorThrown) {
+                        error: function (jqXHR, textStatus, errorThrown) {
                             layer.msg(jqXHR.responseText, {
                                 time: 2000,
                                 icon: 5
@@ -218,7 +233,7 @@
                 });
             }
         },
-        enable: function() {
+        enable: function () {
             var checkStatus = table.checkStatus("LAY-app-alarmEvent-list-reload");
             var data = checkStatus.data;
             if (data.length == 0) {
@@ -226,20 +241,20 @@
             }
             if (data.length > 0) {
                 var alarmEventInts = new Array();
-                for (var i=0; i<data.length;i++) {
+                for (var i = 0; i < data.length; i++) {
                     alarmEventInts[i] = data[i].alarmEventInt;
                 }
                 layer.confirm("确定启用所选预警信息？", {
                     icon: 3,
                     title: "系统提示"
-                }, function(index) {
+                }, function (index) {
                     $.ajax({
                         url: "<%= request.getContextPath() %>/warn/alarmEvent/enable",
                         type: "POSt",
                         data: JSON.stringify(alarmEventInts),
                         cache: false,
                         contentType: "text/json",
-                        success: function(result) {
+                        success: function (result) {
                             if (result.exception) {
                                 layer.alert(result.exception.message, {
                                     icon: 2,
@@ -249,14 +264,14 @@
                                 layer.msg("启用成功", {
                                     icon: 1,
                                     time: 2000
-                                }, function() {
+                                }, function () {
                                     table.reload("LAY-app-alarmEvent-list-reload");
                                 });
                             } else {
                                 layer.msg("启用失败");
                             }
                         },
-                        error: function(jqXHR, textStatus, errorThrown) {
+                        error: function (jqXHR, textStatus, errorThrown) {
                             layer.msg(jqXHR.responseText, {
                                 time: 2000,
                                 icon: 5
@@ -316,7 +331,7 @@
         async: false,
         cache: false,
         contentType: "text/json",
-        success: function(result) {
+        success: function (result) {
             if (result) {
                 hiddenFields = result.data
             } else {
@@ -347,7 +362,7 @@
         limits: [10, 15, 20, 30],
         toolbar: "#toolbar",
         defaultToolbar: ["filter"],
-        colHideChange: function(col, checked) {
+        colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;
             $.ajax({
@@ -355,9 +370,9 @@
                 type: "GET",
                 cache: false,
                 contentType: "text/json",
-                success: function(result) {
+                success: function (result) {
                     if (result) {
-                    } else{
+                    } else {
                         layer.msg("列筛选失败");
                     }
                 }
@@ -531,8 +546,7 @@
                     }
                 });
             });
-        }
-        else if (e.event == "view") {
+        } else if (e.event == "view") {
             top.layer.open({
                 type: 2,
                 title: "查看预警事件详情",
