@@ -80,7 +80,7 @@ public class DeviceService {
         deviceUpgrade.setEquipmentInt(device.getEquipmentInt());
         deviceUpgrade.setUploadId(deviceMapper.getUpgradeId(device.getVersion(),device.getDeviceSoftwareType()));
         deviceUpgrade.setUpgradeStatus("100");
-        deviceUpgrade.setUpgradeVersion(device.getVersion());
+        deviceUpgrade.setUpgradeBeforeVersion(device.getVersion());
         deviceUpgrade.setVersionUpdater(userObject.getUserName());
         deviceUpgrade.setVersionUpdateTime(new Date());
         deviceUpgradeService.addDeviceUpgrade(deviceUpgrade);
