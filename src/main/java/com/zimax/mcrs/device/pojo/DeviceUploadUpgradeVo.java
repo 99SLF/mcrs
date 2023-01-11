@@ -1,7 +1,5 @@
 package com.zimax.mcrs.device.pojo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.util.Date;
@@ -36,9 +34,9 @@ public class DeviceUploadUpgradeVo {
     private int equipmentInt;
 
     /**
-     * 升级版本
+     * 升级前的版本
      */
-    private String upgradeVersion;
+    private String upgradeBeforeVersion;
 
     /**
      * 升级状态

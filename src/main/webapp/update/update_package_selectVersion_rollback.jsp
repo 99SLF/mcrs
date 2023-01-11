@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
     <style>
-         .layui-table-page {
+        .layui-table-page {
             border-width: 0px;
             border-style: solid;
             border-color: rgb(230, 230, 230);
@@ -61,7 +61,7 @@
             <div class="layui-form layui-card-header layuiadmin-card-header-auto layui-hide">
                 <div class="layui-form-item">
                     <div class="layui-inline" style="float: right">
-                        <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn" data-type="upgrade" id="upgrade">确定
+                        <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn" data-type="rollback" id="rollback">确定
                         </button>
                         <button class="layui-btn layui-btn-normal layui-btn ">取消
                         </button>
@@ -87,18 +87,19 @@
     var form = layui.form;
     var $ = layui.jquery;
     var util = layui.util;
-
+    debugger;
     //获取终端传过来的终端主键和最大版本号
     <%--var deviceIds = "<%=request.getParameter("deviceIds")%>";--%>
 
     var deviceIds = [];
-    var maxVersion = "";
+    var minVersion = "";
     var win = null;
 
     function SetData(dataJson) {
         win = dataJson.win ? dataJson.win : window;
         deviceIds = dataJson.deviceIds ? dataJson.deviceIds : [];
-        maxVersion = dataJson.maxVersion ? dataJson.maxVersion : "";
+        minVersion = dataJson.minVersion ? dataJson.minVersion : "";
+
     }
     //全局参数
     var req_data;
@@ -187,7 +188,7 @@
         var header = $(".layui-card-header");
         var cardbody = $(".layui-card-body");
         //var form = $(".layui-form");
-       // return form.outerHeight(true) + header.outerHeight(true) + (cardbody.outerHeight(true) - cardbody.height()) + (fluid.outerHeight(true) - fluid.height()) + 2;
+        // return form.outerHeight(true) + header.outerHeight(true) + (cardbody.outerHeight(true) - cardbody.height()) + (fluid.outerHeight(true) - fluid.height()) + 2;
         return  header.outerHeight(true) + (cardbody.outerHeight(true) - cardbody.height()) + (fluid.outerHeight(true) - fluid.height()) + 2;
     }
 
@@ -351,12 +352,12 @@
 
     var active = {
 
-        //升级跳转
-        upgrade: function () {
+        //回退跳转
+        rollback: function () {
             var checkStatus = table.checkStatus("LAY-app-device-list-reload");
             var data = checkStatus.data;
             if (data.length == 0) {
-                layer.msg("请选中一条更新版本信息！");
+                layer.msg("请选中一条回退版本信息！");
             }
             if (data.length > 0) {
                 var uploadIds = data[0].uploadId;
@@ -368,12 +369,12 @@
                 var json = {};
                 json.DeviceIds = ids;
                 json.UploadId = uploadIds;
-                layer.confirm("确定升级所选更新版本？", {
+                layer.confirm("确定回退所选更新版本？", {
                     icon: 3,
                     title: "系统提示"
                 }, function (index) {
                     $.ajax({
-                        url: "<%= request.getContextPath() %>/equipment/add",
+                        url: "<%= request.getContextPath() %>/equipment/deviceRollback/add",
                         type: "post",
                         data: JSON.stringify(json),
                         cache: false,
@@ -385,14 +386,14 @@
                                     title: "系统提示"
                                 });
                             } else if (result) {
-                                layer.msg("选择记录添加成功", {
+                                layer.msg("选择记录回退成功", {
                                     icon: 1,
                                     time: 500
                                 }, function () {
                                     table.reload("LAY-app-device-list-reload");
                                 });
                             } else {
-                                layer.msg("选择记录添加失败！", {
+                                layer.msg("选择记录回退失败！", {
                                     icon: 2,
                                     time: 2000
                                 });
@@ -408,11 +409,12 @@
 
                     var index = top.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                     top.layer.close(index); //再执行关闭,先关闭选择的弹窗，不然会top占用，有关闭顺序
-                    top.layer.msg("选择成功！", {
+                    top.layer.msg("回退中！", {
                         icon: 1,
                         time: 2000
                     });
-                    top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");
+                    top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_rollback_list.jsp", "回退记录");
+
                     table.reload("LAY-app-device-list-reload");
 
                 });

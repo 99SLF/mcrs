@@ -1,10 +1,7 @@
 package com.zimax.mcrs.device.mapper;
 
 import com.zimax.components.coframe.rights.pojo.User;
-import com.zimax.mcrs.device.pojo.DeviceUpdate;
-import com.zimax.mcrs.device.pojo.DeviceUpgrade;
-import com.zimax.mcrs.device.pojo.DeviceUpgradeVo;
-import com.zimax.mcrs.device.pojo.DeviceUploadUpgradeVo;
+import com.zimax.mcrs.device.pojo.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,7 +27,7 @@ public interface DeviceUpgradeMapper {
      *
      * @return
      */
-    int count(@Param("equipmentId") String equipmentId, @Param("upgradeVersion") String upgradeVersion);
+    int count(@Param("equipmentId") String equipmentId, @Param("version") String version);
 
 
     void updateDeviceUpgrade(DeviceUpgrade deviceUpgrade);
@@ -64,6 +61,8 @@ public interface DeviceUpgradeMapper {
 
 
     DeviceUploadUpgradeVo queryRecordIdObject(int deviceId);
+
+    Device getVersion(int deviceId);
 
     int queryRecordIdCount(int deviceId);
 }
