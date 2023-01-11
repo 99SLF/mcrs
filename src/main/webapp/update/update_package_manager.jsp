@@ -291,7 +291,7 @@
     table.render({
         elem: "#LAY-app-device-list",
         id: "LAY-app-device-list-reload",
-        url: "<%= request.getContextPath() %>/upload/queryUpdateUpload/query",
+        url: "<%= request.getContextPath() %>/upload/queryUpdateUploadAll/query",
         method: "GET",
         height: "full-" + getFullSize(),
         page: true,

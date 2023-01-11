@@ -94,11 +94,13 @@
     var deviceIds = [];
     var maxVersion = "";
     var win = null;
-
     function SetData(dataJson) {
         win = dataJson.win ? dataJson.win : window;
         deviceIds = dataJson.deviceIds ? dataJson.deviceIds : [];
         maxVersion = dataJson.maxVersion ? dataJson.maxVersion : "";
+
+        //这个方法被终端页面选择调用，才先执行方法， 将表单渲染做成方法，就会在终端调用的时候一起执行，而不会取不到maxVersion的值，让表单在取到maxVersion的时候就执行
+        saiXuan();
     }
     //全局参数
     var req_data;
@@ -224,97 +226,101 @@
         return false;
     }
 
-
-    table.render({
-        elem: "#LAY-app-device-list",
-        id: "LAY-app-device-list-reload",
-        url: "<%= request.getContextPath() %>/upload/queryUpdateUpload/query",
-        method: "GET",
-        height: "full-" + getFullSize(),
-        page: true,
-        //skin: 'nob',
-        limit: 10,
-        limits: [10, 15, 20, 30],
-        toolbar: "#toolbar",
-        defaultToolbar: ["filter"],
-        colHideChange: function(col, checked) {
-            var field = col.field;
-            var hidden = col.hide;
-            $.ajax({
-                url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
-                type: "GET",
-                cache: false,
-                contentType: "text/json",
-                success: function(result) {
-                    if (result) {
-                    } else{
-                        layer.msg("列筛选失败");
+    //先做数据筛选，在渲染表单
+    function saiXuan(){
+        table.render({
+            elem: "#LAY-app-device-list",
+            id: "LAY-app-device-list-reload",
+            url: "<%= request.getContextPath() %>/upload/queryUpdateUpload/query?maxVersion=" + maxVersion,
+            method: "GET",
+            height: "full-" + getFullSize(),
+            page: true,
+            //skin: 'nob',
+            limit: 10,
+            limits: [10, 15, 20, 30],
+            toolbar: "#toolbar",
+            defaultToolbar: ["filter"],
+            colHideChange: function(col, checked) {
+                var field = col.field;
+                var hidden = col.hide;
+                debugger;
+                $.ajax({
+                    url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
+                    type: "GET",
+                    cache: false,
+                    contentType: "text/json",
+                    success: function(result) {
+                        if (result) {
+                        } else{
+                            layer.msg("列筛选失败");
+                        }
                     }
+                });
+            },
+            parseData: function (res) {
+                return {
+                    code: res.code,
+                    msg: res.msg,
+                    count: res.total,
+                    data: res.data
+                };
+            },
+            cols: [[{
+                type: "radio",
+            }, {
+                title: "序号",
+                type: "numbers",
+            },{
+                field: "uploadNumber",
+                title: "更新包单号",
+                align: "center",
+                minWidth: 180,
+                hide: isHidden("uploadNumber"),
+                //打开监听
+                event: "view",
+                //监听打开详情页面
+                templet: function (d) {
+                    return '<span style="color: #09bbfd">' + d.uploadNumber +'</span>';
                 }
-            });
-        },
-        parseData: function (res) {
-            return {
-                code: res.code,
-                msg: res.msg,
-                count: res.total,
-                data: res.data
-            };
-        },
-        cols: [[{
-            type: "radio",
-        }, {
-            title: "序号",
-            type: "numbers",
-        },{
-            field: "uploadNumber",
-            title: "更新包单号",
-            align: "center",
-            minWidth: 180,
-            hide: isHidden("uploadNumber"),
-            //打开监听
-            event: "view",
-            //监听打开详情页面
-            templet: function (d) {
-                return '<span style="color: #09bbfd">' + d.uploadNumber +'</span>';
-            }
-        }, {
-            field: "version",
-            title: "版本号",
-            align: "center",
-            minWidth: 90,
-            hide: isHidden("version")
-        }, {
-            field: "uploadStrategy",
-            title: "更新策略",
-            align: "center",
-            minWidth: 120,
-            hide: isHidden("uploadStrategy"),
-            templet:function(d) {
-                return layui.admin.getDictText("UPDATESTRATEGY", d.uploadStrategy);
-            }
-        }, {
-            field: "deviceSoType",
-            title: "终端软件类型",
-            align: "center",
-            minWidth: 150,
-            hide: isHidden("deviceSoType"),
-            templet:function(d) {
+            }, {
+                field: "version",
+                title: "版本号",
+                align: "center",
+                minWidth: 90,
+                hide: isHidden("version")
+            }, {
+                field: "uploadStrategy",
+                title: "更新策略",
+                align: "center",
+                minWidth: 120,
+                hide: isHidden("uploadStrategy"),
+                templet:function(d) {
+                    return layui.admin.getDictText("UPDATESTRATEGY", d.uploadStrategy);
+                }
+            }, {
+                field: "deviceSoType",
+                title: "终端软件类型",
+                align: "center",
+                minWidth: 150,
+                hide: isHidden("deviceSoType"),
+                templet:function(d) {
 
-                return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoType);
+                    return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoType);
+                }
+            }, {
+                field: "versionUploadTime",
+                title: "版本上传时间",
+                align: "center",
+                minWidth: 200,
+                hide: isHidden("versionUploadTime"),
+                templet:function (data) {
+                    return layui.util.toDateString(data.versionUploadTime, "yyyy-MM-dd HH:mm:ss");
+                }
             }
-        }, {
-            field: "versionUploadTime",
-            title: "版本上传时间",
-            align: "center",
-            minWidth: 200,
-            hide: isHidden("versionUploadTime"),
-            templet:function (data) {
-                return layui.util.toDateString(data.versionUploadTime, "yyyy-MM-dd HH:mm:ss");
-            }
-        }
-        ]]
-    });
+            ]]
+        });
+    }
+
 
 
     $(".layui-btn").on("click", function() {

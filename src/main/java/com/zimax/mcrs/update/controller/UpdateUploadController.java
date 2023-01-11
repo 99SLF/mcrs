@@ -130,10 +130,8 @@ public class UpdateUploadController {
         updateUploadService.addUpdateUpload(updateUpload);
         return Result.success();
     }
-
-
     /**
-     * 显示更新包信息
+     * 显示升级更新包信息
      *
      * @param
      * @param page         页记录数
@@ -148,14 +146,62 @@ public class UpdateUploadController {
      * @return code 状态码
      * @return msg 返回信息
      */
-    @GetMapping("/queryUpdateUpload/query")
-    public Result<?> queryUpdateUpload(String page, String limit,
+    @GetMapping("/queryUpdateUploadAll/query")
+    public Result<?> queryUpdateUploadAll(String page, String limit,
                                        String version, String deviceSoType,
                                        String order, String field) {
-        List UpdateUpload = updateUploadService.queryUpdateUpload(page, limit, version, deviceSoType, order, field);
+        List UpdateUpload = updateUploadService.queryUpdateUploadAll(page, limit, version, deviceSoType, order, field);
         return Result.success(UpdateUpload, updateUploadService.count(version, deviceSoType));
     }
 
+    /**
+     * 显示升级更新包信息
+     *
+     * @param
+     * @param page         页记录数
+     * @param limit        页码
+     * @param maxVersion   最大版本号
+     * @param version      版本号
+     * @param deviceSoType 终端软件类型
+     * @param order        排序方式
+     * @param field        排序字段
+     * @return
+     * @return 更新包信息列表
+     * @return total 总记录数
+     * @return code 状态码
+     * @return msg 返回信息
+     */
+    @GetMapping("/queryUpdateUpload/query")
+    public Result<?> queryUpdateUpload(String page, String limit,
+                                       String version, String deviceSoType,
+                                       String order, String field,String maxVersion) {
+        List UpdateUpload = updateUploadService.queryUpdateUpload(page, limit, version, deviceSoType, order, field ,maxVersion);
+        return Result.success(UpdateUpload, updateUploadService.count(version, deviceSoType));
+    }
+
+    /**
+     * 显示回退更新包信息
+     * @param
+     * @param page         页记录数
+     * @param limit        页码
+     * @param minVersion   最小版本号
+     * @param version      版本号
+     * @param deviceSoType 终端软件类型
+     * @param order        排序方式
+     * @param field        排序字段
+     * @return
+     * @return 更新包信息列表
+     * @return total 总记录数
+     * @return code 状态码
+     * @return msg 返回信息
+     */
+    @GetMapping("/queryUpdateUploadRo/query")
+    public Result<?> queryUpdateUploadRo(String page, String limit,
+                                       String version, String deviceSoType,
+                                       String order, String field,String minVersion) {
+        List UpdateUpload = updateUploadService.queryUpdateUploadRo(page, limit, version, deviceSoType, order, field ,minVersion);
+        return Result.success(UpdateUpload, updateUploadService.count(version, deviceSoType));
+    }
 
     /**
      * 删除更新包数据库记录

@@ -138,9 +138,11 @@
         },
 
         //升级
+
         upgrade: function () {
+
             var checkStatus = table.checkStatus("LAY-app-device-list-reload");
-            debugger;
+
             var data = checkStatus.data;
 
             var maxVersions = new Array();
@@ -178,6 +180,7 @@
                         resize: false,
                         btn: ["确定", "取消"],
                         success: function (layero, index) {
+                            debugger;
                             var dataJson = {
                                 win: window,
                                 deviceIds: deviceIds,
@@ -225,22 +228,22 @@
 
         //回退
         rollback: function () {
-            debugger;
             var checkStatus = table.checkStatus("LAY-app-device-list-reload");
             var data = checkStatus.data;
 
-            // var minVersions = new Array();
-            // for (var i = 0; i < data.length; i++) {
-            //     minVersions[i] = data[i].version;
-            // }
-            // // 获取最小值：
-            // var minVersion = minVersions[0];
-            //
-            // for(var i = 1; i < minVersions.length; i++) {
-            //     var cur = minVersions[i];
-            //     cur < minVersion ? minVersion = cur : null
-            // }
-            // console.log(minVersion)
+            var minVersions = new Array();
+            for (var i = 0; i < data.length; i++) {
+                minVersions[i] = data[i].version;
+            }
+            // 获取最小值：
+            var minVersion = minVersions[0];
+
+            debugger;
+            for(var i = 1; i < minVersions.length; i++) {
+                var cur = minVersions[i];
+                cur < minVersion ? minVersion = cur : null
+            }
+            console.log(minVersion)
 
             if (data.length == 0) {
                 layer.msg("请至少选中一条记录！");
@@ -266,11 +269,13 @@
                             var dataJson = {
                                 win: window,
                                 deviceIds: deviceIds,
+                                minVersion: minVersion
                             };
+                            debugger;
                             layero.find("iframe")[0].contentWindow.SetData(dataJson);
                         },
                         yes: function (index, layero) {
-                            debugger;
+
                             var submit = layero.find("iframe").contents().find("#rollback");
                             submit.click();
 

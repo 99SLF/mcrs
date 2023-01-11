@@ -5,8 +5,9 @@
     <!--添加更新包信息-->
     <insert id="addUpdateUpload" parameterType="com.zimax.mcrs.update.pojo.UpdateUpload">
         insert into upd_upload
-        values (#{uploadId}, #{uploadNumber}, #{version}, #{deviceSoType}, #{uploadStrategy},#{fileName}, #{uploader}, #{versionUploadTime}, #{remarks}, #{majorVersion}, #{downloadUrl},
-                #{uploadUuid},#{uploadFileSize},#{uploadFileType},#{uuidFile})
+        values (#{uploadId}, #{uploadNumber}, #{version}, #{deviceSoType}, #{uploadStrategy}, #{fileName}, #{uploader},
+                #{versionUploadTime}, #{remarks}, #{majorVersion}, #{downloadUrl},
+                #{uploadUuid}, #{uploadFileSize}, #{uploadFileType}, #{uuidFile})
     </insert>
 
     <!--    查询记录数-->
@@ -21,10 +22,51 @@
             </if>
         </where>
     </select>
+
     <!--查询更新包数据-->
-    <select id="queryUpdateUpload" parameterType="map"  resultType="com.zimax.mcrs.update.pojo.UpdateUpload">
+    <select id="queryUpdateUploadAll" parameterType="map" resultType="com.zimax.mcrs.update.pojo.UpdateUpload">
         select * from upd_upload
         <where>
+            <if test="version !=null and version !=''">
+                and version like '%${version}%'
+            </if>
+            <if test="deviceSoType !=null and deviceSoType !=''">
+                and device_so_type like '%${deviceSoType}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+    <!--查询升级更新包数据-->
+    <select id="queryUpdateUpload" parameterType="map" resultType="com.zimax.mcrs.update.pojo.UpdateUpload">
+        select * from upd_upload
+        <where>
+            version &gt; #{maxVersion}
+            <if test="version !=null and version !=''">
+                and version like '%${version}%'
+            </if>
+            <if test="deviceSoType !=null and deviceSoType !=''">
+                and device_so_type like '%${deviceSoType}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+    <!--查询升级更新包数据-->
+    <select id="queryUpdateUploadRo" parameterType="map" resultType="com.zimax.mcrs.update.pojo.UpdateUpload">
+        select * from upd_upload
+        <where>
+            version &lt; #{minVersion}
             <if test="version !=null and version !=''">
                 and version like '%${version}%'
             </if>
@@ -68,14 +110,14 @@
 
     <!--通过终端软件类型查询出最新的版本号-->
     <select id="getUpdateUpload" resultType="com.zimax.mcrs.update.pojo.UpdateUpload">
-    SELECT * FROM upd_upload
+        SELECT * FROM upd_upload
         <where>
             <if test="deviceSoType !=null and deviceSoType !=''">
                 and device_so_type like '%${deviceSoType}%'
             </if>
         </where>
-    ORDER BY version_upload_time DESC
-    LIMIT 1;
+        ORDER BY version_upload_time DESC
+        LIMIT 1;
     </select>
 
     <!--获取一个更新包信息-->
@@ -84,8 +126,6 @@
         from upd_upload
         where upload_id = #{uploadId}
     </select>
-
-
 
 
 </mapper>

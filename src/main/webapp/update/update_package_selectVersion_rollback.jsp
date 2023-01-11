@@ -61,7 +61,8 @@
             <div class="layui-form layui-card-header layuiadmin-card-header-auto layui-hide">
                 <div class="layui-form-item">
                     <div class="layui-inline" style="float: right">
-                        <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn" data-type="rollback" id="rollback">确定
+                        <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn" data-type="rollback"
+                                id="rollback">确定
                         </button>
                         <button class="layui-btn layui-btn-normal layui-btn ">取消
                         </button>
@@ -99,8 +100,9 @@
         win = dataJson.win ? dataJson.win : window;
         deviceIds = dataJson.deviceIds ? dataJson.deviceIds : [];
         minVersion = dataJson.minVersion ? dataJson.minVersion : "";
-
+        saiXuan();
     }
+
     //全局参数
     var req_data;
 
@@ -148,11 +150,10 @@
     });
 
     //下拉框监听事件
-    form.on("select(deviceSoType)", function(data) {
+    form.on("select(deviceSoType)", function (data) {
         var submit = $("#LAY-app-devicelist-search");
         submit.click();
     });
-
 
 
     table.on('sort(LAY-app-device-list)', function (obj) {
@@ -189,7 +190,7 @@
         var cardbody = $(".layui-card-body");
         //var form = $(".layui-form");
         // return form.outerHeight(true) + header.outerHeight(true) + (cardbody.outerHeight(true) - cardbody.height()) + (fluid.outerHeight(true) - fluid.height()) + 2;
-        return  header.outerHeight(true) + (cardbody.outerHeight(true) - cardbody.height()) + (fluid.outerHeight(true) - fluid.height()) + 2;
+        return header.outerHeight(true) + (cardbody.outerHeight(true) - cardbody.height()) + (fluid.outerHeight(true) - fluid.height()) + 2;
     }
 
 
@@ -206,7 +207,7 @@
         async: false,
         cache: false,
         contentType: "text/json",
-        success: function(result) {
+        success: function (result) {
             if (result) {
                 hiddenFields = result.data
             } else {
@@ -225,100 +226,102 @@
         return false;
     }
 
-
-    table.render({
-        elem: "#LAY-app-device-list",
-        id: "LAY-app-device-list-reload",
-        url: "<%= request.getContextPath() %>/upload/queryUpdateUpload/query",
-        method: "GET",
-        height: "full-" + getFullSize(),
-        page: true,
-        //skin: 'nob',
-        limit: 10,
-        limits: [10, 15, 20, 30],
-        toolbar: "#toolbar",
-        defaultToolbar: ["filter"],
-        colHideChange: function(col, checked) {
-            var field = col.field;
-            var hidden = col.hide;
-            $.ajax({
-                url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
-                type: "GET",
-                cache: false,
-                contentType: "text/json",
-                success: function(result) {
-                    if (result) {
-                    } else{
-                        layer.msg("列筛选失败");
+    function saiXuan() {
+        table.render({
+            elem: "#LAY-app-device-list",
+            id: "LAY-app-device-list-reload",
+            url: "<%= request.getContextPath() %>/upload/queryUpdateUploadRo/query?minVersion=" + minVersion,
+            method: "GET",
+            height: "full-" + getFullSize(),
+            page: true,
+            //skin: 'nob',
+            limit: 10,
+            limits: [10, 15, 20, 30],
+            toolbar: "#toolbar",
+            defaultToolbar: ["filter"],
+            colHideChange: function (col, checked) {
+                var field = col.field;
+                var hidden = col.hide;
+                $.ajax({
+                    url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
+                    type: "GET",
+                    cache: false,
+                    contentType: "text/json",
+                    success: function (result) {
+                        if (result) {
+                        } else {
+                            layer.msg("列筛选失败");
+                        }
                     }
+                });
+            },
+            parseData: function (res) {
+                return {
+                    code: res.code,
+                    msg: res.msg,
+                    count: res.total,
+                    data: res.data
+                };
+            },
+            cols: [[{
+                type: "radio",
+            }, {
+                title: "序号",
+                type: "numbers",
+            }, {
+                field: "uploadNumber",
+                title: "更新包单号",
+                align: "center",
+                minWidth: 180,
+                hide: isHidden("uploadNumber"),
+                //打开监听
+                event: "view",
+                //监听打开详情页面
+                templet: function (d) {
+                    return '<span style="color: #09bbfd">' + d.uploadNumber + '</span>';
                 }
-            });
-        },
-        parseData: function (res) {
-            return {
-                code: res.code,
-                msg: res.msg,
-                count: res.total,
-                data: res.data
-            };
-        },
-        cols: [[{
-            type: "radio",
-        }, {
-            title: "序号",
-            type: "numbers",
-        },{
-            field: "uploadNumber",
-            title: "更新包单号",
-            align: "center",
-            minWidth: 180,
-            hide: isHidden("uploadNumber"),
-            //打开监听
-            event: "view",
-            //监听打开详情页面
-            templet: function (d) {
-                return '<span style="color: #09bbfd">' + d.uploadNumber +'</span>';
-            }
-        }, {
-            field: "version",
-            title: "版本号",
-            align: "center",
-            minWidth: 90,
-            hide: isHidden("version")
-        }, {
-            field: "uploadStrategy",
-            title: "更新策略",
-            align: "center",
-            minWidth: 120,
-            hide: isHidden("uploadStrategy"),
-            templet:function(d) {
-                return layui.admin.getDictText("UPDATESTRATEGY", d.uploadStrategy);
-            }
-        }, {
-            field: "deviceSoType",
-            title: "终端软件类型",
-            align: "center",
-            minWidth: 150,
-            hide: isHidden("deviceSoType"),
-            templet:function(d) {
+            }, {
+                field: "version",
+                title: "版本号",
+                align: "center",
+                minWidth: 90,
+                hide: isHidden("version")
+            }, {
+                field: "uploadStrategy",
+                title: "更新策略",
+                align: "center",
+                minWidth: 120,
+                hide: isHidden("uploadStrategy"),
+                templet: function (d) {
+                    return layui.admin.getDictText("UPDATESTRATEGY", d.uploadStrategy);
+                }
+            }, {
+                field: "deviceSoType",
+                title: "终端软件类型",
+                align: "center",
+                minWidth: 150,
+                hide: isHidden("deviceSoType"),
+                templet: function (d) {
 
-                return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoType);
+                    return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoType);
+                }
+            }, {
+                field: "versionUploadTime",
+                title: "版本上传时间",
+                align: "center",
+                minWidth: 200,
+                hide: isHidden("versionUploadTime"),
+                templet: function (data) {
+                    return layui.util.toDateString(data.versionUploadTime, "yyyy-MM-dd HH:mm:ss");
+                }
             }
-        }, {
-            field: "versionUploadTime",
-            title: "版本上传时间",
-            align: "center",
-            minWidth: 200,
-            hide: isHidden("versionUploadTime"),
-            templet:function (data) {
-                return layui.util.toDateString(data.versionUploadTime, "yyyy-MM-dd HH:mm:ss");
-            }
-        }
-        ]]
-    });
+            ]]
+        });
+
+    }
 
 
-    $(".layui-btn").on("click", function() {
+    $(".layui-btn").on("click", function () {
         var type = $(this).data("type");
         active[type] ? active[type].call(this) : "";
     });
@@ -361,7 +364,7 @@
             }
             if (data.length > 0) {
                 var uploadIds = data[0].uploadId;
-                var ids =new Array();
+                var ids = new Array();
                 //ids = deviceIds.split("_");
                 ids = deviceIds
 
@@ -422,7 +425,6 @@
             }
         },
     };
-
 
 
     //批量选中
