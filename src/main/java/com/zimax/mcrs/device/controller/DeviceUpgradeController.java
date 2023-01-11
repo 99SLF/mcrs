@@ -42,18 +42,19 @@ public class DeviceUpgradeController {
     /**
      * 条件查询
      *
-     * @param version        升级版本号
-     * @param equipmentId    设备资源号
-     * @param limit          记录数
-     * @param page           页码
-     * @param field          排序字段
-     * @param order          排序方式
+     * @param version            升级版本号
+     * @param deviceName         终端名称
+     * @param deviceSoftwareType 终端软件类型
+     * @param limit              记录数
+     * @param page               页码
+     * @param field              排序字段
+     * @param order              排序方式
      * @return 终端列表
      */
     @GetMapping("/deviceUpgrade/query")
-    public Result<?> queryDeviceUpgrade(String page, String limit, String equipmentId, String version, String versionUpdater, String versionUpdateTime, String order, String field) {
-        List deviceUpgrade = deviceUpgradeService.queryDeviceUpgrades(page, limit, equipmentId, version, versionUpdater, versionUpdateTime, order, field);
-        return Result.success(deviceUpgrade, deviceUpgradeService.count(equipmentId, version));
+    public Result<?> queryDeviceUpgrade(String page, String limit, String deviceName, String deviceSoftwareType, String version, String versionUpdater, String versionUpdateTime, String order, String field) {
+        List deviceUpgrade = deviceUpgradeService.queryDeviceUpgrades(page, limit, deviceName, deviceSoftwareType, version, versionUpdater, versionUpdateTime, order, field);
+        return Result.success(deviceUpgrade, deviceUpgradeService.count(deviceName, deviceSoftwareType, version, versionUpdater, versionUpdateTime));
     }
 
 
@@ -65,8 +66,6 @@ public class DeviceUpgradeController {
         deviceUpgradeService.updateDeviceUpgrade(deviceUpgrade);
         return Result.success();
     }
-
-
 
 
 //    /**
@@ -186,8 +185,6 @@ public class DeviceUpgradeController {
         }
         return Result.success();
     }
-
-
 
 
 }

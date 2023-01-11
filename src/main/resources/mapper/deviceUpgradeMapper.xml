@@ -19,11 +19,20 @@
         upd_upload AS upl
         ON upg.upload_id=upl.upload_id
         <where>
-            <if test="equipmentId !=null and equipmentId !=''">
-                and eqi.equipment_id like '%${equipmentId}%'
+            <if test="deviceName !=null and deviceName !=''">
+                and dev.device_name LIKE '%${deviceName}%'
+            </if>
+            <if test="deviceSoftwareType !=null and deviceSoftwareType !=''">
+                and dev.device_software_type LIKE '%${deviceSoftwareType}%'
             </if>
             <if test="version !=null and version !=''">
                 and upl.version like '%${version}%'
+            </if>
+            <if test="versionUpdater !=null and versionUpdater !=''">
+                and upg.version_updater like '%${versionUpdater}%'
+            </if>
+            <if test="versionUpdateTime !=null and versionUpdateTime !=''">
+                and upg.version_update_time like '%${versionUpdateTime}%'
             </if>
         </where>
     </select>
@@ -44,7 +53,8 @@
         dev.device_name,
         dev.device_software_type,
         bai.factory_name,
-        upl.upload_number
+        upl.upload_number,
+        dev.app_id
         FROM
         dev_upgrade AS upg
         LEFT JOIN
@@ -60,8 +70,11 @@
         base_access_info AS bai
         ON dev.acc_point_res_id = bai.acc_point_res_id
         <where>
-            <if test="equipmentId !=null and equipmentId !=''">
-                and eqi.equipment_id LIKE '%${equipmentId}%'
+            <if test="deviceName !=null and deviceName !=''">
+                and dev.device_name LIKE '%${deviceName}%'
+            </if>
+            <if test="deviceSoftwareType !=null and deviceSoftwareType !=''">
+                and dev.device_software_type LIKE '%${deviceSoftwareType}%'
             </if>
             <if test="version !=null and version !=''">
                 and upl.version like '%${version}%'

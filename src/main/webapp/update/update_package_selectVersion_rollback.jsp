@@ -10,7 +10,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>更新包管理</title>
+    <title>更新包回退选择</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
@@ -88,18 +88,21 @@
     var form = layui.form;
     var $ = layui.jquery;
     var util = layui.util;
-    debugger;
+
     //获取终端传过来的终端主键和最大版本号
     <%--var deviceIds = "<%=request.getParameter("deviceIds")%>";--%>
 
     var deviceIds = [];
     var minVersion = "";
+    var deviceSoftwareType =" ";
     var win = null;
 
     function SetData(dataJson) {
         win = dataJson.win ? dataJson.win : window;
         deviceIds = dataJson.deviceIds ? dataJson.deviceIds : [];
         minVersion = dataJson.minVersion ? dataJson.minVersion : "";
+        deviceSoftwareType = dataJson.deviceSoftwareType ? dataJson.deviceSoftwareType : "";
+
         saiXuan();
     }
 
@@ -230,7 +233,7 @@
         table.render({
             elem: "#LAY-app-device-list",
             id: "LAY-app-device-list-reload",
-            url: "<%= request.getContextPath() %>/upload/queryUpdateUploadRo/query?minVersion=" + minVersion,
+            url: "<%= request.getContextPath() %>/upload/queryUpdateUploadRo/query?minVersion=" + minVersion + "&deviceSoftwareType=" + deviceSoftwareType,
             method: "GET",
             height: "full-" + getFullSize(),
             page: true,

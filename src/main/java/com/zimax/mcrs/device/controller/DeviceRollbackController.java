@@ -43,7 +43,8 @@ public class DeviceRollbackController {
      * 条件查询
      *
      * @param version        升级版本号
-     * @param equipmentId           设备资源号
+     * @param deviceName         终端名称
+     * @param deviceSoftwareType 终端软件类型
      * @param versionRollbackPeople 版本更改人
      * @param versionRollbackTime   版本更改时间
      * @param limit                 记录数
@@ -53,9 +54,9 @@ public class DeviceRollbackController {
      * @return 终端列表
      */
     @GetMapping("/deviceRollback/query")
-    public Result<?> queryDeviceUpgrade(String page, String limit, String equipmentId, String version, String versionRollbackPeople, String versionRollbackTime, String order, String field) {
-        List deviceRollback = deviceRollbackService.queryDeviceRollback(page, limit, equipmentId, version, versionRollbackPeople, versionRollbackTime, order, field);
-        return Result.success(deviceRollback, deviceRollbackService.count(equipmentId, version));
+    public Result<?> queryDeviceUpgrade(String page, String limit,  String deviceName, String deviceSoftwareType, String version, String versionRollbackPeople, String versionRollbackTime, String order, String field) {
+        List deviceRollback = deviceRollbackService.queryDeviceRollback(page, limit, deviceName, deviceSoftwareType,version, versionRollbackPeople, versionRollbackTime, order, field);
+        return Result.success(deviceRollback, deviceRollbackService.count(deviceName,deviceSoftwareType, version,versionRollbackPeople,versionRollbackTime));
     }
 
 

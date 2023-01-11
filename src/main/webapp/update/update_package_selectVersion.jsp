@@ -10,7 +10,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>更新包管理</title>
+    <title>更新包升级选择</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
@@ -93,11 +93,13 @@
 
     var deviceIds = [];
     var maxVersion = "";
+    var deviceSoftwareType =" ";
     var win = null;
     function SetData(dataJson) {
         win = dataJson.win ? dataJson.win : window;
         deviceIds = dataJson.deviceIds ? dataJson.deviceIds : [];
         maxVersion = dataJson.maxVersion ? dataJson.maxVersion : "";
+        deviceSoftwareType = dataJson.deviceSoftwareType ? dataJson.deviceSoftwareType : "";
 
         //这个方法被终端页面选择调用，才先执行方法， 将表单渲染做成方法，就会在终端调用的时候一起执行，而不会取不到maxVersion的值，让表单在取到maxVersion的时候就执行
         saiXuan();
@@ -231,7 +233,7 @@
         table.render({
             elem: "#LAY-app-device-list",
             id: "LAY-app-device-list-reload",
-            url: "<%= request.getContextPath() %>/upload/queryUpdateUpload/query?maxVersion=" + maxVersion,
+            url: "<%= request.getContextPath() %>/upload/queryUpdateUpload/query?maxVersion=" + maxVersion + "&deviceSoftwareType=" + deviceSoftwareType,
             method: "GET",
             height: "full-" + getFullSize(),
             page: true,
@@ -243,7 +245,6 @@
             colHideChange: function(col, checked) {
                 var field = col.field;
                 var hidden = col.hide;
-                debugger;
                 $.ajax({
                     url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
                     type: "GET",

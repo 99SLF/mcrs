@@ -79,7 +79,7 @@ public class UpdateUploadService {
     /**
      * 查询所有升级更新包信息
      */
-    public List<UpdateUpload> queryUpdateUpload(String page, String limit, String version, String deviceSoType, String order, String field ,String maxVersion) {
+    public List<UpdateUpload> queryUpdateUpload(String page, String limit, String version, String deviceSoType, String order, String field ,String maxVersion , String deviceSoftwareType) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -96,6 +96,7 @@ public class UpdateUploadService {
         map.put("version", version);
         map.put("deviceSoType", deviceSoType);
         map.put("maxVersion", maxVersion);
+        map.put("deviceSoftwareType", deviceSoftwareType);
         return updateUploadMapper.queryUpdateUpload(map);
 
     }
@@ -103,7 +104,7 @@ public class UpdateUploadService {
     /**
      * 查询所有回退更新包信息
      */
-    public List<UpdateUpload> queryUpdateUploadRo(String page, String limit, String version, String deviceSoType, String order, String field ,String minVersion) {
+    public List<UpdateUpload> queryUpdateUploadRo(String page, String limit, String version, String deviceSoType, String order, String field ,String minVersion,String deviceSoftwareType) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -120,6 +121,7 @@ public class UpdateUploadService {
         map.put("version", version);
         map.put("deviceSoType", deviceSoType);
         map.put("minVersion", minVersion);
+        map.put("deviceSoftwareType", deviceSoftwareType);
         return updateUploadMapper.queryUpdateUploadRo(map);
 
     }

@@ -21,53 +21,64 @@
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">设备资源号：</label>
+                    <label class="layui-form-label">终端名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="equipmentId" placeholder="请输入设备资源号" autocomplete="off"
+                        <input type="text" name="deviceName" placeholder="请输入终端名称" autocomplete="off"
                                class="layui-input">
                     </div>
+
+                    <label class="layui-form-label">终端类型：</label>
+                    <div class="layui-input-inline">
+                        <select name="deviceSoftwareType" id="deviceSoftwareType" lay-filter="deviceSoftwareType"
+                                type="select">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
                     <label class="layui-form-label">回退版本号：</label>
                     <div class="layui-input-inline">
                         <input type="text" name="version" placeholder="请输入版本号" autocomplete="off"
                                class="layui-input">
                     </div>
-                </div>
-                <div class="layui-inline">
+
                     <label class="layui-form-label">版本回退人：</label>
                     <div class="layui-input-inline">
                         <input type="text" name="versionRollbackPeople" placeholder="请输入版本更改人" autocomplete="off"
                                class="layui-input">
                     </div>
+                </div>
+                <div class="layui-inline">
                     <label class="layui-form-label">版本回退时间：</label>
                     <div class="layui-input-inline">
                         <input type="text" name="versionRollbackTime"  id="versionRollbackTime" placeholder="请选择版本回退时间"
                                autocomplete="off" id="test"
                                class="layui-input">
                     </div>
+                    <div class="layui-inline layui-search" style="padding-left:15px">
+                        <button class="layui-btn layuiadmin-btn-list" lay-submit
+                                lay-filter="LAY-app-deviceUpgradelist-search"
+                                id="LAY-app-deviceUpgradelist-search">
+                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                        </button>
+                    </div>
                 </div>
 
-                <div class="layui-inline layui-search">
-                    <button class="layui-btn layuiadmin-btn-list" lay-submit
-                            lay-filter="LAY-app-deviceUpgradelist-search"
-                            id="LAY-app-deviceUpgradelist-search">
-                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                    </button>
-                </div>
             </div>
         </div>
 
         <div class="layui-card-body">
-            <%--            <div class="layui-toolbar" id="toolbar" hidden="true">--%>
-            <%--                <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i--%>
-            <%--                        class="layui-icon layui-icon-add-circle-fine"></i>回退--%>
-            <%--                </button>--%>
-            <%--            </div>--%>
+                        <div class="layui-toolbar" id="toolbar" hidden="true">
+<%--                            <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i--%>
+<%--                                    class="layui-icon layui-icon-add-circle-fine"></i>回退--%>
+<%--                            </button>--%>
+                        </div>
 
             <table id="LAY-app-deviceUpgrade-list" lay-filter="LAY-app-deviceUpgrade-list"></table>
 
             <script type="text/html" id="table-deviceUpgrade-list">
-                <%--                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i--%>
-                <%--                        class="layui-icon layui-icon-edit"></i>编辑</a>--%>
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="configurationFile"><i
+                        class="layui-icon layui-icon-edit"></i>详情</a>
                 <%--                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i--%>
                 <%--                        class="layui-icon layui-icon-delete"></i>删除</a>--%>
             </script>
@@ -89,7 +100,6 @@
     var form = layui.form;
     var $ = layui.jquery;
     var util = layui.util;
-    debugger;
     //全局参数
     var req_data;
 
@@ -118,7 +128,14 @@
             where: field
         });
     });
-    // form.render();
+    form.render();
+
+    //下拉框监听事件
+    form.on("select(deviceSoftwareType)", function(data) {
+        var submit = $("#LAY-app-deviceUpgradelist-search");
+        submit.click();
+    });
+
     // //日期
     // laydate.render({
     //     elem: '#test',
@@ -292,7 +309,7 @@
             hide: isHidden("deviceName")
         }, {
             field: "deviceSoftwareType",
-            title: "终端软件类型",
+            title: "终端类型",
             align: "center",
             minWidth: 120,
             hide: isHidden("deviceSoftwareType"),
@@ -366,7 +383,43 @@
                 align: "center",
                 minWidth: 200,
                 hide: isHidden("versionRollbackTime")
+            }, {
+                title: "配置文件",
+                align: "center",
+                fixed: "right",
+                width: 90,
+                toolbar: "#table-deviceUpgrade-list"
+
             }]]
+    });
+
+    //监听操作事件
+    table.on("tool(LAY-app-deviceUpgrade-list)", function (e) {
+        //当前行数据
+        var data = e.data;
+        var appId = data.aPPId;
+        if (e.event == "configurationFile") {
+            top.layer.open({
+                type: 2,
+                title: "查看配置文件详情",
+                content: "<%= request.getContextPath() %>/updateConfigFile/list.jsp",
+                area: ["800px", "560px"],
+                resize: false,
+                btn: ["确定", "取消"],
+                success: function (layero, index) {
+                    var dataJson = {
+                        appId: appId,
+                        win: window
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function (index, layero) {
+                    var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");
+                    edit.click();
+                }
+
+            });
+        }
     });
 
     <%--//监听操作事件--%>

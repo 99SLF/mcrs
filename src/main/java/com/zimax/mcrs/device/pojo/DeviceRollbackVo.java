@@ -21,6 +21,12 @@ public class DeviceRollbackVo {
     private String equipmentId;
 
     /**
+     * APPId
+     */
+    private String APPId;
+
+
+    /**
      * 设备名称
      */
     private String equipmentName;
