@@ -1,32 +1,32 @@
 package com.zimax.mcrs.update.pojo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UpgradeData {
 
     /**
-     * 状态码：
-     *  101: 升级数据有误，无法进行升级
-     *  102：已经升级为最新版本，无法升级
-     *  103: 允许回滚
-     *  104：允许升级
-     *  105：升级失败
-     *  106：升级成功
+     * 是否更新:
+     *  false否
+     *  true是
      */
-    private String statusCode;
+    private boolean ifUpdate;
 
     /**
-     * 是否升级:
-     *  100否
-     *  101是
+     * 状态码：
+     * 0:升级
+     * 1:回退
      */
-    private String isUpdate;
+    private String updatetype;
 
     /**
      * 是否强制升级：
-     *  100：否
-     *  101：是
+     *  false：否
+     *  true：是
      */
     private String isForcedUpdate;
 
@@ -34,9 +34,5 @@ public class UpgradeData {
      * 版本号：
      */
     private String versionID;
-
-
-
-
 
 }

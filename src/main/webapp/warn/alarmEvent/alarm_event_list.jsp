@@ -381,7 +381,13 @@
             title: "预警事件编码",
             align: "center",
             minWidth: 120,
-            hide: isHidden("alarmEventId")
+            hide: isHidden("alarmEventId"),
+            //打开监听
+            event: "view",
+            //监听打开详情页面
+            templet: function (data) {
+                return '<span style="color: #09bbfd">' + data.alarmEventId + '</span>';
+            }
         }, {
             field: "alarmEventTitle",
             title: "预警事件标题",
@@ -524,6 +530,28 @@
                         });
                     }
                 });
+            });
+        }
+        else if (e.event == "view") {
+            top.layer.open({
+                type: 2,
+                title: "查看预警事件详情",
+                content: "<%= request.getContextPath() %>/warn/alarmEvent/alarm_event_view.jsp",
+                area: ["1000px", "560px"],
+                resize: false,
+                // btn: ["确定", "取消"],
+                success: function (layero, index) {
+                    var dataJson = {
+                        data: data,
+                        win: window
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function (index, layero) {
+                    var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");
+                    edit.click();
+                }
+
             });
         }
     });

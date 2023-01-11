@@ -3,6 +3,7 @@ package com.zimax.mcrs.warn.controller;
 import com.zimax.components.coframe.rights.pojo.Role;
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.warn.pojo.AlarmRule;
+import com.zimax.mcrs.warn.pojo.MonitorEquipment;
 import com.zimax.mcrs.warn.service.AlarmEventService;
 import com.zimax.mcrs.warn.service.AlarmRuleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,6 @@ public class AlarmRuleController {
      * @param monitorLevel 监控层级
      * @param enable 是否启用
      * @param alarmEventId 告警事件编码
-     * @param monitorObject 监控对象
      * @param ruleMakeFormPeople 规则制单人
      * @param ruleMakeFormTime 规则制单时间
      * @param limit 记录数
@@ -50,8 +50,8 @@ public class AlarmRuleController {
      * @return 预警规则列表
      */
     @GetMapping("/alarmRule/query")
-    public Result<?> queryAlarmRule(String page, String limit, Integer alarmRuleId, String alarmRuleTitle,String enable, String monitorLevel, String alarmEventId, String monitorObject, String ruleMakeFormPeople, String ruleMakeFormTime, String order, String field) {
-        List alarmRules =  alarmRuleService.queryAlarmRule(page,limit,alarmRuleId,alarmRuleTitle,enable,monitorLevel,alarmEventId,monitorObject,ruleMakeFormPeople,ruleMakeFormTime,order,field);
+    public Result<?> queryAlarmRule(String page, String limit, Integer alarmRuleId, String alarmRuleTitle, String monitorLevel,String enable, String alarmEventId, String ruleMakeFormPeople, String ruleMakeFormTime, String order, String field) {
+        List alarmRules =  alarmRuleService.queryAlarmRule(page,limit,alarmRuleId,alarmRuleTitle,monitorLevel,enable,alarmEventId,ruleMakeFormPeople,ruleMakeFormTime,order,field);
         return Result.success( alarmRules,alarmRuleService.count(alarmRuleId,alarmRuleTitle));
     }
 
@@ -61,6 +61,8 @@ public class AlarmRuleController {
      */
     @PostMapping("/alarmRule/add")
     public Result<?> addAlarmRule(@RequestBody AlarmRule alarmRule){
+//        System.out.println("===========================");
+//        System.out.println(alarmRule);
         alarmRuleService.addAlarmRule(alarmRule);
         return Result.success();
     }
@@ -97,5 +99,29 @@ public class AlarmRuleController {
 
     }
 
+    /**
+     * 查询预警规则对应的监控对象
+     * @param alarmRuleInt 预警规则主键
+     * @return
+     */
+    @GetMapping("/alarmRule/MonitorEquipment/get")
+    public Result<?> getMonitorEquipmentVo(int alarmRuleInt) {
+        return Result.success(alarmRuleService.getMonitorEquipmentVo(alarmRuleInt));
+    }
+
+
+    /**
+     * 检测预警规则编码是否存在
+     *
+     * @param alarmRuleId 设备资源号
+     */
+    @GetMapping("/alarmRule/check/isExist")
+    public Result<?> check(@RequestParam("alarmRuleId") String alarmRuleId) {
+        if(alarmRuleService.countAlarmRule(alarmRuleId)>0){
+            return Result.error("1","当前预警规则编码已存在，请输入正确的预警规则编码");
+        }else {
+            return Result.success();
+        }
+    }
 
 }

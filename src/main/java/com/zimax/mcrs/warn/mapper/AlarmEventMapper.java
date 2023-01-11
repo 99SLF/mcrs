@@ -4,6 +4,7 @@ import com.zimax.mcrs.warn.pojo.AlarmEvent;
 import com.zimax.mcrs.warn.pojo.AlarmEventVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Map;
@@ -58,4 +59,9 @@ public interface AlarmEventMapper {
      * 批量启用
      */
     int enable(AlarmEvent alarmEvent);
+
+    /**
+     * 判断当前输入的预警时间编码是否已存在
+     */
+    int checkAlarmEvent(@Param("alarmEventId") String alarmEventId);
 }

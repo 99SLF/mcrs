@@ -1,11 +1,14 @@
 package com.zimax.mcrs.warn.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
  * 预警规则
@@ -56,11 +59,6 @@ public class AlarmRuleVo {
     private Integer alarmEventInt;
 
     /**
-     * 监控对象
-     */
-    private String monitorObject;
-
-    /**
      * 预警规则描述
      */
     private String alarmRuleDescribe;
@@ -85,5 +83,11 @@ public class AlarmRuleVo {
      * 修改时间
      */
     private String ruleUpdateTime;
+
+    /**
+     *监控对象列表
+     */
+    @TableField(exist = false)
+    List<MonitorEquipmentVo> monitorEquipmentVoList;
 
 }
