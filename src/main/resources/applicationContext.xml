@@ -250,9 +250,9 @@
         <property name="mapperInterface" value="com.zimax.mcrs.update.mapper.DeviceEquipmentVoMapper"/>
     </bean>
 
-    <bean id="DeviceEquipmentVoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <bean id="DeviceRollbackVoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
-        <property name="mapperInterface" value="com.zimax.mcrs.update.mapper.DeviceEquipmentVoMapper"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.update.mapper.DeviceRollbackVoMapper"/>
     </bean>
 
     <bean id="ConfigurationFileMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
