@@ -59,6 +59,11 @@ public class UpdatePackage {
      */
 
     public Result<?> checkRollback(String APPId) {
+
+        if (APPId == null || APPId == "") {
+            return Result.success("0", "数据不存在，无法升级");
+        }
+
         DeviceRollbackVo deviceRollbackVo = updatePackageService.getRollbackVoDevice(APPId);
         UpgradeData upgradeData = new UpgradeData();
         //2.1.2.1、数据不存在，返回不升级
@@ -101,6 +106,10 @@ public class UpdatePackage {
      */
     @PostMapping("/checkResult")
     public Result<?> checkResult(String APPId) {
+
+        if (APPId == null || APPId == "") {
+            return Result.success("0", "数据不存在，无法升级");
+        }
 
         //1、根据APPID查询升级关联表（关联3 设备、升级、更新）
         DeviceUpgradeVo deviceUpgradeVo = updatePackageService.getUpgradeVoDevice(APPId);
@@ -148,6 +157,11 @@ public class UpdatePackage {
      */
     @GetMapping("/loaderInterface")
     public void  loaderInterface(String APPId, HttpServletRequest request, HttpServletResponse response) {
+
+        if (APPId == null || APPId == "") {
+            return;
+        }
+
         //1、通过APPID查询更新表（关联3）
         DeviceUpgradeVo deviceUpgradeVo = updatePackageService.getUpgradeVoDevice(APPId);
 
@@ -266,6 +280,9 @@ public class UpdatePackage {
      */
     @PostMapping("/loaderResult")
     public Result<?> loaderResult(String APPId,String isCode) {
+        if (APPId == null || APPId == "" || isCode == null ||isCode =="") {
+            return Result.success("0", "数据不存在，无法升级");
+        }
         UpgradeData upgradeData = new UpgradeData();
         //1、通过APPID查询更新表（关联3）
         DeviceUpgradeVo deviceUpgradeVo = updatePackageService.getUpgradeVoDevice(APPId);
@@ -387,6 +404,9 @@ public class UpdatePackage {
      */
     @PostMapping("/register")
     public Result<?> register(HttpServletRequest request,String equipmentIp) {
+        if (equipmentIp == null || equipmentIp == "" ) {
+            return Result.error("0", "数据不存在");
+        }
 //        String equipmentIp = ip;
         //equipmentIp = getIpAddress(request);
         String equipmentContinuePort = "";
@@ -430,6 +450,9 @@ public class UpdatePackage {
      */
     @PostMapping("/configurationUploading")
     public Result<?> configurationUploading (String appId,MultipartFile file, String time,HttpServletRequest request) throws IOException {
+        if (appId == null || appId == "" || file == null) {
+            return Result.error("0", "数据不存在");
+        }
         //1、根据APPID查询配置文件
         // 1.获取原始文件名
         String fileName = file.getOriginalFilename();
@@ -480,6 +503,9 @@ public class UpdatePackage {
      */
     @GetMapping("/configurationDownload")
     public void  configurationDownload(String appId, String fileName,HttpServletRequest request, HttpServletResponse response) {
+        if (appId == null || appId == "" || fileName == null || fileName == "") {
+            return ;
+        }
         //1、通过APPID查询
         ConfigurationFile configurationFile = new ConfigurationFile();
         List<ConfigurationFile> configurationFiles = new ArrayList<>();
@@ -549,6 +575,9 @@ public class UpdatePackage {
      */
     @GetMapping("/configurationInformation")
     public Result<?> configurationInformation (String appId) {
+        if (appId == null || appId == "") {
+            return Result.error("0","数据不存在");
+        }
         List<ConfigurationFile> configurationFiles = new ArrayList<>();
         configurationFiles = updatePackageService.getConfigurationFile(appId,null);
         List<HashMap> list = new ArrayList();
