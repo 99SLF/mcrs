@@ -139,7 +139,29 @@ public class UpdatePackageService {
     }
 
 
+    /**
+     * 获取配置文件表
+     * @param appId
+     * @param fileName
+     * @return
+     */
+    public List<ConfigurationFile> getConfigurationFile(String appId, String fileName) {
+        return null;
+    }
 
+    /**
+     * 新增配置文件
+     * @param configurationFile
+     */
+    public void addConfigurationFile(ConfigurationFile configurationFile) {
+    }
+
+    /**
+     * 修改配置文件
+     * @param configurationFile
+     */
+    public void updateConfigurationFile(ConfigurationFile configurationFile) {
+    }
 
 
 //    /**

@@ -4,6 +4,7 @@ import com.alibaba.excel.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.zimax.cap.datacontext.DataContextManager;
+import com.zimax.cap.party.IUserObject;
 import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.device.pojo.Device;
@@ -11,8 +12,10 @@ import com.zimax.mcrs.device.pojo.DeviceRollback;
 import com.zimax.mcrs.device.pojo.DeviceUpgrade;
 import com.zimax.mcrs.update.pojo.*;
 import com.zimax.mcrs.update.service.UpdatePackageService;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -21,8 +24,10 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
-import java.util.Date;
-import java.util.HashMap;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.zip.ZipInputStream;
 
 /**
@@ -52,7 +57,6 @@ public class UpdatePackage {
      * 返回信息：
      *  更新包：
      */
-
 
     public Result<?> checkRollback(String APPId) {
         DeviceRollbackVo deviceRollbackVo = updatePackageService.getRollbackVoDevice(APPId);
@@ -416,5 +420,181 @@ public class UpdatePackage {
     }
 
 
+    /**
+     * 配置文件上传
+     * @param appId
+     * @param file
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    @PostMapping("/configurationUploading")
+    public Result<?> configurationUploading (String appId,MultipartFile file,HttpServletRequest request) throws IOException {
+        //1、根据APPID查询配置文件
+        // 1.获取原始文件名
+        String fileName = file.getOriginalFilename();
+        ConfigurationFile configurationFile = new ConfigurationFile();
+        List<ConfigurationFile> configurationFiles = new ArrayList<>();
+        configurationFiles = updatePackageService.getConfigurationFile(appId,fileName);
+        String filePath = request.getSession().getServletContext().getRealPath("/configurationFile/"+ appId);
+        //判断数据是否存在，存在则修改，不存在则新增
+        if(configurationFiles.size() < 1) {
+            //新增
+            configurationFile.setAppId(appId);
+            configurationFile.setFileName(fileName);
+            configurationFile.setFilePath(filePath + "/" + fileName);
+            configurationFile.setTerminalTime(String.valueOf(new Date()));
+            //已同步
+            configurationFile.setFileStatus("102");
+            updatePackageService.addConfigurationFile(configurationFile);
+        } else {
+            configurationFile = configurationFiles.get(0);
+            //修改
+            configurationFile.setTerminalTime(String.valueOf(new Date()));
+            //已同步
+            configurationFile.setFileStatus("102");
+            updatePackageService.updateConfigurationFile(configurationFile);
+        }
+        if (file != null) {
+            //4.文件大小
+            double uploadFileSize = file.getSize();
+            //5.获取文件类型
+            String uploadFileType = file.getContentType();
 
+            //创建文件夹，存放文件
+            String realPath = filePath;
+            File dir = new File(realPath);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            // 1.创建空文件
+            File newFile = new File(dir, fileName);
+            // 2.将参数file（上传文件）写入空文件中
+            file.transferTo(newFile);
+        } else {
+            return Result.error("0", "上传失败");
+
+        }
+        return Result.success("200","上传成功");
+    }
+
+
+
+    /**
+     * 终端用appid，fileName调用提供提供的更新包下载接口
+     */
+    @GetMapping("/configurationDownload")
+    public void  configurationDownload(String appId, String fileName,HttpServletRequest request, HttpServletResponse response) {
+        //1、通过APPID查询
+        ConfigurationFile configurationFile = new ConfigurationFile();
+        List<ConfigurationFile> configurationFiles = new ArrayList<>();
+        configurationFiles = updatePackageService.getConfigurationFile(appId,fileName);
+        //4、文件发送，解压，运行
+        //文件
+        //String filePath = updateUpload.getDownloadUrl();
+        //String fileName = updateUpload.getFileName();
+        if (configurationFiles.size() < 1) {
+            return;
+        } else {
+            configurationFile = configurationFiles.get(0);
+            //修改
+            configurationFile.setTerminalTime(String.valueOf(new Date()));
+            //已同步
+            configurationFile.setFileStatus("102");
+            updatePackageService.updateConfigurationFile(configurationFile);
+        }
+        String filePath = configurationFile.getFilePath();
+        //fileName = "";
+
+        byte[] data = null;
+
+        FileInputStream fileIn = null;
+        ServletOutputStream out = null;
+        try {
+            //String fileName = new String(fileNameString.getBytes("ISO8859-1"), "UTF-8");
+            response.setContentType("application/octet-stream");
+            // URLEncoder.encode(fileNameString, "UTF-8") 下载文件名为中文的，文件名需要经过url编码
+            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            File file;
+            String filePathString = filePath;
+            file = new File(filePathString);
+            fileIn = new FileInputStream(file);
+            out = response.getOutputStream();
+
+            byte[] outputByte = new byte[1024];
+            int readTmp = 0;
+            while ((readTmp = fileIn.read(outputByte)) != -1) {
+                out.write(outputByte, 0, readTmp); //并不是每次都能读到1024个字节，所有用readTmp作为每次读取数据的长度，否则会出现文件损坏的错误
+            }
+            data = outputByte;
+        }
+        catch (Exception e) {
+            //log.error(e.getMessage());
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                fileIn.close();
+                out.flush();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     *
+     * @param appId
+     * @return
+     */
+    @GetMapping("/configurationInformation")
+    public Result<?> configurationInformation (String appId) {
+        List<ConfigurationFile> configurationFiles = new ArrayList<>();
+        configurationFiles = updatePackageService.getConfigurationFile(appId,null);
+
+
+        String[] fileNames= {"a","b"};
+
+        List<HashMap> list = new ArrayList();
+
+
+        if (configurationFiles.size() < 1) {
+            HashMap<String,Object> map = new HashMap<>();
+            map.put("fileNames",null);
+            map.put("ifUpdate",1);
+            list.add(map);
+        } else {
+            for (ConfigurationFile configurationFile : configurationFiles) {
+                HashMap<String,Object> map = new HashMap<>();
+                if (configurationFile.getFileStatus().equals("101")) {
+                    String terminalTime = configurationFile.getTerminalTime();
+                    LocalDateTime terminalTimes = LocalDateTime.parse(terminalTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                    String webTime =configurationFile.getWebTime();
+                    LocalDateTime webTimes = LocalDateTime.parse(webTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                    String fileStatus = configurationFile.getFileStatus();
+                    if (terminalTimes.isBefore(webTimes)) {
+                        map.put("fileNames",configurationFile.getFileName());
+                        map.put("ifUpdate",1);
+                        list.add(map);
+                    } else {
+                        map.put("fileNames",configurationFile.getFileName());
+                        map.put("ifUpdate",2);
+                        list.add(map);
+                    }
+                }
+            }
+        }
+
+        if (list.size() < 1) {
+            HashMap<String,Object> map = new HashMap<>();
+            map.put("fileNames",null);
+            map.put("ifUpdate",0);
+            list.add(map);
+        }
+        //0: 不操作
+        //1: 终端上传
+        //2: 服务端下载
+        return Result.success(list,"200","请求成功");
+    }
 }
