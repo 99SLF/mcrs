@@ -948,4 +948,18 @@ CREATE TABLE `war_monitor_equipment`  (
   PRIMARY KEY (`monitor_equipment_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 90 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
+DROP TABLE IF EXISTS `dev_config_file`;
+CREATE TABLE `dev_config_file` (
+    `file_id` int(11) NOT NULL AUTO_INCREMENT,
+    `file_name` varchar(255) DEFAULT NULL,
+    `file_path` varchar(255) DEFAULT NULL,
+    `file_status` varchar(255) DEFAULT NULL,
+    `creator` varchar(255) DEFAULT NULL,
+    `terminal_time` varchar(255) DEFAULT NULL,
+    `web_time` varchar(255) DEFAULT NULL,
+    `app_id` varchar(255) DEFAULT NULL,
+    PRIMARY KEY (`file_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+
 SET FOREIGN_KEY_CHECKS = 1;
