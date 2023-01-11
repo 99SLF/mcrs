@@ -43,9 +43,9 @@ public class UpdateConfigFile {
         try {
             updateConfigService.addConfigurationFile(configurationFile);
         }catch (Exception e){
-            return Result.error("0","请求失败");
+            return Result.error("1","请求失败");
         }
-        return Result.success("200","请求成功");
+        return Result.success("0","请求成功");
     }
 
 
@@ -57,9 +57,9 @@ public class UpdateConfigFile {
         try{
             updateConfigService.delConfigurationFile(configurationFile);
         } catch (Exception e){
-            return Result.error("0","请求失败");
+            return Result.error("1","请求失败");
         }
-        return Result.success("200","请求成功");
+        return Result.success("0","请求成功");
     }
 
 
@@ -94,7 +94,7 @@ public class UpdateConfigFile {
 
 
         System.out.print(fileCont);//将字节数组转换为字符串
-        return Result.success(fileCont,"200","请求成功");
+        return Result.success(fileCont,"0","请求成功");
     }
 
     /**
@@ -111,7 +111,7 @@ public class UpdateConfigFile {
                 boolean newFile = txt.createNewFile();
                 if (!newFile) {
                     System.out.println("fail to create new file, please check!");
-                    return  Result.success("0","请求失败");
+                    return  Result.success("1","请求失败");
                 }
             }
             byte[] bytes = fileCont.getBytes();
@@ -132,7 +132,7 @@ public class UpdateConfigFile {
         configurationFile.setFileStatus("101");
         configurationFile.setWebTime(dateString);
         updateConfigService.updateConfigurationFile(configurationFile);
-        return Result.success("200","请求成功");
+        return Result.success("0","请求成功");
     }
 
 }

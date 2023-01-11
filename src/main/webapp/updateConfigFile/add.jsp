@@ -120,7 +120,7 @@
                 cache : false,
                 contentType : 'text/json',
                 success : function(result) {
-                    if(result.code == "200"){
+                    if(result.code == "0"){
                         layer.msg(result.msg, {icon : 1,time : 1500},function() {
                             var index = top.layer.getFrameIndex(window.name);
                             win.layui.table.reload('tableReload');
