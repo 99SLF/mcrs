@@ -26,9 +26,9 @@
                         <input type="text" name="equipmentId" placeholder="请输入设备资源号" autocomplete="off"
                                class="layui-input">
                     </div>
-                    <label class="layui-form-label">版本号：</label>
+                    <label class="layui-form-label">升级版本号：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="upgradeVersion" placeholder="请输入版本号" autocomplete="off"
+                        <input type="text" name="version" placeholder="请输入版本号" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -56,11 +56,11 @@
         </div>
 
         <div class="layui-card-body">
-            <div class="layui-toolbar" id="toolbar" hidden="true">
-                <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i
-                        class="layui-icon layui-icon-add-circle-fine"></i>回退
-                </button>
-            </div>
+<%--            <div class="layui-toolbar" id="toolbar" hidden="true">--%>
+<%--                <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i--%>
+<%--                        class="layui-icon layui-icon-add-circle-fine"></i>回退--%>
+<%--                </button>--%>
+<%--            </div>--%>
 
             <table id="LAY-app-deviceUpgrade-list" lay-filter="LAY-app-deviceUpgrade-list"></table>
 
@@ -272,11 +272,11 @@
             minWidth: 180,
             hide: isHidden("uploadNumber")
         }, {
-            field: "upgradeVersion",
+            field: "version",
             title: "升级版本号",
             align: "center",
             minWidth: 100,
-            hide: isHidden("upgradeVersion")
+            hide: isHidden("version")
         }, {
             field: "upgradeStatus",
             title: "升级状态",
@@ -308,89 +308,89 @@
     });
 
     var active = {
-        //回退
-        add: function () {
-            var checkStatus = table.checkStatus("LAY-app-deviceUpgrade-list-reload");
-            debugger;
-            var data = checkStatus.data;
-            if (data.length == 0) {
-                layer.msg("请至少选中一条记录！");
-            }
-            if (data.length > 0) {
-                var upgradeStatuses = new Array();
-                var deviceUpgradeIds = new Array();
-                for (var i = 0; i < data.length; i++) {
-                    upgradeStatuses[i] = data[i].upgradeStatus;
-                }
-                for (var i = 0; i < data.length; i++) {
-                    deviceUpgradeIds[i] = data[i].deviceUpgradeId;
-                }
+        <%--//回退--%>
+        <%--add: function () {--%>
+        <%--    var checkStatus = table.checkStatus("LAY-app-deviceUpgrade-list-reload");--%>
+        <%--    debugger;--%>
+        <%--    var data = checkStatus.data;--%>
+        <%--    if (data.length == 0) {--%>
+        <%--        layer.msg("请至少选中一条记录！");--%>
+        <%--    }--%>
+        <%--    if (data.length > 0) {--%>
+        <%--        var upgradeStatuses = new Array();--%>
+        <%--        var deviceUpgradeIds = new Array();--%>
+        <%--        for (var i = 0; i < data.length; i++) {--%>
+        <%--            upgradeStatuses[i] = data[i].upgradeStatus;--%>
+        <%--        }--%>
+        <%--        for (var i = 0; i < data.length; i++) {--%>
+        <%--            deviceUpgradeIds[i] = data[i].deviceUpgradeId;--%>
+        <%--        }--%>
 
-                var json = {};
-                json.deviceUpgradeIds = deviceUpgradeIds;
+        <%--        var json = {};--%>
+        <%--        json.deviceUpgradeIds = deviceUpgradeIds;--%>
 
-                function contains(arr, val, val1) {
-                    for (var i = 0; i < arr.length; i++) {
-                        if (arr[i] === val || arr[i] === val1) {
-                            return false;
-                        }
-                    }
-                    return true;
-                }
+        <%--        function contains(arr, val, val1) {--%>
+        <%--            for (var i = 0; i < arr.length; i++) {--%>
+        <%--                if (arr[i] === val || arr[i] === val1) {--%>
+        <%--                    return false;--%>
+        <%--                }--%>
+        <%--            }--%>
+        <%--            return true;--%>
+        <%--        }--%>
 
-                var re = contains(upgradeStatuses, '100', '101');
-                if (re == false) {
-                    layer.msg("所选终端包含未升级或正在升级的终端")
-                    return;
-                } else {
-                    layer.confirm("确定回退所选终端？", {
-                            icon: 3,
-                            title: "系统提示"
-                        },
-                        function (index) {
-                            //新增一条数据到
-                            debugger;
-                            $.ajax({
-                                url: "<%= request.getContextPath() %>/equipment/deviceRollback/add",
-                                type: "post",
-                                data: JSON.stringify(json),
-                                cache: false,
-                                contentType: "text/json",
-                                success: function (result) {
-                                    if (result.exception) {
-                                        layer.alert(result.exception.message, {
-                                            icon: 2,
-                                            title: "系统提示"
-                                        });
-                                    } else if (result.code == 0) {
-                                        layer.msg("所选终端已记录回退数据", {
-                                            icon: 1,
-                                            time: 2000
-                                        }, function () {
-                                            top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_rollback_list.jsp", "回退记录");
-                                            table.reload("LAY-app-deviceUpgrade-list-reload");
-                                        });
-                                    } else {
-                                        layer.msg("有已回退或处于回退状态中的状态在选择中！", {
-                                            icon: 2,
-                                            time: 4000
-                                        });
-                                    }
+        <%--        var re = contains(upgradeStatuses, '100', '101');--%>
+        <%--        if (re == false) {--%>
+        <%--            layer.msg("所选终端包含未升级或正在升级的终端")--%>
+        <%--            return;--%>
+        <%--        } else {--%>
+        <%--            layer.confirm("确定回退所选终端？", {--%>
+        <%--                    icon: 3,--%>
+        <%--                    title: "系统提示"--%>
+        <%--                },--%>
+        <%--                function (index) {--%>
+        <%--                    //新增一条数据到--%>
+        <%--                    debugger;--%>
+        <%--                    $.ajax({--%>
+        <%--                        url: "<%= request.getContextPath() %>/equipment/deviceRollback/add",--%>
+        <%--                        type: "post",--%>
+        <%--                        data: JSON.stringify(json),--%>
+        <%--                        cache: false,--%>
+        <%--                        contentType: "text/json",--%>
+        <%--                        success: function (result) {--%>
+        <%--                            if (result.exception) {--%>
+        <%--                                layer.alert(result.exception.message, {--%>
+        <%--                                    icon: 2,--%>
+        <%--                                    title: "系统提示"--%>
+        <%--                                });--%>
+        <%--                            } else if (result.code == 0) {--%>
+        <%--                                layer.msg("所选终端已记录回退数据", {--%>
+        <%--                                    icon: 1,--%>
+        <%--                                    time: 2000--%>
+        <%--                                }, function () {--%>
+        <%--                                    top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_rollback_list.jsp", "回退记录");--%>
+        <%--                                    table.reload("LAY-app-deviceUpgrade-list-reload");--%>
+        <%--                                });--%>
+        <%--                            } else {--%>
+        <%--                                layer.msg("有已回退或处于回退状态中的状态在选择中！", {--%>
+        <%--                                    icon: 2,--%>
+        <%--                                    time: 4000--%>
+        <%--                                });--%>
+        <%--                            }--%>
 
-                                },
-                                error: function (jqXHR, textStatus, errorThrown) {
-                                    layer.msg(jqXHR.responseText, {
-                                        time: 500,
-                                        icon: 5
-                                    });
-                                }
-                            });
+        <%--                        },--%>
+        <%--                        error: function (jqXHR, textStatus, errorThrown) {--%>
+        <%--                            layer.msg(jqXHR.responseText, {--%>
+        <%--                                time: 500,--%>
+        <%--                                icon: 5--%>
+        <%--                            });--%>
+        <%--                        }--%>
+        <%--                    });--%>
 
-                        });
-                }
-            }
+        <%--                });--%>
+        <%--        }--%>
+        <%--    }--%>
 
-        },
+        <%--},--%>
     };
 
 

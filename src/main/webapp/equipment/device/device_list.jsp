@@ -53,6 +53,10 @@
                 <button class="layui-btn layui-btn-normal layui-btn-sm " lay-event="upgrade">
                     <i class="layui-icon layui-icon-upload-circle"></i>升级
                 </button>
+
+                <button class="layui-btn layui-btn-normal layui-btn-sm " lay-event="rollback" style="background-color: #ee9900">
+                    <i class="layui-icon layui-icon-transfer" ></i>回退
+                </button>
             </div>
 
             <table id="LAY-app-device-list" lay-filter="LAY-app-device-list"></table>
@@ -130,10 +134,26 @@
                 }
             });
         },
+
         //升级
         upgrade: function () {
             var checkStatus = table.checkStatus("LAY-app-device-list-reload");
+            debugger;
             var data = checkStatus.data;
+
+            var maxVersions = new Array();
+            for (var i = 0; i < data.length; i++) {
+                maxVersions[i] = data[i].version;
+            }
+            // 获取最大值版本号最大值：
+            var maxVersion = maxVersions[0];
+
+            for(var i = 1; i < maxVersions.length; i++) {
+                var cur = maxVersions[i];
+                cur > maxVersion ? maxVersion = cur : null
+            }
+            console.log(maxVersion);
+
             if (data.length == 0) {
                 layer.msg("请至少选中一条记录！");
             }
@@ -142,6 +162,7 @@
                 for (var i = 0; i < data.length; i++) {
                     deviceIds[i] = data[i].deviceId;
                 }
+
                 layer.confirm("确定升级所选终端？", {
                     icon: 3,
                     title: "系统提示"
@@ -157,7 +178,8 @@
                         success: function (layero, index) {
                             var dataJson = {
                                 win: window,
-                                deviceIds: deviceIds
+                                deviceIds: deviceIds,
+                                maxVersion: maxVersion
                             };
                             layero.find("iframe")[0].contentWindow.SetData(dataJson);
                         },
@@ -198,6 +220,68 @@
 
         <%--    }--%>
         <%--},--%>
+
+        //回退
+        rollback: function () {
+            debugger;
+            var checkStatus = table.checkStatus("LAY-app-device-list-reload");
+            var data = checkStatus.data;
+
+            // var minVersions = new Array();
+            // for (var i = 0; i < data.length; i++) {
+            //     minVersions[i] = data[i].version;
+            // }
+            // // 获取最小值：
+            // var minVersion = minVersions[0];
+            //
+            // for(var i = 1; i < minVersions.length; i++) {
+            //     var cur = minVersions[i];
+            //     cur < minVersion ? minVersion = cur : null
+            // }
+            // console.log(minVersion)
+
+            if (data.length == 0) {
+                layer.msg("请至少选中一条记录！");
+            }
+            if (data.length > 0) {
+                var deviceIds = new Array();
+                for (var i = 0; i < data.length; i++) {
+                    deviceIds[i] = data[i].deviceId;
+                }
+                layer.confirm("确定回退所选终端？", {
+                    icon: 3,
+                    title: "系统提示"
+                }, function (index) {
+                    top.layer.open({
+                        //弹窗
+                        type: 2,
+                        title: "选择回退版本",
+                        content: "<%=request.getContextPath() %>/update/update_package_selectVersion_rollback.jsp",
+                        area: ["800px", "560px"],
+                        resize: false,
+                        btn: ["确定", "取消"],
+                        success: function (layero, index) {
+                            var dataJson = {
+                                win: window,
+                                deviceIds: deviceIds,
+                            };
+                            layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                        },
+                        yes: function (index, layero) {
+                            debugger;
+                            var submit = layero.find("iframe").contents().find("#rollback");
+                            submit.click();
+
+                            //top.layer.close(index);
+                            <%--top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");--%>
+                        }
+                    });
+                    layer.close(index);
+                    table.reload("LAY-app-device-list-reload");
+                });
+            }
+
+        },
 
         //批量删除
         batchdel: function () {
@@ -499,7 +583,7 @@
                 content: "<%= request.getContextPath() %>/equipment/device/device_edit.jsp",
                 area: ["800px", "560px"],
                 resize: false,
-                btn: ["确定", "取消"],
+                // btn: ["确定", "取消"],
                 success: function (layero, index) {
                     var dataJson = {
                         data: data,
@@ -562,7 +646,7 @@
                 content: "<%= request.getContextPath() %>/equipment/device/device_view.jsp",
                 area: ["1000px", "560px"],
                 resize: false,
-                // btn: ["确定", "取消"],
+                btn: ["确定", "取消"],
                 success: function (layero, index) {
                     var dataJson = {
                         data: data,

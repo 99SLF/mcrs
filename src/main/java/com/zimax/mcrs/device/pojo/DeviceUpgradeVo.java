@@ -26,9 +26,14 @@ public class DeviceUpgradeVo {
     private String equipmentName;
 
     /**
-     * 升级版本
+     * 升级前的版本
      */
-    private String upgradeVersion;
+    private String upgradeBeforeVersion;
+
+    /**
+     * 升级版本号
+     */
+    private String version;
 
     /**
      * 更新包单号

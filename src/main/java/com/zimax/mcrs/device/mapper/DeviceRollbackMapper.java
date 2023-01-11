@@ -26,7 +26,7 @@ public interface DeviceRollbackMapper {
      *
      * @return
      */
-    int count(@Param("equipmentId") String equipmentId, @Param("upgradeVersion") String upgradeVersion);
+    int count(@Param("equipmentId") String equipmentId, @Param("version") String version);
 
 
     /**
@@ -35,6 +35,12 @@ public interface DeviceRollbackMapper {
      */
     void updateDeviceRollback(DeviceRollback deviceRollback);
 
+
+    /**
+     * 修改回滚表全部
+     * @param deviceRollback
+     */
+    void updateDeviceRollbackAll(DeviceRollback deviceRollback);
 
     void addDeviceRollback(DeviceRollback deviceRollback);
 
@@ -49,5 +55,7 @@ public interface DeviceRollbackMapper {
      * 通过升级表id获取记录数
      */
     List<DeviceRollback> queryRollbackMsg(Map map);
+
+    List<DeviceUploadRollbackVo> queryRollRecordId(Map map);
 }
 

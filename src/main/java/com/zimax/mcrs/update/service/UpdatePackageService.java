@@ -139,6 +139,13 @@ public class UpdatePackageService {
     }
 
 
+    /**
+     * 修改回退全部
+     * @param deviceRollback
+     */
+    public void updateDeviceRollbackAll(DeviceRollback deviceRollback) {
+        deviceRollbackMapper.updateDeviceRollbackAll(deviceRollback);
+    }
 
 
 

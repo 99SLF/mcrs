@@ -15,12 +15,15 @@
         LEFT JOIN
         eqi_device AS dev
         ON rol.device_id=dev.device_id
+        LEFT JOIN
+        upd_upload AS upl
+        ON rol.upload_id=upl.upload_id
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
             </if>
-            <if test="upgradeVersion !=null and upgradeVersion !=''">
-                and rol.upgrade_version like '%${upgradeVersion}%'
+            <if test="version !=null and version !=''">
+                and upl.version like '%${version}%'
             </if>
         </where>
     </select>
@@ -32,7 +35,7 @@
         rol.equipment_int,
         rol.device_id,
         rol.upload_id,
-        rol.upgrade_version,
+        upl.version,
         rol.upgrade_status,
         rol.version_rollback_people,
         rol.version_rollback_time,
@@ -60,8 +63,8 @@
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id LIKE '%${equipmentId}%'
             </if>
-            <if test="upgradeVersion !=null and upgradeVersion !=''">
-                and rol.upgrade_version like '%${upgradeVersion}%'
+            <if test="version !=null and version !=''">
+                and upl.version like '%${version}%'
             </if>
             <if test="versionRollbackPeople !=null and versionRollbackPeople !=''">
                 and rol.version_rollback_people like '%${versionRollbackPeople}%'
@@ -129,11 +132,24 @@
         WHERE device_rollback_id = ${deviceRollbackId}
     </update>
 
+    <update id="updateDeviceRollbackAll" parameterType="com.zimax.mcrs.device.pojo.DeviceRollback">
+        UPDATE dev_rollback
+        SET
+            equipment_int = #{equipmentInt},
+            device_id = #{deviceId},
+            upload_id = #{uploadId},
+            rollback_before_version = #{rollbackBeforeVersion},
+            version_rollback_time = #{versionRollbackTime},
+            version_rollback_people = #{versionRollbackPeople},
+            upgrade_status = #{upgradeStatus}
+        WHERE device_rollback_id = ${deviceRollbackId}
+    </update>
+
     <insert id="addDeviceRollback" parameterType="com.zimax.mcrs.device.pojo.DeviceRollback">
         insert into dev_rollback
-        values (#{deviceRollbackId}, #{deviceUpgradeId}, #{equipmentInt},
+        values (#{deviceRollbackId}, #{equipmentInt},
                 #{deviceId}, #{uploadId},
-                #{upgradeVersion}, #{upgradeStatus},
+                #{rollbackBeforeVersion}, #{upgradeStatus},
                 #{versionRollbackPeople}, #{versionRollbackTime})
     </insert>
 
@@ -144,8 +160,17 @@
     </select>
 
     <select id="queryRollbackMsg" parameterType="map" resultType="com.zimax.mcrs.device.pojo.DeviceRollback">
-        select * from dev_rollback
+        select *
+        from dev_rollback
         where device_upgrade_id = #{deviceUpgradeId}
     </select>
 
+    <select id="queryRollRecordId" parameterType="map" resultType="com.zimax.mcrs.device.pojo.DeviceUploadRollbackVo">
+        SELECT *
+        FROM dev_rollback a
+                 LEFT JOIN eqi_device b ON a.device_id = b.device_id
+                 LEFT JOIN upd_upload c ON a.upload_id = c.upload_id
+        WHERE upgrade_status = "100"
+          AND a.device_id = #{deviceId}
+    </select>
 </mapper>

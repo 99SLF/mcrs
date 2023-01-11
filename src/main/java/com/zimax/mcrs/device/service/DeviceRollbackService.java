@@ -5,6 +5,8 @@ import com.zimax.mcrs.device.mapper.DeviceRollbackMapper;
 import com.zimax.mcrs.device.pojo.DeviceRollback;
 import com.zimax.mcrs.device.pojo.DeviceRollbackVo;
 
+import com.zimax.mcrs.device.pojo.DeviceUploadRollbackVo;
+import com.zimax.mcrs.device.pojo.DeviceUploadUpgradeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,7 @@ public class DeviceRollbackService {
     /**
      * 查询所有终端更新信息
      */
-    public List<DeviceRollbackVo> queryDeviceRollback(String  page, String limit, String equipmentId, String upgradeVersion, String versionRollbackPeople, String versionRollbackTime, String order, String field) {
+    public List<DeviceRollbackVo> queryDeviceRollback(String  page, String limit, String equipmentId, String version, String versionRollbackPeople, String versionRollbackTime, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -40,7 +42,7 @@ public class DeviceRollbackService {
             map.put("limit", Integer.parseInt(limit));
         }
         map.put("equipmentId",equipmentId);
-        map.put("upgradeVersion",upgradeVersion);
+        map.put("version",version);
         map.put("versionRollbackPeople",versionRollbackPeople);
         map.put("versionRollbackTime",versionRollbackTime);
         return deviceRollbackMapper.queryAll(map);
@@ -82,5 +84,17 @@ public class DeviceRollbackService {
         Map<String, Object> map = new HashMap<>();
         map.put("deviceUpgradeId", deviceUpgradeId);
         return deviceRollbackMapper.queryRollbackMsg(map) ;
+    }
+
+
+    /**
+     * 通过终端id获取回退记录为未回退的List(三个主键数据)
+     * @param
+     * @return
+     */
+    public List<DeviceUploadRollbackVo> queryRollRecordId(String deviceId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("deviceId", deviceId);
+        return deviceRollbackMapper.queryRollRecordId(map) ;
     }
 }

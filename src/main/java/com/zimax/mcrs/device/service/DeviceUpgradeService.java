@@ -3,6 +3,7 @@ package com.zimax.mcrs.device.service;
 import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.device.mapper.DeviceUpgradeMapper;
+import com.zimax.mcrs.device.pojo.Device;
 import com.zimax.mcrs.device.pojo.DeviceUpgrade;
 import com.zimax.mcrs.device.pojo.DeviceUpgradeVo;
 import com.zimax.mcrs.device.pojo.DeviceUploadUpgradeVo;
@@ -28,7 +29,7 @@ public class DeviceUpgradeService {
     /**
      * 查询所有终端更新信息
      */
-    public List<DeviceUpgradeVo> queryDeviceUpgrades(String page, String limit, String equipmentId, String upgradeVersion, String versionUpdater, String versionUpdateTime, String order, String field) {
+    public List<DeviceUpgradeVo> queryDeviceUpgrades(String page, String limit, String equipmentId, String version, String versionUpdater, String versionUpdateTime, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -43,7 +44,7 @@ public class DeviceUpgradeService {
             map.put("limit", Integer.parseInt(limit));
         }
         map.put("equipmentId", equipmentId);
-        map.put("upgradeVersion", upgradeVersion);
+        map.put("version", version);
         map.put("versionUpdater", versionUpdater);
         map.put("versionUpdateTime", versionUpdateTime);
         return deviceUpgradeMapper.queryAll(map);
@@ -93,6 +94,15 @@ public class DeviceUpgradeService {
      */
     public DeviceUploadUpgradeVo queryRecordIdObject(int deviceId) {
         return deviceUpgradeMapper.queryRecordIdObject(deviceId) ;
+    }
+
+    /**
+     * 通过终端id获取当前的版本号
+     * @param
+     * @return
+     */
+    public Device getVersion(int deviceId) {
+        return deviceUpgradeMapper.getVersion(deviceId) ;
     }
 
 

@@ -47,9 +47,14 @@ public class DeviceRollbackVo {
     private String factoryName;
 
     /**
-     * 升级版本
+     * 回退前版本
      */
-    private String upgradeVersion;
+    private String rollbackBeforeVersion;
+
+    /**
+     * 回退版本
+     */
+    private String version;
 
     /**
      * 升级状态

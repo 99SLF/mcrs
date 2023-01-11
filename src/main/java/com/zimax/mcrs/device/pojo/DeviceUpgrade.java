@@ -44,9 +44,9 @@ public class DeviceUpgrade {
 
 
     /**
-     * 升级版本
+     * 升级前的版本
      */
-    private String upgradeVersion;
+    private String upgradeBeforeVersion;
 
     /**
      * 升级状态

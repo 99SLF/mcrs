@@ -3,11 +3,11 @@ package com.zimax.mcrs.device.controller;
 import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
 import com.zimax.mcrs.config.Result;
-import com.zimax.mcrs.device.pojo.DeviceRollback;
-import com.zimax.mcrs.device.pojo.DeviceUpgrade;
-import com.zimax.mcrs.device.pojo.DeviceUploadUpgradeVo;
+import com.zimax.mcrs.device.pojo.*;
 import com.zimax.mcrs.device.service.DeviceRollbackService;
+import com.zimax.mcrs.device.service.DeviceService;
 import com.zimax.mcrs.device.service.DeviceUpgradeService;
+import com.zimax.mcrs.update.service.UpdatePackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,10 +33,16 @@ public class DeviceRollbackController {
     @Autowired
     private DeviceUpgradeService deviceUpgradeService;
 
+    @Autowired
+    private DeviceService deviceService;
+
+    @Autowired
+    private UpdatePackageService UpdatePackageService;
+
     /**
      * 条件查询
      *
-     * @param upgradeVersion        升级版本号
+     * @param version        升级版本号
      * @param equipmentId           设备资源号
      * @param versionRollbackPeople 版本更改人
      * @param versionRollbackTime   版本更改时间
@@ -47,9 +53,9 @@ public class DeviceRollbackController {
      * @return 终端列表
      */
     @GetMapping("/deviceRollback/query")
-    public Result<?> queryDeviceUpgrade(String page, String limit, String equipmentId, String upgradeVersion, String versionRollbackPeople, String versionRollbackTime, String order, String field) {
-        List deviceRollback = deviceRollbackService.queryDeviceRollback(page, limit, equipmentId, upgradeVersion, versionRollbackPeople, versionRollbackTime, order, field);
-        return Result.success(deviceRollback, deviceRollbackService.count(equipmentId, upgradeVersion));
+    public Result<?> queryDeviceUpgrade(String page, String limit, String equipmentId, String version, String versionRollbackPeople, String versionRollbackTime, String order, String field) {
+        List deviceRollback = deviceRollbackService.queryDeviceRollback(page, limit, equipmentId, version, versionRollbackPeople, versionRollbackTime, order, field);
+        return Result.success(deviceRollback, deviceRollbackService.count(equipmentId, version));
     }
 
 
@@ -58,53 +64,108 @@ public class DeviceRollbackController {
      */
     @PostMapping("/deviceRollback/add")
     public Result<?> addDeviceUpgrade(@RequestBody Map json) {
-        String deviceUpgradeIds = json.get("deviceUpgradeIds").
-                toString().substring(1, json.get("deviceUpgradeIds").toString().length() - 1);
-        String[] deviceUpgradeIdArray = deviceUpgradeIds.split(",");
+        // System.out.println(json);
+
+        //获取前端终端主键
+        String deviceIds = json.get("DeviceIds").toString().substring(1, json.get("DeviceIds").toString().length() - 1).replace('"', ' ');
+
+       //获取更新包主键
+        String uploadIdString = json.get("UploadId").toString();
+        int uploadId = Integer.parseInt(uploadIdString);
+
+        //将获取的终端主键放到数组用于遍历
+        String[] deviceIdArray = deviceIds.split(",");
 
 
-        for (String key : deviceUpgradeIdArray) {
-            int deviceUpgradeId = Integer.valueOf(key);
-            List<DeviceRollback> lists = new ArrayList<DeviceRollback>();
-            lists = deviceRollbackService.queryRollbackMsg(String.valueOf(deviceUpgradeId));
+        for (String key : deviceIdArray) {
+            int deviceId = Integer.valueOf(key.replace(" ", ""));
+
+            //如果传过来的终端id查询数据库所有未回退的记录数。（条件，终端主键，未升级）
+            List<DeviceUploadRollbackVo> lists = new ArrayList<DeviceUploadRollbackVo>();
+            lists = deviceRollbackService.queryRollRecordId (String.valueOf(deviceId));
             int i = lists.size();
 
-            if (i<1){
+            //没有有数据（list集合，长度数<1），新增一条升级记录
 
-                //通过升级表主键，查询回退表，返回list的集合
+            if (i < 1) {
+                DeviceRollback deviceRollback = new DeviceRollback();
 
-                DeviceUpgrade deviceUpgrade = deviceUpgradeService.getDeviceUpgrade(deviceUpgradeId);
-                //回退表更新主键
-                int equipmentInt = deviceUpgrade.getEquipmentInt();
-                //回退表，终端主键
-                int deviceId = deviceUpgrade.getDeviceId();
-                //回退表，更新包主键
-                int uploadId = deviceUpgrade.getUploadId();
-                //回退表，回退版本号
-                String upgradeVersion = deviceUpgrade.getUpgradeVersion();
-                //升级状态，为已回退
+                //将当前选择的终端id存到升级表
+                deviceRollback.setDeviceId(deviceId);
+
+                //将当前选择的更新包存到升级表
+                deviceRollback.setUploadId(uploadId);
+
+                //获取更新人
+                IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
+                deviceRollback.setVersionRollbackPeople(userObject.getUserName());
+
+                //记录当前更新时间
+                deviceRollback.setVersionRollbackTime(new Date());
+
+                //100为未回退，101为回退中，102已回退
+                deviceRollback.setUpgradeStatus("100");
+
+                //通过终端id查询为回退前的版本号
+
+                String rollbackBeforeVersion = deviceUpgradeService.getVersion(deviceId).getVersion();
+                deviceRollback.setRollbackBeforeVersion(rollbackBeforeVersion);
+
+                //通过终端主键获取设备信息
+                int equipmentInt = deviceService.getEquipment(deviceId).getEquipmentInt();
+                deviceRollback.setEquipmentInt(equipmentInt);
+
+                //调用添加方法
+                deviceRollbackService.addDeviceRollback(deviceRollback);
+
+            } else {
+
+                //如果传过来的中id list.size() 有数据,（且仅有一条数据）通过主键 更新更新包主键 为当前前端传过来的主键
+                DeviceUploadRollbackVo deviceRollbackVo = lists.get(0);
+
+                //获取该条已有的回退记录表的主键，用于修改操作
+                int deviceRollbackId = deviceRollbackVo.getDeviceRollbackId();
+
+                //复用接口，所有获取获取该条已有的回退记录表的更新包主键
+                int equipmentInt = deviceRollbackVo.getEquipmentInt();
+
+                //复用接口，所有获取获取该条已有的回退记录表的终端主键
+                int deviceId1 = deviceRollbackVo.getDeviceId();
+
+                //复用接口，所有获取获取该条已有的回退记录表的回退状态
+                String upgradeStatus = deviceRollbackVo.getUpgradeStatus();
+
+                //复用接口，所有获取获取该条已有的回退记录表的回退前版本号
+                String rollbackBeforeVersion = deviceRollbackVo.getRollbackBeforeVersion();
+
 
                 DeviceRollback deviceRollback = new DeviceRollback();
-                deviceRollback.setDeviceUpgradeId(deviceUpgradeId);
-                deviceRollback.setDeviceId(deviceId);
+
+                deviceRollback.setDeviceRollbackId(deviceRollbackId);
                 deviceRollback.setEquipmentInt(equipmentInt);
-                deviceRollback.setUploadId(uploadId);
-                deviceRollback.setUpgradeVersion(upgradeVersion);
-                deviceRollback.setUpgradeStatus("103");
+                deviceRollback.setDeviceId(deviceId1);
+                deviceRollback.setUpgradeStatus(upgradeStatus);
+                deviceRollback.setRollbackBeforeVersion(rollbackBeforeVersion);
+
+                //改动了更新包id（为新传过来的id），版本修改人，修改时间
                 IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
                 deviceRollback.setVersionRollbackPeople(userObject.getUserName());
                 deviceRollback.setVersionRollbackTime(new Date());
-                deviceRollbackService.addDeviceRollback(deviceRollback);
+                deviceRollback.setUploadId(uploadId);
 
-            }else {
-
-                    return Result.error("1","该终端处于回退中，或已经回退，请尝试回退其他终端");
+                //调用更新接口
+                UpdatePackageService.updateDeviceRollbackAll(deviceRollback);
             }
 
 
         }
         return Result.success();
     }
+
+
+
+
+
 
 
 

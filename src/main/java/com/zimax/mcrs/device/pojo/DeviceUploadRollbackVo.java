@@ -1,46 +1,38 @@
 package com.zimax.mcrs.device.pojo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 /**
- * 终端回退信息
- *
- * @author 林俊杰
- * @date 2022/12/13
+ * @author 李伟杰
+ * @date 2023/1/10 21:59
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@TableName("dev_rollback")
-public class DeviceRollback {
+public class DeviceUploadRollbackVo {
 
     /**
      * 终端回退信息主键
      */
-    @TableId(type = IdType.AUTO)
     private int deviceRollbackId;
 
-
     /**
-     * 设备资产主键
+     * 设备主键
      */
+
     private int equipmentInt;
 
     /**
      * 终端主键
      */
+
     private int deviceId;
 
     /**
-     * 更新包主键
+     * 更新包管理编号
      */
+
     private int uploadId;
 
     /**
@@ -48,8 +40,9 @@ public class DeviceRollback {
      */
     private String rollbackBeforeVersion;
 
+
     /**
-     * 升级状态
+     * 回退状态
      */
     private String upgradeStatus;
 
@@ -61,7 +54,6 @@ public class DeviceRollback {
     /**
      * 版本回退时间
      */
-    private Date versionRollbackTime;
-
+    private String versionRollbackTime;
 
 }

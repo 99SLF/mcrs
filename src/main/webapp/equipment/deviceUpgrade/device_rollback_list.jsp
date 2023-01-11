@@ -26,9 +26,9 @@
                         <input type="text" name="equipmentId" placeholder="请输入设备资源号" autocomplete="off"
                                class="layui-input">
                     </div>
-                    <label class="layui-form-label">版本号：</label>
+                    <label class="layui-form-label">回退版本号：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="upgradeVersion" placeholder="请输入版本号" autocomplete="off"
+                        <input type="text" name="version" placeholder="请输入版本号" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -89,7 +89,7 @@
     var form = layui.form;
     var $ = layui.jquery;
     var util = layui.util;
-
+    debugger;
     //全局参数
     var req_data;
 
@@ -278,7 +278,6 @@
                 count: res.total,
                 data: res.data
             };
-            debugger;
         },
         cols: [[{
             type: "checkbox"
@@ -320,11 +319,11 @@
             minWidth: 180,
             hide: isHidden("uploadNumber")
         }, {
-            field: "upgradeVersion",
+            field: "version",
             title: "升级版本号",
             align: "center",
             minWidth: 100,
-            hide: isHidden("upgradeVersion")
+            hide: isHidden("version")
         }, {
             field: "upgradeStatus",
             title: "升级状态",
@@ -332,7 +331,7 @@
             minWidth: 150,
             hide: isHidden("upgradeStatus"),
             templet:function(d) {
-                return layui.admin.getDictText("UPDATE_STATUS", d.upgradeStatus);
+                return layui.admin.getDictText("Rollback", d.upgradeStatus);
             }
         },
             //     {
