@@ -64,6 +64,8 @@
             <script type="text/html" id="table-device-list">
                 <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
                         class="layui-icon layui-icon-edit"></i>编辑</a>
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="configurationFile"><i
+                        class="layui-icon layui-icon-edit"></i>配置文件</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
                         class="layui-icon layui-icon-delete"></i>删除</a>
             </script>
@@ -567,7 +569,7 @@
             title: "操作",
             align: "center",
             fixed: "right",
-            width: 200,
+            width: 250,
             toolbar: "#table-device-list"
         }]]
     });
@@ -638,6 +640,12 @@
                     }
                 });
             });
+        }else if (e.event == "configurationFile") {
+
+
+
+
+
         }
         else if (e.event == "view") {
             top.layer.open({

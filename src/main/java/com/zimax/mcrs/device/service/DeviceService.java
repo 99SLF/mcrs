@@ -1,17 +1,17 @@
 package com.zimax.mcrs.device.service;
 
+import com.zimax.cap.datacontext.DataContextManager;
+import com.zimax.cap.party.IUserObject;
 import com.zimax.components.coframe.rights.DefaultUserManager;
 import com.zimax.components.coframe.rights.pojo.Role;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.device.mapper.DeviceMapper;
-import com.zimax.mcrs.device.pojo.Device;
-import com.zimax.mcrs.device.pojo.DeviceEquipmentVo;
-import com.zimax.mcrs.device.pojo.DeviceVo;
-import com.zimax.mcrs.device.pojo.Equipment;
+import com.zimax.mcrs.device.pojo.*;
 import com.zimax.mcrs.update.pojo.UpdateUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +26,9 @@ public class DeviceService {
 
     @Autowired
     private DeviceMapper deviceMapper;
+
+    @Autowired
+    private DeviceUpgradeService deviceUpgradeService;
 
     /**
      * 查询所有终端信息
@@ -68,8 +71,19 @@ public class DeviceService {
     public void registrationDevice(Device device) {
         //调用方法加密，不使用，使用数据库MD5加密
 //        device.setAPPId(encrypt(device.getAPPId()));
-        device.setVersion("V1.0");
+        device.setVersion("1.0");
         deviceMapper.registrationDevice(device);
+        //注册完成后将本次注册的信息添加至升级信息
+        DeviceUpgrade deviceUpgrade = new DeviceUpgrade();
+        IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
+        deviceUpgrade.setDeviceId(device.getDeviceId());
+        deviceUpgrade.setEquipmentInt(device.getEquipmentInt());
+        deviceUpgrade.setUploadId(deviceMapper.getUpgradeId(device.getVersion(),device.getDeviceSoftwareType()));
+        deviceUpgrade.setUpgradeStatus("100");
+        deviceUpgrade.setUpgradeVersion(device.getVersion());
+        deviceUpgrade.setVersionUpdater(userObject.getUserName());
+        deviceUpgrade.setVersionUpdateTime(new Date());
+        deviceUpgradeService.addDeviceUpgrade(deviceUpgrade);
     }
 
     /**

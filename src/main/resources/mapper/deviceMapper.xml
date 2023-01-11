@@ -55,7 +55,8 @@
     </select>
 
     <!--注册终端-->
-    <insert id="registrationDevice" parameterType="com.zimax.mcrs.device.pojo.Device">
+    <insert id="registrationDevice" parameterType="com.zimax.mcrs.device.pojo.Device" keyProperty="deviceId"
+            useGeneratedKeys="true">
         insert into eqi_device
         values (#{deviceId}, MD5(#{APPId}),
                 #{version}, #{needUpdate},
@@ -131,6 +132,11 @@
     <select id="checkDeviceSoftwareType" resultType="int">
         SELECT COUNT(*) FROM upd_upload
         WHERE device_so_type = '${deviceSoftwareType}'
+    </select>
+
+    <select id="getUpgradeId"  resultType="int"  >
+        SELECT upload_id FROM upd_upload
+        WHERE device_so_type = #{deviceSoftwareType} AND version = #{version}
     </select>
 
 

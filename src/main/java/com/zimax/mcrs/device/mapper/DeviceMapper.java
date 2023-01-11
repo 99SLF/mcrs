@@ -99,4 +99,11 @@ public interface DeviceMapper {
      * @return
      */
     int checkDeviceSoftwareType(@Param("deviceSoftwareType") String deviceSoftwareType);
+
+    /**
+     * 获取更新包对应的主键
+     *
+     * @return
+     */
+    int getUpgradeId (@Param("version") String version,@Param("deviceSoftwareType") String deviceSoftwareType);
 }
