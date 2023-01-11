@@ -445,6 +445,7 @@ public class UpdatePackage {
             //修改
             configurationFile.setTerminalTime(time);
             configurationFile.setWebTime(time);
+            configurationFile.setFilePath(filePath+"/"+fileName);
             //已同步
             configurationFile.setFileStatus("102");
             updatePackageService.updateConfigurationFile(configurationFile);
