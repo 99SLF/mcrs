@@ -22,7 +22,9 @@ public interface UpdateUploadMapper {
      */
     void addUpdateUpload(UpdateUpload updateUpload);
 
+    List<UpdateUpload> queryUpdateUploadAll(Map map);
     List<UpdateUpload> queryUpdateUpload(Map map);
+    List<UpdateUpload> queryUpdateUploadRo(Map map);
 
     int count(@Param("version") String version, @Param("deviceSoType") String deviceSoType);
 

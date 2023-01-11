@@ -56,7 +56,7 @@ public class UpdateUploadService {
     /**
      * 查询所有更新包信息
      */
-    public List<UpdateUpload> queryUpdateUpload(String page, String limit, String version, String deviceSoType, String order, String field) {
+    public List<UpdateUpload> queryUpdateUploadAll(String page, String limit, String version, String deviceSoType, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -72,9 +72,58 @@ public class UpdateUploadService {
         }
         map.put("version", version);
         map.put("deviceSoType", deviceSoType);
+        return updateUploadMapper.queryUpdateUploadAll(map);
+
+    }
+
+    /**
+     * 查询所有升级更新包信息
+     */
+    public List<UpdateUpload> queryUpdateUpload(String page, String limit, String version, String deviceSoType, String order, String field ,String maxVersion) {
+        ChangeString changeString = new ChangeString();
+        Map<String, Object> map = new HashMap<>();
+        if (order == null) {
+            map.put("order", "asc");
+            map.put("field", "upload_number");
+        } else {
+            map.put("order", order);
+            map.put("field", changeString.camelUnderline(field));
+        }
+        if (limit != null) {
+            map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
+            map.put("limit", Integer.parseInt(limit));
+        }
+        map.put("version", version);
+        map.put("deviceSoType", deviceSoType);
+        map.put("maxVersion", maxVersion);
         return updateUploadMapper.queryUpdateUpload(map);
 
     }
+
+    /**
+     * 查询所有回退更新包信息
+     */
+    public List<UpdateUpload> queryUpdateUploadRo(String page, String limit, String version, String deviceSoType, String order, String field ,String minVersion) {
+        ChangeString changeString = new ChangeString();
+        Map<String, Object> map = new HashMap<>();
+        if (order == null) {
+            map.put("order", "asc");
+            map.put("field", "upload_number");
+        } else {
+            map.put("order", order);
+            map.put("field", changeString.camelUnderline(field));
+        }
+        if (limit != null) {
+            map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
+            map.put("limit", Integer.parseInt(limit));
+        }
+        map.put("version", version);
+        map.put("deviceSoType", deviceSoType);
+        map.put("minVersion", minVersion);
+        return updateUploadMapper.queryUpdateUploadRo(map);
+
+    }
+
 
     /**
      * 删除更新包数据

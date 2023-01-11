@@ -38,11 +38,6 @@ public class Device{
     private String version;
 
     /**
-     * 是否需要更新
-     */
-    private String needUpdate;
-
-    /**
      * 是否启用
      */
     private String enable;

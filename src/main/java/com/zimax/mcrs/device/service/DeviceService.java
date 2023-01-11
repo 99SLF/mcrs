@@ -34,7 +34,7 @@ public class DeviceService {
      * 查询所有终端信息
      * @return
      */
-    public List<DeviceVo> queryDevices(String  page, String limit, String equipmentId, String APPId, String deviceName, String processName, String factoryName, String order, String field) {
+    public List<DeviceVo> queryDevices(String  page, String limit, String equipmentId, String deviceSoftwareType,String enable,String deviceName, String processName, String factoryName, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -49,7 +49,8 @@ public class DeviceService {
             map.put("limit", Integer.parseInt(limit));
         }
         map.put("equipmentId",equipmentId);
-        map.put("APPId",APPId);
+        map.put("deviceSoftwareType",deviceSoftwareType);
+        map.put("enable",enable);
         map.put("deviceName",deviceName);
         map.put("processName",processName);
         map.put("factoryName",factoryName);
