@@ -140,6 +140,13 @@ public class UpdatePackageService {
         deviceRollbackMapper.updateDeviceRollback(deviceRollback);
     }
 
+    /**
+     * 修改回退表全部
+     * @param deviceRollback
+     */
+    public void updateDeviceRollbackAll(DeviceRollback deviceRollback) {
+        deviceRollbackMapper.updateDeviceRollbackAll(deviceRollback);
+    }
 
     /**
      * 获取配置文件表
