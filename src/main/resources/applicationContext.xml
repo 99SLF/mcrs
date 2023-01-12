@@ -265,11 +265,6 @@
         <property name="mapperInterface" value="com.zimax.mcrs.update.mapper.DeviceUpgradeVoMapper"/>
     </bean>
 
-    <bean id="LoginLogMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
-        <property name="mapperInterface" value="com.zimax.mcrs.log.mapper.LoginLogMapper"/>
-    </bean>
-
     <bean id="GradeAuthBean" class="com.zimax.components.coframe.rights.gradeauth.GradeAuthService"></bean>
 
     <bean id="PartyAuthService" class="com.zimax.components.coframe.auth.service.PartyAuthService"></bean>
