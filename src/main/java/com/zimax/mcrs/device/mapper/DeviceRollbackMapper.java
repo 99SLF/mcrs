@@ -26,7 +26,8 @@ public interface DeviceRollbackMapper {
      *
      * @return
      */
-    int count(@Param("equipmentId") String equipmentId, @Param("version") String version);
+    int count(@Param("deviceName") String deviceName,@Param("deviceSoftwareType") String deviceSoftwareType, @Param("version") String version,
+              @Param("versionRollbackPeople") String versionRollbackPeople,@Param("versionRollbackTime") String versionRollbackTime);
 
 
     /**

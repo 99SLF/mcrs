@@ -174,8 +174,8 @@ public class UpdateUploadController {
     @GetMapping("/queryUpdateUpload/query")
     public Result<?> queryUpdateUpload(String page, String limit,
                                        String version, String deviceSoType,
-                                       String order, String field,String maxVersion) {
-        List UpdateUpload = updateUploadService.queryUpdateUpload(page, limit, version, deviceSoType, order, field ,maxVersion);
+                                       String order, String field,String maxVersion, String deviceSoftwareType) {
+        List UpdateUpload = updateUploadService.queryUpdateUpload(page, limit, version, deviceSoType, order, field ,maxVersion ,deviceSoftwareType);
         return Result.success(UpdateUpload, updateUploadService.count(version, deviceSoType));
     }
 
@@ -198,8 +198,8 @@ public class UpdateUploadController {
     @GetMapping("/queryUpdateUploadRo/query")
     public Result<?> queryUpdateUploadRo(String page, String limit,
                                        String version, String deviceSoType,
-                                       String order, String field,String minVersion) {
-        List UpdateUpload = updateUploadService.queryUpdateUploadRo(page, limit, version, deviceSoType, order, field ,minVersion);
+                                       String order, String field,String minVersion ,String deviceSoftwareType) {
+        List UpdateUpload = updateUploadService.queryUpdateUploadRo(page, limit, version, deviceSoType, order, field ,minVersion,deviceSoftwareType);
         return Result.success(UpdateUpload, updateUploadService.count(version, deviceSoType));
     }
 

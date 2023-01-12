@@ -46,7 +46,8 @@
     <select id="queryUpdateUpload" parameterType="map" resultType="com.zimax.mcrs.update.pojo.UpdateUpload">
         select * from upd_upload
         <where>
-            version &gt; #{maxVersion}
+            version &gt; #{maxVersion} and
+            device_so_type = #{deviceSoftwareType}
             <if test="version !=null and version !=''">
                 and version like '%${version}%'
             </if>
@@ -62,11 +63,12 @@
         </if>
     </select>
 
-    <!--查询升级更新包数据-->
+    <!--查询回退数据-->
     <select id="queryUpdateUploadRo" parameterType="map" resultType="com.zimax.mcrs.update.pojo.UpdateUpload">
         select * from upd_upload
         <where>
-            version &lt; #{minVersion}
+            version &lt; #{minVersion} and
+            device_so_type = #{deviceSoftwareType}
             <if test="version !=null and version !=''">
                 and version like '%${version}%'
             </if>

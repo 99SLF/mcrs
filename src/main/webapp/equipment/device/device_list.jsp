@@ -199,14 +199,41 @@
             }
             if (data.length > 0) {
                 var deviceIds = new Array();
+                var deviceSoftwareTypes = new Array();
                 for (var i = 0; i < data.length; i++) {
                     deviceIds[i] = data[i].deviceId;
                 }
+                for (var i = 0; i < data.length; i++) {
+                    deviceSoftwareTypes[i] = data[i].deviceSoftwareType;
+                }
 
-                layer.confirm("确定升级所选终端？", {
-                    icon: 3,
-                    title: "系统提示"
-                }, function (index) {
+                //1、如果数组长度为一，就返回true
+                function same(arr) {
+                    if (arr.length === 1) {
+                        return true;
+                    } else {
+                        //2、如果数组长度大于一
+                        if (arr.length > 0) {
+                            return !arr.some(function (value, index) {
+                                return value !== arr[0];
+                            });
+                        } else {
+                            return true;
+                        }
+
+                    }
+                }
+
+                var isSame = same(deviceSoftwareTypes);
+                var deviceSoftwareType = deviceSoftwareTypes[0];
+
+                if (isSame == false) {
+                    layer.msg("批量选择终端软件类型，软件类型必须一致！");
+                } else {
+                    // layer.confirm("确定升级所选终端？", {
+                    //     icon: 3,
+                    //     title: "系统提示"
+                    // }, function (index) {
                     top.layer.open({
                         //弹窗
                         type: 2,
@@ -216,11 +243,11 @@
                         resize: false,
                         btn: ["确定", "取消"],
                         success: function (layero, index) {
-                            debugger;
                             var dataJson = {
                                 win: window,
                                 deviceIds: deviceIds,
-                                maxVersion: maxVersion
+                                maxVersion: maxVersion,
+                                deviceSoftwareType: deviceSoftwareType
                             };
                             layero.find("iframe")[0].contentWindow.SetData(dataJson);
                         },
@@ -232,9 +259,12 @@
                             <%--top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");--%>
                         }
                     });
-                    layer.close(index);
                     table.reload("LAY-app-device-list-reload");
-                });
+                    // });
+
+                }
+
+
             }
 
         },
@@ -266,33 +296,79 @@
         rollback: function () {
             var checkStatus = table.checkStatus("LAY-app-device-list-reload");
             var data = checkStatus.data;
-
             var minVersions = new Array();
+
+
             for (var i = 0; i < data.length; i++) {
                 minVersions[i] = data[i].version;
             }
+
+
             // 获取最小值：
             var minVersion = minVersions[0];
-
-            debugger;
-            for(var i = 1; i < minVersions.length; i++) {
+            for (var i = 1; i < minVersions.length; i++) {
                 var cur = minVersions[i];
                 cur < minVersion ? minVersion = cur : null
             }
             console.log(minVersion)
 
+            //至少选择了一条注释
             if (data.length == 0) {
                 layer.msg("请至少选中一条记录！");
             }
             if (data.length > 0) {
+
+                //终端主键数组
                 var deviceIds = new Array();
+
+                //存放到终端数组
                 for (var i = 0; i < data.length; i++) {
                     deviceIds[i] = data[i].deviceId;
                 }
-                layer.confirm("确定回退所选终端？", {
-                    icon: 3,
-                    title: "系统提示"
-                }, function (index) {
+
+                var deviceSoftwareTypes = new Array();
+                for (var i = 0; i < data.length; i++) {
+                    deviceSoftwareTypes[i] = data[i].deviceSoftwareType;
+                }
+
+                // //1、如果数组长度为一，就返回true
+                // function same(arr) {
+                //     if (arr.length === 1) {
+                //         return true;
+                //     } else {
+                //         //2、如果数组长度大于一，就做数组重复值校验
+                //         let newSet = new Set(arr)
+                //         if (arr.length !== newSet.size) {
+                //             return true;//有重复值
+                //         } else {
+                //             return false;//没有重复
+                //         }
+                //     }
+                // }
+
+                //1、如果数组长度为一，就返回true
+                function same(arr) {
+                    if (arr.length === 1) {
+                        return true;
+                    } else {
+                        //2、如果数组长度大于一
+                        if (arr.length > 0) {
+                            return !arr.some(function (value, index) {
+                                return value !== arr[0];
+                            });
+                        } else {
+                            return true;
+                        }
+
+                    }
+                }
+
+                var isSame = same(deviceSoftwareTypes);
+                var deviceSoftwareType = deviceSoftwareTypes[0];
+
+                if (isSame == false) {
+                    layer.msg("批量选择终端软件类型，软件类型必须一致！");
+                } else {
                     top.layer.open({
                         //弹窗
                         type: 2,
@@ -305,7 +381,8 @@
                             var dataJson = {
                                 win: window,
                                 deviceIds: deviceIds,
-                                minVersion: minVersion
+                                minVersion: minVersion,
+                                deviceSoftwareType: deviceSoftwareType
                             };
                             debugger;
                             layero.find("iframe")[0].contentWindow.SetData(dataJson);
@@ -321,7 +398,7 @@
                     });
                     layer.close(index);
                     table.reload("LAY-app-device-list-reload");
-                });
+                }
             }
 
         },
