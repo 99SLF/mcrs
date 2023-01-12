@@ -26,7 +26,7 @@
             <label class="layui-form-label"><span style="color:red">*</span>日志删除规则编码:</label>
             <div class="layui-input-block">
                 <input id="deleteRuleNum" type="text" name="deleteRuleNum" lay-verify="required|deleteRuleNum"
-                       placeholder="日志删除规则编码(必填)" autocomplete="off" class="layui-input" readonly>
+                       placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
 
@@ -34,7 +34,7 @@
             <label class="layui-form-label"><span style="color:red">*</span>日志删除规则标题:</label>
             <div class="layui-input-block">
                 <input id="deleteRuleTitle" type="text" name="deleteRuleTitle" lay-verify="required|deleteRuleTitle"
-                       placeholder="请输入日志删除规则标题" autocomplete="off" class="layui-input" readonly>
+                       placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
     </div>
@@ -44,11 +44,7 @@
             <label class="layui-form-label"><span style="color:red">*</span>规则级别:</label>
             <div class="layui-input-block">
                 <select name="ruleLevel" id="ruleLevel" lay-filter=""lay-verify="required" type="select" >
-                    <option value="1级">1级</option>
-                    <option value="2级">2级</option>
-                    <option value="3级">3级</option>
-                    <option value="4级">4级</option>
-                    <option value="5级">5级</option>
+                    <option value=""></option>
                 </select>
             </div>
         </div>
@@ -192,6 +188,15 @@
         dictTypeId: "LOG_TYPE",
     });
     form.render();
+
+    //获取日志类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#ruleLevel",
+        dictTypeId: "WARNING_LEVEL",
+    });
+    form.render();
+
+
 
     form.render();
     function SetData(data) {

@@ -65,9 +65,14 @@ public class DeviceExchangeLogVo {
     private String processName;
 
     /**
-     * 数据采集
+     * 操作类型
      */
-    private String dataAcquisition;
+    private String operationType;
+
+    /**
+     * 操作内容
+     */
+    private String operationContent;
 
     /**
      * 操作人

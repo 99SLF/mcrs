@@ -511,7 +511,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 
 
-    -- ----------------------------
+-- ----------------------------
 -- Table structure for log_device_exchange_log
 -- ----------------------------
 DROP TABLE IF EXISTS `log_device_exchange_log`;
@@ -521,9 +521,8 @@ CREATE TABLE `log_device_exchange_log`  (
     `log_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志类型',
     `equipment_int` int(9) NULL DEFAULT NULL COMMENT '设备主键',
     `device_id` int(9) NULL DEFAULT NULL COMMENT '终端主键',
-    `factory_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工厂名称',
-    `process_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '使用工序',
-    `data_acquisition` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '数据采集',
+    `operation_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作类型',
+    `operation_content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作内容',
     `operator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作人',
     `exchange_time` datetime NULL DEFAULT NULL COMMENT '交互时间',
     PRIMARY KEY (`device_exchange_log_id`) USING BTREE

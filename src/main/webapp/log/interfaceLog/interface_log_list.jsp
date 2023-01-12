@@ -23,74 +23,80 @@
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item">
                 <div class="layui-inline">
+                    <label class="layui-form-label">创建时间：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="createTime" id="createTime" placeholder="请输入创建时间"
+                        <input type="text" name="createTime" id="createTime" placeholder=""
                                autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-inline">
+                    <label class="layui-form-label">来源：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="source" placeholder="请输入来源" autocomplete="off"
+                        <input type="text" name="source" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-inline">
+                    <label class="layui-form-label">接口名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="interfaceName" placeholder="请输入接口名称" autocomplete="off"
+                        <input type="text" name="interfaceName" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-inline">
+                    <label class="layui-form-label">接入Ip：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="equipmentIp" placeholder="请输入接入Ip" autocomplete="off"
+                        <input type="text" name="equipmentIp" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-inline">
+                    <label class="layui-form-label">调用者：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="invoker" placeholder="请输入调用者" autocomplete="off"
+                        <input type="text" name="invoker" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-inline">
+                    <label class="layui-form-label">方法名：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="methodName" placeholder="请输入方法名" autocomplete="off"
+                        <input type="text" name="methodName" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-inline">
+                    <label class="layui-form-label">处理时长：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="disposeTime" placeholder="请输入处理时长" autocomplete="off"
+                        <input type="text" name="disposeTime" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
-                </div>
-
-                <div class="layui-inline layui-search">
-                    <button class="layui-btn layuiadmin-btn-list" lay-submit
-                            lay-filter="LAY-app-interfaceLoglist-search"
-                            id="LAY-app-interfaceLoglist-search">查询
-                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                    </button>
+                    <div class="layui-inline layui-search" style="padding-left: 50px">
+                        <button class="layui-btn layuiadmin-btn-list" lay-submit
+                                lay-filter="LAY-app-interfaceLoglist-search"
+                                id="LAY-app-interfaceLoglist-search">
+                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="layui-card-body">
 
-<%--                    <div class="layui-toolbar" id="toolbar" hidden="true">--%>
-<%--                        <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i--%>
-<%--                                class="layui-icon layui-icon-add-circle-fine"></i>新增规则--%>
-<%--                        </button>--%>
-<%--                        <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i--%>
-<%--                                class="layui-icon layui-icon-delete"></i>删除--%>
-<%--                        </button>--%>
-<%--                    </div>--%>
+            <%--                    <div class="layui-toolbar" id="toolbar" hidden="true">--%>
+            <%--                        <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i--%>
+            <%--                                class="layui-icon layui-icon-add-circle-fine"></i>新增规则--%>
+            <%--                        </button>--%>
+            <%--                        <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i--%>
+            <%--                                class="layui-icon layui-icon-delete"></i>删除--%>
+            <%--                        </button>--%>
+            <%--                    </div>--%>
 
             <table id="LAY-app-interfaceLog-list" lay-filter="LAY-app-interfaceLog-list"></table>
 

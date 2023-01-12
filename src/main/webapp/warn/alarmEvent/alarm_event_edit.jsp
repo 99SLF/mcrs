@@ -43,19 +43,15 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>预警级别:</label>
             <div class="layui-input-block">
-                <select name="alarmLevel" id="alarmLevel" lay-filter="required" type="select">
-                    <option value="1级">1级</option>
-                    <option value="2级">2级</option>
-                    <option value="3级">3级</option>
-                    <option value="4级">4级</option>
-                    <option value="5级">5级</option>
+                <select name="alarmLevel" id="alarmLevel" lay-filter="alarmLevel" type="select"lay-verify="required">
+                    <option value=""></option>
                 </select>
             </div>
         </div>
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>预警类型:</label>
             <div class="layui-input-block">
-                <select name="alarmType" id="alarmType" lay-filter="" type="select">
+                <select name="alarmType" id="alarmType" lay-filter="alarmType" type="select" lay-verify="required">
                     <option value=""></option>
                 </select>
             </div>
@@ -81,11 +77,10 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>是否启用：</label>
+            <label class="layui-form-label"><span style="color:red">*</span>启用：</label>
             <div class="layui-input-block">
-                <select name="enableStatus" id="enableStatus" lay-filter="" type="select">
-                    <option value="on">是</option>
-                    <option value="off">否</option>
+                <select name="enableStatus" id="enableStatus" lay-filter="enableStatus" type="select" lay-verify="required">
+                    <option value=""></option>
                 </select>
             </div>
         </div>
@@ -161,6 +156,24 @@
     });
     //设置预警类型的默认值
     $("#alarmType").val("101");
+    form.render();
+
+    //获取预警级别的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#alarmLevel",
+        dictTypeId: "WARNING_LEVEL",
+    });
+    //设置预警级别的默认值
+    $("#alarmType").val("101");
+    form.render();
+
+    //获取启用的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#enableStatus",
+        dictTypeId: "IS_USE",
+    });
+    //设置启用的默认值
+    $("#enableStatus").val("101");
     form.render();
 
     // //判断字符

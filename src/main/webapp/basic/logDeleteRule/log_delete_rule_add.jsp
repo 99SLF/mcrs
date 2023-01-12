@@ -41,12 +41,8 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>规则级别:</label>
             <div class="layui-input-block">
-                <select name="ruleLevel" id="ruleLevel" lay-filter=""lay-verify="required" type="select">
-                    <option value="1级">1级</option>
-                    <option value="2级">2级</option>
-                    <option value="3级">3级</option>
-                    <option value="4级">4级</option>
-                    <option value="5级">5级</option>
+                <select name="ruleLevel" id="ruleLevel" lay-filter="ruleLevel"lay-verify="required" type="select">
+                    <option value=""></option>
                 </select>
             </div>
         </div>
@@ -63,7 +59,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>时间间隔:</label>
             <div class="layui-input-block">
-                <input id="timeInterval" type="text" name="timeInterval" lay-verify="required|timeInterval"
+                <input id="timeInterval" type="text" name="timeInterval" lay-verify="required|timeInterval|number"
                        placeholder="请输入时间间隔"
                        autocomplete="off" class="layui-input">
             </div>
@@ -82,9 +78,8 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>是否启用：</label>
             <div class="layui-input-block">
-                <select name="enable" id="enable" lay-filter="" lay-verify="required" type="select">
-                    <option value="off">否</option>
-                    <option value="on">是</option>
+                <select name="enable" id="enable" lay-filter="enable" lay-verify="required" type="select">
+                    <option value=""></option>
                 </select>
             </div>
         </div>
@@ -163,6 +158,23 @@
     });
     form.render();
 
+    //获取启用类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#enable",
+        dictTypeId: "IS_USE",
+    });
+    //设置启用的默认值
+    $("#enable").val("101");
+    form.render();
+
+    //获取级别的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#ruleLevel",
+        dictTypeId: "WARNING_LEVEL",
+    });
+    //设置级别的默认值
+    $("#ruleLevel").val("101");
+    form.render();
 
     // 判断字符
     form.verify({

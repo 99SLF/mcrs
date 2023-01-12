@@ -48,19 +48,14 @@ public class DeviceExchangeLog {
     private int deviceId;
 
     /**
-     * 工厂名称
+     * 操作类型
      */
-    private String factoryName;
+    private String operationType;
 
     /**
-     * 使用工序
+     * 操作内容
      */
-    private String processName;
-
-    /**
-     * 数据采集
-     */
-    private String dataAcquisition;
+    private String operationContent;
 
     /**
      * 操作人

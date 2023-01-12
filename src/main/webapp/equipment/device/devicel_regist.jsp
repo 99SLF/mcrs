@@ -38,7 +38,7 @@
             <div class="layui-input-block">
                 <input id="equipmentInt" name="equipmentInt" type="hidden"/>
                 <input type="text" class="layui-input" name="equipmentId" id="equipmentId"
-                       lay-verify=""
+                       lay-verify="required"
                        autocomplete="off" placeholder="请选择设备" readonly>
                 <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="onButtonEdit"
                         style="position:absolute;top:0px;right:0px;height:37px"><i
@@ -52,7 +52,8 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>终端类型:</label>
             <div class="layui-input-block">
-                <select name="deviceSoftwareType" id="deviceSoftwareType" lay-filter="deviceSoftwareType" type="select">
+                <select name="deviceSoftwareType" id="deviceSoftwareType" lay-filter="deviceSoftwareType" type="select"
+                        lay-verify="required">
                     <option value=""></option>
                 </select>
             </div>
@@ -61,9 +62,9 @@
 
     <div class="layui-form-item layui-row layui-col-space6">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">是否启用：</label>
+            <label class="layui-form-label"><span style="color:red">*</span>是否启用：</label>
             <div class="layui-input-block">
-                <select name="enable" id="enable" lay-filter="" type="select">
+                <select name="enable" id="enable" lay-filter="" type="select"  lay-verify="required">
                     <option value=""></option>
                 </select>
             </div>
@@ -72,7 +73,7 @@
     <div class="layui-form-item layui-row layui-col-space6">
         <label class="layui-form-label"><span style="color:red">*</span>接入方式:</label>
         <div class="layui-input-block">
-            <select name="accessMethod" id="accessMethod" lay-filter="accessMethod" type="select">
+            <select name="accessMethod" id="accessMethod" lay-filter="accessMethod" type="select"  lay-verify="required">
                 <option value=""></option>
             </select>
         </div>
@@ -82,7 +83,7 @@
         <label class="layui-form-label"><span style="color:red">*</span>接入点名称:</label>
         <div class="layui-input-block">
             <input type="text" class="layui-input" name="accPointResName" id="accPointResName"
-                   lay-verify=""
+                   lay-verify="required"
                    autocomplete="off" placeholder="" readonly>
         </div>
     </div>
