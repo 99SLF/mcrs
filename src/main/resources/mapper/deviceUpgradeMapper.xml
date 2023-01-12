@@ -68,7 +68,7 @@
         ON upg.upload_id=upl.upload_id
         LEFT JOIN
         base_access_info AS bai
-        ON dev.acc_point_res_id = bai.acc_point_res_id
+        ON eqi.acc_point_res_id = bai.acc_point_res_id
         <where>
             <if test="deviceName !=null and deviceName !=''">
                 and dev.device_name LIKE '%${deviceName}%'

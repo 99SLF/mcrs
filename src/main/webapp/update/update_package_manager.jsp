@@ -470,9 +470,9 @@
                 type: 2,
                 title: "查看更新包详情",
                 content: "<%= request.getContextPath() %>/update/update_package_detailed.jsp",
-                area: ["800px", "560px"],
+                area: ["600px", "500px"],
                 resize: false,
-                btn: ["确定", "取消"],
+                // btn: ["确定", "取消"],
                 success: function (layero, index) {
                     var dataJson = {
                         data: data,
