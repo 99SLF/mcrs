@@ -354,13 +354,15 @@
             align: "center",
             minWidth: 100,
             hide: isHidden("matrixCode")
-        }, {
-            field: "matrixName",
-            title: "基地名称",
-            align: "center",
-            minWidth: 120,
-            hide: isHidden("matrixName")
-        }, {
+        },
+        //     {
+        //     field: "matrixName",
+        //     title: "基地名称",
+        //     align: "center",
+        //     minWidth: 120,
+        //     hide: isHidden("matrixName")
+        // },
+            {
             field: "factoryCode",
             title: "工厂代码",
             align: "center",
