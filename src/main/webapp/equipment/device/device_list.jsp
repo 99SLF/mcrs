@@ -692,8 +692,23 @@
                 });
             });
         } else if (e.event == "configurationFile") {
-
-
+            var appId = data.aPPId;
+            top.layer.open({
+                type: 2,
+                title: "配置文件列表",
+                content: "<%= request.getContextPath() %>/updateConfigFile/list.jsp",
+                area: ["1000px", "560px"],
+                resize: false,
+                btn: ["确定", "取消"],
+                success: function (layero, index) {
+                    debugger;
+                    var dataJson = {
+                        appId: appId,
+                        win: window
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                }
+            });
         } else if (e.event == "view") {
             top.layer.open({
                 type: 2,

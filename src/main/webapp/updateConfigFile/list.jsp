@@ -59,9 +59,14 @@
     //var appId = null;
     var appId = "001";
 
-    function SetData(data) {
+    function SetData(obj) {
         win = obj.win ? obj.win : window;
         appId = obj.appId ? obj.appId : null;
+        table.reload("tableReload",{
+            where:{
+                appId: appId
+            }
+        })
     }
 
 
