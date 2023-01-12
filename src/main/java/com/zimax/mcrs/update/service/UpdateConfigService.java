@@ -57,7 +57,7 @@ public class UpdateConfigService {
     public void addConfigurationFile(ConfigurationFile configurationFile) {
         String path = configurationFile.getConfigPath();
          path = path.trim();
-        String fileName = path.substring(path.lastIndexOf("/")+1);
+        String fileName = path.substring(path.lastIndexOf("\\")+1);
         configurationFile.setFileName(fileName);
         configurationFile.setFileStatus("101");
         IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();

@@ -37,8 +37,9 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">预警级别：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="alarmLevel" placeholder="" autocomplete="off"
-                               class="layui-input">
+                        <select name="alarmLevel" id="alarmLevel" lay-filter="alarmLevel" type="select">
+                            <option value=""></option>
+                        </select>
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -114,6 +115,7 @@
     var form = layui.form;
     var $ = layui.jquery;
     var util = layui.util;
+    var isExits = false;
 
     //全局参数
     var req_data;
@@ -135,7 +137,13 @@
         elem: "#alarmType",
         dictTypeId: "WRANING_TYPE",
     });
-    //设置预警类型的默认值
+    form.render();
+
+    //获取预警级别的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#alarmLevel",
+        dictTypeId: "WARNING_LEVEL",
+    });
     form.render();
 
     //监听搜索
@@ -146,11 +154,17 @@
         });
     });
 
-    //下拉框监听事件
-    form.on("select(alarmType)", function(data) {
+    //预警类型下拉框监听事件
+    form.on("select(alarmType)", function (data) {
         var submit = $("#LAY-app-alarmEventlist-search");
         submit.click();
     });
+    //预警级别下拉框监听事件
+    form.on("select(alarmLevel)", function (data) {
+        var submit = $("#LAY-app-alarmEventlist-search");
+        submit.click();
+    });
+
 
     //文本框回车事件
     $(".layui-input").on("keydown", function (event) {
@@ -238,48 +252,63 @@
             if (data.length == 0) {
                 layer.msg("请至少选中一条记录！");
             }
-            if (data.length > 0) {
-                var alarmEventInts = new Array();
-                for (var i = 0; i < data.length; i++) {
-                    alarmEventInts[i] = data[i].alarmEventInt;
+            for (i = 0; i < data.length; i++) {
+                debugger;
+                if (data[i].enableStatus == "101") {
+                    isExits = true;
+                    break;
                 }
-                layer.confirm("确定启用所选预警信息？", {
-                    icon: 3,
-                    title: "系统提示"
-                }, function (index) {
-                    $.ajax({
-                        url: "<%= request.getContextPath() %>/warn/alarmEvent/enable",
-                        type: "POSt",
-                        data: JSON.stringify(alarmEventInts),
-                        cache: false,
-                        contentType: "text/json",
-                        success: function (result) {
-                            if (result.exception) {
-                                layer.alert(result.exception.message, {
-                                    icon: 2,
-                                    title: "系统提示"
+                isExits = false
+            }
+            if (isExits == false) {
+                if (data.length > 0) {
+                    var alarmEventInts = new Array();
+                    for (var i = 0; i < data.length; i++) {
+                        alarmEventInts[i] = data[i].alarmEventInt;
+                    }
+                    layer.confirm("确定启用所选预警信息？", {
+                        icon: 3,
+                        title: "系统提示"
+                    }, function (index) {
+                        $.ajax({
+                            url: "<%= request.getContextPath() %>/warn/alarmEvent/enable",
+                            type: "POSt",
+                            data: JSON.stringify(alarmEventInts),
+                            cache: false,
+                            contentType: "text/json",
+                            success: function (result) {
+                                if (result.exception) {
+                                    layer.alert(result.exception.message, {
+                                        icon: 2,
+                                        title: "系统提示"
+                                    });
+                                } else if (result) {
+                                    layer.msg("启用成功", {
+                                        icon: 1,
+                                        time: 2000
+                                    }, function () {
+                                        table.reload("LAY-app-alarmEvent-list-reload");
+                                    });
+                                } else {
+                                    layer.msg("启用失败");
+                                }
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                layer.msg(jqXHR.responseText, {
+                                    time: 2000,
+                                    icon: 5
                                 });
-                            } else if (result) {
-                                layer.msg("启用成功", {
-                                    icon: 1,
-                                    time: 2000
-                                }, function () {
-                                    table.reload("LAY-app-alarmEvent-list-reload");
-                                });
-                            } else {
-                                layer.msg("启用失败");
                             }
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            layer.msg(jqXHR.responseText, {
-                                time: 2000,
-                                icon: 5
-                            });
-                        }
+                        });
                     });
-                });
+                }
+            } else if(isExits == true){
+                layer.msg("当前选择事件存在已启用");
+            }else {
+                layer.msg("启用失败");
             }
         }
+
     };
 
     table.on('sort(LAY-app-alarmEvent-list)', function (obj) {
@@ -410,16 +439,22 @@
             hide: isHidden("alarmEventTitle")
         }, {
             field: "enableStatus",
-            title: "是否启用",
+            title: "启用",
             align: "center",
             minWidth: 120,
-            hide: isHidden("enableStatus")
+            hide: isHidden("enableStatus"),
+            templet: function (d) {
+                return layui.admin.getDictText("IS_USE", d.enableStatus);
+            }
         }, {
             field: "alarmLevel",
             title: "预警级别",
             align: "center",
             minWidth: 100,
-            hide: isHidden("alarmLevel")
+            hide: isHidden("alarmLevel"),
+            templet: function (d) {
+                return layui.admin.getDictText("WARNING_LEVEL", d.alarmLevel);
+            }
         }, {
             field: "alarmType",
             title: "预警类型",

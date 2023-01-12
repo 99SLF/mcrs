@@ -81,7 +81,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>设备连接端口:</label>
             <div class="layui-input-block">
-                <input id="equipmentContinuePort" type="text" name="equipmentContinuePort" lay-verify="required"
+                <input id="equipmentContinuePort" type="text" name="equipmentContinuePort" lay-verify="required|number|equipmentContinuePort"
                        placeholder="" autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -89,7 +89,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>设备连接IP:</label>
             <div class="layui-input-block">
-                <input id="equipmentIp" type="text" name="equipmentIp" lay-verify="required"
+                <input id="equipmentIp" type="text" name="equipmentIp" lay-verify="required|equipmentIp"
                        placeholder="" autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -152,7 +152,7 @@
             <label class="layui-form-label">备注:</label>
             <div class="layui-input-block">
             <textarea cols="50" rows="10" style="width:100%;height:100px" name="remarks" id="remarks" autocomplete="off"
-                      class="layui-input" lay-verify="remarks"></textarea>
+                      class="layui-input" lay-verify="remarks" placeholder="备注不能超过255字符"></textarea>
             </div>
         </div>
     </div>
@@ -243,9 +243,9 @@
                 return "设备连接端口不能超过20字";
             }
         },
-        mesContinueIp: function (value, item) {
-            if (value.length > 50) {
-                return "MES连接IP不能超过20个字符";
+        equipmentIp: function (value, item) {
+            if (value.length > 20) {
+                return "设备连接IP不能超过20个字符";
             }
         },
         remarks: function (value, item) {

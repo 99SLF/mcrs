@@ -5,17 +5,10 @@
 
     <!--查询记录数-->
     <select id="count" resultType="int">
-        SELECT  count(*), if(dev.version = upd.version,"否","是")as need_update
-        ,MAX(upd.version_upload_time)
+        SELECT  count(*)
         FROM eqi_device AS dev
         LEFT JOIN eqi_equipment AS eqi
         ON dev.equipment_int=eqi.equipment_int
-        LEFT JOIN base_access_info AS bai
-        ON eqi.acc_point_res_id = bai.acc_point_res_id
-        LEFT JOIN base_equip_info AS bei
-        ON eqi.equip_type_id= bei.equip_type_id
-        LEFT JOIN upd_upload AS upd
-        ON dev.device_software_type = upd.device_so_type
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
