@@ -123,7 +123,6 @@
         if(submit == false){
             submit = true ;
             //JSON.stringify(data.field)
-
             $.ajax({
                 url : "<%=request.getContextPath() %>/updateConfig/updatefile",
                 type : 'POST',

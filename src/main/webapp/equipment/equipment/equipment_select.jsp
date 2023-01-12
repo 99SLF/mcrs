@@ -29,13 +29,13 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">设备类型：</label>
                     <div class="layui-input-inline">
-                        <select name="equipTypeName" id="equipTypeName" lay-filter="" type="select" onenter="search">
+                        <select name="equipTypeName" id="equipTypeName" lay-filter="equipTypeName" type="select" onenter="search">
                             <option value=""></option>
                         </select>
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-deviceInfo-search">
+                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-deviceInfo-search" id="LAY-app-deviceInfo-search">
                         <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                     </button>
                 </div>
@@ -93,9 +93,19 @@
         });
     });
 
-    $(".layui-btn.layuiadmin-btn-list").on("click", function () {
-        var type = $(this).data("type");
-        active[type] ? active[type].call(this) : "";
+    //使用工序下拉框监听事件
+    form.on("select(equipTypeName)", function(data) {
+        var submit = $("#LAY-app-deviceInfo-search");
+        submit.click();
+    });
+
+    //文本框回车事件
+    $(".layui-input").on("keydown", function (event) {
+        if (event.keyCode == 13) {
+            var submit = $("#LAY-app-deviceInfo-search");
+            submit.click();
+            return false;
+        }
     });
 
     var selData = {};      //存放选中行数据

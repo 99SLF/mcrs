@@ -39,10 +39,10 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">设备安装位置:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>设备安装位置:</label>
             <div class="layui-input-block">
                 <input id="equipmentInstallLocation" type="text" name="equipmentInstallLocation"
-                       lay-verify="" placeholder="请输入设备安装位置" autocomplete="off" class="layui-input">
+                       lay-verify="required|equipmentInstallLocation" placeholder="请输入设备安装位置" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-col-sm6">
@@ -217,6 +217,8 @@
         elem: "#enable",
         dictTypeId: "IS_USE",
     });
+    //设置启用的默认值
+    $("#enable").val("101");
     form.render();
 
     // 判断字符
@@ -230,7 +232,8 @@
             if (value.length > 20) {
                 return "设备名称不能超过20字";
             }
-        }, equipmentInstallLocation: function (value, item) {
+        },
+        equipmentInstallLocation: function (value, item) {
             if (value.length > 50) {
                 return "设备安装位置不能超过50字";
             }
@@ -292,7 +295,6 @@
                 $("#processName").val(data.processName);
                 top.layer.close(index);
                 check();
-                Exist();
             }
         });
     });

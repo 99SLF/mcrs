@@ -35,8 +35,8 @@ public class DeviceController {
     @PostMapping("/device/registrationDevice")
     public Result<?> registrationDevice(@RequestBody Device device) {
         IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
-        device.setEnable("off");
-        device.setRegisterStatus("未注册");
+        device.setRegisterStatus("102");
+        device.setVersion("1.0");
         device.setCreator(usetObject.getUserName());
         device.setCreateTime(new Date());
         deviceService.registrationDevice(device);
@@ -142,7 +142,20 @@ public class DeviceController {
 
     }
 
-
+    /**
+     * 查询当前选择设备是否被注册
+     * @param equipmentInt 设备主键
+     * @return
+     */
+    @GetMapping("/device/checkEquipment/isExist")
+    public Result<?> checkEquipment(@RequestParam("equipmentInt") int equipmentInt){
+        System.out.println(equipmentInt);
+        if (deviceService.checkEquipment(equipmentInt)>0){
+            return Result.error("1","当前选择设备已被注册，请重新选择未注册设备");
+        }else {
+            return Result.success();
+        }
+}
 
 
 }

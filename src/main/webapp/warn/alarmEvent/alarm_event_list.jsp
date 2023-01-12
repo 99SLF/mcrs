@@ -23,26 +23,25 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">预警事件编码：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="alarmEventId" placeholder="请输入编码" autocomplete="off"
+                        <input type="text" name="alarmEventId" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">预警事件标题：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="alarmEventTitle" placeholder="请输入标题" autocomplete="off"
+                        <input type="text" name="alarmEventTitle" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">预警级别：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="alarmLevel" placeholder="请输入预警级别" autocomplete="off"
+                        <input type="text" name="alarmLevel" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
-
                     <label class="layui-form-label">预警类型：</label>
                     <div class="layui-input-block">
                         <select name="alarmType" id="alarmType" lay-filter="alarmType" type="select">
@@ -53,19 +52,19 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">制单人：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="makeFormPeople" placeholder="请输入制单人" autocomplete="off"
+                        <input type="text" name="makeFormPeople" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">制单时间：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="makeFormTime" placeholder="请输入制单时间" id="makeFormTime"
+                        <input type="text" name="makeFormTime" placeholder="" id="makeFormTime"
                                autocomplete="off"
                                class="layui-input">
                     </div>
 
-                    <div class="layui-inline layui-search">
+                    <div class="layui-inline layui-search" style="padding-left: 50px">
                         <button class="layui-btn layuiadmin-btn-list" lay-submit
                                 lay-filter="LAY-app-alarmEventlist-search"
                                 id="LAY-app-alarmEventlist-search">

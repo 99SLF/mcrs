@@ -61,7 +61,7 @@ public class UpdatePackage {
     public Result<?> checkRollback(String APPId) {
 
         if (APPId == null || APPId == "") {
-            return Result.success("1", "数据不存在，无法升级");
+            return Result.success("1", "传入参数有误");
         }
 
         DeviceRollbackVo deviceRollbackVo = updatePackageService.getRollbackVoDevice(APPId);
@@ -108,7 +108,7 @@ public class UpdatePackage {
     public Result<?> checkResult(String APPId) {
 
         if (APPId == null || APPId == "") {
-            return Result.success("1", "数据不存在，无法升级");
+            return Result.success("1", "传入参数有误");
         }
 
         try {
@@ -289,7 +289,7 @@ public class UpdatePackage {
     @PostMapping("/loaderResult")
     public Result<?> loaderResult(String APPId,String isCode) {
         if (APPId == null || APPId == "" || isCode == null ||isCode =="") {
-            return Result.success("1", "数据不存在，无法升级");
+            return Result.success("1", "传入参数有误");
         }
 
         try {
@@ -418,7 +418,7 @@ public class UpdatePackage {
     @PostMapping("/register")
     public Result<?> register(HttpServletRequest request,String equipmentIp) {
         if (equipmentIp == null || equipmentIp == "" ) {
-            return Result.error("1", "数据不存在");
+            return Result.error("1", "传入参数有误");
         }
 
         try {

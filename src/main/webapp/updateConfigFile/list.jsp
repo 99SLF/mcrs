@@ -56,12 +56,17 @@
     var hiddenFields = [];
     //功能名
     var funName = "config_file";
-    //var appId = null;
-    var appId = "001";
+    var appId = null;
+    //var appId = "001";
 
-    function SetData(data) {
+    function SetData(obj) {
         win = obj.win ? obj.win : window;
         appId = obj.appId ? obj.appId : null;
+        table.reload("tableReload",{
+            where:{
+                appId: appId
+            }
+        })
     }
 
 
@@ -252,7 +257,9 @@
         var data = obj.data;
         if (obj.event == "edit") {
             var fileCont = null;
-
+            if (data.filePath == "" || data.filePath == null) {
+                return  layer.msg("配置文件未上传，无法进行修改", {icon : 2,time : 1500});
+            }
             var configurationFile = JSON.stringify(obj.data);
             $.ajax({
                 url: "<%=request.getContextPath() %>/updateConfig/getfile",
