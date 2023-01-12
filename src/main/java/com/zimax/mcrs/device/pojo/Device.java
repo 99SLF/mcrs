@@ -58,11 +58,6 @@ public class Device{
     private String  deviceName;
 
     /**
-     * 接入点资源维护数据的主键
-     */
-    private int accPointResId;
-
-    /**
      * 设备主键
      */
     private int equipmentInt;

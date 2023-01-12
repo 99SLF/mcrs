@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="layui-col-sm6">
-                    <label class="layui-form-label">预警规则标题:</label>
+                    <label class="layui-form-label"><span style="color:red">*</span>预警规则标题:</label>
                     <div class="layui-input-block">
                         <input id="alarmRuleTitle" type="text" name="alarmRuleTitle" lay-verify="required"
                                placeholder="预警规则标题" autocomplete="off" class="layui-input">

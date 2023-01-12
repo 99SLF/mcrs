@@ -39,7 +39,7 @@ public class DeviceService {
         Map<String,Object> map= new HashMap<>();
         if(order==null){
             map.put("order","desc");
-            map.put("field","dev.create_time");
+            map.put("field","vo.create_time");
         }else{
             map.put("order",order);
             map.put("field",changeString.camelUnderline(field));
@@ -72,7 +72,6 @@ public class DeviceService {
     public void registrationDevice(Device device) {
         //调用方法加密，不使用，使用数据库MD5加密
 //        device.setAPPId(encrypt(device.getAPPId()));
-        device.setVersion("1.0");
         deviceMapper.registrationDevice(device);
         //注册完成后将本次注册的信息添加至升级信息
         DeviceUpgrade deviceUpgrade = new DeviceUpgrade();
@@ -158,6 +157,13 @@ public class DeviceService {
         return deviceMapper.checkDeviceSoftwareType(deviceSoftwareType);
     }
 
-
+    /**
+     * 判断当前选择设备是否已被注册
+     * @param equipmentInt
+     * @return
+     */
+    public int checkEquipment(int equipmentInt){
+        return  deviceMapper.checkEquipment(equipmentInt);
+    }
 
 }

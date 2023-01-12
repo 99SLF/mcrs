@@ -41,7 +41,7 @@
     </div>
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">是否启用：</label>
+            <label class="layui-form-label">启用：</label>
             <div class="layui-input-block">
                 <select name="enable" id="enable" lay-filter="" type="select">
                     <option value="on">是</option>
@@ -50,7 +50,7 @@
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label">是否需要更新:</label>
+            <label class="layui-form-label">需要更新:</label>
             <div class="layui-input-block">
                 <input id="needUpdate" type="text" name="needUpdate" lay-verify="" placeholder=""
                        autocomplete="off" class="layui-input" readonly>
@@ -67,7 +67,7 @@
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>终端软件类型:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>终端类型:</label>
             <div class="layui-input-block">
                 <select name="deviceSoftwareType" id="deviceSoftwareType" lay-filter="" type="select">
                     <option value=""></option>
@@ -87,13 +87,9 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>接入点名称:</label>
             <div class="layui-input-block">
-                <input id="accPointResId" name="accPointResId" type="hidden"/>
                 <input type="text" class="layui-input" name="accPointResName" id="accPointResName"
                        lay-verify=""
                        autocomplete="off" placeholder="" readonly>
-                <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="accPoint"
-                        style="position:absolute;top:0px;right:0px;height:37px"><i
-                        class="layui-icon layui-icon-more"></i></button>
             </div>
         </div>
     </div>
@@ -265,8 +261,14 @@
         elem: "#deviceSoftwareType",
         dictTypeId: "DEVICE_SOFTWARE_TYPE",
     });
-    //设置软件类型的默认值
-    $("#deviceSoftwareType").val("101");
+    form.render();
+
+
+    //获取启用类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#enable",
+        dictTypeId: "IS_USE",
+    });
     form.render();
 
 
@@ -280,7 +282,7 @@
             "version": data.version,
             "needUpdate": data.needUpdate,
             "enable": data.enable,
-            "registerStatus": data.registerStatus,
+            "registerStatus": layui.admin.getDictText("REGISTER_STATUS",data.registerStatus),
             "deviceSoftwareType": data.deviceSoftwareType,
             "deviceName": data.deviceName,
             "accPointResId": data.accPointResId,

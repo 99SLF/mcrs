@@ -6,9 +6,19 @@
             http://www.springframework.org/schema/beans/spring-beans.xsd
                 http://www.springframework.org/schema/context
                     http://www.springframework.org/schema/context/spring-context.xsd">
-    <!--    导入外部配置文件-->
+
+    <!--    导入外部配置文件xml-->
     <!--   <import resource="applicationContext-service.xml"></import>-->
+
+    <!--spring只允许一个context-其他都会被忽略-，且必须在bean之前加载-->
+    <!--解决方式：1.添加ignore-unresolvable="true" 属性-->
+    <!--2.使用统配符加载-->
+    <!--3.不使用外置文件，直接使用javabean直接修改vaule-->
+
+    <!--更新包上传配置-->
+    <context:property-placeholder ignore-unresolvable="true" location="classpath:upload.properties"/>
     <context:property-placeholder location="classpath:jdbc.properties"/>
+
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${jdbc.driver}"/>
         <property name="jdbcUrl" value="${jdbc.url}"/>
@@ -30,6 +40,25 @@
         <property name="maxUploadSize" value="62914560"/>
         <property name="maxInMemorySize" value="40960"/>
     </bean>
+    <!--
+       加载properties配置文件
+       classpath:表示类路径下
+   -->
+    <!--
+		配置uploadJava
+		使用格式:${properties文件中的属性名}
+	-->
+
+
+    <bean id="UploadJava" class="com.zimax.mcrs.update.javaBean.UploadJava">
+        <property name="realPath" value="${realPath}"/>
+    </bean>
+
+
+
+
+
+
 
 
     <!--    Mapper扫描器-->
