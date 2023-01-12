@@ -29,13 +29,14 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">使用工序：</label>
                     <div class="layui-input-inline">
-                        <select name="processName" id="processName" lay-filter="" type="select" onenter="search">
+                        <select name="processName" id="processName" lay-filter="processName" type="select" onenter="search">
                             <option value=""></option>
                         </select>
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-deviceInfo-search">
+                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-deviceInfo-search"
+                    id="LAY-app-deviceInfo-search">
                         <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                     </button>
                 </div>
@@ -82,6 +83,15 @@
     form.render();
     var deviceData = {};
 
+    //获取使用工序的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#processName",
+        dictTypeId: "USE_PROCESS",
+    });
+    form.render();
+
+
+
     //监听搜索
     form.on("submit(LAY-app-deviceInfo-search)", function (data) {
         var field = data.field;
@@ -89,6 +99,7 @@
             "equipmentInt": field.equipmentInt,
             "equipmentId": field.equipmentId,
             "equipTypeName": field.equipTypeName,
+            "processName": field.processName,
             "isEquipment": "1"
         };
         table.reload("LAY-app-device-list", {
@@ -97,9 +108,19 @@
         });
     });
 
-    $(".layui-btn.layuiadmin-btn-list").on("click", function () {
-        var type = $(this).data("type");
-        active[type] ? active[type].call(this) : "";
+    //使用工序下拉框监听事件
+    form.on("select(processName)", function(data) {
+        var submit = $("#LAY-app-deviceInfo-search");
+        submit.click();
+    });
+
+    //文本框回车事件
+    $(".layui-input").on("keydown", function (event) {
+        if (event.keyCode == 13) {
+            var submit = $("#LAY-app-deviceInfo-search");
+            submit.click();
+            return false;
+        }
     });
 
     var selData = {};      //存放选中行数据
@@ -199,21 +220,6 @@
         }]]
     });
 
-    var param = {
-        "equipmentInt": "",
-        "equipmentId": "",
-        "equipTypeName": "",
-        "equipmentInstallLocation": "",
-        "equipmentIp": "",
-        "accPointResName": "",
-        "matrixCode": "",
-        "factoryCode": "",
-        "processName": "",
-    }
-    dataJson.push(param);
-    tables.reload({
-        data: dataJson
-    });
 
 
     function GetData() {

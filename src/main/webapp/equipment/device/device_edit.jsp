@@ -49,7 +49,7 @@
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label">是否需要更新:</label>
+            <label class="layui-form-label">需要更新:</label>
             <div class="layui-input-block">
                 <input id="needUpdate" type="text" name="needUpdate" lay-verify="" placeholder=""
                        autocomplete="off" class="layui-input" readonly>
@@ -62,11 +62,11 @@
             <label class="layui-form-label">注册状态:</label>
             <div class="layui-input-block">
                 <input id="registerStatus" type="text" name="registerStatus" lay-verify="" placeholder=""
-                       autocomplete="off" class="layui-input" readonly>
+                       autocomplete="off" class="layui-input"  readonly>
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>终端软件类型:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>终端类型:</label>
             <div class="layui-input-block">
                 <select name="deviceSoftwareType" id="deviceSoftwareType" lay-filter="" type="select">
                     <option value=""></option>
@@ -86,13 +86,9 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>接入点名称:</label>
             <div class="layui-input-block">
-                <input id="accPointResId" name="accPointResId" type="hidden"/>
                 <input type="text" class="layui-input" name="accPointResName" id="accPointResName"
                        lay-verify=""
                        autocomplete="off" placeholder="" readonly>
-                <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="accPoint"
-                        style="position:absolute;top:0px;right:0px;height:37px"><i
-                        class="layui-icon layui-icon-more"></i></button>
             </div>
         </div>
     </div>
@@ -175,7 +171,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>接入方式:</label>
             <div class="layui-input-block">
-                <select name="accessMethod" id="accessMethod" lay-filter="" type="select">
+                <select name="accessMethod" id="accessMethod" lay-filter="" type="select" lay-verify="required">
                     <option value=""></option>
                 </select>
             </div>
@@ -222,6 +218,7 @@
     //禁用选择设备资源号按钮
     $('#selectEquipment').addClass("layui-btn-disabled").attr("disabled", true);
 
+
     function SetData(data) {
         win = data.win ? data.win : window;
         var data = data.data;
@@ -232,7 +229,7 @@
             "version": data.version,
             "needUpdate": data.needUpdate,
             "enable": data.enable,
-            "registerStatus": data.registerStatus,
+            "registerStatus": layui.admin.getDictText("REGISTER_STATUS",data.registerStatus),
             "deviceSoftwareType": data.deviceSoftwareType,
             "deviceName": data.deviceName,
             "accPointResId": data.accPointResId,
@@ -249,6 +246,7 @@
             "programInstallationPath": data.programInstallationPath,
             "executorInstallationPath": data.executorInstallationPath,
         });
+        debugger;
     }
 
     //获取接入方式的下拉值
@@ -270,6 +268,8 @@
         dictTypeId: "IS_USE",
     });
     form.render();
+
+
 
 
     //判断字符
@@ -346,25 +346,25 @@
             }
         });
     });
-    //选择接入点资源入口
-    $("#accPoint").click(function () {
-        top.layer.open({
-            type: 2,
-            title: "选择接入点资源",
-            area: ["850px", "470px"],
-            btn: ["确定", "取消"],
-            content: "<%= request.getContextPath() %>/basic/accPointResMaintain/accPointRes_select.jsp",
-            yes: function (index, layero) {
-                var data = layero.find('iframe')[0].contentWindow.getData();
-                $("#accPointResId").val(data.accPointResId);
-                $("#accPointResName").val(data.accPointResName);
-                $("#factoryName").val(data.factoryName);
-                $("#processName").val(data.processName);
-                top.layer.close(index);
-            }
-        });
-    });
-    form.render();
+    <%--//选择接入点资源入口--%>
+    <%--$("#accPoint").click(function () {--%>
+    <%--    top.layer.open({--%>
+    <%--        type: 2,--%>
+    <%--        title: "选择接入点资源",--%>
+    <%--        area: ["850px", "470px"],--%>
+    <%--        btn: ["确定", "取消"],--%>
+    <%--        content: "<%= request.getContextPath() %>/basic/accPointResMaintain/accPointRes_select.jsp",--%>
+    <%--        yes: function (index, layero) {--%>
+    <%--            var data = layero.find('iframe')[0].contentWindow.getData();--%>
+    <%--            $("#accPointResId").val(data.accPointResId);--%>
+    <%--            $("#accPointResName").val(data.accPointResName);--%>
+    <%--            $("#factoryName").val(data.factoryName);--%>
+    <%--            $("#processName").val(data.processName);--%>
+    <%--            top.layer.close(index);--%>
+    <%--        }--%>
+    <%--    });--%>
+    <%--});--%>
+    <%--form.render();--%>
     // //日期
     // laydate.render({
     // 	elem: '#invaldate',

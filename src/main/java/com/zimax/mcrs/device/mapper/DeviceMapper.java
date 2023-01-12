@@ -106,4 +106,12 @@ public interface DeviceMapper {
      * @return
      */
     int getUpgradeId (@Param("version") String version,@Param("deviceSoftwareType") String deviceSoftwareType);
+
+    /**
+     * 查询当前设备是否已被注册
+     *
+     * @return
+     */
+    int checkEquipment(@Param("equipmentInt")int equipmentInt);
+
 }

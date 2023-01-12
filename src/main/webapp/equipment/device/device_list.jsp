@@ -150,6 +150,8 @@
         }
     });
 
+
+
     var active = {
         //终端注册
         add: function () {
@@ -176,6 +178,10 @@
         //升级
 
         upgrade: function () {
+
+
+
+
 
             var checkStatus = table.checkStatus("LAY-app-device-list-reload");
 
@@ -592,7 +598,7 @@
             hide: isHidden("version")
         }, {
             field: "needUpdate",
-            title: "是否需要更新",
+            title: "需要更新",
             align: "center",
             minWidth: 120,
             hide: isHidden("needUpdate")
@@ -601,7 +607,10 @@
             title: "注册状态",
             align: "center",
             minWidth: 120,
-            hide: isHidden("registerStatus")
+            hide: isHidden("registerStatus"),
+            templet: function (d) {
+                return layui.admin.getDictText("REGISTER_STATUS", d.registerStatus);
+            }
         }, {
             field: "enable",
             title: "启用",
