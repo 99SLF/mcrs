@@ -778,7 +778,6 @@
                 resize: false,
                 btn: ["确定", "取消"],
                 success: function (layero, index) {
-                    debugger;
                     var dataJson = {
                         appId: appId,
                         win: window
