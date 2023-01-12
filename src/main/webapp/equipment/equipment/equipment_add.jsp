@@ -293,6 +293,7 @@
                 $("#matrixCode").val(data.matrixCode);
                 $("#factoryCode").val(data.factoryCode);
                 $("#processName").val(data.processName);
+                debugger;
                 top.layer.close(index);
                 check();
             }
@@ -328,6 +329,7 @@
         if (submit == false) {
             submit = true;
             var submitData = JSON.stringify(data.field);
+            debugger;
             if (isExist == false) {
                 $.ajax({
                     url: "<%= request.getContextPath() %>/equipment/equipment/add",

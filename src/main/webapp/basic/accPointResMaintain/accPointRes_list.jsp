@@ -347,7 +347,11 @@
             title: "是否启用",
             align: "center",
             minWidth: 80,
-            hide: isHidden("isEnable")
+            hide: isHidden("isEnable"),
+            templet:function(d) {
+
+                return layui.admin.getDictText("IS_USE", d.isEnable);
+            }
         }, {
             field: "matrixCode",
             title: "基地代码",

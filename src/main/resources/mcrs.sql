@@ -816,9 +816,6 @@ INSERT INTO `base_coding_serialnumber` VALUES ('6', 'jrdCod', '4', '1', '0', 'å¤
     -- Records of base_process_info
     -- ----------------------------
 
-    -- ----------------------------
-    -- Table structure for base_access_info
-    -- ----------------------------
 -- ----------------------------
 -- Table structure for base_access_info
 -- ----------------------------
@@ -830,19 +827,14 @@ CREATE TABLE `base_access_info` (
     `acc_point_res_name` varchar(255) DEFAULT NULL,
     `is_enable` varchar(255) DEFAULT NULL,
     `matrix_code` varchar(255) DEFAULT NULL,
-    `matrix_name` varchar(255) DEFAULT NULL,
     `factory_code` varchar(255) DEFAULT NULL,
-    `factory_name` varchar(255) DEFAULT NULL,
     `process_code` varchar(255) DEFAULT NULL,
-    `process_name` varchar(255) DEFAULT NULL,
-    `process_remarks` varchar(255) DEFAULT NULL,
     `creator` varchar(255) DEFAULT NULL,
     `create_time` datetime DEFAULT NULL,
     `updater` varchar(255) DEFAULT NULL,
     `update_time` datetime DEFAULT NULL,
     PRIMARY KEY (`acc_point_res_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for upd_record

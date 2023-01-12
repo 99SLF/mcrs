@@ -63,6 +63,7 @@
     <select id="queryAccPointRes" parameterType="map"
             resultType="com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointResVo">
         SELECT
+        a.acc_point_res_id,
         a.acc_point_res_code,
         a.acc_point_res_name,
         a.is_enable,
