@@ -954,3 +954,21 @@ CREATE TABLE `dev_config_file` (
 
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+    -- ----------------------------
+-- Table structure for log_login_log
+-- ----------------------------
+DROP TABLE IF EXISTS `log_login_log`;
+CREATE TABLE `log_login_log`  (
+  `login_log_id` int(9) NOT NULL AUTO_INCREMENT,
+  `equipment_int` int(9) NULL DEFAULT NULL,
+  `device_id` int(9) NULL DEFAULT NULL,
+  `source` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `login_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `login_time` datetime NULL DEFAULT NULL,
+  `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`login_log_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 76 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
