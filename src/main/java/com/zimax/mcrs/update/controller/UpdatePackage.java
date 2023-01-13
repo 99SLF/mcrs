@@ -87,12 +87,16 @@ public class UpdatePackage {
                     upgradeData.setVersionID(version);
                     upgradeData.setIfUpdate(true);
                     upgradeData.setIsForcedUpdate("false");
+                    upgradeData.setExecutorInstallationPath(deviceRollbackVo.getExecutorInstallationPath());
+                    upgradeData.setProgramInstallationPath(deviceRollbackVo.getProgramInstallationPath());
                     return Result.success(upgradeData,"0", "是否回滚");
                 } else {//2.1.3.2、更新策略为强制更新，返回 是否升级、版本号、更新策略
                     upgradeData.setUpdatetype("1");
                     upgradeData.setVersionID(version);
                     upgradeData.setIfUpdate(true);
                     upgradeData.setIsForcedUpdate("true");
+                    upgradeData.setExecutorInstallationPath(deviceRollbackVo.getExecutorInstallationPath());
+                    upgradeData.setProgramInstallationPath(deviceRollbackVo.getProgramInstallationPath());
                     return Result.success(upgradeData,"0", "是否回滚");
                 }
             }
@@ -139,12 +143,16 @@ public class UpdatePackage {
                         upgradeData.setVersionID(version);
                         upgradeData.setIfUpdate(true);
                         upgradeData.setIsForcedUpdate("false");
+                        upgradeData.setExecutorInstallationPath(deviceUpgradeVo.getExecutorInstallationPath());
+                        upgradeData.setProgramInstallationPath(deviceUpgradeVo.getProgramInstallationPath());
                         return Result.success(upgradeData,"0", "是否升级");
                     } else {//3.2、更新策略为强制更新，返回 是否升级、版本号、更新策略
                         upgradeData.setUpdatetype("0");
                         upgradeData.setVersionID(version);
                         upgradeData.setIfUpdate(true);
                         upgradeData.setIsForcedUpdate("true");
+                        upgradeData.setExecutorInstallationPath(deviceUpgradeVo.getExecutorInstallationPath());
+                        upgradeData.setProgramInstallationPath(deviceUpgradeVo.getProgramInstallationPath());
                         return Result.success(upgradeData,"0", "是否升级");
                     }
                 }
