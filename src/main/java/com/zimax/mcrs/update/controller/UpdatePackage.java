@@ -70,14 +70,14 @@ public class UpdatePackage {
         if (deviceRollbackVo == null) {
             upgradeData.setUpdatetype("1");
             upgradeData.setIfUpdate(false);
-            return Result.success(upgradeData,"1", "数据不存在，无法升级");
+            return Result.success(upgradeData,"2", "数据不存在，无法升级");
         } else {
             //2.1.2.2、存在，但状态为升级，返回已经是最新版本
             String upgradeStatus = deviceRollbackVo.getUpgradeStatus();
             if (upgradeStatus.equals("102") || upgradeStatus.equals("101") ) {
                 upgradeData.setUpdatetype("1");
                 upgradeData.setIfUpdate(false);
-                return Result.success(upgradeData,"1", "已经是最新版本，无法升级");
+                return Result.success(upgradeData,"2", "已经是最新版本，无法升级");
             } else {    //2.1.2.3、存在，但状态为未升级
                 //2.1.3、查询更新策略
                 //2.1.3.1、更新策略为手动更新，返回 是否升级、版本号、更新策略
