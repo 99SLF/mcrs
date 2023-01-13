@@ -59,11 +59,6 @@ public class DeviceVo {
     private String  deviceName;
 
     /**
-     * 接入点资源维护数据的主键
-     */
-    private int accPointResId;
-
-    /**
      *接入点名称
      */
     private String accPointResName;

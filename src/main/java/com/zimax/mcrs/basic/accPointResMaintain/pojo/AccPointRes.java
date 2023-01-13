@@ -53,35 +53,35 @@ public class AccPointRes {
      */
     private String matrixCode;
 
-    /**
-     * 基地名称
-     */
-    private String matrixName;
+//    /**
+//     * 基地名称
+//     */
+//    private String matrixName;
 
     /**
      * 工厂代码
      */
     private String factoryCode;
-
-    /**
-     * 工厂名称
-     */
-    private String factoryName;
+//
+//    /**
+//     * 工厂名称
+//     */
+//    private String factoryName;
 
     /**
      * 工序代码
      */
     private String processCode;
 
-    /**
-     * 工序名称
-     */
-    private String processName;
+//    /**
+//     * 工序名称
+//     */
+//    private String processName;
 
-    /**
-     * 工序描述
-     */
-    private String processRemarks;
+//    /**
+//     * 工序描述
+//     */
+//    private String processRemarks;
 
     /**
      * 制单人

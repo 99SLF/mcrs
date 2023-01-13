@@ -18,6 +18,12 @@
         LEFT JOIN
         upd_upload AS upl
         ON rol.upload_id=upl.upload_id
+        LEFT JOIN
+        base_access_info AS bai
+        ON eqi.acc_point_res_id = bai.acc_point_res_id
+        LEFT JOIN
+        base_factory_info AS bfi
+        ON bai.factory_code = bfi.factory_code
         <where>
             <if test="deviceName !=null and deviceName !=''">
                 and dev.device_name LIKE '%${deviceName}%'
@@ -52,7 +58,7 @@
         eqi.equipment_name,
         dev.device_name,
         dev.device_software_type,
-        bai.factory_name,
+        bfi.factory_name,
         upl.upload_number,
         dev.app_id
         FROM
@@ -68,7 +74,10 @@
         ON rol.upload_id=upl.upload_id
         LEFT JOIN
         base_access_info AS bai
-        ON dev.acc_point_res_id = bai.acc_point_res_id
+        ON eqi.acc_point_res_id = bai.acc_point_res_id
+        LEFT JOIN
+        base_factory_info AS bfi
+        ON bai.factory_code = bfi.factory_code
         <where>
             <if test="deviceName !=null and deviceName !=''">
                 and dev.device_name LIKE '%${deviceName}%'

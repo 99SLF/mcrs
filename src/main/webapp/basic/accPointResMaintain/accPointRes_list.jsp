@@ -347,20 +347,26 @@
             title: "是否启用",
             align: "center",
             minWidth: 80,
-            hide: isHidden("isEnable")
+            hide: isHidden("isEnable"),
+            templet:function(d) {
+
+                return layui.admin.getDictText("IS_USE", d.isEnable);
+            }
         }, {
             field: "matrixCode",
             title: "基地代码",
             align: "center",
             minWidth: 100,
             hide: isHidden("matrixCode")
-        }, {
-            field: "matrixName",
-            title: "基地名称",
-            align: "center",
-            minWidth: 120,
-            hide: isHidden("matrixName")
-        }, {
+        },
+        //     {
+        //     field: "matrixName",
+        //     title: "基地名称",
+        //     align: "center",
+        //     minWidth: 120,
+        //     hide: isHidden("matrixName")
+        // },
+            {
             field: "factoryCode",
             title: "工厂代码",
             align: "center",

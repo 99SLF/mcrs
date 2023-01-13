@@ -84,7 +84,7 @@
             <label class="layui-form-label">备注：</label>
             <div class="layui-input-block">
                 <textarea class="layui-textarea field-effect field-content" name="remarks" id="remarks"
-                          autocomplete="off" placeholder="" lay-verify="remarks"></textarea>
+                          autocomplete="off" placeholder="" lay-verify="remarks" readonly></textarea>
             </div>
         </div>
     </div>

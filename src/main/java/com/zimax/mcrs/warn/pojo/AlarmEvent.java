@@ -76,7 +76,6 @@ public class    AlarmEvent {
      */
     private String makeFormTime;
 
-
     /**
      * 修改人
      */

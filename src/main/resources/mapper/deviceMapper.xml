@@ -5,9 +5,8 @@
 
     <!--查询记录数-->
     <select id="count" resultType="int">
-        SELECT count(*) FROM eqi_device AS dev
-        LEFT JOIN base_access_info AS bai
-        ON dev.acc_point_res_id = bai.acc_point_res_id
+        SELECT  count(*)
+        FROM eqi_device AS dev
         LEFT JOIN eqi_equipment AS eqi
         ON dev.equipment_int=eqi.equipment_int
         <where>
@@ -22,42 +21,84 @@
 
     <!--查询所有-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.device.pojo.DeviceVo">
-        SELECT  *, if(dev.version = upd.version,"否","是")as need_update
-        ,MAX(upd.version_upload_time)
-        FROM eqi_device AS dev
-        LEFT JOIN base_access_info AS bai
-        ON dev.acc_point_res_id = bai.acc_point_res_id
-        LEFT JOIN eqi_equipment AS eqi
+        SELECT
+        vo.*
+        from
+        (SELECT
+        dev.device_id,
+        dev.app_id,
+        dev.version,
+        dev.`enable`,
+        dev.register_status,
+        dev.device_software_type,
+        dev.device_name,
+        bai.acc_point_res_name,
+        bfi.factory_name,
+        eqi.equipment_int,
+        eqi.equipment_id,
+        eqi.equipment_ip,
+        eqi.equipment_continue_port,
+        bpi.process_name,
+        eqi.equipment_install_location,
+        dev.access_method,
+        dev.remarks,
+        dev.creator,
+        dev.create_time,
+        bei.equip_type_name,
+        bei.protocol_communication,
+        dev.program_installation_path,
+        dev.executor_installation_path,
+        upd.upload_id,
+        if(dev.version = upd.version,
+        "否",
+        "是")as need_update
+        FROM
+        eqi_device AS dev
+        LEFT JOIN
+        eqi_equipment AS eqi
         ON dev.equipment_int=eqi.equipment_int
-        LEFT JOIN base_equip_info AS bei
+        LEFT JOIN
+        base_access_info AS bai
+        ON eqi.acc_point_res_id = bai.acc_point_res_id
+        LEFT JOIN
+        base_equip_info AS bei
         ON eqi.equip_type_id= bei.equip_type_id
-        LEFT JOIN upd_upload AS upd
+        LEFT JOIN
+        upd_upload AS upd
         ON dev.device_software_type = upd.device_so_type
+        LEFT JOIN
+        base_factory_info AS bfi
+        ON bai.factory_code = bfi.factory_code
+        LEFT JOIN
+        base_process_info AS bpi
+        ON bai.process_code = bpi.process_code
+        order by
+        upd.version_upload_time desc) as vo
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
-                and eqi.equipment_id like '%${equipmentId}%'
+                and vo.equipment_id like '%${equipmentId}%'
             </if>
             <if test="deviceSoftwareType !=null and deviceSoftwareType !=''">
-                and dev.device_software_type like '%${deviceSoftwareType}%'
+                and vo.device_software_type like '%${deviceSoftwareType}%'
             </if>
             <if test="enable !=null and enable !=''">
-                and dev.enable like '%${enable}%'
+                and vo.enable like '%${enable}%'
             </if>
             <if test="deviceName !=null and deviceName !=''">
-                and dev.device_name like '%${deviceName}%'
+                and vo.device_name like '%${deviceName}%'
             </if>
             <if test="processName !=null and processName !=''">
-                and bai.process_name like '%${processName}%'
+                and vo.process_name like '%${processName}%'
             </if>
             <if test="factoryName !=null and factoryName !=''">
-                and bai.factory_name like '%${factoryName}%'
+                and vo.factory_name like '%${factoryName}%'
             </if>
         </where>
         GROUP BY
-        dev.device_id
+        vo.device_id
         <if test="order !=null and order !=''">
             order by ${field} ${order}
-        </if>
+         </if>
         <if test="limit !=null and limit !=''">
             limit ${begin},${limit}
         </if>
@@ -72,7 +113,7 @@
                 #{version},
                 #{enable}, #{registerStatus},
                 #{deviceSoftwareType}, #{deviceName},
-                #{accPointResId},#{equipmentInt},
+                #{equipmentInt},
                 #{accessMethod}, #{remarks},
                 #{creator}, #{createTime},
                 #{programInstallationPath}, #{executorInstallationPath})
@@ -93,7 +134,6 @@
             register_status=#{registerStatus},
             device_software_type=#{deviceSoftwareType},
             device_name=#{deviceName},
-            acc_point_res_id=#{accPointResId},
             equipment_int=#{equipmentInt},
             access_method=#{accessMethod},
             remarks=#{remarks},
@@ -146,6 +186,11 @@
     <select id="getUpgradeId"  resultType="int"  >
         SELECT upload_id FROM upd_upload
         WHERE device_so_type = #{deviceSoftwareType} AND version = #{version}
+    </select>
+
+    <select id="checkEquipment" resultType="int">
+        select count(equipment_int) from eqi_device
+        where equipment_int =  #{equipmentInt}
     </select>
 
 

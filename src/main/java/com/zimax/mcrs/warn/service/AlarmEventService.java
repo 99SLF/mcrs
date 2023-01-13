@@ -30,7 +30,7 @@ public class AlarmEventService {
     /**
      * 查询全部预警信息
      */
-    public List<AlarmEventVo> queryAll(String page, String limit, Integer alarmEventId, String alarmEventTitle, String alarmLevel, String alarmCategory, String alarmType, String makeFormPeople, String makeFormTime, String order, String field){
+    public List<AlarmEventVo> queryAll(String page, String limit, String alarmEventId, String alarmEventTitle, String alarmLevel, String alarmCategory, String alarmType, String makeFormPeople, String makeFormTime, String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -57,7 +57,7 @@ public class AlarmEventService {
     /**
      * 查询记录
      */
-    public int count(Integer alarmEventId, String alarmEventTitle) {
+    public int count(String alarmEventId, String alarmEventTitle) {
         return alarmEventMapper.count(alarmEventId, alarmEventTitle);
     }
 
@@ -109,7 +109,7 @@ public class AlarmEventService {
         IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
         for (Integer integer:alarmEventInt){
             alarmEvent.setAlarmEventInt(integer);
-            alarmEvent.setEnableStatus("on");
+            alarmEvent.setEnableStatus("101");
             alarmEvent.setUpdatePeople(usetObject.getUserName());
             alarmEvent.setUpdateTime(new Date());
             alarmEventMapper.enable(alarmEvent);

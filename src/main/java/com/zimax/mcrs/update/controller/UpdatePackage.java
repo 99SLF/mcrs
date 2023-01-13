@@ -139,7 +139,7 @@ public class UpdatePackage {
                     //3.1、更新策略为手动更新，返回 是否升级、版本号、更新策略
                     String version = deviceUpgradeVo.getVersion();
                     if (deviceUpgradeVo.getUploadStrategy().equals("002")) {
-                        upgradeData.setUpdatetype("1");
+                        upgradeData.setUpdatetype("0");
                         upgradeData.setVersionID(version);
                         upgradeData.setIfUpdate(true);
                         upgradeData.setIsForcedUpdate("false");
@@ -147,7 +147,7 @@ public class UpdatePackage {
                         upgradeData.setProgramInstallationPath(deviceUpgradeVo.getProgramInstallationPath());
                         return Result.success(upgradeData,"0", "是否升级");
                     } else {//3.2、更新策略为强制更新，返回 是否升级、版本号、更新策略
-                        upgradeData.setUpdatetype("1");
+                        upgradeData.setUpdatetype("0");
                         upgradeData.setVersionID(version);
                         upgradeData.setIfUpdate(true);
                         upgradeData.setIsForcedUpdate("true");

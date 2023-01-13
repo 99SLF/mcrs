@@ -375,13 +375,7 @@
             align: "center",
             minWidth: 150,
             hide: isHidden("alarmEventId")
-        }, {
-            field: "monitorObject",
-            title: "监控对象",
-            align: "center",
-            minWidth: 150,
-            hide: isHidden("monitorObject")
-        }, {
+        },                               {
             field: "alarmRuleDescribe",
             title: "规则描述",
             align: "center",

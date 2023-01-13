@@ -51,11 +51,9 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>是否启用:</label>
             <div class="layui-input-block">
-                <select name="isEnable" id="iseEnable" lay-filter="isEnable"
-                        lay-verify="required|isEnable" type="select">
+                <select name="isEnable" id="isEnable" lay-filter="isEnable" lay-verify="required|isEnable"
+                        type="select">
                     <option value=""></option>
-                    <option value="是">是</option>
-                    <option value="否">否</option>
                 </select>
             </div>
         </div>
@@ -120,7 +118,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label">工序名称：</label>
             <div class="layui-input-block">
-                <input id="processName" type="text" name="processName" lay-verify=""
+                <input id="processName" type="text" name="processName" lay-verify="processName" lay-filter="processName"
                        placeholder="请先选择工序代码" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
@@ -154,6 +152,7 @@
 
     <div class="layui-form-item layui-hide">
         <input type="button" lay-submit lay-filter="layuiadmin-app-form-submit"
+               lay-filter="*"
                id="layuiadmin-app-form-submit"
                value="确认添加">
     </div>
@@ -181,6 +180,19 @@
     function SetData(data) {
         win = data.win ? data.win : window;
     }
+
+    layui.admin.renderDictSelect({
+        elem: "#isEnable",
+        dictTypeId: "IS_USE"
+    });
+
+    layui.admin.renderDictSelect({
+        elem: "#processName",
+        dictTypeId: "USE_PROCESS"
+    });
+
+    //数据字典项加载
+    form.render();
 
     // 判断字符
     form.verify({
@@ -371,7 +383,7 @@
                         var allDatas = result.data;
                         var processNameVal = allDatas[0].processName;
                         var processRemarksVal = allDatas[0].processRemarks;
-                        $("#processName").val(processNameVal);
+                        $("#processName").val(layui.admin.getDictText("USE_PROCESS", processNameVal));
                         $("#processRemarks").val(processRemarksVal);
 
 
@@ -389,6 +401,10 @@
 
     //监听提交
     form.on("submit(layuiadmin-app-form-submit)", function (data) {
+
+
+        debugger;
+
         // var submitData = JSON.stringify(data.field);
         debugger;
         if (submit == false) {
@@ -398,7 +414,7 @@
             if (isExist == false) {
                 $.ajax({
                     url: "<%= request.getContextPath() %>/accPointResController/add",
-                    type: "POST",
+                    type: "POST",//post自动过滤掉field中不需要的数据，实体接什么就保留什么
                     data: submitData,
                     cache: false,
                     contentType: "text/json",

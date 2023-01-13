@@ -7,27 +7,32 @@
     <!--新增用户-->
     <insert id="addAccPointRes" parameterType="com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes">
         insert into base_access_info
-        values (#{accPointResId}, #{infoId}, #{accPointResCode}, #{accPointResName}, #{isEnable}, #{matrixCode},#{matrixName},
-                #{factoryCode}, #{factoryName},
-                #{processCode}, #{processName},
-                #{processRemarks}, #{creator}, #{createTime}, #{updater}, #{updateTime})
+        values (#{accPointResId}, #{infoId}, #{accPointResCode}, #{accPointResName}, #{isEnable}, #{matrixCode},
+                #{factoryCode}, #{processCode}, #{creator}, #{createTime}, #{updater}, #{updateTime})
+
     </insert>
 
     <!--    查询记录数-->
     <select id="count" resultType="int">
-        select count(*) from base_access_info
+        SELECT
+        count(*)
+        FROM
+        base_access_info a
+        LEFT JOIN base_matrix_info b ON a.matrix_code =  b.matrix_code
+        LEFT JOIN base_factory_info c ON a.factory_code = c.factory_code
+        LEFT JOIN base_process_info d ON a.process_code = d.process_code
         <where>
             <if test="accPointResCode !=null and accPointResCode !=''">
-                and acc_point_res_code like '%${accPointResCode}%'
+                and a.acc_point_res_code like '%${accPointResCode}%'
             </if>
             <if test="accPointResName !=null and accPointResName !=''">
-                and acc_point_res_name like '%${accPointResName}%'
+                and a.acc_point_res_name like '%${accPointResName}%'
             </if>
             <if test="creator !=null and creator !=''">
-                and creator like '%${creator}%'
+                and a.creator like '%${creator}%'
             </if>
             <if test="createTime !=null and createTime !=''">
-                and create_time like '%${createTime}%'
+                and a.create_time like '%${createTime}%'
             </if>
         </where>
     </select>
@@ -35,39 +40,62 @@
     <!--更新一条选信息-->
     <update id="updateAccPointRes" parameterType="com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes">
         UPDATE base_access_info
-        SET info_id          = #{infoId},
+        SET
+            info_id            = #{infoId},
             acc_point_res_code = #{accPointResCode},
             acc_point_res_name = #{accPointResName},
-            is_enable        = #{isEnable},
-            matrix_code      = #{matrixCode},
-            matrix_name      = #{matrixName},
-            factory_code     = #{factoryCode},
-            factory_name     = #{factoryName},
-            process_code     = #{processCode},
-            process_name     = #{processName},
-            process_remarks  = #{processRemarks},
-            creator         = #{creator},
-            create_time      = #{createTime,jdbcType=DATE},
-            updater         = #{updater},
-            update_time      =#{updateTime,jdbcType=DATE}
+            is_enable          = #{isEnable},
+            matrix_code        = #{matrixCode},
+--             matrix_name        = #{matrixName},
+            factory_code       = #{factoryCode},
+--             factory_name       = #{factoryName},
+            process_code       = #{processCode},
+--             process_name       = #{processName},
+--             process_remarks    = #{processRemarks},
+            creator            = #{creator},
+            create_time        = #{createTime,jdbcType=DATE},
+            updater            = #{updater},
+            update_time        =#{updateTime,jdbcType=DATE}
         WHERE acc_point_res_id = ${accPointResId}
     </update>
 
     <!--列表显示-->
-    <select id="queryAccPointRes" parameterType="map" resultType="com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointResVo">
-        select * from base_access_info
+    <select id="queryAccPointRes" parameterType="map"
+            resultType="com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointResVo">
+        SELECT
+        a.acc_point_res_id,
+        a.acc_point_res_code,
+        a.acc_point_res_name,
+        a.is_enable,
+        b.matrix_code,
+        c.factory_code,
+        c.factory_name,
+        d.process_code,
+        d.process_name,
+        d.process_remarks,
+        a.creator,
+        a.create_time,
+        a.updater,
+        a.update_time,
+        d.process_name,
+        d.process_remarks
+        FROM
+        base_access_info a
+        LEFT JOIN base_matrix_info b ON a.matrix_code =  b.matrix_code
+        LEFT JOIN base_factory_info c ON a.factory_code = c.factory_code
+        LEFT JOIN base_process_info d ON a.process_code = d.process_code
         <where>
             <if test="accPointResCode !=null and accPointResCode !=''">
-                and acc_point_res_code like '%${accPointResCode}%'
+                and a.acc_point_res_code like '%${accPointResCode}%'
             </if>
             <if test="accPointResName !=null and accPointResName !=''">
-                and acc_point_res_name like '%${accPointResName}%'
+                and a.acc_point_res_name like '%${accPointResName}%'
             </if>
             <if test="creator !=null and creator !=''">
-                and creator like '%${creator}%'
+                and a.creator like '%${creator}%'
             </if>
             <if test="createTime !=null and createTime !=''">
-                and create_time like '%${createTime}%'
+                and a.create_time like '%${createTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">

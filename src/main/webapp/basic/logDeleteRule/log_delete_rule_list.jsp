@@ -21,36 +21,21 @@
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">日志删除规则编码：</label>
+                    <label class="layui-form-label">日志删除编码：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="deleteRuleNum" placeholder="请输入编码" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                    <label class="layui-form-label">日志删除规则标题：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="deleteRuleTitle" placeholder="请输入标题" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                    <label class="layui-form-label">规则级别：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="ruleLevel" placeholder="" autocomplete="off"
+                        <input type="text" name="deleteRuleNum" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">规则类型：</label>
+                    <label class="layui-form-label">日志删除标题：</label>
                     <div class="layui-input-inline">
-                        <select name="deleteRuleType" id="deleteRuleType" lay-filter="" type="select">
-                            <option value=""></option>
-                        </select>
-                    </div>
-                    <label class="layui-form-label">制单人：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="creator" placeholder="" autocomplete="off"
+                        <input type="text" name="deleteRuleTitle" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
-                    <div class="layui-inline layui-search">
-                        <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-logDeleteRulelist-search"
+                    <div class="layui-inline layui-search" style="padding-left: 50px">
+                        <button class="layui-btn layuiadmin-btn-list" lay-submit
+                                lay-filter="LAY-app-logDeleteRulelist-search"
                                 id="LAY-app-logDeleteRulelist-search">
                             <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                         </button>
@@ -117,13 +102,7 @@
     //     type: 'date'
     // });
 
-    //获取规则类型的下拉值
-    layui.admin.renderDictSelect({
-        elem: "#deleteRuleType",
-        dictTypeId: "LOG_DELETE_RULE_TYPE",
-    });
-    //设置预警类型的默认值
-    form.render();
+
 
     //监听搜索
     form.on("submit(LAY-app-logDeleteRulelist-search)", function (data) {
@@ -215,16 +194,19 @@
             }
         },
         enable: function () {
-            checkEnable();
+
             var checkStatus = table.checkStatus("LAY-app-logDeleteRule-list-reload");
-            var datas= checkStatus.data;
+            var datas = checkStatus.data;
+
             if (datas.length == 0) {
                 layer.msg("请至少选中一条规则！");
             }
-            if (datas.length >=2 ) {
+            if (datas.length >= 2) {
                 layer.msg("只能启用一条规则");
             }
-            if (datas.length == 1 ) {
+
+            if (datas.length == 1) {
+                checkEnable();
                 var ruleDeleteIds = new Array();
                 for (var i = 0; i < datas.length; i++) {
 
@@ -235,37 +217,37 @@
                     title: "系统提示"
                 }, function (index) {
                     if (isExist == false) {
-                    $.ajax({
-                        url: "<%= request.getContextPath() %>/logDeleteRule/logDeleteRule/enable",
-                        type: "POSt",
-                        data: JSON.stringify(datas),
-                        cache: false,
-                        contentType: "text/json",
-                        success: function (result) {
-                            if (result.exception) {
-                                layer.alert(result.exception.message, {
-                                    icon: 2,
-                                    title: "系统提示"
+                        $.ajax({
+                            url: "<%= request.getContextPath() %>/logDeleteRule/logDeleteRule/enable",
+                            type: "POSt",
+                            data: JSON.stringify(datas),
+                            cache: false,
+                            contentType: "text/json",
+                            success: function (result) {
+                                if (result.exception) {
+                                    layer.alert(result.exception.message, {
+                                        icon: 2,
+                                        title: "系统提示"
+                                    });
+                                } else if (result) {
+                                    layer.msg("启用成功", {
+                                        icon: 1,
+                                        time: 2000
+                                    }, function () {
+                                        table.reload("LAY-app-logDeleteRule-list-reload");
+                                    });
+                                } else {
+                                    layer.msg("启用失败");
+                                }
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                layer.msg(jqXHR.responseText, {
+                                    time: 2000,
+                                    icon: 5
                                 });
-                            } else if (result) {
-                                layer.msg("启用成功", {
-                                    icon: 1,
-                                    time: 2000
-                                }, function () {
-                                    table.reload("LAY-app-logDeleteRule-list-reload");
-                                });
-                            } else {
-                                layer.msg("启用失败");
                             }
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            layer.msg(jqXHR.responseText, {
-                                time: 2000,
-                                icon: 5
-                            });
-                        }
-                    });
-                    } else if ( isExist == true) {
+                        });
+                    } else if (isExist == true) {
                         layer.msg("当前日志类型存在启用状态删除规则，请先关闭已启用规则", {
                             icon: 2,
                             time: 2000
@@ -277,13 +259,13 @@
     };
 
     //判断日志删除规则是否已存在启用状态
-   function checkEnable() {
+    function checkEnable() {
 
-       var checkStatus = table.checkStatus("LAY-app-logDeleteRule-list-reload");
-       var datas= checkStatus.data;
+        var checkStatus = table.checkStatus("LAY-app-logDeleteRule-list-reload");
+        var datas = checkStatus.data;
         if (datas[0].logType != null && datas[0].logType != "") {
             $.ajax({
-                url: "<%= request.getContextPath() %>/logDeleteRule/logDeleteRule/check/enable?logType="+datas[0].logType,
+                url: "<%= request.getContextPath() %>/logDeleteRule/logDeleteRule/check/enable?logType=" + datas[0].logType,
                 type: "GET",
                 cache: false,
                 contentType: "text/json",
@@ -420,7 +402,7 @@
             event: "view",
             //监听打开详情页面
             templet: function (data) {
-                return '<span style="color: #09bbfd">' + data.deleteRuleNum +'</span>';
+                return '<span style="color: #09bbfd">' + data.deleteRuleNum + '</span>';
             }
         }, {
             field: "deleteRuleTitle",
@@ -430,17 +412,20 @@
             hide: isHidden("deleteRuleTitle")
         }, {
             field: "enable",
-            title: "是否启用",
+            title: "启用",
             align: "center",
             minWidth: 120,
-            hide: isHidden("enable")
+            hide: isHidden("enable"),
+            templet: function (d) {
+                return layui.admin.getDictText("IS_USE", d.enable);
+            }
         }, {
             field: "deleteRuleType",
             title: "日志删除规则类型",
             align: "center",
-            minWidth: 100,
+            minWidth: 200,
             hide: isHidden("deleteRuleType"),
-            templet:function(d) {
+            templet: function (d) {
                 return layui.admin.getDictText("LOG_DELETE_RULE_TYPE", d.deleteRuleType);
             }
         }, {
@@ -449,7 +434,7 @@
             align: "center",
             minWidth: 100,
             hide: isHidden("logType"),
-            templet:function(d) {
+            templet: function (d) {
                 return layui.admin.getDictText("LOG_TYPE", d.logType);
             }
         }, {
@@ -457,7 +442,10 @@
             title: "规则级别",
             align: "center",
             minWidth: 150,
-            hide: isHidden("ruleLevel")
+            hide: isHidden("ruleLevel"),
+            templet: function (d) {
+                return layui.admin.getDictText("WARNING_LEVEL", d.ruleLevel);
+            }
         }, {
             field: "timeInterval",
             title: "时间间隔",
@@ -470,7 +458,7 @@
             align: "center",
             minWidth: 120,
             hide: isHidden("timeUnit"),
-            templet:function(d) {
+            templet: function (d) {
                 return layui.admin.getDictText("TIME_UNIT", d.timeUnit);
             }
         }, {
@@ -571,8 +559,7 @@
                     }
                 });
             });
-        }
-        else if (e.event == "view") {
+        } else if (e.event == "view") {
             top.layer.open({
                 type: 2,
                 title: "查看日志删除规则详情",

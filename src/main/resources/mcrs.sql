@@ -281,25 +281,25 @@ CREATE TABLE `dict_type` (
 -- ----------------------------
 DROP TABLE IF EXISTS `eqi_device`;
 CREATE TABLE `eqi_device`  (
-    `device_id` int(9) NOT NULL AUTO_INCREMENT COMMENT '终端主键',
-    `app_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'APPId',
-    `version` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '版本号',
-    `enable` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否启用',
-    `register_status` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '注册状态',
-    `device_software_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '终端软件类型',
-    `device_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '终端名称',
-    `acc_point_res_id` int(9) NULL DEFAULT NULL COMMENT '接入点资源维护主键',
-    `equipment_int` int(9) NULL DEFAULT NULL COMMENT '设备主键',
-    `access_method` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接入方式',
-    `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
-    `creator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
-    `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-    `program_installation_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '终端程序安装路径',
-    `executor_installation_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '终端执行程序安装路径',
-    PRIMARY KEY (`device_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 123106 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+   `device_id` int(9) NOT NULL AUTO_INCREMENT COMMENT '终端主键',
+   `app_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'APPId',
+   `version` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '版本号',
+   `enable` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否启用',
+   `register_status` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '注册状态',
+   `device_software_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '终端软件类型',
+   `device_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '终端名称',
+   `equipment_int` int(9) NULL DEFAULT NULL COMMENT '设备主键',
+   `access_method` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接入方式',
+   `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+   `creator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+   `program_installation_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '终端程序安装路径',
+   `executor_installation_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '终端执行程序安装路径',
+   PRIMARY KEY (`device_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
 
 -- ----------------------------
 -- Table structure for eqi_equipment
@@ -511,7 +511,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 
 
-    -- ----------------------------
+-- ----------------------------
 -- Table structure for log_device_exchange_log
 -- ----------------------------
 DROP TABLE IF EXISTS `log_device_exchange_log`;
@@ -521,9 +521,8 @@ CREATE TABLE `log_device_exchange_log`  (
     `log_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志类型',
     `equipment_int` int(9) NULL DEFAULT NULL COMMENT '设备主键',
     `device_id` int(9) NULL DEFAULT NULL COMMENT '终端主键',
-    `factory_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工厂名称',
-    `process_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '使用工序',
-    `data_acquisition` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '数据采集',
+    `operation_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作类型',
+    `operation_content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作内容',
     `operator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作人',
     `exchange_time` datetime NULL DEFAULT NULL COMMENT '交互时间',
     PRIMARY KEY (`device_exchange_log_id`) USING BTREE
@@ -817,9 +816,6 @@ INSERT INTO `base_coding_serialnumber` VALUES ('6', 'jrdCod', '4', '1', '0', '�
     -- Records of base_process_info
     -- ----------------------------
 
-    -- ----------------------------
-    -- Table structure for base_access_info
-    -- ----------------------------
 -- ----------------------------
 -- Table structure for base_access_info
 -- ----------------------------
@@ -831,19 +827,14 @@ CREATE TABLE `base_access_info` (
     `acc_point_res_name` varchar(255) DEFAULT NULL,
     `is_enable` varchar(255) DEFAULT NULL,
     `matrix_code` varchar(255) DEFAULT NULL,
-    `matrix_name` varchar(255) DEFAULT NULL,
     `factory_code` varchar(255) DEFAULT NULL,
-    `factory_name` varchar(255) DEFAULT NULL,
     `process_code` varchar(255) DEFAULT NULL,
-    `process_name` varchar(255) DEFAULT NULL,
-    `process_remarks` varchar(255) DEFAULT NULL,
     `creator` varchar(255) DEFAULT NULL,
     `create_time` datetime DEFAULT NULL,
     `updater` varchar(255) DEFAULT NULL,
     `update_time` datetime DEFAULT NULL,
     PRIMARY KEY (`acc_point_res_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for upd_record

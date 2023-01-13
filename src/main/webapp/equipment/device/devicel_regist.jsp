@@ -38,7 +38,7 @@
             <div class="layui-input-block">
                 <input id="equipmentInt" name="equipmentInt" type="hidden"/>
                 <input type="text" class="layui-input" name="equipmentId" id="equipmentId"
-                       lay-verify=""
+                       lay-verify="required"
                        autocomplete="off" placeholder="请选择设备" readonly>
                 <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="onButtonEdit"
                         style="position:absolute;top:0px;right:0px;height:37px"><i
@@ -50,9 +50,10 @@
 
     <div class="layui-form-item layui-row layui-col-space6">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>终端软件类型:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>终端类型:</label>
             <div class="layui-input-block">
-                <select name="deviceSoftwareType" id="deviceSoftwareType" lay-filter="deviceSoftwareType" type="select">
+                <select name="deviceSoftwareType" id="deviceSoftwareType" lay-filter="deviceSoftwareType" type="select"
+                        lay-verify="required">
                     <option value=""></option>
                 </select>
             </div>
@@ -60,11 +61,30 @@
     </div>
 
     <div class="layui-form-item layui-row layui-col-space6">
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><span style="color:red">*</span>是否启用：</label>
+            <div class="layui-input-block">
+                <select name="enable" id="enable" lay-filter="" type="select"  lay-verify="required">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        </div>
+    <div class="layui-form-item layui-row layui-col-space6">
         <label class="layui-form-label"><span style="color:red">*</span>接入方式:</label>
         <div class="layui-input-block">
-            <select name="accessMethod" id="accessMethod" lay-filter="accessMethod" type="select">
+            <select name="accessMethod" id="accessMethod" lay-filter="accessMethod" type="select"  lay-verify="required">
                 <option value=""></option>
             </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-row layui-col-space6">
+        <label class="layui-form-label"><span style="color:red">*</span>接入点名称:</label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input" name="accPointResName" id="accPointResName"
+                   lay-verify="required"
+                   autocomplete="off" placeholder="" readonly>
         </div>
     </div>
 
@@ -77,9 +97,9 @@
     </div>
 
     <div class="layui-form-item layui-row layui-col-space6">
-        <label class="layui-form-label">终端执行程序安装路径:</label>
+        <label class="layui-form-label"><span style="color:red">*</span>终端执行程序安装路径:</label>
         <div class="layui-input-block">
-            <input id="executorInstallationPath" type="text" name="executorInstallationPath" lay-verify=""
+            <input id="executorInstallationPath" type="text" name="executorInstallationPath" lay-verify="required"
                    placeholder="" autocomplete="off" class="layui-input">
         </div>
     </div>
@@ -144,6 +164,7 @@
     var submit = false;
     var isExist = false;
     var isExistDSW = false;
+    var isExistEQI = false;
     var win = null;
 
     function SetData(data) {
@@ -186,6 +207,16 @@
     //设置软件类型的默认值
     $("#deviceSoftwareType").val("101");
     form.render();
+
+    //获取启用类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#enable",
+        dictTypeId: "IS_USE",
+    });
+    //设置启用的默认值
+    $("#enable").val("101");
+    form.render();
+
 
     // 判断字符
     form.verify({
@@ -256,39 +287,41 @@
                 var data = layero.find('iframe')[0].contentWindow.getData();
                 $("#equipmentInt").val(data.equipmentInt);
                 $("#equipmentId").val(data.equipmentId);
+                $("#accPointResName").val(data.accPointResName);
                 top.layer.close(index);
                 check();
-                Exist();
+                //因为对设备做唯一判断，故APPId验证重复，取消APPId验证
+                // Exist();
             }
         });
     });
 
 
-    //判断APPId是否已存在
-    function Exist() {
-        var APPId = $("#APPId").val();
+    <%--//判断APPId是否已存在--%>
+    <%--function Exist() {--%>
+    <%--    var APPId = $("#APPId").val();--%>
 
-        if (APPId != null && APPId != "") {
-            $.ajax({
-                url: "<%= request.getContextPath() %>/equipment/device/check/isExist?APPId=" + APPId,
-                type: "GET",
-                cache: false,
-                contentType: "text/json",
-                cache: false,
-                success: function (text) {
-                    if (text.code == "1") {
+    <%--    if (APPId != null && APPId != "") {--%>
+    <%--        $.ajax({--%>
+    <%--            url: "<%= request.getContextPath() %>/equipment/device/check/isExist?APPId=" + APPId,--%>
+    <%--            type: "GET",--%>
+    <%--            cache: false,--%>
+    <%--            contentType: "text/json",--%>
+    <%--            cache: false,--%>
+    <%--            success: function (text) {--%>
+    <%--                if (text.code == "1") {--%>
 
-                        isExist = true;
-                    } else {
-                        isExist = false;
-                    }
-                }
-            });
-        } else {
-            return;
-        }
-        console.log(isExist);
-    };
+    <%--                    isExist = true;--%>
+    <%--                } else {--%>
+    <%--                    isExist = false;--%>
+    <%--                }--%>
+    <%--            }--%>
+    <%--        });--%>
+    <%--    } else {--%>
+    <%--        return;--%>
+    <%--    }--%>
+    <%--    console.log(isExist);--%>
+    <%--};--%>
 
 
     //判断是否已存在终端软件类型对应更新包
@@ -316,13 +349,42 @@
         console.log(isExistDSW);
     };
 
+    //判断设备是否已被注册
+    function equipmentInt() {
+        var equipemntInt = $("#equipmentInt").val();
+
+        if (equipmentInt != null && equipmentInt != "") {
+            $.ajax({
+                url: "<%= request.getContextPath() %>/equipment/device/checkEquipment/isExist?equipmentInt=" + equipemntInt,
+                type: "GET",
+                cache: false,
+                contentType: "text/json",
+                cache: false,
+                async: false,
+                success: function (text) {
+                    if (text.code == "1") {
+
+                        isExistEQI = true;
+                    } else {
+                        isExistEQI = false;
+                    }
+                }
+            });
+        } else {
+            return;
+        }
+        console.log(isExistEQI);
+    };
+
+
     //监听提交
     form.on("submit(layuiadmin-app-form-submit)", function (data) {
         deviceSoftwareType();
+        equipmentInt();
         if (submit == false) {
             submit = true;
             var submitData = JSON.stringify(data.field);
-            if (isExist == false && isExistDSW == false) {
+            if ( isExistDSW == false && isExistEQI == false) {
                 $.ajax({
                     url: "<%= request.getContextPath() %>/equipment/device/registrationDevice",
                     type: "POST",
@@ -341,23 +403,33 @@
                         });
                     }
                 });
-            } else if (isExist == true && isExistDSW==false) {
-                layer.msg("APPId已存在，请重新选择正确的设备资源号与终端软件类型", {
-                    icon: 2,
-                    time: 2000
-                });
-                submit = false;
             }
-            else if (isExist == false && isExistDSW==true) {
+            //因为对设备注册做出唯一限制，故APPId的重复判断失效，弃用
+            // else if (isExist == true && isExistDSW==false && isExistEQI == false) {
+            //     layer.msg("APPId已存在，请重新选择正确的设备资源号与终端软件类型", {
+            //         icon: 2,
+            //         time: 2000
+            //     });
+            //     submit = false;
+            // }
+            else if ( isExistDSW==true && isExistEQI == false) {
                 layer.msg("当前终端软件类型不存在更新包，请上传更新包后重试", {
                     icon: 2,
                     time: 2000
                 });
                 submit = false;
             }
+            else if ( isExistDSW==false && isExistEQI == true) {
+                layer.msg("当前选择设备已被注册，请选择未被注册设备", {
+                    icon: 2,
+                    time: 2000
+                });
+                submit = false;
+            }
         } else {
-            layer.msg("正在添加...请稍等！");
+            layer.msg("请检查该软件类型更新包是否上传以及选择设备是否已被注册");
         }
+        debugger;
         return false;
     });
 </script>

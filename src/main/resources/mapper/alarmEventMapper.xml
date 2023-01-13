@@ -36,7 +36,7 @@
                 and alarm_type like '%${alarmType}%'
             </if>
             <if test="makeFormPeople !=null and makeFormPeople !=''">
-                and make_form-people like '%${makeFormPeople}%'
+                and make_form_people like '%${makeFormPeople}%'
             </if>
             <if test="makeFormTime !=null and makeFormTime !=''">
                 and make_form_time like '%${makeFormTime}%'

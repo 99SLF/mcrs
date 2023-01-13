@@ -39,10 +39,10 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">设备安装位置:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>设备安装位置:</label>
             <div class="layui-input-block">
                 <input id="equipmentInstallLocation" type="text" name="equipmentInstallLocation"
-                       lay-verify="" placeholder="请输入设备安装位置" autocomplete="off" class="layui-input">
+                       lay-verify="required|equipmentInstallLocation" placeholder="请输入设备安装位置" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-col-sm6">
@@ -81,7 +81,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>设备连接端口:</label>
             <div class="layui-input-block">
-                <input id="equipmentContinuePort" type="text" name="equipmentContinuePort" lay-verify="required"
+                <input id="equipmentContinuePort" type="text" name="equipmentContinuePort" lay-verify="required|number|equipmentContinuePort"
                        placeholder="" autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -89,7 +89,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>设备连接IP:</label>
             <div class="layui-input-block">
-                <input id="equipmentIp" type="text" name="equipmentIp" lay-verify="required"
+                <input id="equipmentIp" type="text" name="equipmentIp" lay-verify="required|equipmentIp"
                        placeholder="" autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -152,7 +152,7 @@
             <label class="layui-form-label">备注:</label>
             <div class="layui-input-block">
             <textarea cols="50" rows="10" style="width:100%;height:100px" name="remarks" id="remarks" autocomplete="off"
-                      class="layui-input" lay-verify="remarks"></textarea>
+                      class="layui-input" lay-verify="remarks" placeholder="备注不能超过255字符"></textarea>
             </div>
         </div>
     </div>
@@ -217,6 +217,8 @@
         elem: "#enable",
         dictTypeId: "IS_USE",
     });
+    //设置启用的默认值
+    $("#enable").val("101");
     form.render();
 
     // 判断字符
@@ -230,7 +232,8 @@
             if (value.length > 20) {
                 return "设备名称不能超过20字";
             }
-        }, equipmentInstallLocation: function (value, item) {
+        },
+        equipmentInstallLocation: function (value, item) {
             if (value.length > 50) {
                 return "设备安装位置不能超过50字";
             }
@@ -240,9 +243,9 @@
                 return "设备连接端口不能超过20字";
             }
         },
-        mesContinueIp: function (value, item) {
-            if (value.length > 50) {
-                return "MES连接IP不能超过20个字符";
+        equipmentIp: function (value, item) {
+            if (value.length > 20) {
+                return "设备连接IP不能超过20个字符";
             }
         },
         remarks: function (value, item) {
@@ -290,9 +293,9 @@
                 $("#matrixCode").val(data.matrixCode);
                 $("#factoryCode").val(data.factoryCode);
                 $("#processName").val(data.processName);
+                debugger;
                 top.layer.close(index);
                 check();
-                Exist();
             }
         });
     });
@@ -326,6 +329,7 @@
         if (submit == false) {
             submit = true;
             var submitData = JSON.stringify(data.field);
+            debugger;
             if (isExist == false) {
                 $.ajax({
                     url: "<%= request.getContextPath() %>/equipment/equipment/add",

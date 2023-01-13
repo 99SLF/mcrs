@@ -11,6 +11,8 @@
         ON exchange.equipment_int = eqi.equipment_int
         LEFT JOIN eqi_device AS dev
         ON exchange.device_id = dev.device_id
+        LEFT JOIN base_access_info AS bai
+        ON eqi.acc_point_res_id = bai.acc_point_res_id
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
@@ -26,6 +28,8 @@
         ON exchange.equipment_int = eqi.equipment_int
         LEFT JOIN eqi_device AS dev
         ON exchange.device_id = dev.device_id
+        LEFT JOIN base_access_info AS bai
+        ON eqi.acc_point_res_id = bai.acc_point_res_id
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
@@ -34,7 +38,7 @@
                 and eqi.equipment_continue_port like '%${equipmentContinuePort}%'
             </if>
             <if test="processName !=null and processName !=''">
-                and exchange.process_name like '%${processName}%'
+                and bai.process_name like '%${processName}%'
             </if>
             <if test="operator !=null and operator !=''">
                 and exchange.operator like '%${operator}%'

@@ -34,27 +34,27 @@
                             <div class="layui-carousel layadmin-carousel layadmin-shortcut">
                                 <ul class="layui-row layui-col-space10">
                                     <li class="layui-col-xs3">
-                                        <a lay-href="<%=request.getContextPath() %>/basic/accPointResMaintain/accPointRes_add.jsp">
+                                        <a lay-href="<%=request.getContextPath() %>/basic/accPointResMaintain/accPointRes_list.jsp">
                                             <i class="layui-icon layui-icon-chart"></i>
-                                            <cite>接入点新增</cite>
+                                            <cite>接入点维护</cite>
                                         </a>
                                     </li>
                                     <li class="layui-col-xs3">
-                                        <a lay-href="<%=request.getContextPath() %>/equipment/equipment/equipment_add.jsp">
+                                        <a lay-href="<%=request.getContextPath() %>/equipment/equipment/equipment_list.jsp">
                                             <i class="layui-icon layui-icon-set"></i>
-                                            <cite>设备新增</cite>
+                                            <cite>资产管理</cite>
                                         </a>
                                     </li>
                                     <li class="layui-col-xs3">
-                                        <a lay-href="<%=request.getContextPath() %>/equipment/equipment/equipment_add.jsp">
+                                        <a lay-href="<%=request.getContextPath() %>/equipment/device/device_list.jsp">
                                             <i class="layui-icon layui-icon-template-1"></i>
-                                            <cite>终端注册</cite>
+                                            <cite>终端管理</cite>
                                         </a>
                                     </li>
                                     <li class="layui-col-xs3">
-                                        <a lay-href="<%=request.getContextPath() %>/update/update_package_uploads.jsp">
+                                        <a lay-href="<%=request.getContextPath() %>/update/update_package_manager.jsp">
                                             <i class="layui-icon layui-icon-chat"></i>
-                                            <cite>更新包上传</cite>
+                                            <cite>更新管理</cite>
                                         </a>
                                     </li>
                                 </ul>

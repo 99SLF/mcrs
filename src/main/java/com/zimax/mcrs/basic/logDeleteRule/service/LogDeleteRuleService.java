@@ -116,7 +116,7 @@ public class LogDeleteRuleService {
         IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
         for (LogDeleteRule i:logDeleteRules){
             logDeleteRule.setRuleDeleteId(i.getRuleDeleteId());
-            logDeleteRule.setEnable("on");
+            logDeleteRule.setEnable("101");
             logDeleteRule.setUpdater(usetObject.getUserName());
             logDeleteRule.setUpdateTime(new Date());
             logDeleteRuleMapper.enable(logDeleteRule);
