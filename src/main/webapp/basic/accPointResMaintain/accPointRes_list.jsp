@@ -75,8 +75,8 @@
                 <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i
                         class="layui-icon layui-icon-add-circle-fine"></i>新增接入点
                 </button>
-                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="qiyong"><i
-                        class="layui-icon layui-icon-refresh" readonly></i>启用
+                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="enable"><i
+                        class="layui-icon layui-icon-refresh"></i>启用
                 </button>
                 <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i
                         class="layui-icon layui-icon-delete"></i>删除
@@ -112,6 +112,7 @@
     var util = layui.util;
     //全加载：日期
     var laydate = layui.laydate;
+    var isExits = false;
 
     //全局参数
     var req_data;
@@ -122,6 +123,7 @@
     var hiddenFields = [];
 
     //监听搜索
+    debugger;
     form.on("submit(LAY-app-devicelist-search)", function (data) {
         var field = data.field;
         table.reload("LAY-app-device-list-reload", {
@@ -160,9 +162,6 @@
                     submit.click();
                 }
             });
-        },
-        //启用
-        qiyong: function () {
         },
         //批量删除
         batchdel: function () {
@@ -214,6 +213,68 @@
                 });
             }
         },
+        enable: function () {
+            var checkStatus = table.checkStatus("LAY-app-device-list-reload");
+            var data = checkStatus.data;
+            if (data.length == 0) {
+                layer.msg("请至少选中一条记录！");
+            }
+            for (i = 0; i < data.length; i++) {
+                debugger;
+                if (data[i].isEnable == "101") {
+                    isExits = true;
+                    break;
+                }
+                isExits = false
+            }
+            if (isExits == false) {
+                if (data.length > 0) {
+                    var accPointResIds = new Array();
+                    for (var i = 0; i < data.length; i++) {
+                        accPointResIds[i] = data[i].accPointResId;
+                    }
+                    layer.confirm("确定启用所选接入点信息？", {
+                        icon: 3,
+                        title: "系统提示"
+                    }, function (index) {
+                        $.ajax({
+                            url: "<%= request.getContextPath() %>/accPointResController/accPointRes/enable",
+                            type: "POSt",
+                            data: JSON.stringify(accPointResIds),
+                            cache: false,
+                            contentType: "text/json",
+                            success: function (result) {
+                                if (result.exception) {
+                                    layer.alert(result.exception.message, {
+                                        icon: 2,
+                                        title: "系统提示"
+                                    });
+                                } else if (result) {
+                                    layer.msg("启用成功", {
+                                        icon: 1,
+                                        time: 2000
+                                    }, function () {
+                                        table.reload("LAY-app-device-list-reload");
+                                    });
+                                } else {
+                                    layer.msg("启用失败");
+                                }
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                layer.msg(jqXHR.responseText, {
+                                    time: 2000,
+                                    icon: 5
+                                });
+                            }
+                        });
+                    });
+                }
+            } else if(isExits == true){
+                layer.msg("当前接入点已启用");
+            }else {
+                layer.msg("启用失败");
+            }
+        }
     };
 
     table.on('sort(LAY-app-device-list)', function (obj) {
@@ -344,7 +405,7 @@
             hide: isHidden("accPointResName")
         }, {
             field: "isEnable",
-            title: "是否启用",
+            title: "启用状态",
             align: "center",
             minWidth: 80,
             hide: isHidden("isEnable"),
@@ -359,13 +420,13 @@
             minWidth: 100,
             hide: isHidden("matrixCode")
         },
-        //     {
-        //     field: "matrixName",
-        //     title: "基地名称",
-        //     align: "center",
-        //     minWidth: 120,
-        //     hide: isHidden("matrixName")
-        // },
+            {
+            field: "matrixName",
+            title: "基地名称",
+            align: "center",
+            minWidth: 120,
+            hide: true
+        },
             {
             field: "factoryCode",
             title: "工厂代码",

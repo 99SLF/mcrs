@@ -41,6 +41,13 @@ public interface ProcessMapper {
     int count(@Param("infoId") String infoId);
 
     /**
+     * 查询代码
+     */
+    List<ProcessInfoVo> selectListInit(@Param("factoryCode") String factoryCode);
+
+    int countProcess(@Param("factoryCode") String factoryCode);
+
+    /**
      * 更新
      */
     void updateProcessInfo(ProcessInfo processInfo);

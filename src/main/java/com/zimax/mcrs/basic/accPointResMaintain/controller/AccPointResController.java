@@ -1,5 +1,6 @@
 package com.zimax.mcrs.basic.accPointResMaintain.controller;
 
+import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes;
 import com.zimax.mcrs.basic.accPointResMaintain.service.AccPointResService;
 import com.zimax.mcrs.config.Result;
@@ -91,6 +92,33 @@ public class AccPointResController {
     @GetMapping("/getCount")
     public Result<?> getCount() {
         return Result.success(accPointResService.count(null,null,null,null));
+
+    }
+
+
+    /**
+     * 批量启用（弃用了）
+     *
+     * @param accPointRess 接入点编号
+     * @param
+     */
+    @PostMapping("/changeEnable")
+    @ResponseBody
+    public Result<?> changeEnable(@RequestBody List<AccPointRes> accPointRess) {
+        /*调用启用*/
+        accPointResService.changeEnable(accPointRess);
+        return Result.success();
+
+    }
+
+    /**
+     * 批量启用接入点
+     * @param accPointResIds 接入点主键
+     */
+    @PostMapping("/accPointRes/enable")
+    public Result<?> enable(@RequestBody List<Integer> accPointResIds) {
+        accPointResService.enable(accPointResIds);
+        return Result.success();
 
     }
 }

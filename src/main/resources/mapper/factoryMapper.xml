@@ -42,6 +42,33 @@
         </if>
     </select>
 
+    <select id="countFactory" resultType="int">
+        SELECT count(*)
+        FROM base_matrix_info  a
+        LEFT JOIN  base_tree b ON a.info_id = b.parent_id
+        LEFT JOIN  base_factory_info c ON b.info_id = c.info_id
+        <where>
+            logic_states = "0"
+            <if test="matrixCode !=null and matrixCode !=''">
+                and matrix_code like '%${matrixCode}%'
+            </if>
+        </where>
+    </select>
+
+    <!--列表显示-->
+    <select id="selectListInit" parameterType="map" resultType="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfoVo">
+        SELECT *
+        FROM base_matrix_info  a
+                 LEFT JOIN  base_tree b ON a.info_id = b.parent_id
+                 LEFT JOIN  base_factory_info c ON b.info_id = c.info_id
+        <where>
+            logic_states = "0"
+            <if test="matrixCode !=null and matrixCode !=''">
+                and matrix_code like '%${matrixCode}%'
+            </if>
+        </where>
+    </select>
+
     <!--更新一条选中信息-->
     <update id="updateFactoryInfo" parameterType="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo">
         UPDATE base_factory_info

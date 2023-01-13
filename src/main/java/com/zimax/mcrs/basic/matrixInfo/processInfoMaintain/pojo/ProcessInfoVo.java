@@ -1,6 +1,8 @@
 package com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo;
 
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 
@@ -42,6 +44,29 @@ public class ProcessInfoVo {
      * 制单人
      */
     private String creator;
+
+    /**
+     * 工厂信息数据的主键
+     */
+
+    private int factoryId;
+
+
+    /**
+     * 工厂名称
+     */
+    private String factoryName;
+
+    /**
+     * 工厂代号
+     */
+    private String factoryCode;
+
+
+    /**
+     * 工厂地址
+     */
+    private String factoryAddress;
 
 
     /**
