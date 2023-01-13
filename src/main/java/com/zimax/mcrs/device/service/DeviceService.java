@@ -58,6 +58,16 @@ public class DeviceService {
     }
 
     /**
+     * 终端主页查询记录
+     */
+    public int counts(String equipmentId, String deviceSoftwareType,String enable, String deviceName, String processName, String factoryName){
+        return deviceMapper.counts(equipmentId,deviceSoftwareType,enable, deviceName,processName,factoryName);
+    }
+
+
+
+
+    /**
      * 查询记录
      */
     public int count(String equipmentId, String APPId){

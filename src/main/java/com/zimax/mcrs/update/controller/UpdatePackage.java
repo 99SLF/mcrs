@@ -87,12 +87,16 @@ public class UpdatePackage {
                     upgradeData.setVersionID(version);
                     upgradeData.setIfUpdate(true);
                     upgradeData.setIsForcedUpdate("false");
+                    upgradeData.setExecutorInstallationPath(deviceRollbackVo.getExecutorInstallationPath());
+                    upgradeData.setProgramInstallationPath(deviceRollbackVo.getProgramInstallationPath());
                     return Result.success(upgradeData,"0", "是否回滚");
                 } else {//2.1.3.2、更新策略为强制更新，返回 是否升级、版本号、更新策略
                     upgradeData.setUpdatetype("1");
                     upgradeData.setVersionID(version);
                     upgradeData.setIfUpdate(true);
                     upgradeData.setIsForcedUpdate("true");
+                    upgradeData.setExecutorInstallationPath(deviceRollbackVo.getExecutorInstallationPath());
+                    upgradeData.setProgramInstallationPath(deviceRollbackVo.getProgramInstallationPath());
                     return Result.success(upgradeData,"0", "是否回滚");
                 }
             }
@@ -139,12 +143,16 @@ public class UpdatePackage {
                         upgradeData.setVersionID(version);
                         upgradeData.setIfUpdate(true);
                         upgradeData.setIsForcedUpdate("false");
+                        upgradeData.setExecutorInstallationPath(deviceUpgradeVo.getExecutorInstallationPath());
+                        upgradeData.setProgramInstallationPath(deviceUpgradeVo.getProgramInstallationPath());
                         return Result.success(upgradeData,"0", "是否升级");
                     } else {//3.2、更新策略为强制更新，返回 是否升级、版本号、更新策略
                         upgradeData.setUpdatetype("0");
                         upgradeData.setVersionID(version);
                         upgradeData.setIfUpdate(true);
                         upgradeData.setIsForcedUpdate("true");
+                        upgradeData.setExecutorInstallationPath(deviceUpgradeVo.getExecutorInstallationPath());
+                        upgradeData.setProgramInstallationPath(deviceUpgradeVo.getProgramInstallationPath());
                         return Result.success(upgradeData,"0", "是否升级");
                     }
                 }
@@ -303,6 +311,10 @@ public class UpdatePackage {
             int deviceUpgradeId = 0;
             //回退表主键
             int deviceRollbackId = 0;
+            //终端主键
+            int deviceId = 0;
+            //版本好
+            String version = "";
 
 
             //2.1、数据不存在，查询回退表
@@ -317,6 +329,9 @@ public class UpdatePackage {
                 //2.1.2、数据存在，获取更新包主键
                 uploadId = deviceRollbackVo.getUploadId();
                 deviceRollbackId = deviceRollbackVo.getDeviceRollbackId();
+
+                deviceId = deviceRollbackVo.getDeviceId();
+                version = deviceRollbackVo.getVersion();
             } else {
                 if (deviceUpgradeVo.getUpgradeStatus().equals("102")) {
                     DeviceRollbackVo deviceRollbackVo = updatePackageService.getRollbackVoDevice(APPId);
@@ -325,14 +340,20 @@ public class UpdatePackage {
                     }
                     uploadId = deviceRollbackVo.getUploadId();
                     deviceRollbackId = deviceRollbackVo.getDeviceRollbackId();
+
+                    deviceId = deviceRollbackVo.getDeviceId();
+                    version = deviceRollbackVo.getVersion();
                 } else {
                     //2.2、数据存在，获取更新包主键
                     uploadId = deviceUpgradeVo.getUploadId();
                     deviceUpgradeId = deviceUpgradeVo.getDeviceUpgradeId();
+
+                    deviceId = deviceUpgradeVo.getDeviceId();
+                    version = deviceUpgradeVo.getVersion();
                 }
             }
 
-
+            Device device = new Device();
             //3.1、升级不成功，修改升级表状态（升级中-->升级失败-->未升级）（1升级）
             //3.2、升级成功，修改升级表状态（升级中-->升级成功-->已升级）
             if (deviceUpgradeId != 0) {
@@ -357,10 +378,12 @@ public class UpdatePackage {
 
             //4、返回终端信息
             if (isCode.equals("100")) {
-
                 return Result.success(upgradeData,"1", "升级失败");
             } else {
 
+                device.setDeviceId(deviceId);
+                device.setVersion(version);
+                updatePackageService.updateDeviceStatus(device);
                 return Result.success(upgradeData,"0", "该终端已完成升级");
             }
         }catch (Exception e){

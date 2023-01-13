@@ -159,10 +159,10 @@
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label">终端执行程序安装路径:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>终端执行程序安装路径:</label>
             <div class="layui-input-block">
                 <input id="executorInstallationPath" type="text" name="executorInstallationPath"
-                       lay-verify="" placeholder="" autocomplete="off" class="layui-input">
+                       lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>

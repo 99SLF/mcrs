@@ -8,6 +8,7 @@
         SELECT count(*) FROM eqi_equipment AS eqi
         LEFT JOIN base_equip_info AS bei ON eqi.equip_type_id = bei.equip_type_id
         LEFT JOIN base_access_info AS bai ON eqi.acc_point_res_id = bai.acc_point_res_id
+        LEFT JOIN base_process_info AS bpi ON bai.process_code = bpi.process_code
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
@@ -23,6 +24,7 @@
         SELECT * FROM eqi_equipment AS eqi
         LEFT JOIN base_equip_info AS bei ON eqi.equip_type_id = bei.equip_type_id
         LEFT JOIN base_access_info AS bai ON eqi.acc_point_res_id = bai.acc_point_res_id
+        LEFT JOIN base_process_info AS bpi ON bai.process_code = bpi.process_code
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
@@ -31,7 +33,7 @@
                 and eqi.equipment_name like '%${equipmentName}%'
             </if>
             <if test="processName !=null and processName !=''">
-                and bai.process_name like '%${processName}%'
+                and bpi.process_name like '%${processName}%'
             </if>
         </where>
         <if test="order !=null and order !=''">

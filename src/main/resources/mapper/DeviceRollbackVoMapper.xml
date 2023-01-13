@@ -5,7 +5,7 @@
 
     <!--查询-->
     <select id="getDevice" resultType="com.zimax.mcrs.update.pojo.DeviceRollbackVo">
-        SELECT a.app_id,c.version,c.upload_strategy,c.upload_id,b.upgrade_status,b.version_rollback_time,b.device_rollback_id
+        SELECT a.app_id,a.device_id,a.program_installation_path,a.executor_installation_path,c.version,c.upload_strategy,c.upload_id,b.upgrade_status,b.version_rollback_time,b.device_rollback_id
         FROM eqi_device a
         JOIN dev_rollback b ON a.device_id = b.device_id
         JOIN upd_upload c ON b.upload_id = c.upload_id

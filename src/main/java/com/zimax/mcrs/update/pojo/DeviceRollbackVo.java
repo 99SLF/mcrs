@@ -17,6 +17,11 @@ public class DeviceRollbackVo {
     private String appId;
 
     /**
+     * 终端ID
+     */
+    private Integer deviceId;
+
+    /**
      * 更新包主键
      */
     private int uploadId;
@@ -45,4 +50,14 @@ public class DeviceRollbackVo {
      * 设备回退主键
      */
     private int deviceRollbackId;
+
+    /**
+     * 终端程序安装路径
+     */
+    private String programInstallationPath;
+
+    /**
+     * 终端执行程序安装路径
+     */
+    private String executorInstallationPath;
 }
