@@ -17,6 +17,11 @@ public class DeviceRollbackVo {
     private String appId;
 
     /**
+     * 终端ID
+     */
+    private Integer deviceId;
+
+    /**
      * 更新包主键
      */
     private int uploadId;

@@ -145,7 +145,13 @@
     <!--更新1条终端信息-->
     <update id="updateDeviceStatus" parameterType="com.zimax.mcrs.device.pojo.Device">
         update eqi_device
-        set register_status = #{registerStatus}
+        set
+        <if test="registerStatus != null and registerStatus !=''">
+            register_status = #{registerStatus}
+        </if>
+        <if test="version !=null and version !=''">
+            version = #{version}
+        </if>
         where device_id = #{deviceId}
     </update>
 
