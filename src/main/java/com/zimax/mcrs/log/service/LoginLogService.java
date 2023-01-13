@@ -15,15 +15,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 登录日志日志
+ * 登录日志
  * @author 林俊杰
  * @date 2023/1/11
  */
 @Service
 public class LoginLogService {
-
-    @Autowired
-    private InterfaceLogMapper interfaceLogMapper;
 
     @Autowired
     private LoginLogMapper loginLogMapper;

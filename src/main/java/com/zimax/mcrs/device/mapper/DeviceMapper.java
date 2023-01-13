@@ -28,6 +28,18 @@ public interface DeviceMapper {
     List<DeviceVo> queryAll(Map map);
 
     /**
+     * 终端主页计数
+     *
+     * @return
+     */
+    int counts(@Param("equipmentId") String equipmentId,
+              @Param("deviceSoftwareType") String deviceSoftwareType,
+              @Param("enable")String enable,
+              @Param("deviceName")String deviceName,
+              @Param("processName")String processName,
+              @Param("factoryName")String factoryName);
+
+    /**
      * 注册终端
      *
      * @return
