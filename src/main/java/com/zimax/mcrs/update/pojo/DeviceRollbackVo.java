@@ -45,4 +45,14 @@ public class DeviceRollbackVo {
      * 设备回退主键
      */
     private int deviceRollbackId;
+
+    /**
+     * 终端程序安装路径
+     */
+    private String programInstallationPath;
+
+    /**
+     * 终端执行程序安装路径
+     */
+    private String executorInstallationPath;
 }

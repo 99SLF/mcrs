@@ -41,4 +41,16 @@ public class DeviceUpgradeVo {
      * 设备升级主键
      */
     private int deviceUpgradeId;
+
+    /**
+     * 终端程序安装路径
+     */
+    private String programInstallationPath;
+
+    /**
+     * 终端执行程序安装路径
+     */
+    private String executorInstallationPath;
+
+
 }
