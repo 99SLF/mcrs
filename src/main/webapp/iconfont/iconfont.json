@@ -1,21 +1,35 @@
 {
-  "id": "",
-  "name": "",
+  "id": "3863513",
+  "name": "MCRS",
   "font_family": "iconfont",
   "css_prefix_text": "icon-",
   "description": "",
   "glyphs": [
     {
-      "icon_id": "659174",
-      "name": "ic_techcal",
-      "font_class": "ictechcal",
-      "unicode": "e643",
-      "unicode_decimal": 58947
+      "icon_id": "1489846",
+      "name": "报表管理",
+      "font_class": "baobiaoguanli",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
+      "icon_id": "8765222",
+      "name": "高级查询",
+      "font_class": "gaojichaxun",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
+      "icon_id": "1338",
+      "name": "文本输入",
+      "font_class": "wenbenshuru",
+      "unicode": "e600",
+      "unicode_decimal": 58880
     },
     {
       "icon_id": "3101153",
       "name": "1在线监测",
-      "font_class": "zaixianjiance",
+      "font_class": "jiankongguanli",
       "unicode": "e613",
       "unicode_decimal": 58899
     },
@@ -36,7 +50,7 @@
     {
       "icon_id": "17606318",
       "name": "建模",
-      "font_class": "jianmo",
+      "font_class": "jianmoguanli",
       "unicode": "e6a7",
       "unicode_decimal": 59047
     },

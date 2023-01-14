@@ -48,6 +48,8 @@ public class UpdateUploadController {
 
     @Autowired
     private SerialnumberService serialnumberService;
+    private UploadJava uploadJava = (UploadJava)new ClassPathXmlApplicationContext(
+            "applicationContext.xml").getBean("UploadJava");
     /**
      * 记录更新包上传记录
      *
@@ -99,12 +101,6 @@ public class UpdateUploadController {
 
             //方法三：用javabean存放更新包文件到本地路径
             //7.创建Spring容器
-            ApplicationContext context = new ClassPathXmlApplicationContext(
-                    "applicationContext.xml");
-
-            //8.获取bean
-            UploadJava uploadJava = (UploadJava) context.getBean("UploadJava");
-
             //9.调用方法
            String realPath = uploadJava.getUploadpackagePath();
 

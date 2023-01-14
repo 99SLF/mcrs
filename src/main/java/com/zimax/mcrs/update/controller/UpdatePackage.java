@@ -44,6 +44,8 @@ public class UpdatePackage {
 
     @Autowired
     private UpdatePackageService updatePackageService;
+    private UploadJava uploadJava = (UploadJava)new ClassPathXmlApplicationContext(
+            "applicationContext.xml").getBean("UploadJava");
 
     /**
      * 注入信息
@@ -506,11 +508,7 @@ public class UpdatePackage {
             ConfigurationFile configurationFile = new ConfigurationFile();
             List<ConfigurationFile> configurationFiles = new ArrayList<>();
             configurationFiles = updatePackageService.getConfigurationFile(appId,fileName);
-            ApplicationContext context = new ClassPathXmlApplicationContext(
-                    "applicationContext.xml");
-
             //8.获取bean
-            UploadJava uploadJava = (UploadJava) context.getBean("UploadJava");
             String filePath = uploadJava.getConfigPath()+File.separator+appId;
             //判断数据是否存在，存在则修改，不存在则新增
             if(configurationFiles.size() < 1) {
