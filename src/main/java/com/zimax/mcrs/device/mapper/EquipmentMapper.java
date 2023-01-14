@@ -55,7 +55,7 @@ public interface EquipmentMapper {
      *
      * @return
      */
-    int count(@Param("equipmentId") String equipmentId, @Param("equipmentName") String equipmentName,@Param("equipmentProperties") String equipmentProperties);
+    int count(@Param("equipmentId") String equipmentId, @Param("equipmentName") String equipmentName, @Param("enable") String enable, @Param("processName") String processName);
 
     /**
      * 批量删除设备

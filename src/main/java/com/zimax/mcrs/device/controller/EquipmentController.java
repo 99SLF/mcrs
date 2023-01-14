@@ -30,6 +30,7 @@ public class EquipmentController {
      *
      * @param equipmentId   设备资源号
      * @param equipmentName 设备名称
+     * @param enable        启用
      * @param processName 工序名称
      * @param limit         记录数
      * @param page          页码
@@ -38,9 +39,9 @@ public class EquipmentController {
      * @return 设备列表
      */
     @GetMapping("/equipment/query")
-    public Result<?> query( String limit,  String page, String equipmentId, String equipmentName, String processName,String order, String field) {
-        List equipments = equipmentService.queryEquipments(limit, page, equipmentId, equipmentName,processName ,order, field);
-        return Result.success(equipments, equipmentService.count(equipmentId, equipmentName,processName));
+    public Result<?> query( String limit,  String page, String equipmentId, String equipmentName,String enable, String processName,String order, String field) {
+        List equipments = equipmentService.queryEquipments(limit, page, equipmentId, equipmentName,enable,processName ,order, field);
+        return Result.success(equipments, equipmentService.count(equipmentId, equipmentName,enable,processName));
     }
 
     /**

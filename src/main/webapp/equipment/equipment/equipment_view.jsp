@@ -162,7 +162,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label">创建人:</label>
             <div class="layui-input-block">
-                <input id="creator" type="text" name="creator" lay-verify="required"
+                <input id="createName" type="text" name="createName" lay-verify=""
                        placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
@@ -170,7 +170,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label">创建时间:</label>
             <div class="layui-input-block">
-                <input id="createTime" type="text" name="createTime" lay-verify="required"
+                <input id="createTime" type="text" name="createTime" lay-verify=""
                        placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
@@ -235,7 +235,7 @@
             "processName": data.processName,
             "enable": data.enable,
             "remarks": data.remarks,
-            "creator": data.creator,
+            "createName": data.createName,
             "createTime": layui.util.toDateString(data.createTime),
         });
     }

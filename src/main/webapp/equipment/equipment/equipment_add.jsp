@@ -157,23 +157,6 @@
         </div>
     </div>
 
-    <div class="layui-input-block">
-        <%
-            IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
-        %>
-        <%--                <input type="text" class="layui-hide" name="creator" value="<%=usetObject.getUserId()%>"/>--%>
-        <%--				显示当前用户名--%>
-        <input type="text" class="layui-hide" name="creator" value="<%=usetObject.getUserName()%>"
-               readonly/>
-    </div>
-
-
-    <div class="layui-input-block">
-        <input type="text" class="layui-hide" name="createTime"
-               value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>" readonly/>
-    </div>
-
-
     <div class="layui-form-item layui-hide">
         <input type="button" lay-submit lay-filter="layuiadmin-app-form-submit" id="layuiadmin-app-form-submit"
                value="确认添加">
