@@ -95,5 +95,14 @@ public class EquipmentService {
         return equipmentMapper.checkEquipmentId(equipmentId);
     }
 
+    /**
+     * 检测设备连接IP是否存在
+     *
+     * @param equipmentIp 设备连接Ip
+     */
+    public int checkEquipmentIp(String equipmentIp) {
+        return equipmentMapper.checkEquipmentIp(equipmentIp);
+    }
+
 
 }

@@ -197,6 +197,7 @@
     var $ = layui.jquery;
     var submit = false;
     var isExist = false;
+    var isExistEIP = false;
     var win = null;
 
     function SetData(data) {
@@ -309,7 +310,6 @@
                 type: "GET",
                 cache: false,
                 contentType: "text/json",
-                cache: false,
                 success: function (text) {
                     if (text.code == "1") {
                         isExist = true;
@@ -323,14 +323,36 @@
         }
     });
 
-    //监听提交
+    //判断设备连接Ip是否已存在
+    $("#equipmentIp").blur(function () {
+        var equipmentIp = $("#equipmentIp").val();
+        if (equipmentIp != null && equipmentIp != "") {
+            $.ajax({
+                url: "<%= request.getContextPath() %>/equipment/equipmentIp/check/isExist?equipmentIp=" + equipmentIp,
+                type: "GET",
+                cache: false,
+                contentType: "text/json",
+                success: function (text) {
+                    if (text.code == "1") {
+                        isExistEIP = true;
+                    } else {
+                        isExistEIP = false;
+                    }
+                }
+            });
+        } else {
+            return;
+        }
+    });
 
+
+    //监听提交
     form.on("submit(layuiadmin-app-form-submit)", function (data) {
         if (submit == false) {
             submit = true;
             var submitData = JSON.stringify(data.field);
             debugger;
-            if (isExist == false) {
+            if (isExist == false && isExistEIP == false) {
                 $.ajax({
                     url: "<%= request.getContextPath() %>/equipment/equipment/add",
                     type: "POST",
@@ -349,8 +371,14 @@
                         });
                     }
                 });
-            } else if (isExist == true) {
+            } else if (isExist == true && isExistEIP == false) {
                 layer.msg("设备资源号已存在，请重新输入", {
+                    icon: 2,
+                    time: 2000
+                });
+                submit = false;
+            } else if (isExist == false && isExistEIP == true) {
+                layer.msg("当前输入IP已被占用，请重新输入正确IP", {
                     icon: 2,
                     time: 2000
                 });

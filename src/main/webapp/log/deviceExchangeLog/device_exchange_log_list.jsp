@@ -396,7 +396,7 @@
             minWidth: 200,
             hide: isHidden("exchangeTime"),
             templet:function(d) {
-                return layui.util.toDateString(d.exchangeTime,'yyyy-MM-dd HH:mm:ss');
+                return layui.util.toDateString(d.exchangeTime);
             }
         }]]
     });

@@ -22,14 +22,14 @@
             <div class="layui-inline">
                 <label class="layui-form-label">预警规则编码：</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="alarmRuleId" placeholder="请输入编码" autocomplete="off"
+                    <input type="text" name="alarmRuleId" placeholder="" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">预警规则标题：</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="alarmRuleTitle" placeholder="请输入预警规则标题" autocomplete="off"
+                    <input type="text" name="alarmRuleTitle" placeholder="" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
@@ -359,16 +359,22 @@
             hide: isHidden("alarmRuleTitle")
         }, {
             field: "enable",
-            title: "是否启用",
+            title: "启用",
             align: "center",
             minWidth: 120,
-            hide: isHidden("enable")
+            hide: isHidden("enable"),
+            templet: function (d) {
+                return layui.admin.getDictText("IS_USE", d.enable);
+            }
         }, {
             field: "monitorLevel",
             title: "监控层级",
             align: "center",
             minWidth: 100,
-            hide: isHidden("monitorLevel")
+            hide: isHidden("monitorLevel"),
+            templet: function (d) {
+                return layui.admin.getDictText("WARNING_LEVEL", d.monitorLevel);
+            }
         }, {
             field: "alarmEventId",
             title: "预警事件编码",
@@ -392,7 +398,10 @@
             title: "制单时间",
             align: "center",
             minWidth: 200,
-            hide: isHidden("ruleMakeFormTime")
+            hide: isHidden("ruleMakeFormTime"),
+            templet: function (d) {
+                return layui.util.toDateString(d.ruleMakeFormTime);
+            }
         }, {
             field: "ruleUpdatePeople",
             title: "修改人",
@@ -404,7 +413,10 @@
             title: "修改时间",
             align: "center",
             minWidth: 200,
-            hide: isHidden("ruleUpdateTime")
+            hide: isHidden("ruleUpdateTime"),
+            templet: function (d) {
+                return layui.util.toDateString(d.ruleUpdateTime);
+            }
         }, {
             title: "操作",
             align: "center",

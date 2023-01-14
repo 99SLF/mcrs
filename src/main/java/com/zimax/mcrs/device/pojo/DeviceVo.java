@@ -111,7 +111,8 @@ public class DeviceVo {
     /**
      * 创建人
      */
-    private String creator;
+    @TableField(exist = false)
+    private String createName;
 
     /**
      * 创建时间
@@ -137,6 +138,7 @@ public class DeviceVo {
      * 终端执行程序安装路径
      */
     private String executorInstallationPath;
+
 
 
 }

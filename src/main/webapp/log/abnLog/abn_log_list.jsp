@@ -350,7 +350,7 @@
 				hide: isHidden("exchangeTime"),
 				minWidth: 100,
 				templet:function(d) {
-					return layui.util.toDateString(d.exchangeTime,'yyyy-MM-dd HH:mm:ss');
+					return layui.util.toDateString(d.exchangeTime);
 				}
 			}
 

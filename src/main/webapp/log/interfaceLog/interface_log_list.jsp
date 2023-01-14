@@ -385,7 +385,7 @@
             minWidth: 200,
             hide: isHidden("createTime"),
             templet: function (d) {
-                return layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss');
+                return layui.util.toDateString(d.createTime);
             }
         }, {
             field: "jSONPage",
@@ -406,7 +406,7 @@
             minWidth: 200,
             hide: isHidden("startTime"),
             templet:function(d) {
-                return layui.util.toDateString(d.startTime,'yyyy-MM-dd HH:mm:ss');
+                return layui.util.toDateString(d.startTime);
             }
         }, {
             field: "endTime",
@@ -415,7 +415,7 @@
             minWidth: 200,
             hide: isHidden("endTime"),
             templet: function (d) {
-                return layui.util.toDateString(d.endTime, 'yyyy-MM-dd HH:mm:ss');
+                return layui.util.toDateString(d.endTime);
             }
         }, {
             field: "invoker",

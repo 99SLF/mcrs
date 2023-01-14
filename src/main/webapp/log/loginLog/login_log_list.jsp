@@ -280,7 +280,7 @@
             minWidth: 150,
             hide: isHidden("loginTime"),
             templet: function (d) {
-                return layui.util.toDateString(d.loginTime, 'yyyy-MM-dd HH:mm:ss');
+                return layui.util.toDateString(d.loginTime);
             }
         }, {
             field: "processName",

@@ -493,7 +493,10 @@
             title: "制单时间",
             align: "center",
             minWidth: 100,
-            hide: isHidden("makeFormTime")
+            hide: isHidden("makeFormTime"),
+            templet: function (d) {
+                return layui.util.toDateString(d.makeFormTime);
+            }
         }, {
             field: "updatePeople",
             title: "修改人",
@@ -505,7 +508,10 @@
             title: "修改时间",
             align: "center",
             minWidth: 100,
-            hide: isHidden("updateTime")
+            hide: isHidden("updateTime"),
+            templet: function (d) {
+                return layui.util.toDateString(d.updateTime);
+            }
         }, {
             title: "操作",
             align: "center",

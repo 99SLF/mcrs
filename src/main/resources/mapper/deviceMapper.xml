@@ -42,7 +42,7 @@
         eqi.equipment_install_location,
         dev.access_method,
         dev.remarks,
-        dev.creator,
+        cur.USER_NAME AS createName,
         dev.create_time,
         bei.equip_type_name,
         bei.protocol_communication,
@@ -72,6 +72,8 @@
         LEFT JOIN
         base_process_info AS bpi
         ON bai.process_code = bpi.process_code
+        LEFT JOIN  cap_user AS cur
+        ON dev.creator = cur.USER_ID
         order by
         upd.version_upload_time desc) as vo
         <where>
@@ -129,7 +131,7 @@
         eqi.equipment_install_location,
         dev.access_method,
         dev.remarks,
-        dev.creator,
+        cur.USER_NAME AS createName,
         dev.create_time,
         bei.equip_type_name,
         bei.protocol_communication,
@@ -159,6 +161,8 @@
         LEFT JOIN
         base_process_info AS bpi
         ON bai.process_code = bpi.process_code
+        LEFT JOIN  cap_user AS cur
+        ON dev.creator = cur.USER_ID
         order by
         upd.version_upload_time desc) as vo
         <where>

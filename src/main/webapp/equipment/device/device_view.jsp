@@ -191,7 +191,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label">创建人:</label>
             <div class="layui-input-block">
-                <input id="creator" type="text" name="creator" lay-verify="required"
+                <input id="createName" type="text" name="createName" lay-verify="required"
                        placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
@@ -296,8 +296,8 @@
             "equipmentInstallLocation": data.equipmentInstallLocation,
             "accessMethod": data.accessMethod,
             "remarks": data.remarks,
-            "creator": data.creator,
-            "createTime": layui.util.toDateString(data.createTime,'yyyy-MM-dd HH:mm:ss'),
+            "createName": data.createName,
+            "createTime": layui.util.toDateString(data.createTime),
             "programInstallationPath": data.programInstallationPath,
             "executorInstallationPath": data.executorInstallationPath,
         });

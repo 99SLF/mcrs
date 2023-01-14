@@ -81,8 +81,6 @@ public class EquipmentController {
      */
     @PostMapping("/equipment/update")
     public Result<?> updateEquipment(@RequestBody Equipment equipment) {
-        System.out.println("============================");
-        System.out.println(equipment);
         equipmentService.updateEquipment(equipment);
         return Result.success();
     }
@@ -118,6 +116,21 @@ public class EquipmentController {
     public Result<?> check(@RequestParam("equipmentId") String equipmentId) {
         if(equipmentService.checkEquipmentId(equipmentId)>0){
             return Result.error("1","当前设备资源号已存在，请输入正确的设备资源号");
+        }else {
+            return Result.success();
+        }
+    }
+
+
+    /**
+     * 检测设备连接IP是否存在
+     *
+     * @param equipmentIp 设备连接IP
+     */
+    @GetMapping("/equipmentIp/check/isExist")
+    public Result<?> checkEquipmentIp(@RequestParam("equipmentIp") String equipmentIp) {
+        if(equipmentService.checkEquipmentIp(equipmentIp)>0){
+            return Result.error("1","当前IP已被占用存在，请重新输入正确IP");
         }else {
             return Result.success();
         }
