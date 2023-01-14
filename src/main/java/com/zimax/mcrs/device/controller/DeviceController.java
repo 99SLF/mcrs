@@ -37,7 +37,7 @@ public class DeviceController {
         IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
         device.setRegisterStatus("102");
         device.setVersion("1.0");
-        device.setCreator(usetObject.getUserName());
+        device.setCreator(usetObject.getUserId());
         device.setCreateTime(new Date());
         deviceService.registrationDevice(device);
         return Result.success();

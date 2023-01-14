@@ -81,8 +81,6 @@ public class EquipmentController {
      */
     @PostMapping("/equipment/update")
     public Result<?> updateEquipment(@RequestBody Equipment equipment) {
-        System.out.println("============================");
-        System.out.println(equipment);
         equipmentService.updateEquipment(equipment);
         return Result.success();
     }

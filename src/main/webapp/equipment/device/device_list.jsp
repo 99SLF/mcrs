@@ -718,7 +718,7 @@
                 return layui.admin.getDictText("ACCESS_METHOD", d.accessMethod);
             }
         }, {
-            field: "creator",
+            field: "createName",
             title: "创建人",
             align: "center",
             minWidth: 100,
