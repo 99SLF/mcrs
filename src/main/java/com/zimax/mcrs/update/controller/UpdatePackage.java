@@ -10,10 +10,13 @@ import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.device.pojo.Device;
 import com.zimax.mcrs.device.pojo.DeviceRollback;
 import com.zimax.mcrs.device.pojo.DeviceUpgrade;
+import com.zimax.mcrs.update.javaBean.UploadJava;
 import com.zimax.mcrs.update.pojo.*;
 import com.zimax.mcrs.update.service.UpdatePackageService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -503,7 +506,12 @@ public class UpdatePackage {
             ConfigurationFile configurationFile = new ConfigurationFile();
             List<ConfigurationFile> configurationFiles = new ArrayList<>();
             configurationFiles = updatePackageService.getConfigurationFile(appId,fileName);
-            String filePath = request.getSession().getServletContext().getRealPath("/configurationFile/"+ appId);
+            ApplicationContext context = new ClassPathXmlApplicationContext(
+                    "applicationContext.xml");
+
+            //8.获取bean
+            UploadJava uploadJava = (UploadJava) context.getBean("UploadJava");
+            String filePath = uploadJava.getConfigPath()+File.separator+appId;
             //判断数据是否存在，存在则修改，不存在则新增
             if(configurationFiles.size() < 1) {
                 return Result.error("1", "上传失败");

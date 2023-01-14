@@ -7,19 +7,32 @@ package com.zimax.mcrs.update.javaBean;
 
 public class UploadJava {
 
-    private String realPath;
+    private String UploadpackagePath;
+    private String ConfigPath;
+    private String SystemFilePath;
 
-    public void setRealPath(String realPath) {
-        this.realPath = realPath;
+    public String getUploadpackagePath() {
+        return UploadpackagePath;
     }
 
-    public  void getRealPath(String realPath){
-        this.realPath = realPath;
+    public void setUploadpackagePath(String uploadpackagePath) {
+        UploadpackagePath = uploadpackagePath;
     }
 
-    public String read () {
-        return realPath ;
+    public String getConfigPath() {
+        return ConfigPath;
+    }
 
+    public void setConfigPath(String configPath) {
+        ConfigPath = configPath;
+    }
+
+    public String getSystemFilePath() {
+        return SystemFilePath;
+    }
+
+    public void setSystemFilePath(String systemFilePath) {
+        SystemFilePath = systemFilePath;
     }
 
 }

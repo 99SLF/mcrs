@@ -106,7 +106,7 @@ public class UpdateUploadController {
             UploadJava uploadJava = (UploadJava) context.getBean("UploadJava");
 
             //9.调用方法
-           String realPath = uploadJava.read();
+           String realPath = uploadJava.getUploadpackagePath();
 
             File dir = new File(realPath);
             if (!dir.exists()) {

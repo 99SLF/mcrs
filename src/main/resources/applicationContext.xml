@@ -51,7 +51,9 @@
 
 
     <bean id="UploadJava" class="com.zimax.mcrs.update.javaBean.UploadJava">
-        <property name="realPath" value="${realPath}"/>
+        <property name="UploadpackagePath" value="${UploadpackagePath}"/>
+        <property name="ConfigPath" value="${ConfigPath}"/>
+        <property name="SystemFilePath" value="${SystemFilePath}"/>
     </bean>
 
 
