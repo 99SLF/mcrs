@@ -1,247 +1,58 @@
 {
-  "id": "2477290",
-  "name": "wcs",
+  "id": "",
+  "name": "",
   "font_family": "iconfont",
-  "css_prefix_text": "icon",
-  "description": "和生荣数字化工厂mes",
+  "css_prefix_text": "icon-",
+  "description": "",
   "glyphs": [
     {
-      "icon_id": "21844750",
-      "name": "基础数据",
-      "font_class": "jichushuju",
-      "unicode": "e607",
-      "unicode_decimal": 58887
+      "icon_id": "659174",
+      "name": "ic_techcal",
+      "font_class": "ictechcal",
+      "unicode": "e643",
+      "unicode_decimal": 58947
     },
     {
-      "icon_id": "21844725",
-      "name": "库存管理",
-      "font_class": "kucunguanli",
-      "unicode": "e606",
-      "unicode_decimal": 58886
-    },
-    {
-      "icon_id": "21844712",
-      "name": "权限管理",
-      "font_class": "quanxianguanli",
-      "unicode": "e605",
-      "unicode_decimal": 58885
-    },
-    {
-      "icon_id": "21844644",
-      "name": "组织管理",
-      "font_class": "zuzhiguanli",
-      "unicode": "e604",
-      "unicode_decimal": 58884
-    },
-    {
-      "icon_id": "21843127",
-      "name": "退出登录",
-      "font_class": "tuichudenglu",
-      "unicode": "e622",
-      "unicode_decimal": 58914
-    },
-    {
-      "icon_id": "21843121",
-      "name": "修改密码",
-      "font_class": "xiugaimima",
-      "unicode": "e621",
-      "unicode_decimal": 58913
-    },
-    {
-      "icon_id": "21843119",
-      "name": "基本资料",
-      "font_class": "jibenziliao",
-      "unicode": "e620",
-      "unicode_decimal": 58912
-    },
-    {
-      "icon_id": "21843115",
-      "name": "生产计划",
-      "font_class": "shengchanjihua",
-      "unicode": "e61f",
-      "unicode_decimal": 58911
-    },
-    {
-      "icon_id": "21843111",
-      "name": "指令",
-      "font_class": "zhiling",
-      "unicode": "e61e",
-      "unicode_decimal": 58910
-    },
-    {
-      "icon_id": "21843103",
-      "name": "订单",
-      "font_class": "dingdan",
-      "unicode": "e61d",
-      "unicode_decimal": 58909
-    },
-    {
-      "icon_id": "21843099",
-      "name": "-_看板",
-      "font_class": "-_kanban",
-      "unicode": "e61c",
-      "unicode_decimal": 58908
-    },
-    {
-      "icon_id": "21843090",
-      "name": "报表",
-      "font_class": "baobiao",
-      "unicode": "e61b",
-      "unicode_decimal": 58907
-    },
-    {
-      "icon_id": "21843087",
-      "name": "配方",
-      "font_class": "peifang",
-      "unicode": "e61a",
-      "unicode_decimal": 58906
-    },
-    {
-      "icon_id": "21843082",
-      "name": "追溯",
-      "font_class": "zhuisu",
-      "unicode": "e619",
-      "unicode_decimal": 58905
-    },
-    {
-      "icon_id": "21843058",
-      "name": "设备",
-      "font_class": "shebei",
-      "unicode": "e618",
-      "unicode_decimal": 58904
-    },
-    {
-      "icon_id": "21843055",
-      "name": "仓库",
-      "font_class": "cangku",
-      "unicode": "e617",
-      "unicode_decimal": 58903
-    },
-    {
-      "icon_id": "21843045",
-      "name": "生产管理",
-      "font_class": "shengchanguanli",
-      "unicode": "e616",
-      "unicode_decimal": 58902
-    },
-    {
-      "icon_id": "21843016",
-      "name": "系统",
-      "font_class": "xitong",
-      "unicode": "e615",
-      "unicode_decimal": 58901
-    },
-    {
-      "icon_id": "21843013",
-      "name": "订单计划",
-      "font_class": "dingdanjihua",
-      "unicode": "e614",
-      "unicode_decimal": 58900
-    },
-    {
-      "icon_id": "21842966",
-      "name": "密码",
-      "font_class": "mima",
+      "icon_id": "3101153",
+      "name": "1在线监测",
+      "font_class": "zaixianjiance",
       "unicode": "e613",
       "unicode_decimal": 58899
     },
     {
-      "icon_id": "21842940",
-      "name": "用户",
-      "font_class": "yonghu",
-      "unicode": "e612",
-      "unicode_decimal": 58898
+      "icon_id": "7698862",
+      "name": "12日志管理",
+      "font_class": "rizhiguanli",
+      "unicode": "e618",
+      "unicode_decimal": 58904
     },
     {
-      "icon_id": "1338",
-      "name": "文本输入",
-      "font_class": "wenbenshuru",
-      "unicode": "e600",
-      "unicode_decimal": 58880
+      "icon_id": "9950272",
+      "name": "6-2权限管理",
+      "font_class": "-quanxianguanli",
+      "unicode": "e653",
+      "unicode_decimal": 58963
     },
     {
-      "icon_id": "797424",
-      "name": "取消",
-      "font_class": "quxiao",
-      "unicode": "e709",
-      "unicode_decimal": 59145
+      "icon_id": "17606318",
+      "name": "建模",
+      "font_class": "jianmo",
+      "unicode": "e6a7",
+      "unicode_decimal": 59047
     },
     {
-      "icon_id": "1273256",
-      "name": "删除",
-      "font_class": "icon",
-      "unicode": "e6a0",
-      "unicode_decimal": 59040
+      "icon_id": "18438523",
+      "name": "基础数据",
+      "font_class": "jichushuju",
+      "unicode": "e6b1",
+      "unicode_decimal": 59057
     },
     {
-      "icon_id": "1305463",
-      "name": "查看",
-      "font_class": "chakan",
-      "unicode": "e63e",
-      "unicode_decimal": 58942
-    },
-    {
-      "icon_id": "1614439",
-      "name": "导出",
-      "font_class": "daochu",
-      "unicode": "e61f",
-      "unicode_decimal": 58911
-    },
-    {
-      "icon_id": "3458309",
-      "name": "导入",
-      "font_class": "daoru",
-      "unicode": "e622",
-      "unicode_decimal": 58914
-    },
-    {
-      "icon_id": "5399558",
-      "name": "保存",
-      "font_class": "baocun",
-      "unicode": "e936",
-      "unicode_decimal": 59702
-    },
-    {
-      "icon_id": "8765222",
-      "name": "高级查询",
-      "font_class": "gaojichaxun",
-      "unicode": "e632",
-      "unicode_decimal": 58930
-    },
-    {
-      "icon_id": "12978136",
-      "name": "重置",
-      "font_class": "zhongzhi",
-      "unicode": "e611",
-      "unicode_decimal": 58897
-    },
-    {
-      "icon_id": "17892206",
-      "name": "新增",
-      "font_class": "xinzeng",
-      "unicode": "e624",
-      "unicode_decimal": 58916
-    },
-    {
-      "icon_id": "20409716",
-      "name": "数据归档",
-      "font_class": "shujuguidang",
-      "unicode": "e61e",
-      "unicode_decimal": 58910
-    },
-    {
-      "icon_id": "24859942",
-      "name": "下载-文件下载-08",
-      "font_class": "xiazai-wenjianxiazai-08",
-      "unicode": "e855",
-      "unicode_decimal": 59477
-    },
-    {
-      "icon_id": "26082676",
-      "name": "预览",
-      "font_class": "yulan",
-      "unicode": "e62b",
-      "unicode_decimal": 58923
+      "icon_id": "20880827",
+      "name": "版本管理",
+      "font_class": "banbenguanli",
+      "unicode": "e650",
+      "unicode_decimal": 58960
     }
   ]
 }

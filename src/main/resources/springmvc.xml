@@ -51,4 +51,5 @@
     <context:component-scan base-package="com.zimax.mcrs.basic.treeStructure"></context:component-scan>
     <context:component-scan base-package="com.zimax.mcrs.basic.matrixInfo"></context:component-scan>
     <context:component-scan base-package="com.zimax.mcrs.basic.accPointResMaintain"></context:component-scan>
+    <context:component-scan base-package="com.zimax.mcrs.systemFile"></context:component-scan>
 </beans>

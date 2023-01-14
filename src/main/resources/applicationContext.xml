@@ -273,6 +273,10 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.mcrs.log.mapper.AbnLogMapper"/>
     </bean>
+    <bean id="SystemFileMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.systemFile.mapper.SystemFileMapper"/>
+    </bean>
 
     <bean id="DeviceEquipmentVoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>

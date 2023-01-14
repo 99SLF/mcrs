@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.systemFile.mapper.SystemFileMapper">
+    <select id="querySystemFile" resultType="com.zimax.mcrs.systemFile.pojo.SystemFile">
+        select * from system_file
+    </select>
+
+    <update id="updateSystemFile" parameterType="com.zimax.mcrs.systemFile.pojo.SystemFile">
+        UPDATE system_file
+        SET file_name = #{fileName},
+            version = #{version},
+            remark = #{remark},
+            download_path = #{downloadPath},
+            creator = #{creator},
+            create_time = #{createTime}
+        WHERE file_id = #{fileId}
+    </update>
+
+</mapper>
