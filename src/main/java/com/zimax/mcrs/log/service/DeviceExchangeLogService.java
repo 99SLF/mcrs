@@ -53,8 +53,8 @@ public class DeviceExchangeLogService {
     /**
      * 查询记录
      */
-    public int count(String equipmentId) {
-        return deviceExchangeLogMapper.count(equipmentId);
+    public int count(String equipmentId, String equipmentContinuePort, String processName, String operator, String exchangeTime) {
+        return deviceExchangeLogMapper.count(equipmentId,equipmentContinuePort,processName,operator,exchangeTime);
     }
 
     /**

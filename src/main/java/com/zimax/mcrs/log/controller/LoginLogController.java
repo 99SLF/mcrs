@@ -38,7 +38,7 @@ public class LoginLogController {
     @GetMapping("/loginLog/query")
     public Result<?> query(String limit, String page, String equipmentId, String source, String loginUser, String loginTime, String order, String field) {
         List loginLogs = loginLogService.queryLoginLogLog(limit, page, equipmentId, source,loginUser ,loginTime,order, field);
-        return Result.success(loginLogs, loginLogService.count(source));
+        return Result.success(loginLogs, loginLogService.count(equipmentId,source,loginUser,loginTime));
     }
 
     /**

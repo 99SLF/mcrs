@@ -4,16 +4,17 @@
 <html>
 <!-- 
   - Author(s): 林俊杰
-  - Date: 2022-12-01 16:18:16
+  - Date: 2023-1-13 16:41:04
   - Description:
 -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
-    <title>设备交换日志</title>
+    <title>MES交换日志</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v1">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/iconfont/iconfont.css">
 </head>
 <body>
 <div class="layui-fluid">
@@ -28,38 +29,39 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">端口号：</label>
+                    <label class="layui-form-label">终端名称：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="deviceName" placeholder="" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">设备接入端口：</label>
                     <div class="layui-input-inline">
                         <input type="text" name="equipmentContinuePort" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
+
                 <div class="layui-inline">
-                    <label class="layui-form-label">使用工序：</label>
+                    <label class="layui-form-label">创建时间：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="processName" placeholder="" autocomplete="off"
+                        <input type="text" name="createTime"  id="createTime"  placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">操作人：</label>
+                    <label class="layui-form-label">MES连接IP：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="operator" placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">交互时间：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="exchangeTime" id="exchangeTime" placeholder=""
-                               autocomplete="off"
+                        <input type="text" name="mesIpAddress" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                     
                     <div class="layui-inline layui-search" style="padding-left: 50px">
                         <button class="layui-btn layuiadmin-btn-list" lay-submit
-                                lay-filter="LAY-app-deviceExchangeLoglist-search"
-                                id="LAY-app-deviceExchangeLoglist-search">
+                                lay-filter="LAY-app-plcLoglist-search"
+                                id="LAY-app-plcLoglist-search">
                             <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                         </button>
                     </div>
@@ -80,9 +82,9 @@
             <%--        </div>--%>
 
 
-            <table id="LAY-app-deviceExchangeLog-list" lay-filter="LAY-app-deviceExchangeLog-list"></table>
+            <table id="LAY-app-plcLog-list" lay-filter="LAY-app-plcLog-list"></table>
 
-            <%--        <script type="text/html" id="table-deviceExchangeLog-list">--%>
+            <%--        <script type="text/html" id="table-plcLog-list">--%>
             <%--            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i--%>
             <%--                    class="layui-icon layui-icon-edit"></i>编辑</a>--%>
             <%--            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i--%>
@@ -118,104 +120,38 @@
     var laydate = layui.laydate;
     //日期时间选择器
     laydate.render({
-        elem: '#exchangeTime',
+        elem: '#createTime',
         type: 'date'
     });
 
 
     //监听搜索
-    form.on("submit(LAY-app-deviceExchangeLoglist-search)", function (data) {
+    form.on("submit(LAY-app-plcLoglist-search)", function (data) {
         var field = data.field;
-        table.reload("LAY-app-deviceExchangeLog-list-reload", {
+        table.reload("LAY-app-plcLog-list-reload", {
             where: field
         });
     });
+
+    // //登录时间监听事件
+    // form.on("input(loginTime)", function(data) {
+    //     var submit = $("#LAY-app-plcLoglist-search");
+    //     submit.click();
+    // });
 
 
     //文本框回车事件
     $(".layui-input").on("keydown", function (event) {
         if (event.keyCode == 13) {
-            var submit = $("#LAY-app-deviceExchangeLoglist-search");
+            var submit = $("#LAY-app-plcLoglist-search");
             submit.click();
             return false;
         }
     });
 
-    <%--var active = {--%>
-    <%--    //设备新建--%>
-    <%--    add: function () {--%>
-    <%--        top.layer.open({--%>
-    <%--            type: 2,--%>
-    <%--            title: "预警规则新建",--%>
-    <%--            content: "<%= request.getContextPath() %>/warn/deviceExchangeLog/alarm_rule_add.jsp",--%>
-    <%--            area: ["1000px", "560px"],--%>
-    <%--            resize: false,--%>
-    <%--            btn: ["确定", "取消"],--%>
-    <%--            success: function (layero, index) {--%>
-    <%--                var dataJson = {--%>
-    <%--                    win: window,--%>
-    <%--                };--%>
-    <%--                layero.find("iframe")[0].contentWindow.SetData(dataJson);--%>
-    <%--            },--%>
-    <%--            yes: function (index, layero) {--%>
-    <%--                var submit = layero.find("iframe").contents().find("#layuiadmin-app-form-submit");--%>
-    <%--                submit.click();--%>
-    <%--            }--%>
-    <%--        });--%>
-    <%--    },--%>
-    <%--    //批量删除--%>
-    <%--    batchdel: function () {--%>
-    <%--        var checkStatus = table.checkStatus("LAY-app-deviceExchangeLog-list-reload");--%>
-    <%--        var data = checkStatus.data;--%>
-    <%--        if (data.length == 0) {--%>
-    <%--            layer.msg("请至少选中一条记录！");--%>
-    <%--        }--%>
-    <%--        if (data.length > 0) {--%>
-    <%--            var deviceExchangeLogInts = new Array();--%>
-    <%--            for (var i = 0; i < data.length; i++) {--%>
-    <%--                deviceExchangeLogInts[i] = data[i].deviceExchangeLogInt;--%>
-    <%--            }--%>
-    <%--            layer.confirm("确定删除所选预警规则？", {--%>
-    <%--                icon: 3,--%>
-    <%--                title: "系统提示"--%>
-    <%--            }, function (index) {--%>
-    <%--                $.ajax({--%>
-    <%--                    url: "<%= request.getContextPath() %>/warn/deviceExchangeLog/batchDelete",--%>
-    <%--                    type: "DELETE",--%>
-    <%--                    data: JSON.stringify(deviceExchangeLogInts),--%>
-    <%--                    cache: false,--%>
-    <%--                    contentType: "text/json",--%>
-    <%--                    success: function (result) {--%>
-    <%--                        if (result.exception) {--%>
-    <%--                            layer.alert(result.exception.message, {--%>
-    <%--                                icon: 2,--%>
-    <%--                                title: "系统提示"--%>
-    <%--                            });--%>
-    <%--                        } else if (result) {--%>
-    <%--                            layer.msg("删除成功", {--%>
-    <%--                                icon: 1,--%>
-    <%--                                time: 2000--%>
-    <%--                            }, function () {--%>
-    <%--                                table.reload("LAY-app-deviceExchangeLog-list-reload");--%>
-    <%--                            });--%>
-    <%--                        } else {--%>
-    <%--                            layer.msg("删除失败");--%>
-    <%--                        }--%>
-    <%--                    },--%>
-    <%--                    error: function (jqXHR, textStatus, errorThrown) {--%>
-    <%--                        layer.msg(jqXHR.responseText, {--%>
-    <%--                            time: 2000,--%>
-    <%--                            icon: 5--%>
-    <%--                        });--%>
-    <%--                    }--%>
-    <%--                });--%>
-    <%--            });--%>
-    <%--        }--%>
-    <%--    }--%>
-    <%--};--%>
 
-    table.on('sort(LAY-app-deviceExchangeLog-list)', function (obj) {
-        table.reload('LAY-app-deviceExchangeLog-list-reload', {
+    table.on('sort(LAY-app-plcLog-list)', function (obj) {
+        table.reload('LAY-app-plcLog-list-reload', {
             initSort: obj,
             where: {
                 sortField: obj.field,
@@ -225,14 +161,14 @@
     });
 
     //左侧表头按钮事件监听
-    table.on("toolbar(LAY-app-deviceExchangeLog-list)", function (obj) {
+    table.on("toolbar(LAY-app-plcLog-list)", function (obj) {
         var type = obj.event;
         active[type] ? active[type].call(this) : "";
     });
 
     //表格排序
-    table.on("sort(LAY-app-deviceExchangeLog-list)", function (obj) {
-        table.reload("LAY-app-deviceExchangeLog-list-reload", {
+    table.on("sort(LAY-app-plcLog-list)", function (obj) {
+        table.reload("LAY-app-plcLog-list-reload", {
             initSort: obj,
             where: {
                 sortField: obj.field,
@@ -250,7 +186,7 @@
 
 
     $(window).resize(function () {
-        table.reload("LAY-app-deviceExchangeLog-list-reload", {
+        table.reload("LAY-app-plcLog-list-reload", {
             height: "full-" + getFullSize()
         });
     });
@@ -283,16 +219,24 @@
 
 
     table.render({
-        elem: "#LAY-app-deviceExchangeLog-list",
-        id: "LAY-app-deviceExchangeLog-list-reload",
-        url: "<%= request.getContextPath() %>/log/deviceExchangeLog/query",
+        elem: "#LAY-app-plcLog-list",
+        id: "LAY-app-plcLog-list-reload",
+        url: "<%= request.getContextPath() %>/log/mesLog/query",
         method: "GET",
         height: "full-" + getFullSize(),
         page: true,
         limit: 10,
         limits: [10, 15, 20, 30],
         toolbar: "#toolbar",
-        defaultToolbar: ["filter"],
+        defaultToolbar: [{
+            title: "查询",
+            layEvent: "search",
+            icon: "layui-icon layui-icon-search layuiadmin-button-btn",
+        }, {
+            title: "高级查询",
+            layEvent: "query",
+            icon: "icon iconfont icon-gaojichaxun",
+        }, "filter"],
         colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;
@@ -310,7 +254,6 @@
             });
         },
         parseData: function (res) {
-            debugger;
             return {
                 code: res.code,
                 msg: res.msg,
@@ -324,91 +267,85 @@
             title: "序号",
             type: "numbers"
         }, {
-            field: "deviceExchangeLogNum",
-            title: "日志编号",
+            field: "rfidLogNum",
+            title: "MES交换日志编号",
             align: "center",
-            minWidth: 120,
-            hide: isHidden("deviceExchangeLogNum")
+            minWidth: 150,
+            hide: isHidden("rfidLogNum")
         }, {
             field: "logType",
             title: "日志类型",
             align: "center",
-            minWidth: 120,
+            minWidth: 100,
             hide: isHidden("logType")
         }, {
             field: "equipmentId",
             title: "设备资源号",
             align: "center",
-            minWidth: 120,
+            minWidth: 150,
             hide: isHidden("equipmentId")
         }, {
             field: "aPPId",
             title: "APPID",
             align: "center",
-            minWidth: 100,
+            minWidth: 200,
             hide: isHidden("aPPId")
         }, {
-            field: "equipmentIp",
-            title: "接入IP",
+            field: "deviceName",
+            title: "终端名称",
             align: "center",
             minWidth: 150,
-            hide: isHidden("equipmentIp")
+            hide: isHidden("deviceName")
+        }, {
+            field: "mesIpAddress",
+            title: "MES连接IP地址",
+            align: "center",
+            minWidth: 150,
+            hide: isHidden("mesIpAddress")
         }, {
             field: "equipmentContinuePort",
-            title: "端口号",
+            title: "设备连接端口",
             align: "center",
             minWidth: 150,
             hide: isHidden("equipmentContinuePort")
         }, {
-            field: "factoryName",
-            title: "工厂名称",
+            field: "equipmentContinuePort",
+            title: "设备连接端口",
             align: "center",
             minWidth: 120,
-            hide: isHidden("factoryName")
+            hide: isHidden("equipmentContinuePort")
         }, {
-            field: "processName",
-            title: "使用工序",
+            field: "content",
+            title: "交互内容",
             align: "center",
             minWidth: 120,
-            hide: isHidden("processName")
+            hide: isHidden("content")
         }, {
-            field: "operationType",
-            title: "操作类型",
+            field: "creator",
+            title: "创建人",
             align: "center",
-            minWidth: 150,
-            hide: isHidden("operationType")
+            minWidth: 120,
+            hide: isHidden("creator")
         }, {
-            field: "operationContent",
-            title: "操作内容",
+            field: "createTime",
+            title: "创建时间",
             align: "center",
             minWidth: 200,
-            hide: isHidden("operationContent")
-        }, {
-            field: "operator",
-            title: "操作人",
-            align: "center",
-            minWidth: 120,
-            hide: isHidden("operator")
-        }, {
-            field: "exchangeTime",
-            title: "设备交换时间",
-            align: "center",
-            minWidth: 200,
-            hide: isHidden("exchangeTime"),
-            templet:function(d) {
-                return layui.util.toDateString(d.exchangeTime,'yyyy-MM-dd HH:mm:ss');
+            hide: isHidden("createTime"),
+            templet: function (d) {
+                return layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss');
             }
         }]]
     });
 
     //监听操作事件
-    <%--table.on("tool(LAY-app-deviceExchangeLog-list)", function (e) {--%>
+    <%--table.on("tool(LAY-app-plcLog-list)", function (e) {--%>
     <%--    var data = e.data;--%>
     <%--    if (e.event == "edit") {--%>
     <%--        top.layer.open({--%>
     <%--            type: 2,--%>
     <%--            title: "编辑设备信息",--%>
-    <%--            content: "<%= request.getContextPath() %>/warn/deviceExchangeLog/alarm_rule_edit.jsp",--%>
+    <%--            content: "<%= request.getContextPath() %>/warn/plcLog/alarm_rule_edit.jsp",--%>
     <%--            area: ["1000px", "560px"],--%>
     <%--            resize: false,--%>
     <%--            btn: ["确定", "取消"],--%>
@@ -431,10 +368,10 @@
     <%--            title: "系统提示"--%>
     <%--        }, function (index) {--%>
     <%--            $.ajax({--%>
-    <%--                url: "<%= request.getContextPath() %>/warn/deviceExchangeLog/delete/" + data.deviceExchangeLogInt,--%>
+    <%--                url: "<%= request.getContextPath() %>/warn/plcLog/delete/" + data.plcLogInt,--%>
     <%--                type: "DElETE",--%>
     <%--                data: JSON.stringify({--%>
-    <%--                    deviceExchangeLog: data--%>
+    <%--                    plcLog: data--%>
     <%--                }),--%>
     <%--                cache: false,--%>
     <%--                contentType: "text/json",--%>
@@ -449,7 +386,7 @@
     <%--                            icon: 1,--%>
     <%--                            time: 500--%>
     <%--                        }, function () {--%>
-    <%--                            table.reload("LAY-app-deviceExchangeLog-list-reload");--%>
+    <%--                            table.reload("LAY-app-plcLog-list-reload");--%>
     <%--                        });--%>
     <%--                    } else {--%>
     <%--                        layer.msg("删除失败！", {--%>

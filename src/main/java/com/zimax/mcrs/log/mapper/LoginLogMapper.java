@@ -28,7 +28,10 @@ public interface LoginLogMapper {
      * 计数
      * @return
      */
-    int count(@Param("source") String source);
+    int count(@Param("equipmentId") String equipmentId,
+            @Param("source") String source,
+            @Param("loginUser") String loginUser,
+            @Param("loginTime") String loginTime);
 
     /**
      * 登录日志添加

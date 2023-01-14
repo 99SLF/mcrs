@@ -64,8 +64,8 @@ public class AbnLogService {
     /**
      * 查询记录
      */
-    public int count(String equipmentId) {
-        return abnLogMapper.count(equipmentId);
+    public int count(String equipmentId, String deviceName, String abnType, String abnLevel, String exchangeTime) {
+        return abnLogMapper.count(equipmentId,deviceName,abnType,abnLevel,exchangeTime);
     }
 
 

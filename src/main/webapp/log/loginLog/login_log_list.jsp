@@ -278,7 +278,10 @@
             title: "登陆时间",
             align: "center",
             minWidth: 150,
-            hide: isHidden("loginTime")
+            hide: isHidden("loginTime"),
+            templet: function (d) {
+                return layui.util.toDateString(d.loginTime, 'yyyy-MM-dd HH:mm:ss');
+            }
         }, {
             field: "processName",
             title: "备注",

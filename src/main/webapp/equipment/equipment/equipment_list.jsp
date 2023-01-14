@@ -397,8 +397,11 @@
             field: "createTime",
             title: "创建时间",
             align: "center",
-            minWidth: 150,
-            hide: true
+            minWidth: 200,
+            hide: true,
+            templet:function(d) {
+                return layui.util.toDateString(d.createTime,'yyyy-MM-dd HH:mm:ss');
+            }
         },{
             title: "操作",
             align: "center",

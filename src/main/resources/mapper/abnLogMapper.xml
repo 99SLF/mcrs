@@ -12,6 +12,18 @@
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
             </if>
+            <if test="deviceName !=null and deviceName !=''">
+                and dev.device_name like '%${deviceName}%'
+            </if>
+            <if test="abnType !=null and abnType !=''">
+                and abn.abn_type like '%${abnType}%'
+            </if>
+            <if test="abnLevel !=null and abnLevel !=''">
+                and abn.abn_level like '%${abnLevel}%'
+            </if>
+            <if test="exchangeTime !=null and exchangeTime !=''">
+                and abn.exchange_time like '%${exchangeTime}%'
+            </if>
         </where>
     </select>
 

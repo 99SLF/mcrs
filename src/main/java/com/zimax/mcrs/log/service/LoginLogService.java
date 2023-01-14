@@ -7,6 +7,7 @@ import com.zimax.mcrs.log.pojo.InterfaceLog;
 import com.zimax.mcrs.log.pojo.InterfaceLogVo;
 import com.zimax.mcrs.log.pojo.LoginLog;
 import com.zimax.mcrs.log.pojo.LoginLogVo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,8 +54,8 @@ public class LoginLogService {
     /**
      * 查询记录
      */
-    public int count(String source) {
-        return loginLogMapper.count(source);
+    public int count(String equipmentId,String source,  String loginUser,String loginTime) {
+        return loginLogMapper.count(equipmentId,source,loginUser,loginTime);
     }
 
 
