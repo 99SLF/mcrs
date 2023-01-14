@@ -39,6 +39,18 @@
             <if test="logStatus !=null and logStatus !=''">
                 and log_status like '%${logStatus}%'
             </if>
+            <if test="operationType !=null and operationType !=''">
+                and operation_type like '%${operationType}%'
+            </if>
+            <if test="operationTime !=null and operationTime !=''">
+                and operation_time like '%${operationTime}%'
+            </if>
+            <if test="operationResult !=null and operationResult !=''">
+                and operation_result like '%${operationResult}%'
+            </if>
+            <if test="operator !=null and operator !=''">
+                and operator like '%${operator}%'
+            </if>
         </where>
     </select>
 

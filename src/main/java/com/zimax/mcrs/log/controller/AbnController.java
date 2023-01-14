@@ -41,7 +41,7 @@ public class AbnController {
     @GetMapping("/abnLog/query")
     public Result<?> query(String limit, String page, String equipmentId, String deviceName, String abnType, String abnLevel, String exchangeTime, String order, String field) {
         List abnLogs = abnLogService.queryAbnLog(limit, page, equipmentId, deviceName,abnType ,abnLevel,exchangeTime,order, field);
-        return Result.success(abnLogs, abnLogService.count(equipmentId));
+        return Result.success(abnLogs, abnLogService.count(equipmentId, deviceName,abnType ,abnLevel,exchangeTime));
     }
 
 

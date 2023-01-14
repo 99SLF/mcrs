@@ -54,8 +54,8 @@ public class OperationLogService {
     /**
      * 查询记录
      */
-    public int count(String logStatus) {
-        return operationLogMapper.count(logStatus);
+    public int count(String logStatus, String operationType, String operationTime,String operationResult, String operator) {
+        return operationLogMapper.count(logStatus,operationType,operationTime,operationResult,operator);
     }
 
     /**

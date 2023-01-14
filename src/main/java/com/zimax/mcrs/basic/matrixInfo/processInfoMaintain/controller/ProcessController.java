@@ -1,6 +1,7 @@
 package com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.controller;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfoVo;
+import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfoVo;
 import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.MatrixVo;
 import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
 import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfoVo;
@@ -60,6 +61,20 @@ public class ProcessController {
 //        processService.deleteProcess(processId);
 //        return Result.success();
 //    }
+
+    /**
+     * 获取工序代码
+     * @param
+     * @return
+     */
+    @GetMapping("/selectProcessCodeInit")
+    public Result<?> selectListInit(String factoryCode){
+        Map<String,Object> maps = new HashMap<>();
+        List<ProcessInfoVo> processList = processService.selectListInit(factoryCode);//查询出数据
+        maps.put("data",processList);
+        return Result.success(processList, processService.countProcess(factoryCode));
+    }
+
 
     /**
      * 分页查询所有工序信息

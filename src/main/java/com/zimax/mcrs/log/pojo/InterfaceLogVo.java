@@ -104,7 +104,7 @@ public class InterfaceLogVo {
     private String disposeTime;
 
     /**
-     * 方法名
+     * 接口类型
      */
-    private String methodName;
+    private String interfaceType;
 }

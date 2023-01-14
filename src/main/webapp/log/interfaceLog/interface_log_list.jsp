@@ -4,33 +4,22 @@
 <html>
 <!-- 
   - Author(s): 林俊杰
-  - Date: 2022-12-02 11:07:19
+  - Date: 2022-12-01 16:18:16
   - Description:
 -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
-    <title>接口日志页面</title>
+    <title>接口日志</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/custom.css">
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/layout.css">
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/iconfont/iconfont.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v1">
 </head>
 <body>
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">创建时间：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="createTime" id="createTime" placeholder=""
-                               autocomplete="off"
-                               class="layui-input">
-                    </div>
-                </div>
-
                 <div class="layui-inline">
                     <label class="layui-form-label">来源：</label>
                     <div class="layui-input-inline">
@@ -40,15 +29,15 @@
                 </div>
 
                 <div class="layui-inline">
-                    <label class="layui-form-label">接口名称：</label>
+                    <label class="layui-form-label">接口类型：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="interfaceName" placeholder="" autocomplete="off"
+                        <input type="text" name="interfaceType" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-inline">
-                    <label class="layui-form-label">接入Ip：</label>
+                    <label class="layui-form-label">设备接入IP：</label>
                     <div class="layui-input-inline">
                         <input type="text" name="equipmentIp" placeholder="" autocomplete="off"
                                class="layui-input">
@@ -64,17 +53,18 @@
                 </div>
 
                 <div class="layui-inline">
-                    <label class="layui-form-label">方法名：</label>
+                    <label class="layui-form-label">接口名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="methodName" placeholder="" autocomplete="off"
+                        <input type="text" name="interfaceName" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-inline">
-                    <label class="layui-form-label">处理时长：</label>
+                    <label class="layui-form-label">创建时间：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="disposeTime" placeholder="" autocomplete="off"
+                        <input type="text" name="createTime" id="createTime" placeholder=""
+                               autocomplete="off"
                                class="layui-input">
                     </div>
                     <div class="layui-inline layui-search" style="padding-left: 50px">
@@ -371,16 +361,16 @@
             minWidth: 150,
             hide: isHidden("aPPId")
         }, {
-            field: "interfaceName",
-            title: "接口名称",
+            field: "interfaceType",
+            title: "接口类型",
             align: "center",
             minWidth: 150,
-            hide: isHidden("interfaceName")
+            hide: isHidden("interfaceType")
         }, {
             field: "equipmentIp",
-            title: "接入IP地址",
+            title: "设备接入IP地址",
             align: "center",
-            minWidth: 120,
+            minWidth: 150,
             hide: isHidden("equipmentIp")
         }, {
             field: "equipmentContinuePort",
@@ -392,8 +382,11 @@
             field: "createTime",
             title: "创建时间",
             align: "center",
-            minWidth: 100,
-            hide: isHidden("createTime")
+            minWidth: 200,
+            hide: isHidden("createTime"),
+            templet: function (d) {
+                return layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss');
+            }
         }, {
             field: "jSONPage",
             title: "JSON包",
@@ -410,32 +403,38 @@
             field: "startTime",
             title: "处理开始时间",
             align: "center",
-            minWidth: 100,
-            hide: isHidden("startTime")
+            minWidth: 200,
+            hide: isHidden("startTime"),
+            templet:function(d) {
+                return layui.util.toDateString(d.startTime,'yyyy-MM-dd HH:mm:ss');
+            }
         }, {
             field: "endTime",
             title: "处理结束时间",
             align: "center",
-            minWidth: 100,
-            hide: isHidden("endTime")
+            minWidth: 200,
+            hide: isHidden("endTime"),
+            templet: function (d) {
+                return layui.util.toDateString(d.endTime, 'yyyy-MM-dd HH:mm:ss');
+            }
         }, {
             field: "invoker",
             title: "调用者",
             align: "center",
-            minWidth: 100,
+            minWidth: 120,
             hide: isHidden("invoker")
         }, {
             field: "disposeTime",
             title: "处理时长",
             align: "center",
-            minWidth: 100,
+            minWidth: 120,
             hide: isHidden("disposeTime")
         }, {
-            field: "methodName",
-            title: "方法名",
+            field: "interfaceName",
+            title: "接口名称",
             align: "center",
-            minWidth: 100,
-            hide: isHidden("methodName")
+            minWidth: 120,
+            hide: isHidden("interfaceName")
         }]]
     });
 

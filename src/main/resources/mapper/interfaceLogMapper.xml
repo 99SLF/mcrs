@@ -11,8 +11,23 @@
         LEFT JOIN eqi_device as dev
         ON inter.device_id = dev.device_id
         <where>
+            <if test="createTime !=null and createTime !=''">
+                and inter.create_time like '%${createTime}%'
+            </if>
             <if test="source !=null and source !=''">
                 and inter.source like '%${source}%'
+            </if>
+            <if test="interfaceType !=null and interfaceType !=''">
+                and inter.interface_type like '%${interfaceType}%'
+            </if>
+            <if test="equipmentIp !=null and equipmentIp !=''">
+                and eqi.equipment_ip like '%${equipmentIp}%'
+            </if>
+            <if test="invoker !=null and invoker !=''">
+                and inter.invoker like '%${invoker}%'
+            </if>
+            <if test="interfaceName !=null and interfaceName !=''">
+                and inter.interface_name like '%${interfaceName}%'
             </if>
         </where>
     </select>
@@ -31,8 +46,8 @@
             <if test="source !=null and source !=''">
                 and inter.source like '%${source}%'
             </if>
-            <if test="interfaceName !=null and interfaceName !=''">
-                and inter.interface_name like '%${interfaceName}%'
+            <if test="interfaceType !=null and interfaceType !=''">
+                and inter.interface_type like '%${interfaceType}%'
             </if>
             <if test="equipmentIp !=null and equipmentIp !=''">
                 and eqi.equipment_ip like '%${equipmentIp}%'
@@ -40,11 +55,8 @@
             <if test="invoker !=null and invoker !=''">
                 and inter.invoker like '%${invoker}%'
             </if>
-            <if test="methodName !=null and methodName !=''">
-                and inter.method_name like '%${methodName}%'
-            </if>
-            <if test="disposeTime !=null and disposeTime !=''">
-                and inter.dispose_time like '%${disposeTime}%'
+            <if test="interfaceName !=null and interfaceName !=''">
+                and inter.interface_name like '%${interfaceName}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -61,7 +73,7 @@
         values (#{interfaceLogId}, #{interfaceLogNum}, #{logType}, #{source},
                 #{equipmentInt}, #{deviceId}, #{interfaceName},
                 #{createTime}, #{JSONPage}, #{disposeResult}, #{startTime},
-                #{endTime}, #{invoker}, #{disposeTime}, #{methodName})
+                #{endTime}, #{invoker}, #{disposeTime}, #{interfaceType})
     </insert>
 
 <!--    &lt;!&ndash;根据主键删除设备&ndash;&gt;-->

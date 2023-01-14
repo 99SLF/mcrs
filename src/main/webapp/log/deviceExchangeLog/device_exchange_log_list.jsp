@@ -394,7 +394,10 @@
             title: "设备交换时间",
             align: "center",
             minWidth: 200,
-            hide: isHidden("exchangeTime")
+            hide: isHidden("exchangeTime"),
+            templet:function(d) {
+                return layui.util.toDateString(d.exchangeTime,'yyyy-MM-dd HH:mm:ss');
+            }
         }]]
     });
 

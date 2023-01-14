@@ -66,7 +66,7 @@
             <label class="layui-form-label"><span style="color:red">*</span>基地代码:</label>
             <div class="layui-input-block">
                 <%--   lay-filter 对应下面的form.on事件过滤         --%>
-                <select name="matrixCode" id="matrixCode" lay-filter="matrixCode" lay-verify=""
+                <select name="matrixCode" id="matrixCode" lay-filter="matrixCode" lay-verify="required|matrixCode"
                         type="select">
                     <option value=""></option>
                 </select>
@@ -87,7 +87,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>工厂代码:</label>
             <div class="layui-input-block">
-                <select name="factoryCode" id="factoryCode" lay-filter="factoryCode" lay-verify=""
+                <select name="factoryCode" id="factoryCode" lay-filter="factoryCode" lay-verify="required|factoryCode"
                         type="select">
                     <option value=""></option>
                 </select>
@@ -108,7 +108,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>工序代码：</label>
             <div class="layui-input-block">
-                <select name="processCode" id="processCode" lay-filter="processCode" lay-verify=""
+                <select name="processCode" id="processCode" lay-filter="processCode" lay-verify="required|processCode"
                         type="select">
                     <option value=""></option>
                 </select>
@@ -202,11 +202,32 @@
             }
         },
 
-        equipTypeEnable: function (value, item) {
+        isEnable: function (value, item) {
             if (value.length = 0) {
                 return "请确定是否启用";
             }
+        },
+
+        matrixCode: function (value, item) {
+            if (value.length = 0) {
+                return "请选择基地代码";
+            }
+        },
+
+        factoryCode: function (value, item) {
+            if (value.length = 0) {
+                return "请选择工厂代码";
+            }
+        },
+
+        processCode: function (value, item) {
+            if (value.length = 0) {
+                return "请选择工序代码";
+            }
         }
+
+
+
     });
 
     //下拉选择框动态赋值，将基地代码赋值给下拉选择框

@@ -81,7 +81,7 @@ public class DeviceController {
     @GetMapping("/device/query")
     public Result<?> queryDevice(String  page, String limit, String equipmentId, String deviceSoftwareType,String enable, String deviceName, String processName, String factoryName, String order, String field) {
         List devices = deviceService.queryDevices(page, limit, equipmentId, deviceSoftwareType,enable, deviceName,processName,factoryName,order, field);
-        return Result.success(devices, deviceService.count(equipmentId, deviceSoftwareType));
+        return Result.success(devices, deviceService.counts(equipmentId, deviceSoftwareType,enable, deviceName,processName,factoryName));
     }
 
     /**

@@ -48,6 +48,17 @@ public class FactoryService {
 //        factoryMapper.deleteFactory(factoryId);
 //    }
 
+    /**
+     * 查询所有工厂代码
+     */
+    public List<FactoryInfoVo> selectListInit(String matrixCode) {
+        return factoryMapper.selectListInit(matrixCode);
+
+    }
+    public int countFactory(String matrixCode) {
+
+        return factoryMapper.countFactory(matrixCode);
+    }
 
     /**
      * 编辑

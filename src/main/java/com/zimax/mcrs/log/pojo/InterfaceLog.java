@@ -92,7 +92,7 @@ public class InterfaceLog {
     private Date disposeTime;
 
     /**
-     * 方法名
+     * 接口类型
      */
-    private String methodName;
+    private String interfaceType;
 }

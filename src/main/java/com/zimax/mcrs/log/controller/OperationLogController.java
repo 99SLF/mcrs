@@ -36,7 +36,7 @@ public class OperationLogController {
     @GetMapping("/operationLog/query")
     public Result<?> queryOperationLog(String limit, String page, String logStatus, String operationType, String operationTime,String operationResult, String operator,String order, String field) {
         List operationLogs = operationLogService.queryOperationLog(limit,page,logStatus,operationType,operationTime,operationResult,operator,order,field);
-        return Result.success(operationLogs, operationLogService.count(logStatus));
+        return Result.success(operationLogs, operationLogService.count(logStatus,operationType,operationTime,operationResult,operator));
     }
 
     /**

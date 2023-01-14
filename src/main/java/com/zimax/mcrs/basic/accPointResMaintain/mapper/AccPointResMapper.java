@@ -2,6 +2,7 @@ package com.zimax.mcrs.basic.accPointResMaintain.mapper;
 
 import com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes;
 import com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointResVo;
+import com.zimax.mcrs.warn.pojo.AlarmEvent;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -57,6 +58,20 @@ public interface AccPointResMapper {
      * @param accPointResIds
      */
     void batchDelete(List<Integer> accPointResIds);
+
+
+    /**
+     * 弃用了
+     * @param
+     * @return
+     */
+    void changeEnable(List<AccPointRes> accPointRess);
+
+
+    /**
+     * 批量启用
+     */
+    int enable(AccPointRes accPointRes);
 }
 
 

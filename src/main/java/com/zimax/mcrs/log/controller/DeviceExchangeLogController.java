@@ -43,7 +43,7 @@ public class DeviceExchangeLogController {
     @GetMapping("/deviceExchangeLog/query")
     public Result<?> queryDeviceExchange(String limit, String page, String equipmentId, String equipmentContinuePort, String processName, String operator, String exchangeTime, String order, String field) {
         List deviceExchangeLogs = deviceExchangeLogService.queryDeviceExchangeLog(limit, page, equipmentId, equipmentContinuePort, processName, operator, exchangeTime, order, field);
-        return Result.success(deviceExchangeLogs, deviceExchangeLogService.count(equipmentId));
+        return Result.success(deviceExchangeLogs, deviceExchangeLogService.count(equipmentId, equipmentContinuePort, processName, operator, exchangeTime));
     }
 
     /**
