@@ -39,6 +39,8 @@ import java.util.UUID;
 public class SystemFileController {
     @Autowired
     private SystemFileService systemFileService;
+    private UploadJava uploadJava = (UploadJava)new ClassPathXmlApplicationContext(
+                    "applicationContext.xml").getBean("UploadJava");
     @PostMapping("/upload")
     public Result<?> updateSystemFile(MultipartFile file, SystemFile systemFile, HttpServletRequest request) throws
             Exception {
@@ -53,10 +55,11 @@ public class SystemFileController {
             // 3.把文件加上随机数，防止文件重复
             //String uuid = UUID.randomUUID().toString().replace("-", "").toUpperCase();
             //5.获取文件类型
-            ApplicationContext context = new ClassPathXmlApplicationContext(
-                    "applicationContext.xml");
-
-            UploadJava uploadJava = (UploadJava) context.getBean("UploadJava");
+            Object obj =  DataContextManager.current();
+//            ApplicationContext context = new ClassPathXmlApplicationContext(
+//                    "applicationContext.xml");
+//
+//            UploadJava uploadJava = (UploadJava) context.getBean("UploadJava");
             //9.调用方法
             String realPath = uploadJava.getSystemFilePath();
             File dir = new File(realPath);
@@ -70,7 +73,7 @@ public class SystemFileController {
             file.transferTo(newFile);
 
             //15.保存更新包存放文件夹路径位置
-            systemFile.setDownloadPath(dir.getPath() + "/" + uploadFileName);
+            systemFile.setDownloadPath(dir.getPath() + File.separator+ uploadFileName);
 
             //16.将更新时间保存到数据库信息中
             systemFile.setCreateTime(new Date());

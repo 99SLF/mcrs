@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" session="false" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <!DOCTYPE html>
 <html>
 <!--
@@ -25,7 +27,7 @@
                 <a  class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
                         class="layui-icon layui-icon-edit" ></i>修改</a>
                 <a  class="layui-btn layui-btn-normal layui-btn-xs" lay-event="download"><i
-                        class="layui-icon layui-icon-del" ></i>下载</a>
+                        class="layui-icon layui-icon-download-circle" ></i>下载</a>
             </script>
         </div>
     </div>
@@ -134,14 +136,17 @@
             align: "center",
             minWidth: 80,
         }, {
-            field: "creator",
+            field: "creatorName",
             title: "上传人 ",
-            align: "center",
+            align: "center"
         }, {
             field: "createTime",
             title: "上传时间",
             align: "center",
             minWidth: 120,
+            templet: function (data) {
+                return util.toDateString(data.createTime)
+            }
         }, {
             field: "remark",
             title: "备注",
@@ -162,9 +167,9 @@
         var data = e.data;
         //edit 下载
         if (e.event == "download") {
-            var filePath = encodeURIComponent(e.data.downloadUrl);
+            var filePath = encodeURIComponent(e.data.downloadPath);
             var filename = encodeURIComponent(e.data.fileName);
-            var url = "<%= request.getContextPath() %>/upload/download?filePath=" + filePath ;
+            var url = "<%= request.getContextPath() %>/systemFile/download?filePath=" + filePath ;
             //var url =  "<%= request.getContextPath() %>/update/loaderInterface?APPId=1";
             //创建a标签，用于点击
             var a = document.createElement("a");

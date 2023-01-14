@@ -18,6 +18,16 @@
     <meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
     <title>系统文件上传</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
+    <style>
+        .layui-form-label {
+            width: 120px;
+        }
+
+        .layui-input-block {
+            margin-left: 150px;
+            min-height: 36px
+        }
+    </style>
     <script src="common/layui/layui.all.js"></script>
     <script type="text/javascript">
     </script>
@@ -47,7 +57,7 @@
     <div>
         <div class="layui-form-item layui-row layui-col-space10">
             <div class="layui-col-sm6">
-                <label class="layui-form-label"><span style="color:red">*</span>升级程序安装包</label>
+                <label class="layui-form-label" id="showName"><span style="color:red">*</span></label>
                 <div class="layui-input-block layui-upload" style="width: 400px">
                     <button type="button" name="url" class="layui-btn layui-btn-sm"
                             id="test1"><i class="layui-icon">&#xe67c;</i>附件上传
@@ -61,8 +71,8 @@
     <div class="layui-form-item layui-row layui-col-space10">
         <label class="layui-form-label">备注：</label>
         <div class="layui-input-block">
-                <textarea class="layui-textarea field-effect field-content" name="remarks" id="remarks"
-                          autocomplete="off" placeholder="" lay-verify="remarks"></textarea>
+                <textarea class="layui-textarea field-effect field-content" name="remark" id="remark"
+                          autocomplete="off" placeholder="" lay-verify="remark"></textarea>
         </div>
     </div>
     <div class="layui-form-item layui-hide">
@@ -82,7 +92,6 @@
 
 <script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
 <script type="text/javascript">
-
     var layer = layui.layer;
     var laydate = layui.laydate;
     var form = layui.form;
@@ -93,16 +102,18 @@
     var isExist = false;
     var win = null;
 
-    //表单加载，字典项数据
-    form.render();
-
     function SetData(data) {
         win = data.win ? data.win : window;
         form.val('layuiadmin-app-form-list', {
             "fileId": data.fileId,
         });
+        if(data.fileId==1){
+            document.getElementById("showName").innerHTML="升级程序安装包";
+        }else{
+            document.getElementById("showName").innerHTML="帮助文档";
+        }
     }
-
+    form.render();
 
 
     //上传
@@ -118,7 +129,7 @@
         accept: 'file',
         // //允许上传的文件后缀。一般结合 accept 参数类设定。假设 accept 为 file 类型时，那么你设置 exts: 'zip|rar|7z' 即代表只允许上传压缩格式的文件。如果 accept 未设定，那么限制的就是图片的文件格式
         // exts: 'txt|rar|zip|doc|docx|pdf|xls|xlsx|jpg|png',//允许上传的文件类型
-        exts: 'zip|rar|7z',
+        exts: 'zip|rar|7z|doc|docx',
         //和后端接口命名相同的文件名
         field: "file",
         //是否选完文件后自动上传。如果设定 false，那么需要设置 bindAction 参数来指向一个其它按钮提交上传
@@ -135,8 +146,8 @@
             version: () => {
                 return $('#version').val();//实现动态传值
             },
-            remarks: () => {
-                return $('#remarks').val();//实现动态传值
+            remark: () => {
+                return $('#remark').val();//实现动态传值
             },
             // versionUploadTime:()=>{//后端设置，前端不带了，前端只是显示
             //     return $('#versionUploadTime').val();//实现动态传值

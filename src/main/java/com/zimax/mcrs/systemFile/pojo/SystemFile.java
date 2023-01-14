@@ -1,5 +1,6 @@
 package com.zimax.mcrs.systemFile.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,4 +25,6 @@ public class SystemFile {
     String downloadPath;
     String creator;
     Date createTime;
+    @TableField(exist = false)
+    String creatorName;
 }
