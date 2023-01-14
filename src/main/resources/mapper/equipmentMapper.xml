@@ -83,12 +83,18 @@
         </foreach>
     </delete>
 
-
     <!--查询设备资源号-->
     <select id="checkEquipmentId" resultType="int">
         select count(*)
         from eqi_equipment
         where equipment_id = #{equipmentId}
+    </select>
+
+    <!--查询设备连接Ip-->
+    <select id="checkEquipmentIp" resultType="int">
+        select count(*)
+        from eqi_equipment
+        where equipment_ip = #{equipmentIp}
     </select>
 
 </mapper>

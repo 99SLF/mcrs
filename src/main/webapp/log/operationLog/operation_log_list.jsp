@@ -370,7 +370,7 @@
             minWidth: 100,
             hide: isHidden("operationTime"),
             templet: function (d) {
-                return layui.util.toDateString(d.operationTime, 'yyyy-MM-dd HH:mm:ss');
+                return layui.util.toDateString(d.operationTime);
             }
         }]]
     });

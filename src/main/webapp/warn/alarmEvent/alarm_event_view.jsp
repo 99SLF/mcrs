@@ -210,10 +210,9 @@
             "lowerLimit": data.lowerLimit,
             "alarmType": data.alarmType,
             "makeFormPeople": data.makeFormPeople,
-            "makeFormTime": data.makeFormTime,
+            "makeFormTime": layui.util.toDateString(data.makeFormTime),
             "updatePeople": data.updatePeople,
-            "updateTime": data.updateTime,
-
+            "updateTime": layui.util.toDateString(data.updateTime),
         });
     }
 

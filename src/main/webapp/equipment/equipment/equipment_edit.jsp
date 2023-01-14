@@ -334,6 +334,28 @@
     // 	}
     // });
 
+    //判断设备连接Ip是否已被占用
+    $("#equipmentIp").blur(function () {
+        var equipmentIp = $("#equipmentIp").val();
+        if (equipmentIp != null && equipmentIp != "") {
+            $.ajax({
+                url: "<%= request.getContextPath() %>/equipment/equipmentIp/check/isExist?equipmentIp=" + equipmentIp,
+                type: "GET",
+                cache: false,
+                contentType: "text/json",
+                success: function (text) {
+                    if (text.code == "1") {
+                        isExist = true;
+                    } else {
+                        isExist = false;
+                    }
+                }
+            });
+        } else {
+            return;
+        }
+    });
+
     //监听提交
     form.on("submit(layuiadmin-app-form-edit)", function (data) {
         var submitData = JSON.stringify(data.field);
@@ -359,7 +381,13 @@
                     }
                 });
             }
-        } else {
+        } else if (isExist == true) {
+            layer.msg("当前输入IP已被占用，请重新输入正确IP", {
+                icon: 2,
+                time: 2000
+            });
+            submit = false;
+        }else {
             layer.msg("请稍等");
         }
         return false;

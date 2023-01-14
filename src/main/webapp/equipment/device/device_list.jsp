@@ -731,7 +731,7 @@
             minWidth: 200,
             hide: true,
             templet: function (d) {
-                return layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss');
+                return layui.util.toDateString(d.createTime);
             }
             // hide: isHidden("createTime")
         }, {

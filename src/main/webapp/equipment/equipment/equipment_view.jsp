@@ -236,7 +236,7 @@
             "enable": data.enable,
             "remarks": data.remarks,
             "creator": data.creator,
-            "createTime": layui.util.toDateString(data.createTime,'yyyy-MM-dd HH:mm:ss'),
+            "createTime": layui.util.toDateString(data.createTime),
         });
     }
 

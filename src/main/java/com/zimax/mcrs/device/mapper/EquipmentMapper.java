@@ -24,7 +24,6 @@ public interface EquipmentMapper {
      */
     List<EquipmentVo> queryAll(Map map);
 
-
     /**
      * 新建设备
      *
@@ -36,7 +35,6 @@ public interface EquipmentMapper {
      * 导入（从excle模板导入）
      */
 //    public void importEquipment();
-
 
     /**
      * 删除设备
@@ -52,7 +50,6 @@ public interface EquipmentMapper {
      */
     void updateEquipment(Equipment equipment);
 
-
     /**
      * 记录条数
      *
@@ -60,18 +57,22 @@ public interface EquipmentMapper {
      */
     int count(@Param("equipmentId") String equipmentId, @Param("equipmentName") String equipmentName,@Param("equipmentProperties") String equipmentProperties);
 
-
     /**
      * 批量删除设备
      * @param equipmentInt
      */
     void deleteEquipments(List<Integer> equipmentInt);
 
-
-
     /**
      * 检查当前设备资源号是否存在
      */
     int checkEquipmentId(@Param("equipmentId") String equipmentId);
+
+    /**
+     * 检查输入Ip是否已存在
+     * @return
+     */
+    int checkEquipmentIp(@Param("equipmentIp") String equipmentIp);
+
 
 }

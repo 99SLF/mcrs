@@ -236,9 +236,9 @@
             "alarmEventInt": data.alarmEventInt,
             "alarmRuleDescribe": data.alarmRuleDescribe,
             "ruleMakeFormPeople": data.ruleMakeFormPeople,
-            "ruleMakeFormTime": data.ruleMakeFormTime,
+            "ruleMakeFormTime": layui.util.toDateString(data.ruleMakeFormTime),
             "ruleUpdatePeople": data.ruleUpdatePeople,
-            "ruleUpdateTime": data.ruleUpdateTime,
+            "ruleUpdateTime": layui.util.toDateString(data.ruleUpdateTime),
 
         });
         $.ajax({

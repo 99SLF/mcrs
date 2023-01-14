@@ -297,7 +297,7 @@
             "accessMethod": data.accessMethod,
             "remarks": data.remarks,
             "creator": data.creator,
-            "createTime": layui.util.toDateString(data.createTime,'yyyy-MM-dd HH:mm:ss'),
+            "createTime": layui.util.toDateString(data.createTime),
             "programInstallationPath": data.programInstallationPath,
             "executorInstallationPath": data.executorInstallationPath,
         });
