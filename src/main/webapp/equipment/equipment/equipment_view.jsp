@@ -24,31 +24,31 @@
         <%--		需要隐藏主键--%>
         <input type="hidden" name="equipmentInt" value="default">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>设备资源号:</label>
+            <label class="layui-form-label">设备资源号:</label>
             <div class="layui-input-block">
                 <input id="equipmentId" type="text" name="equipmentId" lay-verify="required|equipmentId"
-                       placeholder="请输入设备资源号(必填)" autocomplete="off" class="layui-input" readonly>
+                       placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>设备名称:</label>
+            <label class="layui-form-label">设备名称:</label>
             <div class="layui-input-block">
                 <input id="equipmentName" type="text" name="equipmentName" lay-verify="required|equipmentName"
-                       placeholder="请输入设备名称(必填)" autocomplete="off" class="layui-input">
+                       placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
     </div>
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>设备安装位置:</label>
+            <label class="layui-form-label">设备安装位置:</label>
             <div class="layui-input-block">
                 <input id="equipmentInstallLocation" type="text" name="equipmentInstallLocation"
-                       lay-verify="" placeholder="请输入设备安装位置" autocomplete="off" class="layui-input" readonly>
+                       lay-verify="" placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>设备类型:</label>
+            <label class="layui-form-label">设备类型:</label>
             <div class="layui-input-block">
                 <input id="equipTypeId" name="equipTypeId" type="hidden"/>
                 <input type="text" class="layui-input" name="equipTypeName" id="equipTypeName"
@@ -63,7 +63,7 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>MES连接IP:</label>
+            <label class="layui-form-label">MES连接IP:</label>
             <div class="layui-input-block">
                 <input id="mesIpAddress" type="text" name="mesIpAddress" lay-verify="required"
                        placeholder="" autocomplete="off" class="layui-input" readonly>
@@ -71,7 +71,7 @@
         </div>
 
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>支持通信协议:</label>
+            <label class="layui-form-label">支持通信协议:</label>
             <div class="layui-input-block">
                 <input id="protocolCommunication" type="text" name="protocolCommunication" lay-verify="required"
                        placeholder="" autocomplete="off" class="layui-input" readonly>
@@ -81,7 +81,7 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>设备连接端口:</label>
+            <label class="layui-form-label">设备连接端口:</label>
             <div class="layui-input-block">
                 <input id="equipmentContinuePort" type="text" name="equipmentContinuePort" lay-verify="required"
                        placeholder="" autocomplete="off" class="layui-input" readonly>
@@ -89,7 +89,7 @@
         </div>
 
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>设备连接IP:</label>
+            <label class="layui-form-label">设备连接IP:</label>
             <div class="layui-input-block">
                 <input id="equipmentIp" type="text" name="equipmentIp" lay-verify="required"
                        placeholder="" autocomplete="off" class="layui-input" readonly>
@@ -99,7 +99,7 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>接入点名称:</label>
+            <label class="layui-form-label">接入点名称:</label>
             <div class="layui-input-block">
                 <input id="accPointResId" name="accPointResId" type="hidden"/>
                 <input type="text" class="layui-input" name="accPointResName" id="accPointResName"
@@ -121,7 +121,7 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>工厂代码:</label>
+            <label class="layui-form-label">工厂代码:</label>
             <div class="layui-input-block">
                 <input id="factoryCode" type="text" name="factoryCode" lay-verify="required"
                        placeholder="" autocomplete="off" class="layui-input" readonly>
@@ -140,7 +140,7 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>是否启用:</label>
+            <label class="layui-form-label">启用:</label>
             <div class="layui-input-block">
                 <select name="enable" id="enable" lay-verify="required" type="select">
                     <option value=""></option>

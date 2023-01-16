@@ -2,6 +2,7 @@ package com.zimax.mcrs.log.pojo;
 
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -80,7 +81,8 @@ public class MesLogVo {
     /**
      * 创建人
      */
-    private String creator;
+    @TableField(exist = false)
+    private String createName;
 
     /**
      * 创建时间

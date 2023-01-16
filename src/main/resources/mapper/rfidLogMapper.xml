@@ -10,6 +10,8 @@
         ON lrl.equipment_int = eqi.equipment_int
         LEFT JOIN eqi_device AS dev
         ON lrl.device_id = dev.device_id
+        LEFT JOIN cap_user AS cur
+        ON lrl.creator = cur.USER_ID
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
@@ -34,11 +36,13 @@
 
     <!--查询所有-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.log.pojo.RfidLogVo">
-        SELECT * FROM log_rfid_log AS lrl
+        SELECT *,cur.USER_NAME AS createName  FROM log_rfid_log AS lrl
         LEFT JOIN eqi_equipment AS eqi
         ON lrl.equipment_int = eqi.equipment_int
         LEFT JOIN eqi_device AS dev
         ON lrl.device_id = dev.device_id
+        LEFT JOIN cap_user AS cur
+        ON lrl.creator = cur.USER_ID
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'

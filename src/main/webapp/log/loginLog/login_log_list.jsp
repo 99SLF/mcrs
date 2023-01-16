@@ -37,7 +37,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">登录用户：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="loginUser" placeholder="" autocomplete="off"
+                        <input type="text" name="loginUserName" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -268,11 +268,11 @@
             minWidth: 150,
             hide: isHidden("source")
         }, {
-            field: "loginUser",
+            field: "loginUserName",
             title: "登录用户",
             align: "center",
             minWidth: 120,
-            hide: isHidden("loginUser")
+            hide: isHidden("loginUserName")
         }, {
             field: "loginTime",
             title: "登陆时间",

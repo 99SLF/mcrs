@@ -60,9 +60,9 @@
                 <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i
                         class="layui-icon layui-icon-delete"></i>删除
                 </button>
-                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="import"><i
-                        class="layui-icon layui-icon-import"></i>导入
-                </button>
+<%--                <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="import"><i--%>
+<%--                        class="layui-icon layui-icon-util"></i>导入--%>
+<%--                </button>--%>
             </div>
 
             <table id="LAY-app-equipment-list" lay-filter="LAY-app-equipment-list"></table>

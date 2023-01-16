@@ -2,6 +2,7 @@ package com.zimax.mcrs.log.pojo;
 
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -52,7 +53,8 @@ public class LoginLogVo {
     /**
      * 登录用户
      */
-    private String loginUser;
+    @TableField(exist = false)
+    private String loginUserName;
 
     /**
      * 登录时间

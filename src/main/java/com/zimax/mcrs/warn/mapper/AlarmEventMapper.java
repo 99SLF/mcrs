@@ -27,7 +27,13 @@ public interface AlarmEventMapper {
      * @param alarmEventId 预警事件编码
      * @param alarmEventTitle 预警事件标题
      */
-    int count(@Param("alarmEventId") String alarmEventId, @Param("alarmEventTitle") String alarmEventTitle);
+    int count(@Param("alarmEventId") String alarmEventId,
+              @Param("alarmEventTitle") String alarmEventTitle,
+              @Param("alarmLevel") String alarmLevel,
+              @Param("alarmCategory") String alarmCategory,
+              @Param("alarmType") String alarmType,
+              @Param("createName") String createName,
+              @Param("makeFormTime") String makeFormTime);
 
     /**
      *添加预警事件

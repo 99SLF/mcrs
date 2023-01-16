@@ -269,7 +269,7 @@
             type: "numbers"
         }, {
             field: "rfidLogNum",
-            title: "RFID交换日志编号",
+            title: "日志编号",
             align: "center",
             minWidth: 150,
             hide: isHidden("rfidLogNum")
@@ -328,11 +328,11 @@
             minWidth: 120,
             hide: isHidden("parameterNum")
         }, {
-            field: "creator",
+            field: "createName",
             title: "创建人",
             align: "center",
             minWidth: 120,
-            hide: isHidden("creator")
+            hide: isHidden("createName")
         }, {
             field: "createTime",
             title: "创建时间",

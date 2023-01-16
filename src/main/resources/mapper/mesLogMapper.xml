@@ -12,6 +12,8 @@
         ON lml.device_id = dev.device_id
         LEFT JOIN base_equip_info AS bei
         ON eqi.equip_type_id = bei.equip_type_id
+        LEFT JOIN cap_user AS cur
+        ON lml.creator = cur.USER_ID
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
@@ -33,13 +35,15 @@
 
     <!--查询所有-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.log.pojo.MesLogVo">
-        SELECT * FROM log_mes_log AS lml
+        SELECT *,cur.USER_NAME AS createName FROM log_mes_log AS lml
         LEFT JOIN eqi_equipment AS eqi
         ON lml.equipment_int = eqi.equipment_int
         LEFT JOIN eqi_device AS dev
         ON lml.device_id = dev.device_id
         LEFT JOIN base_equip_info AS bei
         ON eqi.equip_type_id = bei.equip_type_id
+        LEFT JOIN cap_user AS cur
+        ON lml.creator = cur.USER_ID
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'

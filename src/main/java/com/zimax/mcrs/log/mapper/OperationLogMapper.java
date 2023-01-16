@@ -32,7 +32,7 @@ public interface OperationLogMapper {
               @Param("operationType") String operationType,
               @Param("operationTime") String operationTime,
               @Param("operationResult") String operationResult,
-              @Param("operator") String operator
+              @Param("operateName") String operateName
     );
 
 

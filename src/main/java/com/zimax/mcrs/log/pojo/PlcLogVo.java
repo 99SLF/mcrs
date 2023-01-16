@@ -83,7 +83,7 @@ public class PlcLogVo {
     /**
      * 创建人
      */
-    private String creator;
+    private String createName;
 
     /**
      * 创建时间

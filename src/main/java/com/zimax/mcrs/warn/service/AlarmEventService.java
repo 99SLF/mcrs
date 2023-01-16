@@ -30,7 +30,7 @@ public class AlarmEventService {
     /**
      * 查询全部预警信息
      */
-    public List<AlarmEventVo> queryAll(String page, String limit, String alarmEventId, String alarmEventTitle, String alarmLevel, String alarmCategory, String alarmType, String makeFormPeople, String makeFormTime, String order, String field){
+    public List<AlarmEventVo> queryAll(String page, String limit, String alarmEventId, String alarmEventTitle, String alarmLevel, String alarmCategory, String alarmType, String createName, String makeFormTime, String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -49,7 +49,7 @@ public class AlarmEventService {
         map.put("alarmLevel", alarmLevel);
         map.put("alarmCategory", alarmCategory);
         map.put("alarmType", alarmType);
-        map.put("makeFormPeople", makeFormPeople);
+        map.put("createName", createName);
         map.put("makeFormTime", makeFormTime);
         return alarmEventMapper.queryAll(map);
     }
@@ -57,8 +57,8 @@ public class AlarmEventService {
     /**
      * 查询记录
      */
-    public int count(String alarmEventId, String alarmEventTitle) {
-        return alarmEventMapper.count(alarmEventId, alarmEventTitle);
+    public int count(String alarmEventId, String alarmEventTitle, String alarmLevel, String alarmCategory, String alarmType, String createName, String makeFormTime) {
+        return alarmEventMapper.count(alarmEventId, alarmEventTitle,alarmLevel,alarmCategory,alarmType,createName,makeFormTime);
     }
 
 
@@ -67,6 +67,9 @@ public class AlarmEventService {
      * @param alarmEvent 告警事件
      */
     public void addAlarm(AlarmEvent alarmEvent){
+        IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
+        alarmEvent.setMakeFormPeople(userObject.getUserId());
+        alarmEvent.setMakeFormTime(new Date());
         alarmEventMapper.addAlarmEvent(alarmEvent);
     }
 
@@ -83,6 +86,9 @@ public class AlarmEventService {
      * 修改告警事件
      */
     public void updateAlarm(AlarmEvent alarmEvent){
+        IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
+        alarmEvent.setUpdatePeople(userObject.getUserId());
+        alarmEvent.setUpdateTime(new Date());
         alarmEventMapper.updateAlarmEvent(alarmEvent);
     }
 

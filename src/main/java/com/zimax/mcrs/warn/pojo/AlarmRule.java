@@ -68,7 +68,7 @@ public class AlarmRule {
     /**
      * 制单时间
      */
-    private String ruleMakeFormTime;
+    private Date ruleMakeFormTime;
 
 
     /**
@@ -79,7 +79,7 @@ public class AlarmRule {
     /**
      * 修改时间
      */
-    private String ruleUpdateTime;
+    private Date ruleUpdateTime;
 
     /**
      *监控对象列表

@@ -5,22 +5,24 @@
 
     <!--查询所有操作日志-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.log.pojo.OperationLogVo">
-        select * from log_operation_log
+        select *,cur.USER_NAME AS operateName from log_operation_log AS lol
+        LEFT JOIN cap_user AS cur
+        ON lol.operator = cur.USER_ID
         <where>
             <if test="logStatus !=null and logStatus !=''">
-                and log_status like '%${logStatus}%'
+                and lol.log_status like '%${logStatus}%'
             </if>
             <if test="operationType !=null and operationType !=''">
-                and operation_type like '%${operationType}%'
+                and lol.operation_type like '%${operationType}%'
             </if>
             <if test="operationTime !=null and operationTime !=''">
-                and operation_time like '%${operationTime}%'
+                and lol.operation_time like '%${operationTime}%'
             </if>
             <if test="operationResult !=null and operationResult !=''">
-                and operation_result like '%${operationResult}%'
+                and lol.operation_result like '%${operationResult}%'
             </if>
-            <if test="operator !=null and operator !=''">
-                and operator like '%${operator}%'
+            <if test="operateName !=null and operateName !=''">
+                and cur.USER_NAME like '%${operateName}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -34,22 +36,28 @@
 
     <!--查询记录数-->
     <select id="count" resultType="int">
-        select count(*) from log_operation_log
+        select
+        count(*)
+        from
+        log_operation_log AS lol
+        LEFT JOIN
+        cap_user AS cur
+        ON lol.operator = cur.USER_ID;
         <where>
             <if test="logStatus !=null and logStatus !=''">
-                and log_status like '%${logStatus}%'
+                and lol.log_status like '%${logStatus}%'
             </if>
             <if test="operationType !=null and operationType !=''">
-                and operation_type like '%${operationType}%'
+                and lol.operation_type like '%${operationType}%'
             </if>
             <if test="operationTime !=null and operationTime !=''">
-                and operation_time like '%${operationTime}%'
+                and lol.operation_time like '%${operationTime}%'
             </if>
             <if test="operationResult !=null and operationResult !=''">
-                and operation_result like '%${operationResult}%'
+                and lol.operation_result like '%${operationResult}%'
             </if>
-            <if test="operator !=null and operator !=''">
-                and operator like '%${operator}%'
+            <if test="operateName !=null and operateName !=''">
+                and cur.USER_NAME like '%${operateName}%'
             </if>
         </where>
     </select>
