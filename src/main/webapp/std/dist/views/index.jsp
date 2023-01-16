@@ -115,19 +115,21 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="layui-col-md6">
                     <div class="layui-card">
-                        <div class="layui-card-header">数据概览</div>
+                        <div class="layui-card-header">工序对应设备数量</div>
                         <div class="layui-card-body">
-
-                            <div class="layui-carousel layadmin-carousel layadmin-dataview" data-anim="fade"
-                                 lay-filter="LAY-index-dataview">
-                                <div carousel-item id="LAY-index-dataview">
-                                    <div><i class="layui-icon layui-icon-loading1 layadmin-loading"></i></div>
-                                    <div></div>
-                                    <div></div>
-                                </div>
-                            </div>
-
+                            <div id="EchartZhu7" style="width: 100%;height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            各工厂的工序对应设备数量</div>
+                        <div class="layui-card-body">
+                            <div id="EchartZhu8" style="width: 100%;height: 300px;"></div>
                         </div>
                     </div>
                 </div>
@@ -195,12 +197,12 @@
     var layer = layui.layer;
     var table = layui.table;
     var util = layui.util;
-    var activeWarn = [], hardWarn = [], recordDate = [];
+    var activeWarn = [], hardWarn = [], recordDate = [],eqiByProcess=[]
     var bingData = [];
     var form = layui.form;
-    <%--var chartZhu4 = echarts.init(document.getElementById('EchartZhu4'));--%>
     var chartZhu6 = echarts.init(document.getElementById('EchartZhu6'));
-    <%--var chartZhu7 = echarts.init(document.getElementById('EchartZhu7'));--%>
+    var chartZhu7 = echarts.init(document.getElementById('EchartZhu7'));
+    var chartZhu8 = echarts.init(document.getElementById('EchartZhu8'));
     var chartZhu9 = echarts.init(document.getElementById('EchartZhu9'));
     // 终端数量
     $.ajax({
@@ -266,6 +268,7 @@
         }
     });
 
+    // 告警信息折线图
     $.ajax({
         url: "<%=request.getContextPath() %>/DeviceAbnormalAlarm/groupQueryBydate",
         type: "GET",
@@ -293,6 +296,7 @@
             }
         }
     });
+    // 饼图
     $.ajax({
         url: "<%=request.getContextPath() %>/DeviceAbnormalAlarm/getWarnByproduction",
         type: "GET",
@@ -321,6 +325,29 @@
             }
         }
     });
+
+
+    // 柱形图
+    $.ajax({
+        url: "<%=request.getContextPath() %>/AccessMonitor/processAndeqi",
+        type: "GET",
+        async: true,
+        cache: false,
+        contentType: "text/json",
+        success: function (result) {
+            if (result) {
+                var data = result.data;
+                eqiByProcess.push(data.dieCut);
+                eqiByProcess.push(data.coat);
+                eqiByProcess.push(data.wind);
+                eqiByProcess.push(data.coldPress);
+                echartZhu();
+            } else {
+                layer.msg("查询失败");
+            }
+        }
+    });
+    echartDui();
 
     function getFullSize() {
         var fluid = $(".layui-fluid");
@@ -371,6 +398,50 @@
     //         }]
     //     };
     //
+
+    //指定图表配置项和数据
+    function echartZhu(){
+        var optionchartZhu = {
+            xAxis: {
+                data: ['模切', '涂布', '卷绕', '冷压']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                name: '数量',
+                type: 'bar', //柱状
+                data: eqiByProcess,
+                itemStyle: {
+                    normal: { //柱子颜色
+                        color: 'blue'
+                    }
+                }}]
+        };
+        chartZhu7.setOption(optionchartZhu, true);
+    }
+    function echartDui(){
+        var optionchartDui = {
+            xAxis: {
+                data: ['A', 'B', 'C', 'D', 'E']
+            },
+            yAxis: {},
+            series: [
+                {
+                    data: [10, 22, 28, 43, 49],
+                    type: 'bar',
+                    stack: 'A'
+                },
+                {
+                    data: [5, 4, 3, 5, 10],
+                    type: 'bar',
+                    stack: 'A'
+                }
+            ]
+        };
+        chartZhu8.setOption(optionchartDui, true);
+    }
+
     function echartZhe() {
         var optionchartZhe = {
             tooltip: {},
@@ -520,7 +591,6 @@
             minWidth: 120,
         }]]
     });
-
 </script>
 </body>
 </html>

@@ -25,6 +25,8 @@ function submit() {
      * 登录
      */
     form.on("submit(login)", function(data) {
+        $('#login').addClass("layui-btn-disabled").attr("disabled",true);
+        var login = document.getElementById("login");
     	$.ajax({
     		url: contextPath + "/auth/login",
     		type: "POST",
@@ -34,6 +36,7 @@ function submit() {
     		success: function(res) {
     			var url = getQueryVariable("url");
     			if (res.code == 0) {
+    			    debugger;
     				if (data.field.remember === "on") {
     					var exp = new Date;
     					exp.setDate(exp.getDate() + 7);
@@ -74,6 +77,7 @@ function submit() {
                         icon: 5
     				});
     			}
+                $('#login').addClass("layui-btn-disabled").attr("disabled",false);
     		}
     	});
     	return false;
