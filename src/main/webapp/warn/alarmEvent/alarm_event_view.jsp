@@ -24,36 +24,32 @@
         <%--隐藏主键--%>
         <input type="hidden" name="alarmEventInt" value="default">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>预警事件编码:</label>
+            <label class="layui-form-label">预警事件编码:</label>
             <div class="layui-input-block">
                 <input id="alarmEventId" type="text" name="alarmEventId" lay-verify="required"
-                       placeholder="预警事件编码(必填)" autocomplete="off" class="layui-input" readonly>
+                       placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
         <div class="layui-col-sm6">
             <label class="layui-form-label">预警事件标题:</label>
             <div class="layui-input-block">
                 <input id="alarmEventTitle" type="text" name="alarmEventTitle" lay-verify=""
-                       placeholder="预警事件标题" autocomplete="off" class="layui-input" readonly>
+                       placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
     </div>
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>预警级别:</label>
+            <label class="layui-form-label">预警级别:</label>
             <div class="layui-input-block">
                 <select name="alarmLevel" id="alarmLevel" lay-filter="required" type="select">
-                    <option value="1级">1级</option>
-                    <option value="2级">2级</option>
-                    <option value="3级">3级</option>
-                    <option value="4级">4级</option>
-                    <option value="5级">5级</option>
+                    <option value=""></option>
                 </select>
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>预警类型:</label>
+            <label class="layui-form-label">预警类型:</label>
             <div class="layui-input-block">
                 <select name="alarmType" id="alarmType" lay-filter="" type="select">
                     <option value=""></option>
@@ -63,7 +59,7 @@
     </div>
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>上限:</label>
+            <label class="layui-form-label">上限:</label>
             <div class="layui-input-block">
                 <input id="upperLimit" type="text" name="upperLimit" lay-verify="required"
                        placeholder="请输入上限" autocomplete="off" class="layui-input" readonly>
@@ -71,7 +67,7 @@
         </div>
 
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>下限:</label>
+            <label class="layui-form-label">下限:</label>
             <div class="layui-input-block">
                 <input id="lowerLimit" type="text" name="lowerLimit" lay-verify="required" placeholder="请输入下限"
                        autocomplete="off" class="layui-input" readonly>
@@ -81,11 +77,10 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>是否启用：</label>
+            <label class="layui-form-label">启用：</label>
             <div class="layui-input-block">
                 <select name="enableStatus" id="enableStatus" lay-filter="" type="select">
-                    <option value="on">是</option>
-                    <option value="off">否</option>
+                    <option value=""></option>
                 </select>
             </div>
         </div>

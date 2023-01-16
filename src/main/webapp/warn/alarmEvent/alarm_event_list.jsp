@@ -81,7 +81,7 @@
                 <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i
                         class="layui-icon layui-icon-add-circle-fine"></i>新增事件
                 </button>
-                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="enable"><i
+                <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="enable"><i
                         class="layui-icon layui-icon-ok-circle"></i>启用
                 </button>
                 <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i
