@@ -36,7 +36,6 @@ function submit() {
     		success: function(res) {
     			var url = getQueryVariable("url");
     			if (res.code == 0) {
-    			    debugger;
     				if (data.field.remember === "on") {
     					var exp = new Date;
     					exp.setDate(exp.getDate() + 7);

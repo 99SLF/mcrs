@@ -203,7 +203,7 @@
 			<li lay-id="<%=request.getContextPath()%>/std/dist/views/index.jsp" lay-attr="<%=request.getContextPath()%>/std/dist/views/index.jsp" class="layui-this">
 				<i class="layui-icon layui-icon-home"></i>
 			</li>
-		</ul>d
+		</ul>
 	</div>
 </div>
 <!-- 主体内容 -->
