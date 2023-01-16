@@ -97,22 +97,6 @@
                 </div>
             </div>
 
-
-            <%--制单人--%>
-            <div class="layui-input-block">
-                <%
-                    IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
-                %>
-                <input id="ruleMakeFormPeople" type="text" name="ruleMakeFormPeople"
-                       value="<%=usetObject.getUserName()%>"
-                       class="layui-hide">
-            </div>
-            <%--    //制单时间--%>
-            <div class="layui-input-block">
-                <input type="text" name="ruleMakeFormTime" id="ruleMakeFormTime" class="layui-hide"
-                       value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>">
-            </div>
-
             <div class="layui-form-item layui-hide">
                 <input type="button" lay-submit lay-filter="layuiadmin-app-form-submit" id="layuiadmin-app-form-submit"
                        value="确认添加">

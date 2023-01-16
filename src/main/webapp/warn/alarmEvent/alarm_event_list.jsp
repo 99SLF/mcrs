@@ -483,34 +483,39 @@
             minWidth: 100,
             hide: isHidden("lowerLimit")
         }, {
-            field: "makeFormPeople",
+            field: "createName",
             title: "制单人",
             align: "center",
             minWidth: 120,
-            hide: isHidden("makeFormPeople")
+            hide: isHidden("createName")
         }, {
             field: "makeFormTime",
             title: "制单时间",
             align: "center",
-            minWidth: 100,
+            minWidth: 200,
             hide: isHidden("makeFormTime"),
             templet: function (d) {
                 return layui.util.toDateString(d.makeFormTime);
             }
         }, {
-            field: "updatePeople",
+            field: "updateName",
             title: "修改人",
             align: "center",
             minWidth: 120,
-            hide: isHidden("updatePeople")
+            hide: isHidden("updateName")
         }, {
             field: "updateTime",
             title: "修改时间",
             align: "center",
-            minWidth: 100,
+            minWidth: 200,
             hide: isHidden("updateTime"),
             templet: function (d) {
-                return layui.util.toDateString(d.updateTime);
+                if(d.updateTime!=null){
+                    return layui.util.toDateString(d.updateTime);
+                }else{
+                    return '';
+                }
+
             }
         }, {
             title: "操作",

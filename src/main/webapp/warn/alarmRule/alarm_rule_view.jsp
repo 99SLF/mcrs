@@ -111,7 +111,7 @@
                 <div class="layui-col-sm6">
                     <label class="layui-form-label">制单人:</label>
                     <div class="layui-input-block">
-                        <input id="ruleMakeFormPeople" type="text" name="ruleMakeFormPeople" lay-verify="required"
+                        <input id="createName" type="text" name="createName" lay-verify="required"
                                placeholder="" autocomplete="off" class="layui-input" readonly>
                     </div>
                 </div>
@@ -129,7 +129,7 @@
                 <div class="layui-col-sm6">
                     <label class="layui-form-label">修改人:</label>
                     <div class="layui-input-block">
-                        <input id="ruleUpdatePeople" type="text" name="ruleUpdatePeople" lay-verify="required"
+                        <input id="updateName" type="text" name="updateName" lay-verify="required"
                                placeholder="" autocomplete="off" class="layui-input" readonly>
                     </div>
                 </div>
@@ -198,6 +198,20 @@
     function SetData(data) {
         win = data.win ? data.win : window;
     }
+
+    //获取预警级别的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#monitorLevel",
+        dictTypeId: "WARNING_LEVEL",
+    });
+    form.render();
+
+    //获取启用的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#enable",
+        dictTypeId: "IS_USE",
+    });
+    form.render();
     //禁用规则等级下拉选择框
     layui.use('form', function(){
         var form = layui.form;
@@ -235,9 +249,9 @@
             "alarmEventId": data.alarmEventId,
             "alarmEventInt": data.alarmEventInt,
             "alarmRuleDescribe": data.alarmRuleDescribe,
-            "ruleMakeFormPeople": data.ruleMakeFormPeople,
+            "createName": data.createName,
             "ruleMakeFormTime": layui.util.toDateString(data.ruleMakeFormTime),
-            "ruleUpdatePeople": data.ruleUpdatePeople,
+            "updateName": data.updateName,
             "ruleUpdateTime": layui.util.toDateString(data.ruleUpdateTime),
 
         });

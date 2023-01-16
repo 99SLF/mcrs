@@ -47,7 +47,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">调用者：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="invoker" placeholder="" autocomplete="off"
+                        <input type="text" name="invokerName" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -418,11 +418,11 @@
                 return layui.util.toDateString(d.endTime);
             }
         }, {
-            field: "invoker",
+            field: "invokerName",
             title: "调用者",
             align: "center",
             minWidth: 120,
-            hide: isHidden("invoker")
+            hide: isHidden("invokerName")
         }, {
             field: "disposeTime",
             title: "处理时长",

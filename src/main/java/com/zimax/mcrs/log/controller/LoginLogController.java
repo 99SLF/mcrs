@@ -29,16 +29,16 @@ public class LoginLogController {
      * @param page  页码
      * @param equipmentId   设备资源号
      * @param source    来源
-     * @param loginUser     登录用户
+     * @param loginUserName  依据查询的登录用户id查询登录用户姓名
      * @param loginTime     登录事件
      * @param order
      * @param field
      * @return
      */
     @GetMapping("/loginLog/query")
-    public Result<?> query(String limit, String page, String equipmentId, String source, String loginUser, String loginTime, String order, String field) {
-        List loginLogs = loginLogService.queryLoginLogLog(limit, page, equipmentId, source,loginUser ,loginTime,order, field);
-        return Result.success(loginLogs, loginLogService.count(equipmentId,source,loginUser,loginTime));
+    public Result<?> query(String limit, String page, String equipmentId, String source, String loginUserName, String loginTime, String order, String field) {
+        List loginLogs = loginLogService.queryLoginLogLog(limit, page, equipmentId, source,loginUserName ,loginTime,order, field);
+        return Result.success(loginLogs, loginLogService.count(equipmentId,source,loginUserName,loginTime));
     }
 
     /**

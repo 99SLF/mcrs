@@ -36,16 +36,18 @@
             <div class="layui-inline">
                 <label class="layui-form-label">监控层级：</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="monitorLevel" placeholder="" autocomplete="off"
-                           class="layui-input">
+                    <select name="monitorLevel" id="monitorLevel" lay-filter="monitorLevel" type="select">
+                        <option value=""></option>
+                    </select>
                 </div>
             </div>
 
             <div class="layui-inline">
                 <label class="layui-form-label">状态：</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="enable" placeholder="" autocomplete="off"
-                           class="layui-input">
+                    <select name="enable" id="enable" lay-filter="enable" type="select">
+                        <option value=""></option>
+                    </select>
                 </div>
             </div>
             <div class="layui-inline">
@@ -137,6 +139,19 @@
         type: 'date'
     });
 
+    //获取预警级别的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#monitorLevel",
+        dictTypeId: "WARNING_LEVEL",
+    });
+    form.render();
+
+    //获取启用的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#enable",
+        dictTypeId: "IS_USE",
+    });
+    form.render();
 
     //监听搜索
     form.on("submit(LAY-app-alarmRulelist-search)", function (data) {
@@ -145,6 +160,19 @@
         table.reload("LAY-app-alarmRule-list-reload", {
             where: field
         });
+    });
+
+
+    //监控级别下拉框监听事件
+    form.on("select(monitorLevel)", function (data) {
+        var submit = $("#LAY-app-alarmRulelist-search");
+        submit.click();
+    });
+
+    //启用下拉框监听事件
+    form.on("select(enable)", function (data) {
+        var submit = $("#LAY-app-alarmRulelist-search");
+        submit.click();
     });
 
 
@@ -388,11 +416,11 @@
             minWidth: 120,
             hide: isHidden("alarmRuleDescribe")
         }, {
-            field: "ruleMakeFormPeople",
+            field: "createName",
             title: "制单人",
             align: "center",
             minWidth: 120,
-            hide: isHidden("ruleMakeFormPeople")
+            hide: isHidden("createName")
         }, {
             field: "ruleMakeFormTime",
             title: "制单时间",
@@ -403,11 +431,11 @@
                 return layui.util.toDateString(d.ruleMakeFormTime);
             }
         }, {
-            field: "ruleUpdatePeople",
+            field: "updateName",
             title: "修改人",
             align: "center",
             minWidth: 120,
-            hide: isHidden("ruleUpdatePeople")
+            hide: isHidden("updateName")
         }, {
             field: "ruleUpdateTime",
             title: "修改时间",
@@ -415,7 +443,12 @@
             minWidth: 200,
             hide: isHidden("ruleUpdateTime"),
             templet: function (d) {
-                return layui.util.toDateString(d.ruleUpdateTime);
+                if(d.ruleUpdateTime!=null){
+                    return layui.util.toDateString(d.ruleUpdateTime);
+                }else{
+                    return '';
+                }
+
             }
         }, {
             title: "操作",

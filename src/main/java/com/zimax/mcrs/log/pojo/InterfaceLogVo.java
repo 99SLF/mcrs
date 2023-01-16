@@ -2,6 +2,7 @@ package com.zimax.mcrs.log.pojo;
 
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -96,7 +97,8 @@ public class InterfaceLogVo {
     /**
      * 调用者
      */
-    private String invoker;
+    @TableField(exist = false)
+    private String invokerName;
 
     /**
      * 处理时长

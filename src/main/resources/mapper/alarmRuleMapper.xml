@@ -5,24 +5,49 @@
 
     <!--查询记录数-->
     <select id="count" resultType="int">
-        SELECT count(*) FROM war_alarm_rule as rul
+        SELECT count(*) , cur.USER_NAME AS createName, cu.USER_NAME AS updateName
+        FROM war_alarm_rule as rul
         LEFT JOIN war_alarm_event as eve
         on rul.alarm_event_int = eve.alarm_event_int
+        LEFT JOIN cap_user AS cur
+        ON rul.rule_make_form_people = cur.USER_ID
+        LEFT JOIN cap_user AS cu
+        ON rul.rule_update_people = cu.USER_ID
         <where>
-            <if test="alarmRuleId !=null and alarmRuleId !=''">
-                and rul.alarm_rule_id like '%${alarmRuleId}%'
-            </if>
-            <if test="alarmRuleTitle !=null and alarmRuleTitle !=''">
-                and rul.alarm_rule_title like '%${alarmRuleTitle}%'
-            </if>
+        <if test="alarmRuleId !=null and alarmRuleId !=''">
+            and rul.alarm_rule_id like '%${alarmRuleId}%'
+        </if>
+        <if test="alarmRuleTitle !=null and alarmRuleTitle !=''">
+            and rul.alarm_rule_title like '%${alarmRuleTitle}%'
+        </if>
+        <if test="monitorLevel !=null and monitorLevel !=''">
+            and rul.monitor_level like '%${monitorLevel}%'
+        </if>
+        <if test="enable !=null and enable !=''">
+            and rul.enable like '%${enable}%'
+        </if>
+        <if test="alarmEventId !=null and alarmEventId !=''">
+            and eve.alarm_event_id like '%${alarmEventId}%'
+        </if>
+        <if test="createName !=null and createName !=''">
+            and cur.USER_NAME like '%${createName}%'
+        </if>
+        <if test="ruleMakeFormTime !=null and ruleMakeFormTime !=''">
+            and rul.rule_make_form_time like '%${ruleMakeFormTime}%'
+        </if>
         </where>
     </select>
 
     <!--查询所有监控规则表-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.warn.pojo.AlarmRuleVo">
-        SELECT *FROM war_alarm_rule as rul
+        SELECT * , cur.USER_NAME AS createName, cu.USER_NAME AS updateName
+        FROM war_alarm_rule as rul
         LEFT JOIN war_alarm_event as eve
         on rul.alarm_event_int = eve.alarm_event_int
+        LEFT JOIN cap_user AS cur
+        ON rul.rule_make_form_people = cur.USER_ID
+        LEFT JOIN cap_user AS cu
+        ON rul.rule_update_people = cu.USER_ID
         <where>
             <if test="alarmRuleId !=null and alarmRuleId !=''">
                 and rul.alarm_rule_id like '%${alarmRuleId}%'
@@ -39,8 +64,8 @@
             <if test="alarmEventId !=null and alarmEventId !=''">
                 and eve.alarm_event_id like '%${alarmEventId}%'
             </if>
-            <if test="ruleMakeFormPeople !=null and ruleMakeFormPeople !=''">
-                and rul.rule_make_form_People like '%${ruleMakeFormPeople}%'
+            <if test="createName !=null and createName !=''">
+                and cur.USER_NAME like '%${createName}%'
             </if>
             <if test="ruleMakeFormTime !=null and ruleMakeFormTime !=''">
                 and rul.rule_make_form_time like '%${ruleMakeFormTime}%'

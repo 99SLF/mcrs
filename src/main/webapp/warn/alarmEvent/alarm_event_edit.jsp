@@ -96,19 +96,6 @@
         </div>
     </div>
 
-    <%--    //修改人人--%>
-    <div class="layui-input-block">
-        <%
-            IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
-        %>
-        <input id="updatePeople" type="text" name="updatePeople" value="<%=usetObject.getUserName()%>"
-               class="layui-hide">
-    </div>
-    <%--    //修改时间--%>
-    <div class="layui-input-block">
-        <input type="text" name="updateTime" id="updateTime" class="layui-hide"
-               value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>">
-    </div>
     <div class="layui-form-item layui-hide">
         <input type="button" lay-submit lay-filter="layuiadmin-app-form-edit" id="layuiadmin-app-form-edit"
                value="确认修改">

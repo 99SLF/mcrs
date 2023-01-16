@@ -25,7 +25,10 @@ public interface AlarmRuleMapper {
      * @param alarmRuleId 预警规则编码
      * @param alarmRuleTitle 预警规则标题
      */
-    int count(@Param("alarmRuleId") Integer alarmRuleId, @Param("alarmRuleTitle") String alarmRuleTitle);
+    int count(@Param("alarmRuleId") String alarmRuleId, @Param("alarmRuleTitle") String alarmRuleTitle,
+              @Param("monitorLevel")  String monitorLevel,@Param("enable") String enable,
+              @Param("alarmEventId")String alarmEventId,@Param("createName") String createName,
+              @Param("ruleMakeFormTime")String ruleMakeFormTime);
 
     /**
      *添加预警事件

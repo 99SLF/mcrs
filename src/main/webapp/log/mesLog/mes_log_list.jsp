@@ -267,11 +267,11 @@
             title: "序号",
             type: "numbers"
         }, {
-            field: "rfidLogNum",
-            title: "MES交换日志编号",
+            field: "mesLogNum",
+            title: "日志编号",
             align: "center",
             minWidth: 150,
-            hide: isHidden("rfidLogNum")
+            hide: isHidden("mesLogNum")
         }, {
             field: "logType",
             title: "日志类型",
@@ -306,12 +306,6 @@
             field: "equipmentContinuePort",
             title: "设备连接端口",
             align: "center",
-            minWidth: 150,
-            hide: isHidden("equipmentContinuePort")
-        }, {
-            field: "equipmentContinuePort",
-            title: "设备连接端口",
-            align: "center",
             minWidth: 120,
             hide: isHidden("equipmentContinuePort")
         }, {
@@ -321,11 +315,11 @@
             minWidth: 120,
             hide: isHidden("content")
         }, {
-            field: "creator",
+            field: "createName",
             title: "创建人",
             align: "center",
             minWidth: 120,
-            hide: isHidden("creator")
+            hide: isHidden("createName")
         }, {
             field: "createTime",
             title: "创建时间",

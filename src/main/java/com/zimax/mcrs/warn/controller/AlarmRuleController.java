@@ -41,7 +41,7 @@ public class AlarmRuleController {
      * @param monitorLevel 监控层级
      * @param enable 是否启用
      * @param alarmEventId 告警事件编码
-     * @param ruleMakeFormPeople 规则制单人
+     * @param createName 规则制单人
      * @param ruleMakeFormTime 规则制单时间
      * @param limit 记录数
      * @param page 页码
@@ -50,9 +50,9 @@ public class AlarmRuleController {
      * @return 预警规则列表
      */
     @GetMapping("/alarmRule/query")
-    public Result<?> queryAlarmRule(String page, String limit, Integer alarmRuleId, String alarmRuleTitle, String monitorLevel,String enable, String alarmEventId, String ruleMakeFormPeople, String ruleMakeFormTime, String order, String field) {
-        List alarmRules =  alarmRuleService.queryAlarmRule(page,limit,alarmRuleId,alarmRuleTitle,monitorLevel,enable,alarmEventId,ruleMakeFormPeople,ruleMakeFormTime,order,field);
-        return Result.success( alarmRules,alarmRuleService.count(alarmRuleId,alarmRuleTitle));
+    public Result<?> queryAlarmRule(String page, String limit, String alarmRuleId, String alarmRuleTitle, String monitorLevel,String enable, String alarmEventId, String createName, String ruleMakeFormTime, String order, String field) {
+        List alarmRules =  alarmRuleService.queryAlarmRule(page,limit,alarmRuleId,alarmRuleTitle,monitorLevel,enable,alarmEventId,createName,ruleMakeFormTime,order,field);
+        return Result.success( alarmRules,alarmRuleService.count(alarmRuleId,alarmRuleTitle,monitorLevel,enable,alarmEventId,createName,ruleMakeFormTime));
     }
 
     /**
@@ -61,8 +61,6 @@ public class AlarmRuleController {
      */
     @PostMapping("/alarmRule/add")
     public Result<?> addAlarmRule(@RequestBody AlarmRule alarmRule){
-//        System.out.println("===========================");
-//        System.out.println(alarmRule);
         alarmRuleService.addAlarmRule(alarmRule);
         return Result.success();
     }

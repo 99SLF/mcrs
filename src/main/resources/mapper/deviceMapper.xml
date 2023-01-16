@@ -49,9 +49,9 @@
         dev.program_installation_path,
         dev.executor_installation_path,
         upd.upload_id,
-        if(dev.version = upd.version,
-        "否",
-        "是")as need_update
+        if(dev.version &lt; upd.version,
+        "是",
+        "否")as need_update
         FROM
         eqi_device AS dev
         LEFT JOIN
@@ -138,7 +138,7 @@
         dev.program_installation_path,
         dev.executor_installation_path,
         upd.upload_id,
-        if(dev.version = upd.version,
+        if(dev.version &lt; upd.version,
         "否",
         "是")as need_update
         FROM

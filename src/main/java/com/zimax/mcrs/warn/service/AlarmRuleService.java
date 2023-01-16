@@ -1,5 +1,7 @@
 package com.zimax.mcrs.warn.service;
 
+import com.zimax.cap.datacontext.DataContextManager;
+import com.zimax.cap.party.IUserObject;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.device.pojo.PlcGroup;
 import com.zimax.mcrs.device.pojo.PlcPoint;
@@ -13,6 +15,7 @@ import com.zimax.mcrs.warn.pojo.MonitorEquipmentVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,12 +34,12 @@ public class AlarmRuleService {
     /**
      * 查询所有预警规则
      */
-    public List<AlarmRuleVo> queryAlarmRule(String  page, String limit, Integer alarmRuleId, String alarmRuleTitle, String monitorLevel, String enable, String alarmEventId, String ruleMakeFormPeople, String ruleMakeFormTime, String order, String field){
+    public List<AlarmRuleVo> queryAlarmRule(String  page, String limit, String alarmRuleId, String alarmRuleTitle, String monitorLevel, String enable, String alarmEventId, String createName, String ruleMakeFormTime, String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
             map.put("order","desc");
-            map.put("field","rule_make_form_time");
+            map.put("field","rul.rule_make_form_time");
         }else{
             map.put("order",order);
             map.put("field",changeString.camelUnderline(field));
@@ -50,7 +53,7 @@ public class AlarmRuleService {
         map.put("monitorLevel",monitorLevel);
         map.put("enable",enable);
         map.put("alarmEventId",alarmEventId);
-        map.put("ruleMakeFormPeople",ruleMakeFormPeople);
+        map.put("createName",createName);
         map.put("ruleMakeFormTime",ruleMakeFormTime);
         return alarmRuleMapper.queryAll(map);
     }
@@ -58,8 +61,8 @@ public class AlarmRuleService {
     /**
      * 查询记录
      */
-    public int count(Integer alarmRuleId, String alarmRuleTitle){
-        return alarmRuleMapper.count(alarmRuleId,alarmRuleTitle);
+    public int count(String alarmRuleId, String alarmRuleTitle, String monitorLevel, String enable, String alarmEventId, String createName, String ruleMakeFormTime){
+        return alarmRuleMapper.count(alarmRuleId,alarmRuleTitle,monitorLevel,enable,alarmEventId,createName,ruleMakeFormTime);
     }
 
     /**
@@ -67,6 +70,9 @@ public class AlarmRuleService {
      * @param alarmRule 预警规则
      */
     public void addAlarmRule(AlarmRule alarmRule ){
+        IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
+        alarmRule.setRuleMakeFormPeople(userObject.getUserId());
+        alarmRule.setRuleMakeFormTime(new Date());
         alarmRuleMapper.addAlarmRule(alarmRule);
         //添加预警规则对应的监控对象
         if (alarmRule.getMonitorEquipmentList().size() > 0) {
@@ -106,6 +112,9 @@ public class AlarmRuleService {
                 alarmRuleMapper.removeMonitorEquipment(monitorEquipment.getMonitorEquipmentId());
             }
         }
+        IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
+        alarmRule.setRuleUpdatePeople(userObject.getUserId());
+        alarmRule.setRuleUpdateTime(new Date());
         alarmRuleMapper.updateAlarmRule(alarmRule);
         //添加预警规则新的对应监控对象
         if (alarmRule.getMonitorEquipmentList().size() > 0) {

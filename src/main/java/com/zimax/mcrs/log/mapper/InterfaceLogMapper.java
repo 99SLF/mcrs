@@ -37,7 +37,7 @@ public interface InterfaceLogMapper {
               @Param("source") String source,
               @Param("interfaceType") String interfaceType,
               @Param("equipmentIp") String equipmentIp,
-              @Param("invoker") String invoker,
+              @Param("invokerName") String invokerName,
               @Param("interfaceName") String methodName
     );
 

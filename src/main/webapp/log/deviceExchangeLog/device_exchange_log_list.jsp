@@ -44,7 +44,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">操作人：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="operator" placeholder="" autocomplete="off"
+                        <input type="text" name="operateName" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -384,11 +384,11 @@
             minWidth: 200,
             hide: isHidden("operationContent")
         }, {
-            field: "operator",
+            field: "operateName",
             title: "操作人",
             align: "center",
             minWidth: 120,
-            hide: isHidden("operator")
+            hide: isHidden("operateName")
         }, {
             field: "exchangeTime",
             title: "设备交换时间",

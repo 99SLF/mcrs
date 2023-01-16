@@ -30,7 +30,7 @@ public interface LoginLogMapper {
      */
     int count(@Param("equipmentId") String equipmentId,
             @Param("source") String source,
-            @Param("loginUser") String loginUser,
+            @Param("loginUserName") String loginUserName,
             @Param("loginTime") String loginTime);
 
     /**

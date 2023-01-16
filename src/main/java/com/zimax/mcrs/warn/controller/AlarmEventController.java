@@ -30,15 +30,15 @@ public class AlarmEventController {
      * @param alarmLevel 告警级别
      * @param alarmCategory 告警分类
      * @param alarmType 告警类型
-     * @param makeFormPeople 制单人
+     * @param createName 制单人
      * @param limit 记录数
      * @param page 页码
      * @return 角色列表
      */
     @GetMapping("/alarmEvent/query")
-    public Result<?> query(String alarmEventId, String alarmEventTitle, String alarmLevel, String alarmCategory,  String alarmType, String makeFormPeople, String makeFormTime, String limit,  String page, String order, String field) {
-        List alarmEvents = alarmEventService.queryAll(page,limit,alarmEventId,alarmEventTitle,alarmLevel,alarmCategory,alarmType,makeFormPeople,makeFormTime,order,field);
-        return Result.success(alarmEvents, alarmEventService.count(alarmEventId,alarmEventTitle));
+    public Result<?> query(String alarmEventId, String alarmEventTitle, String alarmLevel, String alarmCategory,  String alarmType, String createName, String makeFormTime, String limit,  String page, String order, String field) {
+        List alarmEvents = alarmEventService.queryAll(page,limit,alarmEventId,alarmEventTitle,alarmLevel,alarmCategory,alarmType,createName,makeFormTime,order,field);
+        return Result.success(alarmEvents, alarmEventService.count(alarmEventId,alarmEventTitle,alarmLevel,alarmCategory,alarmType,createName,makeFormTime));
     }
 
     /**

@@ -101,20 +101,6 @@
                     </div>
                 </div>
             </div>
-
-
-            <div class="layui-input-block">
-                <%
-                    IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
-                %>
-                <input id="ruleUpdatePeople" type="text" name="ruleUpdatePeople" class="layui-hide"
-                       value="<%=usetObject.getUserName()%>">
-            </div>
-
-            <div class="layui-input-block">
-                <input type="text" name="ruleUpdateTime" id="ruleUpdateTime" class="layui-hide"
-                       value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>">
-            </div>
             <div class="layui-form-item layui-hide">
                 <input type="button" lay-submit lay-filter="layuiadmin-app-form-edit" id="layuiadmin-app-form-edit"
                        value="确认修改">

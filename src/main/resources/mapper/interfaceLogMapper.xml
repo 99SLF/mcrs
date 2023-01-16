@@ -10,6 +10,8 @@
         on inter.equipment_int = eqi.equipment_int
         LEFT JOIN eqi_device as dev
         ON inter.device_id = dev.device_id
+        LEFT JOIN cap_user AS cur
+        ON inter.`invoker` = cur.USER_ID
         <where>
             <if test="createTime !=null and createTime !=''">
                 and inter.create_time like '%${createTime}%'
@@ -23,8 +25,8 @@
             <if test="equipmentIp !=null and equipmentIp !=''">
                 and eqi.equipment_ip like '%${equipmentIp}%'
             </if>
-            <if test="invoker !=null and invoker !=''">
-                and inter.invoker like '%${invoker}%'
+            <if test="invokerName !=null and invokerName !=''">
+                and cur.USER_NAME like '%${invokerName}%'
             </if>
             <if test="interfaceName !=null and interfaceName !=''">
                 and inter.interface_name like '%${interfaceName}%'
@@ -34,11 +36,13 @@
 
     <!--查询所有-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.log.pojo.InterfaceLogVo">
-        SELECT * FROM log_interface_log as inter
+        SELECT * ,cur.USER_NAME AS invokerName FROM log_interface_log as inter
         LEFT JOIN eqi_equipment as eqi
         on inter.equipment_int = eqi.equipment_int
         LEFT JOIN eqi_device as dev
         ON inter.device_id = dev.device_id
+        LEFT JOIN cap_user AS cur
+        ON inter.`invoker` = cur.USER_ID
         <where>
             <if test="createTime !=null and createTime !=''">
                 and inter.create_time like '%${createTime}%'
@@ -52,8 +56,8 @@
             <if test="equipmentIp !=null and equipmentIp !=''">
                 and eqi.equipment_ip like '%${equipmentIp}%'
             </if>
-            <if test="invoker !=null and invoker !=''">
-                and inter.invoker like '%${invoker}%'
+            <if test="invokerName !=null and invokerName !=''">
+                and cur.USER_NAME like '%${invokerName}%'
             </if>
             <if test="interfaceName !=null and interfaceName !=''">
                 and inter.interface_name like '%${interfaceName}%'

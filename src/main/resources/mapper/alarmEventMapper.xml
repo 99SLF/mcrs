@@ -5,41 +5,64 @@
 
     <!--查询记录数-->
     <select id="count" resultType="int">
-        select count(*) from war_alarm_event
+        select count(*) , cur.USER_NAME AS createName, cu.USER_NAME AS updateName from war_alarm_event AS wae
+        LEFT JOIN cap_user AS cur
+        on wae.make_form_people = cur.USER_ID
+        LEFT JOIN cap_user as cu
+        on wae.update_people = cu.USER_ID
         <where>
             <if test="alarmEventId !=null and alarmEventId !=''">
-                and alarm_event_id like '%${alarmEventId}%'
+                and wae.alarm_event_id like '%${alarmEventId}%'
             </if>
             <if test="alarmEventTitle !=null and alarmEventTitle !=''">
-                and alarm_event_title like '%${alarmEventTitle}%'
+                and wae.alarm_event_title like '%${alarmEventTitle}%'
+            </if>
+            <if test="alarmLevel !=null and alarmLevel !=''">
+                and wae.alarm_level like '%${alarmLevel}%'
+            </if>
+            <if test="alarmCategory !=null and alarmCategory !=''">
+                and wae.alarm_category like '%${alarmCategory}%'
+            </if>
+            <if test="alarmType !=null and alarmType !=''">
+                and wae.alarm_type like '%${alarmType}%'
+            </if>
+            <if test="createName !=null and createName !=''">
+                and cur.USER_NAME like '%${createName}%'
+            </if>
+            <if test="makeFormTime !=null and makeFormTime !=''">
+                and wae.make_form_time like '%${makeFormTime}%'
             </if>
         </where>
     </select>
 
     <!--查询所有-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.warn.pojo.AlarmEventVo">
-        select * from war_alarm_event
+        select * , cur.USER_NAME AS createName, cu.USER_NAME AS updateName from war_alarm_event AS wae
+        LEFT JOIN cap_user AS cur
+        on wae.make_form_people = cur.USER_ID
+        LEFT JOIN cap_user as cu
+        on wae.update_people = cu.USER_ID
         <where>
             <if test="alarmEventId !=null and alarmEventId !=''">
-                and alarm_event_id like '%${alarmEventId}%'
+                and wae.alarm_event_id like '%${alarmEventId}%'
             </if>
             <if test="alarmEventTitle !=null and alarmEventTitle !=''">
-                and alarm_event_title like '%${alarmEventTitle}%'
+                and wae.alarm_event_title like '%${alarmEventTitle}%'
             </if>
             <if test="alarmLevel !=null and alarmLevel !=''">
-                and alarm_level like '%${alarmLevel}%'
+                and wae.alarm_level like '%${alarmLevel}%'
             </if>
             <if test="alarmCategory !=null and alarmCategory !=''">
-                and alarm_category like '%${alarmCategory}%'
+                and wae.alarm_category like '%${alarmCategory}%'
             </if>
             <if test="alarmType !=null and alarmType !=''">
-                and alarm_type like '%${alarmType}%'
+                and wae.alarm_type like '%${alarmType}%'
             </if>
-            <if test="makeFormPeople !=null and makeFormPeople !=''">
-                and make_form_people like '%${makeFormPeople}%'
+            <if test="createName !=null and createName !=''">
+                and cur.USER_NAME like '%${createName}%'
             </if>
             <if test="makeFormTime !=null and makeFormTime !=''">
-                and make_form_time like '%${makeFormTime}%'
+                and wae.make_form_time like '%${makeFormTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -51,7 +74,7 @@
     </select>
 
     <!--添加预警事件-->
-    <insert id="addAlarmEvent" parameterType="com.zimax.mcrs.warn.pojo.AlarmEventVo">
+    <insert id="addAlarmEvent" parameterType="com.zimax.mcrs.warn.pojo.AlarmEvent">
         insert into war_alarm_event
         values (#{alarmEventInt},#{alarmEventId}, #{alarmEventTitle}, #{enableStatus},
                 #{alarmLevel}, #{upperLimit},

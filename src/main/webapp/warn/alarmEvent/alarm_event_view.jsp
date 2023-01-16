@@ -104,7 +104,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label">制单人:</label>
             <div class="layui-input-block">
-                <input id="makeFormPeople" type="text" name="makeFormPeople" lay-verify="required"
+                <input id="createName" type="text" name="createName" lay-verify="required"
                        placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
@@ -121,7 +121,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label">修改人:</label>
             <div class="layui-input-block">
-                <input id="updatePeople" type="text" name="updatePeople" lay-verify="required"
+                <input id="updateName" type="text" name="updateName" lay-verify="required"
                        placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
@@ -170,11 +170,17 @@
         $("#alarmType").attr("disabled","disabled");
         form.render('select');
     });
-
     //获取预警类型的下拉值
     layui.admin.renderDictSelect({
         elem: "#alarmType",
         dictTypeId: "WRANING_TYPE",
+    });
+    form.render();
+
+    //获取预警级别的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#alarmLevel",
+        dictTypeId: "WARNING_LEVEL",
     });
     form.render();
 
@@ -190,9 +196,13 @@
         elem: "#deviceSoftwareType",
         dictTypeId: "DEVICE_SOFTWARE_TYPE",
     });
-    //设置软件类型的默认值
-    $("#deviceSoftwareType").val("101");
     form.render();
+
+    //获取启用的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#enableStatus",
+        dictTypeId: "IS_USE",
+    });
 
 
     function SetData(data) {
@@ -209,9 +219,9 @@
             "upperLimit": data.upperLimit,
             "lowerLimit": data.lowerLimit,
             "alarmType": data.alarmType,
-            "makeFormPeople": data.makeFormPeople,
+            "createName": data.createName,
             "makeFormTime": layui.util.toDateString(data.makeFormTime),
-            "updatePeople": data.updatePeople,
+            "updateName": data.updateName,
             "updateTime": layui.util.toDateString(data.updateTime),
         });
     }

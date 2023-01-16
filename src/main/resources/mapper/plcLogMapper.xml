@@ -5,11 +5,14 @@
 
     <!--    查询记录数-->
     <select id="count" resultType="int">
-        SELECT count(*) FROM log_plc_log AS lpl
+        SELECT count(*),cur.USER_NAME AS createName
+        FROM log_plc_log AS lpl
         LEFT JOIN eqi_equipment AS eqi
         ON lpl.equipment_int = eqi.equipment_int
         LEFT JOIN eqi_device AS dev
         ON lpl.device_id = dev.device_id
+        LEFT JOIN cap_user AS cur
+        ON lpl.creator = cur.USER_ID
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
@@ -31,11 +34,14 @@
 
     <!--查询所有-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.log.pojo.PlcLogVo">
-        SELECT * FROM log_plc_log AS lpl
+        SELECT *,cur.USER_NAME AS createName
+        FROM log_plc_log AS lpl
         LEFT JOIN eqi_equipment AS eqi
         ON lpl.equipment_int = eqi.equipment_int
         LEFT JOIN eqi_device AS dev
         ON lpl.device_id = dev.device_id
+        LEFT JOIN cap_user AS cur
+        ON lpl.creator = cur.USER_ID
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
