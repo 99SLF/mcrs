@@ -326,6 +326,8 @@
     <bean id="RoleBean" class="com.zimax.components.coframe.rights.service.RoleService">
         <property name="roleMapper" ref="RoleMapper"/>
         <property name="gradeAuthService" ref="GradeAuthBean"/>
+        <property name="resAuthMapper" ref="ResAuthMapper"/>
+        <property name="partyAuthMapper" ref="PartyAuthMapper"/>
     </bean>
 
     <bean id="FunctionBean" class="com.zimax.components.coframe.framework.service.FunctionService">

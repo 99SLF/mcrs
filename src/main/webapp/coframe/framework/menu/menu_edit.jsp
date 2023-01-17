@@ -163,7 +163,6 @@
 	form.on("submit(layuiadmin-app-form-edit)", function(data) {
 		if (submit ==false) {
 			submit = true;
-			debugger;
 			var submitData = JSON.stringify(data.field);
 			if (isExist == false) {
 				$.ajax({
@@ -182,7 +181,7 @@
 					}
 				});	
 			} else if (isExist == true) {
-				layer.msg("角色已存在，请重新输入", {
+				layer.msg("菜单代码已存在，请重新输入", {
 					icon: 2,
 					time: 2000
 				});

@@ -175,8 +175,6 @@
 		defaultToolbar: [],
 		cols: [[{
 			type: "checkbox",
-			fixed: "left",
-			name: "checkbox2"
 		}, {
 			field: "dictId",
 			title: "字典项代码",
@@ -577,6 +575,8 @@
 	}
 	
 	function removeDict() {
+		debugger;
+		var checkStatus = dictTb.checkStatus("#LAY-app-dictType-list");
 		var jsonData = JSON.stringify(selectedTermData);
 		layer.confirm("所有关联的业务字典项都将被删除，确认删除业务字典项？", {
     		btn: ['确定', '取消'],
@@ -643,12 +643,13 @@
 	});
 	
 	treeTable.on('checkbox(LAY-app-dict-list)', function(obj){//demo2表格复选框监听
+		debugger;
 		if (obj.checked) {
 			selected++;
 		} else {
 			selected--;
 		}
-  		var checkStatus = dictTermTb.checkStatus('#LAY-app-dict-list');
+  		var checkStatus = dictTermTb.checkStatus('#LAY-app-dict-list-reload');
   		selectedTermData = checkStatus;
 	});
 	
