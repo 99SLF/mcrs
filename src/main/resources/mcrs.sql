@@ -989,7 +989,7 @@ CREATE TABLE `log_plc_log`  (
     `map_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '映射地址',
     `tag_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标签类型',
     `creator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
-    `createTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
+    `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
     PRIMARY KEY (`plc_log_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 

@@ -56,7 +56,8 @@
     </select>
 
     <!--添加设备-->
-    <insert id="addEquipment" parameterType="com.zimax.mcrs.device.pojo.Equipment">
+    <insert id="addEquipment" parameterType="com.zimax.mcrs.device.pojo.Equipment" keyProperty="equipmentInt"
+            useGeneratedKeys="true">
         insert into eqi_equipment
         values (#{equipmentInt}, #{equipmentId}, #{equipmentName}, #{equipmentInstallLocation},
                 #{equipTypeId}, #{equipmentContinuePort}, #{equipmentIp},
@@ -83,7 +84,7 @@
             acc_point_res_id=#{accPointResId},
             enable=#{enable},
             remarks=#{remarks}
-        where equipment_int=#{equipmentInt}
+        where equipment_int = #{equipmentInt}
     </update>
 
     <!--  批量删除-->
@@ -107,5 +108,25 @@
         from eqi_equipment
         where equipment_ip = #{equipmentIp}
     </select>
+
+    <!--查询设备对应工位信息-->
+    <select id="queryWorkStation" resultType="com.zimax.mcrs.device.pojo.WorkStation">
+        select *
+        from eqi_work_station
+        where equipment_int = #{equipmentInt}
+    </select>
+
+    <insert id="addWorkStation" parameterType="com.zimax.mcrs.device.pojo.WorkStation">
+        insert into eqi_work_station
+        values (#{workStationId},#{equipmentInt},#{workStationNum})
+    </insert>
+
+    <!--根据主键删除设备-->
+    <delete id="removeWorkStation" parameterType="int">
+        delete
+        from eqi_work_station
+        where work_station_id = #{workStationId}
+    </delete>
+
 
 </mapper>

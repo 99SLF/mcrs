@@ -6,6 +6,9 @@ import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.device.mapper.EquipmentMapper;
 import com.zimax.mcrs.device.pojo.Equipment;
 import com.zimax.mcrs.device.pojo.EquipmentVo;
+import com.zimax.mcrs.device.pojo.WorkStation;
+import com.zimax.mcrs.warn.pojo.MonitorEquipment;
+import com.zimax.mcrs.warn.pojo.MonitorEquipmentVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,6 +63,13 @@ public class EquipmentService {
         equipment.setCreator(userObject.getUserId());
         equipment.setCreateTime(new Date());
         equipmentMapper.addEquipment(equipment);
+        //如果工位不为空，则添加至工位表
+        if (equipment.getWorkStationList() != null) {
+            for (WorkStation workStation : equipment.getWorkStationList()) {
+                workStation.setEquipmentInt(equipment.getEquipmentInt());
+                equipmentMapper.addWorkStation(workStation);
+            }
+        }
     }
 
     /**
@@ -68,6 +78,13 @@ public class EquipmentService {
      * @param equipmentInt 设备号
      */
     public void removeEquipment(int equipmentInt) {
+        List<WorkStation> workStationList = equipmentMapper.queryWorkStation(equipmentInt);
+        //如果存在工位信息，删除
+        if(workStationList.size()>0){
+            for(WorkStation workStation: workStationList){
+                equipmentMapper.removeWorkStation(workStation.getWorkStationId());
+            }
+        }
         equipmentMapper.removeEquipment(equipmentInt);
     }
 
@@ -75,7 +92,22 @@ public class EquipmentService {
      * 更新设备
      */
     public void updateEquipment(Equipment equipment) {
+        List<WorkStation> workStationList = equipmentMapper.queryWorkStation(equipment.getEquipmentInt());
+        //如果存在工位信息，删除
+        if(equipment.getWorkStationList() != null){
+            for(WorkStation workStation: workStationList){
+                equipmentMapper.removeWorkStation(workStation.getWorkStationId());
+            }
+        }
         equipmentMapper.updateEquipment(equipment);
+        //如果工位不为空，则添加至工位表
+        if (equipment.getWorkStationList() != null ) {
+            for (WorkStation workStation : equipment.getWorkStationList()) {
+                workStation.setEquipmentInt(equipment.getEquipmentInt());
+                equipmentMapper.addWorkStation(workStation);
+            }
+        }
+
     }
 
     /**
@@ -89,6 +121,16 @@ public class EquipmentService {
      * 批量删除终端
      */
     public void deleteEquipments(List<Integer> equipmentInt) {
+        //从表中获取设备的对应工位信息
+        for (Integer a: equipmentInt) {
+            List<WorkStation> workStationList = equipmentMapper.queryWorkStation(a);
+            //如果存在工位信息，删除
+            if(workStationList.size()>0){
+                for(WorkStation workStation: workStationList){
+                    equipmentMapper.removeEquipment(workStation.getWorkStationId());
+                }
+            }
+        }
         equipmentMapper.deleteEquipments(equipmentInt);
     }
 
@@ -108,6 +150,20 @@ public class EquipmentService {
      */
     public int checkEquipmentIp(String equipmentIp) {
         return equipmentMapper.checkEquipmentIp(equipmentIp);
+    }
+
+    /**
+     * 查询设备对应的工位
+     * @param equipmentInt
+     * @return
+     */
+    public Equipment queryWorkStation(int equipmentInt){
+        Equipment equipment = new Equipment();
+        List<WorkStation> workStationList = equipmentMapper.queryWorkStation(equipmentInt);
+        if (workStationList!= null && workStationList.size()>0){
+            equipment.setWorkStationList(workStationList);
+        }
+        return equipment;
     }
 
 

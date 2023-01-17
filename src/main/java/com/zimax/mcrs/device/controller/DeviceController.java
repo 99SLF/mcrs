@@ -71,7 +71,7 @@ public class DeviceController {
      * 条件查询
      *
      * @param deviceSoftwareType    终端软件类型
-     * @param equipmentId 设备资源号
+     * @param deviceName 终端名称
      * @param limit       记录数
      * @param page        页码
      * @param field       排序字段

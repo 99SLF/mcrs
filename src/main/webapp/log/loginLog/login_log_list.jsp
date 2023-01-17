@@ -283,11 +283,11 @@
                 return layui.util.toDateString(d.loginTime);
             }
         }, {
-            field: "processName",
+            field: "remarks",
             title: "备注",
             align: "center",
             minWidth: 120,
-            hide: isHidden("processName")
+            hide: isHidden("remarks")
         }]]
     });
 

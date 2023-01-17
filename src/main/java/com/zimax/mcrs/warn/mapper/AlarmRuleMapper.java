@@ -69,7 +69,7 @@ public interface AlarmRuleMapper {
     /**
      *删除预警规则对应的监控对象
      */
-    void removeMonitorEquipment(int alarmRuleInt);
+    void removeMonitorEquipment(int monitorEquipmentId);
 
     /**
      * 根据预警规则编码查询预警规则是否存在

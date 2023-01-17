@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 设备
@@ -117,6 +118,9 @@ public class EquipmentVo {
      */
     private String remarks;
 
-
-
+    /**
+     *工位列表
+     */
+    @TableField(exist = false)
+    List<WorkStation> workStationList;
 }

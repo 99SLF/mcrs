@@ -51,15 +51,6 @@ public class EquipmentController {
      */
     @PostMapping("/equipment/add")
     public Result<?> addEquipment(@RequestBody Equipment equipment) {
-//        //获取当前用户信息
-//        IUserObject userName = DataContextManager.current().getMUODataContext().getUserObject();
-//        System.out.println("=============================================================");
-//        System.out.println(userName);
-        //设置创建人为当前用户的姓名
-//        equipment.setCreator(creator.get());
-//        //设置创建日期为当前时间
-//        equipment.setCreateTime(new Date());
-        //调用方法添加设备
         equipmentService.addEquipment(equipment);
         return Result.success();
     }
@@ -138,5 +129,14 @@ public class EquipmentController {
     }
 
 
+    /**
+     * 查询设备资产对应的工位信息
+     * @param equipmentInt 设备主键
+     * @return
+     */
+    @GetMapping("/equipment/workStation/get")
+    public Result<?> getWorkStation(int equipmentInt) {
+        return Result.success(equipmentService.queryWorkStation(equipmentInt));
+    }
 
 }

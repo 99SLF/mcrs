@@ -23,7 +23,7 @@
     <input id="ruleDeleteId" name="ruleDeleteId" type="hidden"/>
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>日志删除规则编码:</label>
+            <label class="layui-form-label">日志删除规则编码:</label>
             <div class="layui-input-block">
                 <input id="deleteRuleNum" type="text" name="deleteRuleNum" lay-verify="required|deleteRuleNum"
                        placeholder="" autocomplete="off" class="layui-input" readonly>
@@ -31,7 +31,7 @@
         </div>
 
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>日志删除规则标题:</label>
+            <label class="layui-form-label">日志删除规则标题:</label>
             <div class="layui-input-block">
                 <input id="deleteRuleTitle" type="text" name="deleteRuleTitle" lay-verify="required|deleteRuleTitle"
                        placeholder="" autocomplete="off" class="layui-input" readonly>
@@ -41,7 +41,7 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>规则级别:</label>
+            <label class="layui-form-label">规则级别:</label>
             <div class="layui-input-block">
                 <select name="ruleLevel" id="ruleLevel" lay-filter=""lay-verify="required" type="select" >
                     <option value=""></option>
@@ -49,7 +49,7 @@
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>日志删除规则类型:</label>
+            <label class="layui-form-label">日志删除规则类型:</label>
             <div class="layui-input-block">
                 <select name="deleteRuleType" id="deleteRuleType" lay-filter="required" lay-verify="required" type="select" >
                     <option value="" ></option>
@@ -59,15 +59,15 @@
     </div>
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>时间间隔:</label>
+            <label class="layui-form-label">时间间隔:</label>
             <div class="layui-input-block">
                 <input id="timeInterval" type="text" name="timeInterval" lay-verify="required"
-                       placeholder="请输入时间间隔"
+                       placeholder=""
                        autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>时间单位:</label>
+            <label class="layui-form-label">时间单位:</label>
             <div class="layui-input-block">
                 <select name="timeUnit" id="timeUnit" lay-filter="required" lay-verify="required" type="select" >
                     <option value=""></option>
@@ -78,16 +78,15 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>是否启用：</label>
+            <label class="layui-form-label">启用：</label>
             <div class="layui-input-block">
                 <select name="enable" id="enable" lay-filter="" lay-verify="required" type="select" >
-                    <option value="on">是</option>
-                    <option value="off">否</option>
+                    <option value=""></option>
                 </select>
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>日志类型:</label>
+            <label class="layui-form-label">日志类型:</label>
             <div class="layui-input-block">
                 <select name="logType" id="logType" lay-filter="" lay-verify="required" type="select" >
                     <option value="" ></option>
@@ -98,7 +97,7 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>创建人：</label>
+            <label class="layui-form-label">创建人：</label>
             <div class="layui-input-block">
                 <input id="creator" type="text" name="creator" lay-verify="required"
                        placeholder=""
@@ -106,7 +105,7 @@
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>创建时间:</label>
+            <label class="layui-form-label">创建时间:</label>
             <div class="layui-input-block">
                 <input id="createTime" type="text" name="createTime" lay-verify="required"
                        placeholder=""
@@ -189,10 +188,17 @@
     });
     form.render();
 
-    //获取日志类型的下拉值
+    //获取规则级别类型的下拉值
     layui.admin.renderDictSelect({
         elem: "#ruleLevel",
         dictTypeId: "WARNING_LEVEL",
+    });
+    form.render();
+
+    //获取启用类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#enable",
+        dictTypeId: "IS_USE",
     });
     form.render();
 

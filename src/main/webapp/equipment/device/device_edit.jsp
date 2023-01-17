@@ -229,7 +229,7 @@
             "version": data.version,
             "needUpdate": data.needUpdate,
             "enable": data.enable,
-            "registerStatus": layui.admin.getDictText("REGISTER_STATUS",data.registerStatus),
+            "registerStatus": data.registerStatus,
             "deviceSoftwareType": data.deviceSoftwareType,
             "deviceName": data.deviceName,
             "accPointResId": data.accPointResId,
@@ -266,6 +266,13 @@
     layui.admin.renderDictSelect({
         elem: "#enable",
         dictTypeId: "IS_USE",
+    });
+    form.render();
+
+    //获取启用类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#registerStatus",
+        dictTypeId: "REGISTER_STATUS",
     });
     form.render();
 

@@ -21,9 +21,9 @@
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">设备资源号：</label>
+                    <label class="layui-form-label">终端名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="equipmentId" placeholder="" autocomplete="off"
+                        <input type="text" name="deviceName" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>

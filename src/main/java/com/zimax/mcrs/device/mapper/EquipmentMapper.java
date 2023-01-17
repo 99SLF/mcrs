@@ -2,6 +2,7 @@ package com.zimax.mcrs.device.mapper;
 
 import com.zimax.mcrs.device.pojo.Equipment;
 import com.zimax.mcrs.device.pojo.EquipmentVo;
+import com.zimax.mcrs.device.pojo.WorkStation;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -74,5 +75,21 @@ public interface EquipmentMapper {
      */
     int checkEquipmentIp(@Param("equipmentIp") String equipmentIp);
 
+    /**
+     * 查询设备是否存在工位
+     * @param equipmentInt 设备主键
+     * @return
+     */
+    List<WorkStation> queryWorkStation(int equipmentInt);
+
+    /**
+     * 给对应的设备添加工位
+     */
+    void addWorkStation(WorkStation workStation);
+
+    /**
+     * 删除工位信息
+     */
+    void removeWorkStation(int workStationId);
 
 }

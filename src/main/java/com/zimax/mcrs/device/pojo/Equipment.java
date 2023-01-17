@@ -2,12 +2,14 @@ package com.zimax.mcrs.device.pojo;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.zimax.mcrs.warn.pojo.MonitorEquipment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
+
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 设备
@@ -82,6 +84,12 @@ public class Equipment {
      * 备注
      */
     private String remarks;
+
+    /**
+     *工位列表
+     */
+    @TableField(exist = false)
+    List<WorkStation> workStationList;
 
 
 
