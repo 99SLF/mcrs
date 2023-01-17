@@ -1046,14 +1046,6 @@ CREATE TABLE `eqi_work_station`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 SET FOREIGN_KEY_CHECKS = 1;
-
-
-
-
-
-
-
-,
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
