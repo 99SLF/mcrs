@@ -133,7 +133,14 @@
 	}
 	
 	function reset() {
-		var formData = {}
+		var formData = {
+            equipmentId: "",
+            axisName: "",
+            prodSFCId: "",
+            vehicleCode: "",
+            startProdTime: "",
+            endProdTime: ""
+		}
 		win.setFormData(formData);
 	}
 	
