@@ -23,9 +23,6 @@
     <div class="layui-card">
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item">
-                <h1>配置文件列表</h1>
-            </div>
-            <div class="layui-form-item">
                 <button class="layui-btn layui-btn" lay-submit lay-filter="add" lay-event="add" title="新增配置文件">新增配置文件</button>
             </div>
 
@@ -65,7 +62,8 @@
         table.reload("tableReload",{
             where:{
                 appId: appId
-            }
+            },
+            url: "<%=request.getContextPath() %>/updateConfig/query"
         })
     }
 
@@ -148,10 +146,7 @@
     table.render({
         elem:'#config-file-list',
         id:'tableReload',
-        url: "<%=request.getContextPath() %>/updateConfig/query",
-        where: {
-            appId: appId
-        },
+        data: [],
         method:"GET",
         title: '配置文件列表',
         page: true,
