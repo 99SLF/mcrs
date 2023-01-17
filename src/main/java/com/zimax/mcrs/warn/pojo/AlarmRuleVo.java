@@ -51,7 +51,7 @@ public class AlarmRuleVo {
     /**
      * 预警事件编码
      */
-    private Integer alarmEventId;
+    private String alarmEventId;
 
     /**
      * 预警事件主键
@@ -66,18 +66,17 @@ public class AlarmRuleVo {
     /**
      * 制单人
      */
-    private String ruleMakeFormPeople;
+    private String createName;
 
     /**
      * 制单时间
      */
     private String ruleMakeFormTime;
 
-
     /**
      * 修改人
      */
-    private String ruleUpdatePeople;
+    private String updateName;
 
     /**
      * 修改时间

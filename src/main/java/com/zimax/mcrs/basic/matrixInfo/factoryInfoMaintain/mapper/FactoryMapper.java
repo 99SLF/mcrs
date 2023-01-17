@@ -30,6 +30,12 @@ public interface FactoryMapper {
 //     */
 //    void deleteFactory(int factoryId);
 
+    /**
+     * 查询代码
+     */
+    List<FactoryInfoVo> selectListInit(@Param("matrixCode") String matrixCode);
+
+    int countFactory(@Param("matrixCode") String matrixCode);
 
     /**
      * 查询信息

@@ -157,23 +157,6 @@
         </div>
     </div>
 
-    <div class="layui-input-block">
-        <%
-            IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
-        %>
-        <%--                <input type="text" class="layui-hide" name="creator" value="<%=usetObject.getUserId()%>"/>--%>
-        <%--				显示当前用户名--%>
-        <input type="text" class="layui-hide" name="creator" value="<%=usetObject.getUserName()%>"
-               readonly/>
-    </div>
-
-
-    <div class="layui-input-block">
-        <input type="text" class="layui-hide" name="createTime"
-               value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>" readonly/>
-    </div>
-
-
     <div class="layui-form-item layui-hide">
         <input type="button" lay-submit lay-filter="layuiadmin-app-form-submit" id="layuiadmin-app-form-submit"
                value="确认添加">
@@ -197,6 +180,7 @@
     var $ = layui.jquery;
     var submit = false;
     var isExist = false;
+    var isExistEIP = false;
     var win = null;
 
     function SetData(data) {
@@ -309,7 +293,6 @@
                 type: "GET",
                 cache: false,
                 contentType: "text/json",
-                cache: false,
                 success: function (text) {
                     if (text.code == "1") {
                         isExist = true;
@@ -323,14 +306,36 @@
         }
     });
 
-    //监听提交
+    //判断设备连接Ip是否已存在
+    $("#equipmentIp").blur(function () {
+        var equipmentIp = $("#equipmentIp").val();
+        if (equipmentIp != null && equipmentIp != "") {
+            $.ajax({
+                url: "<%= request.getContextPath() %>/equipment/equipmentIp/check/isExist?equipmentIp=" + equipmentIp,
+                type: "GET",
+                cache: false,
+                contentType: "text/json",
+                success: function (text) {
+                    if (text.code == "1") {
+                        isExistEIP = true;
+                    } else {
+                        isExistEIP = false;
+                    }
+                }
+            });
+        } else {
+            return;
+        }
+    });
 
+
+    //监听提交
     form.on("submit(layuiadmin-app-form-submit)", function (data) {
         if (submit == false) {
             submit = true;
             var submitData = JSON.stringify(data.field);
             debugger;
-            if (isExist == false) {
+            if (isExist == false && isExistEIP == false) {
                 $.ajax({
                     url: "<%= request.getContextPath() %>/equipment/equipment/add",
                     type: "POST",
@@ -349,8 +354,14 @@
                         });
                     }
                 });
-            } else if (isExist == true) {
+            } else if (isExist == true && isExistEIP == false) {
                 layer.msg("设备资源号已存在，请重新输入", {
+                    icon: 2,
+                    time: 2000
+                });
+                submit = false;
+            } else if (isExist == false && isExistEIP == true) {
+                layer.msg("当前输入IP已被占用，请重新输入正确IP", {
                     icon: 2,
                     time: 2000
                 });

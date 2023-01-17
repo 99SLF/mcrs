@@ -26,18 +26,28 @@
                         <input type="text" name="equipmentId" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
+                </div>
+                <div class="layui-inline">
                     <label class="layui-form-label">设备名称：</label>
                     <div class="layui-input-inline">
                         <input type="text" name="equipmentName" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
-
-                <div class="layui-inline layui-search">
-                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-equipmentlist-search"
-                            id="LAY-app-equipmentlist-search">
-                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                    </button>
+                <div class="layui-inline">
+                    <label class="layui-form-label">启用：</label>
+                    <div class="layui-input-inline">
+                        <select name="enable" id="enable" lay-filter="enable" type="select">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <div class="layui-inline layui-search" style=" padding-left: 50px">
+                        <button class="layui-btn layuiadmin-btn-list" lay-submit
+                                lay-filter="LAY-app-equipmentlist-search"
+                                id="LAY-app-equipmentlist-search">
+                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -50,9 +60,9 @@
                 <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i
                         class="layui-icon layui-icon-delete"></i>删除
                 </button>
-                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="import"><i
-                        class="layui-icon layui-icon-import"></i>导入
-                </button>
+<%--                <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="import"><i--%>
+<%--                        class="layui-icon layui-icon-util"></i>导入--%>
+<%--                </button>--%>
             </div>
 
             <table id="LAY-app-equipment-list" lay-filter="LAY-app-equipment-list"></table>
@@ -98,7 +108,12 @@
         });
     });
 
-
+    //启用下拉框监听事件
+    form.on("select(enable)", function (data) {
+        var submit = $("#LAY-app-equipmentlist-search");
+        submit.click();
+    });
+    
     //获取启用类型的下拉值
     layui.admin.renderDictSelect({
         elem: "#enable",
@@ -139,7 +154,7 @@
         },
 
         //批量删除
-        batchdel: function() {
+        batchdel: function () {
             var checkStatus = table.checkStatus("LAY-app-equipment-list-reload");
             var data = checkStatus.data;
             if (data.length == 0) {
@@ -147,20 +162,20 @@
             }
             if (data.length > 0) {
                 var equipmentInts = new Array();
-                for (var i=0; i<data.length;i++) {
+                for (var i = 0; i < data.length; i++) {
                     equipmentInts[i] = data[i].equipmentInt;
                 }
                 layer.confirm("确定删除所选设备信息？", {
                     icon: 3,
                     title: "系统提示"
-                }, function(index) {
+                }, function (index) {
                     $.ajax({
                         url: "<%= request.getContextPath() %>/equipment/equipment/batchDelete",
                         type: "DELETE",
                         data: JSON.stringify(equipmentInts),
                         cache: false,
                         contentType: "text/json",
-                        success: function(result) {
+                        success: function (result) {
                             if (result.exception) {
                                 layer.alert(result.exception.message, {
                                     icon: 2,
@@ -170,14 +185,14 @@
                                 layer.msg("删除成功", {
                                     icon: 1,
                                     time: 2000
-                                }, function() {
+                                }, function () {
                                     table.reload("LAY-app-equipment-list-reload");
                                 });
                             } else {
                                 layer.msg("删除失败");
                             }
                         },
-                        error: function(jqXHR, textStatus, errorThrown) {
+                        error: function (jqXHR, textStatus, errorThrown) {
                             layer.msg(jqXHR.responseText, {
                                 time: 2000,
                                 icon: 5
@@ -237,7 +252,7 @@
         async: false,
         cache: false,
         contentType: "text/json",
-        success: function(result) {
+        success: function (result) {
             if (result) {
                 hiddenFields = result.data
             } else {
@@ -268,7 +283,7 @@
         limits: [10, 15, 20, 30],
         toolbar: "#toolbar",
         defaultToolbar: ["filter"],
-        colHideChange: function(col, checked) {
+        colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;
             $.ajax({
@@ -276,9 +291,9 @@
                 type: "GET",
                 cache: false,
                 contentType: "text/json",
-                success: function(result) {
+                success: function (result) {
                     if (result) {
-                    } else{
+                    } else {
                         layer.msg("列筛选失败");
                     }
                 }
@@ -307,7 +322,7 @@
             event: "view",
             //监听打开详情页面
             templet: function (data) {
-                return '<span style="color: #09bbfd">' + data.equipmentId +'</span>';
+                return '<span style="color: #09bbfd">' + data.equipmentId + '</span>';
             }
         }, {
             field: "equipmentName",
@@ -321,10 +336,10 @@
             align: "center",
             minWidth: 100,
             hide: isHidden("enable"),
-            templet:function(d) {
+            templet: function (d) {
                 return layui.admin.getDictText("IS_USE", d.enable);
             }
-        },{
+        }, {
             field: "equipmentInstallLocation",
             title: "设备安装位置",
             align: "center",
@@ -336,7 +351,7 @@
             align: "center",
             minWidth: 100,
             hide: isHidden("equipTypeName"),
-            templet:function(d) {
+            templet: function (d) {
                 return layui.admin.getDictText("EQUIPMENT_PROPERTY", d.equipTypeName);
             }
         }, {
@@ -388,18 +403,21 @@
             minWidth: 100,
             hide: true
         }, {
-            field: "creator",
+            field: "createName",
             title: "创建人",
             align: "center",
             minWidth: 100,
             hide: true
-        },{
+        }, {
             field: "createTime",
             title: "创建时间",
             align: "center",
-            minWidth: 150,
-            hide: true
-        },{
+            minWidth: 200,
+            hide: true,
+            templet: function (d) {
+                return layui.util.toDateString(d.createTime);
+            }
+        }, {
             title: "操作",
             align: "center",
             fixed: "right",
@@ -438,7 +456,7 @@
                 title: "系统提示"
             }, function (index) {
                 $.ajax({
-                    url: "<%= request.getContextPath() %>/equipment/equipment/delete/"+data.equipmentInt,
+                    url: "<%= request.getContextPath() %>/equipment/equipment/delete/" + data.equipmentInt,
                     type: "DElETE",
                     data: JSON.stringify({
                         equipment: data
@@ -473,8 +491,7 @@
                     }
                 });
             });
-        }
-        else if (e.event == "view") {
+        } else if (e.event == "view") {
             top.layer.open({
                 type: 2,
                 title: "查看设备详情",

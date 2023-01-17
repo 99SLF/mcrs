@@ -51,7 +51,9 @@
 
 
     <bean id="UploadJava" class="com.zimax.mcrs.update.javaBean.UploadJava">
-        <property name="realPath" value="${realPath}"/>
+        <property name="UploadpackagePath" value="${UploadpackagePath}"/>
+        <property name="ConfigPath" value="${ConfigPath}"/>
+        <property name="SystemFilePath" value="${SystemFilePath}"/>
     </bean>
 
 
@@ -273,6 +275,10 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.mcrs.log.mapper.AbnLogMapper"/>
     </bean>
+    <bean id="SystemFileMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.systemFile.mapper.SystemFileMapper"/>
+    </bean>
 
     <bean id="DeviceEquipmentVoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
@@ -299,6 +305,20 @@
         <property name="mapperInterface" value="com.zimax.mcrs.log.mapper.LoginLogMapper"/>
     </bean>
 
+    <bean id="PlcLogMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.log.mapper.PlcLogMapper"/>
+    </bean>
+
+    <bean id="RfidLogMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.log.mapper.RfidLogMapper"/>
+    </bean>
+
+    <bean id="MesLogMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.log.mapper.MesLogMapper"/>
+    </bean>
     <bean id="GradeAuthBean" class="com.zimax.components.coframe.rights.gradeauth.GradeAuthService"></bean>
 
     <bean id="PartyAuthService" class="com.zimax.components.coframe.auth.service.PartyAuthService"></bean>

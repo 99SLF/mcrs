@@ -69,18 +69,17 @@ public class AlarmEventVo {
     /**
      * 制单人
      */
-    private String makeFormPeople;
+    private String createName;
 
     /**
      * 制单时间
      */
     private String makeFormTime;
 
-
     /**
      * 修改人
      */
-    private String updatePeople;
+    private String updateName;
 
     /**
      * 修改时间

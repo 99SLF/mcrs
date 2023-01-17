@@ -18,7 +18,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("war_alarm_event")
-public class    AlarmEvent {
+public class AlarmEvent {
 
     /**
      * 预警事件主键
@@ -74,7 +74,7 @@ public class    AlarmEvent {
     /**
      * 制单时间
      */
-    private String makeFormTime;
+    private Date makeFormTime;
 
     /**
      * 修改人

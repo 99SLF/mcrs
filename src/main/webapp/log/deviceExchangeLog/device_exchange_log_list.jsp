@@ -44,7 +44,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">操作人：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="operator" placeholder="" autocomplete="off"
+                        <input type="text" name="operateName" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -334,7 +334,10 @@
             title: "日志类型",
             align: "center",
             minWidth: 120,
-            hide: isHidden("logType")
+            hide: isHidden("logType"),
+            templet: function (d) {
+                return layui.admin.getDictText("LOG_TYPE", d.logType);
+            }
         }, {
             field: "equipmentId",
             title: "设备资源号",
@@ -384,17 +387,20 @@
             minWidth: 200,
             hide: isHidden("operationContent")
         }, {
-            field: "operator",
+            field: "operateName",
             title: "操作人",
             align: "center",
             minWidth: 120,
-            hide: isHidden("operator")
+            hide: isHidden("operateName")
         }, {
             field: "exchangeTime",
             title: "设备交换时间",
             align: "center",
             minWidth: 200,
-            hide: isHidden("exchangeTime")
+            hide: isHidden("exchangeTime"),
+            templet:function(d) {
+                return layui.util.toDateString(d.exchangeTime);
+            }
         }]]
     });
 

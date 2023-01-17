@@ -7,6 +7,7 @@ import com.zimax.mcrs.log.pojo.InterfaceLog;
 import com.zimax.mcrs.log.pojo.InterfaceLogVo;
 import com.zimax.mcrs.log.pojo.LoginLog;
 import com.zimax.mcrs.log.pojo.LoginLogVo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +16,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 登录日志日志
+ * 登录日志
  * @author 林俊杰
  * @date 2023/1/11
  */
 @Service
 public class LoginLogService {
-
-    @Autowired
-    private InterfaceLogMapper interfaceLogMapper;
 
     @Autowired
     private LoginLogMapper loginLogMapper;
@@ -32,7 +30,7 @@ public class LoginLogService {
     /**
      * 查询所有接口日志信息
      */
-    public List<LoginLogVo> queryLoginLogLog(String limit, String page, String equipmentId, String source, String loginUser, String loginTime, String order, String field){
+    public List<LoginLogVo> queryLoginLogLog(String limit, String page, String equipmentId, String source, String loginUserName, String loginTime, String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -48,7 +46,7 @@ public class LoginLogService {
         }
         map.put("equipmentId",equipmentId);
         map.put("source",source);
-        map.put("loginUser",loginUser);
+        map.put("loginUserName",loginUserName);
         map.put("loginTime",loginTime);
         return loginLogMapper.queryAll(map);
     }
@@ -56,8 +54,8 @@ public class LoginLogService {
     /**
      * 查询记录
      */
-    public int count(String source) {
-        return loginLogMapper.count(source);
+    public int count(String equipmentId,String source,  String loginUserName,String loginTime) {
+        return loginLogMapper.count(equipmentId,source,loginUserName,loginTime);
     }
 
 

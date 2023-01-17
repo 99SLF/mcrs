@@ -21,21 +21,21 @@
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item layui-col-space12">
                 <div class="layui-inline">
-                    <label class="layui-form-label">创建时间：</label>
+                    <label class="layui-form-label">日志状态：</label>
                     <div class="layui-input-inline">
                         <input type="text" name="logStatus" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">创建时间：</label>
+                    <label class="layui-form-label">操作类型：</label>
                     <div class="layui-input-inline">
                         <input type="text" name="operationType" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">创建时间：</label>
+                    <label class="layui-form-label">操作时间：</label>
                     <div class="layui-input-inline">
                         <input type="text" name="operationTime" id="operationTime" placeholder=""
                                autocomplete="off"
@@ -43,16 +43,16 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">创建时间：</label>
+                    <label class="layui-form-label">操作结果：</label>
                     <div class="layui-input-inline">
                         <input type="text" name="operationResult" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">创建时间：</label>
+                    <label class="layui-form-label">操作人：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="operator" placeholder="" autocomplete="off"
+                        <input type="text" name="operateName" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                     <div class="layui-inline layui-search"style="padding-left: 50px">
@@ -332,7 +332,10 @@
             title: "日志类型",
             align: "center",
             minWidth: 120,
-            hide: isHidden("logType")
+            hide: isHidden("logType"),
+            templet: function (d) {
+                return layui.admin.getDictText("LOG_TYPE", d.logType);
+            }
         }, {
             field: "logStatus",
             title: "日志状态",
@@ -358,17 +361,20 @@
             minWidth: 120,
             hide: isHidden("operationResult")
         }, {
-            field: "operator",
+            field: "operateName",
             title: "操作人",
             align: "center",
             minWidth: 120,
-            hide: isHidden("operator")
+            hide: isHidden("operateName")
         }, {
             field: "operationTime",
             title: "操作时间",
             align: "center",
             minWidth: 100,
-            hide: isHidden("operationTime")
+            hide: isHidden("operationTime"),
+            templet: function (d) {
+                return layui.util.toDateString(d.operationTime);
+            }
         }]]
     });
 

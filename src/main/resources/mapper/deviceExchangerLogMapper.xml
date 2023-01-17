@@ -13,23 +13,12 @@
         ON exchange.device_id = dev.device_id
         LEFT JOIN base_access_info AS bai
         ON eqi.acc_point_res_id = bai.acc_point_res_id
-        <where>
-            <if test="equipmentId !=null and equipmentId !=''">
-                and eqi.equipment_id like '%${equipmentId}%'
-            </if>
-        </where>
-    </select>
-
-    <!--查询所有-->
-    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.log.pojo.DeviceExchangeLogVo">
-        SELECT * FROM
-        log_device_exchange_log as exchange
-        LEFT JOIN eqi_equipment as eqi
-        ON exchange.equipment_int = eqi.equipment_int
-        LEFT JOIN eqi_device AS dev
-        ON exchange.device_id = dev.device_id
-        LEFT JOIN base_access_info AS bai
-        ON eqi.acc_point_res_id = bai.acc_point_res_id
+        LEFT JOIN base_process_info AS bpi
+        ON bai.process_code = bpi.process_code
+        LEFT JOIN base_factory_info AS bfi
+        ON bai.factory_code = bfi.factory_code
+        LEFT JOIN cap_user AS cur
+        ON exchange.operator = cur.USER_ID
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
@@ -38,10 +27,45 @@
                 and eqi.equipment_continue_port like '%${equipmentContinuePort}%'
             </if>
             <if test="processName !=null and processName !=''">
-                and bai.process_name like '%${processName}%'
+                and bpi.process_name like '%${processName}%'
             </if>
-            <if test="operator !=null and operator !=''">
-                and exchange.operator like '%${operator}%'
+            <if test="operateName !=null and operateName !=''">
+                and cur.USER_NAME like '%${operateName}%'
+            </if>
+            <if test="exchangeTime !=null and exchangeTime !=''">
+                and exchange.exchange_time like '%${exchangeTime}%'
+            </if>
+        </where>
+    </select>
+
+    <!--查询所有-->
+    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.log.pojo.DeviceExchangeLogVo">
+        SELECT *, cur.USER_NAME AS operateName FROM
+        log_device_exchange_log as exchange
+        LEFT JOIN eqi_equipment as eqi
+        ON exchange.equipment_int = eqi.equipment_int
+        LEFT JOIN eqi_device AS dev
+        ON exchange.device_id = dev.device_id
+        LEFT JOIN base_access_info AS bai
+        ON eqi.acc_point_res_id = bai.acc_point_res_id
+        LEFT JOIN base_process_info AS bpi
+        ON bai.process_code = bpi.process_code
+        LEFT JOIN base_factory_info AS bfi
+        ON bai.factory_code = bfi.factory_code
+        LEFT JOIN cap_user AS cur
+        ON exchange.operator = cur.USER_ID
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="equipmentContinuePort !=null and equipmentContinuePort !=''">
+                and eqi.equipment_continue_port like '%${equipmentContinuePort}%'
+            </if>
+            <if test="processName !=null and processName !=''">
+                and bpi.process_name like '%${processName}%'
+            </if>
+            <if test="operateName !=null and operateName !=''">
+                and cur.USER_NAME like '%${operateName}%'
             </if>
             <if test="exchangeTime !=null and exchangeTime !=''">
                 and exchange.exchange_time like '%${exchangeTime}%'

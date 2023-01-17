@@ -32,7 +32,7 @@ public class DeviceExchangeLogController {
      * @param equipmentId           设备资源号
      * @param equipmentContinuePort 设备连接端口
      * @param processName           使用工序名称
-     * @param operator              操作人
+     * @param operateName           依据USER_ID查询 USER_NAME
      * @param exchangeTime          交换时间
      * @param limit                 记录数
      * @param page                  页码
@@ -41,9 +41,9 @@ public class DeviceExchangeLogController {
      * @return 设备列表
      */
     @GetMapping("/deviceExchangeLog/query")
-    public Result<?> queryDeviceExchange(String limit, String page, String equipmentId, String equipmentContinuePort, String processName, String operator, String exchangeTime, String order, String field) {
-        List deviceExchangeLogs = deviceExchangeLogService.queryDeviceExchangeLog(limit, page, equipmentId, equipmentContinuePort, processName, operator, exchangeTime, order, field);
-        return Result.success(deviceExchangeLogs, deviceExchangeLogService.count(equipmentId));
+    public Result<?> queryDeviceExchange(String limit, String page, String equipmentId, String equipmentContinuePort, String processName, String operateName, String exchangeTime, String order, String field) {
+        List deviceExchangeLogs = deviceExchangeLogService.queryDeviceExchangeLog(limit, page, equipmentId, equipmentContinuePort, processName, operateName, exchangeTime, order, field);
+        return Result.success(deviceExchangeLogs, deviceExchangeLogService.count(equipmentId, equipmentContinuePort, processName, operateName, exchangeTime));
     }
 
     /**

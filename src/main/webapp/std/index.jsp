@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/common/layui/css/layui.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/admin.css" media="all">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v2">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/iconfont/iconfont.css?v3">
 </head>
 <body class="layui-layout-body">
 <div id="LAY_app">
@@ -122,7 +123,7 @@
 }}
 	<li data-name="{{ item.menuCode || '' }}" data-jump="{{ item.linkAction || '' }}" class="layui-nav-item {{ classSelected() }}">
 		<a href="javascript:;" {{ hasChildren ? '' : 'lay-href="'+ url +'"' }} lay-tips="{{ item.menuName }}" lay-direction="2">
-			<i class="layui-icon {{ item.imagePath }}"></i>
+			<i class="layui-icon iconfont {{ item.imagePath }}"></i>
 			<cite>{{ item.menuName }}</cite>
 		</a>
 	{{# if (hasChildren) { }}

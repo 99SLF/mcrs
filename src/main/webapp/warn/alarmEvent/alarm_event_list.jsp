@@ -81,7 +81,7 @@
                 <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i
                         class="layui-icon layui-icon-add-circle-fine"></i>新增事件
                 </button>
-                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="enable"><i
+                <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="enable"><i
                         class="layui-icon layui-icon-ok-circle"></i>启用
                 </button>
                 <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i
@@ -483,29 +483,40 @@
             minWidth: 100,
             hide: isHidden("lowerLimit")
         }, {
-            field: "makeFormPeople",
+            field: "createName",
             title: "制单人",
             align: "center",
             minWidth: 120,
-            hide: isHidden("makeFormPeople")
+            hide: isHidden("createName")
         }, {
             field: "makeFormTime",
             title: "制单时间",
             align: "center",
-            minWidth: 100,
-            hide: isHidden("makeFormTime")
+            minWidth: 200,
+            hide: isHidden("makeFormTime"),
+            templet: function (d) {
+                return layui.util.toDateString(d.makeFormTime);
+            }
         }, {
-            field: "updatePeople",
+            field: "updateName",
             title: "修改人",
             align: "center",
             minWidth: 120,
-            hide: isHidden("updatePeople")
+            hide: isHidden("updateName")
         }, {
             field: "updateTime",
             title: "修改时间",
             align: "center",
-            minWidth: 100,
-            hide: isHidden("updateTime")
+            minWidth: 200,
+            hide: isHidden("updateTime"),
+            templet: function (d) {
+                if(d.updateTime!=null){
+                    return layui.util.toDateString(d.updateTime);
+                }else{
+                    return '';
+                }
+
+            }
         }, {
             title: "操作",
             align: "center",

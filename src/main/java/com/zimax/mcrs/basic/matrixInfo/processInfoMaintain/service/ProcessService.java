@@ -82,6 +82,17 @@ public class ProcessService {
     }
 
     /**
+     * 查询所有工序代码
+     */
+    public List<ProcessInfoVo> selectListInit(String factoryCode) {
+        return processMapper.selectListInit(factoryCode);
+
+    }
+    public int countProcess(String factoryCode) {
+
+        return processMapper.countProcess(factoryCode);
+    }
+    /**
      * 记录条数
      *
      * @param

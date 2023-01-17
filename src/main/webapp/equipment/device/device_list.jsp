@@ -30,7 +30,8 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">终端类型：</label>
                     <div class="layui-input-inline">
-                        <select name="deviceSoftwareType" id="deviceSoftwareType" lay-filter="deviceSoftwareType" type="select">
+                        <select name="deviceSoftwareType" id="deviceSoftwareType" lay-filter="deviceSoftwareType"
+                                type="select">
                             <option value=""></option>
                         </select>
                     </div>
@@ -116,13 +117,13 @@
     });
 
     //软件类型下拉框监听事件
-    form.on("select(deviceSoftwareType)", function(data) {
+    form.on("select(deviceSoftwareType)", function (data) {
         var submit = $("#LAY-app-devicelist-search");
         submit.click();
     });
 
     //启用下拉框监听事件
-    form.on("select(enable)", function(data) {
+    form.on("select(enable)", function (data) {
         var submit = $("#LAY-app-devicelist-search");
         submit.click();
     });
@@ -149,7 +150,6 @@
             return false;
         }
     });
-
 
 
     var active = {
@@ -225,9 +225,11 @@
 
                     }
                 }
+
                 for (var i = 0; i < data.length; i++) {
                     enables[i] = data[i].enable;
                 }
+
                 function contains(arr, val) {
                     for (var i = 0; i < arr.length; i++) {
                         if (arr[i] === val) {
@@ -236,14 +238,15 @@
                     }
                     return false;
                 }
+
                 //101 是 102 否
-                var isab = contains(enables,'102');
+                var isab = contains(enables, '102');
                 var isSame = same(deviceSoftwareTypes);
                 var deviceSoftwareType = deviceSoftwareTypes[0];
 
-                if(isab==true){
+                if (isab == true) {
                     layer.msg("该终端类型，未启用，无法升级！");
-                }else {
+                } else {
                     if (isSame == false) {
                         layer.msg("批量选择终端软件类型，软件类型必须一致！");
                     } else {
@@ -276,15 +279,14 @@
                                 <%--top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");--%>
                             }
                         });
-                        table.reload("LAY-app-device-list-reload");
+                        // table.reload("LAY-app-device-list-reload");
                         // });
 
                     }
 
 
                 }
-                }
-
+            }
 
 
         },
@@ -383,9 +385,11 @@
 
                     }
                 }
+
                 for (var i = 0; i < data.length; i++) {
                     enables[i] = data[i].enable;
                 }
+
                 function contains(arr, val) {
                     for (var i = 0; i < arr.length; i++) {
                         if (arr[i] === val) {
@@ -394,14 +398,15 @@
                     }
                     return false;
                 }
+
                 //101 是 102 否
-                var isab = contains(enables,'102');
+                var isab = contains(enables, '102');
                 var isSame = same(deviceSoftwareTypes);
                 var deviceSoftwareType = deviceSoftwareTypes[0];
 
-                if(isab==true){
+                if (isab == true) {
                     layer.msg("该终端类型，未启用，无法回退！");
-                }else {
+                } else {
                     if (isSame == false) {
                         layer.msg("批量选择终端软件类型，软件类型必须一致！");
                     } else {
@@ -432,8 +437,8 @@
                                 <%--top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");--%>
                             }
                         });
-                        layer.close(index);
-                        table.reload("LAY-app-device-list-reload");
+
+                        // table.reload("LAY-app-device-list-reload");
                     }
                 }
             }
@@ -686,7 +691,7 @@
             title: "设备安装位置",
             align: "center",
             minWidth: 150,
-            hide:true
+            hide: true
             // hide: isHidden("equipmentInstallLocation")
         }, {
             field: "processName",
@@ -695,12 +700,12 @@
             minWidth: 150,
             hide: true,
             // hide: isHidden("processName")
-        },   {
+        }, {
             field: "factoryName",
             title: "工厂名称",
             align: "center",
             minWidth: 150,
-            hide:true
+            hide: true
             // hide: isHidden("factoryName")
         }, {
             field: "accessMethod",
@@ -713,7 +718,7 @@
                 return layui.admin.getDictText("ACCESS_METHOD", d.accessMethod);
             }
         }, {
-            field: "creator",
+            field: "createName",
             title: "创建人",
             align: "center",
             minWidth: 100,
@@ -725,6 +730,9 @@
             align: "center",
             minWidth: 200,
             hide: true,
+            templet: function (d) {
+                return layui.util.toDateString(d.createTime);
+            }
             // hide: isHidden("createTime")
         }, {
             field: "remarks",

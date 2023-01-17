@@ -37,7 +37,7 @@ public class DeviceController {
         IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
         device.setRegisterStatus("102");
         device.setVersion("1.0");
-        device.setCreator(usetObject.getUserName());
+        device.setCreator(usetObject.getUserId());
         device.setCreateTime(new Date());
         deviceService.registrationDevice(device);
         return Result.success();
@@ -81,7 +81,7 @@ public class DeviceController {
     @GetMapping("/device/query")
     public Result<?> queryDevice(String  page, String limit, String equipmentId, String deviceSoftwareType,String enable, String deviceName, String processName, String factoryName, String order, String field) {
         List devices = deviceService.queryDevices(page, limit, equipmentId, deviceSoftwareType,enable, deviceName,processName,factoryName,order, field);
-        return Result.success(devices, deviceService.count(equipmentId, deviceSoftwareType));
+        return Result.success(devices, deviceService.counts(equipmentId, deviceSoftwareType,enable, deviceName,processName,factoryName));
     }
 
     /**

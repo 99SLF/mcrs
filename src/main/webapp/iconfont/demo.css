@@ -8,14 +8,6 @@
     url('https://at.alicdn.com/t/font_985780_km7mi63cihi.svg?t=1545807318834#iconfont') format('svg');
 }
 
-@font-face {
-  font-family: "iconfont"; /* Project id 3695389 */
-   src: url('//at.alicdn.com/t/c/font_3695389_t2zi96xxyta.woff2?t=1665374920540') format('woff2'),
-    url('//at.alicdn.com/t/c/font_3695389_t2zi96xxyta.woff?t=1665374920540') format('woff'),
-    url('//at.alicdn.com/t/c/font_3695389_t2zi96xxyta.ttf?t=1665374920540') format('truetype');
-}
-
-
 .logo {
   font-family: "iconfont logo";
   font-size: 160px;

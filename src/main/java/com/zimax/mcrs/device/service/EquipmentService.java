@@ -1,5 +1,7 @@
 package com.zimax.mcrs.device.service;
 
+import com.zimax.cap.datacontext.DataContextManager;
+import com.zimax.cap.party.IUserObject;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.device.mapper.EquipmentMapper;
 import com.zimax.mcrs.device.pojo.Equipment;
@@ -27,7 +29,7 @@ public class EquipmentService {
     /**
      * 查询所有
      */
-    public List<EquipmentVo> queryEquipments(String limit, String page, String equipmentId, String equipmentName, String processName, String order, String field) {
+    public List<EquipmentVo> queryEquipments(String limit, String page, String equipmentId, String equipmentName,String enable, String processName, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -43,6 +45,7 @@ public class EquipmentService {
         }
         map.put("equipmentId", equipmentId);
         map.put("equipmentName", equipmentName);
+        map.put("enable", enable);
         map.put("processName", processName);
         return equipmentMapper.queryAll(map);
     }
@@ -53,6 +56,9 @@ public class EquipmentService {
      * @param equipment 角色
      */
     public void addEquipment(Equipment equipment) {
+        IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
+        equipment.setCreator(userObject.getUserId());
+        equipment.setCreateTime(new Date());
         equipmentMapper.addEquipment(equipment);
     }
 
@@ -75,8 +81,8 @@ public class EquipmentService {
     /**
      * 查询记录
      */
-    public int count(String equipmentId, String equipmentName ,String equipmentProperties) {
-        return equipmentMapper.count(equipmentId, equipmentName ,equipmentProperties);
+    public int count(String equipmentId, String equipmentName ,String enable, String processName) {
+        return equipmentMapper.count(equipmentId, equipmentName ,enable, processName);
     }
 
     /**
@@ -93,6 +99,15 @@ public class EquipmentService {
      */
     public int checkEquipmentId(String equipmentId) {
         return equipmentMapper.checkEquipmentId(equipmentId);
+    }
+
+    /**
+     * 检测设备连接IP是否存在
+     *
+     * @param equipmentIp 设备连接Ip
+     */
+    public int checkEquipmentIp(String equipmentIp) {
+        return equipmentMapper.checkEquipmentIp(equipmentIp);
     }
 
 

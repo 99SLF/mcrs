@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.log.mapper.RfidLogMapper">
+
+    <!--    查询记录数-->
+    <select id="count" resultType="int">
+        SELECT count(*) FROM log_rfid_log AS lrl
+        LEFT JOIN eqi_equipment AS eqi
+        ON lrl.equipment_int = eqi.equipment_int
+        LEFT JOIN eqi_device AS dev
+        ON lrl.device_id = dev.device_id
+        LEFT JOIN cap_user AS cur
+        ON lrl.creator = cur.USER_ID
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="deviceName!=null and deviceName !=''">
+                and dev.device_name like '%${deviceName}%'
+            </if>
+            <if test="rfidId !=null and rfidId !=''">
+                and lrl.rfid_id like '%${rfidId}%'
+            </if>
+            <if test="equipmentIp !=null and equipmentIp !=''">
+                and eqi.equipment_ip like '%${equipmentIp}%'
+            </if>
+            <if test="equipmentContinuePort !=null and equipmentContinuePort !=''">
+                and eqi.equipmentContinuePort like '%${equipmentContinuePort}%'
+            </if>
+            <if test="createTime !=null and createTime !=''">
+                and lrl.create_time like '%${createTime}%'
+            </if>
+        </where>
+    </select>
+
+    <!--查询所有-->
+    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.log.pojo.RfidLogVo">
+        SELECT *,cur.USER_NAME AS createName  FROM log_rfid_log AS lrl
+        LEFT JOIN eqi_equipment AS eqi
+        ON lrl.equipment_int = eqi.equipment_int
+        LEFT JOIN eqi_device AS dev
+        ON lrl.device_id = dev.device_id
+        LEFT JOIN cap_user AS cur
+        ON lrl.creator = cur.USER_ID
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="deviceName!=null and deviceName !=''">
+                and dev.device_name like '%${deviceName}%'
+            </if>
+            <if test="rfidId !=null and rfidId !=''">
+                and lrl.rfid_id like '%${rfidId}%'
+            </if>
+            <if test="equipmentIp !=null and equipmentIp !=''">
+                and eqi.equipment_ip like '%${equipmentIp}%'
+            </if>
+            <if test="equipmentContinuePort !=null and equipmentContinuePort !=''">
+                and eqi.equipmentContinuePort like '%${equipmentContinuePort}%'
+            </if>
+            <if test="createTime !=null and createTime !=''">
+                and lrl.create_time like '%${createTime}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+    <!--添加Rfid交换日志-->
+    <insert id="addRfidLog" parameterType="com.zimax.mcrs.log.pojo.RfidLog">
+        insert into log_rfid_log
+        values (#{rfidLogId}, #{rfidLogNum}, #{logType}, #{equipmentInt},
+                #{deviceId}, #{rfidId}, #{parameterName},
+                #{parameterNum}, #{creator}, #{createTime})
+    </insert>
+
+    <!--删除-->
+    <delete id="removeRfidLog" parameterType="int">
+        delete from log_rfid_log where rfid_log_id = #{rfidLogId}
+    </delete>
+
+
+</mapper>

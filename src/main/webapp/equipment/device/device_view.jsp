@@ -24,7 +24,7 @@
         <%--	需要隐藏主键	--%>
         <input type="hidden" name="deviceId" value="default">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>APPID:</label>
+            <label class="layui-form-label">APPID:</label>
             <div class="layui-input-block">
                 <input id="APPId" type="text" name="APPId" lay-verify="" placeholder="" autocomplete="off"
                        class="layui-input" readonly>
@@ -67,7 +67,7 @@
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>终端类型:</label>
+            <label class="layui-form-label">终端类型:</label>
             <div class="layui-input-block">
                 <select name="deviceSoftwareType" id="deviceSoftwareType" lay-filter="" type="select">
                     <option value=""></option>
@@ -78,14 +78,14 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>终端名称:</label>
+            <label class="layui-form-label">终端名称:</label>
             <div class="layui-input-block">
                 <input id="deviceName" type="text" name="deviceName" lay-verify="required|deviceName" placeholder=""
                        autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>接入点名称:</label>
+            <label class="layui-form-label">接入点名称:</label>
             <div class="layui-input-block">
                 <input type="text" class="layui-input" name="accPointResName" id="accPointResName"
                        lay-verify=""
@@ -112,7 +112,7 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>设备资源号:</label>
+            <label class="layui-form-label">设备资源号:</label>
             <div class="layui-input-block">
                 <input id="equipmentInt" name="equipmentInt" type="hidden"/>
                 <input type="text" class="layui-input" name="equipmentId" id="equipmentId"
@@ -152,14 +152,14 @@
     </div>
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>终端程序安装路径:</label>
+            <label class="layui-form-label">终端程序安装路径:</label>
             <div class="layui-input-block">
                 <input id="programInstallationPath" type="text" name="programInstallationPath" lay-verify="required"
                        placeholder="" autocomplete="off" class="layui-input"  readonly>
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>终端执行程序安装路径:</label>
+            <label class="layui-form-label">终端执行程序安装路径:</label>
             <div class="layui-input-block">
                 <input id="executorInstallationPath" type="text" name="executorInstallationPath"
                        lay-verify="required" placeholder="" autocomplete="off" class="layui-input" readonly>
@@ -169,7 +169,7 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>接入方式:</label>
+            <label class="layui-form-label">接入方式:</label>
             <div class="layui-input-block">
                 <select name="accessMethod" id="accessMethod" lay-filter="" type="select">
                     <option value=""></option>
@@ -191,7 +191,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label">创建人:</label>
             <div class="layui-input-block">
-                <input id="creator" type="text" name="creator" lay-verify="required"
+                <input id="createName" type="text" name="createName" lay-verify="required"
                        placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
@@ -252,8 +252,6 @@
         elem: "#accessMethod",
         dictTypeId: "ACCESS_METHOD",
     });
-    //设置接入方式的默认值
-    $("#accessMethod").val("101");
     form.render();
 
     //获取软件类型的下拉值
@@ -296,8 +294,8 @@
             "equipmentInstallLocation": data.equipmentInstallLocation,
             "accessMethod": data.accessMethod,
             "remarks": data.remarks,
-            "creator": data.creator,
-            "createTime": data.createTime,
+            "createName": data.createName,
+            "createTime": layui.util.toDateString(data.createTime),
             "programInstallationPath": data.programInstallationPath,
             "executorInstallationPath": data.executorInstallationPath,
         });

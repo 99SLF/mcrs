@@ -43,21 +43,16 @@
                 <div class="layui-col-sm6">
                     <label class="layui-form-label"><span style="color:red">*</span>监控层级:</label>
                     <div class="layui-input-block">
-                        <select name="monitorLevel" id="monitorLevel" lay-filter="required" type="select">
-                            <option value="1级">1级</option>
-                            <option value="2级">2级</option>
-                            <option value="3级">3级</option>
-                            <option value="4级">4级</option>
-                            <option value="5级">5级</option>
+                        <select name="monitorLevel" id="monitorLevel" lay-filter="monitorLevel" lay-verify="required" type="select">
+                            <option value=""></option>
                         </select>
                     </div>
                 </div>
                 <div class="layui-col-sm6">
-                    <label class="layui-form-label"><span style="color:red">*</span>是否启用：</label>
+                    <label class="layui-form-label"><span style="color:red">*</span>启用：</label>
                     <div class="layui-input-block">
-                        <select name="enable" id="enable" lay-filter="required" type="select">
-                            <option value="on">是</option>
-                            <option value="off">否</option>
+                        <select name="enable" id="enable" lay-filter="enable" lay-verify="required" type="select">
+                            <option value=""></option>
                         </select>
                     </div>
                 </div>
@@ -100,22 +95,6 @@
                       class="layui-input" lay-verify="alarmEventContent"></textarea>
                     </div>
                 </div>
-            </div>
-
-
-            <%--制单人--%>
-            <div class="layui-input-block">
-                <%
-                    IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
-                %>
-                <input id="ruleMakeFormPeople" type="text" name="ruleMakeFormPeople"
-                       value="<%=usetObject.getUserName()%>"
-                       class="layui-hide">
-            </div>
-            <%--    //制单时间--%>
-            <div class="layui-input-block">
-                <input type="text" name="ruleMakeFormTime" id="ruleMakeFormTime" class="layui-hide"
-                       value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>">
             </div>
 
             <div class="layui-form-item layui-hide">
@@ -174,6 +153,22 @@
         win = data.win ? data.win : window;
     }
 
+    //获取启用的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#enable",
+        dictTypeId: "IS_USE",
+    });
+    //设置启用的默认值
+    $("#enable").val("101");
+    form.render();
+
+    //获取监控层级的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#monitorLevel",
+        dictTypeId: "WARNING_LEVEL",
+    });
+    $("#monitorLevel").val("101");
+    form.render();
 
     //选择预警事件编码入口
     $("#onButtonAlarmEvent").click(function () {

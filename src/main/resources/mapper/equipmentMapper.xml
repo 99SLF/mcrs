@@ -9,28 +9,39 @@
         LEFT JOIN base_equip_info AS bei ON eqi.equip_type_id = bei.equip_type_id
         LEFT JOIN base_access_info AS bai ON eqi.acc_point_res_id = bai.acc_point_res_id
         LEFT JOIN base_process_info AS bpi ON bai.process_code = bpi.process_code
+        LEFT JOIN cap_user AS cur ON eqi.creator = cur.USER_ID
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
             </if>
             <if test="equipmentName !=null and equipmentName !=''">
                 and eqi.equipment_name like '%${equipmentName}%'
+            </if>
+            <if test="enable !=null and enable !=''">
+                and eqi.enable like '%${enable}%'
+            </if>
+            <if test="processName !=null and processName !=''">
+                and bpi.process_name like '%${processName}%'
             </if>
         </where>
     </select>
 
     <!--查询所有-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.device.pojo.EquipmentVo">
-        SELECT * FROM eqi_equipment AS eqi
+        SELECT *, cur.USER_NAME AS createName FROM eqi_equipment AS eqi
         LEFT JOIN base_equip_info AS bei ON eqi.equip_type_id = bei.equip_type_id
         LEFT JOIN base_access_info AS bai ON eqi.acc_point_res_id = bai.acc_point_res_id
         LEFT JOIN base_process_info AS bpi ON bai.process_code = bpi.process_code
+        LEFT JOIN cap_user AS cur ON eqi.creator = cur.USER_ID
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
             </if>
             <if test="equipmentName !=null and equipmentName !=''">
                 and eqi.equipment_name like '%${equipmentName}%'
+            </if>
+            <if test="enable !=null and enable !=''">
+                and eqi.enable like '%${enable}%'
             </if>
             <if test="processName !=null and processName !=''">
                 and bpi.process_name like '%${processName}%'
@@ -83,12 +94,18 @@
         </foreach>
     </delete>
 
-
     <!--查询设备资源号-->
     <select id="checkEquipmentId" resultType="int">
         select count(*)
         from eqi_equipment
         where equipment_id = #{equipmentId}
+    </select>
+
+    <!--查询设备连接Ip-->
+    <select id="checkEquipmentIp" resultType="int">
+        select count(*)
+        from eqi_equipment
+        where equipment_ip = #{equipmentIp}
     </select>
 
 </mapper>

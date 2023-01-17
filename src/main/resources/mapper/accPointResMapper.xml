@@ -46,12 +46,8 @@
             acc_point_res_name = #{accPointResName},
             is_enable          = #{isEnable},
             matrix_code        = #{matrixCode},
---             matrix_name        = #{matrixName},
             factory_code       = #{factoryCode},
---             factory_name       = #{factoryName},
             process_code       = #{processCode},
---             process_name       = #{processName},
---             process_remarks    = #{processRemarks},
             creator            = #{creator},
             create_time        = #{createTime,jdbcType=DATE},
             updater            = #{updater},
@@ -68,6 +64,7 @@
         a.acc_point_res_name,
         a.is_enable,
         b.matrix_code,
+        b.matrix_name,
         c.factory_code,
         c.factory_name,
         d.process_code,
@@ -122,5 +119,31 @@
         </foreach>
     </delete>
 
+    <!--批量启用（弃用了）-->
+    <update id="changeEnable">
+        update base_access_info
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="isEnable = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.isEnable != null and item.isEnable != ''">
+                        when acc_point_res_id= #{item.accPointResId} then #{item.isEnable}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where acc_point_res_id in
+        <foreach collection="list" item="accPointRes" index="index" separator="," open="(" close=")">
+            (#{accPointRes.acc_point_res_id})
+        </foreach>
+    </update>
+
+    <!--批量启用-->
+    <update id="enable" parameterType="java.util.List">
+        update base_access_info
+        set is_enable = #{isEnable},
+            updater=#{updater},
+            update_time=#{updateTime}
+        where acc_point_res_id = #{accPointResId}
+    </update>
 
 </mapper>

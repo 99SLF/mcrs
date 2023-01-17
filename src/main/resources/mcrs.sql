@@ -464,27 +464,28 @@ CREATE TABLE `upd_upload` (
 ) ENGINE=InnoDB AUTO_INCREMENT=197 DEFAULT CHARSET=utf8;
 
 
+
 -- ----------------------------
 -- Table structure for log_interface_log
 -- ----------------------------
 DROP TABLE IF EXISTS `log_interface_log`;
 CREATE TABLE `log_interface_log`  (
-    `interface_log_id` int(9) NOT NULL AUTO_INCREMENT COMMENT '接口日志主键',
-    `interface_log_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接口日志编号',
-    `log_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志类型',
-    `source` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '来源',
-    `equipment_int` int(9) NULL DEFAULT NULL COMMENT '设备主键',
-    `device_id` int(9) NULL DEFAULT NULL COMMENT '终端主键',
-    `interface_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接口名称',
-    `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-    `json_page` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'JSON包',
-    `dispose_result` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '处理结果',
-    `start_time` datetime NULL DEFAULT NULL COMMENT '开始时间',
-    `end_time` datetime NULL DEFAULT NULL COMMENT '结束时间',
-    `invoker` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '调用者',
-    `dispose_time` datetime NULL DEFAULT NULL COMMENT '处理时长',
-    `method_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '方法名',
-    PRIMARY KEY (`interface_log_id`) USING BTREE
+  `interface_log_id` int(9) NOT NULL AUTO_INCREMENT COMMENT '接口日志主键',
+  `interface_log_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接口日志编号',
+  `log_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志类型',
+  `source` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '来源',
+  `equipment_int` int(9) NULL DEFAULT NULL COMMENT '设备主键',
+  `device_id` int(9) NULL DEFAULT NULL COMMENT '终端主键',
+  `interface_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接口名称',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `json_page` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'JSON包',
+  `dispose_result` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '处理结果',
+  `start_time` datetime NULL DEFAULT NULL COMMENT '开始时间',
+  `end_time` datetime NULL DEFAULT NULL COMMENT '结束时间',
+  `invoker` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '调用者',
+  `dispose_time` datetime NULL DEFAULT NULL COMMENT '处理时长',
+  `interface_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接口类型',
+  PRIMARY KEY (`interface_log_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 92 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 SET FOREIGN_KEY_CHECKS = 1;
@@ -972,3 +973,84 @@ CREATE TABLE `log_login_log`  (
 
 SET FOREIGN_KEY_CHECKS = 1;
 
+
+    -- ----------------------------
+-- Table structure for log_plc_log
+-- ----------------------------
+DROP TABLE IF EXISTS `log_plc_log`;
+CREATE TABLE `log_plc_log`  (
+    `plc_log_id` int(9) NOT NULL AUTO_INCREMENT COMMENT 'PLC交换日志Id',
+    `plc_log_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'PLC交换日志编号',
+    `log_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志类型',
+    `equipment_int` int(9) NULL DEFAULT NULL COMMENT '设备主键',
+    `device_id` int(9) NULL DEFAULT NULL COMMENT '终端主键',
+    `plc_group_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'PLC组别名称',
+    `group_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '组别类型',
+    `map_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '映射地址',
+    `tag_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标签类型',
+    `creator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+    `createTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
+    PRIMARY KEY (`plc_log_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+    -- ----------------------------
+-- Table structure for log_rfid_log
+-- ----------------------------
+DROP TABLE IF EXISTS `log_rfid_log`;
+CREATE TABLE `log_rfid_log`  (
+ `rfid_log_id` int(9) NOT NULL AUTO_INCREMENT COMMENT 'RFID交换日志Id',
+ `rfid_log_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'RFID交换日志编号',
+ `log_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志类型',
+ `equipment_int` int(9) NULL DEFAULT NULL COMMENT '设备主键'
+ `device_id` int(9) NULL DEFAULT NULL COMMENT '终端主键',
+ `rfid_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'RFID-ID',
+ `parameter_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '参数名称',
+ `parameter_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '参数值',
+ `creator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+ `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+ PRIMARY KEY (`rfid_log_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+    -- ----------------------------
+-- Table structure for log_mes_log
+-- ----------------------------
+DROP TABLE IF EXISTS `log_mes_log`;
+CREATE TABLE `log_mes_log`  (
+    `mes_log_id` int(9) NOT NULL AUTO_INCREMENT COMMENT 'RFID交换日志Id',
+    `mes_log_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'RFID交换日志编号',
+    `log_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志类型',
+    `equipment_int` int(9) NULL DEFAULT NULL COMMENT '设备主键',
+    `device_id` int(255) NULL DEFAULT NULL COMMENT '终端主键',
+    `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '交互内容',
+    `creator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+    `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+    PRIMARY KEY (`mes_log_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- ----------------------------
+-- Table structure for eqi_work_station
+-- ----------------------------
+DROP TABLE IF EXISTS `eqi_work_station`;
+CREATE TABLE `eqi_work_station`  (
+    `work_station_id` int(9) NOT NULL AUTO_INCREMENT COMMENT '工位主键',
+    `equipment_int` int(9) NULL DEFAULT NULL COMMENT '设备主键',
+    `work_station_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工位代码',
+    PRIMARY KEY (`work_station_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+
+
+
+
+
+,

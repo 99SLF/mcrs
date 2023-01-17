@@ -26,38 +26,41 @@
 		<div class="layui-form-item">
 
 			<div class="layui-inline">
-
+				<label class="layui-form-label">设备资源号：</label>
 				<div class="layui-input-inline" >
-					<input type="text" name="equipmentId" value="" placeholder="请输入设备资源号" autocomplete="off" class="layui-input">
+					<input type="text" name="equipmentId" value="" placeholder="" autocomplete="off" class="layui-input">
 				</div>
 			</div>
 
 			<div class="layui-inline">
-
+				<label class="layui-form-label">终端名称：</label>
 				<div class="layui-input-inline" >
-					<input type="text" name="deviceName" value="" placeholder="请输入终端名称" autocomplete="off" class="layui-input">
+					<input type="text" name="deviceName" value="" placeholder="" autocomplete="off" class="layui-input">
 				</div>
 			</div>
 
 			<div class="layui-inline">
+				<label class="layui-form-label">预警类型：</label>
 				<div class="layui-input-inline" >
-					<select name="abnType" id="abnType" lay-filter="" type="select">
+					<select name="abnType" id="abnType" lay-filter="abnType" type="select">
 						<option value=""></option>
 					</select>
 				</div>
 			</div>
 
 			<div class="layui-inline">
-
+				<label class="layui-form-label">预警等级：</label>
 				<div class="layui-input-inline" >
-					<input type="text" name="abnLevel" value="" placeholder="请输入预警等级" autocomplete="off" class="layui-input">
+					<select name="abnLevel" id="abnLevel" lay-filter="abnLevel" type="select">
+						<option value=""></option>
+					</select>
 				</div>
 			</div>
 
 			<div class="layui-inline">
-
+				<label class="layui-form-label">交互时间：</label>
 				<div class="layui-input-inline" >
-					<input type="text" name="exchangeTime" value="" placeholder="请选择交互时间" id="exchangeTime" autocomplete="off" class="layui-input">
+					<input type="text" name="exchangeTime" value="" placeholder="" id="exchangeTime" autocomplete="off" class="layui-input">
 				</div>
 			</div>
 			<div class="layui-inline layui-search">
@@ -114,6 +117,13 @@
 	});
 	form.render();
 
+	//获取预警等级的下拉值
+	layui.admin.renderDictSelect({
+		elem: "#abnLevel",
+		dictTypeId: "WARNING_LEVEL",
+	});
+	form.render();
+
 
 	//监听搜索
 	form.on("submit(LAY-app-rolelist-search)", function(data) {
@@ -123,11 +133,19 @@
 		});
 	});
 
-	//下拉框监听事件
-	form.on('select(appType)', function(data){
+	//预警类型下拉框监听事件
+	form.on('select(abnType)', function(data){
 		var submit = $("#LAY-app-rolelist-search");
 		submit.click();
 	});
+	form.render();
+
+	//预警等级下拉框监听事件
+	form.on('select(abnLevel)', function(data){
+		var submit = $("#LAY-app-rolelist-search");
+		submit.click();
+	});
+	form.render();
 
 	//文本框回车事件
 	$(".layui-input").on("keydown", function(event) {
@@ -315,7 +333,10 @@
 				title: "预警等级",
 				align:"center",
 				hide: isHidden("abnLevel"),
-				minWidth: 100
+				minWidth: 100,
+				templet: function (d) {
+					return layui.admin.getDictText("WARNING_LEVEL", d.abnLevel);
+				}
 			}, {
 				field: "abnContent",
 				title: "预警内容",
@@ -327,7 +348,10 @@
 				title: "交互时间",
 				align:"center",
 				hide: isHidden("exchangeTime"),
-				minWidth: 100
+				minWidth: 100,
+				templet:function(d) {
+					return layui.util.toDateString(d.exchangeTime);
+				}
 			}
 
 		]]

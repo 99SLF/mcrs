@@ -10,20 +10,8 @@
         ON log.equipment_int = eqi.equipment_int
         LEFT JOIN eqi_device AS dev
         ON log.device_id = dev.device_id
-        <where>
-            <if test="source !=null and source !=''">
-                and log.source like '%${source}%'
-            </if>
-        </where>
-    </select>
-
-    <!--查询所有-->
-    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.log.pojo.LoginLogVo">
-        SELECT * FROM log_login_log AS log
-        LEFT JOIN eqi_equipment AS eqi
-        ON log.equipment_int = eqi.equipment_int
-        LEFT JOIN eqi_device AS dev
-        ON log.device_id = dev.device_id
+        LEFT JOIN cap_user AS cur
+        ON log.login_user = cur.USER_ID
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
@@ -31,8 +19,33 @@
             <if test="source !=null and source !=''">
                 and log.source like '%${source}%'
             </if>
-            <if test="loginUser !=null and loginUser !=''">
-                and log.login_user like '%${loginUser}%'
+            <if test="loginUserName !=null and loginUserName !=''">
+                and cur.USER_NAME like '%${loginUserName}%'
+            </if>
+            <if test="loginTime !=null and loginTime !=''">
+                and log.login_time like '%${loginTime}%'
+            </if>
+        </where>
+    </select>
+
+    <!--查询所有-->
+    <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.log.pojo.LoginLogVo">
+        SELECT *,cur.USER_NAME AS loginUserName FROM log_login_log AS log
+        LEFT JOIN eqi_equipment AS eqi
+        ON log.equipment_int = eqi.equipment_int
+        LEFT JOIN eqi_device AS dev
+        ON log.device_id = dev.device_id
+        LEFT JOIN cap_user AS cur
+        ON log.login_user = cur.USER_ID
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="source !=null and source !=''">
+                and log.source like '%${source}%'
+            </if>
+            <if test="loginUserName !=null and loginUserName !=''">
+                and cur.USER_NAME like '%${loginUserName}%'
             </if>
             <if test="loginTime !=null and loginTime !=''">
                 and log.login_time like '%${loginTime}%'

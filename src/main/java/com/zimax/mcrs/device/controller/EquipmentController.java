@@ -30,6 +30,7 @@ public class EquipmentController {
      *
      * @param equipmentId   设备资源号
      * @param equipmentName 设备名称
+     * @param enable        启用
      * @param processName 工序名称
      * @param limit         记录数
      * @param page          页码
@@ -38,9 +39,9 @@ public class EquipmentController {
      * @return 设备列表
      */
     @GetMapping("/equipment/query")
-    public Result<?> query( String limit,  String page, String equipmentId, String equipmentName, String processName,String order, String field) {
-        List equipments = equipmentService.queryEquipments(limit, page, equipmentId, equipmentName,processName ,order, field);
-        return Result.success(equipments, equipmentService.count(equipmentId, equipmentName,processName));
+    public Result<?> query( String limit,  String page, String equipmentId, String equipmentName,String enable, String processName,String order, String field) {
+        List equipments = equipmentService.queryEquipments(limit, page, equipmentId, equipmentName,enable,processName ,order, field);
+        return Result.success(equipments, equipmentService.count(equipmentId, equipmentName,enable,processName));
     }
 
     /**
@@ -81,8 +82,6 @@ public class EquipmentController {
      */
     @PostMapping("/equipment/update")
     public Result<?> updateEquipment(@RequestBody Equipment equipment) {
-        System.out.println("============================");
-        System.out.println(equipment);
         equipmentService.updateEquipment(equipment);
         return Result.success();
     }
@@ -118,6 +117,21 @@ public class EquipmentController {
     public Result<?> check(@RequestParam("equipmentId") String equipmentId) {
         if(equipmentService.checkEquipmentId(equipmentId)>0){
             return Result.error("1","当前设备资源号已存在，请输入正确的设备资源号");
+        }else {
+            return Result.success();
+        }
+    }
+
+
+    /**
+     * 检测设备连接IP是否存在
+     *
+     * @param equipmentIp 设备连接IP
+     */
+    @GetMapping("/equipmentIp/check/isExist")
+    public Result<?> checkEquipmentIp(@RequestParam("equipmentIp") String equipmentIp) {
+        if(equipmentService.checkEquipmentIp(equipmentIp)>0){
+            return Result.error("1","当前IP已被占用存在，请重新输入正确IP");
         }else {
             return Result.success();
         }

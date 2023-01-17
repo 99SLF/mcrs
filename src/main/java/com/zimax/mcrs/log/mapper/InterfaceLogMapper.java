@@ -33,7 +33,13 @@ public interface InterfaceLogMapper {
      * 计数
      * @return
      */
-    int count(@Param("source") String source);
+    int count(@Param("createTime") String createTime,
+              @Param("source") String source,
+              @Param("interfaceType") String interfaceType,
+              @Param("equipmentIp") String equipmentIp,
+              @Param("invokerName") String invokerName,
+              @Param("interfaceName") String methodName
+    );
 
     /**
      * 新建接口日志

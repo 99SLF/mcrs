@@ -28,7 +28,7 @@ public class DeviceExchangeLogService {
      * 查询所有的设备交换日志
      * @return DeviceExchangeLog
      */
-    public List<DeviceExchangeLogVo> queryDeviceExchangeLog(String limit, String page, String equipmentId, String equipmentContinuePort, String processName,String operator, String exchangeTime, String order, String field){
+    public List<DeviceExchangeLogVo> queryDeviceExchangeLog(String limit, String page, String equipmentId, String equipmentContinuePort, String processName,String operateName, String exchangeTime, String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -45,7 +45,7 @@ public class DeviceExchangeLogService {
         map.put("equipmentId",equipmentId);
         map.put("equipmentContinuePort",equipmentContinuePort);
         map.put("processName",processName);
-        map.put("operator",operator);
+        map.put("operateName",operateName);
         map.put("exchangeTime",exchangeTime);
         return deviceExchangeLogMapper.queryAll(map);
     }
@@ -53,8 +53,8 @@ public class DeviceExchangeLogService {
     /**
      * 查询记录
      */
-    public int count(String equipmentId) {
-        return deviceExchangeLogMapper.count(equipmentId);
+    public int count(String equipmentId, String equipmentContinuePort, String processName, String operateName, String exchangeTime) {
+        return deviceExchangeLogMapper.count(equipmentId,equipmentContinuePort,processName,operateName,exchangeTime);
     }
 
     /**

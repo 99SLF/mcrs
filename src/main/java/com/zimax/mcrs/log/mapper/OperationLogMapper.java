@@ -28,7 +28,13 @@ public interface OperationLogMapper {
      * 计数
      * @return
      */
-    int count(@Param("logStatus") String logStatus);
+    int count(@Param("logStatus") String logStatus,
+              @Param("operationType") String operationType,
+              @Param("operationTime") String operationTime,
+              @Param("operationResult") String operationResult,
+              @Param("operateName") String operateName
+    );
+
 
     /**
      * 删除功能

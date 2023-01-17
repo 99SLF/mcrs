@@ -26,17 +26,17 @@
                 <%--	需要隐藏主键	--%>
                 <input type="hidden" name="alarmRuleInt" value="default">
                 <div class="layui-col-sm6">
-                    <label class="layui-form-label"><span style="color:red">*</span>预警规则编码:</label>
+                    <label class="layui-form-label">预警规则编码:</label>
                     <div class="layui-input-block">
                         <input id="alarmRuleId" type="text" name="alarmRuleId" lay-verify="required"
-                               placeholder="预警规则编码(必填)" autocomplete="off" class="layui-input" readonly>
+                               placeholder="" autocomplete="off" class="layui-input" readonly>
                     </div>
                 </div>
                 <div class="layui-col-sm6">
                     <label class="layui-form-label">预警规则标题:</label>
                     <div class="layui-input-block">
                         <input id="alarmRuleTitle" type="text" name="alarmRuleTitle" lay-verify="required"
-                               placeholder="预警规则标题" autocomplete="off" class="layui-input" readonly>
+                               placeholder="" autocomplete="off" class="layui-input" readonly>
                     </div>
                 </div>
             </div>
@@ -45,23 +45,18 @@
             <div class="layui-form-item layui-row layui-col-space10">
 
                 <div class="layui-col-sm6">
-                    <label class="layui-form-label"><span style="color:red">*</span>监控层级:</label>
+                    <label class="layui-form-label">监控层级:</label>
                     <div class="layui-input-block">
                         <select name="monitorLevel" id="monitorLevel" lay-filter="required" type="select">
-                            <option value="1级">1级</option>
-                            <option value="2级">2级</option>
-                            <option value="3级">3级</option>
-                            <option value="4级">4级</option>
-                            <option value="5级">5级</option>
+                            <option value=""></option>
                         </select>
                     </div>
                 </div>
                 <div class="layui-col-sm6">
-                    <label class="layui-form-label"><span style="color:red">*</span>是否启用：</label>
+                    <label class="layui-form-label">启用：</label>
                     <div class="layui-input-block">
                         <select name="enable" id="enable" lay-filter="required" type="select">
-                            <option value="on">是</option>
-                            <option value="off">否</option>
+                            <option value=""></option>
                         </select>
                     </div>
                 </div>
@@ -69,7 +64,7 @@
 
             <div class="layui-form-item layui-row layui-col-space10">
                 <div class="layui-col-sm6">
-                    <label class="layui-form-label"><span style="color:red">*</span>预警事件编码:</label>
+                    <label class="layui-form-label">预警事件编码:</label>
                     <div class="layui-input-block">
                         <input id="alarmEventInt" name="alarmEventInt" type="hidden"/>
                         <input type="text" class="layui-input" name="alarmEventId" id="alarmEventId"
@@ -111,7 +106,7 @@
                 <div class="layui-col-sm6">
                     <label class="layui-form-label">制单人:</label>
                     <div class="layui-input-block">
-                        <input id="ruleMakeFormPeople" type="text" name="ruleMakeFormPeople" lay-verify="required"
+                        <input id="createName" type="text" name="createName" lay-verify="required"
                                placeholder="" autocomplete="off" class="layui-input" readonly>
                     </div>
                 </div>
@@ -129,7 +124,7 @@
                 <div class="layui-col-sm6">
                     <label class="layui-form-label">修改人:</label>
                     <div class="layui-input-block">
-                        <input id="ruleUpdatePeople" type="text" name="ruleUpdatePeople" lay-verify="required"
+                        <input id="updateName" type="text" name="updateName" lay-verify="required"
                                placeholder="" autocomplete="off" class="layui-input" readonly>
                     </div>
                 </div>
@@ -198,6 +193,20 @@
     function SetData(data) {
         win = data.win ? data.win : window;
     }
+
+    //获取预警级别的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#monitorLevel",
+        dictTypeId: "WARNING_LEVEL",
+    });
+    form.render();
+
+    //获取启用的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#enable",
+        dictTypeId: "IS_USE",
+    });
+    form.render();
     //禁用规则等级下拉选择框
     layui.use('form', function(){
         var form = layui.form;
@@ -235,10 +244,10 @@
             "alarmEventId": data.alarmEventId,
             "alarmEventInt": data.alarmEventInt,
             "alarmRuleDescribe": data.alarmRuleDescribe,
-            "ruleMakeFormPeople": data.ruleMakeFormPeople,
-            "ruleMakeFormTime": data.ruleMakeFormTime,
-            "ruleUpdatePeople": data.ruleUpdatePeople,
-            "ruleUpdateTime": data.ruleUpdateTime,
+            "createName": data.createName,
+            "ruleMakeFormTime": layui.util.toDateString(data.ruleMakeFormTime),
+            "updateName": data.updateName,
+            "ruleUpdateTime": layui.util.toDateString(data.ruleUpdateTime),
 
         });
         $.ajax({

@@ -74,6 +74,19 @@ public class FactoryController {
     }
 
     /**
+     * 获取工厂代码
+     * @param
+     * @return
+     */
+    @GetMapping("/selectFactoryCodeInit")
+    public Result<?> selectListInit(String matrixCode){
+        Map<String,Object> maps = new HashMap<>();
+        List<FactoryInfoVo> factoryList = factoryService.selectListInit(matrixCode);//查询出数据
+        maps.put("data",factoryList);
+        return Result.success(factoryList, factoryService.countFactory(matrixCode));
+    }
+
+    /**
      * 通过父节点id查询工厂信息(工厂代号),父节点id等于基地节点的值
      * 用户选择框下拉值
      * @param

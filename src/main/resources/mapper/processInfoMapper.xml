@@ -41,6 +41,32 @@
         </if>
     </select>
 
+    <select id="countProcess" resultType="int">
+        SELECT count(*)
+        FROM base_factory_info  a
+        LEFT JOIN  base_tree b ON a.info_id = b.parent_id
+        LEFT JOIN  base_process_info c ON b.info_id = c.info_id
+        <where>
+            logic_states = "0"
+            <if test="factoryCode !=null and factoryCode !=''">
+                and factory_code like '%${factoryCode}%'
+            </if>
+        </where>
+    </select>
+
+    <!--列表显示-->
+    <select id="selectListInit" parameterType="map" resultType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfoVo">
+        SELECT *
+        FROM base_factory_info  a
+                 LEFT JOIN  base_tree b ON a.info_id = b.parent_id
+                 LEFT JOIN  base_process_info c ON b.info_id = c.info_id
+        <where>
+            logic_states = "0"
+            <if test="factoryCode !=null and factoryCode !=''">
+                and factory_code like '%${factoryCode}%'
+            </if>
+        </where>
+    </select>
     <!--更新一条选中信息-->
     <update id="updateProcessInfo" parameterType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo">
         UPDATE base_process_info

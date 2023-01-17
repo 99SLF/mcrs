@@ -29,7 +29,12 @@ public interface AbnLogMapper {
      * 计数
      * @return
      */
-    int count(@Param("equipmentId") String equipmentId);
+    int count(@Param("equipmentId") String equipmentId,
+              @Param("deviceName") String deviceName,
+              @Param("abnType") String abnType,
+              @Param("abnLevel") String abnLevel,
+              @Param("exchangeTime") String exchangeTime
+    );
 
     /**
      * 新建异常日志

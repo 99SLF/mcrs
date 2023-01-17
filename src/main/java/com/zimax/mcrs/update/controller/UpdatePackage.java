@@ -10,10 +10,13 @@ import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.device.pojo.Device;
 import com.zimax.mcrs.device.pojo.DeviceRollback;
 import com.zimax.mcrs.device.pojo.DeviceUpgrade;
+import com.zimax.mcrs.update.javaBean.UploadJava;
 import com.zimax.mcrs.update.pojo.*;
 import com.zimax.mcrs.update.service.UpdatePackageService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,6 +44,8 @@ public class UpdatePackage {
 
     @Autowired
     private UpdatePackageService updatePackageService;
+    private UploadJava uploadJava = (UploadJava)new ClassPathXmlApplicationContext(
+            "applicationContext.xml").getBean("UploadJava");
 
     /**
      * 注入信息
@@ -70,14 +75,14 @@ public class UpdatePackage {
         if (deviceRollbackVo == null) {
             upgradeData.setUpdatetype("1");
             upgradeData.setIfUpdate(false);
-            return Result.success(upgradeData,"1", "数据不存在，无法升级");
+            return Result.success(upgradeData,"2", "数据不存在，无法升级");
         } else {
             //2.1.2.2、存在，但状态为升级，返回已经是最新版本
             String upgradeStatus = deviceRollbackVo.getUpgradeStatus();
             if (upgradeStatus.equals("102") || upgradeStatus.equals("101") ) {
                 upgradeData.setUpdatetype("1");
                 upgradeData.setIfUpdate(false);
-                return Result.success(upgradeData,"1", "已经是最新版本，无法升级");
+                return Result.success(upgradeData,"2", "已经是最新版本，无法升级");
             } else {    //2.1.2.3、存在，但状态为未升级
                 //2.1.3、查询更新策略
                 //2.1.3.1、更新策略为手动更新，返回 是否升级、版本号、更新策略
@@ -503,7 +508,8 @@ public class UpdatePackage {
             ConfigurationFile configurationFile = new ConfigurationFile();
             List<ConfigurationFile> configurationFiles = new ArrayList<>();
             configurationFiles = updatePackageService.getConfigurationFile(appId,fileName);
-            String filePath = request.getSession().getServletContext().getRealPath("/configurationFile/"+ appId);
+            //8.获取bean
+            String filePath = uploadJava.getConfigPath()+File.separator+appId;
             //判断数据是否存在，存在则修改，不存在则新增
             if(configurationFiles.size() < 1) {
                 return Result.error("1", "上传失败");
