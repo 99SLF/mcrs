@@ -25,62 +25,57 @@
 		border-radius: 0;
 		overflow: auto
 	}
+	.layui-form-item .layui-inline {
+		margin-bottom: 0px !important;
+		margin-right: 0px !important;
+	}
+	.layui-form-label {
+		width: 120px !important;
+        padding: 5px 0px !important;
+	}
+	.layui-form-item .layui-input-inline {
+		float: left;
+		width: 150px;
+		margin-right: 10px;
+	}
+    .layui-input {
+        height: 30px !important;
+	}
 </style>
 </head>
 <body>
 <div class="layui-card">
 	<script type="text/html" id="toolbar">
-	<div class="layui-form layui-card-header layuiadmin-card-header-auto">
-		<div class="layui-form-item">
-			<div class="layui-inline">
-				<label class="layui-form-label">设备资源号：</label>
-				<div class="layui-input-inline">
-					<input type="text" name="equipmentId" value="" placeholder="请输入设备资源号" autocomplete="off"
-						   class="layui-input">
+		<div class="layui-form layuiadmin-card-header-auto" lay-filter="layuiadmin-feeding-form" id="layuiadmin-feeding-form">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">设备资源号：</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="equipmentId" autocomplete="off" />
+					</div>
 				</div>
-				<label class="layui-form-label">轴名称：</label>
-				<div class="layui-input-inline">
-					<input type="text" name="axisName" value="" placeholder="请输入轴名称" autocomplete="off"
-						   class="layui-input">
+				<div class="layui-inline">
+					<label class="layui-form-label">轴名称：</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="axisName" autocomplete="off" />
+					</div>
 				</div>
-			</div>
-			
-			<div class="layui-inline">
-				<label class="layui-form-label">生产SFC编码：</label>
-				<div class="layui-input-inline">
-					<input type="text" name="prodSFCId" value="" placeholder="请输入生产SFC编码" autocomplete="off"
-						   class="layui-input">
+				<div class="layui-inline">
+					<label class="layui-form-label">生产SFC编码：</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="prodSFCId" autocomplete="off" />
+					</div>
 				</div>
-				<label class="layui-form-label">载具码：</label>
-				<div class="layui-input-inline">
-					<input type="text" name="vehicleCode" value="" placeholder="请输入载具码" autocomplete="off"
-						   class="layui-input">
-				</div>
-			</div>
-			
-			<div class="layui-inline">
-				<label class="layui-form-label">开始时间：</label>
-				<div class="layui-input-inline">
-					<input type="text" name="startProdTime" value="" placeholder="请选择开始时间" id="test0" autocomplete="off"
-						   class="layui-input">
-				</div>
-				<label class="layui-form-label">结束时间：</label>
-				<div class="layui-input-inline">
-					<input type="text" name="endProdTime" value="" placeholder="请选择结束时间" id="test1" autocomplete="off"
-						   class="layui-input">
-				</div>
-				<div class="layui-inline layui-search" style="padding-left:15px">
-					<button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-feeding-search"
-							id="LAY-app-feeding-search" >
+				<div class="layui-inline layui-hide">
+					<button id="LAY-app-feeding-search" class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-feeding-search">
 						<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
 					</button>
 				</div>
 			</div>
 		</div>
-	</div>
 	</script>
 	<div class="layui-card-body">
-		<table id="LAY-app-application-list" lay-filter="LAY-app-application-list"></table>
+		<table id="LAY-app-feeding-list" lay-filter="LAY-app-feeding-list"></table>
 	</div>
 </div>
 <script src="<%=request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
@@ -96,7 +91,6 @@
 	var form = layui.form;
 	var $ = layui.jquery;
 	var util = layui.util;
-	var laydate = layui.laydate;
 	var admin = layui.admin;
 	var view = layui.view;
 	
@@ -104,41 +98,43 @@
 	var hiddenFields = [];
 	// 功能名
 	var funName = "feeding_list";
-	
-	// 日期时间选择器
-	laydate.render({
-		elem: "#test0",
-		type: "date"
-	});
-	
-	// 日期时间选择器
-	laydate.render({
-		elem: "#test1",
-		type: "date"
-	});
+	// 高级查询参数
+	var advancedFormData = {};
+	// 焦点名称
+	var focusName = null;
 	
 	// 监听搜索
 	form.on("submit(LAY-app-feeding-search)", function(data) {
 		var field = data.field;
-		table.reload("LAY-app-application-list-reload", {
-			where: field
+        reloadData(field);
+        var formData = {
+            equipmentId: field.equipmentId,
+            axisName: field.axisName,
+            prodSFCId: field.prodSFCId
+        };
+        form.val("layuiadmin-feeding-form", formData);
+        advancedFormData = $.extend(advancedFormData, formData);
+	});
+	
+	function reloadData(formData) {
+		table.reload("LAY-app-feeding-list-reload", {
+			where: formData
 		});
-	});
-	
-	// 下拉框监听事件
-	form.on("select(appType)", function(data) {
-		var submit = $("#LAY-app-feeding-search");
-		submit.click();
-	});
-	
-	// 文本框回车事件
-	$(".layui-input").on("keydown", function(event) {
-		if (event.keyCode == 13) {
-			var submit = $("#LAY-app-feeding-search");
-			submit.click();
-			return false;
+        formReder();
+        if (focusName) {
+            $("input[name=" + focusName + "]").focus();
 		}
-	});
+	}
+	
+	function setFormData(data) {
+		advancedFormData = data;
+        reloadData(data);
+        form.val("layuiadmin-feeding-form", {
+            equipmentId: data.equipmentId,
+            axisName: data.axisName,
+            prodSFCId: data.prodSFCId
+        });
+	}
 	
 	function getFullSize() {
 		var header = $(".layui-card-header");
@@ -149,30 +145,44 @@
 	// 监听按钮点击事件
 	var active = {
 		search: function() {
-		    debugger;
 			var submit = $("#LAY-app-feeding-search");
 			submit.click();
 			return false;
 		},
 		query: function() {
+		    var url = "<%=request.getContextPath() %>/report/feeding_form_query.jsp";
 			admin.popupRight({
-				id: "LAY_adminPopupAbout",
-				success: function() {
-					view(this.id).render("system/about");
+				type: 2,
+                content: [url, "yes"],
+				btn: ["查询", "重置", "取消"],
+				success: function(layero, index) {
+					var dataJson = {
+						win : window,
+						data: advancedFormData
+					};
+					layero.find("iframe")[0].contentWindow.SetData(dataJson);
+				},
+				yes: function(index, layero) {
+					var submit = layero.find("iframe").contents().find("#LAY-app-feeding-search-advanced");
+					submit.click();
+					top.layer.close(index);
+				},
+				btn2: function(index, layero) {
+					layero.find("iframe")[0].contentWindow.reset();
 				}
 			});
 		}
 	};
 	
 	// 右侧表头按钮事件监听
-	table.on("toolbar(LAY-app-application-list)", function(obj) {
+	table.on("toolbar(LAY-app-feeding-list)", function(obj) {
 		var type = obj.event;
 		active[type] ? active[type].call(this) : "";
 	});
 	
 	// 表格排序
-	table.on("sort(LAY-app-application-list)", function(obj) {
-		table.reload("LAY-app-application-list-reload", {
+	table.on("sort(LAY-app-feeding-list)", function(obj) {
+		table.reload("LAY-app-feeding-list-reload", {
 			initSort: obj,
 			where: {
 				field: obj.field,
@@ -190,7 +200,7 @@
 		contentType: "text/json",
 		success: function(result) {
 			if (result) {
-				hiddenFields = result.data
+				hiddenFields = result.data;
 			} else {
 				layer.msg("查询失败");
 			}
@@ -208,8 +218,8 @@
 	}
 	
 	table.render({
-		elem: "#LAY-app-application-list",
-		id: "LAY-app-application-list-reload",
+		elem: "#LAY-app-feeding-list",
+		id: "LAY-app-feeding-list-reload",
 		url: "<%=request.getContextPath() %>/report/feeding/query",
 		method: "get",
 		height: "full-" + getFullSize(),
@@ -320,9 +330,23 @@
 			}
 		}]]
 	});
+
+    formReder();
 	
-	$(window).resize(function() {
-		table.reload("LAY-app-application-list-reload", {
+    function formReder() {
+        // 文本框回车事件
+        $(".layui-input").on("keydown", function (event) {
+            if (event.keyCode == 13) {
+                focusName = event.target.name;
+                var submit = $("#LAY-app-feeding-search");
+                submit.click();
+                return false;
+            }
+        });
+    }
+	
+    $(window).resize(function() {
+		table.reload("LAY-app-feeding-list-reload", {
 			height: "full-" + getFullSize()
 		});
 	});
