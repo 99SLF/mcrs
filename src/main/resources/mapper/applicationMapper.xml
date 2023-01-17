@@ -49,7 +49,7 @@
     <update id="updateApplication" parameterType="com.zimax.components.coframe.framework.pojo.Application">
         update app_application set app_code=#{appCode},app_name=#{appName},app_type=#{appType},display_order=#{displayOrder},
                                    is_open=#{isOpen},open_date=#{openDate},protocol_type=#{protocolType},
-                                   ip_addr=#{ipAddr},url=#{url},app_desc=#{appDesc},app_info=#{appInfo} where app_id=#{appId}
+                                   ip_addr=#{ipAddr},ip_port=#{ipPort},url=#{url},app_desc=#{appDesc},app_info=#{appInfo} where app_id=#{appId}
     </update>
     <!--    批量删除-->
     <delete id="deleteApplications" parameterType="java.util.List">

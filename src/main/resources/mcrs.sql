@@ -1004,7 +1004,7 @@ CREATE TABLE `log_rfid_log`  (
  `rfid_log_id` int(9) NOT NULL AUTO_INCREMENT COMMENT 'RFID交换日志Id',
  `rfid_log_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'RFID交换日志编号',
  `log_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志类型',
- `equipment_int` int(9) NULL DEFAULT NULL COMMENT '设备主键'
+ `equipment_int` int(9) NULL DEFAULT NULL COMMENT '设备主键',
  `device_id` int(9) NULL DEFAULT NULL COMMENT '终端主键',
  `rfid_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'RFID-ID',
  `parameter_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '参数名称',
@@ -1046,11 +1046,19 @@ CREATE TABLE `eqi_work_station`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 SET FOREIGN_KEY_CHECKS = 1;
+SET FOREIGN_KEY_CHECKS=0;
 
-
-
-
-
-
-
-,
+-- ----------------------------
+-- Table structure for system_file
+-- ----------------------------
+DROP TABLE IF EXISTS `system_file`;
+CREATE TABLE `system_file` (
+   `file_id` int(8) NOT NULL,
+   `file_name` varchar(255) DEFAULT NULL,
+   `version` varchar(64) DEFAULT NULL,
+   `download_path` varchar(255) DEFAULT NULL,
+   `remark` varchar(255) DEFAULT NULL,
+   `creator` varchar(32) DEFAULT NULL,
+   `create_time` datetime DEFAULT NULL,
+   PRIMARY KEY (`file_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

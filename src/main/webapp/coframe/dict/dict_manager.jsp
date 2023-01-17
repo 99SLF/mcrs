@@ -39,9 +39,9 @@
 				   		<button class="layui-btn layuiadmin-btn-list layui-btn-sm layui-btn-normal" data-type="addcldtype" id="btn_addSubDictType"><i class="layui-icon layui-icon-add-circle-fine"></i>添加子类型</button>
 				    	<button class="layui-btn layuiadmin-btn-list layui-btn-sm layui-btn-warm" data-type="update" id="btn_editDictType" ><i class="layui-icon layui-icon-edit"></i>修改</button>
 						<button class="layui-btn layuiadmin-btn-list layui-btn-sm layui-btn-danger" data-type="remove" id="btn_removeDictType"><i class="layui-icon layui-icon-delete"></i>删除</button>
-						<button class="layui-btn layuiadmin-btn-list layui-btn-sm" data-type="inport">导入</button>
-						<button class="layui-btn layuiadmin-btn-list layui-btn-sm" data-type="outport">导出</button>
-						<button class="layui-btn layuiadmin-btn-list layui-btn-sm" data-type="refresh"><i class="layui-icon layui-icon-refresh"></i>刷新缓存</button>
+<%--						<button class="layui-btn layuiadmin-btn-list layui-btn-sm" data-type="inport">导入</button>--%>
+<%--						<button class="layui-btn layuiadmin-btn-list layui-btn-sm" data-type="outport">导出</button>--%>
+<%--						<button class="layui-btn layuiadmin-btn-list layui-btn-sm" data-type="refresh"><i class="layui-icon layui-icon-refresh"></i>刷新缓存</button>--%>
 					</div>
 					<table id="LAY-app-dictType-list" ></table>
   				</div>
@@ -57,17 +57,6 @@
 		</div>
 	</div>
 </div>
-<script type="text/html" >
-	<div class="layui-btn-container">
-		<button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-add-circle-fine"></i>添加</button>
-		<button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="addcldtype" id="btn_addSubDictType"><i class="layui-icon layui-icon-add-circle-fine"></i>添加子类型</button>
-		<button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="update" id="btn_editDictType" >修改</button>
-		<button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete" id="btn_removeDictType">删除</button>
-		<button class="layui-btn layui-btn-sm" lay-event="import">导入</button>
-		<button class="layui-btn layui-btn-sm" lay-event="outport">导出</button>
-		<button class="layui-btn layui-btn-sm" lay-event="refresh"><i class="layui-icon layui-icon-refresh"></i>刷新缓存</button>
-	</div>
-</script>
 <script type="text/html" id="toolbarDemo2">
 	<div class="layui-btn-container">
 		<button class="layui-btn layui-btn-sm" lay-event="add_mession"><i class="layui-icon layui-icon-add-circle-fine"></i>添加</button>
@@ -186,8 +175,6 @@
 		defaultToolbar: [],
 		cols: [[{
 			type: "checkbox",
-			fixed: "left",
-			name: "checkbox2"
 		}, {
 			field: "dictId",
 			title: "字典项代码",
@@ -588,6 +575,8 @@
 	}
 	
 	function removeDict() {
+		debugger;
+		var checkStatus = dictTb.checkStatus("#LAY-app-dictType-list");
 		var jsonData = JSON.stringify(selectedTermData);
 		layer.confirm("所有关联的业务字典项都将被删除，确认删除业务字典项？", {
     		btn: ['确定', '取消'],
@@ -654,12 +643,13 @@
 	});
 	
 	treeTable.on('checkbox(LAY-app-dict-list)', function(obj){//demo2表格复选框监听
+		debugger;
 		if (obj.checked) {
 			selected++;
 		} else {
 			selected--;
 		}
-  		var checkStatus = dictTermTb.checkStatus('#LAY-app-dict-list');
+  		var checkStatus = dictTermTb.checkStatus('#LAY-app-dict-list-reload');
   		selectedTermData = checkStatus;
 	});
 	

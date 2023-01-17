@@ -22,14 +22,10 @@
 					<div class="layui-form-item" >角色授权</div>					
 					<div class="layui-form-item">
 						<div class="layui-inline">
-							<input type="text" name="criteria/_expr[1]/roleCode" value="" placeholder="角色代码" autocomplete="off" class="layui-input">
-							<input type="hidden" class="layui-input" name="criteria/_expr[1]/_op" value="like"/>
-			    			<input type="hidden" class="layui-input" name="criteria/_expr[1]/_likeRule" value="all"/>
+							<input type="text" name="roleCode" value="" placeholder="角色代码" autocomplete="off" class="layui-input">
 						</div>
 						<div class="layui-inline">
-							<input type="text" name="criteria/_expr[2]/roleName" value="" placeholder="角色名称" autocomplete="off" class="layui-input">
-							<input type="hidden" class="layui-input" name="criteria/_expr[2]/_op" value="like"/>
-			    			<input type="hidden" class="layui-input" name="criteria/_expr[2]/_likeRule" value="all"/>
+							<input type="text" name="roleName" value="" placeholder="角色名称" autocomplete="off" class="layui-input">
 						</div>
 						<div class="layui-inline layui-search">
 							<button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-rolelist-search" id="LAY-app-rolelist-search">
@@ -155,7 +151,7 @@
 	
 	table.render({
 		elem: "#LAY-app-role-list",
-		url: "<%= request.getContextPath() %>/rights/role/authorized",
+		url: "<%= request.getContextPath() %>/rights/role/query",
 		height: getFullSize(),
 		parseData: function(res) {
 			return {

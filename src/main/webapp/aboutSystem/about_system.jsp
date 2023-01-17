@@ -60,28 +60,6 @@
     form.render();
 
     var active = {
-        //更新包上传
-        add: function () {
-            top.layer.open({
-                type: 2,
-                title: "上传",
-                content: "<%= request.getContextPath() %>/aboutSystem/system_file_upload.jsp",
-                area: ["800px", "560px"],
-                resize: false,
-                btn: ["确定", "取消"],
-                success: function (layero, index) {
-                    var dataJson = {
-                        win: window,
-                    };
-                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
-                },
-                yes: function (index, layero) {
-                    var submit = layero.find("iframe").contents().find("#layuiadmin-app-form-submit");
-                    submit.click();
-
-                }
-            });
-        },
     };
 
     //左侧表头按钮事件监听
@@ -184,7 +162,7 @@
                 type: 2,
                 title: "上传",
                 content: "<%= request.getContextPath() %>/aboutSystem/system_file_upload.jsp",
-                area: ["800px", "560px"],
+                area: ["800px", "400px"],
                 resize: false,
                 btn: ["确定", "取消"],
                 success: function (layero, index) {

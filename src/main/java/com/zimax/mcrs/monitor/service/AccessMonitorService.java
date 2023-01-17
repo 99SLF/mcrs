@@ -54,6 +54,9 @@ public class AccessMonitorService {
     public GroupByProduction getWarnByproduction() {
         return accessMonitorMapper.getWarnByproduction();
     }
+    public GroupByProduction queryProcessAndeqi() {
+        return accessMonitorMapper.queryProcessAndeqi();
+    }
     public List<GroupByDate> groupQueryBydate() {
         List<GroupByDate> groupByDates = accessMonitorMapper.groupQueryBydate();
         List<GroupByDate> groupByDateList = new ArrayList<>();

@@ -117,7 +117,7 @@
 	var isExist = false;
 	var laydate = layui.laydate; //日期
 	var submit = false;
-	
+	var util = layui.util;
 		  //日期
 	laydate.render({
 		elem: '#openDate',
@@ -141,7 +141,7 @@
 		"appId": data.appId,
 	    "appName": data.appName,
 	  	"appCode": data.appCode,
-	  	"openDate": data.openDate,
+	  	"openDate": util.toDateString(data.openDate,"yyyy-MM-dd"),
 	  	"protocolType": data.protocolType,
 		"appType": data.appType,
 	  	"isOpen": data.isOpen,

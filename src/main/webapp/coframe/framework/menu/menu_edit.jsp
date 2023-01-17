@@ -109,6 +109,7 @@
 	var isExist = false;
 	var funcName1;
 	var submit = false;
+	var wholemenuCode = "";
 	var win = null;
 	function SetData(data) {
 		win = data.win ? data.win : window;
@@ -117,6 +118,7 @@
 		if(data.funcCode!=null&&data.funcCode!=""){
 			FindFuncName(data.funcCode);
 		}
+		wholemenuCode = data.menuCode;
 		form.val('layuiadmin-app-form-list', {
 			"menuId": data.menuId,
 	  		"menuAction": data.menuAction,
@@ -139,6 +141,9 @@
 	//判断菜单代码是否已存在
 	$("#menuCode").blur(function() {
 		var menuCode = $("#menuCode").val();
+		if(wholemenuCode==menuCode){
+			return;
+		}
 		if (menuCode != null && menuCode != "") {
 			$.ajax({
 				url: "<%= request.getContextPath() %>/framework/menu/find?menuCode="+menuCode,
@@ -163,7 +168,6 @@
 	form.on("submit(layuiadmin-app-form-edit)", function(data) {
 		if (submit ==false) {
 			submit = true;
-			debugger;
 			var submitData = JSON.stringify(data.field);
 			if (isExist == false) {
 				$.ajax({
@@ -182,7 +186,7 @@
 					}
 				});	
 			} else if (isExist == true) {
-				layer.msg("角色已存在，请重新输入", {
+				layer.msg("菜单代码已存在，请重新输入", {
 					icon: 2,
 					time: 2000
 				});

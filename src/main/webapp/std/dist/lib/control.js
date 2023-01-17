@@ -25,6 +25,8 @@ function submit() {
      * 登录
      */
     form.on("submit(login)", function(data) {
+        $('#login').addClass("layui-btn-disabled").attr("disabled",true);
+        var login = document.getElementById("login");
     	$.ajax({
     		url: contextPath + "/auth/login",
     		type: "POST",
@@ -74,6 +76,7 @@ function submit() {
                         icon: 5
     				});
     			}
+                $('#login').addClass("layui-btn-disabled").attr("disabled",false);
     		}
     	});
     	return false;
