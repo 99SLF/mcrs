@@ -1034,6 +1034,26 @@ CREATE TABLE `log_mes_log`  (
 
 SET FOREIGN_KEY_CHECKS = 1;
 
+-- ----------------------------
+-- Table structure for eqi_work_station
+-- ----------------------------
+DROP TABLE IF EXISTS `eqi_work_station`;
+CREATE TABLE `eqi_work_station`  (
+    `work_station_id` int(9) NOT NULL AUTO_INCREMENT COMMENT '工位主键',
+    `equipment_int` int(9) NULL DEFAULT NULL COMMENT '设备主键',
+    `work_station_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工位代码',
+    PRIMARY KEY (`work_station_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+
+
+
+
+
+,
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------

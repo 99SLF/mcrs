@@ -334,7 +334,10 @@
             title: "日志类型",
             align: "center",
             minWidth: 120,
-            hide: isHidden("logType")
+            hide: isHidden("logType"),
+            templet: function (d) {
+                return layui.admin.getDictText("LOG_TYPE", d.logType);
+            }
         }, {
             field: "equipmentId",
             title: "设备资源号",
