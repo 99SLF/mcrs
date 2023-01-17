@@ -137,8 +137,8 @@
 });
 
 
-	//判断菜单代码是否已存在
 	$("#menuCode").blur(function() {
+		debugger;
 		var menuCode = $("#menuCode").val();
 		if (menuCode != null && menuCode != "") {
 			$.ajax({
@@ -151,7 +151,7 @@
 					if (text.code == "1") {
 						isExist = true;
 					} else {
-				    isExist = false;
+						isExist = false;
 					}
 				}
 			});
@@ -159,6 +159,7 @@
 			return;
 		}
 	});
+
 
 	//监听提交
 	form.on("submit(layuiadmin-app-form-submit)", function(data) {

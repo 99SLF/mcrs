@@ -151,7 +151,7 @@
 	
 	table.render({
 		elem: "#LAY-app-role-list",
-		url: "<%= request.getContextPath() %>/rights/role/authorized",
+		url: "<%= request.getContextPath() %>/rights/role/query",
 		height: getFullSize(),
 		parseData: function(res) {
 			return {

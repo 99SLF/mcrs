@@ -109,6 +109,7 @@
 	var isExist = false;
 	var funcName1;
 	var submit = false;
+	var wholemenuCode = "";
 	var win = null;
 	function SetData(data) {
 		win = data.win ? data.win : window;
@@ -117,6 +118,7 @@
 		if(data.funcCode!=null&&data.funcCode!=""){
 			FindFuncName(data.funcCode);
 		}
+		wholemenuCode = data.menuCode;
 		form.val('layuiadmin-app-form-list', {
 			"menuId": data.menuId,
 	  		"menuAction": data.menuAction,
@@ -139,6 +141,9 @@
 	//判断菜单代码是否已存在
 	$("#menuCode").blur(function() {
 		var menuCode = $("#menuCode").val();
+		if(wholemenuCode==menuCode){
+			return;
+		}
 		if (menuCode != null && menuCode != "") {
 			$.ajax({
 				url: "<%= request.getContextPath() %>/framework/menu/find?menuCode="+menuCode,
