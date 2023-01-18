@@ -19,69 +19,77 @@
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
-            <div class="layui-inline">
-                <label class="layui-form-label">预警规则编码：</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="alarmRuleId" placeholder="" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">预警规则标题：</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="alarmRuleTitle" placeholder="" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">监控层级：</label>
-                <div class="layui-input-inline">
-                    <select name="monitorLevel" id="monitorLevel" lay-filter="monitorLevel" type="select">
-                        <option value=""></option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="layui-inline">
-                <label class="layui-form-label">状态：</label>
-                <div class="layui-input-inline">
-                    <select name="enable" id="enable" lay-filter="enable" type="select">
-                        <option value=""></option>
-                    </select>
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">预警事件编码：</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="alarmEventId" placeholder="" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-inline">
-                <label class="layui-form-label">制单人：</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="ruleMakeFormPeople" placeholder="" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">制单时间：</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="ruleMakeFormTime" id="ruleMakeFormTime" placeholder=""
-                           autocomplete="off"
-                           class="layui-input">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">预警规则编码：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="alarmRuleId" placeholder="" autocomplete="off"
+                               class="layui-input">
+                    </div>
                 </div>
 
-                <div class="layui-inline layui-search" style="padding-left: 50px">
-                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-alarmRulelist-search"
-                            id="LAY-app-alarmRulelist-search">
-                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                    </button>
+                <div class="layui-inline">
+                    <label class="layui-form-label">预警规则标题：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="alarmRuleTitle" placeholder="" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">监控层级：</label>
+                    <div class="layui-input-inline">
+                        <select name="monitorLevel" id="monitorLevel" lay-filter="monitorLevel" type="select">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">状态：</label>
+                    <div class="layui-input-inline">
+                        <select name="enable" id="enable" lay-filter="enable" type="select">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">预警级别：</label>
+                    <div class="layui-input-inline">
+                        <select name="alarmLevel" id="alarmLevel" lay-filter="alarmLevel" type="select">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">预警事件编码：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="alarmEventId" placeholder="" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">制单人：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="createName" placeholder="" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">制单时间：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="ruleMakeFormTime" id="ruleMakeFormTime" placeholder=""
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+
+                    <div class="layui-inline layui-search" style="padding-left: 50px">
+                        <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-alarmRulelist-search"
+                                id="LAY-app-alarmRulelist-search">
+                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-
-
         </div>
 
         <div class="layui-card-body">
@@ -409,7 +417,7 @@
             align: "center",
             minWidth: 150,
             hide: isHidden("alarmEventId")
-        },                               {
+        }, {
             field: "alarmRuleDescribe",
             title: "规则描述",
             align: "center",
@@ -443,19 +451,13 @@
             minWidth: 200,
             hide: isHidden("ruleUpdateTime"),
             templet: function (d) {
-                if(d.ruleUpdateTime!=null){
+                if (d.ruleUpdateTime != null) {
                     return layui.util.toDateString(d.ruleUpdateTime);
-                }else{
+                } else {
                     return '';
                 }
 
             }
-        }, {
-            title: "操作",
-            align: "center",
-            fixed: "right",
-            width: 200,
-            toolbar: "#table-alarmRule-list"
         }]]
     });
 
@@ -524,8 +526,7 @@
                     }
                 });
             });
-        }
-        else if (e.event == "view") {
+        } else if (e.event == "view") {
             top.layer.open({
                 type: 2,
                 title: "查看预警规则详情",

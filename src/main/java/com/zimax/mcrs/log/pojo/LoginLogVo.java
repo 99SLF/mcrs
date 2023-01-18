@@ -4,12 +4,8 @@ package com.zimax.mcrs.log.pojo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.util.Date;
 
 /**
  * 登录日志
@@ -21,24 +17,15 @@ import java.util.Date;
 public class LoginLogVo {
 
     /**
-     * 登录日志Id
+     * 日志Id
      */
     @TableId(type = IdType.AUTO)
-    private int loginLogId;
-    /**
-     * 设备主键
-     */
-    private int equipmentInt;
+    private int logId;
 
     /**
      * 设备资源号
      */
     private String equipmentId;
-
-    /**
-     * 终端主键
-     */
-    private int deviceId;
 
     /**
      * APPId
@@ -60,10 +47,5 @@ public class LoginLogVo {
      * 登录时间
      */
     private String loginTime;
-
-    /**
-     * 备注
-     */
-    private String remarks;
 
 }

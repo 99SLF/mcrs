@@ -44,7 +44,7 @@
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">预警类型：</label>
-                    <div class="layui-input-block">
+                    <div class="layui-input-inline">
                         <select name="alarmType" id="alarmType" lay-filter="alarmType" type="select">
                             <option value=""></option>
                         </select>
@@ -53,7 +53,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">制单人：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="makeFormPeople" placeholder="" autocomplete="off"
+                        <input type="text" name="createName" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -100,14 +100,13 @@
         </div>
     </div>
 </div>
-<script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
 
+<script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
 <script>
     layui.config({
         base: "<%=request.getContextPath()%>/"
     });
 </script>
-
 <script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
 <script type="text/javascript">
     var layer = layui.layer;

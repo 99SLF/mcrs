@@ -116,7 +116,7 @@ public class AlarmEventService {
         for (Integer integer:alarmEventInt){
             alarmEvent.setAlarmEventInt(integer);
             alarmEvent.setEnableStatus("101");
-            alarmEvent.setUpdatePeople(usetObject.getUserName());
+            alarmEvent.setUpdatePeople(usetObject.getUserId());
             alarmEvent.setUpdateTime(new Date());
             alarmEventMapper.enable(alarmEvent);
         }

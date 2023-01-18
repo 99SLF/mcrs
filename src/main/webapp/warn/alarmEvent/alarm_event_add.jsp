@@ -60,7 +60,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>上限:</label>
             <div class="layui-input-block">
-                <input id="upperLimit" type="text" name="upperLimit" lay-verify="required|upperLimit"
+                <input id="upperLimit" type="text" name="upperLimit" lay-verify="required|upperLimit|number"
                        placeholder="请输入上限" autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -68,7 +68,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>下限:</label>
             <div class="layui-input-block">
-                <input id="lowerLimit" type="text" name="lowerLimit" lay-verify="required|lowerLimit" placeholder="请输入下限"
+                <input id="lowerLimit" type="text" name="lowerLimit" lay-verify="required|lowerLimit|number" placeholder="请输入下限"
                        autocomplete="off" class="layui-input">
             </div>
         </div>

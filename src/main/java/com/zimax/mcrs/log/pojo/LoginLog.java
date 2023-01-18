@@ -19,14 +19,19 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("log_login_log")
+@TableName("log_log")
 public class LoginLog {
 
     /**
      * 登录日志Id
      */
     @TableId(type = IdType.AUTO)
-    private int loginLogId;
+    private int logId;
+
+    /**
+     * 日志类型
+     */
+    private String logType;
 
     /**
      * 设备主键
@@ -46,7 +51,7 @@ public class LoginLog {
     /**
      * 登录用户
      */
-    private String loginUser;
+    private String userId;
 
     /**
      * 登录时间
@@ -54,8 +59,7 @@ public class LoginLog {
     private Date loginTime;
 
     /**
-     * 备注
+     * 创建时间
      */
-    private String remarks;
-
+    private Date createTime;
 }

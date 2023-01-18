@@ -259,7 +259,7 @@
             field: "aPPId",
             title: "APPID",
             align: "center",
-            minWidth: 200,
+            minWidth: 300,
             hide: isHidden("aPPId")
         }, {
             field: "source",
@@ -282,12 +282,6 @@
             templet: function (d) {
                 return layui.util.toDateString(d.loginTime);
             }
-        }, {
-            field: "remarks",
-            title: "备注",
-            align: "center",
-            minWidth: 120,
-            hide: isHidden("remarks")
         }]]
     });
 

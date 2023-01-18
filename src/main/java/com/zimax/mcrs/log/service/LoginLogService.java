@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,7 @@ public class LoginLogService {
         Map<String,Object> map= new HashMap<>();
         if(order==null){
             map.put("order","desc");
-            map.put("field","log.login_time");
+            map.put("field","ll.login_time");
         }else{
             map.put("order",order);
             map.put("field",changeString.camelUnderline(field));
@@ -58,31 +59,14 @@ public class LoginLogService {
         return loginLogMapper.count(equipmentId,source,loginUserName,loginTime);
     }
 
-
-//    /**
-//     * 检测设备是否存在
-//     *
-//     * @param equipmentInt 设备资源号
-//     */
-//    public int  checkEquipment(int equipmentInt) {
-//        return interfaceLogMapper.checkEquipment(equipmentInt);
-//    }
-//
     /**
      * 添加登录日志
      * @param loginLog
      */
     public void addLoginLog(LoginLog loginLog) {
+        loginLog.setLogType("101");
+        loginLog.setCreateTime(new Date());
         loginLogMapper.addLoginLog(loginLog);
     }
-
-    /**
-     * 删除登录日志
-     * @param loginLogId
-     */
-    public void removeLoginLog(int loginLogId) {
-        loginLogMapper.removeLoginLog(loginLogId);
-    }
-
 
 }
