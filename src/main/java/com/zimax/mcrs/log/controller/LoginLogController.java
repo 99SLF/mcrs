@@ -53,16 +53,4 @@ public class LoginLogController {
     }
 
 
-    /**
-     * 删除接口日志
-     *
-     * @param loginLogId 根据登录日志主键删除
-     */
-    @DeleteMapping("/loginLog/delete/{loginLogId}")
-    public Result<?> removeLoginLog(@PathVariable("loginLogId") int loginLogId){
-        System.out.println(loginLogId);
-        loginLogService.removeLoginLog(loginLogId);
-        return Result.success();
-    }
-
 }
