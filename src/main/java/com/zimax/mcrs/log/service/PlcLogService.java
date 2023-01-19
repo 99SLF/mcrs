@@ -7,6 +7,7 @@ import com.zimax.mcrs.log.pojo.PlcLogVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,12 +27,12 @@ public class PlcLogService {
     /**
      * 查询所有plc日志信息
      */
-    public List<PlcLogVo> queryPlcLog(String limit, String page, String equipmentId, String deviceName, String plcGroupName, String groupType, String createTime, String order, String field){
+    public List<PlcLogVo> queryPlcLog(String limit, String page, String equipmentName, String deviceName, String plcGroupName, String groupType, String createTime, String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
             map.put("order","desc");
-            map.put("field","lpl.create_time");
+            map.put("field","ll.create_time");
         }else{
             map.put("order",order);
             map.put("field",changeString.camelUnderline(field));
@@ -40,7 +41,7 @@ public class PlcLogService {
             map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
             map.put("limit", Integer.parseInt(limit));
         }
-        map.put("equipmentId",equipmentId);
+        map.put("equipmentName",equipmentName);
         map.put("deviceName",deviceName);
         map.put("plcGroupName",plcGroupName);
         map.put("groupType",groupType);
@@ -51,8 +52,8 @@ public class PlcLogService {
     /**
      * 查询记录
      */
-    public int count( String equipmentId, String deviceName, String plcGroupName, String groupType, String createTime) {
-        return plcLogMapper.count(equipmentId,deviceName,plcGroupName,groupType,createTime);
+    public int count( String equipmentName, String deviceName, String plcGroupName, String groupType, String createTime) {
+        return plcLogMapper.count(equipmentName,deviceName,plcGroupName,groupType,createTime);
     }
 //
 //
@@ -70,16 +71,11 @@ public class PlcLogService {
      * @param plcLog plc交换日志
      */
     public void addPlcLog(PlcLog plcLog) {
+        plcLog.setLogType("105");
+        plcLog.setCreateTime(new Date());
         plcLogMapper.addPlcLog(plcLog);
     }
 
-    /**
-     * 删除Plc交换日志
-     * @param plcLogId
-     */
-    public void removePlcLog(int plcLogId) {
-        plcLogMapper.removePlcLog(plcLogId);
-    }
 
 
 }

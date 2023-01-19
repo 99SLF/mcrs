@@ -21,9 +21,9 @@
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item layui-col-space12">
                 <div class="layui-inline">
-                    <label class="layui-form-label">设备资源号：</label>
+                    <label class="layui-form-label">设备名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="equipmentId" placeholder="" autocomplete="off"
+                        <input type="text" name="equipmentName" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -259,26 +259,17 @@
             title: "序号",
             type: "numbers"
         }, {
-            field: "plcLogNum",
-            title: "日志编号",
-            align: "center",
-            minWidth: 120,
-            hide: isHidden("plcLogNum")
-        }, {
-            field: "logType",
-            title: "日志类型",
-            align: "center",
-            minWidth: 200,
-            hide: isHidden("logType"),
-            templet: function (d) {
-                return layui.admin.getDictText("LOG_TYPE", d.logType);
-            }
-        }, {
             field: "equipmentId",
             title: "设备资源号",
             align: "center",
             minWidth: 150,
             hide: isHidden("equipmentId")
+        }, {
+            field: "equipmentName",
+            title: "设备名称",
+            align: "left",
+            minWidth: 150,
+            hide: isHidden("equipmentName")
         }, {
             field: "aPPId",
             title: "APPID",
@@ -288,13 +279,13 @@
         }, {
             field: "deviceName",
             title: "终端名称",
-            align: "center",
+            align: "left",
             minWidth: 150,
             hide: isHidden("deviceName")
         }, {
             field: "plcGroupName",
             title: "PLC组别名称",
-            align: "center",
+            align: "left",
             minWidth: 120,
             hide: isHidden("plcGroupName")
         }, {
@@ -306,13 +297,13 @@
         }, {
             field: "mapAddress",
             title: "映射地址",
-            align: "center",
+            align: "left",
             minWidth: 120,
             hide: isHidden("mapAddress")
         }, {
             field: "tagName",
             title: "标签类型",
-            align: "center",
+            align: "left",
             minWidth: 120,
             hide: isHidden("tagName")
         }, {
@@ -325,10 +316,14 @@
             field: "createTime",
             title: "创建时间",
             align: "center",
-            minWidth: 120,
+            minWidth: 200,
             hide: isHidden("createTime"),
             templet: function (d) {
-                return layui.util.toDateString(d.createTime);
+                if(d.createTime!=null){
+                    return layui.util.toDateString(d.createTime);
+                }else{
+                    return '';
+                }
             }
         }]]
     });

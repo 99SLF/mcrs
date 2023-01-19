@@ -19,19 +19,14 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("log_rfid_log")
+@TableName("log_log")
 public class RfidLog {
 
     /**
-     * RFID交换日志Id
+     * 日志主键
      */
     @TableId(type = IdType.AUTO)
-    private int rfidLogId;
-
-    /**
-     * RFID交换日志编号
-     */
-    private String rfidLogNum;
+    private int logId;
 
     /**
      * 日志类型

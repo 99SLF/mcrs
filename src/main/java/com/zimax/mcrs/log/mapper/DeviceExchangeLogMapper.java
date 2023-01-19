@@ -32,18 +32,13 @@ public interface DeviceExchangeLogMapper extends BaseMapper<DeviceExchangeLog> {
               @Param("equipmentContinuePort") String equipmentContinuePort,
               @Param("processName") String processName,
               @Param("operateName") String operateName,
-              @Param("exchangeTime")String exchangeTime);
+              @Param("equipmentExchangeTime")String equipmentExchangeTime);
 
     /**
      * 设备交换日志添加
      * @param deviceExchangeLog
      */
     void addDeviceExchangeLog(DeviceExchangeLog deviceExchangeLog);
-
-    /**
-     * 设备交换日志删除
-     */
-    void removeDeviceExchangeLog(int deviceExchangeLogId);
 
 
 }

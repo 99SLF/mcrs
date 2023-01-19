@@ -280,7 +280,11 @@
             minWidth: 150,
             hide: isHidden("loginTime"),
             templet: function (d) {
-                return layui.util.toDateString(d.loginTime);
+                if(d.loginTime!=null){
+                    return layui.util.toDateString(d.loginTime);
+                }else{
+                    return '';
+                }
             }
         }]]
     });

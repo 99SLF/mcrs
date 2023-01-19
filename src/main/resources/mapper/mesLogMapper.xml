@@ -5,18 +5,20 @@
 
     <!--    查询记录数-->
     <select id="count" resultType="int">
-        SELECT count(*) FROM log_mes_log AS lml
+        SELECT count(*)
+        FROM log_log AS ll
         LEFT JOIN eqi_equipment AS eqi
-        ON lml.equipment_int = eqi.equipment_int
+        ON ll.equipment_int = eqi.equipment_int
         LEFT JOIN eqi_device AS dev
-        ON lml.device_id = dev.device_id
+        ON ll.device_id = dev.device_id
         LEFT JOIN base_equip_info AS bei
         ON eqi.equip_type_id = bei.equip_type_id
         LEFT JOIN cap_user AS cur
-        ON lml.creator = cur.USER_ID
+        ON ll.creator = cur.USER_ID
         <where>
-            <if test="equipmentId !=null and equipmentId !=''">
-                and eqi.equipment_id like '%${equipmentId}%'
+            ll.log_type = '107'
+            <if test="equipmentName !=null and equipmentName !=''">
+                and eqi.equipment_name like '%${equipmentName}%'
             </if>
             <if test="deviceName!=null and deviceName !=''">
                 and dev.device_name like '%${deviceName}%'
@@ -28,25 +30,37 @@
                 and eqi.equipment_continue_port like '%${equipmentContinuePort}%'
             </if>
             <if test="createTime !=null and createTime !=''">
-                and lml.create_time like '%${createTime}%'
+                and ll.create_time like '%${createTime}%'
             </if>
         </where>
     </select>
 
     <!--查询所有-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.log.pojo.MesLogVo">
-        SELECT *,cur.USER_NAME AS createName FROM log_mes_log AS lml
+        SELECT
+        ll.log_status,
+        eqi.equipment_id,
+        eqi.equipment_name,
+        dev.app_id,
+        dev.device_name,
+        bei.mes_ip_address,
+        eqi.equipment_continue_port,
+        ll.mes_content,
+        cur.USER_NAME AS createName,
+        ll.create_time
+        FROM log_log AS ll
         LEFT JOIN eqi_equipment AS eqi
-        ON lml.equipment_int = eqi.equipment_int
+        ON ll.equipment_int = eqi.equipment_int
         LEFT JOIN eqi_device AS dev
-        ON lml.device_id = dev.device_id
+        ON ll.device_id = dev.device_id
         LEFT JOIN base_equip_info AS bei
         ON eqi.equip_type_id = bei.equip_type_id
         LEFT JOIN cap_user AS cur
-        ON lml.creator = cur.USER_ID
+        ON ll.creator = cur.USER_ID
         <where>
-            <if test="equipmentId !=null and equipmentId !=''">
-                and eqi.equipment_id like '%${equipmentId}%'
+            ll.log_type = '107'
+            <if test="equipmentName !=null and equipmentName !=''">
+                and eqi.equipment_name like '%${equipmentName}%'
             </if>
             <if test="deviceName!=null and deviceName !=''">
                 and dev.device_name like '%${deviceName}%'
@@ -58,7 +72,7 @@
                 and eqi.equipment_continue_port like '%${equipmentContinuePort}%'
             </if>
             <if test="createTime !=null and createTime !=''">
-                and lml.create_time like '%${createTime}%'
+                and ll.create_time like '%${createTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -69,18 +83,14 @@
         </if>
     </select>
 
-    <!--添加Rfid交换日志-->
+    <!--添加mes交换日志-->
     <insert id="addMesLog" parameterType="com.zimax.mcrs.log.pojo.MesLog">
-        insert into log_mes_log
-        values (#{mesLogId}, #{mesLogNum}, #{logType}, #{equipmentInt},
-                #{deviceId}, #{content}, #{creator},
+        insert into log_log (log_id,log_type,log_status,equipment_int,device_id,mes_content,creator,create_time)
+        values (#{logId}, #{logType}, #{logStatus}, #{equipmentInt},
+                #{deviceId}, #{mesContent}, #{creator},
                 #{createTime})
     </insert>
 
-    <!--删除-->
-    <delete id="removeMesLog" parameterType="int">
-        delete from log_mes_log where mes_log_id = #{mesLogId}
-    </delete>
 
 
 </mapper>

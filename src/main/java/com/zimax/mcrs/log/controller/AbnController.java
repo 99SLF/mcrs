@@ -27,11 +27,11 @@ public class AbnController {
 
     /**
      *
-     * @param equipmentId 设备资源号
+     * @param equipmentName 设备资源号
      * @param deviceName 终端名称
      * @param abnType 预警类型
      * @param abnLevel 异常等级
-     * @param exchangeTime 交互时间
+     * @param equipmentExchangeTime 交互时间
      * @param limit         记录数
      * @param page          页码
      * @param field         排序字段
@@ -39,9 +39,9 @@ public class AbnController {
      * @return
      */
     @GetMapping("/abnLog/query")
-    public Result<?> query(String limit, String page, String equipmentId, String deviceName, String abnType, String abnLevel, String exchangeTime, String order, String field) {
-        List abnLogs = abnLogService.queryAbnLog(limit, page, equipmentId, deviceName,abnType ,abnLevel,exchangeTime,order, field);
-        return Result.success(abnLogs, abnLogService.count(equipmentId, deviceName,abnType ,abnLevel,exchangeTime));
+    public Result<?> query(String limit, String page, String equipmentName, String deviceName, String abnType, String abnLevel, String equipmentExchangeTime, String order, String field) {
+        List abnLogs = abnLogService.queryAbnLog(limit, page, equipmentName, deviceName,abnType ,abnLevel,equipmentExchangeTime,order, field);
+        return Result.success(abnLogs, abnLogService.count(equipmentName, deviceName,abnType ,abnLevel,equipmentExchangeTime));
     }
 
 
@@ -79,15 +79,5 @@ public class AbnController {
     }
 
 
-    /**
-     * 删除异常日志
-     *
-     * @param abnLogId 依据异常日志主键删除
-     */
-    @DeleteMapping("/abnLog/delete/{abnLogId}")
-    public Result<?> removeAbnLog(@PathVariable("abnLogId") int abnLogId){
-        abnLogService.removeAbnLog(abnLogId);
-        return Result.success();
-    }
 
 }

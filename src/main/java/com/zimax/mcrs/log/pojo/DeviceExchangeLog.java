@@ -17,25 +17,24 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("log_device_exchange_log")
+@TableName("log_log")
 public class DeviceExchangeLog {
 
     /**
-     * 设备交换日志主键
+     * 日志主键
      */
     @TableId(type = IdType.AUTO)
-    private int deviceExchangeLogId;
-
-
-    /**
-     * 设备交换日志编号
-     */
-    private String deviceExchangeLogNum;
+    private int logId;
 
     /**
      * 日志类型
      */
     private String logType;
+
+    /**
+     * 日志状态
+     */
+    private String logStatus;
 
     /**
      * 设备主键
@@ -60,12 +59,17 @@ public class DeviceExchangeLog {
     /**
      * 操作人
      */
-    private String operator;
+    private String user;
 
     /**
      * 交互时间
      */
-    private Date exchangeTime;
+    private Date equipmentExchangeTime;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
 
 
 }

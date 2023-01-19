@@ -76,15 +76,5 @@ public class InterfaceController {
     }
 
 
-    /**
-     * 删除接口日志
-     *
-     * @param interfaceLogId 依据接口日志主键删除
-     */
-    @DeleteMapping("/interfaceLog/delete/{interfaceLogId}")
-    public Result<?> removeInterfaceLog(@PathVariable("interfaceLogId") int interfaceLogId){
-        interfaceLogService.removeInterfaceLog(interfaceLogId);
-        return Result.success();
-    }
 
 }

@@ -5,21 +5,29 @@
 
     <!--查询所有操作日志-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.log.pojo.OperationLogVo">
-        select *,cur.USER_NAME AS operateName from log_operation_log AS lol
+        SELECT
+        ll.log_status,
+        ll.operation_type,
+        ll.operation_content,
+        ll.result,
+        cur.USER_NAME AS operateName,
+        ll.operation_time
+        FROM log_log AS ll
         LEFT JOIN cap_user AS cur
-        ON lol.operator = cur.USER_ID
+        ON ll.user = cur.USER_ID
         <where>
+            ll.log_type = '103'
             <if test="logStatus !=null and logStatus !=''">
-                and lol.log_status like '%${logStatus}%'
+                and ll.log_status like '%${logStatus}%'
             </if>
             <if test="operationType !=null and operationType !=''">
-                and lol.operation_type like '%${operationType}%'
+                and ll.operation_type like '%${operationType}%'
             </if>
             <if test="operationTime !=null and operationTime !=''">
-                and lol.operation_time like '%${operationTime}%'
+                and ll.operation_time like '%${operationTime}%'
             </if>
-            <if test="operationResult !=null and operationResult !=''">
-                and lol.operation_result like '%${operationResult}%'
+            <if test="result !=null and result !=''">
+                and ll.result like '%${result}%'
             </if>
             <if test="operateName !=null and operateName !=''">
                 and cur.USER_NAME like '%${operateName}%'
@@ -38,23 +46,22 @@
     <select id="count" resultType="int">
         select
         count(*)
-        from
-        log_operation_log AS lol
-        LEFT JOIN
-        cap_user AS cur
-        ON lol.operator = cur.USER_ID;
+        FROM log_log AS ll
+        LEFT JOIN cap_user AS cur
+        ON ll.user = cur.USER_ID
         <where>
+            ll.log_type = '103'
             <if test="logStatus !=null and logStatus !=''">
-                and lol.log_status like '%${logStatus}%'
+                and ll.log_status like '%${logStatus}%'
             </if>
             <if test="operationType !=null and operationType !=''">
-                and lol.operation_type like '%${operationType}%'
+                and ll.operation_type like '%${operationType}%'
             </if>
             <if test="operationTime !=null and operationTime !=''">
-                and lol.operation_time like '%${operationTime}%'
+                and ll.operation_time like '%${operationTime}%'
             </if>
-            <if test="operationResult !=null and operationResult !=''">
-                and lol.operation_result like '%${operationResult}%'
+            <if test="result !=null and result !=''">
+                and ll.result like '%${result}%'
             </if>
             <if test="operateName !=null and operateName !=''">
                 and cur.USER_NAME like '%${operateName}%'
@@ -65,16 +72,13 @@
 
     <!--添加操作日志-->
     <insert id="addOperationLog" parameterType="com.zimax.mcrs.log.pojo.OperationLog">
-        insert into log_operation_log
-        values (#{operationLogId}, #{operationLogNum}, #{logType}, #{logStatus},
-                #{operationType}, #{operationContent}, #{operationResult},
-                #{operator}, #{operationTime})
+        insert into log_log (log_id,log_type,log_status,
+                             operation_type,operation_content,
+                             result,user,operation_time,create_time)
+        values (#{logId}, #{logType}, #{logStatus}, #{operationType},
+                #{operationContent}, #{result}, #{user},
+                #{operationTime}, #{createTime})
     </insert>
-
-    <!--删除-->
-    <delete id="removeOperationLog" parameterType="int">
-        delete from log_operation_log where operation_log_id = #{operationLogId}
-    </delete>
 
 
 <!--    <select id="getRole" resultType="com.zimax.components.coframe.rights.pojo.Role" >-->

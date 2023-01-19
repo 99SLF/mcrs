@@ -10,6 +10,7 @@ import com.zimax.mcrs.log.pojo.RfidLogVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,12 +30,12 @@ public class MesLogService {
     /**
      * 查询所有RFID日志信息
      */
-    public List<MesLogVo> queryMesLog(String limit, String page, String equipmentId, String deviceName, String mesIpAddress, String equipmentContinuePort, String createTime, String order, String field){
+    public List<MesLogVo> queryMesLog(String limit, String page, String equipmentName, String deviceName, String mesIpAddress, String equipmentContinuePort, String createTime, String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
             map.put("order","desc");
-            map.put("field","lml.create_time");
+            map.put("field","ll.create_time");
         }else{
             map.put("order",order);
             map.put("field",changeString.camelUnderline(field));
@@ -43,9 +44,9 @@ public class MesLogService {
             map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
             map.put("limit", Integer.parseInt(limit));
         }
-        map.put("equipmentId",equipmentId);
+        map.put("equipmentName",equipmentName);
         map.put("deviceName",deviceName);
-        map.put("rfidId",mesIpAddress);
+        map.put("mesIpAddress",mesIpAddress);
         map.put("equipmentContinuePort",equipmentContinuePort);
         map.put("createTime",createTime);
         return mesLogMapper.queryAll(map);
@@ -54,8 +55,8 @@ public class MesLogService {
     /**
      * 查询记录
      */
-    public int count( String equipmentId, String deviceName, String mesIpAddress,String equipmentContinuePort, String createTime) {
-        return mesLogMapper.count(equipmentId,deviceName,mesIpAddress,equipmentContinuePort,createTime);
+    public int count( String equipmentName, String deviceName, String mesIpAddress,String equipmentContinuePort, String createTime) {
+        return mesLogMapper.count(equipmentName,deviceName,mesIpAddress,equipmentContinuePort,createTime);
     }
 
     /**
@@ -63,15 +64,9 @@ public class MesLogService {
      * @param mesLog mes交换日志
      */
     public void addMesLog(MesLog mesLog) {
+        mesLog.setLogType("107");
+        mesLog.setCreateTime(new Date());
         mesLogMapper.addMesLog(mesLog);
-    }
-
-    /**
-     * 删除Mes交换日志
-     * @param mesLogId
-     */
-    public void removeMesLog(int mesLogId) {
-        mesLogMapper.removeMesLog(mesLogId);
     }
 
 

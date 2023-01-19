@@ -51,7 +51,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">交互时间：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="exchangeTime" id="exchangeTime" placeholder=""
+                        <input type="text" name="equipmentExchangeTime" id="equipmentExchangeTime" placeholder=""
                                autocomplete="off"
                                class="layui-input">
                     </div>
@@ -64,10 +64,7 @@
                         </button>
                     </div>
                 </div>
-
             </div>
-
-
         </div>
         <div class="layui-card-body">
             <%--        <div class="layui-toolbar" id="toolbar" hidden="true">--%>
@@ -118,7 +115,7 @@
     var laydate = layui.laydate;
     //日期时间选择器
     laydate.render({
-        elem: '#exchangeTime',
+        elem: '#equipmentExchangeTime',
         type: 'date'
     });
 
@@ -310,7 +307,6 @@
             });
         },
         parseData: function (res) {
-            debugger;
             return {
                 code: res.code,
                 msg: res.msg,
@@ -324,19 +320,13 @@
             title: "序号",
             type: "numbers"
         }, {
-            field: "deviceExchangeLogNum",
-            title: "日志编号",
+            field: "logStatus",
+            title: "日志状态",
             align: "center",
             minWidth: 120,
-            hide: isHidden("deviceExchangeLogNum")
-        }, {
-            field: "logType",
-            title: "日志类型",
-            align: "center",
-            minWidth: 120,
-            hide: isHidden("logType"),
+            hide: isHidden("logStatus"),
             templet: function (d) {
-                return layui.admin.getDictText("LOG_TYPE", d.logType);
+                return layui.admin.getDictText("LOG_STATUS", d.logStatus)
             }
         }, {
             field: "equipmentId",
@@ -345,24 +335,36 @@
             minWidth: 120,
             hide: isHidden("equipmentId")
         }, {
+            field: "equipmentName",
+            title: "设备名称",
+            align: "left",
+            minWidth: 120,
+            hide: isHidden("equipmentName")
+        }, {
             field: "aPPId",
             title: "APPID",
             align: "center",
-            minWidth: 100,
+            minWidth: 300,
             hide: isHidden("aPPId")
         }, {
             field: "equipmentIp",
-            title: "接入IP",
+            title: "设备接入IP",
             align: "center",
             minWidth: 150,
             hide: isHidden("equipmentIp")
         }, {
             field: "equipmentContinuePort",
-            title: "端口号",
+            title: "设备接入端口",
             align: "center",
-            minWidth: 150,
+            minWidth: 200,
             hide: isHidden("equipmentContinuePort")
         }, {
+            field: "matrixName",
+            title: "基地名称",
+            align: "center",
+            minWidth: 120,
+            hide: isHidden("matrixName")
+        },{
             field: "factoryName",
             title: "工厂名称",
             align: "center",
@@ -379,11 +381,14 @@
             title: "操作类型",
             align: "center",
             minWidth: 150,
-            hide: isHidden("operationType")
+            hide: isHidden("operationType"),
+            templet: function (d) {
+        return layui.admin.getDictText("OPERATE_TYPE", d.operationType);
+    }
         }, {
             field: "operationContent",
             title: "操作内容",
-            align: "center",
+            align: "left",
             minWidth: 200,
             hide: isHidden("operationContent")
         }, {
@@ -393,13 +398,17 @@
             minWidth: 120,
             hide: isHidden("operateName")
         }, {
-            field: "exchangeTime",
+            field: "equipmentExchangeTime",
             title: "设备交换时间",
             align: "center",
             minWidth: 200,
-            hide: isHidden("exchangeTime"),
+            hide: isHidden("equipmentExchangeTime"),
             templet:function(d) {
-                return layui.util.toDateString(d.exchangeTime);
+                if(d.equipmentExchangeTime!=null){
+                    return layui.util.toDateString(d.equipmentExchangeTime);
+                }else{
+                    return '';
+                }
             }
         }]]
     });

@@ -17,31 +17,12 @@ import lombok.NoArgsConstructor;
  * @date 2023/1/13
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@TableName("log_mes_log")
 public class MesLogVo {
-
-    /**
-     * MES交换日志Id
-     */
-    @TableId(type = IdType.AUTO)
-    private int mesLogId;
-
-    /**
-     * MES交换日志编号
-     */
-    private String mesLogNum;
 
     /**
      * 日志类型
      */
-    private String logType;
-
-    /**
-     * 设备主键
-     */
-    private int equipmentInt;
+    private String logStatus;
 
     /**
      * 设备资源号
@@ -49,9 +30,9 @@ public class MesLogVo {
     private String equipmentId;
 
     /**
-     * 终端主键
+     * 设备名称
      */
-    private int deviceId;
+    private String equipmentName;
 
     /**
      * APPID
@@ -76,7 +57,7 @@ public class MesLogVo {
     /**
      * 交互内容
      */
-    private String content;
+    private String mesContent;
 
     /**
      * 创建人

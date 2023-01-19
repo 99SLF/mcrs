@@ -27,16 +27,16 @@ public class OperationLogController {
      * @param logStatus 日志状态
      * @param operationType 操作类型
      * @param operationTime 日志创建时间
-     * @param operationResult 操作结果
-     * @param operator 操作人
+     * @param result 操作结果
+     * @param operateName 操作人
      * @param limit 记录数
      * @param page 页码
      * @return 操作日志列表
      */
     @GetMapping("/operationLog/query")
-    public Result<?> queryOperationLog(String limit, String page, String logStatus, String operationType, String operationTime,String operationResult, String operator,String order, String field) {
-        List operationLogs = operationLogService.queryOperationLog(limit,page,logStatus,operationType,operationTime,operationResult,operator,order,field);
-        return Result.success(operationLogs, operationLogService.count(logStatus,operationType,operationTime,operationResult,operator));
+    public Result<?> queryOperationLog(String limit, String page, String logStatus, String operationType, String operationTime,String result, String operateName,String order, String field) {
+        List operationLogs = operationLogService.queryOperationLog(limit,page,logStatus,operationType,operationTime,result,operateName,order,field);
+        return Result.success(operationLogs, operationLogService.count(logStatus,operationType,operationTime,result,operateName));
     }
 
     /**
@@ -48,20 +48,6 @@ public class OperationLogController {
         operationLogService.addOperationLog(operationLog);
         return Result.success();
     }
-
-
-    /**
-     * 删除功能
-     *
-     * @param operationLogId 依据操作日志主键删除
-     */
-    @DeleteMapping("/operationLog/delete/{operationLogId}")
-    public Result<?> removeOperationLog(@PathVariable("operationLogId") int operationLogId) {
-        operationLogService.removeOperationLog(operationLogId);
-        return Result.success();
-    }
-
-
 
 
 }

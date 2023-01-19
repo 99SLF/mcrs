@@ -5,21 +5,25 @@
 
     <!--    查询记录数-->
     <select id="count" resultType="int">
-        SELECT count(*) FROM
-        log_device_exchange_log as exchange
-        LEFT JOIN eqi_equipment as eqi
-        ON exchange.equipment_int = eqi.equipment_int
+        SELECT
+        count(*)
+        FROM log_log AS ll
+        LEFT JOIN eqi_equipment AS eqi
+        ON ll.equipment_int = eqi.equipment_int
         LEFT JOIN eqi_device AS dev
-        ON exchange.device_id = dev.device_id
+        ON ll.device_id = dev.device_id
         LEFT JOIN base_access_info AS bai
         ON eqi.acc_point_res_id = bai.acc_point_res_id
-        LEFT JOIN base_process_info AS bpi
-        ON bai.process_code = bpi.process_code
+        LEFT JOIN base_matrix_info AS bmi
+        ON bai.matrix_code = bmi.matrix_code
         LEFT JOIN base_factory_info AS bfi
         ON bai.factory_code = bfi.factory_code
+        LEFT JOIN base_process_info AS bpi
+        ON bai.process_code = bpi.process_code
         LEFT JOIN cap_user AS cur
-        ON exchange.operator = cur.USER_ID
+        ON ll.`user` = cur.USER_ID
         <where>
+            ll.log_type = '104'
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
             </if>
@@ -32,29 +36,45 @@
             <if test="operateName !=null and operateName !=''">
                 and cur.USER_NAME like '%${operateName}%'
             </if>
-            <if test="exchangeTime !=null and exchangeTime !=''">
-                and exchange.exchange_time like '%${exchangeTime}%'
+            <if test="equipmentExchangeTime !=null and equipmentExchangeTime !=''">
+                and ll.equipment_exchange_time like '%${equipmentExchangeTime}%'
             </if>
         </where>
     </select>
 
     <!--查询所有-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.log.pojo.DeviceExchangeLogVo">
-        SELECT *, cur.USER_NAME AS operateName FROM
-        log_device_exchange_log as exchange
-        LEFT JOIN eqi_equipment as eqi
-        ON exchange.equipment_int = eqi.equipment_int
+        SELECT
+        ll.log_status,
+        eqi.equipment_id,
+        eqi.equipment_name,
+        dev.app_id,
+        eqi.equipment_ip,
+        eqi.equipment_continue_port,
+        bmi.matrix_name,
+        bfi.factory_name,
+        bpi.process_name,
+        ll.operation_type,
+        operation_content,
+        cur.USER_NAME AS operateName,
+        ll.equipment_exchange_time
+        FROM log_log AS ll
+        LEFT JOIN eqi_equipment AS eqi
+        ON ll.equipment_int = eqi.equipment_int
         LEFT JOIN eqi_device AS dev
-        ON exchange.device_id = dev.device_id
+        ON ll.device_id = dev.device_id
         LEFT JOIN base_access_info AS bai
         ON eqi.acc_point_res_id = bai.acc_point_res_id
-        LEFT JOIN base_process_info AS bpi
-        ON bai.process_code = bpi.process_code
+        LEFT JOIN base_matrix_info AS bmi
+        ON bai.matrix_code = bmi.matrix_code
         LEFT JOIN base_factory_info AS bfi
         ON bai.factory_code = bfi.factory_code
+        LEFT JOIN base_process_info AS bpi
+        ON bai.process_code = bpi.process_code
         LEFT JOIN cap_user AS cur
-        ON exchange.operator = cur.USER_ID
+        ON ll.`user` = cur.USER_ID
         <where>
+            ll.log_type = '104'
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
             </if>
@@ -67,8 +87,8 @@
             <if test="operateName !=null and operateName !=''">
                 and cur.USER_NAME like '%${operateName}%'
             </if>
-            <if test="exchangeTime !=null and exchangeTime !=''">
-                and exchange.exchange_time like '%${exchangeTime}%'
+            <if test="equipmentExchangeTime !=null and equipmentExchangeTime !=''">
+                and ll.equipment_exchange_time like '%${equipmentExchangeTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -81,19 +101,12 @@
 
     <!--添加设备交换日志-->
     <insert id="addDeviceExchangeLog" parameterType="com.zimax.mcrs.log.pojo.DeviceExchangeLog">
-        insert into log_device_exchange_log
-        values (#{deviceExchangeLogId}, #{deviceExchangeLogNum}, #{logType}, #{equipmentInt},
-                #{deviceId}, #{factoryName}, #{processName},
-                #{dataAcquisition}, #{operator}, #{exchangeTime})
+        insert into log_log (log_id,log_type,log_status,equipment_int,device_id,
+                             operation_type,operation_content,user,
+                             ,create_time)
+        values (#{logId}, #{logType}, #{logStatus},#{equipmentInt}, #{deviceId},
+                #{operationType}, #{operationContent}, #{user},
+                #{equipmentExchangeTime}, #{createTime})
     </insert>
-
-    <!--根据主键删除设备交换日志-->
-    <delete id="removeDeviceExchangeLog" parameterType="int">
-        delete
-        from log_device_exchange_log
-        where device_exchange_log_id = #{deviceExchangeLogId}
-    </delete>
-
-
 
 </mapper>

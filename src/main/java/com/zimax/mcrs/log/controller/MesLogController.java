@@ -28,7 +28,7 @@ public class MesLogController {
      *
      * @param limit  条数
      * @param page 页码
-     * @param equipmentId 设备资源号
+     * @param equipmentName 设备名称
      * @param deviceName 终端名称
      * @param mesIpAddress mes连接IP
      * @param equipmentContinuePort 设备连接端口
@@ -38,9 +38,9 @@ public class MesLogController {
      * @return
      */
     @GetMapping("/mesLog/query")
-    public Result<?> query(String limit, String page, String equipmentId, String deviceName, String mesIpAddress, String equipmentContinuePort, String createTime, String order, String field) {
-        List mesLogsList = mesLogService.queryMesLog(limit, page, equipmentId, deviceName, mesIpAddress, equipmentContinuePort, createTime, order, field);
-        return Result.success(mesLogsList, mesLogService.count(equipmentId, deviceName,mesIpAddress ,equipmentContinuePort,createTime));
+    public Result<?> query(String limit, String page, String equipmentName, String deviceName, String mesIpAddress, String equipmentContinuePort, String createTime, String order, String field) {
+        List mesLogsList = mesLogService.queryMesLog(limit, page, equipmentName, deviceName, mesIpAddress, equipmentContinuePort, createTime, order, field);
+        return Result.success(mesLogsList, mesLogService.count(equipmentName, deviceName,mesIpAddress ,equipmentContinuePort,createTime));
     }
 
     /**
@@ -54,16 +54,5 @@ public class MesLogController {
         return Result.success();
     }
 
-
-    /**
-     * 删除Mes交换日志
-     *
-     * @param mesLogId 根据mes交换日志主键删除
-     */
-    @DeleteMapping("/mesLog/delete/{mesLogId}")
-    public Result<?> removeMesLog(@PathVariable("mesLogId") int mesLogId){
-        mesLogService.removeMesLog(mesLogId);
-        return Result.success();
-    }
 
 }

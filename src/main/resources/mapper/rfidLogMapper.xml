@@ -5,62 +5,72 @@
 
     <!--    查询记录数-->
     <select id="count" resultType="int">
-        SELECT count(*) FROM log_rfid_log AS lrl
+        SELECT
+        count(*)
+        FROM log_log AS ll
         LEFT JOIN eqi_equipment AS eqi
-        ON lrl.equipment_int = eqi.equipment_int
+        ON ll.equipment_int = eqi.equipment_int
         LEFT JOIN eqi_device AS dev
-        ON lrl.device_id = dev.device_id
+        ON ll.device_id = dev.device_id
         LEFT JOIN cap_user AS cur
-        ON lrl.creator = cur.USER_ID
+        ON ll.creator = cur.USER_ID
         <where>
-            <if test="equipmentId !=null and equipmentId !=''">
-                and eqi.equipment_id like '%${equipmentId}%'
+            ll.log_type  = '106'
+            <if test="equipmentName !=null and equipmentName !=''">
+                and eqi.equipment_name like '%${equipmentName}%'
             </if>
             <if test="deviceName!=null and deviceName !=''">
                 and dev.device_name like '%${deviceName}%'
             </if>
             <if test="rfidId !=null and rfidId !=''">
-                and lrl.rfid_id like '%${rfidId}%'
+                and ll.rfid_id like '%${rfidId}%'
             </if>
-            <if test="equipmentIp !=null and equipmentIp !=''">
-                and eqi.equipment_ip like '%${equipmentIp}%'
-            </if>
-            <if test="equipmentContinuePort !=null and equipmentContinuePort !=''">
-                and eqi.equipmentContinuePort like '%${equipmentContinuePort}%'
+            <if test="parameterName !=null and parameterName !=''">
+                and ll.parameter_name like '%${parameterName}%'
             </if>
             <if test="createTime !=null and createTime !=''">
-                and lrl.create_time like '%${createTime}%'
+                and ll.create_time like '%${createTime}%'
             </if>
         </where>
     </select>
 
     <!--查询所有-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.log.pojo.RfidLogVo">
-        SELECT *,cur.USER_NAME AS createName  FROM log_rfid_log AS lrl
+        SELECT
+        eqi.equipment_id,
+        eqi.equipment_name,
+        dev.app_id,
+        dev.device_name,
+        ll.rfid_id,
+        eqi.equipment_ip,
+        eqi.equipment_continue_port,
+        ll.parameter_name,
+        ll.parameter_num,
+        cur.USER_NAME AS createName,
+        ll.create_time
+        FROM log_log AS ll
         LEFT JOIN eqi_equipment AS eqi
-        ON lrl.equipment_int = eqi.equipment_int
+        ON ll.equipment_int = eqi.equipment_int
         LEFT JOIN eqi_device AS dev
-        ON lrl.device_id = dev.device_id
+        ON ll.device_id = dev.device_id
         LEFT JOIN cap_user AS cur
-        ON lrl.creator = cur.USER_ID
+        ON ll.creator = cur.USER_ID
         <where>
-            <if test="equipmentId !=null and equipmentId !=''">
-                and eqi.equipment_id like '%${equipmentId}%'
+            ll.log_type  = '106'
+            <if test="equipmentName !=null and equipmentName !=''">
+                and eqi.equipment_name like '%${equipmentName}%'
             </if>
             <if test="deviceName!=null and deviceName !=''">
                 and dev.device_name like '%${deviceName}%'
             </if>
             <if test="rfidId !=null and rfidId !=''">
-                and lrl.rfid_id like '%${rfidId}%'
+                and ll.rfid_id like '%${rfidId}%'
             </if>
-            <if test="equipmentIp !=null and equipmentIp !=''">
-                and eqi.equipment_ip like '%${equipmentIp}%'
-            </if>
-            <if test="equipmentContinuePort !=null and equipmentContinuePort !=''">
-                and eqi.equipmentContinuePort like '%${equipmentContinuePort}%'
+            <if test="parameterName !=null and parameterName !=''">
+                and ll.parameter_name like '%${parameterName}%'
             </if>
             <if test="createTime !=null and createTime !=''">
-                and lrl.create_time like '%${createTime}%'
+                and ll.create_time like '%${createTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -73,8 +83,9 @@
 
     <!--添加Rfid交换日志-->
     <insert id="addRfidLog" parameterType="com.zimax.mcrs.log.pojo.RfidLog">
-        insert into log_rfid_log
-        values (#{rfidLogId}, #{rfidLogNum}, #{logType}, #{equipmentInt},
+        insert into log_log (log_id,log_type,equipment_int,device_id,
+                             rfid_id,parameter_name,parameter_num,creator,create_time)
+        values (#{logId}, #{logType}, #{equipmentInt},
                 #{deviceId}, #{rfidId}, #{parameterName},
                 #{parameterNum}, #{creator}, #{createTime})
     </insert>

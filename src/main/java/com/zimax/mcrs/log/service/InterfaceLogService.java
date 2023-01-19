@@ -8,6 +8,7 @@ import com.zimax.mcrs.log.pojo.InterfaceLogVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,7 @@ public class InterfaceLogService {
         Map<String,Object> map= new HashMap<>();
         if(order==null){
             map.put("order","desc");
-            map.put("field","inter.create_time");
+            map.put("field","ll.create_time");
         }else{
             map.put("order",order);
             map.put("field",changeString.camelUnderline(field));
@@ -72,14 +73,11 @@ public class InterfaceLogService {
      * @param interfaceLog
      */
     public void addInterfaceLog(InterfaceLog interfaceLog) {
+        //在添加时声明日志类型
+        interfaceLog.setLogType("102");
+        //设置日志创建时间
+        interfaceLog.setCreateTime(new Date());
         interfaceLogMapper.addInterfaceLog(interfaceLog);
-    }
-
-    /**
-     * 删除接口日志
-     */
-    public void removeInterfaceLog(int interfaceLogId) {
-        interfaceLogMapper.removeInterfaceLog(interfaceLogId);
     }
 
 

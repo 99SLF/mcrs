@@ -23,15 +23,10 @@ import java.util.Date;
 public class PlcLog {
 
     /**
-     * PLC交换日志Id
+     * 日志主键
      */
     @TableId(type = IdType.AUTO)
-    private int plcLogId;
-
-    /**
-     * PLC交换日志编号
-     */
-    private String plcLogNum;
+    private int logId;
 
     /**
      * 日志类型

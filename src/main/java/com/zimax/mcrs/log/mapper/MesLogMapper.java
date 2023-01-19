@@ -27,7 +27,7 @@ public interface MesLogMapper {
      * @return
      */
     int count(
-            @Param("equipmentId") String equipmentId,
+            @Param("equipmentName") String equipmentName,
             @Param("deviceName") String deviceName,
             @Param("mesIpAddress") String mesIpAddress,
             @Param("equipmentContinuePort") String equipmentContinuePort,
@@ -40,11 +40,6 @@ public interface MesLogMapper {
      * @return
      */
     void addMesLog(MesLog mesLog);
-
-    /**
-     * 删除日志
-     */
-     void removeMesLog(int mesLogId);
 
 
 }

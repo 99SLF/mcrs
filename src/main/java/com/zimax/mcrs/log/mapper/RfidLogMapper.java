@@ -30,11 +30,10 @@ public interface RfidLogMapper {
      * @return
      */
     int count(
-            @Param("equipmentId") String equipmentId,
+            @Param("equipmentName") String equipmentName,
             @Param("deviceName") String deviceName,
             @Param("rfidId") String rfidId,
-            @Param("equipmentIp") String equipmentIp,
-            @Param("equipmentContinuePort") String equipmentContinuePort,
+            @Param("parameterName") String parameterName,
             @Param("createTime") String createTime
             );
 
@@ -44,11 +43,6 @@ public interface RfidLogMapper {
      * @return
      */
     void addRfidLog(RfidLog rfidLog);
-
-    /**
-     * 删除日志
-     */
-     void removeRfidLog(int rfidLogId);
 
 
 }

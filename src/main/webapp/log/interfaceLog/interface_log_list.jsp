@@ -331,21 +331,6 @@
             title: "序号",
             type: "numbers"
         }, {
-            field: "interfaceLogNum",
-            title: "日志编号",
-            align: "center",
-            minWidth: 120,
-            hide: isHidden("interfaceLogNum")
-        }, {
-            field: "logType",
-            title: "日志类型",
-            align: "center",
-            minWidth: 120,
-            hide: isHidden("logType"),
-            templet: function (d) {
-                return layui.admin.getDictText("LOG_TYPE", d.logType);
-            }
-        }, {
             field: "source",
             title: "来源",
             align: "center",
@@ -355,13 +340,19 @@
             field: "equipmentId",
             title: "设备资源号",
             align: "center",
-            minWidth: 100,
+            minWidth: 150,
             hide: isHidden("equipmentId")
+        }, {
+            field: "equipmentName",
+            title: "设备名称",
+            align: "left",
+            minWidth: 150,
+            hide: isHidden("equipmentName")
         }, {
             field: "aPPId",
             title: "APPID",
             align: "center",
-            minWidth: 150,
+            minWidth: 300,
             hide: isHidden("aPPId")
         }, {
             field: "interfaceType",
@@ -391,47 +382,50 @@
                 return layui.util.toDateString(d.createTime);
             }
         }, {
-            field: "jSONPage",
+            field: "json",
             title: "JSON包",
             align: "center",
             minWidth: 120,
-            hide: isHidden("jSONPage")
+            hide: isHidden("json")
         }, {
-            field: "disposeResult",
+            field: "result",
             title: "处理结果",
             align: "center",
             minWidth: 100,
-            hide: isHidden("disposeResult")
+            hide: isHidden("result"),
+            templet: function (d) {
+                return layui.admin.getDictText("DISPOSE_RESULT", d.result);
+            }
         }, {
-            field: "startTime",
+            field: "disposeStartTime",
             title: "处理开始时间",
             align: "center",
             minWidth: 200,
-            hide: isHidden("startTime"),
+            hide: true,
             templet:function(d) {
-                return layui.util.toDateString(d.startTime);
+                return layui.util.toDateString(d.disposeStartTime);
             }
         }, {
-            field: "endTime",
+            field: "disposeEndTime",
             title: "处理结束时间",
             align: "center",
             minWidth: 200,
-            hide: isHidden("endTime"),
+            hide: true,
             templet: function (d) {
-                return layui.util.toDateString(d.endTime);
+                return layui.util.toDateString(d.disposeEndTime);
             }
         }, {
             field: "invokerName",
             title: "调用者",
             align: "center",
             minWidth: 120,
-            hide: isHidden("invokerName")
+            hide: true
         }, {
             field: "disposeTime",
             title: "处理时长",
             align: "center",
             minWidth: 120,
-            hide: isHidden("disposeTime")
+            hide: true
         }, {
             field: "interfaceName",
             title: "接口名称",

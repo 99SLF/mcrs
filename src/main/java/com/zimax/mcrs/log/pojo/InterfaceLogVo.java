@@ -18,26 +18,7 @@ import java.util.Date;
  * @date 2022/12/20
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@TableName("log_interface_log")
 public class InterfaceLogVo {
-
-    /**
-     * 接口日志Id
-     */
-    @TableId(type = IdType.AUTO)
-    private int interfaceLogId;
-
-    /**
-     * 接口日志编号
-     */
-    private String interfaceLogNum;
-
-    /**
-     * 日志类型
-     */
-    private String logType;
 
     /**
      * 来源
@@ -50,12 +31,22 @@ public class InterfaceLogVo {
     private String equipmentId;
 
     /**
-     * APPID
+     * 设备名称
+     */
+    private String equipmentName;
+
+    /**
+     * APPId
      */
     private String APPId;
 
     /**
-     * 设备接入IP
+     * 接口类型
+     */
+    private String interfaceType;
+
+    /**
+     * 设备接入Ip
      */
     private String equipmentIp;
 
@@ -65,48 +56,42 @@ public class InterfaceLogVo {
     private String equipmentContinuePort;
 
     /**
-     * 接口名称
-     */
-    private String interfaceName;
-
-    /**
-     *创建时间
+     * 创建时间
      */
     private String createTime;
 
     /**
      * JSON包
      */
-    private String JSONPage;
+    private String json;
 
     /**
      * 处理结果
      */
-    private String disposeResult;
+    private String result;
 
     /**
      * 开始时间
      */
-    private String startTime;
+    private Date disposeStartTime;
 
     /**
      * 结束时间
      */
-    private String endTime;
+    private Date disposeEndTime;
 
     /**
      * 调用者
      */
-    @TableField(exist = false)
     private String invokerName;
 
     /**
      * 处理时长
      */
-    private String disposeTime;
+    private Date disposeTime;
 
     /**
-     * 接口类型
+     * 接口名称
      */
-    private String interfaceType;
+    private String interfaceName;
 }
