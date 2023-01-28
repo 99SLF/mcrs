@@ -274,7 +274,7 @@
             field: "aPPId",
             title: "APPID",
             align: "center",
-            minWidth: 120,
+            minWidth: 300,
             hide: isHidden("aPPId")
         }, {
             field: "deviceName",
@@ -293,7 +293,10 @@
             title: "组别类型",
             align: "center",
             minWidth: 120,
-            hide: isHidden("groupType")
+            hide: isHidden("groupType"),
+            templet: function (d) {
+                return layui.admin.getDictText("plc_group_type", d.groupType);
+            }
         }, {
             field: "mapAddress",
             title: "映射地址",

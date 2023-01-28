@@ -105,8 +105,8 @@
 
 
     <!-- 接口日志定时删除-->
-    <delete id="deleteInterfaceLog" parameterType="date">
-        delete from log_interface_log where create_time > #{interfaceLogTime}
+    <delete id="deleteLog" parameterType="date">
+        delete from log_log where create_time > #{interfaceLogTime}
     </delete>
 
 

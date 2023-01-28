@@ -145,9 +145,9 @@
             <div class="layui-card-body">
                 <h2>监控对象</h2>
                 <div class="layui-toolbar" id="toolbar" hidden="true">
-                    <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add" id="monitor"><i
-                            class="layui-icon layui-icon-add-circle-fine"></i>监控对象
-                    </button>
+<%--                    <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add" id="monitor"><i--%>
+<%--                            class="layui-icon layui-icon-add-circle-fine"></i>监控对象--%>
+<%--                    </button>--%>
                 </div>
 
 
@@ -224,8 +224,8 @@
     //禁用选择设备类型入口
     $('#onButtonAlarmEvent').addClass("layui-btn-disabled").attr("disabled",true);
 
-    //禁用选择监控对象按钮
-    $('#monitor').addClass("layui-btn-disabled").attr("disabled",true);
+    // //禁用选择监控对象按钮
+    // $('#monitor').addClass("layui-btn-disabled").attr("disabled",true);
 
     //禁用选择设备类型入口
     $('#delete').addClass("layui-btn-disabled").attr("disabled",true);
@@ -564,25 +564,7 @@
             align: "center",
             minWidth: 100,
             hide: isHidden("ruleMakeFormTime")
-        }, {
-            title: "操作",
-            align: "center",
-            fixed: "right",
-            width: 100,
-            toolbar: "#table-alarmRule-list"
         }]]
-    });
-    table.on("tool(LAY-app-alarmRule-list)", function (e) {
-        var date
-        if (obj.event == "del") {
-            var Data = table.cache["LAY-app-alarmRule-list"];
-            if (obj.tr.data("index") >= -1) {
-                Data.splice(obj.tr.data("index"), 1);	//根据索引删除当前行
-                table.reload('LAY-app-alarmRule-list', {
-                    data: Data
-                });
-            }
-        }
     });
 
     function setMonitorEquipment(monitorEquipmentList) {

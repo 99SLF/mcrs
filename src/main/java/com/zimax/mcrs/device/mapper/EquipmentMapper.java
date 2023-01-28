@@ -73,7 +73,7 @@ public interface EquipmentMapper {
      * 检查输入Ip是否已存在
      * @return
      */
-    int checkEquipmentIp(@Param("equipmentIp") String equipmentIp);
+    int checkEquipmentIp(@Param("equipmentIp") String equipmentIp,@Param("equipmentInt") String equipmentInt);
 
     /**
      * 查询设备是否存在工位

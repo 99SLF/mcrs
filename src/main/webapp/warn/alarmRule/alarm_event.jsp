@@ -33,7 +33,8 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-alarmEventInfo-search">
+                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-alarmEventInfo-search"
+                            id="LAY-app-alarmEventInfo-search">
                         <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                     </button>
                 </div>
@@ -52,11 +53,34 @@
     </div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
+
+<script>
+    layui.config({
+        base: "<%=request.getContextPath()%>/"
+    });
+</script>
+
+<script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
 <script type="text/javascript">
     var layer = layui.layer;
     var table = layui.table;
     var form = layui.form;
     var $ = layui.jquery;
+    var submit = false;
+    var reg = /^\d+$|^\d*\.\d+$/;
+    var laydate = layui.laydate;
+    form.render();
+    var dataJson = [];
+    var funName = "list";
+    //过滤字段
+    var hiddenFields = [];
+    var win = null;
+
+    var tableData = null;
+
+    form.render();
+    var deviceData = {};
+
 
     form.render();
     var alarmEventData = {};
@@ -76,10 +100,19 @@
         });
     });
 
-    $(".layui-btn.layuiadmin-btn-list").on("click", function () {
-        var type = $(this).data("type");
-        active[type] ? active[type].call(this) : "";
+    //文本框回车事件
+    $(".layui-input").on("keydown", function (event) {
+        if (event.keyCode == 13) {
+            var submit = $("#LAY-app-alarmEventInfo-search");
+            submit.click();
+            return false;
+        }
     });
+
+    // $(".layui-btn.layuiadmin-btn-list").on("click", function () {
+    //     var type = $(this).data("type");
+    //     active[type] ? active[type].call(this) : "";
+    // });
 
     var selData = {};      //存放选中行数据
 
@@ -146,12 +179,18 @@
             field: "alarmLevel",
             title: "预警事件级别",
             align: "center",
-            minWidth: 150
+            minWidth: 150,
+            templet: function (d) {
+                return layui.admin.getDictText("WARNING_LEVEL", d.alarmLevel);
+            }
         }, {
             field: "alarmType",
             title: "预警事件类型",
             align: "center",
             minWidth: 150,
+            templet: function (d) {
+                return layui.admin.getDictText("WRANING_TYPE", d.alarmType);
+            }
         }]]
     });
 

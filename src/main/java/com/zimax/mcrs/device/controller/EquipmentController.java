@@ -118,10 +118,11 @@ public class EquipmentController {
      * 检测设备连接IP是否存在
      *
      * @param equipmentIp 设备连接IP
+     * @param equipmentInt 设备主键
      */
     @GetMapping("/equipmentIp/check/isExist")
-    public Result<?> checkEquipmentIp(@RequestParam("equipmentIp") String equipmentIp) {
-        if(equipmentService.checkEquipmentIp(equipmentIp)>0){
+    public Result<?> checkEquipmentIp(@RequestParam("equipmentIp") String equipmentIp,@RequestParam("equipmentInt") String equipmentInt) {
+        if(equipmentService.checkEquipmentIp(equipmentIp,equipmentInt)>0){
             return Result.error("1","当前IP已被占用存在，请重新输入正确IP");
         }else {
             return Result.success();

@@ -502,7 +502,7 @@
                 type: 2,
                 title: "编辑日志删除规则信息",
                 content: "<%= request.getContextPath() %>/basic/logDeleteRule/log_delete_rule_edit.jsp",
-                area: ["800px", "560px"],
+                area: ["800px", "480px"],
                 resize: false,
                 btn: ["确定", "取消"],
                 success: function (layero, index) {
