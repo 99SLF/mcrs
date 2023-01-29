@@ -80,7 +80,9 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">注册状态：</label>
 		<div class="layui-input-block">
-			<input type="text"  class="layui-input" name="registerStatus" autocomplete="off" />
+			<select name="registerStatus" id="registerStatus" lay-filter="registerStatus" type="select">
+				<option value=""></option>
+			</select>
 		</div>
 	</div>
 	<div class="layui-form-item">
@@ -139,6 +141,13 @@
 	layui.admin.renderDictSelect({
 		elem: "#enable",
 		dictTypeId: "IS_USE",
+	});
+	form.render();
+
+	//获取注册状态的下拉值
+	layui.admin.renderDictSelect({
+		elem: "#registerStatus",
+		dictTypeId: "REGISTER_STATUS",
 	});
 	form.render();
 
