@@ -6,47 +6,73 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>应用基础框架</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
-<link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v1">
-<style type="text/css">
-.layui-card {
-	margin-bottom: 0px
-}
-</style>
+<link rel="stylesheet" href="<%=request.getContextPath() %>/common/layui/css/layui.css"/>
+<link rel="stylesheet" href="<%=request.getContextPath() %>/std/dist/style/admin.css"/>
+<link rel="stylesheet" href="<%=request.getContextPath() %>/std/dist/style/custom.css?v=1.0.0">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/iconfont/iconfont.css">
+	<style>
+		.layui-card {
+			margin-bottom: 0px
+		}
+		.layui-layer-adminRight {
+			top: 0px !important;
+			bottom: 0;
+			box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
+			border-radius: 0;
+			overflow: auto
+		}
+		.layui-form-item .layui-inline {
+			margin-bottom: 0px !important;
+			margin-right: 0px !important;
+		}
+		.layui-form-label {
+			width: 120px !important;
+			padding: 5px 0px !important;
+		}
+		.layui-form-item .layui-input-inline {
+			float: left;
+			width: 150px;
+			margin-right: 10px;
+		}
+		.layui-input {
+			height: 30px !important;
+		}
+	</style>
 </head>
 <body>
 <div class="layui-card">
-	<div class="layui-form layui-card-header layuiadmin-card-header-auto">
-		<div class="layui-form-item">
-			<div class="layui-inline">
-				<label class="layui-form-label">应用名称：</label>
-				<div class="layui-input-inline" >
-					<input type="text" name="appName" value="" placeholder="" autocomplete="off" class="layui-input">
+	<script type="text/html" id="toolbar">
+		<div class="layui-form layuiadmin-card-header-auto" lay-filter="layuiadmin-feeding-form" id="layuiadmin-feeding-form">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">应用名称：</label>
+					<div class="layui-input-inline" >
+						<input type="text" name="appName" value="" placeholder="" autocomplete="off" class="layui-input">
+					</div>
 				</div>
-			</div>
-			<div class="layui-inline">
-				<label class="layui-form-label">应用类型：</label>
-				<div class="layui-input-inline">
-					<select name="appType" emptyText="全部" nullItemText="全部" showNullItem="true" lay-filter="appType"  type="select"  id="apptype">
-					  	<option value=""></option>
-						<option value="1">远程</option>
-						<option value="0">本地</option>
-					</select>
+				<div class="layui-inline">
+					<label class="layui-form-label">应用类型：</label>
+					<div class="layui-input-inline">
+						<select name="appType" emptyText="全部" nullItemText="全部" showNullItem="true" lay-filter="appType"  type="select"  id="apptype">
+							<option value=""></option>
+							<option value="1">远程</option>
+							<option value="0">本地</option>
+						</select>
+					</div>
 				</div>
-			</div>
-			<div class="layui-inline layui-search">
-				<button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-rolelist-search" id="LAY-app-rolelist-search">
-					<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-				</button>
+				<div class="layui-inline layui-hide">
+					<button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-rolelist-search" id="LAY-app-rolelist-search">
+						<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+					</button>
+				</div>
 			</div>
 		</div>
-	</div>
+	</script>
 	<div class="layui-card-body">
-		<div class="layui-toolbar" id="toolbar" hidden="true">
-			<button class="layui-btn layuiadmin-btn-list layui-btn-sm"  lay-event="add"><i class="layui-icon layui-icon-add-circle-fine"></i>添加</button>
-			<button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i class="layui-icon layui-icon-delete"></i>删除</button>
-		</div>
+<%--		<div class="layui-toolbar" id="toolbar" hidden="true">--%>
+<%--			<button class="layui-btn layuiadmin-btn-list layui-btn-sm"  lay-event="add"><i class="layui-icon layui-icon-add-circle-fine"></i>添加</button>--%>
+<%--			<button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i class="layui-icon layui-icon-delete"></i>删除</button>--%>
+<%--		</div>--%>
 		<table id="LAY-app-application-list" lay-filter="LAY-app-application-list"></table>
 		<script type="text/html" id="table-role-list">
 			<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
@@ -69,13 +95,17 @@
 	var hiddenFields = [];
 	//功能名
 	var funName = "application_list";
+	var focusName = null;
 	
 	//监听搜索
 	form.on("submit(LAY-app-rolelist-search)", function(data) {
 		var field = data.field;
-		table.reload("LAY-app-application-list-reload", {
-			where: field
-		});
+		reloadData(field);
+		var formData = {
+			appName: field.appName,
+			appType: field.appType,
+		};
+		form.val("layuiadmin-feeding-form", formData);
 	});
 	
 	//下拉框监听事件
@@ -83,6 +113,15 @@
 		var submit = $("#LAY-app-rolelist-search");
 		submit.click();
 	});
+	function reloadData(formData) {
+		table.reload("LAY-app-application-list-reload", {
+			where: formData
+		});
+		formReder();
+		if (focusName) {
+			$("input[name=" + focusName + "]").focus();
+		}
+	}
 	
 	//文本框回车事件
 	$(".layui-input").on("keydown", function(event) {
@@ -94,6 +133,11 @@
 	});
 	
 	var active = {
+		search: function() {
+			var submit = $("#LAY-app-rolelist-search");
+			submit.click();
+			return false;
+		},
 		add: function() {
 			top.layer.open({
 				type: 2,
@@ -224,7 +268,19 @@
 		page: true,
 		limit: 10,
 		toolbar: "#toolbar",
-		defaultToolbar: ["filter"],
+		defaultToolbar: [{
+			title: "查询",
+			layEvent: "search",
+			icon: "layui-icon layui-icon-search layuiadmin-button-btn",
+		},{
+			title: "添加",
+			layEvent: "add",
+			icon: "layui-icon layui-icon-add-circle-fine",
+		},{
+			title: "删除",
+			layEvent: "batchdel",
+			icon: "layui-icon layui-icon-delete",
+		},"filter"],
 		colHideChange: function(col, checked) {
 			var field = col.field;
 			var hidden = col.hide;
@@ -403,7 +459,20 @@
 			}
 		}
 	}
-		
+
+	formReder();
+
+	function formReder() {
+		// 文本框回车事件
+		$(".layui-input").on("keydown", function (event) {
+			if (event.keyCode == 13) {
+				focusName = event.target.name;
+				var submit = $("#LAY-app-rolelist-search");
+				submit.click();
+				return false;
+			}
+		});
+	}
 	$("body").on("click", ".layui-table-body table.layui-table tbody tr td", function() {
 		if ($(this).attr("data-field") === "0") return;
 		$(this).siblings().eq(0).find('i').click();
