@@ -79,9 +79,10 @@ public class DeviceController {
      * @return 终端列表
      */
     @GetMapping("/device/query")
-    public Result<?> queryDevice(String  page, String limit, String equipmentId, String deviceSoftwareType,String enable, String deviceName, String processName, String factoryName, String order, String field) {
-        List devices = deviceService.queryDevices(page, limit, equipmentId, deviceSoftwareType,enable, deviceName,processName,factoryName,order, field);
-        return Result.success(devices, deviceService.counts(equipmentId, deviceSoftwareType,enable, deviceName,processName,factoryName));
+    public Result<?> queryDevice(String  page, String limit, String equipmentId, String deviceSoftwareType,String enable, String deviceName, String processName, String factoryName,
+                                 String version,String needUpdate,String registerStatus,String programInstallationPath,String createTime,String order, String field) {
+        List devices = deviceService.queryDevices(page, limit, equipmentId, deviceSoftwareType,enable, deviceName,processName,factoryName,version,needUpdate,registerStatus,programInstallationPath,createTime,order, field);
+        return Result.success(devices, deviceService.counts(equipmentId, deviceSoftwareType,enable, deviceName,processName,factoryName,version,needUpdate,registerStatus,programInstallationPath,createTime));
     }
 
     /**

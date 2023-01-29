@@ -429,7 +429,6 @@
         } else {
             layer.msg("请检查该软件类型更新包是否上传以及选择设备是否已被注册");
         }
-        debugger;
         return false;
     });
 </script>

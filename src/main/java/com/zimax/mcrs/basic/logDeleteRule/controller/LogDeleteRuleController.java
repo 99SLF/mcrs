@@ -72,9 +72,9 @@ public class LogDeleteRuleController {
      */
     @PostMapping("/logDeleteRule/update")
     public Result<?> updateLogDeleteRule(@RequestBody LogDeleteRule logDeleteRule) throws Exception {
-        if (logDeleteRule.getEnable().equals("on")) {
+        if (logDeleteRule.getEnable().equals("101")) {
             enableTime(logDeleteRule.getLogType(), logDeleteRule.getRetentionTime(), logDeleteRule.getTimeUnit());
-        } else if (logDeleteRule.getEnable().equals("off")) {
+        } else if (logDeleteRule.getEnable().equals("102")) {
             stopName(logDeleteRule.getLogType());
         }
         logDeleteRuleService.updateLogDeleteRule(logDeleteRule);

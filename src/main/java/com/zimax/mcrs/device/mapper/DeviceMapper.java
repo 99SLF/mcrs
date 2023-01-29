@@ -37,7 +37,12 @@ public interface DeviceMapper {
               @Param("enable")String enable,
               @Param("deviceName")String deviceName,
               @Param("processName")String processName,
-              @Param("factoryName")String factoryName);
+              @Param("factoryName")String factoryName,
+              @Param("version")String version,
+              @Param("needUpdate")String needUpdate,
+              @Param("registerStatus")String registerStatus,
+              @Param("programInstallationPath")String programInstallationPath,
+              @Param("createTime")String createTime);
 
     /**
      * 注册终端
