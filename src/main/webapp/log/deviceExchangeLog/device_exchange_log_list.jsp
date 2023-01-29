@@ -399,7 +399,7 @@
             hide: isHidden("operateName")
         }, {
             field: "equipmentExchangeTime",
-            title: "设备交换时间",
+            title: "设备交互时间",
             align: "center",
             minWidth: 200,
             hide: isHidden("equipmentExchangeTime"),

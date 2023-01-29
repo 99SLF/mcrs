@@ -27,11 +27,6 @@ public class LogDeleteRule {
     private int ruleDeleteId;
 
     /**
-     * 删除规则编码
-     */
-    private String deleteRuleNum;
-
-    /**
      * 删除规则标题
      */
     private String deleteRuleTitle;
@@ -40,11 +35,6 @@ public class LogDeleteRule {
      * 是否启用
      */
     private String enable;
-
-    /**
-     * 规则等级
-     */
-    private String ruleLevel;
 
     /**
      * 日志删除规则类型
@@ -57,24 +47,14 @@ public class LogDeleteRule {
     private String logType;
 
     /**
-     * 时间间隔
+     * 保留时间数
      */
-    private String  timeInterval;
+    private String  retentionTime;
 
     /**
      * 时间单位
      */
     private String timeUnit;
-
-    /**
-     * 创建人
-     */
-    private String creator;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
 
     /**
      * 修改人

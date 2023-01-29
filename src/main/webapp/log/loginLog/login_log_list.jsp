@@ -30,8 +30,10 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">来源：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="source" placeholder="" autocomplete="off"
-                               class="layui-input">
+                        <select name="source" id="source" lay-filter="source"
+                                type="select">
+                            <option value=""></option>
+                        </select>
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -114,6 +116,13 @@
         elem: '#loginTime',
         type: 'date'
     });
+    //获取来源的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#source",
+        dictTypeId: "SOURCE",
+    });
+    form.render();
+
 
 
     //监听搜索
@@ -124,12 +133,11 @@
         });
     });
 
-    // //登录时间监听事件
-    // form.on("input(loginTime)", function(data) {
-    //     var submit = $("#LAY-app-loginLoglist-search");
-    //     submit.click();
-    // });
-
+    //来源下拉框监听事件
+    form.on("select(source)", function (data) {
+        var submit = $("#LAY-app-loginLoglist-search");
+        submit.click();
+    });
 
     //文本框回车事件
     $(".layui-input").on("keydown", function (event) {
@@ -266,7 +274,10 @@
             title: "来源",
             align: "center",
             minWidth: 150,
-            hide: isHidden("source")
+            hide: isHidden("source"),
+            templet: function (d) {
+                return layui.admin.getDictText("SOURCE", d.source);
+            }
         }, {
             field: "loginUserName",
             title: "登录用户",

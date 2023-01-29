@@ -73,12 +73,12 @@ public class InterfaceLogVo {
     /**
      * 开始时间
      */
-    private Date disposeStartTime;
+    private String disposeStartTime;
 
     /**
      * 结束时间
      */
-    private Date disposeEndTime;
+    private String disposeEndTime;
 
     /**
      * 调用者
@@ -88,7 +88,7 @@ public class InterfaceLogVo {
     /**
      * 处理时长
      */
-    private Date disposeTime;
+    private String disposeTime;
 
     /**
      * 接口名称

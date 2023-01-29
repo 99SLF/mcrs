@@ -23,9 +23,11 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">日志状态：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="logStatus" placeholder="" autocomplete="off"
-                               class="layui-input">
+                        <select name="logStatus" id="logStatus" lay-filter="logStatus" type="select">
+                            <option value=""></option>
+                        </select>
                     </div>
+
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">操作类型：</label>
@@ -136,6 +138,13 @@
     });
     form.render();
 
+    //获取操作结果的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#logStatus",
+        dictTypeId: "LOG_STATUS",
+    });
+    form.render();
+
 
     //监听搜索
     form.on("submit(LAY-app-operationLoglist-search)", function (data) {
@@ -143,6 +152,12 @@
         table.reload("LAY-app-operationLog-list-reload", {
             where: field
         });
+    });
+
+    //启用下拉框监听事件
+    form.on("select(logStatus)", function (data) {
+        var submit = $("#LAY-app-operationLoglist-search");
+        submit.click();
     });
 
     //启用下拉框监听事件

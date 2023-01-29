@@ -46,8 +46,9 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">组别类型：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="groupType" placeholder="" autocomplete="off"
-                               class="layui-input">
+                        <select name="groupType" id="groupType" lay-filter="groupType" type="select">
+                            <option value=""></option>
+                        </select>
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -124,6 +125,12 @@
         type: 'date'
     });
 
+    //获取组别类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#groupType",
+        dictTypeId: "GROUP_TYPE",
+    });
+    form.render();
 
     //监听搜索
     form.on("submit(LAY-app-plcLoglist-search)", function (data) {
@@ -133,11 +140,11 @@
         });
     });
 
-    // //登录时间监听事件
-    // form.on("input(loginTime)", function(data) {
-    //     var submit = $("#LAY-app-plcLoglist-search");
-    //     submit.click();
-    // });
+    //组别类型监听事件
+    form.on("select(groupType)", function(data) {
+        var submit = $("#LAY-app-plcLoglist-search");
+        submit.click();
+    });
 
 
     //文本框回车事件
@@ -295,7 +302,7 @@
             minWidth: 120,
             hide: isHidden("groupType"),
             templet: function (d) {
-                return layui.admin.getDictText("plc_group_type", d.groupType);
+                return layui.admin.getDictText("GROUP_TYPE", d.groupType);
             }
         }, {
             field: "mapAddress",
@@ -305,7 +312,7 @@
             hide: isHidden("mapAddress")
         }, {
             field: "tagName",
-            title: "标签类型",
+            title: "标签名称",
             align: "left",
             minWidth: 120,
             hide: isHidden("tagName")

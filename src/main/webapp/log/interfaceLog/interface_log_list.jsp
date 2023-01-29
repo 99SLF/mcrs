@@ -23,16 +23,20 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">来源：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="source" placeholder="" autocomplete="off"
-                               class="layui-input">
+                        <select name="source" id="source" lay-filter="source"
+                                type="select">
+                            <option value=""></option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="layui-inline">
                     <label class="layui-form-label">接口类型：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="interfaceType" placeholder="" autocomplete="off"
-                               class="layui-input">
+                        <select name="interfaceType" id="interfaceType" lay-filter="interfaceType"
+                                type="select">
+                            <option value=""></option>
+                        </select>
                     </div>
                 </div>
 
@@ -139,6 +143,30 @@
         });
     });
 
+    //来源下拉框监听事件
+    form.on("select(source)", function (data) {
+        var submit = $("#LAY-app-interfaceLoglist-search");
+        submit.click();
+    });
+    //接口类型下拉框监听事件
+    form.on("select(interfaceType)", function (data) {
+        var submit = $("#LAY-app-interfaceLoglist-search");
+        submit.click();
+    });
+
+    //获取接口类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#interfaceType",
+        dictTypeId: "API_TYPE",
+    });
+    form.render();
+
+    //获取来源的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#source",
+        dictTypeId: "SOURCE",
+    });
+    form.render();
 
     //文本框回车事件
     $(".layui-input").on("keydown", function (event) {
@@ -335,7 +363,10 @@
             title: "来源",
             align: "center",
             minWidth: 120,
-            hide: isHidden("source")
+            hide: isHidden("source"),
+            templet: function (d) {
+                return layui.admin.getDictText("SOURCE", d.source);
+            }
         }, {
             field: "equipmentId",
             title: "设备资源号",
@@ -359,7 +390,10 @@
             title: "接口类型",
             align: "center",
             minWidth: 150,
-            hide: isHidden("interfaceType")
+            hide: isHidden("interfaceType"),
+            templet: function (d) {
+                return layui.admin.getDictText("API_TYPE", d.interfaceType);
+            }
         }, {
             field: "equipmentIp",
             title: "设备接入IP地址",
@@ -424,7 +458,7 @@
             field: "disposeTime",
             title: "处理时长",
             align: "center",
-            minWidth: 120,
+            minWidth: 200,
             hide: true
         }, {
             field: "interfaceName",
