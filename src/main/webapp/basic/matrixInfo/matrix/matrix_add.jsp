@@ -132,6 +132,7 @@
                             var index = parent.layer.getFrameIndex(window.name);
                             top.layer.close(index);
                         });
+                        win.rendTree();
                     }
                 });
             }

@@ -252,7 +252,6 @@
                         yes: function (index, layero) {
                             var submit = layero.find("iframe").contents().find("#layuiadmin-app-form-submit");
                             submit.click();
-
                         }
                     })
                 }
@@ -335,7 +334,9 @@
                                     icon: 1,
                                     time: 500
                                 }, function () {
-                                    table.reload("LAY-app-equipment-list-reload");
+                                    // table.reload("LAY-app-equipment-list-reload");
+                                    rendTree();
+
                                 });
                             } else if(result.code == 1) {
                                 layer.msg(result.msg, {

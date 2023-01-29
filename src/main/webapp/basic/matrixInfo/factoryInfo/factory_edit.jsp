@@ -105,6 +105,7 @@
                             win.layui.table.reload("LAY-app-device-list-reload");
                             top.layer.close(index);
                         });
+                        win.rendTree();
                     }
                 });
             }
