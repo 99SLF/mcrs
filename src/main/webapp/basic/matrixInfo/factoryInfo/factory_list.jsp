@@ -125,7 +125,6 @@
 	var infoId = <%=request.getParameter("nodeId")%>;
 	getfactory(infoId);
 	function getfactory(infoId){
-		debugger;
 		//获取数据
 		$.ajax({
 			url:"<%=request.getContextPath() %>/FactoryController/query?infoId=" + infoId,
@@ -133,7 +132,6 @@
 			cache: false,
 			contentType:"text/json",
 			success: function(rel) {
-				debugger;
 				var data = rel.data;
 				if (data == null ||data.length < 1) {
 					form.val("factory-add", {

@@ -125,7 +125,6 @@
 	var infoId = <%=request.getParameter("nodeId")%>;
 	getprocess(infoId);
 	function getprocess(infoId){
-		debugger;
 		//获取数据
 		$.ajax({
 			url:"<%=request.getContextPath() %>/ProcessController/query?infoId=" + infoId,
@@ -133,7 +132,6 @@
 			cache: false,
 			contentType:"text/json",
 			success: function(rel) {
-				debugger;
 				var data = rel.data;
 				if (data == null ||data.length < 1) {
 					form.val("process-add", {
@@ -156,12 +154,10 @@
 
 	//监听提交
 	form.on("submit(save_data)", function (data) {
-		debugger;
 		var data = data.field
 		if(data.processId == null || data.processId == "") {
 			//新增
 			var process = JSON.stringify(data);
-			debugger;
 			$.ajax({
 				url: "<%=request.getContextPath() %>/ProcessController/add",
 				type: "post",
@@ -189,7 +185,6 @@
 		} else {
 			//修改
 			var process = JSON.stringify(data);
-			debugger;
 			$.ajax({
 				url: "<%=request.getContextPath() %>/ProcessController/update",
 				type: "post",
@@ -222,7 +217,6 @@
 
 	//监听取消
 	form.on("submit(canle)", function (data) {
-		debugger;
 		getprocess(infoId);
 	});
 

@@ -123,7 +123,6 @@
     var infoId = <%=request.getParameter("nodeId")%>;
     getmatrix(infoId);
     function getmatrix(infoId){
-        debugger;
         //获取数据
         $.ajax({
             url:"<%=request.getContextPath() %>/MatrixController/query?infoId=" + infoId,
@@ -131,7 +130,6 @@
             cache: false,
             contentType:"text/json",
             success: function(rel) {
-                debugger;
                 var data = rel.data;
                 if (data == null ||data.length < 1) {
                     form.val("matrix-add", {
@@ -154,12 +152,10 @@
 
     //监听提交
     form.on("submit(save_data)", function (data) {
-        debugger;
         var data = data.field
         if(data.matrixId == null || data.matrixId == "") {
             //新增
             var matrix = JSON.stringify(data);
-            debugger;
             $.ajax({
                 url: "<%=request.getContextPath() %>/MatrixController/add",
                 type: "post",
@@ -187,7 +183,6 @@
         } else {
             //修改
             var matrix = JSON.stringify(data);
-            debugger;
             $.ajax({
                 url: "<%=request.getContextPath() %>/MatrixController/update",
                 type: "post",
@@ -220,7 +215,6 @@
 
     //监听取消
     form.on("submit(canle)", function (data) {
-        debugger;
         getmatrix(infoId);
     });
 

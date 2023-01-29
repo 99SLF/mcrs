@@ -25,10 +25,15 @@ public class AccPointRes {
     @TableId(type = IdType.AUTO)
     private Integer accPointResId;
 
+//    /**
+//     * 树id
+//     */
+//    private int infoId;
+
     /**
-     * 树id
+     * 工序主键
      */
-    private int infoId;
+    private Integer processId;
 
     /**
      * 接入点代码
@@ -40,28 +45,27 @@ public class AccPointRes {
      */
     private String accPointResName;
 
-
     /**
      *是否启用
      */
     private String isEnable;
 
-    /**
-     *基地代码
-     */
-    private String matrixCode;
-
-
-    /**
-     * 工厂代码
-     */
-    private String factoryCode;
-
-
-    /**
-     * 工序代码
-     */
-    private String processCode;
+//    /**
+//     *基地代码
+//     */
+//    private String matrixCode;
+//
+//
+//    /**
+//     * 工厂代码
+//     */
+//    private String factoryCode;
+//
+//
+//    /**
+//     * 工序代码
+//     */
+//    private String processCode;
 
 
     /**
@@ -83,5 +87,6 @@ public class AccPointRes {
      * 修改时间
      */
     private Date updateTime;
+
 
 }

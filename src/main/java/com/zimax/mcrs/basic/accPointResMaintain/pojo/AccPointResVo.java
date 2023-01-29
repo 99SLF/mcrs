@@ -2,7 +2,6 @@ package com.zimax.mcrs.basic.accPointResMaintain.pojo;
 
 import lombok.Data;
 
-
 /**
  * @author 李伟杰
  * @date 2022/12/24 23:01
@@ -15,10 +14,10 @@ public class AccPointResVo {
      */
     private int accPointResId;
 
-    /**
-     * 树id
-     */
-    private int infoId;
+//    /**
+//     * 树id
+//     */
+//    private int infoId;
 
     /**
      * 接入点代码
@@ -47,6 +46,7 @@ public class AccPointResVo {
     private String matrixName;
 
 
+
     /**
      * 工厂代码
      */
@@ -56,6 +56,12 @@ public class AccPointResVo {
      * 工厂名称
      */
     private String factoryName;
+
+
+    /**
+     * 工序id
+     */
+    private String processId;
 
     /**
      * 工序代码

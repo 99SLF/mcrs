@@ -79,9 +79,20 @@ public class MatrixService {
     }
 
     /**
+     * 查询所有基地信息（树）
+     */
+    public List<Matrix> queryMatrixTree() {
+        Map<String, Object> map = new HashMap<>();
+        return matrixMapper.queryMatrixTree(map);
+
+    }
+
+    /**
+     * （接入点新增，编辑）
+     *  获取基地代码
      * 查询所有基地代码
      */
-    public List<MatrixVo> selectList() {
+    public List<Matrix> selectList() {
         return matrixMapper.selectList();
 
     }
@@ -114,5 +125,27 @@ public class MatrixService {
 
     }
 
+    public void removeMatrix(int matrixId) {
+        matrixMapper.removeMatrix(matrixId);
+    }
 
+
+    /**
+     * 通过基地id查询底下的工厂数
+     * @param
+     */
+    public int countMatrixFactory(int matrixId){
+        return matrixMapper.countMatrixFactory(matrixId);
+    }
+
+    /**
+     * （基础数据目录树）
+     * 查询出当前树节点的详细基地信息信息
+     * @param
+     * @return
+     */
+    public List<Matrix> queryMatrixNode(int nodeId) {
+        return matrixMapper.queryMatrixNode(nodeId);
+
+    }
 }

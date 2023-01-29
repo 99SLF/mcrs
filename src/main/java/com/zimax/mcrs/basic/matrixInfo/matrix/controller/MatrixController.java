@@ -2,7 +2,6 @@ package com.zimax.mcrs.basic.matrixInfo.matrix.controller;
 
 
 import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.Matrix;
-import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.MatrixVo;
 import com.zimax.mcrs.basic.matrixInfo.matrix.service.MatrixService;
 
 import com.zimax.mcrs.config.Result;
@@ -53,8 +52,8 @@ public class MatrixController {
     }
 
      /**
+     * 目录树，tab，基地信息列表
      * 分页查询所有基地信息
-     *
      * @param page          页记录数
      * @param limit         页码
      * @param infoId        树id
@@ -67,12 +66,27 @@ public class MatrixController {
      */
     @GetMapping("/query")
     public Result<?> queryMatrix(String page, String limit, String infoId, String order, String field) {
-        List Matrix = matrixService.queryMatrix(page, limit, infoId, order, field);
+        List Matrix = matrixService.queryMatrix(page, limit, infoId, order, field );
         return Result.success(Matrix, matrixService.count(infoId));
     }
 
 
     /**
+     * 分页查询所有基地信息
+     *
+     * @return 数据列表
+     * @return total 总记录数
+     * @return code 状态码
+     * @return msg 返回信息
+     */
+    @GetMapping("/queryMatrixTree")
+    public Result<?> queryMatrixTree() {
+        List Matrix = matrixService.queryMatrixTree();
+        return Result.success(Matrix);
+    }
+
+    /**
+     * （接入点新增，编辑）
      * 获取基地代码
      * @param
      * @return
@@ -80,7 +94,7 @@ public class MatrixController {
     @GetMapping("/selectMatrixCode")
     public Result<?> selectList(){
         Map<String,Object> maps = new HashMap<>();
-        List<MatrixVo> matrixList = matrixService.selectList();//查询出数据
+        List<Matrix> matrixList = matrixService.selectList();//查询出数据
         maps.put("data",matrixList);
         return Result.success(matrixList, matrixService.countMatrix());
     }
@@ -89,8 +103,8 @@ public class MatrixController {
 
 
     /**
+     * 接入点新增
      * 通过基地代码查询出相应的基地信息（名称）
-     *
      * @param
      * @return
      */
@@ -102,5 +116,42 @@ public class MatrixController {
     }
 
 
+    /**
+     * （基础数据目录树）
+     * 通过基地真实id删除一条基地信息
+     * @param
+     * @return
+     */
+
+    @PostMapping("/removeMatrix")
+    public Result<?> removeMatrix(Integer realId) {
+        int count= matrixService.countMatrixFactory(realId);
+        if (count==0){
+            matrixService.removeMatrix(realId);
+            return Result.success();
+        }else {
+            return Result.error("1", "该基地下有工厂，无法删除");
+
+        }
+    }
+
+
+    /**
+     * （基础数据目录树）
+     * 查询出当前树节点的详细基地信息信息
+     * @param
+     * @return
+     */
+    @GetMapping("/exactQuery")
+    public Result<?> queryMatrixNode(Integer nodeId){
+        Map<String,Object> maps = new HashMap<>();
+        List<Matrix> matrixInfo = matrixService.queryMatrixNode(nodeId);
+        maps.put("data",matrixInfo);
+        return Result.success(matrixInfo);
+    }
 
 }
+
+
+
+

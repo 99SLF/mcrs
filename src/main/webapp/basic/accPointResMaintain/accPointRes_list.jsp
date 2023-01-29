@@ -21,11 +21,13 @@
             padding-left: 0px;
             width: 85px;
         }
-        .layui-input{
+
+        .layui-input {
 
             width: 180px;
         }
-        zdr{
+
+        zdr {
             width: 80px;
         }
 
@@ -49,15 +51,12 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label" id="zdr">制单人：</label>
+                    <label class="layui-form-label"><span style="color:red">*</span>是否启用:</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="creator" placeholder="请输入" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                    <label class="layui-form-label">制单时间：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="createTime" placeholder="选择时间" autocomplete="off"
-                               class="layui-input">
+                        <select name="isEnable" id="isEnable" lay-filter="isEnable" lay-verify="required|isEnable"
+                                type="select">
+                            <option value=""></option>
+                        </select>
                     </div>
                 </div>
 
@@ -131,7 +130,6 @@
         });
     });
 
-
     //文本框回车事件
     $(".layui-input").on("keydown", function (event) {
         if (event.keyCode == 13) {
@@ -142,7 +140,6 @@
     });
 
     var active = {
-        //设备新建
         add: function () {
             top.layer.open({
                 type: 2,
@@ -269,9 +266,9 @@
                         });
                     });
                 }
-            } else if(isExits == true){
+            } else if (isExits == true) {
                 layer.msg("当前接入点已启用");
-            }else {
+            } else {
                 layer.msg("启用失败");
             }
         }
@@ -389,27 +386,27 @@
             field: "accPointResCode",
             title: '接入点代码',
             align: "center",
-            minWidth: 100,
+            minWidth: 80,
             //打开监听
             event: "view",
             hide: isHidden("accPointResCode"),
             //监听打开详情页面
             templet: function (d) {
-                return '<span style="color: #09bbfd">' + d.accPointResCode +'</span>';
+                return '<span style="color: #09bbfd">' + d.accPointResCode + '</span>';
             }
         }, {
             field: "accPointResName",
             title: "接入点名称",
             align: "center",
-            minWidth: 120,
+            minWidth: 150,
             hide: isHidden("accPointResName")
         }, {
             field: "isEnable",
-            title: "启用状态",
+            title: "启用",
             align: "center",
-            minWidth: 80,
+            minWidth: 60,
             hide: isHidden("isEnable"),
-            templet:function(d) {
+            templet: function (d) {
 
                 return layui.admin.getDictText("IS_USE", d.isEnable);
             }
@@ -417,73 +414,80 @@
             field: "matrixCode",
             title: "基地代码",
             align: "center",
-            minWidth: 100,
+            minWidth: 150,
             hide: isHidden("matrixCode")
-        },
-            {
+        }, {
             field: "matrixName",
             title: "基地名称",
             align: "center",
-            minWidth: 120,
+            minWidth: 150,
             hide: true
-        },
-            {
+        }, {
             field: "factoryCode",
             title: "工厂代码",
             align: "center",
-            minWidth: 100,
+            minWidth: 80,
             hide: isHidden("factoryCode")
         }, {
             field: "factoryName",
             title: "工厂名称",
             align: "center",
-            minWidth: 120,
+            minWidth: 150,
             hide: isHidden("factoryName")
+        }, {
+            field: "processId",
+            title: "工序Id",
+            align: "center",
+            minWidth: 60,
+            hide: true
         }, {
             field: "processCode",
             title: "工序代码",
             align: "center",
-            minWidth: 100,
+            minWidth: 80,
             hide: isHidden("processCode")
         }, {
             field: "processName",
             title: "工序名称",
             align: "center",
-            minWidth: 140,
+            minWidth: 150,
             hide: isHidden("processName")
         }, {
             field: "processRemarks",
             title: "工序描述",
             align: "center",
-            minWidth: 150,
+            minWidth: 200,
             hide: isHidden("processRemarks")
         }, {
             field: "creator",
-            title: "制单人",
+            title: "创建人",
             align: "center",
-            minWidth: 120,
+            minWidth: 150,
             hide: isHidden("creator")
         }, {
             field: "createTime",
-            title: "制单时间",
+            title: "创建时间",
             align: "center",
-            minWidth: 160,
+            minWidth: 200,
             hide: isHidden("createTime"),
-            templet:function (data) {
+            templet: function (data) {
                 return layui.util.toDateString(data.createTime, "yyyy-MM-dd HH:mm:ss");
             }
         }, {
             field: "updater",
             title: "修改人",
             align: "center",
-            minWidth: 120,
+            minWidth: 150,
             hide: isHidden("updater")
         }, {
             field: "updateTime",
             title: "修改时间",
             align: "center",
-            minWidth: 160,
-            hide: isHidden("updateTime")
+            minWidth: 200,
+            hide: isHidden("updateTime"),
+            templet: function (data) {
+                return layui.util.toDateString(data.updateTime, "yyyy-MM-dd HH:mm:ss");
+            }
         }, {
             title: "操作",
             align: "center",
@@ -523,7 +527,7 @@
                 icon: 3,
                 title: "系统提示"
             }, function (index) {
-                var accPointResIds =new Array();
+                var accPointResIds = new Array();
                 accPointResIds[0] = data.accPointResId;
                 $.ajax({
                     url: "<%= request.getContextPath() %>/accPointResController/batchDelete",
@@ -559,15 +563,16 @@
                     }
                 });
             });
-        }else if (e.event == "view") {
+        } else if (e.event == "view") {
             top.layer.open({
                 type: 2,
                 title: "查看接入点信息维护",
                 content: "<%= request.getContextPath() %>/basic/accPointResMaintain/accPointRes_detailed.jsp",
                 area: ["800px", "500px"],
                 resize: false,
-                btn: ["确定", "取消"],
+                // btn: ["确定", "取消"],
                 success: function (layero, index) {
+                    debugger;
                     var dataJson = {
                         data: data,
                         win: window

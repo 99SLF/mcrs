@@ -17,15 +17,14 @@ public class MatrixVo {
     private int matrixId;
 
     /**
-     * 树id
+     * 上级id
      */
-    private String infoId;
 
+    private Integer parentId;
     /**
      * 基地名称
      */
     private String matrixName;
-
 
     /**
      * 基地代号
@@ -41,7 +40,6 @@ public class MatrixVo {
      * 制单人
      */
     private String creator;
-
 
     /**
      * 制单时间

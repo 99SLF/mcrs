@@ -14,6 +14,21 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
+    <style>
+
+        .layui-form-label {
+            padding-left: 0px;
+            width: 85px;
+        }
+        .layui-input{
+
+            width: 180px;
+        }
+        zdr{
+            width: 80px;
+        }
+
+    </style>
 </head>
 <body>
 <div class="layui-fluid">
@@ -57,8 +72,11 @@
                 <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i
                         class="layui-icon layui-icon-add-circle-fine"></i>新增设备类型
                 </button>
+                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="enable"><i
+                        class="layui-icon layui-icon-refresh"></i>启用
+                </button>
                 <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i
-                        class="layui-icon layui-icon-refresh" readonly></i>启用
+                        class="layui-icon layui-icon-delete"></i>删除
                 </button>
             </div>
 
@@ -125,7 +143,7 @@
                 type: 2,
                 title: "新增设备类型",
                 content: "<%= request.getContextPath() %>/basic/equipType/equipType_add.jsp",
-                area: ["1000px", "800px"],
+                area: ["800px", "500px"],
                 resize: false,
                 btn: ["确定", "取消"],
                 success: function (layero, index) {
@@ -140,56 +158,118 @@
                 }
             });
         },
-        <%--//批量删除--%>
-        <%--batchdel: function () {--%>
-        <%--    var checkStatus = table.checkStatus("LAY-app-device-list-reload");--%>
-        <%--    var data = checkStatus.data;--%>
-        <%--    if (data.length == 0) {--%>
-        <%--        layer.msg("请至少选中一条记录！");--%>
-        <%--    }--%>
-        <%--    if (data.length > 0) {--%>
-        <%--        var deviceIds = new Array();--%>
-        <%--        for (var i = 0; i < data.length; i++) {--%>
-        <%--            deviceIds[i] = data[i].deviceId;--%>
-        <%--        }--%>
-        <%--        layer.confirm("确定删除所选终端信息？", {--%>
-        <%--            icon: 3,--%>
-        <%--            title: "系统提示"--%>
-        <%--        }, function (index) {--%>
-        <%--            $.ajax({--%>
-        <%--                url: "<%= request.getContextPath() %>/equipment/device/batchDelete",--%>
-        <%--                type: "DELETE",--%>
-        <%--                data: JSON.stringify(deviceIds),--%>
-        <%--                cache: false,--%>
-        <%--                contentType: "text/json",--%>
-        <%--                success: function (result) {--%>
-        <%--                    if (result.exception) {--%>
-        <%--                        layer.alert(result.exception.message, {--%>
-        <%--                            icon: 2,--%>
-        <%--                            title: "系统提示"--%>
-        <%--                        });--%>
-        <%--                    } else if (result) {--%>
-        <%--                        layer.msg("删除成功", {--%>
-        <%--                            icon: 1,--%>
-        <%--                            time: 2000--%>
-        <%--                        }, function () {--%>
-        <%--                            table.reload("LAY-app-device-list-reload");--%>
-        <%--                        });--%>
-        <%--                    } else {--%>
-        <%--                        layer.msg("删除失败");--%>
-        <%--                    }--%>
+        //批量删除
+        batchdel: function () {
+            var checkStatus = table.checkStatus("LAY-app-device-list-reload");
+            var data = checkStatus.data;
+            if (data.length == 0) {
+                layer.msg("请至少选中一条记录！");
+            }
+            if (data.length > 0) {
+                var equipTypeIds = new Array();
+                for (var i = 0; i < data.length; i++) {
+                    equipTypeIds[i] = data[i].equipTypeId;
+                }
+                layer.confirm("确定删除所选设备信息？", {
+                    icon: 3,
+                    title: "系统提示"
+                }, function (index) {
+                    $.ajax({
+                        url: "<%= request.getContextPath() %>/EquipController/batchDelete",
+                        type: "DELETE",
+                        data: JSON.stringify(equipTypeIds),
+                        cache: false,
+                        contentType: "text/json",
+                        success: function (result) {
+                            if (result.exception) {
+                                layer.alert(result.exception.message, {
+                                    icon: 2,
+                                    title: "系统提示"
+                                });
+                            } else if (result) {
+                                layer.msg("删除成功", {
+                                    icon: 1,
+                                    time: 2000
+                                }, function () {
+                                    table.reload("LAY-app-device-list-reload");
+                                });
+                            } else {
+                                layer.msg("删除失败");
+                            }
 
-        <%--                },--%>
-        <%--                error: function (jqXHR, textStatus, errorThrown) {--%>
-        <%--                    layer.msg(jqXHR.responseText, {--%>
-        <%--                        time: 2000,--%>
-        <%--                        icon: 5--%>
-        <%--                    });--%>
-        <%--                }--%>
-        <%--            });--%>
-        <%--        });--%>
-        <%--    }--%>
-        <%--},--%>
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            layer.msg(jqXHR.responseText, {
+                                time: 2000,
+                                icon: 5
+                            });
+                        }
+                    });
+                });
+            }
+        },
+        enable: function () {
+            var checkStatus = table.checkStatus("LAY-app-device-list-reload");
+            var data = checkStatus.data;
+            if (data.length == 0) {
+                layer.msg("请至少选中一条记录！");
+            }
+            for (i = 0; i < data.length; i++) {
+                debugger;
+                if (data[i].equipTypeEnable == "101") {
+                    isExits = true;
+                    break;
+                }
+                isExits = false
+            }
+            if (isExits == false) {
+                if (data.length > 0) {
+                    var equipTypeIds = new Array();
+                    for (var i = 0; i < data.length; i++) {
+                        equipTypeIds[i] = data[i].equipTypeId;
+                    }
+                    layer.confirm("确定启用所选设备类型信息？", {
+                        icon: 3,
+                        title: "系统提示"
+                    }, function (index) {
+                        $.ajax({
+                            url: "<%= request.getContextPath() %>/EquipController/enable",
+                            type: "POSt",
+                            data: JSON.stringify(equipTypeIds),
+                            cache: false,
+                            contentType: "text/json",
+                            success: function (result) {
+                                if (result.exception) {
+                                    layer.alert(result.exception.message, {
+                                        icon: 2,
+                                        title: "系统提示"
+                                    });
+                                } else if (result) {
+                                    layer.msg("启用成功", {
+                                        icon: 1,
+                                        time: 2000
+                                    }, function () {
+                                        table.reload("LAY-app-device-list-reload");
+                                    });
+                                } else {
+                                    layer.msg("启用失败");
+                                }
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                layer.msg(jqXHR.responseText, {
+                                    time: 2000,
+                                    icon: 5
+                                });
+                            }
+                        });
+                    });
+                }
+            } else if(isExits == true){
+                layer.msg("当前包含已启用，无需再启用");
+            }else {
+                layer.msg("启用失败");
+            }
+        }
     };
 
     table.on('sort(LAY-app-device-list)', function (obj) {
@@ -304,7 +384,7 @@
             field: "equipTypeCode",
             title: '设备类型代码',
             align: "center",
-            minWidth: 120,
+            minWidth: 150,
             //打开监听
             event: "view",
             hide: isHidden("equipTypeCode"),
@@ -316,19 +396,23 @@
             field: "equipTypeName",
             title: "设备类型名称",
             align: "center",
-            minWidth: 120,
+            minWidth: 150,
             hide: isHidden("equipTypeName")
         }, {
             field: "equipTypeEnable",
-            title: "是否启用",
+            title: "启用",
             align: "center",
-            minWidth: 90,
-            hide: isHidden("equipTypeEnable")
+            minWidth: 60,
+            hide: isHidden("equipTypeEnable"),
+            templet:function(d) {
+
+                return layui.admin.getDictText("IS_USE", d.equipTypeEnable);
+            }
         }, {
             field: "manufacturer",
             title: "厂家",
             align: "center",
-            minWidth: 100,
+            minWidth: 150,
             hide: isHidden("manufacturer")
         }, {
             field: "equipControllerModel",
@@ -340,37 +424,37 @@
             field: "protocolCommunication",
             title: "支持通信协议",
             align: "center",
-            minWidth: 120,
+            minWidth: 150,
             hide: isHidden("protocolCommunication")
         }, {
             field: "manufacturer",
             title: "工厂名称",
             align: "center",
-            minWidth: 100,
+            minWidth: 150,
             hide: isHidden("manufacturer")
         }, {
             field: "mesIpAddress",
             title: "MES连接IP地址",
             align: "center",
-            minWidth: 140,
+            minWidth: 150,
             hide: isHidden("mesIpAddress")
         }, {
             field: "remarks",
             title: "备注",
             align: "center",
-            minWidth: 120,
+            minWidth: 150,
             hide: isHidden("remarks")
         }, {
             field: "creator",
             title: "制单人",
             align: "center",
-            minWidth: 120,
+            minWidth: 150,
             hide: isHidden("creator")
         }, {
             field: "createTime",
             title: "制单时间",
             align: "center",
-            minWidth: 100,
+            minWidth: 200,
             hide: isHidden("createTime"),
             templet:function (data) {
                 return layui.util.toDateString(data.createTime, "yyyy-MM-dd HH:mm:ss");
@@ -379,14 +463,17 @@
             field: "updater",
             title: "修改人",
             align: "center",
-            minWidth: 120,
+            minWidth: 150,
             hide: isHidden("updater")
         }, {
             field: "updateTime",
             title: "修改时间",
             align: "center",
-            minWidth: 100,
-            hide: isHidden("updateTime")
+            minWidth: 200,
+            hide: isHidden("updateTime"),
+            templet: function (data) {
+                return layui.util.toDateString(data.updateTime, "yyyy-MM-dd HH:mm:ss");
+            }
             // templet:function (data) {
             //     if (data.updateTime !==null || data.updateTime !=="") {
             //         return layui.util.toDateString(data.updateTime, "yyyy-MM-dd HH:mm:ss");
@@ -397,7 +484,7 @@
             title: "操作",
             align: "center",
             fixed: "right",
-            width: 200,
+            width: 150,
             toolbar: "#table-device-list"
         }]]
     });
@@ -411,7 +498,7 @@
                 type: 2,
                 title: "编辑设备类型信息维护",
                 content: "<%= request.getContextPath() %>/basic/equipType/equipType_edit.jsp",
-                area: ["1000px", "800px"],
+                area: ["800px", "500px"],
                 resize: false,
                 btn: ["确定", "取消"],
                 success: function (layero, index) {
@@ -473,7 +560,7 @@
                 type: 2,
                 title: "编辑设备类型信息维护",
                 content: "<%= request.getContextPath() %>/basic/equipType/equipType_detailed.jsp",
-                area: ["1000px", "800px"],
+                area: ["800px", "500px"],
                 resize: false,
                 btn: ["确定", "取消"],
                 success: function (layero, index) {

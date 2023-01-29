@@ -38,9 +38,14 @@ public interface MatrixMapper {
 
 
     /**
+     * 查询基地信息(树)
+     */
+    List<Matrix> queryMatrixTree(Map map);
+
+    /**
      * 查询代码
      */
-    List<MatrixVo> selectList();
+    List<Matrix> selectList();
 
     int countMatrix();
 
@@ -56,4 +61,22 @@ public interface MatrixMapper {
      */
 
     List<Matrix> getMatrixName(Map map);
+
+    void removeMatrix(int matrixId);
+
+    /**
+     * 根据基地主键查询工厂数
+     * @param
+     * @return
+     */
+    int countMatrixFactory(@Param("matrixId") int matrixId);
+
+    /**
+     * （基础数据目录树）
+     * 查询出当前树节点的详细基地信息信息
+     * @param
+     * @return
+     */
+
+    List<Matrix> queryMatrixNode(int nodeId);
 }

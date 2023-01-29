@@ -5,7 +5,7 @@
     <!--添加基地基础数据-->
     <insert id="addMatrix" parameterType="com.zimax.mcrs.basic.matrixInfo.matrix.pojo.Matrix">
         insert into base_matrix_info
-        values (#{matrixId}, #{infoId}, #{matrixName}, #{matrixCode}, #{matrixAddress},
+        values (#{matrixId}, #{parentId}, #{matrixName}, #{matrixCode}, #{matrixAddress},
                 #{creator}, #{createTime}, #{updater}, #{updateTime})
     </insert>
 
@@ -34,44 +34,41 @@
         </if>
     </select>
 
-
-    <select id="countMatrix" resultType="int">
-        SELECT count(*)
-        FROM base_matrix_info a
-                 LEFT JOIN base_tree b
-                           ON a.info_id = b.info_id
-        where logic_states = 0
-    </select>
-
     <!--列表显示-->
-    <select id="selectList" parameterType="map" resultType="com.zimax.mcrs.basic.matrixInfo.matrix.pojo.MatrixVo">
-        SELECT *
-        FROM base_matrix_info a
-                 LEFT JOIN base_tree b
-                           ON a.info_id = b.info_id
-        where logic_states = 0
+    <select id="queryMatrixTree" parameterType="map" resultType="com.zimax.mcrs.basic.matrixInfo.matrix.pojo.Matrix">
+        select *
+        from base_matrix_info
     </select>
+
+
+
+    <!--新增接入点信息显示选择基地代码-->
+    <select id="selectList" parameterType="map" resultType="com.zimax.mcrs.basic.matrixInfo.matrix.pojo.Matrix">
+        SELECT *
+        FROM base_matrix_info
+    </select>
+
+    <!--新增接入点信息显示选择基地代码-->
+    <select id="countMatrix" resultType="int">
+        select count(*)
+        from base_matrix_info
+    </select>
+
 
     <!--更新一条选中信息-->
     <update id="updateMatrix" parameterType="com.zimax.mcrs.basic.matrixInfo.matrix.pojo.Matrix">
         UPDATE base_matrix_info
-        SET info_id        = #{infoId},
-            matrix_name    = #{matrixName},
-            matrix_code    = #{matrixCode},
+        SET matrix_name    = #{matrixName},
             matrix_address = #{matrixAddress},
-            create_time    = #{creator},
-            create_time    = #{createTime,jdbcType=DATE},
             updater        = #{updater},
-            update_time    = #{updateTime,jdbcType=DATE}
+            update_time    = #{updateTime}
         WHERE matrix_id = ${matrixId}
     </update>
 
-    <!---->
+    <!--接入点新增，通过基地代码查询基地名称-->
     <select id="getMatrixName" resultType="com.zimax.mcrs.basic.matrixInfo.matrix.pojo.Matrix">
         SELECT *
-        FROM base_matrix_info a
-        LEFT JOIN base_tree b
-        ON a.info_id = b.info_id
+        FROM base_matrix_info
         <where>
             <if test="matrixCode !=null and matrixCode !=''">
                 and matrix_code like '%${matrixCode}%'
@@ -79,4 +76,33 @@
         </where>
     </select>
 
+    <delete id="removeMatrix" parameterType="int">
+        delete
+        from base_matrix_info
+        where matrix_id = #{matrixId}
+    </delete>
+
+    <!--查询指定基地下的工厂数-->
+    <select id="countMatrixFactory" resultType="int">
+        SELECT COUNT(*)
+        FROM
+        base_factory_info a
+        LEFT JOIN base_matrix_info b ON a.matrix_id = b.matrix_id
+        <where>
+            <if test="matrixId !=null and matrixId !=''">
+                and a.matrix_id = #{matrixId}
+            </if>
+        </where>
+    </select>
+
+    <!--通过树id查询出当前的基地信息（基础数据树）-->
+    <select id="queryMatrixNode" resultType="com.zimax.mcrs.basic.matrixInfo.matrix.pojo.Matrix">
+        SELECT *
+        FROM base_matrix_info
+        <where>
+            <if test="matrixId !=null and matrixId !=''">
+                and matrix_id = #{nodeId}
+            </if>
+        </where>
+    </select>
 </mapper>

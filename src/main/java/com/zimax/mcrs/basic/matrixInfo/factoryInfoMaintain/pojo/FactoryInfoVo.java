@@ -18,9 +18,10 @@ public class FactoryInfoVo {
     private int factoryId;
 
     /**
-     * 树id
+     * 上级id基地
      */
-    private int infoId;
+
+    private int matrixId;
 
     /**
      * 工厂名称
@@ -31,34 +32,7 @@ public class FactoryInfoVo {
      * 工厂代号
      */
     private String factoryCode;
-    /**
-     * 基础基地数据的主键
-     */
 
-    private int matrixId;
-
-    /**
-     * 基地名称
-     */
-    private String matrixName;
-
-
-    /**
-     * 基地代号
-     */
-    private String matrixCode;
-
-    /**
-     *基地地址
-     */
-    private String matrixAddress;
-
-
-
-    /**
-     * 工厂地址
-     */
-    private String factoryAddress;
 
     /**
      * 制单人

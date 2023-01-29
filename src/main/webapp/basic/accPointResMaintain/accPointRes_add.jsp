@@ -30,16 +30,7 @@
 <body>
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list"
      style="padding: 20px 30px 0 0;">
-
     <div class="layui-form-item layui-row layui-col-space10">
-
-        <%--        <div class="layui-col-sm6">--%>
-        <%--            <label class="layui-form-label"><span style="color:red">*</span>设备类型代码:</label>--%>
-        <%--            <div class="layui-input-block">--%>
-        <%--                <input id="equipTypeCode" type="text" name="equipTypeCode" lay-verify="required|equipTypeCode"--%>
-        <%--                       placeholder="请输入设备类型代码(必填)" autocomplete="off" class="layui-input">--%>
-        <%--            </div>--%>
-        <%--        </div>--%>
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>接入点名称:</label>
             <div class="layui-input-block">
@@ -58,10 +49,7 @@
             </div>
         </div>
     </div>
-
-
     <div class="layui-form-item layui-row layui-col-space10">
-
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>基地代码:</label>
             <div class="layui-input-block">
@@ -82,7 +70,6 @@
             </div>
         </div>
     </div>
-
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>工厂代码:</label>
@@ -93,19 +80,19 @@
                 </select>
             </div>
         </div>
-
         <div class="layui-col-sm6">
             <label class="layui-form-label">工厂名称:</label>
             <div class="layui-input-block">
                 <input id="factoryName" type="text" name="factoryName"
                        lay-verify=""
-                       placeholder="请先选择工厂代码" autocomplete="off" class="layui-input">
+                       placeholder="请先选择工厂代码" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
     </div>
-
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
+            <input id="processId" type="hidden" name="processId" lay-verify="processId" lay-filter="processId"
+                   placeholder="工序Id" autocomplete="off" class="layui-input" readonly>
             <label class="layui-form-label"><span style="color:red">*</span>工序代码：</label>
             <div class="layui-input-block">
                 <select name="processCode" id="processCode" lay-filter="processCode" lay-verify="required|processCode"
@@ -114,7 +101,6 @@
                 </select>
             </div>
         </div>
-
         <div class="layui-col-sm6">
             <label class="layui-form-label">工序名称：</label>
             <div class="layui-input-block">
@@ -123,7 +109,6 @@
             </div>
         </div>
     </div>
-
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm12">
             <label class="layui-form-label">工序描述:</label>
@@ -134,7 +119,6 @@
             </div>
         </div>
     </div>
-
     <div class="layui-form-item layui-row layui-hide">
         <div class="layui-input-block">
             <input type="text" class="layui-hide" name="createTime"
@@ -151,10 +135,8 @@
     </div>
 
     <div class="layui-form-item layui-hide">
-        <input type="button" lay-submit lay-filter="layuiadmin-app-form-submit"
-               lay-filter="*"
-               id="layuiadmin-app-form-submit"
-               value="确认添加">
+        <input type="button" lay-submit lay-filter="layuiadmin-app-form-submit" lay-filter="*"
+               id="layuiadmin-app-form-submit" value="确认添加">
     </div>
 
 </div>
@@ -227,10 +209,9 @@
         }
 
 
-
     });
 
-    //下拉选择框动态赋值，将基地代码赋值给下拉选择框
+    //下拉选择框动态赋值，将基地代码赋值给下拉选择框(接入点新增)
     $.ajax({
         url: "<%= request.getContextPath() %>/MatrixController/selectMatrixCode",
         dataType: "json",
@@ -246,7 +227,7 @@
         }
     })
 
-    //对应lay-verify事件过滤，选择下拉值相应的基地代码获取相应的基地名称返回给基地名称输入框
+    //对应lay-verify事件过滤，选择下拉值相应的基地代码获取相应的基地名称返回给基地名称输入框（基地代码查询基地名称）
     form.on("select(matrixCode)", function (data) {
         debugger;
         var matrixCode = data.value;
@@ -254,6 +235,7 @@
             $("#matrixName").val("");
             $("#factoryCode").empty();
             $("#factoryName").val("");
+            $("#processId").val("");
             $("#processCode").empty();
             $("#processName").val("");
             $("#processRemarks").val("");
@@ -275,6 +257,7 @@
                         $("#matrixName").val("");
                         $("#factoryCode").empty();
                         $("#factoryName").val("");
+                        $("#processId").val("");
                         $("#processCode").empty();
                         $("#processName").val("");
                         $("#processRemarks").val("");
@@ -283,10 +266,10 @@
                         var matrixNameVal = allDatas[0].matrixName;
                         //将后端获取的版本号赋值给最新版本号的输入框
                         $("#matrixName").val(matrixNameVal);
-                        var parentid = allDatas[0].infoId;
+                        var matrixId = allDatas[0].matrixId;
                         //下拉选择框动态赋值，将工厂代码赋值给下拉选择框
                         $.ajax({
-                            url: "<%= request.getContextPath() %>/FactoryController/selectFactoryCode?infoId=" + parentid,
+                            url: "<%= request.getContextPath() %>/FactoryController/selectFactoryCode?matrixId=" + matrixId,
                             dataType: "json",
                             async: false,
                             type: "get",
@@ -297,6 +280,7 @@
                                 // $("#processCode").empty();
                                 $("#factoryCode").find("option").remove();
                                 $("#factoryName").val("");
+                                $("#processId").val("");
                                 $("#processCode").find("option").remove();
                                 $("#processName").val("");
                                 $("#processRemarks").val("");
@@ -322,6 +306,7 @@
         var factoryCode = data.value;
         if (data.value == null || data.value == "") {
             $("#factoryName").val("");
+            $("#processId").val("");
             $("#processCode").find("option").remove();
             $("#processName").val("");
             $("#processRemarks").val("");
@@ -329,8 +314,7 @@
         } else {
             //调用查询的后端
             $.ajax({
-
-                //查询出工厂名称
+                //查询出工厂名称(工厂代码查询工厂名称)
                 url: "<%= request.getContextPath() %>/FactoryController/getFactoryName?factoryCode=" + factoryCode,
                 type: "GET",
                 async: false,//默认是true异步传输，false是同步传输,转全局变量的第一条件
@@ -340,6 +324,7 @@
                 success: function (result) {
                     if (result) {
                         $("#factoryName").val("");
+                        $("#processId").val("");
                         $("#processCode").find("option").remove();
                         $("#processName").val("");
                         $("#processRemarks").val("");
@@ -347,16 +332,17 @@
                         var factoryNameVal = allDatas[0].factoryName;
                         //将后端获取的版本号赋值给最新版本号的输入框
                         $("#factoryName").val(factoryNameVal);
-                        var parentid = allDatas[0].infoId;
+                        var factoryId = allDatas[0].factoryId;
                         //下拉选择框动态赋值，得到工序代码赋值给下拉选择框
                         $.ajax({
-                            url: "<%= request.getContextPath() %>/ProcessController/selectProcessCode?infoId=" + parentid,
+                            url: "<%= request.getContextPath() %>/ProcessController/selectProcessCode?factoryId=" + factoryId,
                             dataType: "json",
                             async: false,
                             type: "get",
                             success: function (data) { //注意后端代码返回数据key值必须同名 为data
                                 console.log(data)
                                 //使用循环遍历，给下拉列表赋值
+                                $("#processId").val("");
                                 $("#processCode").find("option").remove();
                                 $("#processName").val("");
                                 $("#processRemarks").val("");
@@ -383,6 +369,7 @@
     form.on("select(processCode)", function (data) {
         var processCode = data.value;
         if (data.value == null || data.value == "") {
+            $("#processId").val("");
             $("#processName").val("");
             $("#processRemarks").val("");
             form.render();
@@ -399,12 +386,16 @@
                 dataType: "json",//
                 success: function (result) {
                     if (result) {
+                        $("#processId").val("");
                         $("#processName").val("");
                         $("#processRemarks").val("");
                         var allDatas = result.data;
                         var processNameVal = allDatas[0].processName;
                         var processRemarksVal = allDatas[0].processRemarks;
-                        $("#processName").val(layui.admin.getDictText("USE_PROCESS", processNameVal));
+                        var processId = allDatas[0].processId;
+                        // $("#processName").val(layui.admin.getDictText("USE_PROCESS", processNameVal));
+                        $("#processId").val(processId);
+                        $("#processName").val(processNameVal);
                         $("#processRemarks").val(processRemarksVal);
 
 

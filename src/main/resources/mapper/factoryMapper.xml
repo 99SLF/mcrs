@@ -5,7 +5,7 @@
     <!--添加工厂基础数据-->
     <insert id="addFactoryInfo" parameterType="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo">
         insert into base_factory_info
-        values (#{factoryId}, #{infoId}, #{factoryName}, #{factoryCode}, #{factoryAddress},
+        values (#{factoryId}, #{matrixId}, #{factoryName}, #{factoryCode}, #{factoryAddress},
                 #{creator}, #{createTime}, #{updater}, #{updateTime})
     </insert>
 
@@ -15,7 +15,9 @@
     <!--        from bas_factory_info-->
     <!--        where factory_id = #{factoryId}-->
     <!--    </delete>-->
-    <!--    查询记录数-->
+
+
+    <!--查询工厂记录数（树表）-->
     <select id="count" resultType="int">
         select count(*) from base_factory_info
         <where>
@@ -25,7 +27,7 @@
         </where>
     </select>
 
-    <!--列表显示-->
+    <!--列表显示工厂数据（树表）-->
     <select id="queryFactoryInfos" parameterType="map"
             resultType="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfoVo">
         select * from base_factory_info
@@ -42,29 +44,54 @@
         </if>
     </select>
 
-    <select id="countFactory" resultType="int">
+    <!--查询工厂记录数（无树表）-->
+    <select id="countNode" resultType="int">
         SELECT count(*)
-        FROM base_matrix_info  a
-        LEFT JOIN  base_tree b ON a.info_id = b.parent_id
-        LEFT JOIN  base_factory_info c ON b.info_id = c.info_id
-        <where>
-            logic_states = "0"
-            <if test="matrixCode !=null and matrixCode !=''">
-                and matrix_code like '%${matrixCode}%'
-            </if>
-        </where>
+        FROM base_factory_info
+        WHERE matrix_id = #{nodeId}
+    </select>
+
+    <!--列表显示工厂数据（无树表）-->
+    <select id="queryFactoryInfosNode" parameterType="map"
+            resultType="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfoVo">
+        SELECT *
+        FROM base_factory_info
+        WHERE matrix_id = #{nodeId}
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
     </select>
 
     <!--列表显示-->
-    <select id="selectListInit" parameterType="map" resultType="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfoVo">
-        SELECT *
-        FROM base_matrix_info  a
-                 LEFT JOIN  base_tree b ON a.info_id = b.parent_id
-                 LEFT JOIN  base_factory_info c ON b.info_id = c.info_id
+    <select id="queryFactoryInfosTree" parameterType="map"
+            resultType="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo">
+        select *
+        from base_factory_info
+    </select>
+
+    <!--接入点编辑，初始化下拉框，获取全部的工厂代码-->
+    <select id="selectListInit" parameterType="map"
+            resultType="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfoVo">
+        SELECT
+        *
+        FROM base_factory_info a
+        LEFT JOIN base_matrix_info b ON a.matrix_id = b.matrix_id
         <where>
-            logic_states = "0"
             <if test="matrixCode !=null and matrixCode !=''">
-                and matrix_code like '%${matrixCode}%'
+                and matrix_code = #{matrixCode}
+            </if>
+        </where>
+    </select>
+    <select id="countFactory" resultType="int">
+        SELECT count(*)
+        FROM base_factory_info a
+        LEFT JOIN base_matrix_info b ON a.matrix_id = b.matrix_id
+        <where>
+            <if test="matrixCode !=null and matrixCode !=''">
+                and matrix_code = #{matrixCode}
             </if>
         </where>
     </select>
@@ -72,37 +99,70 @@
     <!--更新一条选中信息-->
     <update id="updateFactoryInfo" parameterType="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo">
         UPDATE base_factory_info
-        SET info_id         = #{infoId},
-            factory_name    = #{factoryName},
-            factory_code    = #{factoryCode},
+        SET factory_name    = #{factoryName},
             factory_address = #{factoryAddress},
-            create_time     = #{creator},
-            create_time     = #{createTime,jdbcType=DATE},
             updater         = #{updater},
-            update_time     = #{updateTime,jdbcType=DATE}
+            update_time     = #{updateTime}
         WHERE factory_id = ${factoryId}
     </update>
 
-<!--    <select id="countFactory" resultType="int">-->
-<!--        select count(*) from FROM base_factory_info a LEFT JOIN base_tree b ON a.info_id = b.info_id-->
-<!--        WHERE logic_states = "0" AND parent_id=#{infoId}-->
-<!--    </select>-->
+    <!--    <select id="countFactory" resultType="int">-->
+    <!--        select count(*) from FROM base_factory_info a LEFT JOIN base_tree b ON a.info_id = b.info_id-->
+    <!--        WHERE logic_states = "0" AND parent_id=#{infoId}-->
+    <!--    </select>-->
 
-    <!--列表显示-->
-    <select id="selectList" parameterType="map" resultType="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfoVo">
-        SELECT a.info_id, a.factory_code, a.factory_name
-        FROM base_factory_info a LEFT JOIN base_tree b ON a.info_id = b.info_id
-        WHERE logic_states = "0" AND parent_id=#{infoId}
+    <!--接入点新增，通过基地代码（父id）,查询工厂代码-->
+    <select id="selectList" parameterType="map"
+            resultType="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo">
+        SELECT *
+        FROM base_factory_info
+        <where>
+            <if test="matrixId !=null and matrixId !=''">
+                and matrix_id =#{matrixId}
+            </if>
+        </where>
 
     </select>
 
+    <!--接入点新增，通过工厂代码查询工厂名称-->
     <select id="getFactoryName" resultType="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo">
         SELECT * FROM base_factory_info
         <where>
             <if test="factoryCode !=null and factoryCode !=''">
-                and factory_code like '%${factoryCode}%'
+                and factory_code = #{factoryCode}
             </if>
         </where>
     </select>
+
+    <delete id="removeFactory" parameterType="int">
+        delete
+        from base_factory_info
+        where factory_id = #{realId}
+    </delete>
+
+    <!--查询指定工厂下的工序数-->
+    <select id="countFactoryProcess" resultType="int">
+        SELECT COUNT(*)
+        FROM
+        base_process_info a
+        LEFT JOIN base_factory_info b ON a.factory_id = b.factory_id
+        <where>
+            <if test="factoryId !=null and factoryId !=''">
+                and a.factory_id = #{factoryId}
+            </if>
+        </where>
+    </select>
+
+    <!--通过树id查询出当前的工厂信息（基础数据树）-->
+    <select id="queryFactoryNode" resultType="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo">
+        SELECT *
+        FROM base_factory_info
+        <where>
+            <if test="factoryId !=null and factoryId !=''">
+                and factory_id = #{nodeId}
+            </if>
+        </where>
+    </select>
+
 </mapper>
 

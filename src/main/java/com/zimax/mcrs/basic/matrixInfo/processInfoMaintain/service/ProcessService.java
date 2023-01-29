@@ -6,6 +6,7 @@ import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfoVo;
 import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo;
 import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfoVo;
+import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.Matrix;
 import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.MatrixVo;
 import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.mapper.ProcessMapper;
 import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
@@ -60,7 +61,7 @@ public class ProcessService {
 //    }
 
     /**
-     * 查询所有信息
+     * 查询所有信息（树表）
      */
     public List<ProcessInfoVo> queryProcessInfo(String page, String limit, String infoId, String order, String field) {
         ChangeString changeString = new ChangeString();
@@ -82,18 +83,7 @@ public class ProcessService {
     }
 
     /**
-     * 查询所有工序代码
-     */
-    public List<ProcessInfoVo> selectListInit(String factoryCode) {
-        return processMapper.selectListInit(factoryCode);
-
-    }
-    public int countProcess(String factoryCode) {
-
-        return processMapper.countProcess(factoryCode);
-    }
-    /**
-     * 记录条数
+     * 记录条数（树表）
      *
      * @param
      * @return
@@ -102,12 +92,68 @@ public class ProcessService {
         return processMapper.count(infoId);
     }
 
+    /**
+     * 查询所有信息工序信息(无树表)
+     */
+    public List<ProcessInfoVo> queryProcessInfoNode(String page, String limit, String nodeId, String order, String field) {
+        ChangeString changeString = new ChangeString();
+        Map<String, Object> map = new HashMap<>();
+        if (order == null) {
+            map.put("order", "asc");
+            map.put("field", "process_code");
+        } else {
+            map.put("order", order);
+            map.put("field", changeString.camelUnderline(field));
+        }
+        if (limit != null) {
+            map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
+            map.put("limit", Integer.parseInt(limit));
+        }
+        map.put("nodeId", nodeId);
+        return processMapper.queryProcessInfoNode(map);
+
+    }
 
     /**
+     * 记录条数（无树表）
+     *
+     * @param
+     * @return
+     */
+    public int countNode(String nodeId) {
+        return processMapper.countNode(nodeId);
+    }
+
+
+    /**
+     * 查询所有信息
+     */
+    public List<ProcessInfo> queryProcessInfoTree() {
+        Map<String, Object> map = new HashMap<>();
+        return processMapper.queryProcessInfoTree(map);
+    }
+
+    /**
+     * （接入点编辑）
+     * 初始化下拉框，获取全部获取工序代码
+     */
+    public List<ProcessInfoVo> selectListInit(String factoryCode) {
+        return processMapper.selectListInit(factoryCode);
+
+    }
+    public int countProcess(String factoryCode) {
+        return processMapper.countProcess(factoryCode);
+    }
+
+
+
+
+    /**
+     * 接入点新增 通过工厂代码
      * 查询所有工序信息（工序代码和工序名称）
      */
-    public List<ProcessInfoVo> selectList(String infoId) {
-        return processMapper.selectList(infoId);
+    public List<ProcessInfo> selectList(String factoryId) {
+        return processMapper.selectList(factoryId);
 
     }
 
@@ -121,6 +167,30 @@ public class ProcessService {
         Map<String, Object> map = new HashMap<>();
         map.put("processCode", processCode);
         return processMapper.getProcessNameDe(map);
+
+    }
+
+    public void removeProcess(int processId) {
+        processMapper.removeProcess(processId);
+    }
+
+
+    /**
+     * 通过工序id查询该工序被接入点引用
+     * @param
+     */
+    public int countProcessAccess(int processId){
+        return processMapper.countProcessAccess(processId);
+    }
+
+    /**
+     * （基础数据目录树）
+     * 查询出当前树节点的详工序信息
+     * @param
+     * @return
+     */
+    public List<ProcessInfo> queryProcessNode(int nodeId) {
+        return processMapper.queryProcessNode(nodeId);
 
     }
 }

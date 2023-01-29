@@ -25,9 +25,10 @@ public class Matrix {
     private int matrixId;
 
     /**
-     * 树id
+     * 上级id
      */
-    private String infoId;
+
+    private Integer parentId;
 
     /**
      * 基地名称

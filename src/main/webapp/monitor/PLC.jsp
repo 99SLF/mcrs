@@ -89,6 +89,7 @@
 
     //监听搜索
     form.on("submit(LAY-app-rolelist-search)", function (data) {
+        debugger;
         var field = data.field;
         table.reload("LAY-app-application-list-reload", {
             where: field

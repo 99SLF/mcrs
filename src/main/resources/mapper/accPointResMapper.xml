@@ -4,23 +4,21 @@
 <mapper namespace="com.zimax.mcrs.basic.accPointResMaintain.mapper.AccPointResMapper">
 
 
-    <!--新增用户-->
+    <!--新增接入点信息-->
     <insert id="addAccPointRes" parameterType="com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes">
         insert into base_access_info
-        values (#{accPointResId}, #{infoId}, #{accPointResCode}, #{accPointResName}, #{isEnable}, #{matrixCode},
-                #{factoryCode}, #{processCode}, #{creator}, #{createTime}, #{updater}, #{updateTime})
+        values (#{accPointResId}, #{processId}, #{accPointResCode}, #{accPointResName}, #{isEnable}, #{creator},
+                #{createTime}, #{updater}, #{updateTime})
 
     </insert>
-
-    <!--    查询记录数-->
+    <!--    查询接入点表单记录数-->
     <select id="count" resultType="int">
         SELECT
         count(*)
-        FROM
-        base_access_info a
-        LEFT JOIN base_matrix_info b ON a.matrix_code =  b.matrix_code
-        LEFT JOIN base_factory_info c ON a.factory_code = c.factory_code
-        LEFT JOIN base_process_info d ON a.process_code = d.process_code
+        FROM base_access_info a
+        LEFT JOIN base_process_info b ON a.process_id = b.process_id
+        LEFT JOIN base_factory_info c ON b.factory_id = c.factory_id
+        LEFT JOIN base_matrix_info d ON c.matrix_id = d.matrix_id
         <where>
             <if test="accPointResCode !=null and accPointResCode !=''">
                 and a.acc_point_res_code like '%${accPointResCode}%'
@@ -37,25 +35,20 @@
         </where>
     </select>
 
+
     <!--更新一条选信息-->
     <update id="updateAccPointRes" parameterType="com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes">
         UPDATE base_access_info
-        SET
-            info_id            = #{infoId},
+        SET process_id            = #{processId},
             acc_point_res_code = #{accPointResCode},
             acc_point_res_name = #{accPointResName},
             is_enable          = #{isEnable},
-            matrix_code        = #{matrixCode},
-            factory_code       = #{factoryCode},
-            process_code       = #{processCode},
-            creator            = #{creator},
-            create_time        = #{createTime,jdbcType=DATE},
             updater            = #{updater},
             update_time        =#{updateTime,jdbcType=DATE}
         WHERE acc_point_res_id = ${accPointResId}
     </update>
 
-    <!--列表显示-->
+    <!--列表显示接入点信息-->
     <select id="queryAccPointRes" parameterType="map"
             resultType="com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointResVo">
         SELECT
@@ -63,24 +56,22 @@
         a.acc_point_res_code,
         a.acc_point_res_name,
         a.is_enable,
-        b.matrix_code,
-        b.matrix_name,
+        d.matrix_code,
+        d.matrix_name,
         c.factory_code,
         c.factory_name,
-        d.process_code,
-        d.process_name,
-        d.process_remarks,
+        b.process_id,
+        b.process_code,
+        b.process_name,
+        b.process_remarks,
         a.creator,
         a.create_time,
         a.updater,
-        a.update_time,
-        d.process_name,
-        d.process_remarks
-        FROM
-        base_access_info a
-        LEFT JOIN base_matrix_info b ON a.matrix_code =  b.matrix_code
-        LEFT JOIN base_factory_info c ON a.factory_code = c.factory_code
-        LEFT JOIN base_process_info d ON a.process_code = d.process_code
+        a.update_time
+        FROM base_access_info a
+        LEFT JOIN base_process_info b ON a.process_id = b.process_id
+        LEFT JOIN base_factory_info c ON b.factory_id = c.factory_id
+        LEFT JOIN base_matrix_info d ON c.matrix_id = d.matrix_id
         <where>
             <if test="accPointResCode !=null and accPointResCode !=''">
                 and a.acc_point_res_code like '%${accPointResCode}%'
@@ -140,7 +131,7 @@
     <!--批量启用-->
     <update id="enable" parameterType="java.util.List">
         update base_access_info
-        set is_enable = #{isEnable},
+        set is_enable  = #{isEnable},
             updater=#{updater},
             update_time=#{updateTime}
         where acc_point_res_id = #{accPointResId}

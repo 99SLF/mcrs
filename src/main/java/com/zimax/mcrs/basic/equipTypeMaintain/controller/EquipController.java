@@ -87,4 +87,16 @@ public class EquipController {
         return Result.success();
 
     }
+
+
+    /**
+     * 批量启用接入点
+     * @param equipTypeIds 接入点主键
+     */
+    @PostMapping("/enable")
+    public Result<?> enable(@RequestBody List<Integer> equipTypeIds) {
+        equipService.enable(equipTypeIds);
+        return Result.success();
+
+    }
 }

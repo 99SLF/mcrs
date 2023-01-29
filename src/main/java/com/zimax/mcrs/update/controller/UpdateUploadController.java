@@ -136,7 +136,7 @@ public class UpdateUploadController {
             IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
 
             //18.将当期的用户信息存储到数据库表里
-            updateUpload.setUploader(usetObject.getUserName());
+            updateUpload.setUploader(usetObject.getUserId());
 
             //19.走编码规则，流水单号，编码规则，参数是编码规则表功能编码functionNum
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");

@@ -21,9 +21,10 @@ public class ProcessInfoVo {
     private int processId;
 
     /**
-     * 树id
+     * 上级id
      */
-    private String infoId;
+
+    private Integer factoryId;
 
     /**
      * 工序名称
@@ -44,30 +45,6 @@ public class ProcessInfoVo {
      * 制单人
      */
     private String creator;
-
-    /**
-     * 工厂信息数据的主键
-     */
-
-    private int factoryId;
-
-
-    /**
-     * 工厂名称
-     */
-    private String factoryName;
-
-    /**
-     * 工厂代号
-     */
-    private String factoryCode;
-
-
-    /**
-     * 工厂地址
-     */
-    private String factoryAddress;
-
 
     /**
      * 制单时间

@@ -27,9 +27,10 @@ public class FactoryInfo {
     private int factoryId;
 
     /**
-     * 树id
+     * 上级id基地
      */
-    private int infoId;
+
+    private int matrixId;
 
     /**
      * 工厂名称

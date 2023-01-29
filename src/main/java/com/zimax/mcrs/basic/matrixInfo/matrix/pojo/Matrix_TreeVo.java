@@ -24,7 +24,6 @@ public class Matrix_TreeVo {
      * 基地代号
      */
     private String matrixCode;
-
     /**
      * 树id
      */

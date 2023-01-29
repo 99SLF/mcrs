@@ -2,13 +2,10 @@ package com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.service;
 
 import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
-import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo;
-import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfoVo;
 import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.mapper.FactoryMapper;
 import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo;
 import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfoVo;
 import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.Matrix;
-import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.MatrixVo;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.serialnumber.service.SerialnumberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,16 +46,18 @@ public class FactoryService {
 //    }
 
     /**
-     * 查询所有工厂代码
+     * （接入点编辑）
+     * 初始化下拉框，获取全部的工厂代码
      */
     public List<FactoryInfoVo> selectListInit(String matrixCode) {
         return factoryMapper.selectListInit(matrixCode);
 
     }
     public int countFactory(String matrixCode) {
-
         return factoryMapper.countFactory(matrixCode);
     }
+
+
 
     /**
      * 编辑
@@ -72,7 +71,7 @@ public class FactoryService {
     }
 
     /**
-     * 查询所有信息
+     * 查询所有信息工厂信息(树表，废弃)
      */
     public List<FactoryInfoVo> queryFactoryInfos(String page, String limit, String infoId, String order, String field) {
         ChangeString changeString = new ChangeString();
@@ -92,9 +91,8 @@ public class FactoryService {
         return factoryMapper.queryFactoryInfos(map);
 
     }
-
     /**
-     * 记录条数
+     * 记录条数（树表）
      *
      * @param
      * @return
@@ -103,18 +101,62 @@ public class FactoryService {
         return factoryMapper.count(infoId);
     }
 
+    /**
+     * 查询所有信息工厂信息(无树表)
+     */
+    public List<FactoryInfoVo> queryFactoryInfosNode(String page, String limit, String nodeId, String order, String field) {
+        ChangeString changeString = new ChangeString();
+        Map<String, Object> map = new HashMap<>();
+        if (order == null) {
+            map.put("order", "asc");
+            map.put("field", "factory_code");
+        } else {
+            map.put("order", order);
+            map.put("field", changeString.camelUnderline(field));
+        }
+        if (limit != null) {
+            map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
+            map.put("limit", Integer.parseInt(limit));
+        }
+        map.put("nodeId", nodeId);
+        return factoryMapper.queryFactoryInfosNode(map);
+
+    }
+
+    /**
+     * 记录条数（无树表）
+     *
+     * @param
+     * @return
+     */
+    public int countNode(String nodeId) {
+        return factoryMapper.countNode(nodeId);
+    }
+
+    /**
+     * 查询工厂信息
+     */
+    public List<FactoryInfo> queryFactoryInfosTree() {
+        Map<String, Object> map = new HashMap<>();
+        return factoryMapper.queryFactoryInfosTree(map);
+
+    }
+
+
+
 
 
     /**
      * 查询所有工厂信息（工厂代码和工厂名称）
      * 代码
      */
-    public List<FactoryInfoVo> selectList(String infoId) {
-        return factoryMapper.selectList(infoId);
+    public List<FactoryInfo> selectList(String matrixId) {
+        return factoryMapper.selectList(matrixId);
 
     }
 
     /**
+     * 接入点新增
      * 通过工厂代码获取
      * 查询所有工厂信息（工厂名称）
      * 不能用vo映射
@@ -131,4 +173,27 @@ public class FactoryService {
 //        return factoryMapper.countFactory(infoId);
 //    }
 
+    public void removeFactory(int realId) {
+        factoryMapper.removeFactory(realId);
+    }
+
+
+    /**
+     * 通过工厂id查询底下的工序数
+     * @param
+     */
+    public int countFactoryProcess(int factoryId){
+       return factoryMapper.countFactoryProcess(factoryId);
+    }
+
+    /**
+     * （基础数据目录树）
+     * 查询出当前树节点的详细工厂信息
+     * @param
+     * @return
+     */
+    public List<FactoryInfo> queryFactoryNode(int nodeId) {
+        return factoryMapper.queryFactoryNode(nodeId);
+
+    }
 }

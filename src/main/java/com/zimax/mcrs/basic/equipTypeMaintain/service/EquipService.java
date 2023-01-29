@@ -1,5 +1,8 @@
 package com.zimax.mcrs.basic.equipTypeMaintain.service;
 
+import com.zimax.cap.datacontext.DataContextManager;
+import com.zimax.cap.party.IUserObject;
+import com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes;
 import com.zimax.mcrs.basic.equipTypeMaintain.mapper.EquipMapper;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfoVo;
@@ -104,4 +107,20 @@ public class EquipService {
         equipMapper.deleteEquipInfos(equipTypeIds);
     }
 
+
+
+    /**
+     * 批量启用
+     */
+    public void enable(List<Integer> equipTypeIds) {
+        EquipTypeInfo equipTypeInfo = new EquipTypeInfo();
+        IUserObject useObject = DataContextManager.current().getMUODataContext().getUserObject();
+        for (Integer integer:equipTypeIds){
+            equipTypeInfo.setEquipTypeId(integer);
+            equipTypeInfo.setEquipTypeEnable("101");
+            equipTypeInfo.setUpdater(useObject.getUserName());
+            equipTypeInfo.setUpdateTime(new Date());
+            equipMapper.enable(equipTypeInfo);
+        }
+    }
 }

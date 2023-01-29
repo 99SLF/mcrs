@@ -37,9 +37,10 @@ public class UserService {
 	public void addUser(User user) {
 		try {
 			String creator = DataContextManager.current().getMUODataContext().getUserObject().getUserId();
+
 //			IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
 //			user.setCreateor(usetObject.getUserName());
-			user.setUserId(creator);
+			user.setCreator(creator);
 			user.setPassword(encrypt(user.getPassword()));
 			user.setCreateTime(new Date());
 			user.setLastLogin(new Date());

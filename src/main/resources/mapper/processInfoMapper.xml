@@ -5,7 +5,7 @@
     <!--添加工序基础数据-->
     <insert id="addProcessInfo" parameterType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo">
         insert into base_process_info
-        values (#{processId}, #{infoId}, #{processName}, #{processCode}, #{processRemarks},
+        values (#{processId}, #{factoryId}, #{processName}, #{processCode}, #{processRemarks},
                 #{creator}, #{createTime}, #{updater}, #{updateTime})
     </insert>
 
@@ -16,17 +16,9 @@
         where process_id = #{processId}
     </delete>
 
-    <select id="count" resultType="int">
-        select count(*) from base_process_info
-        <where>
-            <if test="infoId !=null and infoId !=''">
-                and info_id like '%${infoId}%'
-            </if>
-        </where>
-    </select>
-
-    <!--列表显示-->
-    <select id="queryProcessInfo" parameterType="map" resultType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfoVo">
+    <!--树表列表显示-->
+    <select id="queryProcessInfo" parameterType="map"
+            resultType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfoVo">
         select * from base_process_info
         <where>
             <if test="infoId !=null and infoId !=''">
@@ -41,57 +33,125 @@
         </if>
     </select>
 
-    <select id="countProcess" resultType="int">
-        SELECT count(*)
-        FROM base_factory_info  a
-        LEFT JOIN  base_tree b ON a.info_id = b.parent_id
-        LEFT JOIN  base_process_info c ON b.info_id = c.info_id
+    <select id="count" resultType="int">
+        select count(*) from base_process_info
         <where>
-            logic_states = "0"
-            <if test="factoryCode !=null and factoryCode !=''">
-                and factory_code like '%${factoryCode}%'
+            <if test="infoId !=null and infoId !=''">
+                and info_id like '%${infoId}%'
             </if>
         </where>
     </select>
 
-    <!--列表显示-->
-    <select id="selectListInit" parameterType="map" resultType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfoVo">
+    <!--查询工序记录数（无树表）-->
+    <select id="countNode" resultType="int">
+        SELECT count(*)
+        FROM base_process_info
+        WHERE factory_id = #{nodeId}
+    </select>
+
+    <!--列表显示工序数据（无树表）-->
+    <select id="queryProcessInfoNode" parameterType="map"
+            resultType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfoVo">
         SELECT *
-        FROM base_factory_info  a
-                 LEFT JOIN  base_tree b ON a.info_id = b.parent_id
-                 LEFT JOIN  base_process_info c ON b.info_id = c.info_id
+        FROM base_process_info
+        WHERE factory_id = #{nodeId}
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+
+    <!--树显示-->
+    <select id="queryProcessInfoTree" parameterType="map"
+            resultType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo">
+        select *
+        from base_process_info
+    </select>
+
+
+    <!--（接入点编辑），初始化下拉框，获取全部获取工序代码-->
+    <select id="selectListInit" parameterType="map"
+            resultType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfoVo">
+        SELECT
+        *
+        FROM base_process_info a
+        LEFT JOIN base_factory_info b ON a.factory_id = b.factory_id
         <where>
-            logic_states = "0"
             <if test="factoryCode !=null and factoryCode !=''">
-                and factory_code like '%${factoryCode}%'
+                and factory_code =#{factoryCode}
             </if>
         </where>
     </select>
+    <select id="countProcess" resultType="int">
+        SELECT count(*)
+        FROM base_process_info a
+        LEFT JOIN base_factory_info b ON a.factory_id = b.factory_id
+        <where>
+            <if test="factoryCode !=null and factoryCode !=''">
+                and factory_code =#{factoryCode}
+            </if>
+        </where>
+    </select>
+
     <!--更新一条选中信息-->
     <update id="updateProcessInfo" parameterType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo">
         UPDATE base_process_info
-        SET info_id         = #{infoId},
-            process_name    = #{processName},
-            process_code    = #{processCode},
+        SET process_name    = #{processName},
             process_remarks = #{processRemarks},
-            create_time     = #{creator},
-            create_time     = #{createTime,jdbcType=DATE},
             updater         = #{updater},
-            update_time     = #{updateTime,jdbcType=DATE}
+            update_time     = #{updateTime}
         WHERE process_id = ${processId}
     </update>
-    <!--列表显示-->
-    <select id="selectList" parameterType="map" resultType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfoVo">
-        SELECT a.info_id, a.process_code, a.process_name
-        FROM base_process_info a LEFT JOIN base_tree b ON a.info_id = b.info_id
-        WHERE logic_states = "0" AND parent_id=#{infoId}
+
+
+    <!--接入点新增，通过工厂代码，查询工序信息-->
+    <select id="selectList" parameterType="map"
+            resultType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo">
+        SELECT *
+        FROM base_process_info
+        <where>
+            <if test="factoryId !=null and factoryId !=''">
+                and factory_id =#{factoryId}
+            </if>
+        </where>
     </select>
 
+    <!--接入点新增，通过工序代码，查询工序信息-->
     <select id="getProcessNameDe" resultType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo">
         SELECT * FROM base_process_info
         <where>
             <if test="processCode !=null and processCode !=''">
-                and process_code like '%${processCode}%'
+                and process_code =#{processCode}
+            </if>
+        </where>
+    </select>
+
+    <delete id="removeProcess" parameterType="int">
+        delete
+        from base_process_info
+        where process_id = #{processId}
+    </delete>
+
+    <!--通过工序id查询该工序是否被接入点引用-->
+    <select id="countProcessAccess" resultType="int">
+        SELECT COUNT(*)
+        FROM base_access_info a
+                 LEFT JOIN
+             base_process_info b
+             ON a.process_id = b.process_id
+        WHERE a.process_id = #{processId}
+    </select>
+
+    <!--通过树id查询出当前的工序信息（基础数据树）-->
+    <select id="queryProcessNode" resultType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo">
+        SELECT *
+        FROM base_process_info
+        <where>
+            <if test="processId !=null and processId !=''">
+                and process_id =#{nodeId}
             </if>
         </where>
     </select>

@@ -1,6 +1,7 @@
 package com.zimax.mcrs.basic.equipTypeMaintain.mapper;
 
 import com.zimax.components.coframe.rights.pojo.User;
+import com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfoVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -45,4 +46,10 @@ public interface EquipMapper {
      * 批量删除
      */
     void deleteEquipInfos(List<Integer> equipTypeIds);
+
+
+    /**
+     * 批量启用
+     */
+    int enable(EquipTypeInfo equipTypeInfo);
 }

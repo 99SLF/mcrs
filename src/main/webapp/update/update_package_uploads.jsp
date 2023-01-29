@@ -157,7 +157,7 @@
                     IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
                 %>
                 <input type="text" class="layui-input" id="uploader" name="uploader"
-                       value="<%=usetObject.getUserName()%>" size="150" readonly/>
+                       value="<%=usetObject.getUserId()%>" size="150" readonly/>
             </div>
         </div>
     </div>

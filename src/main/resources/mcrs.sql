@@ -755,12 +755,30 @@ INSERT INTO `base_coding_serialnumber` VALUES ('6', 'jrdCod', '4', '1', '0', 'å¤
     -- ----------------------------
 
     -- ----------------------------
+-- ----------------------------
+-- Table structure for base_access_info
+-- ----------------------------
+    DROP TABLE IF EXISTS `base_access_info`;
+    CREATE TABLE `base_access_info` (
+        `acc_point_res_id` int(11) NOT NULL AUTO_INCREMENT,
+        `process_id` int(11) DEFAULT NULL,
+        `acc_point_res_code` varchar(255) DEFAULT NULL,
+        `acc_point_res_name` varchar(255) DEFAULT NULL,
+        `is_enable` varchar(255) DEFAULT NULL,
+        `creator` varchar(255) DEFAULT NULL,
+        `create_time` datetime DEFAULT NULL,
+        `updater` varchar(255) DEFAULT NULL,
+        `update_time` datetime DEFAULT NULL,
+        PRIMARY KEY (`acc_point_res_id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+
+    -- ----------------------------
     -- Table structure for base_factory_info
     -- ----------------------------
     DROP TABLE IF EXISTS `base_factory_info`;
     CREATE TABLE `base_factory_info` (
          `factory_id` int(11) NOT NULL AUTO_INCREMENT,
-         `info_id` int(11) DEFAULT NULL,
+         `matrix_id` int(11) DEFAULT NULL,
          `factory_name` varchar(255) DEFAULT NULL,
          `factory_code` varchar(255) DEFAULT NULL,
          `factory_address` varchar(255) DEFAULT NULL,
@@ -769,11 +787,7 @@ INSERT INTO `base_coding_serialnumber` VALUES ('6', 'jrdCod', '4', '1', '0', 'å¤
          `updater` varchar(255) DEFAULT NULL,
          `update_time` datetime DEFAULT NULL,
          PRIMARY KEY (`factory_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
-
-    -- ----------------------------
-    -- Records of base_factory_info
-    -- ----------------------------
+    ) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8;
 
     -- ----------------------------
     -- Table structure for base_matrix_info
@@ -781,7 +795,7 @@ INSERT INTO `base_coding_serialnumber` VALUES ('6', 'jrdCod', '4', '1', '0', 'å¤
     DROP TABLE IF EXISTS `base_matrix_info`;
     CREATE TABLE `base_matrix_info` (
         `matrix_id` int(11) NOT NULL AUTO_INCREMENT,
-        `info_id` int(11) DEFAULT NULL,
+        `parent_id` varchar(255) DEFAULT NULL,
         `matrix_name` varchar(255) DEFAULT NULL,
         `matrix_code` varchar(255) DEFAULT NULL,
         `matrix_address` varchar(255) DEFAULT NULL,
@@ -790,11 +804,7 @@ INSERT INTO `base_coding_serialnumber` VALUES ('6', 'jrdCod', '4', '1', '0', 'å¤
         `updater` varchar(255) DEFAULT NULL,
         `update_time` datetime DEFAULT NULL,
         PRIMARY KEY (`matrix_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8;
-
-    -- ----------------------------
-    -- Records of base_matrix_info
-    -- ----------------------------
+    ) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8;
 
     -- ----------------------------
     -- Table structure for base_process_info
@@ -802,7 +812,7 @@ INSERT INTO `base_coding_serialnumber` VALUES ('6', 'jrdCod', '4', '1', '0', 'å¤
     DROP TABLE IF EXISTS `base_process_info`;
     CREATE TABLE `base_process_info` (
          `process_id` int(11) NOT NULL AUTO_INCREMENT,
-         `info_id` int(11) DEFAULT NULL,
+         `factory_id` int(11) DEFAULT NULL,
          `process_name` varchar(255) DEFAULT NULL,
          `process_code` varchar(255) DEFAULT NULL,
          `process_remarks` varchar(255) DEFAULT NULL,
@@ -811,31 +821,12 @@ INSERT INTO `base_coding_serialnumber` VALUES ('6', 'jrdCod', '4', '1', '0', 'å¤
          `updater` varchar(255) DEFAULT NULL,
          `update_time` datetime DEFAULT NULL,
          PRIMARY KEY (`process_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
+    ) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8;
 
-    -- ----------------------------
-    -- Records of base_process_info
-    -- ----------------------------
 
--- ----------------------------
--- Table structure for base_access_info
--- ----------------------------
-DROP TABLE IF EXISTS `base_access_info`;
-CREATE TABLE `base_access_info` (
-    `acc_point_res_id` int(11) NOT NULL AUTO_INCREMENT,
-    `info_id` int(11) DEFAULT NULL,
-    `acc_point_res_code` varchar(255) DEFAULT NULL,
-    `acc_point_res_name` varchar(255) DEFAULT NULL,
-    `is_enable` varchar(255) DEFAULT NULL,
-    `matrix_code` varchar(255) DEFAULT NULL,
-    `factory_code` varchar(255) DEFAULT NULL,
-    `process_code` varchar(255) DEFAULT NULL,
-    `creator` varchar(255) DEFAULT NULL,
-    `create_time` datetime DEFAULT NULL,
-    `updater` varchar(255) DEFAULT NULL,
-    `update_time` datetime DEFAULT NULL,
-    PRIMARY KEY (`acc_point_res_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+
+
 
 -- ----------------------------
 -- Table structure for upd_record

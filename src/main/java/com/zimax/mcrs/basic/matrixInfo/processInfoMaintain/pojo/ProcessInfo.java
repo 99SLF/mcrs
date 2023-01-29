@@ -27,9 +27,10 @@ public class ProcessInfo {
     private int processId;
 
     /**
-     * 树id
+     * 上级id
      */
-    private String infoId;
+
+    private Integer factoryId;
 
     /**
      * 工序名称

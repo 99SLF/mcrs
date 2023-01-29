@@ -46,7 +46,7 @@ public class TreeInfo {
 
 
     /**
-     * 根据节点查询构建分类树
+     * 根据节点查询构建分类树（一使用）
      * @param nodeId 节点id
      * @return
      */
@@ -165,6 +165,8 @@ public class TreeInfo {
         rootMap.put("isLeaf", false);
         rootMap.put("expanded", true);
         rootMap.put("categorySeq", "root");
+        rootMap.put("infoType", "root");
+
         rootList.add(rootMap);
         // 构造分类List
         for (TreeTemplate category : categorys) {
@@ -177,6 +179,7 @@ public class TreeInfo {
                 map.put("isLeaf", false);
                 map.put("expanded", false);
                 map.put("pid", "root");
+                map.put("infoType", category.getInfoType());
                 map.put("categorySeq", category.getInfoSeq());
                 rootList.add(map);
             }else{
@@ -185,6 +188,7 @@ public class TreeInfo {
                 map.put("type", TYPE_CATEGORY);
                 map.put("iconCls", IconCls.MENU);
                 map.put("isLeaf", false);
+                map.put("infoType", category.getInfoType());
                 map.put("expanded", false);
                 map.put("pid", category.getParentId());
                 map.put("categorySeq", category.getInfoSeq());
@@ -211,6 +215,7 @@ public class TreeInfo {
             map.put("type", TYPE_CATEGORY);
             map.put("iconCls", IconCls.MENU);
             map.put("isLeaf", false);
+            map.put("infoType", category.getInfoType());
             map.put("expanded", false);
             // 如果parent为null，则父节点为root
             if (category.getParentId() == null) {

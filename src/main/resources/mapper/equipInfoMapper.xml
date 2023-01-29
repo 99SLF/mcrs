@@ -82,4 +82,13 @@
             #{id}
         </foreach>
     </delete>
+
+    <!--批量启用-->
+    <update id="enable" parameterType="java.util.List">
+        update base_equip_info
+        set equip_type_enable = #{equipTypeEnable},
+            updater=#{updater},
+            update_time=#{updateTime}
+        where equip_type_id = ${equipTypeId}
+    </update>
 </mapper>

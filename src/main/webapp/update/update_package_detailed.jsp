@@ -1,4 +1,4 @@
-<%@ page import="com.zimax.cap.party.IUserObject" %>
+ <%@ page import="com.zimax.cap.party.IUserObject" %>
 <%@ page import="com.zimax.cap.datacontext.DataContextManager" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>

@@ -84,7 +84,7 @@ public class AccPointResService {
     }
 
     /**
-     * 更新
+     * 修改接入点信息
      */
     public void updateAccPointRes(AccPointRes accPointRes) {
         //域名要一致才可以，127.0.0.1和localhost不一样
@@ -122,7 +122,7 @@ public class AccPointResService {
 
 
     /**
-     * 批量启用告警事件
+     * 批量启用
      */
     public void enable(List<Integer> accPointResIds) {
         AccPointRes accPointRes = new AccPointRes();
