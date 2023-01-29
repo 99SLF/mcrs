@@ -21,9 +21,9 @@
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item layui-col-space12">
                 <div class="layui-inline">
-                    <label class="layui-form-label">设备资源号：</label>
+                    <label class="layui-form-label">设备名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="equipmentId" placeholder="" autocomplete="off"
+                        <input type="text" name="equipmentName" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -46,8 +46,9 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">组别类型：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="groupType" placeholder="" autocomplete="off"
-                               class="layui-input">
+                        <select name="groupType" id="groupType" lay-filter="groupType" type="select">
+                            <option value=""></option>
+                        </select>
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -124,6 +125,12 @@
         type: 'date'
     });
 
+    //获取组别类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#groupType",
+        dictTypeId: "GROUP_TYPE",
+    });
+    form.render();
 
     //监听搜索
     form.on("submit(LAY-app-plcLoglist-search)", function (data) {
@@ -133,11 +140,11 @@
         });
     });
 
-    // //登录时间监听事件
-    // form.on("input(loginTime)", function(data) {
-    //     var submit = $("#LAY-app-plcLoglist-search");
-    //     submit.click();
-    // });
+    //组别类型监听事件
+    form.on("select(groupType)", function(data) {
+        var submit = $("#LAY-app-plcLoglist-search");
+        submit.click();
+    });
 
 
     //文本框回车事件
@@ -259,42 +266,33 @@
             title: "序号",
             type: "numbers"
         }, {
-            field: "plcLogNum",
-            title: "日志编号",
-            align: "center",
-            minWidth: 120,
-            hide: isHidden("plcLogNum")
-        }, {
-            field: "logType",
-            title: "日志类型",
-            align: "center",
-            minWidth: 200,
-            hide: isHidden("logType"),
-            templet: function (d) {
-                return layui.admin.getDictText("LOG_TYPE", d.logType);
-            }
-        }, {
             field: "equipmentId",
             title: "设备资源号",
             align: "center",
             minWidth: 150,
             hide: isHidden("equipmentId")
         }, {
+            field: "equipmentName",
+            title: "设备名称",
+            align: "left",
+            minWidth: 150,
+            hide: isHidden("equipmentName")
+        }, {
             field: "aPPId",
             title: "APPID",
             align: "center",
-            minWidth: 120,
+            minWidth: 300,
             hide: isHidden("aPPId")
         }, {
             field: "deviceName",
             title: "终端名称",
-            align: "center",
+            align: "left",
             minWidth: 150,
             hide: isHidden("deviceName")
         }, {
             field: "plcGroupName",
             title: "PLC组别名称",
-            align: "center",
+            align: "left",
             minWidth: 120,
             hide: isHidden("plcGroupName")
         }, {
@@ -302,17 +300,20 @@
             title: "组别类型",
             align: "center",
             minWidth: 120,
-            hide: isHidden("groupType")
+            hide: isHidden("groupType"),
+            templet: function (d) {
+                return layui.admin.getDictText("GROUP_TYPE", d.groupType);
+            }
         }, {
             field: "mapAddress",
             title: "映射地址",
-            align: "center",
+            align: "left",
             minWidth: 120,
             hide: isHidden("mapAddress")
         }, {
             field: "tagName",
-            title: "标签类型",
-            align: "center",
+            title: "标签名称",
+            align: "left",
             minWidth: 120,
             hide: isHidden("tagName")
         }, {
@@ -325,10 +326,14 @@
             field: "createTime",
             title: "创建时间",
             align: "center",
-            minWidth: 120,
+            minWidth: 200,
             hide: isHidden("createTime"),
             templet: function (d) {
-                return layui.util.toDateString(d.createTime);
+                if(d.createTime!=null){
+                    return layui.util.toDateString(d.createTime);
+                }else{
+                    return '';
+                }
             }
         }]]
     });

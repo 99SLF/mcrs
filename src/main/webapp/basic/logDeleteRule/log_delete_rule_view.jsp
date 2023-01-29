@@ -23,29 +23,10 @@
     <input id="ruleDeleteId" name="ruleDeleteId" type="hidden"/>
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">日志删除规则编码:</label>
-            <div class="layui-input-block">
-                <input id="deleteRuleNum" type="text" name="deleteRuleNum" lay-verify="required|deleteRuleNum"
-                       placeholder="" autocomplete="off" class="layui-input" readonly>
-            </div>
-        </div>
-
-        <div class="layui-col-sm6">
             <label class="layui-form-label">日志删除规则标题:</label>
             <div class="layui-input-block">
                 <input id="deleteRuleTitle" type="text" name="deleteRuleTitle" lay-verify="required|deleteRuleTitle"
                        placeholder="" autocomplete="off" class="layui-input" readonly>
-            </div>
-        </div>
-    </div>
-
-    <div class="layui-form-item layui-row layui-col-space10">
-        <div class="layui-col-sm6">
-            <label class="layui-form-label">规则级别:</label>
-            <div class="layui-input-block">
-                <select name="ruleLevel" id="ruleLevel" lay-filter=""lay-verify="required" type="select" >
-                    <option value=""></option>
-                </select>
             </div>
         </div>
         <div class="layui-col-sm6">
@@ -59,9 +40,9 @@
     </div>
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">时间间隔:</label>
+            <label class="layui-form-label">保留时间数:</label>
             <div class="layui-input-block">
-                <input id="timeInterval" type="text" name="timeInterval" lay-verify="required"
+                <input id="retentionTime" type="text" name="retentionTime" lay-verify="required"
                        placeholder=""
                        autocomplete="off" class="layui-input" readonly>
             </div>
@@ -97,17 +78,17 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">创建人：</label>
+            <label class="layui-form-label">修改人：</label>
             <div class="layui-input-block">
-                <input id="creator" type="text" name="creator" lay-verify="required"
+                <input id="creator" type="text" name="updateName" lay-verify="required"
                        placeholder=""
                        autocomplete="off" class="layui-input"readonly>
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label">创建时间:</label>
+            <label class="layui-form-label">修改时间:</label>
             <div class="layui-input-block">
-                <input id="createTime" type="text" name="createTime" lay-verify="required"
+                <input id="createTime" type="text" name="updateTime" lay-verify="required"
                        placeholder=""
                        autocomplete="off" class="layui-input" readonly>
             </div>
@@ -210,17 +191,14 @@
         var data = data.data;
         form.val("layuiadmin-app-form-list", {
             //要有主键
-            "ruleDeleteId": data.ruleDeleteId,
-            "deleteRuleNum": data.deleteRuleNum,
             "deleteRuleTitle": data.deleteRuleTitle,
             "logType": data.logType,
             "enable": data.enable,
-            "ruleLevel": data.ruleLevel,
             "deleteRuleType": data.deleteRuleType,
-            "timeInterval": data.timeInterval,
+            "retentionTime": data.retentionTime,
             "timeUnit": data.timeUnit,
-            "creator": data.creator,
-            "createTime": data.createTime,
+            "updateName": data.updateName,
+            "updateTime": data.updateTime,
         });
     }
 

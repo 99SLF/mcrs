@@ -18,7 +18,7 @@ import java.util.Map;
 public interface LogDeleteRuleMapper {
 
     /**
-     * 查询全部终端信息
+     * 查询全部日志删除规则
      *
      * @return
      */
@@ -30,21 +30,24 @@ public interface LogDeleteRuleMapper {
      *
      * @return
      */
-    int count(@Param("deleteRuleNum") String deleteRuleNum);
+    int count(@Param("deleteRuleTitle") String deleteRuleTitle,
+              @Param("logType") String logType,
+              @Param("updateName") String updateName,
+              @Param("updateTime") String updateTime);
 
 
-    /**
-     * 添加删除规则
-     * @param logDeleteRule
-     */
-    void addLogDeleteRule(LogDeleteRule logDeleteRule);
-
-    /**
-     * 删除日志删除规则
-     *
-     * @return
-     */
-    void removeLogDeleteRule(int ruleDeleteId);
+//    /**
+//     * 添加删除规则
+//     * @param logDeleteRule
+//     */
+//    void addLogDeleteRule(LogDeleteRule logDeleteRule);
+//
+//    /**
+//     * 删除日志删除规则
+//     *
+//     * @return
+//     */
+//    void removeLogDeleteRule(int ruleDeleteId);
 
     /**
      * 修改删除规则
@@ -52,16 +55,16 @@ public interface LogDeleteRuleMapper {
      */
     void updateLogDeleteRule(LogDeleteRule logDeleteRule);
 
-    /**
-     * 批量删除
-     * @param ruleDeleteId
-     */
-    void deleteLogDeleteRules(List<Integer> ruleDeleteId);
+//    /**
+//     * 批量删除
+//     * @param ruleDeleteId
+//     */
+//    void deleteLogDeleteRules(List<Integer> ruleDeleteId);
 
-    /**
-     * 检查当前规则编码是否存在
-     */
-    int checkLogDeleteRule(@Param("deleteRuleNum") String deleteRuleNum);
+//    /**
+//     * 检查当前规则编码是否存在
+//     */
+//    int checkLogDeleteRule(@Param("deleteRuleNum") String deleteRuleNum);
 
 
     /**
@@ -69,14 +72,14 @@ public interface LogDeleteRuleMapper {
      */
     void enable(LogDeleteRule logDeleteRule);
 
-    /**
-     * 判断当前启用是否唯一
-     */
-    int checkEnable(@Param("logType") String logType);
+//    /**
+//     * 判断当前启用是否唯一
+//     */
+//    int checkEnable(@Param("logType") String logType);
 
-    /**
-     * 接口日志定时删除
-     */
-    void deleteInterfaceLog(Date logInterfaceTime);
+//    /**
+//     * 接口日志定时删除
+//     */
+//    void deleteLog(Date logInterfaceTime);
 
 }

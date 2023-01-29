@@ -23,7 +23,7 @@ import java.util.Date;
 public class LoginLog {
 
     /**
-     * 登录日志Id
+     * 日志主键
      */
     @TableId(type = IdType.AUTO)
     private int logId;

@@ -22,9 +22,9 @@
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item layui-col-space12">
                 <div class="layui-inline">
-                    <label class="layui-form-label">设备资源号：</label>
+                    <label class="layui-form-label">设备名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="equipmentId" placeholder="" autocomplete="off"
+                        <input type="text" name="equipmentName" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -267,19 +267,13 @@
             title: "序号",
             type: "numbers"
         }, {
-            field: "mesLogNum",
-            title: "日志编号",
-            align: "center",
-            minWidth: 150,
-            hide: isHidden("mesLogNum")
-        }, {
-            field: "logType",
+            field: "logStatus",
             title: "日志类型",
             align: "center",
             minWidth: 100,
-            hide: isHidden("logType"),
+            hide: isHidden("logStatus"),
             templet: function (d) {
-                return layui.admin.getDictText("LOG_TYPE", d.logType);
+                return layui.admin.getDictText("LOG_STATUS", d.logStatus);
             }
         }, {
             field: "equipmentId",
@@ -288,10 +282,16 @@
             minWidth: 150,
             hide: isHidden("equipmentId")
         }, {
+            field: "equipmentName",
+            title: "设备名称",
+            align: "left",
+            minWidth: 150,
+            hide: isHidden("equipmentName")
+        },{
             field: "aPPId",
             title: "APPID",
             align: "center",
-            minWidth: 200,
+            minWidth: 250,
             hide: isHidden("aPPId")
         }, {
             field: "deviceName",
@@ -312,11 +312,11 @@
             minWidth: 120,
             hide: isHidden("equipmentContinuePort")
         }, {
-            field: "content",
+            field: "mesContent",
             title: "交互内容",
-            align: "center",
+            align: "left",
             minWidth: 120,
-            hide: isHidden("content")
+            hide: isHidden("mesContent")
         }, {
             field: "createName",
             title: "创建人",
@@ -330,7 +330,11 @@
             minWidth: 200,
             hide: isHidden("createTime"),
             templet: function (d) {
-                return layui.util.toDateString(d.createTime);
+                if(d.createTime!=null){
+                    return layui.util.toDateString(d.createTime);
+                }else{
+                    return '';
+                }
             }
         }]]
     });

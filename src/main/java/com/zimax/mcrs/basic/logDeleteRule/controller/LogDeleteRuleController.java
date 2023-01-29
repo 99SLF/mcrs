@@ -30,11 +30,10 @@ public class LogDeleteRuleController {
     /**
      * 条件查询
      *
-     * @param deleteRuleNum   删除规则编码
      * @param deleteRuleTitle 删除规则标题
-     * @param ruleLevel       规则等级
-     * @param deleteRuleType  删除规则类型
-     * @param creator         创建人
+     * @param logType         日志类型
+     * @param updateName      修改人
+     * @param updateTime      修改时间
      * @param limit           记录数
      * @param page            页码
      * @param field           排序字段
@@ -42,72 +41,72 @@ public class LogDeleteRuleController {
      * @return 删除规则列表
      */
     @GetMapping("/logDeleteRule/query")
-    public Result<?> queryLogDeleteRule(String page, String limit, String deleteRuleNum, String deleteRuleTitle, String ruleLevel, String deleteRuleType, String creator, String order, String field) {
-        List logDeleteRules = logDeleteRuleService.queryLogDeleteRule(page, limit, deleteRuleNum, deleteRuleTitle, ruleLevel, deleteRuleType, creator, order, field);
-        return Result.success(logDeleteRules, logDeleteRuleService.count(deleteRuleNum));
+    public Result<?> queryLogDeleteRule(String page, String limit, String deleteRuleTitle, String logType, String updateName, String updateTime, String order, String field) {
+        List logDeleteRules = logDeleteRuleService.queryLogDeleteRule(page, limit, deleteRuleTitle, logType, updateName, updateTime, order, field);
+        return Result.success(logDeleteRules, logDeleteRuleService.count(deleteRuleTitle, logType, updateName, updateTime));
     }
 
-    /**
-     * 添加日志删除规则
-     */
-    @PostMapping("/logDeleteRule/add")
-    public Result<?> addLogDeleteRule(@RequestBody LogDeleteRule logDeleteRule) {
-        logDeleteRuleService.addLogDeleteRule(logDeleteRule);
-        return Result.success();
-    }
+//    /**
+//     * 添加日志删除规则
+//     */
+//    @PostMapping("/logDeleteRule/add")
+//    public Result<?> addLogDeleteRule(@RequestBody LogDeleteRule logDeleteRule) {
+//        logDeleteRuleService.addLogDeleteRule(logDeleteRule);
+//        return Result.success();
+//    }
 
 
-    /**
-     * 删除日志删除规则
-     *
-     * @param ruleDeleteId 设备主键
-     */
-    @DeleteMapping("/logDeleteRule/delete/{ruleDeleteId}")
-    public Result<?> removeLogDeleteRule(@PathVariable("ruleDeleteId") int ruleDeleteId) {
-        logDeleteRuleService.removeLogDeleteRule(ruleDeleteId);
-        return Result.success();
-    }
+//    /**
+//     * 删除日志删除规则
+//     *
+//     * @param ruleDeleteId 设备主键
+//     */
+//    @DeleteMapping("/logDeleteRule/delete/{ruleDeleteId}")
+//    public Result<?> removeLogDeleteRule(@PathVariable("ruleDeleteId") int ruleDeleteId) {
+//        logDeleteRuleService.removeLogDeleteRule(ruleDeleteId);
+//        return Result.success();
+//    }
 
     /**
      * 修改日志删除规则
      */
     @PostMapping("/logDeleteRule/update")
     public Result<?> updateLogDeleteRule(@RequestBody LogDeleteRule logDeleteRule) throws Exception {
-        if (logDeleteRule.getEnable().equals("on")) {
-            enableTime(logDeleteRule.getLogType(), logDeleteRule.getTimeInterval(), logDeleteRule.getTimeUnit());
-        } else if (logDeleteRule.getEnable().equals("off")) {
+        if (logDeleteRule.getEnable().equals("101")) {
+            enableTime(logDeleteRule.getLogType(), logDeleteRule.getRetentionTime(), logDeleteRule.getTimeUnit());
+        } else if (logDeleteRule.getEnable().equals("102")) {
             stopName(logDeleteRule.getLogType());
         }
         logDeleteRuleService.updateLogDeleteRule(logDeleteRule);
         return Result.success();
     }
 
-    /**
-     * 批量删除日志删除规则
-     *
-     * @param ruleDeleteIds 日志删除规则主键数组
-     */
-    @DeleteMapping("/logDeleteRule/batchDelete")
-    public Result<?> deleteLogDeleteRules(@RequestBody Integer[] ruleDeleteIds) {
-        logDeleteRuleService.deleteLogDeleteRules(Arrays.asList(ruleDeleteIds));
-        return Result.success();
+//    /**
+//     * 批量删除日志删除规则
+//     *
+//     * @param ruleDeleteIds 日志删除规则主键数组
+//     */
+//    @DeleteMapping("/logDeleteRule/batchDelete")
+//    public Result<?> deleteLogDeleteRules(@RequestBody Integer[] ruleDeleteIds) {
+//        logDeleteRuleService.deleteLogDeleteRules(Arrays.asList(ruleDeleteIds));
+//        return Result.success();
+//
+//    }
 
-    }
 
-
-    /**
-     * 检测日志删除规则是否存在
-     *
-     * @param deleteRuleNum 日志删除规则编码
-     */
-    @GetMapping("/logDeleteRule/check/isExist")
-    public Result<?> check(@RequestParam("deleteRuleNum") String deleteRuleNum) {
-        if (logDeleteRuleService.checkLogDeleteRule(deleteRuleNum) > 0) {
-            return Result.error("1", "当前日志删除规则编码已存在，请输入正确日志删除规则编码");
-        } else {
-            return Result.success();
-        }
-    }
+//    /**
+//     * 检测日志删除规则是否存在
+//     *
+//     * @param deleteRuleNum 日志删除规则编码
+//     */
+//    @GetMapping("/logDeleteRule/check/isExist")
+//    public Result<?> check(@RequestParam("deleteRuleNum") String deleteRuleNum) {
+//        if (logDeleteRuleService.checkLogDeleteRule(deleteRuleNum) > 0) {
+//            return Result.error("1", "当前日志删除规则编码已存在，请输入正确日志删除规则编码");
+//        } else {
+//            return Result.success();
+//        }
+//    }
 
     /**
      * 启用日志删除规则
@@ -119,34 +118,34 @@ public class LogDeleteRuleController {
         logDeleteRuleService.enable(logDeleteRule);
         LogDeleteRule logDeleteRule1 = new LogDeleteRule();
         for (LogDeleteRule i : logDeleteRule) {
-            enableTime(i.getLogType(), i.getTimeInterval(), i.getTimeUnit());
+            enableTime(i.getLogType(), i.getRetentionTime(), i.getTimeUnit());
         }
 
         return Result.success();
     }
 
-    /**
-     * 检测日志删除规则是否存在已启用规则
-     *
-     * @param logType 日志类型
-     */
-    @GetMapping("/logDeleteRule/check/enable")
-    public Result<?> checkEnable(@RequestParam("logType") String logType) {
-        if (logDeleteRuleService.countLogType(logType) > 0) {
-            return Result.error("1", "当前日志类型存在已启用删除规则，请关闭已启用删除规则");
-        } else {
-            return Result.success();
-        }
-    }
+//    /**
+//     * 检测日志删除规则是否存在已启用规则
+//     *
+//     * @param logType 日志类型
+//     */
+//    @GetMapping("/logDeleteRule/check/enable")
+//    public Result<?> checkEnable(@RequestParam("logType") String logType) {
+//        if (logDeleteRuleService.countLogType(logType) > 0) {
+//            return Result.error("1", "当前日志类型存在已启用删除规则，请关闭已启用删除规则");
+//        } else {
+//            return Result.success();
+//        }
+//    }
 
     /**
      * 定时器启动
      *
      * @param logType
-     * @param timeInterval
+     * @param retentionTime
      * @param timeUnit
      */
-    public void enableTime(String logType, String timeInterval, String timeUnit) {
+    public void enableTime(String logType, String retentionTime, String timeUnit) {
         String[] a = {"0", "0", "0", "0", "0", "?"};
         Calendar calendar = new GregorianCalendar();
         //获取当天
@@ -159,7 +158,7 @@ public class LogDeleteRuleController {
         //依据时间单位的数据字典拼接corn
         switch (timeUnit) {
             case "101":
-                a[1] = minute + "/" + timeInterval;
+                a[1] = minute + "/" + retentionTime;
                 a[2] = "*";
                 a[3] = "*";
                 a[4] = "*";
@@ -167,7 +166,7 @@ public class LogDeleteRuleController {
 
             case "102":
                 a[1] = minute + "";
-                a[2] = hour + "/" + timeInterval;
+                a[2] = hour + "/" + retentionTime;
                 a[3] = "*";
                 a[4] = "*";
                 break;
@@ -175,7 +174,7 @@ public class LogDeleteRuleController {
             case "103":
                 a[1] = minute + "";
                 a[2] = hour + "";
-                a[3] = day + "/" + timeInterval;
+                a[3] = day + "/" + retentionTime;
                 a[4] = "*";
                 break;
 
@@ -190,7 +189,7 @@ public class LogDeleteRuleController {
                 a[1] = minute + "";
                 a[2] = hour + "";
                 a[3] = 0 + "";
-                a[4] = day + "/" + timeInterval;
+                a[4] = day + "/" + retentionTime;
                 break;
 
         }
@@ -227,11 +226,11 @@ public class LogDeleteRuleController {
         //线程存储
         timeApp.map.put(logType, future);
 
-        switch (logType) {
-            case "102":
-                logInterfaceTime = new Date();
-                break;
-        }
+//        switch (logType) {
+//            case "102":
+//                logInterfaceTime = new Date();
+//                break;
+//        }
     }
 
 
@@ -267,7 +266,7 @@ public class LogDeleteRuleController {
         @Override
         public void run() {
             //线程执行
-            logDeleteRuleService.deleteInterfaceLog(logInterfaceTime);
+//            logDeleteRuleService.deleteInterfaceLog(logInterfaceTime);
 //            System.out.println(logInterfaceTime);
         }
     }

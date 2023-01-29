@@ -17,19 +17,14 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("log_operation_log")
+@TableName("log_log")
 public class OperationLog {
 
     /**
-     * 操作日志Id
+     * 日志主键
      */
     @TableId(type = IdType.AUTO)
-    private int operationLogId;
-
-    /**
-     * 操作日志编号
-     */
-    private String operationLogNum;
+    private int logId;
 
     /**
      * 日志类型
@@ -54,17 +49,22 @@ public class OperationLog {
     /**
      * 操作结果
      */
-    private String operationResult;
+    private String result;
 
     /**
      * 操作人
      */
-    private String operator;
+    private String user;
 
     /**
      * 操作时间
      */
     private Date operationTime;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
 
 
 

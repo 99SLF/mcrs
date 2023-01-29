@@ -5,48 +5,65 @@
 
     <!--    查询记录数-->
     <select id="count" resultType="int">
-        SELECT  count(*) FROM log_abn_log AS abn
-        LEFT JOIN eqi_equipment AS eqi ON abn.equipment_int = eqi.equipment_int
-        LEFT JOIN eqi_device AS dev ON abn.device_id = dev.device_id
+        SELECT  count(*)
+        FROM log_log AS ll
+        LEFT JOIN eqi_equipment AS eqi
+        ON ll.equipment_int = eqi.equipment_int
+        LEFT JOIN eqi_device AS dev
+        ON ll.device_id = dev.device_id
         <where>
-            <if test="equipmentId !=null and equipmentId !=''">
-                and eqi.equipment_id like '%${equipmentId}%'
+            ll.log_type = '108'
+            <if test="equipmentName !=null and equipmentName !=''">
+                and eqi.equipment_name like '%${equipmentName}%'
             </if>
             <if test="deviceName !=null and deviceName !=''">
                 and dev.device_name like '%${deviceName}%'
             </if>
             <if test="abnType !=null and abnType !=''">
-                and abn.abn_type like '%${abnType}%'
+                and ll.abn_type like '%${abnType}%'
             </if>
             <if test="abnLevel !=null and abnLevel !=''">
-                and abn.abn_level like '%${abnLevel}%'
+                and ll.abn_level like '%${abnLevel}%'
             </if>
-            <if test="exchangeTime !=null and exchangeTime !=''">
-                and abn.exchange_time like '%${exchangeTime}%'
+            <if test="equipmentExchangeTime !=null and equipmentExchangeTime !=''">
+                and ll.equipment_exchange_time like '%${equipmentExchangeTime}%'
             </if>
         </where>
     </select>
 
     <!--查询所有-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.log.pojo.AbnLogVo">
-        SELECT * FROM log_abn_log AS abn
-        LEFT JOIN eqi_equipment AS eqi ON abn.equipment_int = eqi.equipment_int
-        LEFT JOIN eqi_device AS dev ON abn.device_id = dev.device_id
+        SELECT
+        eqi.equipment_id,
+        eqi.equipment_name,
+        dev.app_id,
+        dev.device_name,
+        ll.abn_title,
+        ll.abn_type,
+        ll.abn_level,
+        ll.abn_content,
+        ll.equipment_exchange_time
+        FROM log_log AS ll
+        LEFT JOIN eqi_equipment AS eqi
+        ON ll.equipment_int = eqi.equipment_int
+        LEFT JOIN eqi_device AS dev
+        ON ll.device_id = dev.device_id
         <where>
-            <if test="equipmentId !=null and equipmentId !=''">
-                and eqi.equipment_id like '%${equipmentId}%'
+            ll.log_type = '108'
+            <if test="equipmentName !=null and equipmentName !=''">
+                and eqi.equipment_name like '%${equipmentName}%'
             </if>
             <if test="deviceName !=null and deviceName !=''">
                 and dev.device_name like '%${deviceName}%'
             </if>
             <if test="abnType !=null and abnType !=''">
-                and abn.abn_type like '%${abnType}%'
+                and ll.abn_type like '%${abnType}%'
             </if>
             <if test="abnLevel !=null and abnLevel !=''">
-                and abn.abn_level like '%${abnLevel}%'
+                and ll.abn_level like '%${abnLevel}%'
             </if>
-            <if test="exchangeTime !=null and exchangeTime !=''">
-                and abn.exchange_time like '%${exchangeTime}%'
+            <if test="equipmentExchangeTime !=null and equipmentExchangeTime !=''">
+                and ll.equipment_exchange_time like '%${equipmentExchangeTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -59,10 +76,13 @@
 
     <!--添加接口日志-->
     <insert id="addAbnLog" parameterType="com.zimax.mcrs.log.pojo.AbnLog">
-        insert into log_abn_log
-        values (#{abnLogId}, #{abnLogNum}, #{logType}, #{equipmentInt},
+        insert into log_log (log_id,log_type,equipment_int,device_id,abn_title,
+                             abn_type,abn_level,abn_content,equipment_exchange_time,
+                             create_time)
+        values (#{logId}, #{logType}, #{equipmentInt},
                 #{deviceId}, #{abnTitle}, #{abnType},
-                #{abnLevel}, #{abnContent}, #{exchangeTime})
+                #{abnLevel}, #{abnContent}, #{equipmentExchangeTime},
+                #{createTime})
     </insert>
 
 
@@ -73,11 +93,6 @@
         where equipment_int = #{equipmentInt}
     </select>
 
-
-    <!--删除-->
-    <delete id="removeAbnLog" parameterType="int">
-        delete from log_abn_log where abn_log_id = #{abnLogId}
-    </delete>
 
 
 </mapper>

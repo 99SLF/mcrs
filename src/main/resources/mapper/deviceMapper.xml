@@ -95,6 +95,21 @@
             <if test="factoryName !=null and factoryName !=''">
                 and vo.factory_name like '%${factoryName}%'
             </if>
+            <if test="version !=null and version !=''">
+                and vo.version like '%${version}%'
+            </if>
+            <if test="needUpdate !=null and needUpdate !=''">
+                and vo.need_update like '%${needUpdate}%'
+            </if>
+            <if test="registerStatus !=null and registerStatus !=''">
+                and vo.register_status like '%${registerStatus}%'
+            </if>
+            <if test="programInstallationPath !=null and programInstallationPath !=''">
+                and vo.program_installation_path like '%${programInstallationPath}%'
+            </if>
+            <if test="createTime !=null and createTime !=''">
+                and vo.create_time like '%${createTime}%'
+            </if>
         </where>
         GROUP BY
         vo.device_id
@@ -110,7 +125,7 @@
     <!--终端主页查询记录数-->
     <select id="counts" resultType="int">
         SELECT COUNT(*) FROM
-        (SELECT
+            (SELECT
         *
         from
         (SELECT
@@ -183,6 +198,21 @@
             </if>
             <if test="factoryName !=null and factoryName !=''">
                 and vo.factory_name like '%${factoryName}%'
+            </if>
+            <if test="version !=null and version !=''">
+                and vo.version like '%${version}%'
+            </if>
+            <if test="needUpdate !=null and needUpdate !=''">
+                and vo.need_update like '%${needUpdate}%'
+            </if>
+            <if test="registerStatus !=null and registerStatus !=''">
+                and vo.register_status like '%${registerStatus}%'
+            </if>
+            <if test="programInstallationPath !=null and programInstallationPath !=''">
+                and vo.program_installation_path like '%${programInstallationPath}%'
+            </if>
+            <if test="createTime !=null and createTime !=''">
+                and vo.create_time like '%${createTime}%'
             </if>
         </where>
         GROUP BY

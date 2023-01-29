@@ -19,26 +19,6 @@ import java.util.Date;
 @Data
 public class PlcLogVo {
 
-    /**
-     * PLC交换日志Id
-     */
-    @TableId(type = IdType.AUTO)
-    private int plcLogId;
-
-    /**
-     * PLC交换日志编号
-     */
-    private String plcLogNum;
-
-    /**
-     * 日志类型
-     */
-    private String logType;
-
-    /**
-     * 设备主键
-     */
-    private int equipmentInt;
 
     /**
      * 设备资源号
@@ -46,9 +26,9 @@ public class PlcLogVo {
     private String equipmentId;
 
     /**
-     * 终端主键
+     * 设备名称
      */
-    private int deviceId;
+    private String equipmentName;
 
     /**
      * APPID

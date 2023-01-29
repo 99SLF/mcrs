@@ -14,11 +14,115 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/iconfont/iconfont.css">
+    <style>
+        .layui-card {
+            margin-bottom: 0px
+        }
+
+        .layui-layer-adminRight {
+            top: 0px !important;
+            bottom: 0;
+            box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
+            border-radius: 0;
+            overflow: auto
+        }
+
+        .layui-form-item .layui-inline {
+            margin-bottom: 0px !important;
+            margin-right: 0px !important;
+        }
+
+        .layui-form-label {
+            width: 120px !important;
+            padding: 5px 0px !important;
+        }
+
+        .layui-form-item .layui-input-inline {
+            float: left;
+            width: 150px;
+            margin-right: 10px;
+        }
+
+        .layui-input {
+            height: 30px !important;
+        }
+    </style>
 </head>
 <body>
-<div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+
+<%--<div class="layui-fluid">--%>
+<%--    <div class="layui-card">--%>
+<%--        <div class="layui-form layui-card-header layuiadmin-card-header-auto" lay-filter="layuiadmin-device-form" id="layuiadmin-device-form">--%>
+<%--            <div class="layui-form-item">--%>
+<%--                <div class="layui-inline">--%>
+<%--                    <label class="layui-form-label">终端名称：</label>--%>
+<%--                    <div class="layui-input-inline">--%>
+<%--                        <input type="text" name="deviceName" placeholder="" autocomplete="off"--%>
+<%--                               class="layui-input">--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--                <div class="layui-inline">--%>
+<%--                    <label class="layui-form-label">终端类型：</label>--%>
+<%--                    <div class="layui-input-inline">--%>
+<%--                        <select name="deviceSoftwareType" id="deviceSoftwareType" lay-filter="deviceSoftwareType"--%>
+<%--                                type="select">--%>
+<%--                            <option value=""></option>--%>
+<%--                        </select>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--                <div class="layui-inline">--%>
+<%--                    <label class="layui-form-label">启用：</label>--%>
+<%--                    <div class="layui-input-inline">--%>
+<%--                        <select name="enable" id="enable" lay-filter="enable" type="select">--%>
+<%--                            <option value=""></option>--%>
+<%--                        </select>--%>
+<%--                    </div>--%>
+<%--                    <div class="layui-inline layui-search" style="padding-left: 50px">--%>
+<%--                        <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-device-list-search"--%>
+<%--                                id="LAY-app-device-list-search">--%>
+<%--                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>--%>
+<%--                        </button>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+
+<%--        <div class="layui-card-body">--%>
+<%--            <div class="layui-toolbar" id="toolbar" hidden="true">--%>
+<%--                <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i--%>
+<%--                        class="layui-icon layui-icon-add-circle-fine"></i>终端注册--%>
+<%--                </button>--%>
+<%--                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i--%>
+<%--                        class="layui-icon layui-icon-delete"></i>删除--%>
+<%--                </button>--%>
+<%--                <button class="layui-btn layui-btn-normal layui-btn-sm " lay-event="upgrade">--%>
+<%--                    <i class="layui-icon layui-icon-upload-circle"></i>升级--%>
+<%--                </button>--%>
+
+<%--                <button class="layui-btn layui-btn-normal layui-btn-sm " lay-event="rollback"--%>
+<%--                        style="background-color: #ee9900">--%>
+<%--                    <i class="layui-icon layui-icon-transfer"></i>回退--%>
+<%--                </button>--%>
+<%--            </div>--%>
+
+<%--            <table id="LAY-app-device-list" lay-filter="LAY-app-device-list"></table>--%>
+
+<%--            <script type="text/html" id="table-device-list">--%>
+<%--                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i--%>
+<%--                        class="layui-icon layui-icon-edit"></i>编辑</a>--%>
+<%--                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="configurationFile"><i--%>
+<%--                        class="layui-icon layui-icon-edit"></i>配置文件</a>--%>
+<%--                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i--%>
+<%--                        class="layui-icon layui-icon-delete"></i>删除</a>--%>
+<%--            </script>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</div>--%>
+<div class="layui-card">
+    <script type="text/html" id="toolbar">
+        <div class="layui-form layuiadmin-card-header-auto" lay-filter="layuiadmin-device-form"
+             id="layuiadmin-device-form">
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">终端名称：</label>
@@ -43,45 +147,27 @@
                             <option value=""></option>
                         </select>
                     </div>
-                    <div class="layui-inline layui-search" style="padding-left: 50px">
-                        <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-devicelist-search"
-                                id="LAY-app-devicelist-search">
-                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                        </button>
-                    </div>
+                </div>
+                <div class="layui-inline layui-hide">
+                    <button id="LAY-app-device-list-search" class="layui-btn layuiadmin-btn-list" lay-submit
+                            lay-filter="LAY-app-device-list-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
                 </div>
             </div>
         </div>
+    </script>
+    <div class="layui-card-body">
+        <table id="LAY-app-device-list" lay-filter="LAY-app-device-list"></table>
 
-        <div class="layui-card-body">
-            <div class="layui-toolbar" id="toolbar" hidden="true">
-                <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i
-                        class="layui-icon layui-icon-add-circle-fine"></i>终端注册
-                </button>
-                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i
-                        class="layui-icon layui-icon-delete"></i>删除
-                </button>
-                <button class="layui-btn layui-btn-normal layui-btn-sm " lay-event="upgrade">
-                    <i class="layui-icon layui-icon-upload-circle"></i>升级
-                </button>
-
-                <button class="layui-btn layui-btn-normal layui-btn-sm " lay-event="rollback"
-                        style="background-color: #ee9900">
-                    <i class="layui-icon layui-icon-transfer"></i>回退
-                </button>
-            </div>
-
-            <table id="LAY-app-device-list" lay-filter="LAY-app-device-list"></table>
-
-            <script type="text/html" id="table-device-list">
-                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
-                        class="layui-icon layui-icon-edit"></i>编辑</a>
-                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="configurationFile"><i
-                        class="layui-icon layui-icon-edit"></i>配置文件</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
-                        class="layui-icon layui-icon-delete"></i>删除</a>
-            </script>
-        </div>
+        <script type="text/html" id="table-device-list">
+            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="configurationFile"><i
+                    class="layui-icon layui-icon-edit"></i>配置文件</a>
+            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
+                    class="layui-icon layui-icon-edit"></i>编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+                    class="layui-icon layui-icon-delete"></i>删除</a>
+        </script>
     </div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
@@ -99,6 +185,8 @@
     var form = layui.form;
     var $ = layui.jquery;
     var util = layui.util;
+    var admin = layui.admin;
+    var view = layui.view;
 
     //全局参数
     var req_data;
@@ -106,53 +194,118 @@
     //功能名
     var funName = "list";
 
+    // 高级查询参数
+    var advancedFormData = {};
+    // 焦点名称
+    var focusName = null;
+
     var hiddenFields = [];
 
     //监听搜索
-    form.on("submit(LAY-app-devicelist-search)", function (data) {
+    form.on("submit(LAY-app-device-list-search)", function (data) {
         var field = data.field;
+        reloadData(field);
+        var formData = {
+            deviceName: field.deviceName,
+            deviceSoftwareType: field.deviceSoftwareType,
+            enable: field.enable
+        };
+        form.val("layuiadmin-device-form", formData);
+        advancedFormData = $.extend(advancedFormData, formData);
+        // table.reload("LAY-app-device-list-reload", {
+        //     where: field
+        // });
+    });
+
+    function reloadData(formData) {
         table.reload("LAY-app-device-list-reload", {
-            where: field
+            where: formData
         });
-    });
-
-    //软件类型下拉框监听事件
-    form.on("select(deviceSoftwareType)", function (data) {
-        var submit = $("#LAY-app-devicelist-search");
-        submit.click();
-    });
-
-    //启用下拉框监听事件
-    form.on("select(enable)", function (data) {
-        var submit = $("#LAY-app-devicelist-search");
-        submit.click();
-    });
-
-    //获取软件类型的下拉值
-    layui.admin.renderDictSelect({
-        elem: "#deviceSoftwareType",
-        dictTypeId: "DEVICE_SOFTWARE_TYPE",
-    });
-    form.render();
-
-
-    //获取启用类型的下拉值
-    layui.admin.renderDictSelect({
-        elem: "#enable",
-        dictTypeId: "IS_USE",
-    });
-    form.render();
-    //文本框回车事件
-    $(".layui-input").on("keydown", function (event) {
-        if (event.keyCode == 13) {
-            var submit = $("#LAY-app-devicelist-search");
-            submit.click();
-            return false;
+        formReder();
+        if (focusName) {
+            $("input[name=" + focusName + "]").focus();
         }
-    });
+    }
+
+    function setFormData(data) {
+        advancedFormData = data;
+        reloadData(data);
+        form.val("layuiadmin-device-form", {
+            deviceName: data.deviceName,
+            deviceSoftwareType: data.deviceSoftwareType,
+            enable: data.enable
+        });
+    }
+
+    // //软件类型下拉框监听事件
+    // form.on("select(deviceSoftwareType)", function (data) {
+    //     var submit = $("#LAY-app-device-list-search");
+    //     submit.click();
+    // });
+    //
+    // //启用下拉框监听事件
+    // form.on("select(enable)", function (data) {
+    //     var submit = $("#LAY-app-device-list-search");
+    //     submit.click();
+    // });
+    //
+    // //获取软件类型的下拉值
+    // layui.admin.renderDictSelect({
+    //     elem: "#deviceSoftwareType",
+    //     dictTypeId: "DEVICE_SOFTWARE_TYPE",
+    // });
+    // form.render();
+    //
+    //
+    // //获取启用类型的下拉值
+    // layui.admin.renderDictSelect({
+    //     elem: "#enable",
+    //     dictTypeId: "IS_USE",
+    // });
+    // form.render();
+
+
+    // //文本框回车事件
+    // $(".layui-input").on("keydown", function (event) {
+    //     if (event.keyCode == 13) {
+    //         var submit = $("#LAY-app-device-list-search");
+    //         submit.click();
+    //         return false;
+    //     }
+    // });
 
 
     var active = {
+        //查询按钮
+        search: function () {
+            var submit = $("#LAY-app-device-list-search");
+            submit.click();
+            return false;
+        },
+        //高级搜索
+        query: function () {
+            var url = "<%=request.getContextPath() %>/equipment/device/device_form_query.jsp";
+            admin.popupRight({
+                type: 2,
+                content: [url, "yes"],
+                btn: ["查询", "重置", "取消"],
+                success: function (layero, index) {
+                    var dataJson = {
+                        win: window,
+                        data: advancedFormData
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function (index, layero) {
+                    var submit = layero.find("iframe").contents().find("#LAY-app-device-search-advanced");
+                    submit.click();
+                    top.layer.close(index);
+                },
+                btn2: function (index, layero) {
+                    layero.find("iframe")[0].contentWindow.reset();
+                }
+            });
+        },
         //终端注册
         add: function () {
             top.layer.open({
@@ -290,29 +443,6 @@
 
 
         },
-        //升级跳转
-        <%--upgrade: function () {--%>
-        <%--    var checkStatus = table.checkStatus("LAY-app-device-list-reload");--%>
-        <%--    var data = checkStatus.data;--%>
-        <%--    if (data.length == 0) {--%>
-        <%--        layer.msg("请至少选中一条记录！");--%>
-        <%--    }--%>
-        <%--    if (data.length > 0) {--%>
-        <%--        var deviceIds = new Array();--%>
-        <%--        for (var i = 0; i < data.length; i++) {--%>
-        <%--            deviceIds[i] = data[i].deviceId;--%>
-        <%--        }--%>
-        <%--        layer.confirm("确定升级所选终端？", {--%>
-        <%--            icon: 3,--%>
-        <%--            title: "系统提示"--%>
-        <%--        }, function (index) {--%>
-        <%--            top.layui.index.openTabsPage("<%=request.getContextPath() %>/update/update_package_selectVersion.jsp?deviceIds=" + deviceIds.toString().replace(",","_"), "选择更新包");--%>
-        <%--            layer.close(index);--%>
-        <%--            table.reload("LAY-app-device-list-reload");--%>
-        <%--        });--%>
-
-        <%--    }--%>
-        <%--},--%>
 
         //回退
         rollback: function () {
@@ -425,7 +555,6 @@
                                     minVersion: minVersion,
                                     deviceSoftwareType: deviceSoftwareType
                                 };
-                                debugger;
                                 layero.find("iframe")[0].contentWindow.SetData(dataJson);
                             },
                             yes: function (index, layero) {
@@ -575,7 +704,31 @@
         limit: 10,
         limits: [10, 15, 20, 30],
         toolbar: "#toolbar",
-        defaultToolbar: ["filter"],
+        defaultToolbar: [{
+            title: "查询",
+            layEvent: "search",
+            icon: "layui-icon layui-icon-search layuiadmin-button-btn",
+        }, {
+            title: "高级查询",
+            layEvent: "query",
+            icon: "icon iconfont icon-gaojichaxun",
+        }, {
+            title: "终端注册",
+            layEvent: "add",
+            icon: "layui-icon layui-icon-add-circle-fine",
+        }, {
+            title: "批量删除",
+            layEvent: "batchdel",
+            icon: "layui-icon layui-icon-delete ",
+        }, {
+            title: "升级",
+            layEvent: "upgrade",
+            icon: "layui-icon layui-icon-upload-circle",
+        }, {
+            title: "回退",
+            layEvent: "rollback",
+            icon: "layui-icon layui-icon-transfer",
+        }, "filter"],
         colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;
@@ -749,7 +902,46 @@
             toolbar: "#table-device-list"
         }]]
     });
+    formReder();
 
+    function formReder() {
+        // 文本框回车事件
+        $(".layui-input").on("keydown", function (event) {
+            if (event.keyCode == 13) {
+                focusName = event.target.name;
+                var submit = $("#LAY-app-device-list-search");
+                submit.click();
+                return false;
+            }
+        });
+
+        //软件类型下拉框监听事件
+        form.on("select(deviceSoftwareType)", function (data) {
+            var submit = $("#LAY-app-device-list-search");
+            submit.click();
+        });
+
+        //启用下拉框监听事件
+        form.on("select(enable)", function (data) {
+            var submit = $("#LAY-app-device-list-search");
+            submit.click();
+        });
+
+        //获取软件类型的下拉值
+        layui.admin.renderDictSelect({
+            elem: "#deviceSoftwareType",
+            dictTypeId: "DEVICE_SOFTWARE_TYPE",
+        });
+        form.render();
+
+
+        //获取启用类型的下拉值
+        layui.admin.renderDictSelect({
+            elem: "#enable",
+            dictTypeId: "IS_USE",
+        });
+        form.render();
+    }
 
     //监听操作事件
     table.on("tool(LAY-app-device-list)", function (e) {

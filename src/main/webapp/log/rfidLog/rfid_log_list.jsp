@@ -21,12 +21,13 @@
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item layui-col-space12">
                 <div class="layui-inline">
-                    <label class="layui-form-label">设备资源号：</label>
+                    <label class="layui-form-label">设备名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="equipmentId" placeholder="" autocomplete="off"
+                        <input type="text" name="equipmentName" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
+
                 <div class="layui-inline">
                     <label class="layui-form-label">终端名称：</label>
                     <div class="layui-input-inline">
@@ -44,21 +45,13 @@
                 </div>
 
                 <div class="layui-inline">
-                    <label class="layui-form-label">设备接入IP：</label>
+                    <label class="layui-form-label">参数名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="equipmentIp" placeholder="" autocomplete="off"
+                        <input type="text" name="parameterName" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
 
-
-                <div class="layui-inline">
-                    <label class="layui-form-label">设备接入端口：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="equipmentContinuePort" placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">创建时间：</label>
                     <div class="layui-input-inline">
@@ -268,31 +261,22 @@
             title: "序号",
             type: "numbers"
         }, {
-            field: "rfidLogNum",
-            title: "日志编号",
-            align: "center",
-            minWidth: 150,
-            hide: isHidden("rfidLogNum")
-        }, {
-            field: "logType",
-            title: "日志类型",
-            align: "center",
-            minWidth: 100,
-            hide: isHidden("logType"),
-            templet: function (d) {
-                return layui.admin.getDictText("LOG_TYPE", d.logType);
-            }
-        }, {
             field: "equipmentId",
             title: "设备资源号",
             align: "center",
             minWidth: 150,
             hide: isHidden("equipmentId")
         }, {
+            field: "equipmentName",
+            title: "设备名称",
+            align: "left",
+            minWidth: 150,
+            hide: isHidden("equipmentName")
+        }, {
             field: "aPPId",
             title: "APPID",
             align: "center",
-            minWidth: 200,
+            minWidth: 300,
             hide: isHidden("aPPId")
         }, {
             field: "deviceName",
@@ -321,13 +305,13 @@
         }, {
             field: "parameterName",
             title: "参数名称",
-            align: "center",
+            align: "left",
             minWidth: 120,
             hide: isHidden("parameterName")
         },{
             field: "parameterNum",
             title: "参数值",
-            align: "center",
+            align: "left",
             minWidth: 120,
             hide: isHidden("parameterNum")
         }, {
@@ -343,7 +327,11 @@
             minWidth: 200,
             hide: isHidden("createTime"),
             templet: function (d) {
-                return layui.util.toDateString(d.createTime);
+                if(d.createTime!=null){
+                    return layui.util.toDateString(d.createTime);
+                }else{
+                    return '';
+                }
             }
         }]]
     });

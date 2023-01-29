@@ -36,12 +36,12 @@ public class LogDeleteRuleService {
      *
      * @return
      */
-    public List<LogDeleteRuleVo> queryLogDeleteRule(String page, String limit, String deleteRuleNum, String deleteRuleTitle, String ruleLevel, String deleteRuleType, String creator, String order, String field) {
+    public List<LogDeleteRuleVo> queryLogDeleteRule(String page, String limit, String deleteRuleTitle, String logType, String updateName, String updateTime, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
             map.put("order", "desc");
-            map.put("field", "create_time");
+            map.put("field", "ldr.log_type");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));
@@ -50,37 +50,36 @@ public class LogDeleteRuleService {
             map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
             map.put("limit", Integer.parseInt(limit));
         }
-        map.put("deleteRuleNum", deleteRuleNum);
         map.put("deleteRuleTitle", deleteRuleTitle);
-        map.put("ruleLevel", ruleLevel);
-        map.put("deleteRuleType", deleteRuleType);
-        map.put("creator", creator);
+        map.put("logType", logType);
+        map.put("updateName", updateName);
+        map.put("updateTime", updateTime);
         return logDeleteRuleMapper.queryAll(map);
     }
 
     /**
      * 查询记录
      */
-    public int count(String deleteRuleNum) {
-        return logDeleteRuleMapper.count(deleteRuleNum);
+    public int count(String deleteRuleTitle, String logType, String updateName, String updateTime) {
+        return logDeleteRuleMapper.count(deleteRuleTitle,logType,updateName,updateTime);
     }
 
 
-    /**
-     * 添加日志删除规则
-     */
-    public void addLogDeleteRule(LogDeleteRule logDeleteRule) {
-        logDeleteRuleMapper.addLogDeleteRule(logDeleteRule);
-    }
-
-    /**
-     * 删除日志删除规则
-     *
-     * @param ruleDeleteId 日志删除规则主键
-     */
-    public void removeLogDeleteRule(int ruleDeleteId) {
-        logDeleteRuleMapper.removeLogDeleteRule(ruleDeleteId);
-    }
+//    /**
+//     * 添加日志删除规则
+//     */
+//    public void addLogDeleteRule(LogDeleteRule logDeleteRule) {
+//        logDeleteRuleMapper.addLogDeleteRule(logDeleteRule);
+//    }
+//
+//    /**
+//     * 删除日志删除规则
+//     *
+//     * @param ruleDeleteId 日志删除规则主键
+//     */
+//    public void removeLogDeleteRule(int ruleDeleteId) {
+//        logDeleteRuleMapper.removeLogDeleteRule(ruleDeleteId);
+//    }
 
     /**
      * 更新日志删除规则
@@ -88,25 +87,28 @@ public class LogDeleteRuleService {
      * @param logDeleteRule 日志删除规则
      */
     public void updateLogDeleteRule(LogDeleteRule logDeleteRule) {
+        IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
+        logDeleteRule.setUpdater(userObject.getUserId());
+        logDeleteRule.setUpdateTime(new Date());
         logDeleteRuleMapper.updateLogDeleteRule(logDeleteRule);
     }
 
-    /**
-     * 批量删除日志删除规则
-     */
-    public void deleteLogDeleteRules(List<Integer> ruleDeleteId) {
-        logDeleteRuleMapper.deleteLogDeleteRules(ruleDeleteId);
-    }
-
-
-    /**
-     * 检测删除规则是否存在
-     *
-     * @param deleteRuleNum 日志删除规则编码
-     */
-    public int checkLogDeleteRule(String deleteRuleNum) {
-        return logDeleteRuleMapper.checkLogDeleteRule(deleteRuleNum);
-    }
+//    /**
+//     * 批量删除日志删除规则
+//     */
+//    public void deleteLogDeleteRules(List<Integer> ruleDeleteId) {
+//        logDeleteRuleMapper.deleteLogDeleteRules(ruleDeleteId);
+//    }
+//
+//
+//    /**
+//     * 检测删除规则是否存在
+//     *
+//     * @param deleteRuleNum 日志删除规则编码
+//     */
+//    public int checkLogDeleteRule(String deleteRuleNum) {
+//        return logDeleteRuleMapper.checkLogDeleteRule(deleteRuleNum);
+//    }
 
     /**
      * 启用日志删除规则
@@ -123,19 +125,19 @@ public class LogDeleteRuleService {
         }
     }
 
-    /**
-     * 查询启用日志类型的日志删除规则是否存在已启用规则
-     */
-    public int countLogType(String logType){
-        return logDeleteRuleMapper.checkEnable(logType);
-    }
+//    /**
+//     * 查询启用日志类型的日志删除规则是否存在已启用规则
+//     */
+//    public int countLogType(String logType){
+//        return logDeleteRuleMapper.checkEnable(logType);
+//    }
 
-    /**
-     * 接口日志定时删除
-     */
-    public void deleteInterfaceLog(Date logInterfaceTime){
-        logDeleteRuleMapper.deleteInterfaceLog(logInterfaceTime);
-    }
+//    /**
+//     * 接口日志定时删除
+//     */
+//    public void deleteInterfaceLog(Date logInterfaceTime){
+//        logDeleteRuleMapper.deleteInterfaceLog(logInterfaceTime);
+//    }
 
 
 }

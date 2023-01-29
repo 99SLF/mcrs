@@ -15,26 +15,18 @@ import lombok.Data;
 @Data
 public class AbnLogVo {
 
-    /**
-     * 异常日志Id
-     */
-    @TableId(type = IdType.AUTO)
-    private int abnLogId;
 
-    /**
-     * 异常日志编号
-     */
-    private String abnLogNum;
-
-    /**
-     * 日志类型
-     */
-    private String logType;
 
     /**
      * 设备资源号
      */
     private String equipmentId;
+
+
+    /**
+     * 设备名称
+     */
+    private String equipmentName;
 
     /**
      * APPId
@@ -69,7 +61,7 @@ public class AbnLogVo {
     /**
      *交互时间
      */
-    private String exchangeTime;
+    private String equipmentExchangeTime;
 
 
 }

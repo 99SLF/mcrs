@@ -34,7 +34,8 @@ public class DeviceService {
      * 查询所有终端信息
      * @return
      */
-    public List<DeviceVo> queryDevices(String  page, String limit, String equipmentId, String deviceSoftwareType,String enable,String deviceName, String processName, String factoryName, String order, String field) {
+    public List<DeviceVo> queryDevices(String  page, String limit, String equipmentId, String deviceSoftwareType,String enable,String deviceName, String processName, String factoryName,
+                                       String version,String needUpdate,String registerStatus,String programInstallationPath,String createTime, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -54,14 +55,19 @@ public class DeviceService {
         map.put("deviceName",deviceName);
         map.put("processName",processName);
         map.put("factoryName",factoryName);
+        map.put("version",version);
+        map.put("needUpdate",needUpdate);
+        map.put("registerStatus",registerStatus);
+        map.put("programInstallationPath",programInstallationPath);
+        map.put("createTime",createTime);
         return deviceMapper.queryAll(map);
     }
 
     /**
      * 终端主页查询记录
      */
-    public int counts(String equipmentId, String deviceSoftwareType,String enable, String deviceName, String processName, String factoryName){
-        return deviceMapper.counts(equipmentId,deviceSoftwareType,enable, deviceName,processName,factoryName);
+    public int counts(String equipmentId, String deviceSoftwareType,String enable, String deviceName, String processName, String factoryName,String version,String needUpdate,String registerStatus,String programInstallationPath,String createTime){
+        return deviceMapper.counts(equipmentId,deviceSoftwareType,enable, deviceName,processName,factoryName,version,needUpdate,registerStatus,programInstallationPath,createTime);
     }
 
 

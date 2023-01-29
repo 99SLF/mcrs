@@ -19,26 +19,24 @@ import java.util.Date;
 public class DeviceExchangeLogVo {
 
     /**
-     * 设备交换日志主键
+     * 日志状态
      */
-    @TableId(type = IdType.AUTO)
-    private int deviceExchangeLogId;
-
-
-    /**
-     * 设备交换日志编号
-     */
-    private String deviceExchangeLogNum;
-
-    /**
-     * 日志类型
-     */
-    private String logType;
+    private String logStatus;
 
     /**
      * 设备资源号
      */
     private String equipmentId;
+
+    /**
+     * 设备名称
+     */
+    private String equipmentName;
+
+    /**
+     * APPId
+     */
+    private String APPId;
 
     /**
      * 设备连接IP
@@ -51,9 +49,9 @@ public class DeviceExchangeLogVo {
     private String equipmentContinuePort;
 
     /**
-     * APPId
+     * 基地名称
      */
-    private String APPId;
+    private String matrixName;
 
     /**
      * 工厂名称
@@ -84,7 +82,7 @@ public class DeviceExchangeLogVo {
     /**
      * 交互时间
      */
-    private String exchangeTime;
+    private String equipmentExchangeTime;
 
 
 }

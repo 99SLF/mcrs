@@ -29,11 +29,11 @@ public interface AbnLogMapper {
      * 计数
      * @return
      */
-    int count(@Param("equipmentId") String equipmentId,
+    int count(@Param("equipmentName") String equipmentId,
               @Param("deviceName") String deviceName,
               @Param("abnType") String abnType,
               @Param("abnLevel") String abnLevel,
-              @Param("exchangeTime") String exchangeTime
+              @Param("equipmentExchangeTime") String equipmentExchangeTime
     );
 
     /**
@@ -48,10 +48,7 @@ public interface AbnLogMapper {
      */
     int checkEquipment(@Param("equipmentInt") int equipmentInt);
 
-    /**
-     * 删除功能
-     */
-    public void removeAbnLog(int abnLogId);
+
 
 
 }

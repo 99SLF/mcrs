@@ -195,6 +195,7 @@
     var isExist = false;
     var submit = false;
     var win = null;
+    var equipmentInt=null;
 
     var table = layui.table;
 
@@ -217,9 +218,10 @@
     form.render();
 
     function SetData(data) {
+        debugger;
         win = data.win ? data.win : window;
         var data = data.data;
-        debugger;
+        equipmentInt = data.equipmentInt;
         form.val("layuiadmin-app-form-list", {
             "equipmentInt": data.equipmentInt,
             "equipmentId": data.equipmentId,
@@ -340,54 +342,13 @@
     });
 
     form.render();
-    // //日期
-    // laydate.render({
-    // 	elem: '#invaldate',
-    // 	format: 'yyyy-MM-dd',
-    // 	//解决时间选择器一闪而过的情况
-    // 	trigger: 'click',
-    // });
-    //
-    // var startDate = laydate.render({
-    // 	elem: '#star_time',
-    // 	//设置日期的类型
-    // 	type: 'date',
-    // 	trigger:'click',
-    // 	done: function(value, date) {
-    // 		if (value != "") {
-    // 			date.month = date.month - 1;
-    // 			date.date = date.date + 1;
-    // 			endDate.config.min = date;
-    // 		} else {
-    // 			endDate.config.min = startDate.config.min;
-    // 		}
-    // 	},
-    // });
-    //
-    // var endDate = laydate.render({
-    // 	//绑定的控件名称
-    // 	elem: '#end_time',
-    // 	//设置日期的类型
-    // 	type: 'date',
-    // 	//theme: '#2c78da',
-    // 	trigger: 'click',
-    // 	done: function(value, date) {
-    // 		if (value != "") {
-    // 			date.month = date.month - 1;
-    // 			date.date = date.date - 1;
-    // 			startDate.config.max = date;
-    // 		} else {
-    // 			startDate.config.max = endDate.config.max;
-    // 		}
-    // 	}
-    // });
 
     //判断设备连接Ip是否已被占用
     $("#equipmentIp").blur(function () {
         var equipmentIp = $("#equipmentIp").val();
         if (equipmentIp != null && equipmentIp != "") {
             $.ajax({
-                url: "<%= request.getContextPath() %>/equipment/equipmentIp/check/isExist?equipmentIp=" + equipmentIp,
+                url: "<%= request.getContextPath() %>/equipment/equipmentIp/check/isExist?equipmentIp=" + equipmentIp + "&equipmentInt=" + equipmentInt,
                 type: "GET",
                 cache: false,
                 contentType: "text/json",

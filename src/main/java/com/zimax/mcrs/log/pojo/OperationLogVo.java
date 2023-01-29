@@ -19,21 +19,6 @@ import java.util.Date;
 public class OperationLogVo {
 
     /**
-     * 操作日志Id
-     */
-    private int operationLogId;
-
-    /**
-     * 操作日志编号
-     */
-    private String operationLogNum;
-
-    /**
-     * 日志类型
-     */
-    private String logType;
-
-    /**
      * 日志状态
      */
     private String logStatus;
@@ -51,7 +36,7 @@ public class OperationLogVo {
     /**
      * 操作结果
      */
-    private String operationResult;
+    private String result;
 
     /**
      * 操作人

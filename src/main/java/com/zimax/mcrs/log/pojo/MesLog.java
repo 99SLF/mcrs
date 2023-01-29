@@ -19,24 +19,24 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("log_mes_log")
+@TableName("log_log")
 public class MesLog {
 
     /**
-     * MES交换日志Id
+     * 日志主键
      */
     @TableId(type = IdType.AUTO)
-    private int mesLogId;
-
-    /**
-     * MES交换日志编号
-     */
-    private String mesLogNum;
+    private int logId;
 
     /**
      * 日志类型
      */
     private String logType;
+
+    /**
+     * 日志类型
+     */
+    private String logStatus;
 
     /**
      * 设备主键
@@ -51,7 +51,7 @@ public class MesLog {
     /**
      * 交互内容
      */
-    private String content;
+    private String mesContent;
 
     /**
      * 创建人

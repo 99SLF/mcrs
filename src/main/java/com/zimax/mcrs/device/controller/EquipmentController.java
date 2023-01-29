@@ -5,6 +5,8 @@ import com.zimax.cap.party.IUserObject;
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.device.pojo.Equipment;
 import com.zimax.mcrs.device.service.EquipmentService;
+import com.zimax.mcrs.log.pojo.InterfaceLog;
+import com.zimax.mcrs.log.service.InterfaceLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,8 @@ public class EquipmentController {
 
     @Autowired
     private EquipmentService equipmentService;
+
+//    @Autowired InterfaceLogService interfaceLogService;
 
     /**
      * 查询
@@ -52,6 +56,14 @@ public class EquipmentController {
     @PostMapping("/equipment/add")
     public Result<?> addEquipment(@RequestBody Equipment equipment) {
         equipmentService.addEquipment(equipment);
+//        InterfaceLog interfaceLog = new InterfaceLog();
+//        interfaceLog.setEquipmentInt(equipment.getEquipmentInt());
+//        interfaceLog.setInterfaceType("101");
+//        interfaceLog.setJson(equipment.toString());
+//        interfaceLog.setResult("101");
+//        interfaceLog.setSource("Web");
+//        interfaceLog.setInterfaceName("/equipment/equipment/add");
+//        interfaceLogService.addInterfaceLog(interfaceLog);
         return Result.success();
     }
 
@@ -118,10 +130,11 @@ public class EquipmentController {
      * 检测设备连接IP是否存在
      *
      * @param equipmentIp 设备连接IP
+     * @param equipmentInt 设备主键
      */
     @GetMapping("/equipmentIp/check/isExist")
-    public Result<?> checkEquipmentIp(@RequestParam("equipmentIp") String equipmentIp) {
-        if(equipmentService.checkEquipmentIp(equipmentIp)>0){
+    public Result<?> checkEquipmentIp(@RequestParam("equipmentIp") String equipmentIp,@RequestParam("equipmentInt") String equipmentInt) {
+        if(equipmentService.checkEquipmentIp(equipmentIp,equipmentInt)>0){
             return Result.error("1","当前IP已被占用存在，请重新输入正确IP");
         }else {
             return Result.success();

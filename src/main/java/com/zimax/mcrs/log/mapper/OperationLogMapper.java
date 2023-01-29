@@ -31,15 +31,9 @@ public interface OperationLogMapper {
     int count(@Param("logStatus") String logStatus,
               @Param("operationType") String operationType,
               @Param("operationTime") String operationTime,
-              @Param("operationResult") String operationResult,
+              @Param("result") String result,
               @Param("operateName") String operateName
     );
-
-
-    /**
-     * 删除功能
-     */
-    public void removeOperationLog(int operationLogId);
 
     /**
      * 新建操作日志

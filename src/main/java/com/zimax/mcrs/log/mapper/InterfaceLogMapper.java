@@ -53,10 +53,6 @@ public interface InterfaceLogMapper {
      */
     int checkEquipment(@Param("equipmentInt") int equipmentInt);
 
-    /**
-     * 删除功能
-     */
-    public void removeInterfaceLog(int interfaceLogId);
 
 
 }

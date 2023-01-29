@@ -148,8 +148,8 @@ public class EquipmentService {
      *
      * @param equipmentIp 设备连接Ip
      */
-    public int checkEquipmentIp(String equipmentIp) {
-        return equipmentMapper.checkEquipmentIp(equipmentIp);
+    public int checkEquipmentIp(String equipmentIp,String equipmentInt) {
+        return equipmentMapper.checkEquipmentIp(equipmentIp,equipmentInt);
     }
 
     /**

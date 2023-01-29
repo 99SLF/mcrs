@@ -402,7 +402,7 @@
             top.layer.open({
                 type: 2,
                 title: "查看配置文件详情",
-                content: "<%= request.getContextPath() %>/updateConfigFile/list.jsp",
+                content: "<%= request.getContextPath() %>/updateConfigFile/view_list.jsp",
                 area: ["800px", "560px"],
                 resize: false,
                 btn: ["确定", "取消"],

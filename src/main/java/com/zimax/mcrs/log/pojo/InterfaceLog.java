@@ -17,29 +17,19 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("log_interface_log")
+@TableName("log_log")
 public class InterfaceLog {
 
     /**
-     * 接口日志Id
+     * 日志主键
      */
     @TableId(type = IdType.AUTO)
-    private int interfaceLogId;
-
-    /**
-     * 接口日志编号
-     */
-    private String interfaceLogNum;
+    private int logId;
 
     /**
      * 日志类型
      */
     private String logType;
-
-    /**
-     * 来源
-     */
-    private String source;
 
     /**
      * 设备主键
@@ -52,39 +42,44 @@ public class InterfaceLog {
     private int deviceId;
 
     /**
-     * 接口名称
+     * 来源
      */
-    private String interfaceName;
+    private String source;
 
     /**
-     *创建时间
+     * 接口类型
+     */
+    private String interfaceType;
+
+    /**
+     * 创建时间
      */
     private Date createTime;
 
     /**
      * JSON包
      */
-    private String JSONPage;
+    private String json;
 
     /**
      * 处理结果
      */
-    private String disposeResult;
+    private String result;
 
     /**
      * 开始时间
      */
-    private Date startTime;
+    private Date disposeStartTime;
 
     /**
      * 结束时间
      */
-    private Date endTime;
+    private Date disposeEndTime;
 
     /**
      * 调用者
      */
-    private String invoker;
+    private String user;
 
     /**
      * 处理时长
@@ -92,7 +87,7 @@ public class InterfaceLog {
     private Date disposeTime;
 
     /**
-     * 接口类型
+     * 接口名称
      */
-    private String interfaceType;
+    private String interfaceName;
 }

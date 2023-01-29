@@ -18,15 +18,6 @@ import java.util.Date;
 @Data
 
 public class LogDeleteRuleVo {
-    /**
-     * 日志主键
-     */
-    private int ruleDeleteId;
-
-    /**
-     * 删除规则编码
-     */
-    private String deleteRuleNum;
 
     /**
      * 删除规则标题
@@ -39,11 +30,6 @@ public class LogDeleteRuleVo {
     private String enable;
 
     /**
-     * 规则等级
-     */
-    private String ruleLevel;
-
-    /**
      * 日志删除规则类型
      */
     private String deleteRuleType;
@@ -54,9 +40,9 @@ public class LogDeleteRuleVo {
     private String logType;
 
     /**
-     * 时间间隔
+     * 保留时间数
      */
-    private String  timeInterval;
+    private String  retentionTime;
 
     /**
      * 时间单位
@@ -64,19 +50,9 @@ public class LogDeleteRuleVo {
     private String timeUnit;
 
     /**
-     * 创建人
-     */
-    private String creator;
-
-    /**
-     * 创建时间
-     */
-    private String createTime;
-
-    /**
      * 修改人
      */
-    private String updater;
+    private String updateName;
 
     /**
      * 修改时间

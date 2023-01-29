@@ -23,15 +23,10 @@ import java.util.Date;
 public class AbnLog {
 
     /**
-     * 异常日志Id
+     * 日志Id
      */
     @TableId(type = IdType.AUTO)
-    private int abnLogId;
-
-    /**
-     * 异常日志编号
-     */
-    private String abnLogNum;
+    private int logId;
 
     /**
      * 日志类型
@@ -71,7 +66,14 @@ public class AbnLog {
     /**
      *交互时间
      */
-    private Date exchangeTime;
+    private Date equipmentExchangeTime;
+
+    /**
+     *创建时间
+     */
+    private Date createTime;
+
+
 
 
 }

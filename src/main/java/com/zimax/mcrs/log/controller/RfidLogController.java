@@ -28,20 +28,19 @@ public class RfidLogController {
      *
      * @param limit  条数
      * @param page 页码
-     * @param equipmentId 设备资源号
+     * @param equipmentName 设备名称
      * @param deviceName 终端名称
      * @param rfidId RFID-ID
-     * @param equipmentIp 设备连接IP
-     * @param equipmentContinuePort 设备连接端口
+     * @param parameterName 参数名称
      * @param createTime 创建时间
      * @param order
      * @param field
      * @return
      */
     @GetMapping("/rfidLog/query")
-    public Result<?> query(String limit, String page, String equipmentId, String deviceName, String rfidId, String equipmentIp,String equipmentContinuePort, String createTime, String order, String field) {
-        List rfidLogList = rfidLogService.queryRfidLog(limit,page, equipmentId, deviceName,rfidId ,equipmentIp,equipmentContinuePort,createTime,order, field);
-        return Result.success(rfidLogList, rfidLogService.count(equipmentId, deviceName,rfidId ,equipmentIp,equipmentContinuePort,createTime));
+    public Result<?> query(String limit, String page, String equipmentName, String deviceName, String rfidId, String parameterName, String createTime, String order, String field) {
+        List rfidLogList = rfidLogService.queryRfidLog(limit,page, equipmentName, deviceName,rfidId ,parameterName,createTime,order, field);
+        return Result.success(rfidLogList, rfidLogService.count(equipmentName, deviceName,rfidId ,parameterName,createTime));
     }
 
     /**
@@ -52,18 +51,6 @@ public class RfidLogController {
     @PostMapping("/rfidLog/add")
     public Result<?> addRfidLog(@RequestBody RfidLog rfidLog) {
         rfidLogService.addRfidLog(rfidLog);
-        return Result.success();
-    }
-
-
-    /**
-     * 删除Rfid交换日志
-     *
-     * @param rfidLogId 根据rfid交换日志主键删除
-     */
-    @DeleteMapping("/rfidLog/delete/{rfidLogId}")
-    public Result<?> removeRfidLog(@PathVariable("rfidLogId") int rfidLogId){
-        rfidLogService.removeRfidLog(rfidLogId);
         return Result.success();
     }
 

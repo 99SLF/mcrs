@@ -23,15 +23,18 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">日志状态：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="logStatus" placeholder="" autocomplete="off"
-                               class="layui-input">
+                        <select name="logStatus" id="logStatus" lay-filter="logStatus" type="select">
+                            <option value=""></option>
+                        </select>
                     </div>
+
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">操作类型：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="operationType" placeholder="" autocomplete="off"
-                               class="layui-input">
+                        <select name="operationType" id="operationType" lay-filter="operationType" type="select">
+                            <option value=""></option>
+                        </select>
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -45,8 +48,9 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">操作结果：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="operationResult" placeholder="" autocomplete="off"
-                               class="layui-input">
+                        <select name="result" id="result" lay-filter="result" type="select">
+                            <option value=""></option>
+                        </select>
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -120,6 +124,27 @@
         type: 'date'
     });
 
+    //获取操作类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#operationType",
+        dictTypeId: "OPERATE_TYPE",
+    });
+    form.render();
+
+    //获取操作结果的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#result",
+        dictTypeId: "OPERATE_RESULT",
+    });
+    form.render();
+
+    //获取操作结果的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#logStatus",
+        dictTypeId: "LOG_STATUS",
+    });
+    form.render();
+
 
     //监听搜索
     form.on("submit(LAY-app-operationLoglist-search)", function (data) {
@@ -127,6 +152,24 @@
         table.reload("LAY-app-operationLog-list-reload", {
             where: field
         });
+    });
+
+    //启用下拉框监听事件
+    form.on("select(logStatus)", function (data) {
+        var submit = $("#LAY-app-operationLoglist-search");
+        submit.click();
+    });
+
+    //启用下拉框监听事件
+    form.on("select(result)", function (data) {
+        var submit = $("#LAY-app-operationLoglist-search");
+        submit.click();
+    });
+
+    //操作类型下拉框监听事件
+    form.on("select(operationType)", function (data) {
+        var submit = $("#LAY-app-operationLoglist-search");
+        submit.click();
     });
 
 
@@ -322,32 +365,23 @@
             title: "序号",
             type: "numbers"
         }, {
-            field: "operationLogNum",
-            title: "日志编号",
-            align: "center",
-            minWidth: 120,
-            hide: isHidden("operationLogNum")
-        }, {
-            field: "logType",
-            title: "日志类型",
-            align: "center",
-            minWidth: 120,
-            hide: isHidden("logType"),
-            templet: function (d) {
-                return layui.admin.getDictText("LOG_TYPE", d.logType);
-            }
-        }, {
             field: "logStatus",
             title: "日志状态",
             align: "center",
             minWidth: 100,
-            hide: isHidden("logStatus")
+            hide: isHidden("logStatus"),
+            templet: function (d) {
+                return layui.admin.getDictText("LOG_STATUS", d.logStatus);
+            }
         }, {
             field: "operationType",
             title: "操作类型",
             align: "center",
             minWidth: 150,
-            hide: isHidden("operationType")
+            hide: isHidden("operationType"),
+                templet: function (d) {
+                    return layui.admin.getDictText("OPERATE_TYPE", d.operationType);
+                }
         }, {
             field: "operationContent",
             title: "操作内容",
@@ -355,11 +389,14 @@
             minWidth: 150,
             hide: isHidden("operationContent")
         }, {
-            field: "operationResult",
+            field: "result",
             title: "操作结果",
             align: "center",
             minWidth: 120,
-            hide: isHidden("operationResult")
+            hide: isHidden("result"),
+            templet: function (d) {
+                return layui.admin.getDictText("OPERATE_RESULT", d.result);
+            }
         }, {
             field: "operateName",
             title: "操作人",
@@ -373,7 +410,11 @@
             minWidth: 100,
             hide: isHidden("operationTime"),
             templet: function (d) {
-                return layui.util.toDateString(d.operationTime);
+                if(d.operationTime!=null){
+                    return layui.util.toDateString(d.operationTime);
+                }else{
+                    return '';
+                }
             }
         }]]
     });

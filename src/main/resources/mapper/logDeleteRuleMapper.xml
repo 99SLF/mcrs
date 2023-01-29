@@ -5,32 +5,53 @@
 
     <!--查询记录数-->
     <select id="count" resultType="int">
-        SELECT count(*) FROM bas_log_delete_rule
+        SELECT
+        count(*)
+        FROM bas_log_delete_rule AS ldr
+        LEFT JOIN cap_user AS cur
+        ON ldr.updater = cur.USER_ID
         <where>
-            <if test="deleteRuleNum !=null and deleteRuleNum !=''">
-                and delete_rule_num like '%${deleteRuleNum}%'
+            <if test="deleteRuleTitle !=null and deleteRuleTitle !=''">
+                and ldr.delete_rule_title like '%${deleteRuleTitle}%'
+            </if>
+            <if test="logType !=null and logType !=''">
+                and ldr.log_type like '%${logType}%'
+            </if>
+            <if test="updateName !=null and updateName !=''">
+                and cur.USER_NAME like '%${updateName}%'
+            </if>
+            <if test="updateTime !=null and updateTime !=''">
+                and ldr.update_time like '%${updateTime}%'
             </if>
         </where>
     </select>
 
     <!--查询所有-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.basic.logDeleteRule.pojo.LogDeleteRuleVo">
-        SELECT * FROM bas_log_delete_rule
+        SELECT
+        ldr.delete_rule_title,
+        ldr.`enable`,
+        ldr.delete_rule_type,
+        ldr.log_type,
+        ldr.retention_time,
+        ldr.time_unit,
+        cur.USER_NAME AS updateName,
+        ldr.update_time
+        FROM bas_log_delete_rule AS ldr
+        LEFT JOIN cap_user AS cur
+        ON ldr.updater = cur.USER_ID
         <where>
-            <if test="deleteRuleNum !=null and deleteRuleNum !=''">
-                and delete_rule_num like '%${deleteRuleNum}%'
-            </if>
             <if test="deleteRuleTitle !=null and deleteRuleTitle !=''">
-                and delete_rule_title like '%${deleteRuleTitle}%'
+                and ldr.delete_rule_title like '%${deleteRuleTitle}%'
             </if>
-            <if test="ruleLevel !=null and ruleLevel !=''">
-                and rule_level like '%${ruleLevel}%'
+            <if test="logType !=null and logType !=''">
+                and ldr.log_type like '%${logType}%'
             </if>
-            <if test="deleteRuleType !=null and deleteRuleType !=''">
-                and delete_rule_type like '%${deleteRuleType}%'
+            <if test="updateName !=null and updateName !=''">
+                and cur.USER_NAME like '%${updateName}%'
             </if>
-            <if test="creator !=null and creator !=''">
-                and creator like '%${creator}%'
+            <if test="updateTime !=null and updateTime !=''">
+                and ldr.update_time like '%${updateTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -41,72 +62,73 @@
         </if>
     </select>
 
-    <!--添加日志删除规则-->
-    <insert id="addLogDeleteRule" parameterType="com.zimax.mcrs.basic.logDeleteRule.pojo.LogDeleteRule">
-        insert into bas_log_delete_rule
-        values (#{ruleDeleteId}, #{deleteRuleNum}, #{deleteRuleTitle}, #{enable},
-                #{ruleLevel}, #{deleteRuleType}, #{logType},#{timeInterval},
-                #{timeUnit}, #{creator}, #{createTime}, #{updater},
-                #{updateTime})
-    </insert>
+<!--    &lt;!&ndash;添加日志删除规则&ndash;&gt;-->
+<!--    <insert id="addLogDeleteRule" parameterType="com.zimax.mcrs.basic.logDeleteRule.pojo.LogDeleteRule">-->
+<!--        insert into bas_log_delete_rule-->
+<!--        values (#{ruleDeleteId}, #{deleteRuleTitle}, #{enable},-->
+<!--                #{deleteRuleType}, #{logType}, #{retentionTime},-->
+<!--                #{timeUnit}, #{updater}, #{updateTime})-->
+<!--    </insert>-->
 
-    <!--根据主键删除预警事件-->
-    <delete id="removeLogDeleteRule" parameterType="int">
-        delete
-        from bas_log_delete_rule
-        where rule_delete_id = #{ruleDeleteId}
-    </delete>
+    <!--    &lt;!&ndash;根据主键删除预警事件&ndash;&gt;-->
+    <!--    <delete id="removeLogDeleteRule" parameterType="int">-->
+    <!--        delete-->
+    <!--        from bas_log_delete_rule-->
+    <!--        where rule_delete_id = #{ruleDeleteId}-->
+    <!--    </delete>-->
 
     <!--更新日志删除规则-->
     <update id="updateLogDeleteRule" parameterType="com.zimax.mcrs.basic.logDeleteRule.pojo.LogDeleteRule">
         update bas_log_delete_rule
-        set delete_rule_num=#{deleteRuleNum},
-            delete_rule_title=#{deleteRuleTitle},
+        set delete_rule_title=#{deleteRuleTitle},
             enable=#{enable},
-            rule_level=#{ruleLevel},
             delete_rule_type=#{deleteRuleType},
             log_type=#{logType},
-            time_interval=#{timeInterval},
+            retention_time=#{retentionTime},
             time_unit=#{timeUnit},
             updater=#{updater},
             update_time=#{updateTime}
         where rule_delete_id = #{ruleDeleteId}
     </update>
 
-    <!--    批量删除-->
-    <delete id="deleteLogDeleteRules" parameterType="java.util.List">
-        delete from bas_log_delete_rule where rule_delete_id in
-        <foreach collection="list" item="id" separator="," open="(" close=")">
-            #{id}
-        </foreach>
-    </delete>
+<!--    &lt;!&ndash;    批量删除&ndash;&gt;-->
+<!--    <delete id="deleteLogDeleteRules" parameterType="java.util.List">-->
+<!--        delete from bas_log_delete_rule where rule_delete_id in-->
+<!--        <foreach collection="list" item="id" separator="," open="(" close=")">-->
+<!--            #{id}-->
+<!--        </foreach>-->
+<!--    </delete>-->
 
-<!--查询当前日志删除规则编号-->
-    <select id="checkLogDeleteRule" resultType="int">
-        select count(*)
-        from bas_log_delete_rule
-        where delete_rule_num = #{deleteRuleNum}
-    </select>
+<!--    &lt;!&ndash;查询当前日志删除规则编号&ndash;&gt;-->
+<!--    <select id="checkLogDeleteRule" resultType="int">-->
+<!--        select count(*)-->
+<!--        from bas_log_delete_rule-->
+<!--        where delete_rule_num = #{deleteRuleNum}-->
+<!--    </select>-->
 
     <!--启用-->
     <update id="enable" parameterType="com.zimax.mcrs.basic.logDeleteRule.pojo.LogDeleteRule">
         update bas_log_delete_rule
-        set enable = #{enable},
-        updater=#{updater},
-        update_time=#{updateTime}
+        set enable     = #{enable},
+            updater=#{updater},
+            update_time=#{updateTime}
         where rule_delete_id = #{ruleDeleteId}
     </update>
 
-    <!--查询当前日志删除启用规则是否唯一-->
-    <select id="checkEnable" resultType="int">
-        SELECT COUNT(*) FROM bas_log_delete_rule
-        where log_type = #{logType} AND `enable` = 'on'
-    </select>
+<!--    &lt;!&ndash;查询当前日志删除启用规则是否唯一&ndash;&gt;-->
+<!--    <select id="checkEnable" resultType="int">-->
+<!--        SELECT COUNT(*)-->
+<!--        FROM bas_log_delete_rule-->
+<!--        where log_type = #{logType}-->
+<!--          AND `enable` = 'on'-->
+<!--    </select>-->
 
 
     <!-- 接口日志定时删除-->
-    <delete id="deleteInterfaceLog" parameterType="date">
-        delete from log_interface_log where create_time > #{interfaceLogTime}
+    <delete id="deleteLog" parameterType="date">
+        delete
+        from log_log
+        where create_time > #{interfaceLogTime}
     </delete>
 
 

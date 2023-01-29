@@ -106,7 +106,7 @@
     <select id="checkEquipmentIp" resultType="int">
         select count(*)
         from eqi_equipment
-        where equipment_ip = #{equipmentIp}
+        where equipment_ip = #{equipmentIp} and equipment_int != #{equipmentInt}
     </select>
 
     <!--查询设备对应工位信息-->

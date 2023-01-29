@@ -24,46 +24,30 @@
         <%--隐藏主键--%>
         <input type="hidden" name="ruleDeleteId" value="default">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>日志删除规则编码:</label>
-            <div class="layui-input-block">
-                <input id="deleteRuleNum" type="text" name="deleteRuleNum" lay-verify="required|deleteRuleNum"
-                       placeholder="日志删除规则编码(必填)" autocomplete="off" class="layui-input" readonly>
-            </div>
-        </div>
-
-        <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>日志删除规则标题:</label>
             <div class="layui-input-block">
                 <input id="deleteRuleTitle" type="text" name="deleteRuleTitle" lay-verify="required|deleteRuleTitle"
                        placeholder="请输入日志删除规则标题" autocomplete="off" class="layui-input">
             </div>
         </div>
+
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><span style="color:red">*</span>日志删除规则类型:</label>
+            <div class="layui-input-block">
+                <select name="deleteRuleType" id="deleteRuleType" lay-filter="required" lay-verify="required"
+                        type="select">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
     </div>
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>规则级别:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>保留时间数:</label>
             <div class="layui-input-block">
-                <select name="ruleLevel" id="ruleLevel" lay-filter="ruleLevel"lay-verify="required" type="select">
-                    <option value=""></option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>日志删除规则类型:</label>
-            <div class="layui-input-block">
-                <select name="deleteRuleType" id="deleteRuleType" lay-filter="required" lay-verify="required" type="select">
-                    <option value=""></option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="layui-form-item layui-row layui-col-space10">
-        <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>时间间隔:</label>
-            <div class="layui-input-block">
-                <input id="timeInterval" type="text" name="timeInterval" lay-verify="required|timeInterval"
-                       placeholder="请输入时间间隔"
+                <input id="retentionTime" type="text" name="retentionTime" lay-verify="required|number"
+                       placeholder="请输入保留时间"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -96,19 +80,6 @@
         </div>
     </div>
 
-    <%--    //修改人--%>
-    <div class="layui-input-block">
-        <%
-            IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
-        %>
-        <input id="updater" type="text" name="updater" value="<%=usetObject.getUserName()%>"
-               class="layui-hide">
-    </div>
-    <%--    //修改时间--%>
-    <div class="layui-input-block">
-        <input type="text" name="updateTime" id="updateTime" class="layui-hide"
-               value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>">
-    </div>
     <div class="layui-form-item layui-hide">
         <input type="button" lay-submit lay-filter="layuiadmin-app-form-edit" id="layuiadmin-app-form-edit"
                value="确认修改">
@@ -149,6 +120,13 @@
         });
     }
 
+    //禁用日志类型下拉选择框
+    layui.use('form', function () {
+        var form = layui.form;
+        $("#logType").attr("disabled", "disabled");
+        form.render('select');
+    });
+
     //获取日志删除规则类型的下拉值
     layui.admin.renderDictSelect({
         elem: "#deleteRuleType",
@@ -186,7 +164,6 @@
     //设置级别的默认值
     $("#ruleLevel").val("101");
     form.render();
-
 
 
     // //判断字符
@@ -275,14 +252,13 @@
                     }
                 });
             }
-        }else if ( isExist == true) {
+        } else if (isExist == true) {
             layer.msg("当前日志删除规则编码已存在，请重新输入", {
                 icon: 2,
                 time: 2000
             });
             submit = false;
-        }
-        else {
+        } else {
             layer.msg("修改失败",
                 function () {
                     var index = parent.layer.getFrameIndex(window.name);
@@ -293,11 +269,11 @@
         return false;
     });
     //判断日志删除规则是否已存在
-    $("#deleteRuleNum").blur(function() {
+    $("#deleteRuleNum").blur(function () {
         var deleteRuleNum = $("#deleteRuleNum").val();
         if (deleteRuleNum != null && deleteRuleNum != "") {
             $.ajax({
-                url: "<%= request.getContextPath() %>/logDeleteRule/logDeleteRule/check/isExist?deleteRuleNum="+deleteRuleNum,
+                url: "<%= request.getContextPath() %>/logDeleteRule/logDeleteRule/check/isExist?deleteRuleNum=" + deleteRuleNum,
                 type: "GET",
                 cache: false,
                 contentType: "text/json",

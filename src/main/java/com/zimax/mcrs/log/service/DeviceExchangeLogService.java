@@ -28,12 +28,12 @@ public class DeviceExchangeLogService {
      * 查询所有的设备交换日志
      * @return DeviceExchangeLog
      */
-    public List<DeviceExchangeLogVo> queryDeviceExchangeLog(String limit, String page, String equipmentId, String equipmentContinuePort, String processName,String operateName, String exchangeTime, String order, String field){
+    public List<DeviceExchangeLogVo> queryDeviceExchangeLog(String limit, String page, String equipmentId, String equipmentContinuePort, String processName,String operateName, String equipmentExchangeTime, String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
             map.put("order","desc");
-            map.put("field","exchange.exchange_time");
+            map.put("field","ll.equipment_exchange_time");
         }else{
             map.put("order",order);
             map.put("field",changeString.camelUnderline(field));
@@ -46,29 +46,24 @@ public class DeviceExchangeLogService {
         map.put("equipmentContinuePort",equipmentContinuePort);
         map.put("processName",processName);
         map.put("operateName",operateName);
-        map.put("exchangeTime",exchangeTime);
+        map.put("equipmentExchangeTime",equipmentExchangeTime);
         return deviceExchangeLogMapper.queryAll(map);
     }
 
     /**
      * 查询记录
      */
-    public int count(String equipmentId, String equipmentContinuePort, String processName, String operateName, String exchangeTime) {
-        return deviceExchangeLogMapper.count(equipmentId,equipmentContinuePort,processName,operateName,exchangeTime);
+    public int count(String equipmentId, String equipmentContinuePort, String processName, String operateName, String equipmentExchangeTime) {
+        return deviceExchangeLogMapper.count(equipmentId,equipmentContinuePort,processName,operateName,equipmentExchangeTime);
     }
 
     /**
      * 添加设备交换日志
      */
     public void addDeviceExchangeLog(DeviceExchangeLog deviceExchangeLog){
+        deviceExchangeLog.setLogType("104");
+        deviceExchangeLog.setCreateTime(new Date());
         deviceExchangeLogMapper.addDeviceExchangeLog(deviceExchangeLog);
     }
 
-
-    /**
-     * 删除设备交换日志
-     */
-    public void removeDeviceExchangeLog(int deviceExchangeLogId){
-        deviceExchangeLogMapper.removeDeviceExchangeLog(deviceExchangeLogId);
-    }
 }

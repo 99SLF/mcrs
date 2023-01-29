@@ -5,53 +5,73 @@
 
     <!--    查询记录数-->
     <select id="count" resultType="int">
-        SELECT count(*) FROM log_interface_log as inter
-        LEFT JOIN eqi_equipment as eqi
-        on inter.equipment_int = eqi.equipment_int
-        LEFT JOIN eqi_device as dev
-        ON inter.device_id = dev.device_id
+        SELECT
+        count(*)
+        FROM log_log AS ll
+        LEFT JOIN eqi_equipment AS eqi
+        ON ll.equipment_int = eqi.equipment_int
+        LEFT JOIN eqi_device AS dev
+        on ll.device_id = dev.device_id
         LEFT JOIN cap_user AS cur
-        ON inter.`invoker` = cur.USER_ID
+        ON ll.user = cur.USER_ID
         <where>
-            <if test="createTime !=null and createTime !=''">
-                and inter.create_time like '%${createTime}%'
-            </if>
-            <if test="source !=null and source !=''">
-                and inter.source like '%${source}%'
-            </if>
-            <if test="interfaceType !=null and interfaceType !=''">
-                and inter.interface_type like '%${interfaceType}%'
-            </if>
-            <if test="equipmentIp !=null and equipmentIp !=''">
-                and eqi.equipment_ip like '%${equipmentIp}%'
-            </if>
-            <if test="invokerName !=null and invokerName !=''">
-                and cur.USER_NAME like '%${invokerName}%'
-            </if>
-            <if test="interfaceName !=null and interfaceName !=''">
-                and inter.interface_name like '%${interfaceName}%'
-            </if>
+        ll.log_type = '102'
+        <if test="createTime !=null and createTime !=''">
+            and ll.create_time like '%${createTime}%'
+        </if>
+        <if test="source !=null and source !=''">
+            and ll.source like '%${source}%'
+        </if>
+        <if test="interfaceType !=null and interfaceType !=''">
+            and ll.interface_type like '%${interfaceType}%'
+        </if>
+        <if test="equipmentIp !=null and equipmentIp !=''">
+            and eqi.equipment_ip like '%${equipmentIp}%'
+        </if>
+        <if test="invokerName !=null and invokerName !=''">
+            and cur.USER_NAME like '%${invokerName}%'
+        </if>
+        <if test="interfaceName !=null and interfaceName !=''">
+            and ll.interface_name like '%${interfaceName}%'
+        </if>
         </where>
     </select>
 
     <!--查询所有-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.log.pojo.InterfaceLogVo">
-        SELECT * ,cur.USER_NAME AS invokerName FROM log_interface_log as inter
-        LEFT JOIN eqi_equipment as eqi
-        on inter.equipment_int = eqi.equipment_int
-        LEFT JOIN eqi_device as dev
-        ON inter.device_id = dev.device_id
+        SELECT
+        ll.source,
+        eqi.equipment_id,
+        eqi.equipment_name,
+        dev.app_id,
+        ll.interface_type,
+        eqi.equipment_ip,
+        eqi.equipment_continue_port,
+        ll.create_time,
+        ll.json,
+        ll.result,
+        ll.dispose_start_time,
+        ll.dispose_end_time,
+        cur.USER_NAME AS invokerName,
+        ll.dispose_time,
+        ll.interface_name
+        FROM log_log AS ll
+        LEFT JOIN eqi_equipment AS eqi
+        ON ll.equipment_int = eqi.equipment_int
+        LEFT JOIN eqi_device AS dev
+        on ll.device_id = dev.device_id
         LEFT JOIN cap_user AS cur
-        ON inter.`invoker` = cur.USER_ID
+        ON ll.user = cur.USER_ID
         <where>
+            ll.log_type = '102'
             <if test="createTime !=null and createTime !=''">
-                and inter.create_time like '%${createTime}%'
+                and ll.create_time like '%${createTime}%'
             </if>
             <if test="source !=null and source !=''">
-                and inter.source like '%${source}%'
+                and ll.source like '%${source}%'
             </if>
             <if test="interfaceType !=null and interfaceType !=''">
-                and inter.interface_type like '%${interfaceType}%'
+                and ll.interface_type like '%${interfaceType}%'
             </if>
             <if test="equipmentIp !=null and equipmentIp !=''">
                 and eqi.equipment_ip like '%${equipmentIp}%'
@@ -60,7 +80,7 @@
                 and cur.USER_NAME like '%${invokerName}%'
             </if>
             <if test="interfaceName !=null and interfaceName !=''">
-                and inter.interface_name like '%${interfaceName}%'
+                and ll.interface_name like '%${interfaceName}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -73,19 +93,21 @@
 
     <!--添加接口日志-->
     <insert id="addInterfaceLog" parameterType="com.zimax.mcrs.log.pojo.InterfaceLog">
-        insert into log_interface_log
-        values (#{interfaceLogId}, #{interfaceLogNum}, #{logType}, #{source},
-                #{equipmentInt}, #{deviceId}, #{interfaceName},
-                #{createTime}, #{JSONPage}, #{disposeResult}, #{startTime},
-                #{endTime}, #{invoker}, #{disposeTime}, #{interfaceType})
+        insert into log_log (log_id,log_type,equipment_int,device_id,source,
+                                       interface_type,create_time,json,result,dispose_start_time,
+                                       dispose_end_time,user,dispose_time,interface_name)
+        values (#{logId}, #{logType}, #{equipmentInt},
+                #{deviceId}, #{source}, #{interfaceType},
+                #{createTime}, #{json}, #{result}, #{disposeStartTime},
+                #{disposeEndTime}, #{user}, #{disposeTime}, #{interfaceName})
     </insert>
 
-<!--    &lt;!&ndash;根据主键删除设备&ndash;&gt;-->
-<!--    <delete id="removeEquipment" parameterType="int">-->
-<!--        delete-->
-<!--        from eqi_equipment-->
-<!--        where equipment_int = #{equipmentInt}-->
-<!--    </delete>-->
+    <!--    &lt;!&ndash;根据主键删除设备&ndash;&gt;-->
+    <!--    <delete id="removeEquipment" parameterType="int">-->
+    <!--        delete-->
+    <!--        from eqi_equipment-->
+    <!--        where equipment_int = #{equipmentInt}-->
+    <!--    </delete>-->
 
     <!--依据设备资源号获取设备信息-->
     <select id="checkEquipment" resultType="int">
@@ -94,11 +116,6 @@
         where equipment_int = #{equipmentInt}
     </select>
 
-
-    <!--删除-->
-    <delete id="removeInterfaceLog" parameterType="int">
-        delete from log_interface_log where interface_log_id = #{interfaceLogId}
-    </delete>
 
 
 </mapper>
