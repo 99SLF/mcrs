@@ -5,6 +5,8 @@ import com.zimax.mcrs.report.mapper.FeedingReportMapper;
 import com.zimax.mcrs.report.pojo.Feeding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +32,7 @@ public class FeedingService {
      */
     public void addFeeding(Feeding feeding) {
 
+        feeding.setCreateTime(String.valueOf(new Date()));
         feedingReportMapper.addFeeding(feeding);
     }
 

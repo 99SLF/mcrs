@@ -5,6 +5,8 @@ import com.zimax.mcrs.report.pojo.Blanking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +27,7 @@ public class BlankingService {
      */
     public void addBlanking(Blanking blanking){
 
+        blanking.setCreateTime(String.valueOf(new Date()));
         blankingReportMapper.addBlanking(blanking);
     }
 
@@ -33,7 +36,7 @@ public class BlankingService {
      */
     public List<Blanking> queryBlankings(String page,  String limit,
                                          String equipmentId, String axisName,
-                                         String antennaLoc, String prodSFCId,
+                                         String antennaLoc,String vehicleCode, String prodSFCId,
                                          String isEnd, String startProdTime,
                                          String endProdTime,
                                          String order, String field) {
@@ -53,6 +56,7 @@ public class BlankingService {
         map.put("equipmentId", equipmentId);
         map.put("axisName", axisName);
         map.put("antennaLoc", antennaLoc);
+        map.put("vehicleCode", vehicleCode);
         map.put("prodSFCId", prodSFCId);
         map.put("isEnd", isEnd);
         map.put("startProdTime", startProdTime);
@@ -63,9 +67,9 @@ public class BlankingService {
     }
 
     public int count(String equipmentId, String axisName,
-                     String antennaLoc, String prodSFCId,
+                     String antennaLoc, String vehicleCode, String prodSFCId,
                      String isEnd, String startProdTime,
                      String endProdTime) {
-        return blankingReportMapper.count(equipmentId,axisName,antennaLoc,prodSFCId,isEnd,startProdTime,endProdTime);
+        return blankingReportMapper.count(equipmentId,axisName,antennaLoc, vehicleCode ,prodSFCId,isEnd,startProdTime,endProdTime);
     }
 }

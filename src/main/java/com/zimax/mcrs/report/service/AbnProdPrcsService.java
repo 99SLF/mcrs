@@ -5,6 +5,8 @@ import com.zimax.mcrs.report.mapper.AbnProdPrcsReportMapper;
 import com.zimax.mcrs.report.pojo.AbnProdPrcs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +26,7 @@ public class AbnProdPrcsService {
      */
     public void addAbnProdPrcs(AbnProdPrcs abnProdPrcs){
 
+        abnProdPrcs.setCreateTime(String.valueOf(new Date()));
         abnProdPrcsReportMapper.addAbnProdPrcs(abnProdPrcs);
     }
 
@@ -33,11 +36,13 @@ public class AbnProdPrcsService {
      * 查询所有上料报表信息
      */
     public List<AbnProdPrcs> queryAbnProdPrcses(String page, String limit,
-                                            String siteId, String rollId,
-                                            String equipmentId, String axisName,
-                                            String performStep, String createTime,
-                                            String updateTime,
-                                            String order, String field) {
+                                                String siteId, String rollId,
+                                                String equipmentId, String axisName,
+                                                String vehicleCode, String prodSFCId,
+                                                String endEANumber, String isEnd,
+                                                String performStep, String createTime,
+                                                String updateTime,
+                                                String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -55,6 +60,10 @@ public class AbnProdPrcsService {
         map.put("rollId", rollId);
         map.put("equipmentId", equipmentId);
         map.put("axisName", axisName);
+        map.put("vehicleCode", vehicleCode);
+        map.put("prodSFCId", prodSFCId);
+        map.put("endEANumber", endEANumber);
+        map.put("isEnd", isEnd);
         map.put("performStep", performStep);
         map.put("createTime", createTime);
         map.put("updateTime", updateTime);
@@ -64,8 +73,11 @@ public class AbnProdPrcsService {
 
     public int count(String siteId, String rollId,
                      String equipmentId, String axisName,
+                     String vehicleCode, String prodSFCId,
+                     String endEANumber, String isEnd,
                      String performStep, String createTime,
                      String updateTime) {
-        return abnProdPrcsReportMapper.count(siteId, rollId, equipmentId, axisName, performStep, createTime, updateTime);
+        return abnProdPrcsReportMapper.count(siteId, rollId, equipmentId, axisName, vehicleCode, prodSFCId,
+                endEANumber, isEnd, performStep, createTime, updateTime);
     }
 }

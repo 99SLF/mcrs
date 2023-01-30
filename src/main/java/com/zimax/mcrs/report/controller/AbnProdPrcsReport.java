@@ -5,6 +5,7 @@ import com.zimax.mcrs.report.pojo.AbnProdPrcs;
 import com.zimax.mcrs.report.service.AbnProdPrcsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 /**
@@ -44,6 +45,10 @@ public class AbnProdPrcsReport {
      * @param rollId      膜卷号
      * @param equipmentId 设备资源号
      * @param axisName    轴名称
+     * @param vehicleCode 载具码
+     * @param prodSFCId   生产SFC编码
+     * @param endEANumber 完工EA数量
+     * @param isEnd       是否完工
      * @param performStep 执行步骤
      * @param createTime  创建时间
      * @param updateTime  更新时间
@@ -58,11 +63,15 @@ public class AbnProdPrcsReport {
     public Result<?> queryAbnProdPrcses(String page, String limit,
                                         String siteId, String rollId,
                                         String equipmentId, String axisName,
+                                        String vehicleCode, String prodSFCId,
+                                        String endEANumber, String isEnd,
                                         String performStep, String createTime,
                                         String updateTime,
-                                        String order,String field) {
-        List AbnProdPrcses = abnProdPrcsService.queryAbnProdPrcses(page, limit, siteId, rollId, equipmentId, axisName, performStep, createTime, updateTime, order, field);
-        return Result.success(AbnProdPrcses, abnProdPrcsService.count(siteId, rollId, equipmentId, axisName, performStep, createTime, updateTime));
+                                        String order, String field) {
+        List AbnProdPrcses = abnProdPrcsService.queryAbnProdPrcses(page, limit, siteId, rollId, equipmentId, axisName, vehicleCode, prodSFCId,
+                endEANumber, isEnd, performStep, createTime, updateTime, order, field);
+        return Result.success(AbnProdPrcses, abnProdPrcsService.count(siteId, rollId, equipmentId, axisName, vehicleCode, prodSFCId,
+                endEANumber, isEnd, performStep, createTime, updateTime));
     }
 
 

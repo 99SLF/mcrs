@@ -28,7 +28,7 @@ public interface BlankingReportMapper {
      * @return
      */
     int count(@Param("equipmentId") String equipmentId, @Param("axisName") String axisName,
-              @Param("antennaLoc") String antennaLoc, @Param("prodSFCId") String prodSFCId,
+              @Param("antennaLoc") String antennaLoc, @Param("vehicleCode") String vehicleCode, @Param("prodSFCId") String prodSFCId,
               @Param("isEnd") String isEnd, @Param("startProdTime") String startProdTime,
               @Param("endProdTime") String endProdTime
     );

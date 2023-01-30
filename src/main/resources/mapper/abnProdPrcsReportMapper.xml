@@ -27,6 +27,18 @@
             <if test="axisName !=null and axisName !=''">
                 and axis_name like '%${axisName}%'
             </if>
+            <if test="vehicleCode !=null and vehicleCode !=''">
+                and vehicle_code like '%${vehicleCode}%'
+            </if>
+            <if test="prodSFCId !=null and prodSFCId !=''">
+                and prod_SFC_id like '%${prodSFCId}%'
+            </if>
+            <if test="endEANumber !=null and endEANumber !=''">
+                and end_EA_number like '%${endEANumber}%'
+            </if>
+            <if test="isEnd !=null and isEnd !=''">
+                and is_end like '%${isEnd}%'
+            </if>
             <if test="performStep !=null and performStep !=''">
                 and perform_step like '%${performStep}%'
             </if>
@@ -53,6 +65,18 @@
             </if>
             <if test="axisName !=null and axisName !=''">
                 and axis_name like '%${axisName}%'
+            </if>
+            <if test="vehicleCode !=null and vehicleCode !=''">
+                and vehicle_code like '%${vehicleCode}%'
+            </if>
+            <if test="prodSFCId !=null and prodSFCId !=''">
+                and prod_SFC_id like '%${prodSFCId}%'
+            </if>
+            <if test="endEANumber !=null and endEANumber !=''">
+                and end_EA_number like '%${endEANumber}%'
+            </if>
+            <if test="isEnd !=null and isEnd !=''">
+                and is_end like '%${isEnd}%'
             </if>
             <if test="performStep !=null and performStep !=''">
                 and perform_step like '%${performStep}%'

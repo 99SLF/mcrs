@@ -41,6 +41,7 @@ public class BlankingReport {
      * @param equipmentId   设备资源号
      * @param axisName       轴名称
      * @param antennaLoc    天线位置
+     * @param vehicleCode    载具码
      * @param prodSFCId 生产SFC编码
      * @param isEnd     是否完工
      * @param startProdTime    开始生产时间
@@ -53,13 +54,8 @@ public class BlankingReport {
      * @return msg 返回信息
      */
     @GetMapping("/blanking/query")
-    public Result<?> queryBlankings(String page,  String limit,
-                                   String equipmentId, String axisName,
-                                   String antennaLoc, String prodSFCId,
-                                   String isEnd, String startProdTime,
-                                   String endProdTime,
-                                   String order, String field) {
-        List blankings = blankingService.queryBlankings(page,limit,equipmentId,axisName,antennaLoc,prodSFCId,isEnd,startProdTime,endProdTime,order,field);
-        return Result.success(blankings,blankingService.count(equipmentId,axisName,antennaLoc,prodSFCId,isEnd,startProdTime,endProdTime));
+    public Result<?> queryBlankings(String page,  String limit, String equipmentId, String axisName, String antennaLoc, String vehicleCode, String prodSFCId, String isEnd, String startProdTime, String endProdTime, String order, String field) {
+        List blankings = blankingService.queryBlankings(page,limit,equipmentId,axisName,antennaLoc, vehicleCode ,prodSFCId,isEnd,startProdTime,endProdTime,order,field);
+        return Result.success(blankings,blankingService.count(equipmentId,axisName,antennaLoc,vehicleCode,prodSFCId,isEnd,startProdTime,endProdTime));
     }
 }

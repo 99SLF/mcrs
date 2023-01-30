@@ -6,6 +6,7 @@ import com.zimax.mcrs.report.pojo.RFIDReadRa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,7 @@ public class RFIDReadRaService {
      */
     public void addRFIDReadRa(RFIDReadRa rfidReadRa) {
 
+        rfidReadRa.setRecordTime(String.valueOf(new Date()));
         rfidReadRaReportMapper.addRFIDReadRa(rfidReadRa);
     }
 

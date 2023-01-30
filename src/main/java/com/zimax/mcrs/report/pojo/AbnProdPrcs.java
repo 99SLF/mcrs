@@ -73,14 +73,14 @@ public class AbnProdPrcs {
     private String isEnd;
 
     /**
-     * 创建时间
+     * 更新时间
+     */
+    private String updateTime;
+
+    /**
+     * 创建时间（记录时间）
      */
 //    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 //    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private String createTime;
-
-    /**
-     * 更新时间
-     */
-    private String updateTime;
 }

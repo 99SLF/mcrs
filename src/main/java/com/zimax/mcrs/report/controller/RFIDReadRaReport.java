@@ -41,7 +41,7 @@ public class RFIDReadRaReport {
      * @param page        页记录数
      * @param limit       页码
      * @param equipmentId 设备资源号
-     * @param RFIDId      RFID编码
+     * @param rfidId      RFID编码
      * @param antennaId   天线ID
      * @param readRate    读取率
      * @param recordTime  记录时间
