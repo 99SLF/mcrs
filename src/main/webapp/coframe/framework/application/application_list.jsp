@@ -10,34 +10,34 @@
 <link rel="stylesheet" href="<%=request.getContextPath() %>/std/dist/style/admin.css"/>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/std/dist/style/custom.css?v=1.0.0">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/iconfont/iconfont.css">
-	<style>
-		.layui-card {
-			margin-bottom: 0px
-		}
-		.layui-layer-adminRight {
-			top: 0px !important;
-			bottom: 0;
-			box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
-			border-radius: 0;
-			overflow: auto
-		}
-		.layui-form-item .layui-inline {
-			margin-bottom: 0px !important;
-			margin-right: 0px !important;
-		}
-		.layui-form-label {
-			width: 120px !important;
-			padding: 5px 0px !important;
-		}
-		.layui-form-item .layui-input-inline {
-			float: left;
-			width: 150px;
-			margin-right: 10px;
-		}
-		.layui-input {
-			height: 30px !important;
-		}
-	</style>
+<style>
+	.layui-card {
+		margin-bottom: 0px
+	}
+	.layui-layer-adminRight {
+		top: 0px !important;
+		bottom: 0;
+		box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
+		border-radius: 0;
+		overflow: auto
+	}
+	.layui-form-item .layui-inline {
+		margin-bottom: 0px !important;
+		margin-right: 0px !important;
+	}
+	.layui-form-label {
+		width: 120px !important;
+		padding: 5px 0px !important;
+	}
+	.layui-form-item .layui-input-inline {
+		float: left;
+		width: 150px;
+		margin-right: 10px;
+	}
+	.layui-input {
+		height: 30px !important;
+	}
+</style>
 </head>
 <body>
 <div class="layui-card">

@@ -547,7 +547,7 @@
             field: "operator",
             title: "操作人员",
             align: "center",
-            minWidth: 90,
+            width: 100,
         }]]
     });
     table.render({
@@ -570,7 +570,7 @@
             field: "operationTime",
             title: "操作时间",
             align: "center",
-            minWidth: 100,
+            minWidth: 180,
             templet: function (d) {
                 return util.toDateString(d.operationTime);
             },
@@ -578,17 +578,17 @@
             field: "operationContent",
             title: "操作内容",
             align: "center",
-            minWidth: 150,
+            minWidth: 200,
         }, {
             field: "operationResult",
             title: "操作结果",
             align: "center",
-            minWidth: 120,
+            minWidth: 200,
         }, {
             field: "operator",
             title: "操作人",
             align: "center",
-            minWidth: 120,
+            minWidth: 208,
         }]]
     });
 </script>
