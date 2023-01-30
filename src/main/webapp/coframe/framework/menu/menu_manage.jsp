@@ -11,14 +11,43 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
 	<title>菜单管理</title>
-	<link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
-	<link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css" />
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/common/layui/css/layui.css"/>
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/std/dist/style/admin.css"/>
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/std/dist/style/custom.css?v=1.0.0">
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/iconfont/iconfont.css">
+	<style>
+		.layui-card {
+			margin-bottom: 0px
+		}
+		.layui-layer-adminRight {
+			top: 0px !important;
+			bottom: 0;
+			box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
+			border-radius: 0;
+			overflow: auto
+		}
+		.layui-form-item .layui-inline {
+			margin-bottom: 0px !important;
+			margin-right: 0px !important;
+		}
+		.layui-form-label {
+			width: 120px !important;
+			padding: 5px 0px !important;
+		}
+		.layui-form-item .layui-input-inline {
+			float: left;
+			width: 150px;
+			margin-right: 10px;
+		}
+		.layui-input {
+			height: 30px !important;
+		}
+	</style>
 </head>
 <body>
-<div class="layui-fluid">
-	<div class="layui-card">
-		<div class="layui-form layui-card-header layuiadmin-card-header-auto">
+<div class="layui-card">
+	<script type="text/html" id="toolbar">
+		<div class="layui-form layuiadmin-card-header-auto">
 			<div class="layui-form-item">
 				<div class="layui-inline">
 					<label class="layui-form-label">选择菜单：</label>
@@ -31,17 +60,13 @@
 				</div>
 			</div>
 		</div>
-		<div class="layui-card-body">
-			<div class="layui-toolbar" id="toolbar" hidden="true">
-				<button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-add-circle-fine"></i>添加</button>
-				<button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i class="layui-icon layui-icon-delete"></i>删除</button>
-			</div>
-			<table id="LAY-app-menu-list" lay-filter="LAY-app-menu-list"></table>
-			<script type="text/html" id="table-menu-list">
-				<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
-				<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
-			</script>
-		</div>
+	</script>
+	<div class="layui-card-body">
+		<table id="LAY-app-menu-list" lay-filter="LAY-app-menu-list"></table>
+		<script type="text/html" id="table-menu-list">
+			<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+		</script>
 	</div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
@@ -229,7 +254,15 @@
 			});
 		},
 		toolbar: "#toolbar",
-		defaultToolbar: ["filter"],
+		defaultToolbar: [{
+			title: "添加",
+			layEvent: "add",
+			icon: "layui-icon layui-icon-add-circle-fine",
+		},{
+			title: "删除",
+			layEvent: "batchdel",
+			icon: "layui-icon layui-icon-delete",
+		},"filter"],
 		parseData: function(res) {
 			return {
 				code: res.code,

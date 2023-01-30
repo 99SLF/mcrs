@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="layui-card">
-	<div class="layui-form layui-card-header layuiadmin-card-header-auto">
+	<div class="layui-form layuiadmin-card-header-auto">
 		<div class="layui-form-item">
 			<div class="layui-inline">
 				<label class="layui-form-label">选择功能：</label>
@@ -29,10 +29,6 @@
 		</div>
 	</div>
 	<div class="layui-card-body">
-		<div class="layui-toolbar" id="toolbar"  hidden="true">
-			<button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-add-circle-fine"></i>添加</button>
-			<button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i class="layui-icon layui-icon-delete"></i>删除</button>
-		</div>
 		<table id="LAY-app-funcresource-list" lay-filter="LAY-app-funcresource-list"></table>
 		<script type="text/html" id="table-role-list">
 			<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
@@ -238,7 +234,15 @@
 					});
 				},
 				toolbar: "#toolbar",
-				defaultToolbar: ["filter"],
+				defaultToolbar:[{
+					title: "添加",
+					layEvent: "add",
+					icon: "layui-icon layui-icon-add-circle-fine",
+				},{
+					title: "删除",
+					layEvent: "batchdel",
+					icon: "layui-icon layui-icon-delete",
+				},"filter"],
 				limits: [10, 15, 20, 30],
 				parseData: function(res) {
 					return {
