@@ -163,7 +163,6 @@
 
     //监听搜索
     form.on("submit(LAY-app-alarmRulelist-search)", function (data) {
-        debugger;
         var field = data.field;
         table.reload("LAY-app-alarmRule-list-reload", {
             where: field
@@ -362,7 +361,6 @@
             });
         },
         parseData: function (res) {
-            debugger;
             return {
                 code: res.code,
                 msg: res.msg,

@@ -44,19 +44,11 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>保留时间数:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>保留时间数(天):</label>
             <div class="layui-input-block">
                 <input id="retentionTime" type="text" name="retentionTime" lay-verify="required|number"
                        placeholder="请输入保留时间"
                        autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>时间单位:</label>
-            <div class="layui-input-block">
-                <select name="timeUnit" id="timeUnit" lay-filter="required" lay-verify="required" type="select">
-                    <option value=""></option>
-                </select>
             </div>
         </div>
     </div>
@@ -109,14 +101,13 @@
         var data = data.data;
         form.val("layuiadmin-app-form-list", {
             "ruleDeleteId": data.ruleDeleteId,
-            "deleteRuleNum": data.deleteRuleNum,
             "deleteRuleTitle": data.deleteRuleTitle,
             "logType": data.logType,
             "enable": data.enable,
-            "ruleLevel": data.ruleLevel,
             "deleteRuleType": data.deleteRuleType,
-            "timeInterval": data.timeInterval,
-            "timeUnit": data.timeUnit,
+            "retentionTime": data.retentionTime,
+            "updateName": data.updateName,
+            "updateTime": data.updateTime,
         });
     }
 
@@ -131,13 +122,6 @@
     layui.admin.renderDictSelect({
         elem: "#deleteRuleType",
         dictTypeId: "LOG_DELETE_RULE_TYPE",
-    });
-    form.render();
-
-    //获取时间单位的下拉值
-    layui.admin.renderDictSelect({
-        elem: "#timeUnit",
-        dictTypeId: "TIME_UNIT",
     });
     form.render();
 
@@ -156,14 +140,6 @@
     });
     form.render();
 
-    //获取级别的下拉值
-    layui.admin.renderDictSelect({
-        elem: "#ruleLevel",
-        dictTypeId: "WARNING_LEVEL",
-    });
-    //设置级别的默认值
-    $("#ruleLevel").val("101");
-    form.render();
 
 
     // //判断字符

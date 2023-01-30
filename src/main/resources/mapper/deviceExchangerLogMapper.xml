@@ -103,7 +103,7 @@
     <insert id="addDeviceExchangeLog" parameterType="com.zimax.mcrs.log.pojo.DeviceExchangeLog">
         insert into log_log (log_id,log_type,log_status,equipment_int,device_id,
                              operation_type,operation_content,user,
-                             ,create_time)
+                             equipment_exchange_time,create_time)
         values (#{logId}, #{logType}, #{logStatus},#{equipmentInt}, #{deviceId},
                 #{operationType}, #{operationContent}, #{user},
                 #{equipmentExchangeTime}, #{createTime})

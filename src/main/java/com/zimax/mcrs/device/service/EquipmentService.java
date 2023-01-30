@@ -9,6 +9,7 @@ import com.zimax.mcrs.device.pojo.EquipmentVo;
 import com.zimax.mcrs.device.pojo.WorkStation;
 import com.zimax.mcrs.warn.pojo.MonitorEquipment;
 import com.zimax.mcrs.warn.pojo.MonitorEquipmentVo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public class EquipmentService {
     /**
      * 查询所有
      */
-    public List<EquipmentVo> queryEquipments(String limit, String page, String equipmentId, String equipmentName,String enable, String processName, String order, String field) {
+    public List<EquipmentVo> queryEquipments(String limit, String page,String equipmentId,String equipmentName, String enable, String equipmentInstallLocation, String equipTypeName, String protocolCommunication, String accPointResName, String processName, String createName, String createTime, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -49,7 +50,13 @@ public class EquipmentService {
         map.put("equipmentId", equipmentId);
         map.put("equipmentName", equipmentName);
         map.put("enable", enable);
+        map.put("equipmentInstallLocation", equipmentInstallLocation);
+        map.put("equipTypeName", equipTypeName);
+        map.put("protocolCommunication", protocolCommunication);
+        map.put("accPointResName", accPointResName);
         map.put("processName", processName);
+        map.put("createName", createName);
+        map.put("createTime", createTime);
         return equipmentMapper.queryAll(map);
     }
 
@@ -111,10 +118,11 @@ public class EquipmentService {
     }
 
     /**
-     * 查询记录
+     * 查询记录数
      */
-    public int count(String equipmentId, String equipmentName ,String enable, String processName) {
-        return equipmentMapper.count(equipmentId, equipmentName ,enable, processName);
+    public int count(String equipmentId,String equipmentName, String enable, String equipmentInstallLocation, String equipTypeName, String protocolCommunication, String accPointResName, String processName, String createName, String createTime) {
+        return equipmentMapper.count(equipmentId, equipmentName ,enable,equipmentInstallLocation, equipTypeName,
+                protocolCommunication,accPointResName,processName,createName,createTime);
     }
 
     /**
