@@ -31,21 +31,26 @@ public class EquipmentController {
 
     /**
      * 查询
-     *
-     * @param equipmentId   设备资源号
+     * @param limit 条数
+     * @param page 页码
+     * @param equipmentId 设备资源号
      * @param equipmentName 设备名称
-     * @param enable        启用
+     * @param enable 是否启用
+     * @param equipmentInstallLocation 设备安装位置
+     * @param equipTypeName 设备类型名称
+     * @param protocolCommunication 支持通信协议
+     * @param accPointResName 接入点名称
      * @param processName 工序名称
-     * @param limit         记录数
-     * @param page          页码
-     * @param field         排序字段
-     * @param order         排序方式
-     * @return 设备列表
+     * @param createName 创建人
+     * @param createTime 创建时间
+     * @param order
+     * @param field
+     * @return
      */
     @GetMapping("/equipment/query")
-    public Result<?> query( String limit,  String page, String equipmentId, String equipmentName,String enable, String processName,String order, String field) {
-        List equipments = equipmentService.queryEquipments(limit, page, equipmentId, equipmentName,enable,processName ,order, field);
-        return Result.success(equipments, equipmentService.count(equipmentId, equipmentName,enable,processName));
+    public Result<?> query( String limit,  String page, String equipmentId,String equipmentName, String enable, String equipmentInstallLocation, String equipTypeName, String protocolCommunication, String accPointResName, String processName, String createName, String createTime,String order, String field) {
+        List equipments = equipmentService.queryEquipments(limit, page,equipmentId, equipmentName ,enable,equipmentInstallLocation, equipTypeName, protocolCommunication,accPointResName,processName,createName,createTime ,order, field);
+        return Result.success(equipments, equipmentService.count(equipmentId, equipmentName ,enable,equipmentInstallLocation, equipTypeName, protocolCommunication,accPointResName,processName,createName,createTime));
     }
 
     /**

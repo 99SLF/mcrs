@@ -431,7 +431,7 @@
                             time: 500
                         }, function () {
                             var index = parent.layer.getFrameIndex(window.name);
-                            win.layui.table.reload("LAY-app-device-list-reload");
+                            win.layui.table.reload("LAY-app-update_package-list-reload");
                             top.layer.close(index);
                         });
                     }

@@ -6,10 +6,18 @@
     <!--    查询记录数-->
     <select id="count" resultType="int">
         SELECT count(*) FROM eqi_equipment AS eqi
-        LEFT JOIN base_equip_info AS bei ON eqi.equip_type_id = bei.equip_type_id
-        LEFT JOIN base_access_info AS bai ON eqi.acc_point_res_id = bai.acc_point_res_id
-        LEFT JOIN base_process_info AS bpi ON bai.process_code = bpi.process_code
-        LEFT JOIN cap_user AS cur ON eqi.creator = cur.USER_ID
+        LEFT JOIN base_equip_info AS bei
+        ON eqi.equip_type_id = bei.equip_type_id
+        LEFT JOIN base_access_info AS bai
+        ON eqi.acc_point_res_id = bai.acc_point_res_id
+        LEFT JOIN base_process_info AS bpi
+        ON bai.process_id = bpi.process_id
+        LEFT JOIN base_factory_info AS bfi
+        ON bpi.factory_id = bfi.factory_id
+        LEFT JOIN base_matrix_info AS bmi
+        ON bfi.matrix_id = bmi.matrix_id
+        LEFT JOIN cap_user AS cur
+        ON eqi.creator = cur.USER_ID
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
@@ -20,19 +28,45 @@
             <if test="enable !=null and enable !=''">
                 and eqi.enable like '%${enable}%'
             </if>
+            <if test="equipmentInstallLocation !=null and equipmentInstallLocation !=''">
+                and bpi.equipment_install_location like '%${equipmentInstallLocation}%'
+            </if>
+            <if test="equipTypeName !=null and equipTypeName !=''">
+                and bei.equip_type_name like '%${equipTypeName}%'
+            </if>
+            <if test="protocolCommunication !=null and protocolCommunication !=''">
+                and eqi.protocol_communication like '%${protocolCommunication}%'
+            </if>
+            <if test="accPointResName !=null and accPointResName !=''">
+                and bai.acc_point_res_name like '%${accPointResName}%'
+            </if>
             <if test="processName !=null and processName !=''">
                 and bpi.process_name like '%${processName}%'
+            </if>
+            <if test="createName !=null and createName !=''">
+                and cur.create_name like '%${createName}%'
+            </if>
+            <if test="createTime !=null and createTime !=''">
+                and eqi.create_time like '%${createTime}%'
             </if>
         </where>
     </select>
 
     <!--查询所有-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.device.pojo.EquipmentVo">
-        SELECT *, cur.USER_NAME AS createName FROM eqi_equipment AS eqi
-        LEFT JOIN base_equip_info AS bei ON eqi.equip_type_id = bei.equip_type_id
-        LEFT JOIN base_access_info AS bai ON eqi.acc_point_res_id = bai.acc_point_res_id
-        LEFT JOIN base_process_info AS bpi ON bai.process_code = bpi.process_code
-        LEFT JOIN cap_user AS cur ON eqi.creator = cur.USER_ID
+        SELECT *,cur.USER_NAME AS createName FROM eqi_equipment AS eqi
+        LEFT JOIN base_equip_info AS bei
+        ON eqi.equip_type_id = bei.equip_type_id
+        LEFT JOIN base_access_info AS bai
+        ON eqi.acc_point_res_id = bai.acc_point_res_id
+        LEFT JOIN base_process_info AS bpi
+        ON bai.process_id = bpi.process_id
+        LEFT JOIN base_factory_info AS bfi
+        ON bpi.factory_id = bfi.factory_id
+        LEFT JOIN base_matrix_info AS bmi
+        ON bfi.matrix_id = bmi.matrix_id
+        LEFT JOIN cap_user AS cur
+        ON eqi.creator = cur.USER_ID
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
@@ -43,8 +77,26 @@
             <if test="enable !=null and enable !=''">
                 and eqi.enable like '%${enable}%'
             </if>
+            <if test="equipmentInstallLocation !=null and equipmentInstallLocation !=''">
+                and bpi.equipment_install_location like '%${equipmentInstallLocation}%'
+            </if>
+            <if test="equipTypeName !=null and equipTypeName !=''">
+                and bei.equip_type_name like '%${equipTypeName}%'
+            </if>
+            <if test="protocolCommunication !=null and protocolCommunication !=''">
+                and eqi.protocol_communication like '%${protocolCommunication}%'
+            </if>
+            <if test="accPointResName !=null and accPointResName !=''">
+                and bai.acc_point_res_name like '%${accPointResName}%'
+            </if>
             <if test="processName !=null and processName !=''">
                 and bpi.process_name like '%${processName}%'
+            </if>
+            <if test="createName !=null and createName !=''">
+                and cur.create_name like '%${createName}%'
+            </if>
+            <if test="createTime !=null and createTime !=''">
+                and eqi.create_time like '%${createTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">

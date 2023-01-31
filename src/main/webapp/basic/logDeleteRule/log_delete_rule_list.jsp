@@ -14,14 +14,104 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/iconfont/iconfont.css">
+    <style>
+        .layui-card {
+            margin-bottom: 0px
+        }
+
+        .layui-layer-adminRight {
+            top: 0px !important;
+            bottom: 0;
+            box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
+            border-radius: 0;
+            overflow: auto
+        }
+
+        .layui-form-item .layui-inline {
+            margin-bottom: 0px !important;
+            margin-right: 0px !important;
+        }
+
+        .layui-form-label {
+            width: 120px !important;
+            padding: 5px 0px !important;
+        }
+
+        .layui-form-item .layui-input-inline {
+            float: left;
+            width: 150px;
+            margin-right: 10px;
+        }
+
+        .layui-input {
+            height: 30px !important;
+        }
+    </style>
 </head>
 <body>
-<div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+<%--<div class="layui-fluid">--%>
+<%--    <div class="layui-card">--%>
+<%--        <div class="layui-form layui-card-header layuiadmin-card-header-auto">--%>
+<%--            <div class="layui-form-item">--%>
+<%--                <div class="layui-inline">--%>
+<%--                    <label class="layui-form-label">日志删除规则标题：</label>--%>
+<%--                    <div class="layui-input-inline">--%>
+<%--                        <input type="text" name="deleteRuleTitle" placeholder="" autocomplete="off"--%>
+<%--                               class="layui-input">--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+
+<%--                <div class="layui-inline">--%>
+<%--                    <label class="layui-form-label">日志类型：</label>--%>
+<%--                    <div class="layui-input-inline">--%>
+<%--                        <input type="text" name="logType" placeholder="" autocomplete="off"--%>
+<%--                               class="layui-input">--%>
+<%--                    </div>--%>
+<%--                    <div class="layui-inline layui-search" style="padding-left: 50px">--%>
+<%--                        <button class="layui-btn layuiadmin-btn-list" lay-submit--%>
+<%--                                lay-filter="LAY-app-logDeleteRulelist-search"--%>
+<%--                                id="LAY-app-logDeleteRulelist-search">--%>
+<%--                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>--%>
+<%--                        </button>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+
+<%--            </div>--%>
+<%--        </div>--%>
+
+<%--        <div class="layui-card-body">--%>
+<%--            <div class="layui-toolbar" id="toolbar" hidden="true">--%>
+<%--&lt;%&ndash;                <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        class="layui-icon layui-icon-add-circle-fine"></i>删除规则新增&ndash;%&gt;--%>
+<%--&lt;%&ndash;                </button>&ndash;%&gt;--%>
+<%--                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="enable"><i--%>
+<%--                        class="layui-icon layui-icon-ok-circle"></i>启用--%>
+<%--                </button>--%>
+<%--&lt;%&ndash;                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        class="layui-icon layui-icon-delete"></i>删除&ndash;%&gt;--%>
+<%--&lt;%&ndash;                </button>&ndash;%&gt;--%>
+<%--            </div>--%>
+
+<%--            <table id="LAY-app-logDeleteRule-list" lay-filter="LAY-app-logDeleteRule-list"></table>--%>
+
+<%--            <script type="text/html" id="table-logDeleteRule-list">--%>
+<%--                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i--%>
+<%--                        class="layui-icon layui-icon-edit"></i>修改</a>--%>
+<%--&lt;%&ndash;                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        class="layui-icon layui-icon-delete"></i>删除</a>&ndash;%&gt;--%>
+<%--            </script>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</div>--%>
+
+<div class="layui-card">
+    <script type="text/html" id="toolbar">
+        <div class="layui-form layuiadmin-card-header-auto" lay-filter="layuiadmin-logDeleteRule-form"
+             id="layuiadmin-logDeleteRule-form">
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">日志删除规则标题：</label>
+                    <label class="layui-form-label">日志删除标题：</label>
                     <div class="layui-input-inline">
                         <input type="text" name="deleteRuleTitle" placeholder="" autocomplete="off"
                                class="layui-input">
@@ -29,61 +119,30 @@
                 </div>
 
                 <div class="layui-inline">
-                    <label class="layui-form-label">修改人：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="updateName" placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                </div>
-
-                <div class="layui-inline">
-                    <label class="layui-form-label">修改时间：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="updateTime"  id="updateTime" placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                </div>
-
-                <div class="layui-inline">
                     <label class="layui-form-label">日志类型：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="logType" placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                    <div class="layui-inline layui-search" style="padding-left: 50px">
-                        <button class="layui-btn layuiadmin-btn-list" lay-submit
-                                lay-filter="LAY-app-logDeleteRulelist-search"
-                                id="LAY-app-logDeleteRulelist-search">
-                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                        </button>
+                        <select name="logType" id="logType" lay-filter="logType"
+                                type="select">
+                            <option value=""></option>
+                        </select>
                     </div>
                 </div>
-
+                <div class="layui-inline layui-hide">
+                    <button id="LAY-app-logDeleteRulelist-search" class="layui-btn layuiadmin-btn-list" lay-submit
+                            lay-filter="LAY-app-logDeleteRulelist-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
             </div>
         </div>
+    </script>
+    <div class="layui-card-body">
+        <table id="LAY-app-logDeleteRule-list" lay-filter="LAY-app-logDeleteRule-list"></table>
 
-        <div class="layui-card-body">
-            <div class="layui-toolbar" id="toolbar" hidden="true">
-<%--                <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i--%>
-<%--                        class="layui-icon layui-icon-add-circle-fine"></i>删除规则新增--%>
-<%--                </button>--%>
-                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="enable"><i
-                        class="layui-icon layui-icon-ok-circle"></i>启用
-                </button>
-<%--                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i--%>
-<%--                        class="layui-icon layui-icon-delete"></i>删除--%>
-<%--                </button>--%>
-            </div>
-
-            <table id="LAY-app-logDeleteRule-list" lay-filter="LAY-app-logDeleteRule-list"></table>
-
-            <script type="text/html" id="table-logDeleteRule-list">
-                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
-                        class="layui-icon layui-icon-edit"></i>修改</a>
-<%--                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i--%>
-<%--                        class="layui-icon layui-icon-delete"></i>删除</a>--%>
-            </script>
-        </div>
+        <script type="text/html" id="table-logDeleteRule-list">
+            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
+                    class="layui-icon layui-icon-edit"></i>修改</a>
+        </script>
     </div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
@@ -101,7 +160,8 @@
     var form = layui.form;
     var $ = layui.jquery;
     var util = layui.util;
-
+    var admin = layui.admin;
+    var view = layui.view;
 
     //全局参数
     var req_data;
@@ -109,6 +169,10 @@
 
     //功能名
     var funName = "list";
+    // 高级查询参数
+    var advancedFormData = {};
+    // 焦点名称
+    var focusName = null;
 
     var hiddenFields = [];
 
@@ -123,22 +187,43 @@
     //监听搜索
     form.on("submit(LAY-app-logDeleteRulelist-search)", function (data) {
         var field = data.field;
-        table.reload("LAY-app-logDeleteRule-list-reload", {
-            where: field
-        });
+        reloadData(field);
+        var formData = {
+            deleteRuleTitle: field.deleteRuleTitle,
+            logType: field.logType
+        };
+        form.val("layuiadmin-logDeleteRule-form", formData);
+        advancedFormData = $.extend(advancedFormData, formData);
     });
 
+    function reloadData(formData) {
+        table.reload("LAY-app-logDeleteRule-list-reload", {
+            where: formData
+        });
+        formReder();
+        if (focusName) {
+            $("input[name=" + focusName + "]").focus();
+        }
+    }
 
-    //文本框回车事件
-    $(".layui-input").on("keydown", function (event) {
-        if (event.keyCode == 13) {
+    function setFormData(data) {
+        advancedFormData = data;
+        reloadData(data);
+        form.val("layuiadmin-logDeleteRule-form", {
+            deleteRuleTitle: data.deleteRuleTitle,
+            logType: data.logType
+        });
+    }
+
+
+
+    var active = {
+
+        search: function() {
             var submit = $("#LAY-app-logDeleteRulelist-search");
             submit.click();
             return false;
-        }
-    });
-
-    var active = {
+        },
         <%--//删除规则添加--%>
         <%--add: function () {--%>
         <%--    top.layer.open({--%>
@@ -220,9 +305,9 @@
             if (datas.length >= 2) {
                 layer.msg("只能启用一条规则");
             }
-
+            checkEnable()
             if (datas.length == 1) {
-                checkEnable();
+
                 var ruleDeleteIds = new Array();
                 for (var i = 0; i < datas.length; i++) {
 
@@ -264,7 +349,7 @@
                             }
                         });
                     } else if (isExist == true) {
-                        layer.msg("当前日志类型存在启用状态删除规则，请先关闭已启用规则", {
+                        layer.msg("当前日志已启用，请先关闭规则", {
                             icon: 2,
                             time: 2000
                         });
@@ -274,31 +359,31 @@
         }
     };
 
-    <%--//判断日志删除规则是否已存在启用状态--%>
-    <%--function checkEnable() {--%>
+    //判断日志删除规则是否已存在启用状态
+    function checkEnable() {
 
-    <%--    var checkStatus = table.checkStatus("LAY-app-logDeleteRule-list-reload");--%>
-    <%--    var datas = checkStatus.data;--%>
-    <%--    if (datas[0].logType != null && datas[0].logType != "") {--%>
-    <%--        $.ajax({--%>
-    <%--            url: "<%= request.getContextPath() %>/logDeleteRule/logDeleteRule/check/enable?logType=" + datas[0].logType,--%>
-    <%--            type: "GET",--%>
-    <%--            cache: false,--%>
-    <%--            contentType: "text/json",--%>
-    <%--            cache: false,--%>
-    <%--            success: function (result) {--%>
-    <%--                debugger;--%>
-    <%--                if (result.code == "1") {--%>
-    <%--                    isExist = true;--%>
-    <%--                } else {--%>
-    <%--                    isExist = false;--%>
-    <%--                }--%>
-    <%--            }--%>
-    <%--        });--%>
-    <%--    } else {--%>
-    <%--        return;--%>
-    <%--    }--%>
-    <%--}--%>
+        var checkStatus = table.checkStatus("LAY-app-logDeleteRule-list-reload");
+        var datas = checkStatus.data;
+        if (datas[0].logType != null && datas[0].logType != "") {
+            $.ajax({
+                url: "<%= request.getContextPath() %>/logDeleteRule/logDeleteRule/check/enable?logType=" + datas[0].logType,
+                type: "GET",
+                cache: false,
+                contentType: "text/json",
+                cache: false,
+                success: function (result) {
+                    debugger;
+                    if (result.code == "1") {
+                        isExist = true;
+                    } else {
+                        isExist = false;
+                    }
+                }
+            });
+        } else {
+            return;
+        }
+    }
 
     table.on('sort(LAY-app-logDeleteRule-list)', function (obj) {
         table.reload('LAY-app-logDeleteRule-list-reload', {
@@ -378,7 +463,15 @@
         limit: 10,
         limits: [10, 15, 20, 30],
         toolbar: "#toolbar",
-        defaultToolbar: ["filter"],
+        defaultToolbar: [{
+            title: "查询",
+            layEvent: "search",
+            icon: "layui-icon layui-icon-search layuiadmin-button-btn",
+        }, {
+            title: "启用",
+            layEvent: "enable",
+            icon: "layui-icon layui-icon-ok-circle",
+        }, "filter"],
         colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;
@@ -424,7 +517,7 @@
             field: "enable",
             title: "启用",
             align: "center",
-            minWidth: 120,
+            minWidth: 80,
             hide: isHidden("enable"),
             templet: function (d) {
                 return layui.admin.getDictText("IS_USE", d.enable);
@@ -433,7 +526,7 @@
             field: "deleteRuleType",
             title: "日志删除规则类型",
             align: "center",
-            minWidth: 200,
+            minWidth: 150,
             hide: isHidden("deleteRuleType"),
             templet: function (d) {
                 return layui.admin.getDictText("LOG_DELETE_RULE_TYPE", d.deleteRuleType);
@@ -449,19 +542,10 @@
             }
         }, {
             field: "retentionTime",
-            title: "保留时间数",
+            title: "保留时间数(天)",
             align: "center",
-            minWidth: 150,
+            minWidth: 130,
             hide: isHidden("retentionTime")
-        }, {
-            field: "timeUnit",
-            title: "时间单位",
-            align: "center",
-            minWidth: 120,
-            hide: isHidden("timeUnit"),
-            templet: function (d) {
-                return layui.admin.getDictText("TIME_UNIT", d.timeUnit);
-            }
         }, {
             field: "updateName",
             title: "修改人",
@@ -475,9 +559,9 @@
             minWidth: 200,
             hide: isHidden("updateTime"),
             templet: function (d) {
-                if(d.updateTime!=null){
+                if (d.updateTime != null) {
                     return layui.util.toDateString(d.updateTime);
-                }else{
+                } else {
                     return '';
                 }
             }
@@ -485,10 +569,37 @@
             title: "操作",
             align: "center",
             fixed: "right",
-            width: 200,
+            width: 100,
             toolbar: "#table-logDeleteRule-list"
         }]]
     });
+
+    formReder();
+
+    function formReder() {
+        //软件类型下拉框监听事件
+        form.on("select(logType)", function (data) {
+            var submit = $("#LAY-app-logDeleteRulelist-search");
+            submit.click();
+        });
+
+        //获取软件类型的下拉值
+        layui.admin.renderDictSelect({
+            elem: "#logType",
+            dictTypeId: "LOG_TYPE",
+        });
+        form.render();
+
+        // 文本框回车事件
+        $(".layui-input").on("keydown", function (event) {
+            if (event.keyCode == 13) {
+                focusName = event.target.name;
+                var submit = $("#LAY-app-logDeleteRulelist-search");
+                submit.click();
+                return false;
+            }
+        });
+    }
 
     //监听操作事件
     table.on("tool(LAY-app-logDeleteRule-list)", function (e) {
@@ -514,47 +625,47 @@
                 }
 
             });
-        <%--} else if (e.event == "del") {--%>
-        <%--    layer.confirm("确定删除该设备？", {--%>
-        <%--        icon: 3,--%>
-        <%--        title: "系统提示"--%>
-        <%--    }, function (index) {--%>
-        <%--        $.ajax({--%>
-        <%--            url: "<%= request.getContextPath() %>/logDeleteRule/logDeleteRule/delete/" + data.ruleDeleteId,--%>
-        <%--            type: "DElETE",--%>
-        <%--            data: JSON.stringify({--%>
-        <%--                logDeleteRule: data--%>
-        <%--            }),--%>
-        <%--            cache: false,--%>
-        <%--            contentType: "text/json",--%>
-        <%--            success: function (result) {--%>
-        <%--                if (result.exception) {--%>
-        <%--                    layer.alert(result.exception.message, {--%>
-        <%--                        icon: 2,--%>
-        <%--                        title: "系统提示"--%>
-        <%--                    });--%>
-        <%--                } else if (result) {--%>
-        <%--                    layer.msg("删除成功", {--%>
-        <%--                        icon: 1,--%>
-        <%--                        time: 500--%>
-        <%--                    }, function () {--%>
-        <%--                        table.reload("LAY-app-logDeleteRule-list-reload");--%>
-        <%--                    });--%>
-        <%--                } else {--%>
-        <%--                    layer.msg("删除失败！", {--%>
-        <%--                        icon: 2,--%>
-        <%--                        time: 2000--%>
-        <%--                    });--%>
-        <%--                }--%>
-        <%--            },--%>
-        <%--            error: function (jqXHR, textStatus, errorThrown) {--%>
-        <%--                layer.msg(jqXHR.responseText, {--%>
-        <%--                    time: 500,--%>
-        <%--                    icon: 5--%>
-        <%--                });--%>
-        <%--            }--%>
-        <%--        });--%>
-        <%--    });--%>
+            <%--} else if (e.event == "del") {--%>
+            <%--    layer.confirm("确定删除该设备？", {--%>
+            <%--        icon: 3,--%>
+            <%--        title: "系统提示"--%>
+            <%--    }, function (index) {--%>
+            <%--        $.ajax({--%>
+            <%--            url: "<%= request.getContextPath() %>/logDeleteRule/logDeleteRule/delete/" + data.ruleDeleteId,--%>
+            <%--            type: "DElETE",--%>
+            <%--            data: JSON.stringify({--%>
+            <%--                logDeleteRule: data--%>
+            <%--            }),--%>
+            <%--            cache: false,--%>
+            <%--            contentType: "text/json",--%>
+            <%--            success: function (result) {--%>
+            <%--                if (result.exception) {--%>
+            <%--                    layer.alert(result.exception.message, {--%>
+            <%--                        icon: 2,--%>
+            <%--                        title: "系统提示"--%>
+            <%--                    });--%>
+            <%--                } else if (result) {--%>
+            <%--                    layer.msg("删除成功", {--%>
+            <%--                        icon: 1,--%>
+            <%--                        time: 500--%>
+            <%--                    }, function () {--%>
+            <%--                        table.reload("LAY-app-logDeleteRule-list-reload");--%>
+            <%--                    });--%>
+            <%--                } else {--%>
+            <%--                    layer.msg("删除失败！", {--%>
+            <%--                        icon: 2,--%>
+            <%--                        time: 2000--%>
+            <%--                    });--%>
+            <%--                }--%>
+            <%--            },--%>
+            <%--            error: function (jqXHR, textStatus, errorThrown) {--%>
+            <%--                layer.msg(jqXHR.responseText, {--%>
+            <%--                    time: 500,--%>
+            <%--                    icon: 5--%>
+            <%--                });--%>
+            <%--            }--%>
+            <%--        });--%>
+            <%--    });--%>
         } else if (e.event == "view") {
             top.layer.open({
                 type: 2,

@@ -20,6 +20,12 @@ import java.util.Date;
 public class LogDeleteRuleVo {
 
     /**
+     * 删除规则主键
+     */
+    @TableId(type = IdType.AUTO)
+    private int ruleDeleteId;
+
+    /**
      * 删除规则标题
      */
     private String deleteRuleTitle;
@@ -42,12 +48,7 @@ public class LogDeleteRuleVo {
     /**
      * 保留时间数
      */
-    private String  retentionTime;
-
-    /**
-     * 时间单位
-     */
-    private String timeUnit;
+    private int  retentionTime;
 
     /**
      * 修改人

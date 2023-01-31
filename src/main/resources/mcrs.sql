@@ -443,8 +443,8 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- ----------------------------
 -- Table structure for upd_upload
 -- ----------------------------
-DROP TABLE IF EXISTS `upd_upload`;
-CREATE TABLE `upd_upload` (
+    DROP TABLE IF EXISTS `upd_upload`;
+    CREATE TABLE `upd_upload` (
       `upload_id` int(11) NOT NULL AUTO_INCREMENT,
       `upload_number` varchar(255) DEFAULT NULL,
       `version` varchar(255) DEFAULT NULL,
@@ -460,8 +460,10 @@ CREATE TABLE `upd_upload` (
       `upload_file_size` double DEFAULT NULL,
       `upload_file_type` varchar(255) DEFAULT NULL,
       `uuid_file` varchar(255) DEFAULT NULL,
+      `updater` varchar(255) DEFAULT NULL,
+      `version_update_time` datetime DEFAULT NULL,
       PRIMARY KEY (`upload_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=197 DEFAULT CHARSET=utf8;
+    ) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
 
 
 
@@ -652,28 +654,23 @@ CREATE TABLE `dev_plcparam_dispose` (
     ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 
-    -- ----------------------------
-    -- Table structure for bas_log_delete_rule
-    -- ----------------------------
-    DROP TABLE IF EXISTS `bas_log_delete_rule`;
-    CREATE TABLE `bas_log_delete_rule`  (
-        `rule_delete_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '日志主键',
-        `delete_rule_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '删除规则编码',
-        `delete_rule_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '删除规则标题',
-        `enable` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否启用',
-        `rule_level` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '规则级别',
-        `delete_rule_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志删除规则类型',
-        `log_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志类型',
-        `time_interval` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '时间间隔',
-        `time_unit` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '时间单位',
-        `creator` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
-        `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-        `updater` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
-        `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
-        PRIMARY KEY (`rule_delete_id`) USING BTREE
-    ) ENGINE = InnoDB AUTO_INCREMENT = 86 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+-- ----------------------------
+-- Table structure for bas_log_delete_rule
+-- ----------------------------
+DROP TABLE IF EXISTS `bas_log_delete_rule`;
+CREATE TABLE `bas_log_delete_rule`  (
+    `rule_delete_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '日志主键',
+    `delete_rule_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '删除规则标题',
+    `enable` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否启用',
+    `delete_rule_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志删除规则类型',
+    `log_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志类型',
+    `retention_time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '保留时间数（天）',
+    `updater` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
+    `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
+    PRIMARY KEY (`rule_delete_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 105 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
-    SET FOREIGN_KEY_CHECKS = 1;
+SET FOREIGN_KEY_CHECKS = 1;
 
 
     -- ----------------------------

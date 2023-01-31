@@ -46,7 +46,8 @@
             M = M > 9 ? M : "0" + M; //如果分钟小于10,则在前面加0补充为两位数字
             var s = myDate.getSeconds(); //获取秒
             s = s > 9 ? s : "0" + s; //如果秒数小于10,则在前面加0补充为两位数字
-            var NowTime = y + "年" + m + "月" + d + "日" + h + ":" + M + ":" + s; //串联字符串用于输入
+            // var NowTime = y + "年" + m + "月" + d + "日" + h + ":" + M + ":" + s; //串联字符串用于输入
+            var NowTime = y + "-" + m + "-" + d + "-" + h + ":" + M + ":" + s; //串联字符串用于输入
             obj.value = NowTime;// 在文本框中输入时间
             window.setTimeout("getTime()", 1000); //每隔1秒自动变换时间
         }
@@ -153,11 +154,8 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label" style="margin-top: 10px;">制单人:</label>
             <div class="layui-input-block" style="width: 200px;margin-top: 10px; ">
-                <%
-                    IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
-                %>
-                <input type="text" class="layui-input" id="uploader" name="uploader"
-                       value="<%=usetObject.getUserId()%>" size="150" readonly/>
+                <%IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();%>
+                <input type="text" class="layui-input" id="uploader" name="uploader" value="<%=usetObject.getUserName()%>" size="150" readonly/>
             </div>
         </div>
     </div>
@@ -361,7 +359,7 @@
         accept: 'file',
         // //允许上传的文件后缀。一般结合 accept 参数类设定。假设 accept 为 file 类型时，那么你设置 exts: 'zip|rar|7z' 即代表只允许上传压缩格式的文件。如果 accept 未设定，那么限制的就是图片的文件格式
         // exts: 'txt|rar|zip|doc|docx|pdf|xls|xlsx|jpg|png',//允许上传的文件类型
-        exts: 'zip|rar|7z',
+        exts: 'zip|rar',
         //和后端接口命名相同的文件名
         field: "file",
         //是否选完文件后自动上传。如果设定 false，那么需要设置 bindAction 参数来指向一个其它按钮提交上传
@@ -417,7 +415,8 @@
                 time: 2000
             }, function () {
                 var index = parent.layer.getFrameIndex(window.name);
-                win.layui.table.reload("LAY-app-device-list-reload");
+                win.layui.table.reload("LAY-app-update_package-list-reload");
+                win.formReder();
                 top.layer.close(index);
             });
         },

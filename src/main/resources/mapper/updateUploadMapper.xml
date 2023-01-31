@@ -7,31 +7,33 @@
         insert into upd_upload
         values (#{uploadId}, #{uploadNumber}, #{version}, #{deviceSoType}, #{uploadStrategy}, #{fileName}, #{uploader},
                 #{versionUploadTime}, #{remarks}, #{majorVersion}, #{downloadUrl},
-                #{uploadUuid}, #{uploadFileSize}, #{uploadFileType}, #{uuidFile})
+                #{uploadUuid}, #{uploadFileSize}, #{uploadFileType}, #{uuidFile}, #{updater}, #{versionUpdateTime})
     </insert>
 
-    <!--    查询记录数-->
-    <select id="count" resultType="int">
-        select count(*) from upd_upload
-        <where>
-            <if test="version !=null and version !=''">
-                and version like '%${version}%'
-            </if>
-            <if test="deviceSoType !=null and deviceSoType !=''">
-                and device_so_type like '%${deviceSoType}%'
-            </if>
-        </where>
-    </select>
-
-    <!--查询更新包数据-->
+    <!--查询更新包上传管理显示记录数-->
     <select id="queryUpdateUploadAll" parameterType="map" resultType="com.zimax.mcrs.update.pojo.UpdateUpload">
-        select * from upd_upload
+        SELECT
+        *,b.USER_NAME AS uplName
+        FROM upd_upload a
+        LEFT JOIN cap_user b ON a.uploader = b.USER_ID
         <where>
+            <if test="uploadNumber !=null and uploadNumber !=''">
+                and upload_number like '%${uploadNumber}%'
+            </if>
             <if test="version !=null and version !=''">
                 and version like '%${version}%'
             </if>
             <if test="deviceSoType !=null and deviceSoType !=''">
                 and device_so_type like '%${deviceSoType}%'
+            </if>
+            <if test="uploadStrategy !=null and uploadStrategy !=''">
+                and upload_strategy like '%${uploadStrategy}%'
+            </if>
+            <if test="uploader !=null and uploader !=''">
+                and uploader like '%${uploader}%'
+            </if>
+            <if test="versionUploadTime !=null and versionUploadTime !=''">
+                and version_upload_time like '%${versionUploadTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -40,6 +42,31 @@
         <if test="limit !=null and limit !=''">
             limit ${begin},${limit}
         </if>
+    </select>
+
+    <!-- 查询更新包上传管理显示记录数-->
+    <select id="countAll" resultType="int">
+        select count(*) from upd_upload
+        <where>
+            <if test="uploadNumber !=null and uploadNumber !=''">
+                and upload_number like '%${uploadNumber}%'
+            </if>
+            <if test="version !=null and version !=''">
+                and version like '%${version}%'
+            </if>
+            <if test="deviceSoType !=null and deviceSoType !=''">
+                and device_so_type like '%${deviceSoType}%'
+            </if>
+            <if test="uploadStrategy !=null and uploadStrategy !=''">
+                and upload_strategy like '%${uploadStrategy}%'
+            </if>
+            <if test="uploader !=null and uploader !=''">
+                and uploader like '%${uploader}%'
+            </if>
+            <if test="versionUploadTime !=null and versionUploadTime !=''">
+                and version_upload_time like '%${versionUploadTime}%'
+            </if>
+        </where>
     </select>
 
     <!--查询升级更新包数据-->
@@ -61,6 +88,19 @@
         <if test="limit !=null and limit !=''">
             limit ${begin},${limit}
         </if>
+    </select>
+
+    <!-- 查询升级更新包数据记录数-->
+    <select id="count" resultType="int">
+        select count(*) from upd_upload
+        <where>
+            <if test="version !=null and version !=''">
+                and version like '%${version}%'
+            </if>
+            <if test="deviceSoType !=null and deviceSoType !=''">
+                and device_so_type like '%${deviceSoType}%'
+            </if>
+        </where>
     </select>
 
     <!--查询回退数据-->
@@ -129,5 +169,27 @@
         where upload_id = #{uploadId}
     </select>
 
+    <!--获取当前的软件类型的最新的更新包版本号-->
+    <select id="getLastVersion" parameterType="map"
+            resultType="com.zimax.mcrs.update.pojo.UpdateUpload">
+        SELECT *
+        FROM upd_upload
+        <where>
+            <if test="deviceSoType !=null and deviceSoType !=''">
+                and device_so_type =#{deviceSoType}
+            </if>
+        </where>
+        ORDER BY version_upload_time DESC
+        LIMIT 1;
+    </select>
 
+    <!--更新一条更新包数据-->
+    <update id="updateUpload" parameterType="com.zimax.mcrs.update.pojo.UpdateUpload">
+        UPDATE upd_upload
+        SET upload_strategy     = #{uploadStrategy},
+            remarks             = #{remarks},
+            updater             = #{updater},
+            version_update_time = #{versionUpdateTime}
+        WHERE upload_id = ${uploadId}
+    </update>
 </mapper>

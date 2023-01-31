@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <!-- 
-  - Author(s): 林俊杰
+  - Author(s): 林俊杰，李伟杰
   - Date: 2022-12-01 16:11:58
   - Description:
 -->
@@ -662,6 +662,8 @@
 
 
     $(window).resize(function () {
+
+        //LAY-app-device-list-reload
         table.reload("LAY-app-device-list-reload", {
             height: "full-" + getFullSize()
         });
@@ -844,29 +846,25 @@
             title: "设备安装位置",
             align: "center",
             minWidth: 150,
-            hide: true
-            // hide: isHidden("equipmentInstallLocation")
+            hide: isHidden("equipmentInstallLocation")
         }, {
             field: "processName",
             title: "工序名称",
             align: "center",
             minWidth: 150,
-            hide: true,
-            // hide: isHidden("processName")
+            hide: isHidden("processName")
         }, {
             field: "factoryName",
             title: "工厂名称",
             align: "center",
             minWidth: 150,
-            hide: true
-            // hide: isHidden("factoryName")
+            hide: isHidden("factoryName")
         }, {
             field: "accessMethod",
             title: "接入方式",
             align: "center",
             minWidth: 100,
-            hide: true,
-            // hide: isHidden("accessMethod"),
+            hide: isHidden("accessMethod"),
             templet: function (d) {
                 return layui.admin.getDictText("ACCESS_METHOD", d.accessMethod);
             }
@@ -875,25 +873,23 @@
             title: "创建人",
             align: "center",
             minWidth: 100,
-            hide: true,
-            // hide: isHidden("creator")
+            hide: isHidden("creator")
         }, {
             field: "createTime",
             title: "创建时间",
             align: "center",
             minWidth: 200,
-            hide: true,
+            hide: isHidden("createTime"),
             templet: function (d) {
                 return layui.util.toDateString(d.createTime);
             }
-            // hide: isHidden("createTime")
+
         }, {
             field: "remarks",
             title: "备注",
             align: "center",
             minWidth: 100,
-            hide: true
-            // hide: isHidden("remarks")
+            hide: isHidden("remarks")
         }, {
             title: "操作",
             align: "center",

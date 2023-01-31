@@ -17,24 +17,18 @@
             <if test="logType !=null and logType !=''">
                 and ldr.log_type like '%${logType}%'
             </if>
-            <if test="updateName !=null and updateName !=''">
-                and cur.USER_NAME like '%${updateName}%'
-            </if>
-            <if test="updateTime !=null and updateTime !=''">
-                and ldr.update_time like '%${updateTime}%'
-            </if>
         </where>
     </select>
 
     <!--查询所有-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.basic.logDeleteRule.pojo.LogDeleteRuleVo">
         SELECT
+        ldr.rule_delete_id,
         ldr.delete_rule_title,
         ldr.`enable`,
         ldr.delete_rule_type,
         ldr.log_type,
         ldr.retention_time,
-        ldr.time_unit,
         cur.USER_NAME AS updateName,
         ldr.update_time
         FROM bas_log_delete_rule AS ldr
@@ -46,12 +40,6 @@
             </if>
             <if test="logType !=null and logType !=''">
                 and ldr.log_type like '%${logType}%'
-            </if>
-            <if test="updateName !=null and updateName !=''">
-                and cur.USER_NAME like '%${updateName}%'
-            </if>
-            <if test="updateTime !=null and updateTime !=''">
-                and ldr.update_time like '%${updateTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -85,7 +73,6 @@
             delete_rule_type=#{deleteRuleType},
             log_type=#{logType},
             retention_time=#{retentionTime},
-            time_unit=#{timeUnit},
             updater=#{updater},
             update_time=#{updateTime}
         where rule_delete_id = #{ruleDeleteId}
@@ -109,26 +96,31 @@
     <!--启用-->
     <update id="enable" parameterType="com.zimax.mcrs.basic.logDeleteRule.pojo.LogDeleteRule">
         update bas_log_delete_rule
-        set enable     = #{enable},
+        set enable = #{enable},
             updater=#{updater},
             update_time=#{updateTime}
         where rule_delete_id = #{ruleDeleteId}
     </update>
 
-<!--    &lt;!&ndash;查询当前日志删除启用规则是否唯一&ndash;&gt;-->
-<!--    <select id="checkEnable" resultType="int">-->
-<!--        SELECT COUNT(*)-->
-<!--        FROM bas_log_delete_rule-->
-<!--        where log_type = #{logType}-->
-<!--          AND `enable` = 'on'-->
-<!--    </select>-->
+    <!--查询当前日志删除启用规则是否唯一-->
+    <select id="checkEnable" resultType="int">
+        SELECT COUNT(*)
+        FROM bas_log_delete_rule
+        where log_type = #{logType}
+          AND `enable` = '101'
+    </select>
 
+<!--    查询所有的日志删除规则-->
+    <select id="selectLogDeleteRule" parameterType="map" resultType="com.zimax.mcrs.basic.logDeleteRule.pojo.LogDeleteRuleVo">
+        SELECT *
+        FROM bas_log_delete_rule
+    </select>
 
-    <!-- 接口日志定时删除-->
-    <delete id="deleteLog" parameterType="date">
+    <!-- 定时删除-->
+    <delete id="deleteLog" parameterType="String">
         delete
         from log_log
-        where create_time > #{interfaceLogTime}
+        where create_time &lt; #{deleteTime} and log_type =  #{logType}
     </delete>
 
 
