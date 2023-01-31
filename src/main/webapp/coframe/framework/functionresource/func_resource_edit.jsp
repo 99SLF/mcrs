@@ -122,7 +122,8 @@
 					layer.msg("修改成功", {icon: 1,time: 2000}, function() {
 						var index = parent.layer.getFrameIndex(window.name);
 						win.layui.table.reload('LAY-app-funcresource-list-reload');
-						top.layer.close(index);  
+						top.layer.close(index);
+						win.window.updata_select()
 					});
 				}
 			});			

@@ -9,34 +9,34 @@
 <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.1">
-	<style>
-		.layui-card {
-			margin-bottom: 0px
-		}
-		.layui-layer-adminRight {
-			top: 0px !important;
-			bottom: 0;
-			box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
-			border-radius: 0;
-			overflow: auto
-		}
-		.layui-form-item .layui-inline {
-			margin-bottom: 0px !important;
-			margin-right: 0px !important;
-		}
-		.layui-form-label {
-			width: 120px !important;
-			padding: 5px 0px !important;
-		}
-		.layui-form-item .layui-input-inline {
-			float: left;
-			width: 150px;
-			margin-right: 10px;
-		}
-		.layui-input {
-			height: 30px !important;
-		}
-	</style>
+<style>
+	.layui-card {
+		margin-bottom: 0px
+	}
+	.layui-layer-adminRight {
+		top: 0px !important;
+		bottom: 0;
+		box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
+		border-radius: 0;
+		overflow: auto
+	}
+	.layui-form-item .layui-inline {
+		margin-bottom: 0px !important;
+		margin-right: 0px !important;
+	}
+	.layui-form-label {
+		width: 120px !important;
+		padding: 5px 0px !important;
+	}
+	.layui-form-item .layui-input-inline {
+		float: left;
+		width: 150px;
+		margin-right: 10px;
+	}
+	.layui-input {
+		height: 30px !important;
+	}
+</style>
 </head>
 <body>
 <div class="layui-card">
@@ -99,7 +99,7 @@
 				},
 				yes: function(index, layero) {
 					var submit = layero.find('iframe').contents().find("#layuiadmin-app-form-submit");
-					submit.click();	
+					submit.click();
 				}
 			});
 		},
@@ -131,6 +131,7 @@
 								time: 2000
 								}, function() {
 									table.reload("LAY-app-funcgroup-list-reload");
+									updata_select();
 									updateFunSelect();
 								});
 							} else {
@@ -142,7 +143,8 @@
 						}
 					});	
 				})
-	    	} 
+	    	}
+			updata_select();
 		}
 	};
 	
@@ -162,13 +164,14 @@
 		cache: false,
 		contentType: 'text/json',
 		success: function (json) {
+			$('#appId').empty();
 			if (json != null && json.data != null && json.data.length > 0) {
 				for (var i = 0; i < json.data.length; i++) {
 					$('#appId').append(new Option(json.data[i].appName,json.data[i].appId));// 下拉菜单里添加元素
 				}
 				appId = json.data[0].appId
 				$('#refreshtable').val(appId);
-				form.render('select');
+				form.render();
 			}
 		}
 	});
@@ -196,7 +199,7 @@
   		});
 	});
 	
-	function updata_select(flag){
+	function updata_select(){
 		$('#appId').empty();
 		$.ajax({
 			url: "<%= request.getContextPath() %>/framework/application/query",
@@ -204,6 +207,7 @@
 			cache: false,
 			contentType: 'text/json',
 			success: function (json) {
+				debugger;
 				if (json != null && json.data != null && json.data.length > 0) {
 					for (var i = 0; i < json.data.length; i++) {
 						$('#appId').append(new Option(json.data[i].appName,json.data[i].appId));// 下拉菜单里添加元素
@@ -291,9 +295,8 @@
 		},
 		//数据渲染完的回调。你可以借此做一些其它的操作;curr:当前页码;count:数据总量
 		done: function(res, curr, count) {
-			debugger;
 			form.val("layuiadmin-feeding-form",{
-				appId: $("#appId").val(),
+				appId:appId,
 			});
 			form.render();
 		},
@@ -339,117 +342,9 @@
 			toolbar: "#table-role-list"
 		}]]
 	});
-	function select(num,flag) {
-		var data = {
-			appId: num
-		};
-		if (flag == true) {
-			table.render({
-				elem: "#LAY-app-funcgroup-list",
-				id: "LAY-app-funcgroup-list-reload",
-				url: "<%= request.getContextPath() %>/framework/funcGroup/query",
-				method: "get",
-				where: data,
-				toolbar: "#toolbar",
-				defaultToolbar: [{
-					title: "添加",
-					layEvent: "add",
-					icon: "layui-icon layui-icon-add-circle-fine",
-				},{
-					title: "删除",
-					layEvent: "batchdel",
-					icon: "layui-icon layui-icon-delete",
-				},"filter"],
-				height: "full-" + getFullSize(),
-				page: true,
-				limit: 10,
-				colHideChange: function(col, checked) {
-					var field = col.field;
-					var hidden = col.hide;
-					$.ajax({
-						url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
-						type: "GET",
-						cache: false,
-						contentType: "text/json",
-						success: function(result) {
-							if (result) {
-							} else{
-								layer.msg("列筛选失败");
-							}
-						}
-					});
-				},
-				limits: [10, 15, 20, 30],
-				parseData: function(res) {
-					return {
-						code: res.code,
-						msg: "",
-						count: res.total,
-						data: res.data
-					};
-				},
-				//数据渲染完的回调。你可以借此做一些其它的操作;curr:当前页码;count:数据总量
-				done: function(res, curr, count) {
-					form.val("layuiadmin-feeding-form",{
-						appId: 1,
-					});
-					form.render();
-				},
-				where:{
-					appId: $("#appId").val()
-				},
-				//设置表头。值是一个二维数组。方法渲染方式必填
-				cols:[[{
-					type: "checkbox"
-				}, {
-					field: "funcGroupName",
-					title: "功能组名称",
-					align: "left",
-					hide: isHidden("funcGroupName"),
-					minWidth: 150
-				}, {
-					//field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
-					field: "groupLevel",
-					title: "节点层次",
-					align: "center",
-					hide: isHidden("groupLevel"),
-					minWidth: 100
-				}, {
-					field: "funcGroupSeq",
-					title: "功能组序号",
-					align: "center",
-					hide: isHidden("funcGroupSeq"),
-					minWidth: 100
-				}, {
-					field: "isLeaf",
-					title: "是否叶子节点",
-					align: "center",
-					hide: isHidden("isLeaf"),
-					minWidth: 100
-				}, {
-					field: "displayOrder",
-					title: "显示顺序", 
-					align: "center",
-					hide: isHidden("displayOrder"),
-					minWidth: 150
-				}, {
-					title: "操作",
-					align: "center",
-					fixed: "right",
-					width: 150,
-					toolbar: "#table-role-list"
-				}]]
-			});
-		} else {
-			table.reload("LAY-app-funcgroup-list");
-		}
-		form.val("layuiadmin-feeding-form",{
-			appId: 1,
-		});
-		form.render();
- 	}
 		
 	form.on("select(refreshtable)", function(data) {
+		appId =  data.value;
 		var formData = {
 			appId: data.value
 		}
@@ -511,6 +406,7 @@
 								time: 2000
 							}, function() {
 								table.reload("LAY-app-funcgroup-list-reload");
+								updata_select();
 								updateFunSelect();
 							});
 						} else {
@@ -533,7 +429,7 @@
 			var iframeTemp = parent.layui.$(url[i]);
 			if (iframeTemp.length) {
 				var iframe = iframeTemp[0].contentWindow;
-				iframe.window.updata_select(false);
+				iframe.window.updata_select();
 			}
 		}
 	}

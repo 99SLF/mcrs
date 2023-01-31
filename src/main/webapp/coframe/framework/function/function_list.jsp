@@ -9,26 +9,51 @@
 <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
-<style type="text/css">
-.layui-card {
-	margin-bottom: 0px
-}
+<style>
+	.layui-card {
+		margin-bottom: 0px
+	}
+	.layui-layer-adminRight {
+		top: 0px !important;
+		bottom: 0;
+		box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
+		border-radius: 0;
+		overflow: auto
+	}
+	.layui-form-item .layui-inline {
+		margin-bottom: 0px !important;
+		margin-right: 0px !important;
+	}
+	.layui-form-label {
+		width: 120px !important;
+		padding: 5px 0px !important;
+	}
+	.layui-form-item .layui-input-inline {
+		float: left;
+		width: 150px;
+		margin-right: 10px;
+	}
+	.layui-input {
+		height: 30px !important;
+	}
 </style>
 </head>
 <body>
 <div class="layui-card">
-	<div class="layui-form layuiadmin-card-header-auto">
-		<div class="layui-form-item">
-			<div class="layui-inline">
-				<label class="layui-form-label" style="white-space:nowrap">选择子功能组：</label>
-				<div class="layui-input-inline">
-					<select name="appId" id="appId" lay-verify="required"  lay-filter="refreshtable" type="select" >           		
-               			<option value=""></option>
-               		</select>
-				</div>						
+	<script type="text/html" id="toolbar">
+		<div class="layui-form layuiadmin-card-header-auto" lay-filter="layuiadmin-feeding-form" id="layuiadmin-feeding-form">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label" style="white-space:nowrap">选择子功能组：</label>
+					<div class="layui-input-inline">
+						<select name="appId" id="appId" lay-verify="required"  lay-filter="refreshtable" type="select" >
+							<option value=""></option>
+						</select>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
+	</script>
 	<div class="layui-card-body">
 		<table id="LAY-app-function-list" lay-filter="LAY-app-function-list"></table>
 		<script type="text/html" id="table-role-list">
@@ -46,13 +71,13 @@
 	var funcGroupName ="";
 	var  num1 = $("#appId").val(); 
 	var num;
+	var appId = null;
 	var flag = true;
+	var focusName = null;
 	var funName = "function_list";
 	//状态默认
 	$("#appId").val("请选择");
 	form.render();
-	
-		
 	var active = {
 		add: function() {
 			top.layer.open({
@@ -103,6 +128,7 @@
 									time: 2000
 								}, function() {
 									table.reload("LAY-app-function-list-reload");
+									updata_select()
 									updateFuncresourceSelect();
 								});
 							} else {
@@ -143,7 +169,27 @@
 			height: "full-" + getFullSize()
 		});
 	});
-	
+
+	$.ajax({
+		url: "<%= request.getContextPath() %>/framework/funcGroup/query",
+		type: "get",
+		cache: false,
+		contentType: "text/json",
+		success: function (json) {
+			if (json != null && json.data != null && json.data.length > 0) {
+				$("#appId").empty();
+				for (var i = 0;i <json.data.length; i++) {
+					$("#appId").append(new Option(json.data[i].funcGroupName,json.data[i].funcGroupId));// 下拉菜单里添加元素
+				}
+				form.render("select");//更新下拉框
+				$("#refreshtable").val(json.data[0].funcGroupId);
+				funcGroupName = json.data[0].funcGroupName
+				num = json.data[0].funcGroupId;
+				//var num = $("#appId").val();
+				//select(num,flag);
+			}
+		}
+	});
 	//左侧表头按钮事件监听
 	table.on('toolbar(LAY-app-function-list)', function(obj){
 		var type = obj.event;
@@ -184,161 +230,160 @@
 			cache: false,
 			contentType: "text/json",
 			success: function (json) {
+				debugger;
 				if (json != null && json.data != null && json.data.length > 0) {
 					for (var i = 0;i <json.data.length; i++) {
 						$("#appId").append(new Option(json.data[i].funcGroupName,json.data[i].funcGroupId));// 下拉菜单里添加元素										
 					}
-					form.render("select");//更新下拉框
-					$("#refreshtable").val(1);
-					funcGroupName = json.data[0].funcGroupName
-					var num = $("#appId").val();
-					select(num,flag);
+					form.val("layuiadmin-feeding-form",{
+						appId: num,
+					});
+					form.render();
 				}		
 			}
 	  });
 	}
    
   updata_select(flag);
-	
-	function select(num,flag){
-		if	(flag == true){
-			var data = {
-				funcGroupId: num
+
+	table.render({
+		elem: "#LAY-app-function-list",
+		id: "LAY-app-function-list-reload",
+		url: "<%= request.getContextPath() %>/framework/function/query",
+		method: "get",
+		height: "full-" + getFullSize(),
+		page: true,
+		limit: 10,
+		toolbar: "#toolbar",
+		defaultToolbar: [{
+			title: "添加",
+			layEvent: "add",
+			icon: "layui-icon layui-icon-add-circle-fine",
+		},{
+			title: "删除",
+			layEvent: "batchdel",
+			icon: "layui-icon layui-icon-delete",
+		},"filter"],
+		limits: [10, 15, 20, 30],
+		colHideChange: function(col, checked) {
+			var field = col.field;
+			var hidden = col.hide;
+			$.ajax({
+				url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
+				type: "GET",
+				cache: false,
+				contentType: "text/json",
+				success: function(result) {
+					if (result) {
+					} else{
+						layer.msg("列筛选失败");
+					}
+				}
+			});
+		},
+		parseData: function(res) {
+			return {
+				code: res.code,
+				msg: "",
+				count: res.total,
+				data: res.data
 			};
-			table.render({
-				elem: "#LAY-app-function-list",
-				id: "LAY-app-function-list-reload",
-				url: "<%= request.getContextPath() %>/framework/function/query",
-				method: "get",
-				where: data,
-				height: "full-" + getFullSize(),
-				page: true,
-				limit: 10,
-				toolbar: "#toolbar",
-				defaultToolbar: [{
-					title: "添加",
-					layEvent: "add",
-					icon: "layui-icon layui-icon-add-circle-fine",
-				},{
-					title: "删除",
-					layEvent: "batchdel",
-					icon: "layui-icon layui-icon-delete",
-				},"filter"],
-				limits: [10, 15, 20, 30],
-				colHideChange: function(col, checked) {
-					var field = col.field;
-					var hidden = col.hide;
-					$.ajax({
-						url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
-						type: "GET",
-						cache: false,
-						contentType: "text/json",
-						success: function(result) {
-							if (result) {
-							} else{
-								layer.msg("列筛选失败");
-							}
-						}
-					});
-				},
-				parseData: function(res) {
-					return {
-						code: res.code,
-						msg: "",
-						count: res.total,
-						data: res.data
-					};
-				},
-				done: function(res, curr, count) { 
-				},
-				cols:[[{ 
-				//设置表头。值是一个二维数组。方法渲染方式必填
-					type: "checkbox"
-				}, {
-					field: "funcName",
-					title: "功能名称",
-					align: "left",
-					hide: isHidden("funcName"),
-					minWidth: 150
-				}, { 
-				//field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
-					field: "funcType",
-					title: "功能类型",
-					align: "center",
-					minWidth: 100,
-					hide: isHidden("funcType"),
-					templet: function(d){
-						if (d.funcType == "flow") {
-							return "页面流";
-						} else if(d.funcType == "page") {
-							return "页面";
-						} else if(d.funcType == "form") {
-							return "表单";
-						} else if(d.funcType == "view") {
-							return "视图";
-						} else if(d.funcType == "startprocess") {
-							return "启动流程";
-						} else {
-							return "其他";
-						}
-					}
-				}, {
-					field: "isMenu",
-					title: "是否定义为菜单",
-					align: "center",
-					minWidth: 150,
-					hide: isHidden("isMenu"),
-					templet: function(d){
-						if (d.isMenu == 1) {
-							return "是";
-						} else {
-							return "否";
-					  }
-					}
-				}, {			
-					field: "funcGroupName",
-					title: "所属功能组",
-					align: "center",
-					minWidth: 150,
-					hide: isHidden("funcGroupName"),
-					templet: function(d){
-						return funcGroupName;
-					}
-				}, {
-					field: "displayOrder",
-					title: "显示顺序", 
-					align: "center",
-					hide: isHidden("displayOrder"),
-					minWidth: 150
-				}, {			
-					title: "操作",
-					align: "center",
-					fixed: "right",
-					width: 150,
-					toolbar: "#table-role-list"
-				}]]
+		},
+		done: function(res, curr, count) {
+			form.val("layuiadmin-feeding-form",{
+				appId:num,
 			});
-		} else {
-			table.reload("LAY-app-function-list-reload",{
-				where: {
-					funcGroupId: num
-				},
-			});
-		}
- 	}
+			form.render();
+		},
+		cols:[[{
+			//设置表头。值是一个二维数组。方法渲染方式必填
+			type: "checkbox"
+		}, {
+			field: "funcName",
+			title: "功能名称",
+			align: "left",
+			hide: isHidden("funcName"),
+			minWidth: 150
+		}, {
+			//field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
+			field: "funcType",
+			title: "功能类型",
+			align: "center",
+			minWidth: 100,
+			hide: isHidden("funcType"),
+			templet: function(d){
+				if (d.funcType == "flow") {
+					return "页面流";
+				} else if(d.funcType == "page") {
+					return "页面";
+				} else if(d.funcType == "form") {
+					return "表单";
+				} else if(d.funcType == "view") {
+					return "视图";
+				} else if(d.funcType == "startprocess") {
+					return "启动流程";
+				} else {
+					return "其他";
+				}
+			}
+		}, {
+			field: "isMenu",
+			title: "是否定义为菜单",
+			align: "center",
+			minWidth: 150,
+			hide: isHidden("isMenu"),
+			templet: function(d){
+				if (d.isMenu == 1) {
+					return "是";
+				} else {
+					return "否";
+				}
+			}
+		}, {
+			field: "funcGroupName",
+			title: "所属功能组",
+			align: "center",
+			minWidth: 150,
+			hide: isHidden("funcGroupName"),
+			templet: function(d){
+				return funcGroupName;
+			}
+		}, {
+			field: "displayOrder",
+			title: "显示顺序",
+			align: "center",
+			hide: isHidden("displayOrder"),
+			minWidth: 150
+		}, {
+			title: "操作",
+			align: "center",
+			fixed: "right",
+			width: 150,
+			toolbar: "#table-role-list"
+		}]]
+	});
 		
 	form.on("select(refreshtable)", function(data){
 		funcGroupName = data.elem[data.elem.selectedIndex].text;
+		num  = data.value
 		var data = {
 			funcGroupId: data.value
 		};
-		table.reload("LAY-app-function-list-reload", {
-     		 page: {
-      			curr: 1 //重新从第 1 页开始
-			},
-		where:data
-    	});
+		reloadData(data);
+		updata_select(flag);
 	});
+	function reloadData(formData) {
+		table.reload("LAY-app-function-list-reload", {
+			page: {
+				//重新从第 1 页开始
+				curr: 1
+			},
+			where: formData
+		});
+		if (focusName) {
+			$("input[name=" + focusName + "]").focus();
+		}
+	}
 		
 	//监听操作事件
 	table.on("tool(LAY-app-function-list)", function(e) {
@@ -385,6 +430,7 @@
 								time: 2000
 							}, function() {
 								table.reload("LAY-app-function-list-reload");
+								updata_select()
 								updateFuncresourceSelect();
 							});
 						} else {
