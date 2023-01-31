@@ -258,9 +258,13 @@
                 return "设备连接端口不能超过20字";
             }
         },
-        equipmentIp: function (value, item) {
-            if (value.length > 20) {
-                return "设备连接IP不能超过20个字符";
+        equipmentIp: function(value, item){
+            function isValidIP(ip) {
+                var reg = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
+                return reg.test(ip);
+            }
+            if(isValidIP(value) == false){
+                return '请输入正确的IP地址';
             }
         },
         remarks: function (value, item) {

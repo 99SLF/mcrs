@@ -14,12 +14,12 @@
         ON ll.device_id = dev.device_id
         LEFT JOIN base_access_info AS bai
         ON eqi.acc_point_res_id = bai.acc_point_res_id
-        LEFT JOIN base_matrix_info AS bmi
-        ON bai.matrix_code = bmi.matrix_code
-        LEFT JOIN base_factory_info AS bfi
-        ON bai.factory_code = bfi.factory_code
         LEFT JOIN base_process_info AS bpi
-        ON bai.process_code = bpi.process_code
+        ON bai.process_id = bpi.process_id
+        LEFT JOIN base_factory_info AS bfi
+        ON bpi.factory_id = bfi.factory_id
+        LEFT JOIN base_matrix_info AS bmi
+        ON bfi.matrix_id = bmi.matrix_id
         LEFT JOIN cap_user AS cur
         ON ll.`user` = cur.USER_ID
         <where>
@@ -65,12 +65,12 @@
         ON ll.device_id = dev.device_id
         LEFT JOIN base_access_info AS bai
         ON eqi.acc_point_res_id = bai.acc_point_res_id
-        LEFT JOIN base_matrix_info AS bmi
-        ON bai.matrix_code = bmi.matrix_code
-        LEFT JOIN base_factory_info AS bfi
-        ON bai.factory_code = bfi.factory_code
         LEFT JOIN base_process_info AS bpi
-        ON bai.process_code = bpi.process_code
+        ON bai.process_id = bpi.process_id
+        LEFT JOIN base_factory_info AS bfi
+        ON bpi.factory_id = bfi.factory_id
+        LEFT JOIN base_matrix_info AS bmi
+        ON bfi.matrix_id = bmi.matrix_id
         LEFT JOIN cap_user AS cur
         ON ll.`user` = cur.USER_ID
         <where>

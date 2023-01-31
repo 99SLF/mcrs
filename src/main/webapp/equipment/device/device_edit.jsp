@@ -61,7 +61,8 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label">注册状态:</label>
             <div class="layui-input-block">
-                <input id="registerStatus" type="text" name="registerStatus" lay-verify="" placeholder=""
+                <input id="registerStatus" name="registerStatus" type="hidden"/>
+                <input id="registerStatusShow" type="text" name="registerStatusShow" lay-verify="" placeholder=""
                        autocomplete="off" class="layui-input"  readonly>
             </div>
         </div>
@@ -230,6 +231,7 @@
             "needUpdate": data.needUpdate,
             "enable": data.enable,
             "registerStatus": data.registerStatus,
+            "registerStatusShow": layui.admin.getDictText("REGISTER_STATUS",data.registerStatus),
             "deviceSoftwareType": data.deviceSoftwareType,
             "deviceName": data.deviceName,
             "accPointResId": data.accPointResId,
