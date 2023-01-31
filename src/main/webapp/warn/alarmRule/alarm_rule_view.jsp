@@ -479,6 +479,7 @@
         height: "full-" + getFullSize(),
         data: [],
         toolbar: "#toolbar",
+        height: 270 ,
         defaultToolbar: ["filter"],
         colHideChange: function (col, checked) {
             var field = col.field;

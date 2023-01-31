@@ -40,19 +40,11 @@
     </div>
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">保留时间数:</label>
+            <label class="layui-form-label">保留时间数(天):</label>
             <div class="layui-input-block">
                 <input id="retentionTime" type="text" name="retentionTime" lay-verify="required"
                        placeholder=""
                        autocomplete="off" class="layui-input" readonly>
-            </div>
-        </div>
-        <div class="layui-col-sm6">
-            <label class="layui-form-label">时间单位:</label>
-            <div class="layui-input-block">
-                <select name="timeUnit" id="timeUnit" lay-filter="required" lay-verify="required" type="select" >
-                    <option value=""></option>
-                </select>
             </div>
         </div>
     </div>
@@ -113,13 +105,6 @@
 
     var win = null;
 
-    //禁用规则级别下拉选择框
-    layui.use('form', function(){
-        var form = layui.form;
-        $("#ruleLevel").attr("disabled","disabled");
-        form.render('select');
-    });
-
     //禁用日志删除规则类型下拉选择框
     layui.use('form', function(){
         var form = layui.form;
@@ -127,12 +112,6 @@
         form.render('select');
     });
 
-    //禁用时间单位下拉选择框
-    layui.use('form', function(){
-        var form = layui.form;
-        $("#timeUnit").attr("disabled","disabled");
-        form.render('select');
-    });
 
     //禁用是否启用下拉选择框
     layui.use('form', function(){
@@ -155,24 +134,10 @@
     });
     form.render();
 
-    //获取时间单位的下拉值
-    layui.admin.renderDictSelect({
-        elem: "#timeUnit",
-        dictTypeId: "TIME_UNIT",
-    });
-    form.render();
-
     //获取日志类型的下拉值
     layui.admin.renderDictSelect({
         elem: "#logType",
         dictTypeId: "LOG_TYPE",
-    });
-    form.render();
-
-    //获取规则级别类型的下拉值
-    layui.admin.renderDictSelect({
-        elem: "#ruleLevel",
-        dictTypeId: "WARNING_LEVEL",
     });
     form.render();
 
@@ -196,7 +161,6 @@
             "enable": data.enable,
             "deleteRuleType": data.deleteRuleType,
             "retentionTime": data.retentionTime,
-            "timeUnit": data.timeUnit,
             "updateName": data.updateName,
             "updateTime": data.updateTime,
         });

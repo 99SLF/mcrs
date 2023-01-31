@@ -49,12 +49,7 @@ public class LogDeleteRule {
     /**
      * 保留时间数
      */
-    private String  retentionTime;
-
-    /**
-     * 时间单位
-     */
-    private String timeUnit;
+    private int  retentionTime;
 
     /**
      * 修改人

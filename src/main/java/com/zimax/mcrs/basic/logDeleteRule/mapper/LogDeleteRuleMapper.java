@@ -31,9 +31,7 @@ public interface LogDeleteRuleMapper {
      * @return
      */
     int count(@Param("deleteRuleTitle") String deleteRuleTitle,
-              @Param("logType") String logType,
-              @Param("updateName") String updateName,
-              @Param("updateTime") String updateTime);
+              @Param("logType") String logType);
 
 
 //    /**
@@ -72,14 +70,19 @@ public interface LogDeleteRuleMapper {
      */
     void enable(LogDeleteRule logDeleteRule);
 
-//    /**
-//     * 判断当前启用是否唯一
-//     */
-//    int checkEnable(@Param("logType") String logType);
+    /**
+     * 判断当前启用是否唯一
+     */
+    int checkEnable(@Param("logType") String logType);
 
-//    /**
-//     * 接口日志定时删除
-//     */
-//    void deleteLog(Date logInterfaceTime);
+    /**
+     * 查询日志删除规则
+     */
+    List<LogDeleteRuleVo> selectLogDeleteRule(Map map);
+
+    /**
+     * 定时删除
+     */
+    void deleteLog(@Param("logType")String logType,@Param("deleteTime")String deleteTime);
 
 }
