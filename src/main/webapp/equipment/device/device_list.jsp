@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <!-- 
-  - Author(s): 林俊杰
+  - Author(s): 林俊杰，李伟杰
   - Date: 2022-12-01 16:11:58
   - Description:
 -->
@@ -662,6 +662,8 @@
 
 
     $(window).resize(function () {
+
+        //LAY-app-device-list-reload
         table.reload("LAY-app-device-list-reload", {
             height: "full-" + getFullSize()
         });

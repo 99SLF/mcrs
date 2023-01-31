@@ -3,6 +3,8 @@ package com.zimax.mcrs.update.controller;
 
 import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
+import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
+import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfoVo;
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.serialnumber.service.SerialnumberService;
 import com.zimax.mcrs.update.javaBean.UploadJava;
@@ -22,10 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author 李伟杰
@@ -48,8 +47,9 @@ public class UpdateUploadController {
 
     @Autowired
     private SerialnumberService serialnumberService;
-    private UploadJava uploadJava = (UploadJava)new ClassPathXmlApplicationContext(
+    private UploadJava uploadJava = (UploadJava) new ClassPathXmlApplicationContext(
             "applicationContext.xml").getBean("UploadJava");
+
     /**
      * 记录更新包上传记录
      *
@@ -102,7 +102,7 @@ public class UpdateUploadController {
             //方法三：用javabean存放更新包文件到本地路径
             //7.创建Spring容器
             //9.调用方法
-           String realPath = uploadJava.getUploadpackagePath();
+            String realPath = uploadJava.getUploadpackagePath();
 
             File dir = new File(realPath);
             if (!dir.exists()) {
@@ -155,14 +155,14 @@ public class UpdateUploadController {
     }
 
 
-
     @PostMapping("/add")
     public Result<?> addUpdateUpload(@RequestBody UpdateUpload updateUpload) {
         updateUploadService.addUpdateUpload(updateUpload);
         return Result.success();
     }
+
     /**
-     * 显示升级更新包信息
+     * 显示升级更新包信息（更新包上传管理）
      *
      * @param
      * @param page         页记录数
@@ -179,11 +179,14 @@ public class UpdateUploadController {
      */
     @GetMapping("/queryUpdateUploadAll/query")
     public Result<?> queryUpdateUploadAll(String page, String limit,
-                                       String version, String deviceSoType,
-                                       String order, String field) {
-        List UpdateUpload = updateUploadService.queryUpdateUploadAll(page, limit, version, deviceSoType, order, field);
-        return Result.success(UpdateUpload, updateUploadService.count(version, deviceSoType));
+                                          String uploadNumber,
+                                          String version, String deviceSoType,
+                                          String uploadStrategy, String uploader, String versionUploadTime,
+                                          String order, String field) {
+        List UpdateUpload = updateUploadService.queryUpdateUploadAll(page, limit, uploadNumber, version, deviceSoType, uploadStrategy, uploader, versionUploadTime, order, field);
+        return Result.success(UpdateUpload, updateUploadService.countAll(uploadNumber, version, deviceSoType, uploadStrategy, uploader, versionUploadTime));
     }
+
 
     /**
      * 显示升级更新包信息
@@ -205,13 +208,14 @@ public class UpdateUploadController {
     @GetMapping("/queryUpdateUpload/query")
     public Result<?> queryUpdateUpload(String page, String limit,
                                        String version, String deviceSoType,
-                                       String order, String field,String maxVersion, String deviceSoftwareType) {
-        List UpdateUpload = updateUploadService.queryUpdateUpload(page, limit, version, deviceSoType, order, field ,maxVersion ,deviceSoftwareType);
+                                       String order, String field, String maxVersion, String deviceSoftwareType) {
+        List UpdateUpload = updateUploadService.queryUpdateUpload(page, limit, version, deviceSoType, order, field, maxVersion, deviceSoftwareType);
         return Result.success(UpdateUpload, updateUploadService.count(version, deviceSoType));
     }
 
     /**
      * 显示回退更新包信息
+     *
      * @param
      * @param page         页记录数
      * @param limit        页码
@@ -228,9 +232,9 @@ public class UpdateUploadController {
      */
     @GetMapping("/queryUpdateUploadRo/query")
     public Result<?> queryUpdateUploadRo(String page, String limit,
-                                       String version, String deviceSoType,
-                                       String order, String field,String minVersion ,String deviceSoftwareType) {
-        List UpdateUpload = updateUploadService.queryUpdateUploadRo(page, limit, version, deviceSoType, order, field ,minVersion,deviceSoftwareType);
+                                         String version, String deviceSoType,
+                                         String order, String field, String minVersion, String deviceSoftwareType) {
+        List UpdateUpload = updateUploadService.queryUpdateUploadRo(page, limit, version, deviceSoType, order, field, minVersion, deviceSoftwareType);
         return Result.success(UpdateUpload, updateUploadService.count(version, deviceSoType));
     }
 
@@ -255,12 +259,11 @@ public class UpdateUploadController {
      * @return
      */
     @GetMapping("/getUpdateUpload")
-    public Result<?> getUpdateUpload(String deviceSoType){
+    public Result<?> getUpdateUpload(String deviceSoType) {
         List UpdateUpload = updateUploadService.getUpdateUpload(deviceSoType);
         return Result.success(UpdateUpload);
 
     }
-
 
 
     @RequestMapping("/download")
@@ -274,7 +277,7 @@ public class UpdateUploadController {
         //String fileName = "1fdce043-23b0-4f3c-a35a-de68e74869deuploadFile.rar";
         //Sql中用反斜杠查不到数据
         //String fileName = updateUploadMapper.getUploadFileName(downloadUrl);
-    /*方法二：通过配置文件直接获取文件存储位置*/
+        /*方法二：通过配置文件直接获取文件存储位置*/
 
         //1.从下载路径获取uuid+文件名+后缀名（更新包表字段）
         String uuidFile = filePath.substring(filePath.lastIndexOf("/") + 1);
@@ -312,12 +315,10 @@ public class UpdateUploadController {
             while ((readTmp = fileIn.read(outputByte)) != -1) {
                 out.write(outputByte, 0, readTmp); //并不是每次都能读到1024个字节，所有用readTmp作为每次读取数据的长度，否则会出现文件损坏的错误
             }
-        }
-        catch (Exception e) {//10.关闭流对象
+        } catch (Exception e) {//10.关闭流对象
             //log.error(e.getMessage());
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 fileIn.close();
                 out.flush();
@@ -327,6 +328,33 @@ public class UpdateUploadController {
             }
         }
     }
+
+
+    /**
+     * (更新包上传管理——编辑)
+     * 获取当前软件更新包的最新的版本
+     * @param
+     * @return
+     */
+    @GetMapping("/getLastVersion")
+    public Result<?> getLastVersion(String deviceSoType){
+        Map<String,Object> maps = new HashMap<>();
+        List<UpdateUpload> updateUploadList = updateUploadService.getLastVersion(deviceSoType);//查询出当前的软件类型的最新的版本号数据
+        maps.put("data",updateUploadList);
+        return Result.success(updateUploadList);
+    }
+
+    /**
+     * 更新更新包上传的更新策略和备注
+     * @param
+     * @return
+     */
+    @PostMapping("/update")
+    public Result<?> updateUpload(@RequestBody  UpdateUpload updateUpload) {
+        updateUploadService.updateUpload(updateUpload);
+        return Result.success();
+    }
+
 
 
 }

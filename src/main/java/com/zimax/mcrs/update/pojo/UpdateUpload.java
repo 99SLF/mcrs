@@ -110,4 +110,22 @@ public class UpdateUpload {
      * uui前缀和文件名(用户下载截取，获取文件名，或其他字段)
      */
     private  String  uuidFile;
+
+    /**
+     * 修改人
+     */
+    private String updater;
+
+    /**
+     * 修改时间
+     */
+    private Date versionUpdateTime;
+
+    /**
+     * 上传人
+     */
+    @TableField(exist = false)
+    private String uplName;
+
+
 }

@@ -443,8 +443,8 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- ----------------------------
 -- Table structure for upd_upload
 -- ----------------------------
-DROP TABLE IF EXISTS `upd_upload`;
-CREATE TABLE `upd_upload` (
+    DROP TABLE IF EXISTS `upd_upload`;
+    CREATE TABLE `upd_upload` (
       `upload_id` int(11) NOT NULL AUTO_INCREMENT,
       `upload_number` varchar(255) DEFAULT NULL,
       `version` varchar(255) DEFAULT NULL,
@@ -460,8 +460,10 @@ CREATE TABLE `upd_upload` (
       `upload_file_size` double DEFAULT NULL,
       `upload_file_type` varchar(255) DEFAULT NULL,
       `uuid_file` varchar(255) DEFAULT NULL,
+      `updater` varchar(255) DEFAULT NULL,
+      `version_update_time` datetime DEFAULT NULL,
       PRIMARY KEY (`upload_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=197 DEFAULT CHARSET=utf8;
+    ) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
 
 
 

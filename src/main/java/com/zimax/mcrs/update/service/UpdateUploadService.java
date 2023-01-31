@@ -1,7 +1,10 @@
 package com.zimax.mcrs.update.service;
 
+import com.zimax.cap.datacontext.DataContextManager;
+import com.zimax.cap.party.IUserObject;
 import com.zimax.components.coframe.framework.pojo.Menu;
 import com.zimax.components.coframe.rights.pojo.User;
+import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.report.mapper.AbnProdPrcsReportMapper;
 import com.zimax.mcrs.report.pojo.AbnProdPrcs;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,19 +48,25 @@ public class UpdateUploadService {
 
 
     /**
-     * 通过查询记录条数
+     * 通过查询记录条数（更新包上传管理）
      *
      * @param
      * @return
      */
-    public int count(String version, String deviceSoType) {
-        return updateUploadMapper.count(version, deviceSoType);
-    }
+    public int countAll(String uploadNumber,
+                     String version, String deviceSoType,
+                     String uploadStrategy, String uploader, String versionUploadTime) {
 
+        return updateUploadMapper.countAll(uploadNumber,version, deviceSoType,uploadStrategy,uploader,versionUploadTime);
+    }
     /**
-     * 查询所有更新包信息
+     * 查询所有更新包信息(更新包上传管理)
      */
-    public List<UpdateUpload> queryUpdateUploadAll(String page, String limit, String version, String deviceSoType, String order, String field) {
+    public List<UpdateUpload> queryUpdateUploadAll(String page, String limit,
+                                                   String uploadNumber,
+                                                   String version, String deviceSoType,
+                                                   String uploadStrategy, String uploader, String versionUploadTime,
+                                                   String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -70,12 +80,26 @@ public class UpdateUploadService {
             map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
             map.put("limit", Integer.parseInt(limit));
         }
+        map.put("uploadNumber", uploadNumber);
         map.put("version", version);
         map.put("deviceSoType", deviceSoType);
+        map.put("uploadStrategy", uploadStrategy);
+        map.put("uploader", uploader);
+        map.put("versionUploadTime", versionUploadTime);
         return updateUploadMapper.queryUpdateUploadAll(map);
 
     }
 
+    /**
+     * 通过查询记录条数
+     *
+     * @param
+     * @return
+     */
+    public int count(String version, String deviceSoType) {
+
+        return updateUploadMapper.count(version, deviceSoType);
+    }
     /**
      * 查询所有升级更新包信息
      */
@@ -200,7 +224,29 @@ public class UpdateUploadService {
 
 
 
+    /**
+     * (更新包上传管理——编辑)
+     * 获取当前软件更新包的最新的版本
+     * @param
+     * @return
+     */
+    public List<UpdateUpload> getLastVersion(String deviceSoType) {
+        return updateUploadMapper.getLastVersion(deviceSoType);
 
+    }
+
+
+    /**
+     * 更新更新包上传的更新策略和备注
+     * @param
+     * @return
+     */
+    public void updateUpload(UpdateUpload updateUpload) {
+        IUserObject useObject = DataContextManager.current().getMUODataContext().getUserObject();
+        updateUpload.setUpdater(useObject.getUserId());
+        updateUpload.setVersionUpdateTime(new Date());
+        updateUploadMapper.updateUpload(updateUpload);
+    }
 
 
 

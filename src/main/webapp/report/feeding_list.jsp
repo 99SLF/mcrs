@@ -115,8 +115,10 @@
         form.val("layuiadmin-feeding-form", formData);
         advancedFormData = $.extend(advancedFormData, formData);
 	});
-	
+
+
 	function reloadData(formData) {
+		//读取表格数据 表格id
 		table.reload("LAY-app-feeding-list-reload", {
 			where: formData
 		});
