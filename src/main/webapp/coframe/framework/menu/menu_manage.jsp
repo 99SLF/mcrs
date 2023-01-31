@@ -47,7 +47,7 @@
 <body>
 <div class="layui-card">
 	<script type="text/html" id="toolbar">
-		<div class="layui-form layuiadmin-card-header-auto">
+		<div class="layui-form layuiadmin-card-header-auto" lay-filter="layuiadmin-feeding-form" id="layuiadmin-feeding-form">
 			<div class="layui-form-item">
 				<div class="layui-inline">
 					<label class="layui-form-label">选择菜单：</label>
@@ -89,7 +89,7 @@
 	form.render();
 	var menuData = {};
 	var parentMenuId = null;
-
+	var focusName = null;
 	var active = {
 		//传值，判断
 		add: function() {
@@ -348,7 +348,11 @@
 							}
 						}
 					}
-					form.render("select");//刷新表单select选择框渲染
+					form.val("layuiadmin-feeding-form",{
+						menuId: parentMenuId,
+					});
+					form.render();
+					//form.render("select");//刷新表单select选择框渲染
 				}
 			});
 		}
@@ -386,21 +390,22 @@
  	}
  		
  	form.on("select(refreshtable)", function(data) {
-		if (data.value) {
-		  	var data = {
-		  		parentMenuId: data.value
-		  	};
-		  	parentMenuId = data.parentMenuId;
-   		} else {
-   			var data = { 
-   				parentMenuId: "root"
-   			};
-   			parentMenuId = null;
-   		}
-	  	table.reload('LAY-app-menu-list', {
-  			where: data
-		});
+ 		var formData = {
+			parentMenuId: data.value
+		}
+		parentMenuId = data.value;
+		reloadData(formData);
+		updata_select();
+
 	});
+	function reloadData(formData) {
+		table.reload("LAY-app-menu-list", {
+			where: formData
+		});
+		if (focusName) {
+			$("input[name=" + focusName + "]").focus();
+		}
+	}
 	
 	//监听操作事件
 	table.on("tool(LAY-app-menu-list)", function(e) {
