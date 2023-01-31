@@ -189,11 +189,13 @@
 
     var hiddenFields = [];
 
+    var formData = {};
+
     //监听搜索
     form.on("submit(LAY-app-equipmentlist-search)", function (data) {
         var field = data.field;
         reloadData(field);
-        var formData = {
+        formData = {
             equipmentId: field.equipmentId,
             equipmentName: field.equipmentName,
             enable: field.enable
@@ -324,6 +326,7 @@
                                     time: 2000
                                 }, function () {
                                     table.reload("LAY-app-equipment-list-reload");
+                                    formReder();
                                 });
                             } else {
                                 layer.msg("删除失败");
@@ -349,6 +352,7 @@
                 sortOrder: obj.type
             }
         });
+        formReder();
     });
 
     //左侧表头按钮事件监听
@@ -366,6 +370,7 @@
                 sortOrder: obj.type
             }
         });
+        formReder();
     });
 
     function getFullSize() {
@@ -380,6 +385,7 @@
         table.reload("LAY-app-equipment-list-reload", {
             height: "full-" + getFullSize()
         });
+        formReder();
     });
 
     // 查询过滤字段
@@ -603,6 +609,8 @@
         });
         form.render();
 
+        form.val("layuiadmin-equipment-form", formData);
+
     }
 
     //监听操作事件
@@ -654,6 +662,7 @@
                                 time: 500
                             }, function () {
                                 table.reload("LAY-app-equipment-list-reload");
+                                formReder();
                             });
                         } else {
                             layer.msg("删除失败！", {

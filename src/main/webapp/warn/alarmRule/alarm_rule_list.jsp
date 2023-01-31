@@ -456,6 +456,12 @@
                 }
 
             }
+        }, {
+            title: "操作",
+            align: "center",
+            fixed: "right",
+            width: 200,
+            toolbar: "#table-alarmRule-list"
         }]]
     });
 

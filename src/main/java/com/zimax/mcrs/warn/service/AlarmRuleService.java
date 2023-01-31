@@ -3,10 +3,7 @@ package com.zimax.mcrs.warn.service;
 import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
 import com.zimax.mcrs.config.ChangeString;
-import com.zimax.mcrs.device.pojo.PlcGroup;
-import com.zimax.mcrs.device.pojo.PlcPoint;
-import com.zimax.mcrs.device.pojo.PointDispose;
-import com.zimax.mcrs.device.pojo.RfidGroup;
+import com.zimax.mcrs.device.pojo.*;
 import com.zimax.mcrs.warn.mapper.AlarmRuleMapper;
 import com.zimax.mcrs.warn.pojo.AlarmRule;
 import com.zimax.mcrs.warn.pojo.AlarmRuleVo;
@@ -151,6 +148,19 @@ public class AlarmRuleService {
         AlarmRule alarmRule = new AlarmRule();
         List<MonitorEquipmentVo> monitorEquipmentVoList = alarmRuleMapper.queryMonitorEquipmentVo(alarmRuleInt);
         if (monitorEquipmentVoList!= null && monitorEquipmentVoList.size()>0){
+            for (MonitorEquipmentVo monitorEquipmentVo: monitorEquipmentVoList){
+                List<WorkStation> workStationList = alarmRuleMapper.queryWorkStationList(monitorEquipmentVo.getEquipmentInt());
+                for (WorkStation workStation:workStationList){
+                    String a = workStation.getWorkStationNum();
+                    if (monitorEquipmentVo.getWorkStationList() == null || monitorEquipmentVo.getWorkStationList() == ""){
+                        monitorEquipmentVo.setWorkStationList(a);
+                    }
+                    else {
+                        monitorEquipmentVo.setWorkStationList(monitorEquipmentVo.getWorkStationList()+","+a);
+                    }
+                }
+                System.out.println("========================="+monitorEquipmentVo.getWorkStationList());
+            }
             alarmRule.setMonitorEquipmentVoList(monitorEquipmentVoList);
         }
         return alarmRule;

@@ -252,6 +252,7 @@
                     table.reload('workStation', {
                         data: result.data.workStationList,
                     });
+                    win.window.formReder();
                 } else {
                     layer.msg("查询失败");
                 }
@@ -408,6 +409,7 @@
                         }, function () {
                             var index = parent.layer.getFrameIndex(window.name);
                             win.layui.table.reload("LAY-app-equipment-list-reload");
+                            win.window.formReder();
                             top.layer.close(index);
                         });
                     }
@@ -433,7 +435,7 @@
                 , order: obj.type //排序方式
             }
         });
-
+        win.window.formReder();
     });
     //查询过滤字段
     $.ajax({
@@ -472,6 +474,7 @@
         table.reload("workStation", {
             height: "full-" + getFullSize()
         });
+        win.window.formReder();
     });
 
     table.on('toolbar(workStation)', function (obj) {
