@@ -213,6 +213,7 @@
                         }, function () {
                             var index = parent.layer.getFrameIndex(window.name);
                             win.layui.table.reload("LAY-app-update_package-list-reload");
+                            win.formReder();
                             top.layer.close(index);
                         });
                     }
