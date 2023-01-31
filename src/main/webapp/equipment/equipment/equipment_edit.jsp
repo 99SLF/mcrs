@@ -92,7 +92,7 @@
                 <div class="layui-col-sm6">
                     <label class="layui-form-label"><span style="color:red">*</span>设备连接IP:</label>
                     <div class="layui-input-block">
-                        <input id="equipmentIp" type="text" name="equipmentIp" lay-verify="required"
+                        <input id="equipmentIp" type="text" name="equipmentIp" lay-verify="required|equipmentIp"
                                placeholder="" autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -317,6 +317,15 @@
         equipmentName: function (value, item) {
             if (value.length > 20) {
                 return "设备名称不能超过20个字符";
+            }
+        },
+        equipmentIp: function(value, item){
+            function isValidIP(ip) {
+                var reg = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
+                return reg.test(ip);
+            }
+            if(isValidIP(value) == false){
+                return '请输入正确的IP地址';
             }
         },
         equipmentInstallLocation: function (value, item) {

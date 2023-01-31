@@ -405,7 +405,7 @@
                 content: "<%= request.getContextPath() %>/updateConfigFile/view_list.jsp",
                 area: ["800px", "560px"],
                 resize: false,
-                btn: ["确定", "取消"],
+                btn: ["关闭"],
                 success: function (layero, index) {
                     var dataJson = {
                         appId: appId,
@@ -415,7 +415,7 @@
                 },
                 yes: function (index, layero) {
                     var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");
-                    edit.click();
+                    parent.layer.close(index);
                 }
 
             });
