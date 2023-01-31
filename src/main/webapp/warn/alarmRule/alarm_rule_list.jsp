@@ -136,7 +136,7 @@
     var req_data;
 
     //功能名
-    var funName = "list";
+    var funName = "alarm_rule_list";
 
     var hiddenFields = [];
 

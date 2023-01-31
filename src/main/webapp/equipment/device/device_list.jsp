@@ -192,7 +192,7 @@
     var req_data;
 
     //功能名
-    var funName = "list";
+    var funName = "device_list";
 
     // 高级查询参数
     var advancedFormData = {};
@@ -873,7 +873,7 @@
             title: "创建人",
             align: "center",
             minWidth: 100,
-            hide: isHidden("creator")
+            hide: isHidden("createName")
         }, {
             field: "createTime",
             title: "创建时间",

@@ -180,7 +180,7 @@
     var req_data;
 
     //功能名
-    var funName = "list";
+    var funName = "equipment_list";
 
     // 高级查询参数
     var advancedFormData = {};

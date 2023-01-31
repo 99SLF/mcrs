@@ -115,7 +115,7 @@
     var req_data;
 
     //功能名
-    var funName = "list";
+    var funName = "rfid_log_list";
 
     var hiddenFields = [];
 
