@@ -203,6 +203,15 @@
     function SetData(data) {
         win = data.win ? data.win : window;
         var data = data.data;
+        if (data.updateTime==null || data.updateTime ==''){
+            form.val("layuiadmin-app-form-list", {
+                "updateTime": data.updateTime,
+            });
+        }else {
+            form.val("layuiadmin-app-form-list", {
+                "updateTime": layui.util.toDateString(data.updateTime),
+            });
+        }
         form.val("layuiadmin-app-form-list", {
             //需要传入主键
             "alarmEventInt": data.alarmEventInt,
@@ -217,7 +226,6 @@
             "createName": data.createName,
             "makeFormTime": layui.util.toDateString(data.makeFormTime),
             "updateName": data.updateName,
-            "updateTime": layui.util.toDateString(data.updateTime),
         });
     }
 

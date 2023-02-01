@@ -123,7 +123,7 @@
     var req_data;
 
     //功能名
-    var funName = "list";
+    var funName = "interface_log_list";
 
     var hiddenFields = [];
 
@@ -435,7 +435,7 @@
             title: "处理开始时间",
             align: "center",
             minWidth: 200,
-            hide: true,
+            hide: isHidden("disposeStartTime"),
             templet:function(d) {
                 return layui.util.toDateString(d.disposeStartTime);
             }
@@ -444,7 +444,7 @@
             title: "处理结束时间",
             align: "center",
             minWidth: 200,
-            hide: true,
+            hide: isHidden("disposeEndTime"),
             templet: function (d) {
                 return layui.util.toDateString(d.disposeEndTime);
             }
@@ -453,13 +453,13 @@
             title: "调用者",
             align: "center",
             minWidth: 120,
-            hide: true
+            hide: isHidden("invokerName")
         }, {
             field: "disposeTime",
             title: "处理时长",
             align: "center",
             minWidth: 200,
-            hide: true
+            hide: isHidden("disposeTime")
         }, {
             field: "interfaceName",
             title: "接口名称",

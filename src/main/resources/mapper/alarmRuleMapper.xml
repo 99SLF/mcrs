@@ -152,6 +152,13 @@
         WHERE alarm_rule_int = #{alarmRuleInt}
     </select>
 
+    <!--查询监控对象对应的工位-->
+    <select id="queryWorkStationList" parameterType="map" resultType="com.zimax.mcrs.device.pojo.WorkStation">
+        SELECT work_station_num
+        FROM eqi_work_station
+        WHERE equipment_int = #{equipmentInt}
+    </select>
+
     <!--删除监控对象-->
     <delete id="removeMonitorEquipment" parameterType="int">
         delete

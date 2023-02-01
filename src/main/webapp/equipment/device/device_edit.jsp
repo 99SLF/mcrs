@@ -43,7 +43,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label">是否启用：</label>
             <div class="layui-input-block">
-                <select name="enable" id="enable" lay-filter="" type="select">
+                <select name="enable" id="enable" lay-filter="" lay-verify="required" type="select">
                     <option value=""></option>
                 </select>
             </div>
@@ -433,7 +433,8 @@
                             time: 500
                         }, function () {
                             var index = parent.layer.getFrameIndex(window.name);
-                            win.layui.table.reload("LAY-app-update_package-list-reload");
+                            win.layui.table.reload("LAY-app-device-list-reload");
+                            win.window.formReder();
                             top.layer.close(index);
                         });
                     }

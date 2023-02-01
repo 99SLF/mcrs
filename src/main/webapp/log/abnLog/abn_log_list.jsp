@@ -104,7 +104,7 @@
     //过滤字段
     var hiddenFields = [];
     //功能名
-    var funName = "application_list";
+    var funName = "abn_log_list";
 
     var laydate = layui.laydate;
     //日期时间选择器
@@ -302,7 +302,7 @@
                 field: "aPPId",
                 title: "APPId",
                 align: "center",
-                hide: true,
+                hide: isHidden("aPPId"),
                 minWidth: 300
             }, {
                 field: "deviceName",

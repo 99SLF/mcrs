@@ -1,5 +1,6 @@
 package com.zimax.mcrs.warn.mapper;
 
+import com.zimax.mcrs.device.pojo.WorkStation;
 import com.zimax.mcrs.warn.pojo.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -56,10 +57,16 @@ public interface AlarmRuleMapper {
      *查询预警规则对应的监控对象
      */
     List<MonitorEquipmentVo> queryMonitorEquipmentVo(int alarmRuleInt);
+
     /**
      *查询预警规则对应的监控对象
      */
     List<MonitorEquipment> queryMonitorEquipment(int alarmRuleInt);
+
+    /**
+     *查询预警规则对应的监控对象
+     */
+    List<WorkStation> queryWorkStationList(int equipmentInt);
 
     /**
      *添加预警规则对应的监控对象
@@ -75,4 +82,6 @@ public interface AlarmRuleMapper {
      * 根据预警规则编码查询预警规则是否存在
      */
     int countAlarmRule(@Param("alarmRuleId") String alarmRuleId);
+
+
 }

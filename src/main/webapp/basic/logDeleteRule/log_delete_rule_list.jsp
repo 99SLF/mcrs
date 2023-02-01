@@ -168,7 +168,7 @@
     var isExist = false;
 
     //功能名
-    var funName = "list";
+    var funName = "log_delete_rule_list";
     // 高级查询参数
     var advancedFormData = {};
     // 焦点名称
