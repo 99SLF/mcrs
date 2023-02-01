@@ -154,8 +154,8 @@
                 <div class="layui-col-sm12">
                     <label class="layui-form-label">备注:</label>
                     <div class="layui-input-block">
-            <textarea cols="50" rows="10" style="width:100%;height:100px" name="remarks" id="remarks" autocomplete="off"
-                      class="layui-input" lay-verify="remarks"></textarea>
+            <textarea  name="remarks" id="remarks" autocomplete="off"
+                      class="layui-textarea" lay-verify="remarks"></textarea>
                     </div>
                 </div>
             </div>
