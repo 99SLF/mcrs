@@ -37,7 +37,7 @@
             <div class="layui-input-block">
             <textarea cols="50" rows="10" style="width:100%;height:100px" name="matrixAddress" id="matrixAddress"
                       autocomplete="off"
-                      class="layui-input" lay-verify="matrixAddress"></textarea>
+                      class="layui-textarea" lay-verify="matrixAddress"></textarea>
             </div>
         </div>
     </div>
