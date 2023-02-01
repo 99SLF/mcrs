@@ -28,10 +28,13 @@ public interface PlcLogMapper {
      * @return
      */
     int count(
+            @Param("equipmentId") String equipmentId,
             @Param("equipmentName") String equipmentName,
             @Param("deviceName") String deviceName,
             @Param("plcGroupName") String plcGroupName,
             @Param("groupType") String groupType,
+            @Param("tagName") String tagName,
+            @Param("createName") String createName,
             @Param("createTime") String createTime
             );
 

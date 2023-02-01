@@ -14,85 +14,64 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v1">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/iconfont/iconfont.css">
+    <style>
+        .layui-card {
+            margin-bottom: 0px
+        }
+        .layui-layer-adminRight {
+            top: 0px !important;
+            bottom: 0;
+            box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
+            border-radius: 0;
+            overflow: auto
+        }
+        .layui-form-item .layui-inline {
+            margin-bottom: 0px !important;
+            margin-right: 0px !important;
+        }
+        .layui-form-label {
+            width: 120px !important;
+            padding: 5px 0px !important;
+        }
+        .layui-form-item .layui-input-inline {
+            float: left;
+            width: 150px;
+            margin-right: 10px;
+        }
+        .layui-input {
+            height: 30px !important;
+        }
+    </style>
 </head>
 <body>
-<div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
-            <div class="layui-form-item layui-col-space12">
+
+<div class="layui-card">
+    <script type="text/html" id="toolbar">
+        <div class="layui-form layuiadmin-card-header-auto" lay-filter="layuiadmin-rfidLog-form" id="layuiadmin-rfidLog-form">
+            <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">设备名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="equipmentName" placeholder="" autocomplete="off"
-                               class="layui-input">
+                        <input type="text" class="layui-input" name="equipmentName" autocomplete="off" />
                     </div>
                 </div>
-
                 <div class="layui-inline">
                     <label class="layui-form-label">终端名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="deviceName" placeholder="" autocomplete="off"
-                               class="layui-input">
+                        <input type="text" class="layui-input" name="deviceName" autocomplete="off" />
                     </div>
                 </div>
-
-                <div class="layui-inline">
-                    <label class="layui-form-label">RFID-ID：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="rfidId" placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
+                <div class="layui-inline layui-hide">
+                    <button id="LAY-app-rfidLog-search" class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-rfidLog-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
                 </div>
-
-                <div class="layui-inline">
-                    <label class="layui-form-label">参数名称：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="parameterName" placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                </div>
-
-                <div class="layui-inline">
-                    <label class="layui-form-label">创建时间：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="createTime" id="createTime" lay-filter="createTime" placeholder=""
-                               autocomplete="off"
-                               class="layui-input">
-                    </div>
-                    
-                    <div class="layui-inline layui-search" style="padding-left: 50px">
-                        <button class="layui-btn layuiadmin-btn-list" lay-submit
-                                lay-filter="LAY-app-plcLoglist-search"
-                                id="LAY-app-plcLoglist-search">
-                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                        </button>
-                    </div>
-                </div>
-
             </div>
-
-
         </div>
-        <div class="layui-card-body">
-            <%--        <div class="layui-toolbar" id="toolbar" hidden="true">--%>
-            <%--            <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i--%>
-            <%--                    class="layui-icon layui-icon-add-circle-fine"></i>新增规则--%>
-            <%--            </button>--%>
-            <%--            <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i--%>
-            <%--                    class="layui-icon layui-icon-delete"></i>删除--%>
-            <%--            </button>--%>
-            <%--        </div>--%>
-
-
-            <table id="LAY-app-plcLog-list" lay-filter="LAY-app-plcLog-list"></table>
-
-            <%--        <script type="text/html" id="table-plcLog-list">--%>
-            <%--            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i--%>
-            <%--                    class="layui-icon layui-icon-edit"></i>编辑</a>--%>
-            <%--            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i--%>
-            <%--                    class="layui-icon layui-icon-delete"></i>删除</a>--%>
-            <%--        </script>--%>
-        </div>
+    </script>
+    <div class="layui-card-body">
+                    <table id="LAY-app-rfidLog-list" lay-filter="LAY-app-rfidLog-list"></table>
     </div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
@@ -110,50 +89,57 @@
     var form = layui.form;
     var $ = layui.jquery;
     var util = layui.util;
+    var admin = layui.admin;
+    var view = layui.view;
 
     //全局参数
     var req_data;
 
     //功能名
     var funName = "rfid_log_list";
-
+    // 高级查询参数
+    var advancedFormData = {};
+    // 焦点名称
+    var focusName = null;
     var hiddenFields = [];
 
     var laydate = layui.laydate;
-    //日期时间选择器
-    laydate.render({
-        elem: '#createTime',
-        type: 'date'
-    });
 
-
-    //监听搜索
-    form.on("submit(LAY-app-plcLoglist-search)", function (data) {
+    // 监听搜索
+    form.on("submit(LAY-app-rfidLog-search)", function(data) {
         var field = data.field;
-        table.reload("LAY-app-plcLog-list-reload", {
-            where: field
+        reloadData(field);
+        var formData = {
+            equipmentName: field.equipmentName,
+            deviceName: field.deviceName
+        };
+        form.val("layuiadmin-rfidLog-form", formData);
+        advancedFormData = $.extend(advancedFormData, formData);
+    });
+
+
+    function reloadData(formData) {
+        //读取表格数据 表格id
+        table.reload("LAY-app-rfidLog-list-reload", {
+            where: formData
         });
-    });
-
-    // //登录时间监听事件
-    // form.on("input(loginTime)", function(data) {
-    //     var submit = $("#LAY-app-plcLoglist-search");
-    //     submit.click();
-    // });
-
-
-    //文本框回车事件
-    $(".layui-input").on("keydown", function (event) {
-        if (event.keyCode == 13) {
-            var submit = $("#LAY-app-plcLoglist-search");
-            submit.click();
-            return false;
+        formReder();
+        if (focusName) {
+            $("input[name=" + focusName + "]").focus();
         }
-    });
+    }
 
+    function setFormData(data) {
+        advancedFormData = data;
+        reloadData(data);
+        form.val("layuiadmin-rfidLog-form", {
+            equipmentName: data.equipmentName,
+            deviceName: data.deviceName
+        });
+    }
 
-    table.on('sort(LAY-app-plcLog-list)', function (obj) {
-        table.reload('LAY-app-plcLog-list-reload', {
+    table.on('sort(LAY-app-rfidLog-list)', function (obj) {
+        table.reload('LAY-app-rfidLog-list-reload', {
             initSort: obj,
             where: {
                 sortField: obj.field,
@@ -163,14 +149,14 @@
     });
 
     //左侧表头按钮事件监听
-    table.on("toolbar(LAY-app-plcLog-list)", function (obj) {
+    table.on("toolbar(LAY-app-rfidLog-list)", function (obj) {
         var type = obj.event;
         active[type] ? active[type].call(this) : "";
     });
 
     //表格排序
-    table.on("sort(LAY-app-plcLog-list)", function (obj) {
-        table.reload("LAY-app-plcLog-list-reload", {
+    table.on("sort(LAY-app-rfidLog-list)", function (obj) {
+        table.reload("LAY-app-rfidLog-list-reload", {
             initSort: obj,
             where: {
                 sortField: obj.field,
@@ -188,7 +174,7 @@
 
 
     $(window).resize(function () {
-        table.reload("LAY-app-plcLog-list-reload", {
+        table.reload("LAY-app-rfidLog-list-reload", {
             height: "full-" + getFullSize()
         });
     });
@@ -219,10 +205,41 @@
         return false;
     }
 
+    // 监听按钮点击事件
+    var active = {
+        search: function() {
+            var submit = $("#LAY-app-rfidLog-search");
+            submit.click();
+            return false;
+        },
+        query: function() {
+            var url = "<%=request.getContextPath() %>/log/rfidLog/rfidLog_form_query.jsp";
+            admin.popupRight({
+                type: 2,
+                content: [url, "yes"],
+                btn: ["查询", "重置", "取消"],
+                success: function(layero, index) {
+                    var dataJson = {
+                        win : window,
+                        data: advancedFormData
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function(index, layero) {
+                    var submit = layero.find("iframe").contents().find("#LAY-app-rfidLog-search-advanced");
+                    submit.click();
+                    top.layer.close(index);
+                },
+                btn2: function(index, layero) {
+                    layero.find("iframe")[0].contentWindow.reset();
+                }
+            });
+        }
+    };
 
     table.render({
-        elem: "#LAY-app-plcLog-list",
-        id: "LAY-app-plcLog-list-reload",
+        elem: "#LAY-app-rfidLog-list",
+        id: "LAY-app-rfidLog-list-reload",
         url: "<%= request.getContextPath() %>/log/rfidLog/query",
         method: "GET",
         height: "full-" + getFullSize(),
@@ -230,7 +247,15 @@
         limit: 10,
         limits: [10, 15, 20, 30],
         toolbar: "#toolbar",
-        defaultToolbar: ["filter"],
+        defaultToolbar: [{
+            title: "查询",
+            layEvent: "search",
+            icon: "layui-icon layui-icon-search layuiadmin-button-btn",
+        }, {
+            title: "高级查询",
+            layEvent: "query",
+            icon: "icon iconfont icon-gaojichaxun",
+        }, "filter"],
         colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;
@@ -336,79 +361,20 @@
         }]]
     });
 
-    //监听操作事件
-    <%--table.on("tool(LAY-app-plcLog-list)", function (e) {--%>
-    <%--    var data = e.data;--%>
-    <%--    if (e.event == "edit") {--%>
-    <%--        top.layer.open({--%>
-    <%--            type: 2,--%>
-    <%--            title: "编辑设备信息",--%>
-    <%--            content: "<%= request.getContextPath() %>/warn/plcLog/alarm_rule_edit.jsp",--%>
-    <%--            area: ["1000px", "560px"],--%>
-    <%--            resize: false,--%>
-    <%--            btn: ["确定", "取消"],--%>
-    <%--            success: function (layero, index) {--%>
-    <%--                var dataJson = {--%>
-    <%--                    data: data,--%>
-    <%--                    win: window--%>
-    <%--                };--%>
-    <%--                layero.find("iframe")[0].contentWindow.SetData(dataJson);--%>
-    <%--            },--%>
-    <%--            yes: function (index, layero) {--%>
-    <%--                var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");--%>
-    <%--                edit.click();--%>
-    <%--            }--%>
+    formReder();
 
-    <%--        });--%>
-    <%--    } else if (e.event == "del") {--%>
-    <%--        layer.confirm("确定删除该设备？", {--%>
-    <%--            icon: 3,--%>
-    <%--            title: "系统提示"--%>
-    <%--        }, function (index) {--%>
-    <%--            $.ajax({--%>
-    <%--                url: "<%= request.getContextPath() %>/warn/plcLog/delete/" + data.plcLogInt,--%>
-    <%--                type: "DElETE",--%>
-    <%--                data: JSON.stringify({--%>
-    <%--                    plcLog: data--%>
-    <%--                }),--%>
-    <%--                cache: false,--%>
-    <%--                contentType: "text/json",--%>
-    <%--                success: function (result) {--%>
-    <%--                    if (result.exception) {--%>
-    <%--                        layer.alert(result.exception.message, {--%>
-    <%--                            icon: 2,--%>
-    <%--                            title: "系统提示"--%>
-    <%--                        });--%>
-    <%--                    } else if (result) {--%>
-    <%--                        layer.msg("删除成功", {--%>
-    <%--                            icon: 1,--%>
-    <%--                            time: 500--%>
-    <%--                        }, function () {--%>
-    <%--                            table.reload("LAY-app-plcLog-list-reload");--%>
-    <%--                        });--%>
-    <%--                    } else {--%>
-    <%--                        layer.msg("删除失败！", {--%>
-    <%--                            icon: 2,--%>
-    <%--                            time: 2000--%>
-    <%--                        });--%>
-    <%--                    }--%>
-    <%--                },--%>
-    <%--                error: function (jqXHR, textStatus, errorThrown) {--%>
-    <%--                    layer.msg(jqXHR.responseText, {--%>
-    <%--                        time: 500,--%>
-    <%--                        icon: 5--%>
-    <%--                    });--%>
-    <%--                }--%>
-    <%--            });--%>
-    <%--        });--%>
-    <%--    }--%>
-    <%--});--%>
+    function formReder() {
+        // 文本框回车事件
+        $(".layui-input").on("keydown", function (event) {
+            if (event.keyCode == 13) {
+                focusName = event.target.name;
+                var submit = $("#LAY-app-rfidLog-search");
+                submit.click();
+                return false;
+            }
+        });
+    }
 
-    // //批量选中
-    // $("body").on("click", ".layui-table-body table.layui-table tbody tr td", function () {
-    //     if ($(this).attr("data-field") === "0") return;
-    //     $(this).siblings().eq(0).find("i").click();
-    // });
 </script>
 </body>
 </html>

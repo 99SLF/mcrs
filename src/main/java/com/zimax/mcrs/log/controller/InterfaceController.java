@@ -41,9 +41,10 @@ public class InterfaceController {
      * @return 设备列表
      */
     @GetMapping("/interfaceLog/query")
-    public Result<?> query(String limit, String page, String createTime, String source, String interfaceType,String equipmentIp, String invokerName, String interfaceName ,String order, String field) {
-        List interfaceLogs = interfaceLogService.queryInterfaceLog(limit, page, createTime, source,interfaceType ,equipmentIp,invokerName,interfaceName,order, field);
-        return Result.success(interfaceLogs, interfaceLogService.count(createTime, source,interfaceType ,equipmentIp,invokerName,interfaceName));
+    public Result<?> query(String limit, String page,  String source,String equipmentIp,String equipmentName,String interfaceType,String result,
+                           String invokerName,String disposeTime,String interfaceName,String createTime ,String order, String field) {
+        List interfaceLogs = interfaceLogService.queryInterfaceLog(limit, page, source, equipmentIp,equipmentName ,interfaceType,result,invokerName,disposeTime,interfaceName,createTime,order, field);
+        return Result.success(interfaceLogs, interfaceLogService.count(source, equipmentIp,equipmentName ,interfaceType,result,invokerName,disposeTime,interfaceName,createTime));
     }
 
 

@@ -28,7 +28,8 @@ public class InterfaceLogService {
     /**
      * 查询所有接口日志信息
      */
-    public List<InterfaceLogVo> queryInterfaceLog(String limit, String page, String createTime, String source, String interfaceType,String equipmentIp, String invokerName, String interfaceName ,String order, String field){
+    public List<InterfaceLogVo> queryInterfaceLog(String limit, String page,  String source,String equipmentIp,String equipmentName,String interfaceType,String result,
+                                                  String invokerName,String disposeTime,String interfaceName,String createTime ,String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -42,20 +43,24 @@ public class InterfaceLogService {
             map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
             map.put("limit", Integer.parseInt(limit));
         }
-        map.put("createTime",createTime);
         map.put("source",source);
-        map.put("interfaceType",interfaceType);
         map.put("equipmentIp",equipmentIp);
+        map.put("equipmentName",equipmentName);
+        map.put("interfaceType",interfaceType);
+        map.put("result",result);
         map.put("invokerName",invokerName);
+        map.put("disposeTime",disposeTime);
         map.put("interfaceName",interfaceName);
+        map.put("createTime",createTime);
         return interfaceLogMapper.queryAll(map);
     }
 
     /**
      * 查询记录
      */
-    public int count( String createTime, String source, String interfaceType,String equipmentIp, String invokerName, String interfaceName) {
-        return interfaceLogMapper.count(createTime, source,interfaceType ,equipmentIp,invokerName,interfaceName);
+    public int count( String source,String equipmentIp,String equipmentName,String interfaceType,String result,
+                      String invokerName,String disposeTime,String interfaceName,String createTime) {
+        return interfaceLogMapper.count(source, equipmentIp,equipmentName ,interfaceType,result,invokerName,disposeTime,interfaceName,createTime);
     }
 
 

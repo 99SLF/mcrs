@@ -30,7 +30,7 @@ public class MesLogService {
     /**
      * 查询所有RFID日志信息
      */
-    public List<MesLogVo> queryMesLog(String limit, String page, String equipmentName, String deviceName, String mesIpAddress, String equipmentContinuePort, String createTime, String order, String field){
+    public List<MesLogVo> queryMesLog(String limit, String page, String logStatus,String equipmentId,String equipmentName, String deviceName, String mesIpAddress,String createName, String createTime, String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -44,10 +44,12 @@ public class MesLogService {
             map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
             map.put("limit", Integer.parseInt(limit));
         }
+        map.put("logStatus",logStatus);
+        map.put("equipmentId",equipmentId);
         map.put("equipmentName",equipmentName);
         map.put("deviceName",deviceName);
         map.put("mesIpAddress",mesIpAddress);
-        map.put("equipmentContinuePort",equipmentContinuePort);
+        map.put("createName",createName);
         map.put("createTime",createTime);
         return mesLogMapper.queryAll(map);
     }
@@ -55,8 +57,8 @@ public class MesLogService {
     /**
      * 查询记录
      */
-    public int count( String equipmentName, String deviceName, String mesIpAddress,String equipmentContinuePort, String createTime) {
-        return mesLogMapper.count(equipmentName,deviceName,mesIpAddress,equipmentContinuePort,createTime);
+    public int count( String logStatus,String equipmentId,String equipmentName, String deviceName, String mesIpAddress,String createName, String createTime) {
+        return mesLogMapper.count(logStatus,equipmentId,equipmentName,deviceName,mesIpAddress,createName,createTime);
     }
 
     /**

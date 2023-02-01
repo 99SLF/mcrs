@@ -31,7 +31,7 @@ public class AbnLogService {
      * 查询所有异常日志信息
      * @return
      */
-    public List<AbnLogVo> queryAbnLog(String limit, String page, String equipmentName, String deviceName, String abnType, String abnLevel, String equipmentExchangeTime, String order, String field){
+    public List<AbnLogVo> queryAbnLog(String limit, String page, String equipmentId, String equipmentName, String deviceName, String abnType, String abnLevel, String equipmentExchangeTime, String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -45,6 +45,7 @@ public class AbnLogService {
             map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
             map.put("limit", Integer.parseInt(limit));
         }
+        map.put("equipmentId",equipmentId);
         map.put("equipmentName",equipmentName);
         map.put("deviceName",deviceName);
         map.put("abnType",abnType);
@@ -56,8 +57,8 @@ public class AbnLogService {
     /**
      * 查询记录
      */
-    public int count(String equipmentId, String deviceName, String abnType, String abnLevel, String equipmentExchangeTime) {
-        return abnLogMapper.count(equipmentId,deviceName,abnType,abnLevel,equipmentExchangeTime);
+    public int count(String equipmentId,String equipmentName, String deviceName, String abnType, String abnLevel, String equipmentExchangeTime) {
+        return abnLogMapper.count(equipmentId,equipmentName,deviceName,abnType,abnLevel,equipmentExchangeTime);
     }
 
 

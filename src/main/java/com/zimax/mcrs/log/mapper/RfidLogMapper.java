@@ -30,10 +30,12 @@ public interface RfidLogMapper {
      * @return
      */
     int count(
+            @Param("equipmentId") String equipmentId,
             @Param("equipmentName") String equipmentName,
             @Param("deviceName") String deviceName,
             @Param("rfidId") String rfidId,
             @Param("parameterName") String parameterName,
+            @Param("createName") String createName,
             @Param("createTime") String createTime
             );
 

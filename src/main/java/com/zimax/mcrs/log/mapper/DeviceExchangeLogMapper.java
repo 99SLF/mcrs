@@ -28,9 +28,14 @@ public interface DeviceExchangeLogMapper extends BaseMapper<DeviceExchangeLog> {
      * 计数
      * @return
      */
-    int count(@Param("equipmentId") String equipmentId,
-              @Param("equipmentContinuePort") String equipmentContinuePort,
+    int count(@Param("logStatus") String logStatus,
+              @Param("equipmentId") String equipmentId,
+              @Param("equipmentName") String equipmentName,
+              @Param("matrixName") String matrixName,
+              @Param("factoryName") String factoryName,
               @Param("processName") String processName,
+              @Param("operationType") String operationType,
+              @Param("equipmentContinuePort") String equipmentContinuePort,
               @Param("operateName") String operateName,
               @Param("equipmentExchangeTime")String equipmentExchangeTime);
 

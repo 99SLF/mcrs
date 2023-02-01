@@ -16,6 +16,9 @@
         ON ll.creator = cur.USER_ID
         <where>
             ll.log_type  = '106'
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id like '%${equipmentId}%'
+            </if>
             <if test="equipmentName !=null and equipmentName !=''">
                 and eqi.equipment_name like '%${equipmentName}%'
             </if>
@@ -27,6 +30,9 @@
             </if>
             <if test="parameterName !=null and parameterName !=''">
                 and ll.parameter_name like '%${parameterName}%'
+            </if>
+            <if test="createName !=null and createName !=''">
+                and cur.USER_NAME like '%${createName}%'
             </if>
             <if test="createTime !=null and createTime !=''">
                 and ll.create_time like '%${createTime}%'
@@ -57,6 +63,9 @@
         ON ll.creator = cur.USER_ID
         <where>
             ll.log_type  = '106'
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id like '%${equipmentId}%'
+            </if>
             <if test="equipmentName !=null and equipmentName !=''">
                 and eqi.equipment_name like '%${equipmentName}%'
             </if>
@@ -68,6 +77,9 @@
             </if>
             <if test="parameterName !=null and parameterName !=''">
                 and ll.parameter_name like '%${parameterName}%'
+            </if>
+            <if test="createName !=null and createName !=''">
+                and cur.USER_NAME like '%${createName}%'
             </if>
             <if test="createTime !=null and createTime !=''">
                 and ll.create_time like '%${createTime}%'
