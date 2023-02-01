@@ -166,7 +166,8 @@
 							}, function() {
 								var index = parent.layer.getFrameIndex(window.name);
 								win.layui.table.reload("LAY-app-application-list-reload");
-								top.layer.close(index); 
+								top.layer.close(index);
+								win.window.updateSelect();
 								win.window.updateFuncgroupSelect();
 							});
 						} else {
