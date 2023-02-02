@@ -28,7 +28,9 @@ public class DeviceExchangeLogService {
      * 查询所有的设备交换日志
      * @return DeviceExchangeLog
      */
-    public List<DeviceExchangeLogVo> queryDeviceExchangeLog(String limit, String page, String equipmentId, String equipmentContinuePort, String processName,String operateName, String equipmentExchangeTime, String order, String field){
+    public List<DeviceExchangeLogVo> queryDeviceExchangeLog(String limit, String page, String logStatus, String equipmentId,String equipmentName,String matrixName,
+                                                            String factoryName, String processName, String operationType,String equipmentContinuePort,
+                                                            String operateName, String equipmentExchangeTime, String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -42,9 +44,14 @@ public class DeviceExchangeLogService {
             map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
             map.put("limit", Integer.parseInt(limit));
         }
+        map.put("logStatus",logStatus);
         map.put("equipmentId",equipmentId);
-        map.put("equipmentContinuePort",equipmentContinuePort);
+        map.put("equipmentName",equipmentName);
+        map.put("matrixName",matrixName);
+        map.put("factoryName",factoryName);
         map.put("processName",processName);
+        map.put("operationType",operationType);
+        map.put("equipmentContinuePort",equipmentContinuePort);
         map.put("operateName",operateName);
         map.put("equipmentExchangeTime",equipmentExchangeTime);
         return deviceExchangeLogMapper.queryAll(map);
@@ -53,8 +60,12 @@ public class DeviceExchangeLogService {
     /**
      * 查询记录
      */
-    public int count(String equipmentId, String equipmentContinuePort, String processName, String operateName, String equipmentExchangeTime) {
-        return deviceExchangeLogMapper.count(equipmentId,equipmentContinuePort,processName,operateName,equipmentExchangeTime);
+    public int count(
+            String logStatus, String equipmentId,String equipmentName,String matrixName,
+            String factoryName, String processName, String operationType,String equipmentContinuePort,
+            String operateName, String equipmentExchangeTime) {
+        return deviceExchangeLogMapper.count(logStatus,equipmentId,equipmentName,matrixName,factoryName,
+                processName,operationType,equipmentContinuePort,operateName,equipmentExchangeTime);
     }
 
     /**

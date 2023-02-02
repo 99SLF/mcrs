@@ -192,7 +192,7 @@
     var req_data;
 
     //功能名
-    var funName = "list";
+    var funName = "device_list";
 
     // 高级查询参数
     var advancedFormData = {};
@@ -201,11 +201,13 @@
 
     var hiddenFields = [];
 
+    var formData = {};
+
     //监听搜索
     form.on("submit(LAY-app-device-list-search)", function (data) {
         var field = data.field;
         reloadData(field);
-        var formData = {
+        formData = {
             deviceName: field.deviceName,
             deviceSoftwareType: field.deviceSoftwareType,
             enable: field.enable
@@ -607,6 +609,8 @@
                                     time: 2000
                                 }, function () {
                                     table.reload("LAY-app-device-list-reload");
+                                    formReder();
+
                                 });
                             } else {
                                 layer.msg("删除失败");
@@ -633,6 +637,7 @@
                 sortOrder: obj.type
             }
         });
+        formReder();
     });
 
     //左侧表头按钮事件监听
@@ -650,6 +655,7 @@
                 sortOrder: obj.type
             }
         });
+        formReder();
     });
 
     function getFullSize() {
@@ -666,6 +672,7 @@
         table.reload("LAY-app-device-list-reload", {
             height: "full-" + getFullSize()
         });
+        formReder();
     });
 
     // 查询过滤字段
@@ -872,7 +879,7 @@
             title: "创建人",
             align: "center",
             minWidth: 100,
-            hide: isHidden("creator")
+            hide: isHidden("createName")
         }, {
             field: "createTime",
             title: "创建时间",
@@ -900,6 +907,7 @@
     formReder();
 
     function formReder() {
+
         // 文本框回车事件
         $(".layui-input").on("keydown", function (event) {
             if (event.keyCode == 13) {
@@ -936,6 +944,8 @@
             dictTypeId: "IS_USE",
         });
         form.render();
+
+        form.val("layuiadmin-device-form", formData);
     }
 
     //监听操作事件
@@ -987,6 +997,7 @@
                                 time: 500
                             }, function () {
                                 table.reload("LAY-app-device-list-reload");
+                                formReder();
                             });
                         } else {
                             layer.msg("删除失败！", {
@@ -1027,7 +1038,7 @@
                 content: "<%= request.getContextPath() %>/equipment/device/device_view.jsp",
                 area: ["1000px", "560px"],
                 resize: false,
-                btn: ["确定", "取消"],
+                btn: ["关闭"],
                 success: function (layero, index) {
                     var dataJson = {
                         data: data,
@@ -1036,8 +1047,7 @@
                     layero.find("iframe")[0].contentWindow.SetData(dataJson);
                 },
                 yes: function (index, layero) {
-                    var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");
-                    edit.click();
+                    parent.layer.close(index);
                 }
 
             });

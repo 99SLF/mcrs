@@ -398,6 +398,7 @@
                         }, function () {
                             var index = top.layer.getFrameIndex(window.name);
                             win.layui.table.reload("LAY-app-device-list-reload");
+                            win.window.formReder();
                             top.layer.close(index);
                             win.window.updata_select();
                         });

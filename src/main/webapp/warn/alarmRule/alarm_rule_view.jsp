@@ -75,18 +75,18 @@
                                 class="layui-icon layui-icon-more"></i></button>
                     </div>
                 </div>
-<%--                <div class="layui-col-sm6">--%>
-<%--                    <label class="layui-form-label"><span style="color:red">*</span>监控对象:</label>--%>
-<%--                    <div class="layui-input-block">--%>
-<%--                        <input type="text" class="layui-input" name="monitorObject" id="monitorObject"--%>
-<%--                               lay-verify=""--%>
-<%--                               autocomplete="off" placeholder="" readonly>--%>
-<%--                        <button type="button" class="layui-btn layui-btn-sm layui-btn-primary"--%>
-<%--                                id="onButtonMonitorObject"--%>
-<%--                                style="position:absolute;top:0px;right:0px;height:37px"><i--%>
-<%--                                class="layui-icon layui-icon-more"></i></button>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
+                <%--                <div class="layui-col-sm6">--%>
+                <%--                    <label class="layui-form-label"><span style="color:red">*</span>监控对象:</label>--%>
+                <%--                    <div class="layui-input-block">--%>
+                <%--                        <input type="text" class="layui-input" name="monitorObject" id="monitorObject"--%>
+                <%--                               lay-verify=""--%>
+                <%--                               autocomplete="off" placeholder="" readonly>--%>
+                <%--                        <button type="button" class="layui-btn layui-btn-sm layui-btn-primary"--%>
+                <%--                                id="onButtonMonitorObject"--%>
+                <%--                                style="position:absolute;top:0px;right:0px;height:37px"><i--%>
+                <%--                                class="layui-icon layui-icon-more"></i></button>--%>
+                <%--                    </div>--%>
+                <%--                </div>--%>
 
             </div>
 
@@ -145,9 +145,9 @@
             <div class="layui-card-body">
                 <h2>监控对象</h2>
                 <div class="layui-toolbar" id="toolbar" hidden="true">
-<%--                    <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add" id="monitor"><i--%>
-<%--                            class="layui-icon layui-icon-add-circle-fine"></i>监控对象--%>
-<%--                    </button>--%>
+                    <%--                    <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add" id="monitor"><i--%>
+                    <%--                            class="layui-icon layui-icon-add-circle-fine"></i>监控对象--%>
+                    <%--                    </button>--%>
                 </div>
 
 
@@ -208,33 +208,41 @@
     });
     form.render();
     //禁用规则等级下拉选择框
-    layui.use('form', function(){
+    layui.use('form', function () {
         var form = layui.form;
-        $("#monitorLevel").attr("disabled","disabled");
+        $("#monitorLevel").attr("disabled", "disabled");
         form.render('select');
     });
 
     //禁用是否启用下拉选择框
-    layui.use('form', function(){
+    layui.use('form', function () {
         var form = layui.form;
-        $("#enable").attr("disabled","disabled");
+        $("#enable").attr("disabled", "disabled");
         form.render('select');
     });
 
     //禁用选择设备类型入口
-    $('#onButtonAlarmEvent').addClass("layui-btn-disabled").attr("disabled",true);
+    $('#onButtonAlarmEvent').addClass("layui-btn-disabled").attr("disabled", true);
 
     // //禁用选择监控对象按钮
     // $('#monitor').addClass("layui-btn-disabled").attr("disabled",true);
 
     //禁用选择设备类型入口
-    $('#delete').addClass("layui-btn-disabled").attr("disabled",true);
+    $('#delete').addClass("layui-btn-disabled").attr("disabled", true);
 
 
     function SetData(data) {
         win = data.win ? data.win : window;
         var data = data.data;
-        debugger;
+        if (data.ruleUpdateTime == null || data.ruleUpdateTime == '') {
+            form.val("layuiadmin-app-form-list", {
+                "ruleUpdateTime": data.ruleUpdateTime,
+            });
+        }else{
+            form.val("layuiadmin-app-form-list", {
+                "ruleUpdateTime": layui.util.toDateString(data.ruleUpdateTime),
+            });
+        }
         form.val("layuiadmin-app-form-list", {
             "alarmRuleInt": data.alarmRuleInt,
             "alarmRuleId": data.alarmRuleId,
@@ -247,8 +255,6 @@
             "createName": data.createName,
             "ruleMakeFormTime": layui.util.toDateString(data.ruleMakeFormTime),
             "updateName": data.updateName,
-            "ruleUpdateTime": layui.util.toDateString(data.ruleUpdateTime),
-
         });
         $.ajax({
             url: "<%=request.getContextPath() %>/warn/alarmRule/MonitorEquipment/get?alarmRuleInt=" + data.alarmRuleInt,
@@ -479,7 +485,7 @@
         height: "full-" + getFullSize(),
         data: [],
         toolbar: "#toolbar",
-        height: 270 ,
+        height: 270,
         defaultToolbar: ["filter"],
         colHideChange: function (col, checked) {
             var field = col.field;
@@ -507,11 +513,11 @@
             };
         },
         cols: [[{
-            type: "checkbox"
-        }, {
-            title: "序号",
-            type: "numbers"
-        }, {
+            //     type: "checkbox"
+            // }, {
+            //     title: "序号",
+            //     type: "numbers"
+            // }, {
             field: "equipmentId",
             title: "设备资源号",
             align: "center",
@@ -560,11 +566,11 @@
             minWidth: 120,
             hide: isHidden("processName")
         }, {
-            field: "ruleMakeFormTime",
+            field: "workStationList",
             title: "工位代码",
             align: "center",
             minWidth: 100,
-            hide: isHidden("ruleMakeFormTime")
+            hide: isHidden("workStationList")
         }]]
     });
 

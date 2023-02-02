@@ -14,12 +14,48 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v1">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/iconfont/iconfont.css">
+    <style>
+        .layui-card {
+            margin-bottom: 0px
+        }
+
+        .layui-layer-adminRight {
+            top: 0px !important;
+            bottom: 0;
+            box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
+            border-radius: 0;
+            overflow: auto
+        }
+
+        .layui-form-item .layui-inline {
+            margin-bottom: 0px !important;
+            margin-right: 0px !important;
+        }
+
+        .layui-form-label {
+            width: 120px !important;
+            padding: 5px 0px !important;
+        }
+
+        .layui-form-item .layui-input-inline {
+            float: left;
+            width: 150px;
+            margin-right: 10px;
+        }
+
+        .layui-input {
+            height: 30px !important;
+        }
+    </style>
 </head>
 <body>
-<div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
-            <div class="layui-form-item layui-col-space12">
+
+<div class="layui-card">
+    <script type="text/html" id="toolbar">
+        <div class="layui-form layuiadmin-card-header-auto" lay-filter="layuiadmin-operationLog-form"
+             id="layuiadmin-operationLog-form">
+            <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">日志状态：</label>
                     <div class="layui-input-inline">
@@ -27,7 +63,6 @@
                             <option value=""></option>
                         </select>
                     </div>
-
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">操作类型：</label>
@@ -45,52 +80,17 @@
                                class="layui-input">
                     </div>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">操作结果：</label>
-                    <div class="layui-input-inline">
-                        <select name="result" id="result" lay-filter="result" type="select">
-                            <option value=""></option>
-                        </select>
-                    </div>
+                <div class="layui-inline layui-hide">
+                    <button id="LAY-app-operationLog-search" class="layui-btn layuiadmin-btn-list" lay-submit
+                            lay-filter="LAY-app-operationLog-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">操作人：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="operateName" placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                    <div class="layui-inline layui-search"style="padding-left: 50px">
-                        <button class="layui-btn layuiadmin-btn-list" lay-submit
-                                lay-filter="LAY-app-operationLoglist-search"
-                                id="LAY-app-operationLoglist-search">
-                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                        </button>
-                    </div>
-                </div>
-
-
             </div>
         </div>
-        <div class="layui-card-body">
-            <%--        <div class="layui-toolbar" id="toolbar" hidden="true">--%>
-            <%--            <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i--%>
-            <%--                    class="layui-icon layui-icon-add-circle-fine"></i>新增规则--%>
-            <%--            </button>--%>
-            <%--            <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i--%>
-            <%--                    class="layui-icon layui-icon-delete"></i>删除--%>
-            <%--            </button>--%>
-            <%--        </div>--%>
-
-
-            <table id="LAY-app-operationLog-list" lay-filter="LAY-app-operationLog-list"></table>
-
-            <%--        <script type="text/html" id="table-operationLog-list">--%>
-            <%--            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i--%>
-            <%--                    class="layui-icon layui-icon-edit"></i>编辑</a>--%>
-            <%--            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i--%>
-            <%--                    class="layui-icon layui-icon-delete"></i>删除</a>--%>
-            <%--        </script>--%>
-        </div>
+    </script>
+    <div class="layui-card-body">
+        <table id="LAY-app-operationLog-list" lay-filter="LAY-app-operationLog-list"></table>
     </div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
@@ -108,152 +108,90 @@
     var form = layui.form;
     var $ = layui.jquery;
     var util = layui.util;
+    var admin = layui.admin;
+    var view = layui.view;
 
     //全局参数
     var req_data;
 
     //功能名
-    var funName = "list";
+    var funName = "operation_log_list";
+
+    // 高级查询参数
+    var advancedFormData = {};
+    // 焦点名称
+    var focusName = null;
 
     var hiddenFields = [];
+    var formData = {};
 
     var laydate = layui.laydate;
-    //日期时间选择器
-    laydate.render({
-        elem: '#operationTime',
-        type: 'date'
-    });
 
-    //获取操作类型的下拉值
-    layui.admin.renderDictSelect({
-        elem: "#operationType",
-        dictTypeId: "OPERATE_TYPE",
-    });
-    form.render();
-
-    //获取操作结果的下拉值
-    layui.admin.renderDictSelect({
-        elem: "#result",
-        dictTypeId: "OPERATE_RESULT",
-    });
-    form.render();
-
-    //获取操作结果的下拉值
-    layui.admin.renderDictSelect({
-        elem: "#logStatus",
-        dictTypeId: "LOG_STATUS",
-    });
-    form.render();
-
-
-    //监听搜索
-    form.on("submit(LAY-app-operationLoglist-search)", function (data) {
+    // 监听搜索
+    form.on("submit(LAY-app-operationLog-search)", function(data) {
         var field = data.field;
+        reloadData(field);
+        formData = {
+            logStatus: field.logStatus,
+            operationType: field.operationType,
+            operationTime: field.operationTime
+        };
+        form.val("layuiadmin-operationLog-form", formData);
+        advancedFormData = $.extend(advancedFormData, formData);
+    });
+
+    function reloadData(formData) {
+        //读取表格数据 表格id
         table.reload("LAY-app-operationLog-list-reload", {
-            where: field
+            where: formData
         });
-    });
+        formReder();
+        if (focusName) {
+            $("input[name=" + focusName + "]").focus();
+        }
+    }
 
-    //启用下拉框监听事件
-    form.on("select(logStatus)", function (data) {
-        var submit = $("#LAY-app-operationLoglist-search");
-        submit.click();
-    });
+    function setFormData(data) {
+        advancedFormData = data;
+        reloadData(data);
+        form.val("layuiadmin-operationLog-form", {
+            logStatus: data.logStatus,
+            operationType: data.operationType,
+            operationTime: data.operationTime
+        });
+    }
 
-    //启用下拉框监听事件
-    form.on("select(result)", function (data) {
-        var submit = $("#LAY-app-operationLoglist-search");
-        submit.click();
-    });
-
-    //操作类型下拉框监听事件
-    form.on("select(operationType)", function (data) {
-        var submit = $("#LAY-app-operationLoglist-search");
-        submit.click();
-    });
-
-
-    //文本框回车事件
-    $(".layui-input").on("keydown", function (event) {
-        if (event.keyCode == 13) {
-            var submit = $("#LAY-app-operationLoglist-search");
+    // 监听按钮点击事件
+    var active = {
+        search: function() {
+            var submit = $("#LAY-app-operationLog-search");
             submit.click();
             return false;
+        },
+        query: function() {
+            var url = "<%=request.getContextPath() %>/log/operationLog/operationLog_form_query.jsp";
+            admin.popupRight({
+                type: 2,
+                content: [url, "yes"],
+                btn: ["查询", "重置", "取消"],
+                success: function(layero, index) {
+                    var dataJson = {
+                        win : window,
+                        data: advancedFormData
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function(index, layero) {
+                    var submit = layero.find("iframe").contents().find("#LAY-app-operationLog-search-advanced");
+                    submit.click();
+                    top.layer.close(index);
+                },
+                btn2: function(index, layero) {
+                    layero.find("iframe")[0].contentWindow.reset();
+                }
+            });
         }
-    });
-
-    <%--var active = {--%>
-    <%--    //设备新建--%>
-    <%--    add: function () {--%>
-    <%--        top.layer.open({--%>
-    <%--            type: 2,--%>
-    <%--            title: "预警规则新建",--%>
-    <%--            content: "<%= request.getContextPath() %>/warn/operationLog/alarm_rule_add.jsp",--%>
-    <%--            area: ["1000px", "560px"],--%>
-    <%--            resize: false,--%>
-    <%--            btn: ["确定", "取消"],--%>
-    <%--            success: function (layero, index) {--%>
-    <%--                var dataJson = {--%>
-    <%--                    win: window,--%>
-    <%--                };--%>
-    <%--                layero.find("iframe")[0].contentWindow.SetData(dataJson);--%>
-    <%--            },--%>
-    <%--            yes: function (index, layero) {--%>
-    <%--                var submit = layero.find("iframe").contents().find("#layuiadmin-app-form-submit");--%>
-    <%--                submit.click();--%>
-    <%--            }--%>
-    <%--        });--%>
-    <%--    },--%>
-    <%--    //批量删除--%>
-    <%--    batchdel: function () {--%>
-    <%--        var checkStatus = table.checkStatus("LAY-app-operationLog-list-reload");--%>
-    <%--        var data = checkStatus.data;--%>
-    <%--        if (data.length == 0) {--%>
-    <%--            layer.msg("请至少选中一条记录！");--%>
-    <%--        }--%>
-    <%--        if (data.length > 0) {--%>
-    <%--            var operationLogInts = new Array();--%>
-    <%--            for (var i = 0; i < data.length; i++) {--%>
-    <%--                operationLogInts[i] = data[i].operationLogInt;--%>
-    <%--            }--%>
-    <%--            layer.confirm("确定删除所选预警规则？", {--%>
-    <%--                icon: 3,--%>
-    <%--                title: "系统提示"--%>
-    <%--            }, function (index) {--%>
-    <%--                $.ajax({--%>
-    <%--                    url: "<%= request.getContextPath() %>/warn/operationLog/batchDelete",--%>
-    <%--                    type: "DELETE",--%>
-    <%--                    data: JSON.stringify(operationLogInts),--%>
-    <%--                    cache: false,--%>
-    <%--                    contentType: "text/json",--%>
-    <%--                    success: function (result) {--%>
-    <%--                        if (result.exception) {--%>
-    <%--                            layer.alert(result.exception.message, {--%>
-    <%--                                icon: 2,--%>
-    <%--                                title: "系统提示"--%>
-    <%--                            });--%>
-    <%--                        } else if (result) {--%>
-    <%--                            layer.msg("删除成功", {--%>
-    <%--                                icon: 1,--%>
-    <%--                                time: 2000--%>
-    <%--                            }, function () {--%>
-    <%--                                table.reload("LAY-app-operationLog-list-reload");--%>
-    <%--                            });--%>
-    <%--                        } else {--%>
-    <%--                            layer.msg("删除失败");--%>
-    <%--                        }--%>
-    <%--                    },--%>
-    <%--                    error: function (jqXHR, textStatus, errorThrown) {--%>
-    <%--                        layer.msg(jqXHR.responseText, {--%>
-    <%--                            time: 2000,--%>
-    <%--                            icon: 5--%>
-    <%--                        });--%>
-    <%--                    }--%>
-    <%--                });--%>
-    <%--            });--%>
-    <%--        }--%>
-    <%--    }--%>
-    <%--};--%>
+    };
 
     table.on('sort(LAY-app-operationLog-list)', function (obj) {
         table.reload('LAY-app-operationLog-list-reload', {
@@ -263,6 +201,7 @@
                 sortOrder: obj.type
             }
         });
+        formReder();
     });
 
     //左侧表头按钮事件监听
@@ -280,6 +219,7 @@
                 sortOrder: obj.type
             }
         });
+        formReder();
     });
 
     function getFullSize() {
@@ -294,6 +234,7 @@
         table.reload("LAY-app-operationLog-list-reload", {
             height: "full-" + getFullSize()
         });
+        formReder();
     });
 
     // 查询过滤字段
@@ -333,7 +274,15 @@
         limit: 10,
         limits: [10, 15, 20, 30],
         toolbar: "#toolbar",
-        defaultToolbar: ["filter"],
+        defaultToolbar: [{
+            title: "查询",
+            layEvent: "search",
+            icon: "layui-icon layui-icon-search layuiadmin-button-btn",
+        }, {
+            title: "高级查询",
+            layEvent: "query",
+            icon: "icon iconfont icon-gaojichaxun",
+        }, "filter"],
         colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;
@@ -379,9 +328,9 @@
             align: "center",
             minWidth: 150,
             hide: isHidden("operationType"),
-                templet: function (d) {
-                    return layui.admin.getDictText("OPERATE_TYPE", d.operationType);
-                }
+            templet: function (d) {
+                return layui.admin.getDictText("OPERATE_TYPE", d.operationType);
+            }
         }, {
             field: "operationContent",
             title: "操作内容",
@@ -410,15 +359,75 @@
             minWidth: 100,
             hide: isHidden("operationTime"),
             templet: function (d) {
-                if(d.operationTime!=null){
+                if (d.operationTime != null) {
                     return layui.util.toDateString(d.operationTime);
-                }else{
+                } else {
                     return '';
                 }
             }
         }]]
     });
 
+    formReder();
+
+    function formReder() {
+        // 文本框回车事件
+        $(".layui-input").on("keydown", function (event) {
+            if (event.keyCode == 13) {
+                focusName = event.target.name;
+                var submit = $("#LAY-app-operationLog-search");
+                submit.click();
+                return false;
+            }
+        });
+
+        //日期时间选择器
+        laydate.render({
+            elem: '#operationTime',
+            type: 'date'
+        });
+
+        //获取操作类型的下拉值
+        layui.admin.renderDictSelect({
+            elem: "#operationType",
+            dictTypeId: "OPERATE_TYPE",
+        });
+        form.render();
+
+        // //获取操作结果的下拉值
+        // layui.admin.renderDictSelect({
+        //     elem: "#result",
+        //     dictTypeId: "OPERATE_RESULT",
+        // });
+        // form.render();
+
+        //获取日志状态的下拉值
+        layui.admin.renderDictSelect({
+            elem: "#logStatus",
+            dictTypeId: "LOG_STATUS",
+        });
+        form.render();
+
+        //启用下拉框监听事件
+        form.on("select(logStatus)", function (data) {
+            var submit = $("#LAY-app-operationLog-search");
+            submit.click();
+        });
+
+        // //操作结果下拉框监听事件
+        // form.on("select(result)", function (data) {
+        //     var submit = $("#LAY-app-operationLoglist-search");
+        //     submit.click();
+        // });
+
+        //操作类型下拉框监听事件
+        form.on("select(operationType)", function (data) {
+            var submit = $("#LAY-app-operationLog-search");
+            submit.click();
+        });
+
+        form.val("layuiadmin-operationLog-form", formData);
+    }
     //监听操作事件
     <%--table.on("tool(LAY-app-operationLog-list)", function (e) {--%>
     <%--    var data = e.data;--%>

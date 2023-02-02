@@ -43,7 +43,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label">是否启用：</label>
             <div class="layui-input-block">
-                <select name="enable" id="enable" lay-filter="" type="select">
+                <select name="enable" id="enable" lay-filter="" lay-verify="required" type="select">
                     <option value=""></option>
                 </select>
             </div>
@@ -61,7 +61,8 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label">注册状态:</label>
             <div class="layui-input-block">
-                <input id="registerStatus" type="text" name="registerStatus" lay-verify="" placeholder=""
+                <input id="registerStatus" name="registerStatus" type="hidden"/>
+                <input id="registerStatusShow" type="text" name="registerStatusShow" lay-verify="" placeholder=""
                        autocomplete="off" class="layui-input"  readonly>
             </div>
         </div>
@@ -230,6 +231,7 @@
             "needUpdate": data.needUpdate,
             "enable": data.enable,
             "registerStatus": data.registerStatus,
+            "registerStatusShow": layui.admin.getDictText("REGISTER_STATUS",data.registerStatus),
             "deviceSoftwareType": data.deviceSoftwareType,
             "deviceName": data.deviceName,
             "accPointResId": data.accPointResId,
@@ -431,7 +433,8 @@
                             time: 500
                         }, function () {
                             var index = parent.layer.getFrameIndex(window.name);
-                            win.layui.table.reload("LAY-app-update_package-list-reload");
+                            win.layui.table.reload("LAY-app-device-list-reload");
+                            win.window.formReder();
                             top.layer.close(index);
                         });
                     }

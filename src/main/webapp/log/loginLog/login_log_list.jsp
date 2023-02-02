@@ -14,16 +14,58 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v1">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/iconfont/iconfont.css">
+    <style>
+        .layui-card {
+            margin-bottom: 0px
+        }
+
+        .layui-layer-adminRight {
+            top: 0px !important;
+            bottom: 0;
+            box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
+            border-radius: 0;
+            overflow: auto
+        }
+
+        .layui-form-item .layui-inline {
+            margin-bottom: 0px !important;
+            margin-right: 0px !important;
+        }
+
+        .layui-form-label {
+            width: 120px !important;
+            padding: 5px 0px !important;
+        }
+
+        .layui-form-item .layui-input-inline {
+            float: left;
+            width: 150px;
+            margin-right: 10px;
+        }
+
+        .layui-input {
+            height: 30px !important;
+        }
+    </style>
 </head>
 <body>
-<div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
-            <div class="layui-form-item layui-col-space12">
+<div class="layui-card">
+    <script type="text/html" id="toolbar">
+        <div class="layui-form layuiadmin-card-header-auto" lay-filter="layuiadmin-loginLog-form"
+             id="layuiadmin-loginLog-form">
+            <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">设备资源号：</label>
                     <div class="layui-input-inline">
                         <input type="text" name="equipmentId" placeholder="" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">设备名称：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="equipmentName" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -36,54 +78,17 @@
                         </select>
                     </div>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">登录用户：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="loginUserName" placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
+                <div class="layui-inline layui-hide">
+                    <button id="LAY-app-loginLog-search" class="layui-btn layuiadmin-btn-list" lay-submit
+                            lay-filter="LAY-app-loginLog-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">登录时间：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="loginTime" id="loginTime" lay-filter="loginTime" placeholder=""
-                               autocomplete="off"
-                               class="layui-input">
-                    </div>
-                    
-                    <div class="layui-inline layui-search" style="padding-left: 50px">
-                        <button class="layui-btn layuiadmin-btn-list" lay-submit
-                                lay-filter="LAY-app-loginLoglist-search"
-                                id="LAY-app-loginLoglist-search">
-                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                        </button>
-                    </div>
-                </div>
-
             </div>
-
-
         </div>
-        <div class="layui-card-body">
-            <%--        <div class="layui-toolbar" id="toolbar" hidden="true">--%>
-            <%--            <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i--%>
-            <%--                    class="layui-icon layui-icon-add-circle-fine"></i>新增规则--%>
-            <%--            </button>--%>
-            <%--            <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i--%>
-            <%--                    class="layui-icon layui-icon-delete"></i>删除--%>
-            <%--            </button>--%>
-            <%--        </div>--%>
-
-
-            <table id="LAY-app-loginLog-list" lay-filter="LAY-app-loginLog-list"></table>
-
-            <%--        <script type="text/html" id="table-loginLog-list">--%>
-            <%--            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i--%>
-            <%--                    class="layui-icon layui-icon-edit"></i>编辑</a>--%>
-            <%--            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i--%>
-            <%--                    class="layui-icon layui-icon-delete"></i>删除</a>--%>
-            <%--        </script>--%>
-        </div>
+    </script>
+    <div class="layui-card-body">
+        <table id="LAY-app-loginLog-list" lay-filter="LAY-app-loginLog-list"></table>
     </div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
@@ -101,12 +106,20 @@
     var form = layui.form;
     var $ = layui.jquery;
     var util = layui.util;
+    var admin = layui.admin;
+    var view = layui.view;
+
+    var formData = {};
 
     //全局参数
     var req_data;
 
     //功能名
-    var funName = "list";
+    var funName = "login_log_list";
+    // 高级查询参数
+    var advancedFormData = {};
+    // 焦点名称
+    var focusName = null;
 
     var hiddenFields = [];
 
@@ -116,38 +129,41 @@
         elem: '#loginTime',
         type: 'date'
     });
-    //获取来源的下拉值
-    layui.admin.renderDictSelect({
-        elem: "#source",
-        dictTypeId: "SOURCE",
-    });
-    form.render();
 
-
-
-    //监听搜索
-    form.on("submit(LAY-app-loginLoglist-search)", function (data) {
+    // 监听搜索
+    form.on("submit(LAY-app-loginLog-search)", function(data) {
         var field = data.field;
+        reloadData(field);
+        formData = {
+            equipmentId: field.equipmentId,
+            equipmentName: field.equipmentName,
+            source: field.source
+        };
+        form.val("layuiadmin-loginLog-form", formData);
+        advancedFormData = $.extend(advancedFormData, formData);
+    });
+
+
+    function reloadData(formData) {
+        //读取表格数据 表格id
         table.reload("LAY-app-loginLog-list-reload", {
-            where: field
+            where: formData
         });
-    });
-
-    //来源下拉框监听事件
-    form.on("select(source)", function (data) {
-        var submit = $("#LAY-app-loginLoglist-search");
-        submit.click();
-    });
-
-    //文本框回车事件
-    $(".layui-input").on("keydown", function (event) {
-        if (event.keyCode == 13) {
-            var submit = $("#LAY-app-loginLoglist-search");
-            submit.click();
-            return false;
+        formReder();
+        if (focusName) {
+            $("input[name=" + focusName + "]").focus();
         }
-    });
+    }
 
+    function setFormData(data) {
+        advancedFormData = data;
+        reloadData(data);
+        form.val("layuiadmin-loginLog-form", {
+            equipmentId: data.equipmentId,
+            equipmentName: data.equipmentName,
+            source: data.source
+        });
+    }
 
     table.on('sort(LAY-app-loginLog-list)', function (obj) {
         table.reload('LAY-app-loginLog-list-reload', {
@@ -157,6 +173,7 @@
                 sortOrder: obj.type
             }
         });
+        formReder();
     });
 
     //左侧表头按钮事件监听
@@ -174,6 +191,7 @@
                 sortOrder: obj.type
             }
         });
+        formReder();
     });
 
     function getFullSize() {
@@ -188,6 +206,7 @@
         table.reload("LAY-app-loginLog-list-reload", {
             height: "full-" + getFullSize()
         });
+        formReder();
     });
 
     // 查询过滤字段
@@ -216,6 +235,37 @@
         return false;
     }
 
+    // 监听按钮点击事件
+    var active = {
+        search: function() {
+            var submit = $("#LAY-app-loginLog-search");
+            submit.click();
+            return false;
+        },
+        query: function() {
+            var url = "<%=request.getContextPath() %>/log/loginLog/loginLog_form_query.jsp";
+            admin.popupRight({
+                type: 2,
+                content: [url, "yes"],
+                btn: ["查询", "重置", "取消"],
+                success: function(layero, index) {
+                    var dataJson = {
+                        win : window,
+                        data: advancedFormData
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function(index, layero) {
+                    var submit = layero.find("iframe").contents().find("#LAY-app-loginLog-search-advanced");
+                    submit.click();
+                    top.layer.close(index);
+                },
+                btn2: function(index, layero) {
+                    layero.find("iframe")[0].contentWindow.reset();
+                }
+            });
+        }
+    };
 
     table.render({
         elem: "#LAY-app-loginLog-list",
@@ -227,7 +277,15 @@
         limit: 10,
         limits: [10, 15, 20, 30],
         toolbar: "#toolbar",
-        defaultToolbar: ["filter"],
+        defaultToolbar: [{
+            title: "查询",
+            layEvent: "search",
+            icon: "layui-icon layui-icon-search layuiadmin-button-btn",
+        }, {
+            title: "高级查询",
+            layEvent: "query",
+            icon: "icon iconfont icon-gaojichaxun",
+        }, "filter"],
         colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;
@@ -264,6 +322,12 @@
             minWidth: 120,
             hide: isHidden("equipmentId")
         }, {
+            field: "equipmentName",
+            title: "设备名称",
+            align: "center",
+            minWidth: 150,
+            hide: isHidden("equipmentName")
+        }, {
             field: "aPPId",
             title: "APPID",
             align: "center",
@@ -291,14 +355,43 @@
             minWidth: 150,
             hide: isHidden("loginTime"),
             templet: function (d) {
-                if(d.loginTime!=null){
+                if (d.loginTime != null) {
                     return layui.util.toDateString(d.loginTime);
-                }else{
+                } else {
                     return '';
                 }
             }
         }]]
     });
+
+    formReder();
+
+    function formReder() {
+        // 文本框回车事件
+        $(".layui-input").on("keydown", function (event) {
+            if (event.keyCode == 13) {
+                focusName = event.target.name;
+                var submit = $("#LAY-app-loginLog-search");
+                submit.click();
+                return false;
+            }
+        });
+
+        //获取来源的下拉值
+        layui.admin.renderDictSelect({
+            elem: "#source",
+            dictTypeId: "SOURCE",
+        });
+        form.render();
+
+        //来源下拉框监听事件
+        form.on("select(source)", function (data) {
+            var submit = $("#LAY-app-loginLog-search");
+            submit.click();
+        });
+
+        form.val("layuiadmin-loginLog-form", formData);
+    }
 
     //监听操作事件
     <%--table.on("tool(LAY-app-loginLog-list)", function (e) {--%>

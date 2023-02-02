@@ -1,11 +1,15 @@
 package com.zimax.mcrs.warn.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.zimax.mcrs.device.pojo.WorkStation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
  * 预警规则监控对象
@@ -70,4 +74,10 @@ public class MonitorEquipmentVo {
      * 工序名称
      */
     private String processName;
+
+    /**
+     *工位列表
+     */
+    @TableField(exist = false)
+    String workStationList;
 }

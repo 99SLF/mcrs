@@ -96,12 +96,13 @@
 	//功能名
 	var funName = "application_list";
 	var focusName = null;
+	var formData={}
 	
 	//监听搜索
 	form.on("submit(LAY-app-rolelist-search)", function(data) {
 		var field = data.field;
 		reloadData(field);
-		var formData = {
+		 formData = {
 			appName: field.appName,
 			appType: field.appType,
 		};
@@ -188,6 +189,7 @@
 									time: 2000
 								}, function() {
 									table.reload("LAY-app-application-list-reload");
+									updateSelect();
 									updateFuncgroupSelect();
 								});
 							} else {
@@ -435,6 +437,7 @@
 							}, function() {
 								updateFuncgroupSelect();
 								table.reload('LAY-app-application-list-reload');
+								updateSelect();
 							});
 						} else {
 							layer.msg("删除失败");		
@@ -459,7 +462,9 @@
 			}
 		}
 	}
-
+	function updateSelect(){
+		form.val("layuiadmin-feeding-form", formData);
+	}
 	formReder();
 
 	function formReder() {

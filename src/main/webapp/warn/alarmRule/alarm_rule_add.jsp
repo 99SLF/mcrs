@@ -369,6 +369,7 @@
         id: "LAY-app-alarmRule-list-reload",
         height: "full-" + getFullSize(),
         data: [],
+        height: 270 ,
         toolbar: "#toolbar",
         defaultToolbar: ["filter"],
         colHideChange: function (col, checked) {
@@ -396,11 +397,11 @@
             };
         },
         cols: [[{
-            type: "checkbox"
-        }, {
-            title: "序号",
-            type: "numbers"
-        }, {
+        //     type: "checkbox"
+        // }, {
+        //     title: "序号",
+        //     type: "numbers"
+        // },{
             field: "equipmentId",
             title: "设备资源号",
             align: "center",

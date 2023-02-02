@@ -35,12 +35,6 @@
 	
 	<div class="layui-form-item layui-row layui-col-space10">
 		<div class="layui-col-sm6">
-			<label class="layui-form-label"  >登录密码:<span style="color:red">*</span></label>
-			<div class="layui-input-block">
-				<input  type="password" name="password" lay-verify="required" placeholder="登录密码(必填)" autocomplete="off" class="layui-input" disabled="disabled">
-			</div>
-		</div>
-		<div class="layui-col-sm6">
 			<label class="layui-form-label">密码失效日期</label>
 			<div class="layui-input-block">
 	  			<input type="text" name="invalDate" id="invaldate" autocomplete="off" class="layui-input">
@@ -79,32 +73,6 @@
 			</div>
 		</div>
 	</div>
-	
-	<div class="layui-form-item layui-row layui-col-space10">
-		<div class="layui-col-sm6">
-			<label class="layui-form-label" >认证模式：</label>
-			<div class="layui-input-block">
-				<select name="authMode" id="authMode" lay-filter="authMode" type="select">
-					<option value=""></option>
-				</select>		
-			</div>
-		</div>
-		<div class="layui-col-sm6">
-			<label class="layui-form-label" >菜单布局：</label>
-			<div class="layui-input-block">
-				<select name="menuType" id="menuType" lay-filter="menuType" type="select">
-			  		<option value=""></option>
-			    </select>
-			</div>
-		</div>
-	</div>
-	
-	<div class="layui-row layui-col-space10">
-		<label class="layui-form-label">IP地址：</label>
-		<div class="layui-input-block">
-			<textarea  class="layui-textarea field-effect field-content" name="ipAddress" id="ipAddress" autocomplete="off" placeholder="" lay-verify=""></textarea>
-		</div>	
-	</div>
 	<div class="layui-form-item layui-hide">
 		<input type="button" lay-submit lay-filter="layuiadmin-app-form-edit" id="layuiadmin-app-form-edit" value="确认编辑">
 	</div>
@@ -131,14 +99,6 @@
   		elem: "#status",
   		dictTypeId: "COF_USERSTATUS"
     });
-    layui.admin.renderDictSelect({	 //获取用户权限的下拉值
-  		elem: "#authMode",
-  		dictTypeId: "COF_AUTHMODE"
-  	});
-  	 layui.admin.renderDictSelect({	   //获取菜单布局的下拉值
-  		elem: "#menuType",
-  		dictTypeId: "COF_SKINLAYOUT"
-  	});
  
 	form.render();
 	//日期
@@ -190,15 +150,11 @@
 			"operatorId": data.operatorId,
 		 	"userId": data.userId,
 			"userName": data.userName,
-			"password": data.password,
 			"invalDate": util.toDateString(data.invalDate, "yyyy-MM-dd"),
 			"startDate": util.toDateString(data.startDate, "yyyy-MM-dd"),
 			"endDate": util.toDateString(data.endDate, "yyyy-MM-dd"),
 			"email": data.email,
 			"status": data.status,
-			"authMode": data.authMode,
-			"menuType": data.menuType,
-			"ipAddress": data.ipAddress,
 		});
 
 		if (data.enddate != null) {

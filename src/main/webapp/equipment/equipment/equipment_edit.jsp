@@ -92,7 +92,7 @@
                 <div class="layui-col-sm6">
                     <label class="layui-form-label"><span style="color:red">*</span>设备连接IP:</label>
                     <div class="layui-input-block">
-                        <input id="equipmentIp" type="text" name="equipmentIp" lay-verify="required"
+                        <input id="equipmentIp" type="text" name="equipmentIp" lay-verify="required|equipmentIp"
                                placeholder="" autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -154,8 +154,8 @@
                 <div class="layui-col-sm12">
                     <label class="layui-form-label">备注:</label>
                     <div class="layui-input-block">
-            <textarea cols="50" rows="10" style="width:100%;height:100px" name="remarks" id="remarks" autocomplete="off"
-                      class="layui-input" lay-verify="remarks"></textarea>
+            <textarea  name="remarks" id="remarks" autocomplete="off"
+                      class="layui-textarea" lay-verify="remarks"></textarea>
                     </div>
                 </div>
             </div>
@@ -252,6 +252,7 @@
                     table.reload('workStation', {
                         data: result.data.workStationList,
                     });
+                    win.window.formReder();
                 } else {
                     layer.msg("查询失败");
                 }
@@ -317,6 +318,15 @@
         equipmentName: function (value, item) {
             if (value.length > 20) {
                 return "设备名称不能超过20个字符";
+            }
+        },
+        equipmentIp: function(value, item){
+            function isValidIP(ip) {
+                var reg = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
+                return reg.test(ip);
+            }
+            if(isValidIP(value) == false){
+                return '请输入正确的IP地址';
             }
         },
         equipmentInstallLocation: function (value, item) {
@@ -399,6 +409,7 @@
                         }, function () {
                             var index = parent.layer.getFrameIndex(window.name);
                             win.layui.table.reload("LAY-app-equipment-list-reload");
+                            win.window.formReder();
                             top.layer.close(index);
                         });
                     }
@@ -424,7 +435,7 @@
                 , order: obj.type //排序方式
             }
         });
-
+        win.window.formReder();
     });
     //查询过滤字段
     $.ajax({
@@ -463,6 +474,7 @@
         table.reload("workStation", {
             height: "full-" + getFullSize()
         });
+        win.window.formReder();
     });
 
     table.on('toolbar(workStation)', function (obj) {

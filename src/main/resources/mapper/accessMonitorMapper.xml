@@ -57,13 +57,13 @@
     </select>
 
     <select id="queryProcessAndeqi" resultType="com.zimax.mcrs.monitor.pojo.vo.GroupByProduction">
-        SELECT  sum(CASE process_name WHEN "101" THEN 1 ELSE 0 END) AS "coldPress",
-                sum(CASE process_name WHEN "102" THEN 1 ELSE 0 END) AS "dieCut",
-                sum(CASE process_name WHEN "103" THEN 1 ELSE 0 END) AS "wind",
-                sum(CASE process_name WHEN "104" THEN 1 ELSE 0 END) AS "coat"
+        SELECT bpi.process_name,count(bpi.process_name) total
         FROM eqi_equipment AS eqi
                  LEFT JOIN base_access_info AS bai ON eqi.acc_point_res_id = bai.acc_point_res_id
-                 LEFT JOIN base_process_info AS bpi ON bai.process_code = bpi.process_code
+                 LEFT JOIN base_process_info AS bpi
+                           ON bai.process_id = bpi.process_id
+        group by bpi.process_name
+
     </select>
 </mapper>
 

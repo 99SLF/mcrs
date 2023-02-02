@@ -653,8 +653,7 @@ CREATE TABLE `dev_plcparam_dispose` (
         CONSTRAINT `dev_rfidparam_dispose_ibfk_1` FOREIGN KEY (`rfid_group_id`) REFERENCES `dev_rfid_group` (`rfid_group_id`)
     ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
-
--- ----------------------------
+    -- ----------------------------
 -- Table structure for bas_log_delete_rule
 -- ----------------------------
 DROP TABLE IF EXISTS `bas_log_delete_rule`;
@@ -669,6 +668,18 @@ CREATE TABLE `bas_log_delete_rule`  (
     `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
     PRIMARY KEY (`rule_delete_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 105 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of bas_log_delete_rule
+-- ----------------------------
+INSERT INTO `bas_log_delete_rule` VALUES (1, '登录日志删除规则', '102', '101', '101', '1', 'sysadmin', '2023-01-30 10:39:07');
+INSERT INTO `bas_log_delete_rule` VALUES (2, '接口日志删除规则', '102', '101', '102', '1', 'sysadmin', '2023-01-28 08:49:49');
+INSERT INTO `bas_log_delete_rule` VALUES (3, '操作日志删除规则', '102', '101', '103', '1', 'sysadmin', '2023-01-29 16:34:05');
+INSERT INTO `bas_log_delete_rule` VALUES (4, '设备交换日志删除规则', '102', '101', '104', '1', 'sysadmin', '2023-01-28 08:49:49');
+INSERT INTO `bas_log_delete_rule` VALUES (5, 'PLC交互日志删除规则', '102', '101', '105', '1', 'sysadmin', '2023-01-30 10:29:03');
+INSERT INTO `bas_log_delete_rule` VALUES (6, 'RFID交互日志删除规则', '102', '101', '106', '1', 'sysadmin', '2023-01-30 10:23:12');
+INSERT INTO `bas_log_delete_rule` VALUES (7, 'MES交互日志删除规则', '102', '101', '107', '1', 'sysadmin', '2023-01-30 10:08:28');
+INSERT INTO `bas_log_delete_rule` VALUES (8, '异常日志删除规则', '102', '101', '108', '1', 'sysadmin', '2023-01-30 11:05:02');
 
 SET FOREIGN_KEY_CHECKS = 1;
 

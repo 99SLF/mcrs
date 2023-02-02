@@ -44,9 +44,9 @@
         <div class="layui-col-sm12">
             <label class="layui-form-label"><span style="color:red">*</span>工厂地址:</label>
             <div class="layui-input-block">
-            <textarea cols="50" rows="10" style="width:100%;height:100px" name="factoryAddress" id="factoryAddress"
+            <textarea  name="factoryAddress" id="factoryAddress"
                       autocomplete="off"
-                      class="layui-input" lay-verify=""></textarea>
+                      class="layui-textarea" lay-verify=""></textarea>
             </div>
         </div>
     </div>

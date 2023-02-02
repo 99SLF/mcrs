@@ -17,6 +17,12 @@
         ON ll.creator = cur.USER_ID
         <where>
             ll.log_type = '107'
+            <if test="logStatus !=null and logStatus !=''">
+                and ll.log_status like '%${logStatus}%'
+            </if>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id like '%${equipmentId}%'
+            </if>
             <if test="equipmentName !=null and equipmentName !=''">
                 and eqi.equipment_name like '%${equipmentName}%'
             </if>
@@ -26,8 +32,8 @@
             <if test="mesIpAddress !=null and mesIpAddress !=''">
                 and bei.mes_ip_address like '%${mesIpAddress}%'
             </if>
-            <if test="equipmentContinuePort !=null and equipmentContinuePort !=''">
-                and eqi.equipment_continue_port like '%${equipmentContinuePort}%'
+            <if test="createName !=null and createName !=''">
+                and cur.USER_NAME like '%${createName}%'
             </if>
             <if test="createTime !=null and createTime !=''">
                 and ll.create_time like '%${createTime}%'
@@ -59,6 +65,12 @@
         ON ll.creator = cur.USER_ID
         <where>
             ll.log_type = '107'
+            <if test="logStatus !=null and logStatus !=''">
+                and ll.log_status like '%${logStatus}%'
+            </if>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id like '%${equipmentId}%'
+            </if>
             <if test="equipmentName !=null and equipmentName !=''">
                 and eqi.equipment_name like '%${equipmentName}%'
             </if>
@@ -68,8 +80,8 @@
             <if test="mesIpAddress !=null and mesIpAddress !=''">
                 and bei.mes_ip_address like '%${mesIpAddress}%'
             </if>
-            <if test="equipmentContinuePort !=null and equipmentContinuePort !=''">
-                and eqi.equipment_continue_port like '%${equipmentContinuePort}%'
+            <if test="createName !=null and createName !=''">
+                and cur.USER_NAME like '%${createName}%'
             </if>
             <if test="createTime !=null and createTime !=''">
                 and ll.create_time like '%${createTime}%'

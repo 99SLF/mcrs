@@ -120,7 +120,7 @@
     var req_data;
 
     //功能名
-    var funName = "list";
+    var funName = "alarm_event_list";
 
     var hiddenFields = [];
 
@@ -509,9 +509,9 @@
             minWidth: 200,
             hide: isHidden("updateTime"),
             templet: function (d) {
-                if(d.updateTime!=null){
+                if (d.updateTime != null) {
                     return layui.util.toDateString(d.updateTime);
-                }else{
+                } else {
                     return '';
                 }
 
@@ -531,7 +531,7 @@
         if (e.event == "edit") {
             top.layer.open({
                 type: 2,
-                title: "编辑设备信息",
+                title: "编辑预警事件信息",
                 content: "<%= request.getContextPath() %>/warn/alarmEvent/alarm_event_edit.jsp",
                 area: ["1000px", "560px"],
                 resize: false,

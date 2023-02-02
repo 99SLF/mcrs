@@ -13,6 +13,9 @@
         ON ll.device_id = dev.device_id
         <where>
             ll.log_type = '108'
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id like '%${equipmentId}%'
+            </if>
             <if test="equipmentName !=null and equipmentName !=''">
                 and eqi.equipment_name like '%${equipmentName}%'
             </if>
@@ -50,6 +53,9 @@
         ON ll.device_id = dev.device_id
         <where>
             ll.log_type = '108'
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id like '%${equipmentId}%'
+            </if>
             <if test="equipmentName !=null and equipmentName !=''">
                 and eqi.equipment_name like '%${equipmentName}%'
             </if>

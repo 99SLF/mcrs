@@ -29,9 +29,10 @@ public interface LoginLogMapper {
      * @return
      */
     int count(@Param("equipmentId") String equipmentId,
-            @Param("source") String source,
-            @Param("loginUserName") String loginUserName,
-            @Param("loginTime") String loginTime);
+              @Param("equipmentName") String equipmentName,
+              @Param("source") String source,
+              @Param("loginUserName") String loginUserName,
+              @Param("loginTime") String loginTime);
 
     /**
      * 登录日志添加
@@ -40,10 +41,6 @@ public interface LoginLogMapper {
      */
     void addLoginLog(LoginLog loginLog);
 
-    /**
-     * 删除日志
-     */
-     void removeLoginLog(int loginLogId);
 
 
 }

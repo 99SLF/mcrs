@@ -22,25 +22,25 @@ public class MesLogController {
     @Autowired
     private MesLogService mesLogService;
 
-
     /**
-     *  查询全部的Mes交换日志
-     *
-     * @param limit  条数
+     * 查询
+     * @param limit 条数
      * @param page 页码
+     * @param logStatus 日志状态
+     * @param equipmentId 设备资源号
      * @param equipmentName 设备名称
      * @param deviceName 终端名称
-     * @param mesIpAddress mes连接IP
-     * @param equipmentContinuePort 设备连接端口
+     * @param mesIpAddress MES连接IP
+     * @param createName 创建人
      * @param createTime 创建时间
      * @param order
      * @param field
      * @return
      */
     @GetMapping("/mesLog/query")
-    public Result<?> query(String limit, String page, String equipmentName, String deviceName, String mesIpAddress, String equipmentContinuePort, String createTime, String order, String field) {
-        List mesLogsList = mesLogService.queryMesLog(limit, page, equipmentName, deviceName, mesIpAddress, equipmentContinuePort, createTime, order, field);
-        return Result.success(mesLogsList, mesLogService.count(equipmentName, deviceName,mesIpAddress ,equipmentContinuePort,createTime));
+    public Result<?> query(String limit, String page, String logStatus,String equipmentId,String equipmentName, String deviceName, String mesIpAddress,String createName, String createTime, String order, String field) {
+        List mesLogsList = mesLogService.queryMesLog(limit, page,logStatus, equipmentId,equipmentName, deviceName, mesIpAddress, createName, createTime, order, field);
+        return Result.success(mesLogsList, mesLogService.count(logStatus,equipmentId,equipmentName, deviceName,mesIpAddress ,createName,createTime));
     }
 
     /**

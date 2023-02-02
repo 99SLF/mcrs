@@ -14,11 +14,46 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v1">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/iconfont/iconfont.css">
+    <style>
+        .layui-card {
+            margin-bottom: 0px
+        }
+
+        .layui-layer-adminRight {
+            top: 0px !important;
+            bottom: 0;
+            box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
+            border-radius: 0;
+            overflow: auto
+        }
+
+        .layui-form-item .layui-inline {
+            margin-bottom: 0px !important;
+            margin-right: 0px !important;
+        }
+
+        .layui-form-label {
+            width: 120px !important;
+            padding: 5px 0px !important;
+        }
+
+        .layui-form-item .layui-input-inline {
+            float: left;
+            width: 150px;
+            margin-right: 10px;
+        }
+
+        .layui-input {
+            height: 30px !important;
+        }
+    </style>
 </head>
 <body>
-<div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+<div class="layui-card">
+    <script type="text/html" id="toolbar">
+        <div class="layui-form layuiadmin-card-header-auto" lay-filter="layuiadmin-interfaceLog-form"
+             id="layuiadmin-interfaceLog-form">
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">来源：</label>
@@ -41,66 +76,24 @@
                 </div>
 
                 <div class="layui-inline">
-                    <label class="layui-form-label">设备接入IP：</label>
+                    <label class="layui-form-label">设备名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="equipmentIp" placeholder="" autocomplete="off"
+                        <input type="text" name="equipmentName" placeholder="" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
 
-                <div class="layui-inline">
-                    <label class="layui-form-label">调用者：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="invokerName" placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                </div>
-
-                <div class="layui-inline">
-                    <label class="layui-form-label">接口名称：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="interfaceName" placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                </div>
-
-                <div class="layui-inline">
-                    <label class="layui-form-label">创建时间：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="createTime" id="createTime" placeholder=""
-                               autocomplete="off"
-                               class="layui-input">
-                    </div>
-                    <div class="layui-inline layui-search" style="padding-left: 50px">
-                        <button class="layui-btn layuiadmin-btn-list" lay-submit
-                                lay-filter="LAY-app-interfaceLoglist-search"
-                                id="LAY-app-interfaceLoglist-search">
-                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                        </button>
-                    </div>
+                <div class="layui-inline layui-hide">
+                    <button id="LAY-app-interfaceLog-search" class="layui-btn layuiadmin-btn-list" lay-submit
+                            lay-filter="LAY-app-interfaceLog-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
                 </div>
             </div>
         </div>
-        <div class="layui-card-body">
-
-            <%--                    <div class="layui-toolbar" id="toolbar" hidden="true">--%>
-            <%--                        <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i--%>
-            <%--                                class="layui-icon layui-icon-add-circle-fine"></i>新增规则--%>
-            <%--                        </button>--%>
-            <%--                        <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i--%>
-            <%--                                class="layui-icon layui-icon-delete"></i>删除--%>
-            <%--                        </button>--%>
-            <%--                    </div>--%>
-
-            <table id="LAY-app-interfaceLog-list" lay-filter="LAY-app-interfaceLog-list"></table>
-
-            <%--        <script type="text/html" id="table-interfaceLog-list">--%>
-            <%--            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i--%>
-            <%--                    class="layui-icon layui-icon-edit"></i>编辑</a>--%>
-            <%--            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i--%>
-            <%--                    class="layui-icon layui-icon-delete"></i>删除</a>--%>
-            <%--        </script>--%>
-        </div>
+    </script>
+    <div class="layui-card-body">
+        <table id="LAY-app-interfaceLog-list" lay-filter="LAY-app-interfaceLog-list"></table>
     </div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
@@ -118,14 +111,21 @@
     var form = layui.form;
     var $ = layui.jquery;
     var util = layui.util;
-
+    var admin = layui.admin;
+    var view = layui.view;
     //全局参数
     var req_data;
 
+    var formData = {};
+
     //功能名
-    var funName = "list";
+    var funName = "interface_log_list";
 
     var hiddenFields = [];
+    // 高级查询参数
+    var advancedFormData = {};
+    // 焦点名称
+    var focusName = null;
 
     var laydate = layui.laydate;
     //日期时间选择器
@@ -134,121 +134,40 @@
         type: 'date'
     });
 
-
-    //监听搜索
-    form.on("submit(LAY-app-interfaceLoglist-search)", function (data) {
+    // 监听搜索
+    form.on("submit(LAY-app-interfaceLog-search)", function(data) {
         var field = data.field;
+        reloadData(field);
+        formData = {
+            source: field.source,
+            interfaceType: field.interfaceType,
+            equipmentName: field.equipmentName
+        };
+        form.val("layuiadmin-interfaceLog-form", formData);
+        advancedFormData = $.extend(advancedFormData, formData);
+    });
+
+
+    function reloadData(formData) {
+        //读取表格数据 表格id
         table.reload("LAY-app-interfaceLog-list-reload", {
-            where: field
+            where: formData
         });
-    });
-
-    //来源下拉框监听事件
-    form.on("select(source)", function (data) {
-        var submit = $("#LAY-app-interfaceLoglist-search");
-        submit.click();
-    });
-    //接口类型下拉框监听事件
-    form.on("select(interfaceType)", function (data) {
-        var submit = $("#LAY-app-interfaceLoglist-search");
-        submit.click();
-    });
-
-    //获取接口类型的下拉值
-    layui.admin.renderDictSelect({
-        elem: "#interfaceType",
-        dictTypeId: "API_TYPE",
-    });
-    form.render();
-
-    //获取来源的下拉值
-    layui.admin.renderDictSelect({
-        elem: "#source",
-        dictTypeId: "SOURCE",
-    });
-    form.render();
-
-    //文本框回车事件
-    $(".layui-input").on("keydown", function (event) {
-        if (event.keyCode == 13) {
-            var submit = $("#LAY-app-interfaceLoglist-search");
-            submit.click();
-            return false;
+        formReder();
+        if (focusName) {
+            $("input[name=" + focusName + "]").focus();
         }
-    });
+    }
 
-    <%--var active = {--%>
-    <%--    //设备新建--%>
-    <%--    add: function () {--%>
-    <%--        top.layer.open({--%>
-    <%--            type: 2,--%>
-    <%--            title: "预警规则新建",--%>
-    <%--            content: "<%= request.getContextPath() %>/warn/interfaceLog/alarm_rule_add.jsp",--%>
-    <%--            area: ["1000px", "560px"],--%>
-    <%--            resize: false,--%>
-    <%--            btn: ["确定", "取消"],--%>
-    <%--            success: function (layero, index) {--%>
-    <%--                var dataJson = {--%>
-    <%--                    win: window,--%>
-    <%--                };--%>
-    <%--                layero.find("iframe")[0].contentWindow.SetData(dataJson);--%>
-    <%--            },--%>
-    <%--            yes: function (index, layero) {--%>
-    <%--                var submit = layero.find("iframe").contents().find("#layuiadmin-app-form-submit");--%>
-    <%--                submit.click();--%>
-    <%--            }--%>
-    <%--        });--%>
-    <%--    },--%>
-    <%--    //批量删除--%>
-    <%--    batchdel: function () {--%>
-    <%--        var checkStatus = table.checkStatus("LAY-app-interfaceLog-list-reload");--%>
-    <%--        var data = checkStatus.data;--%>
-    <%--        if (data.length == 0) {--%>
-    <%--            layer.msg("请至少选中一条记录！");--%>
-    <%--        }--%>
-    <%--        if (data.length > 0) {--%>
-    <%--            var interfaceLogInts = new Array();--%>
-    <%--            for (var i = 0; i < data.length; i++) {--%>
-    <%--                interfaceLogInts[i] = data[i].interfaceLogInt;--%>
-    <%--            }--%>
-    <%--            layer.confirm("确定删除所选预警规则？", {--%>
-    <%--                icon: 3,--%>
-    <%--                title: "系统提示"--%>
-    <%--            }, function (index) {--%>
-    <%--                $.ajax({--%>
-    <%--                    url: "<%= request.getContextPath() %>/warn/interfaceLog/batchDelete",--%>
-    <%--                    type: "DELETE",--%>
-    <%--                    data: JSON.stringify(interfaceLogInts),--%>
-    <%--                    cache: false,--%>
-    <%--                    contentType: "text/json",--%>
-    <%--                    success: function (result) {--%>
-    <%--                        if (result.exception) {--%>
-    <%--                            layer.alert(result.exception.message, {--%>
-    <%--                                icon: 2,--%>
-    <%--                                title: "系统提示"--%>
-    <%--                            });--%>
-    <%--                        } else if (result) {--%>
-    <%--                            layer.msg("删除成功", {--%>
-    <%--                                icon: 1,--%>
-    <%--                                time: 2000--%>
-    <%--                            }, function () {--%>
-    <%--                                table.reload("LAY-app-interfaceLog-list-reload");--%>
-    <%--                            });--%>
-    <%--                        } else {--%>
-    <%--                            layer.msg("删除失败");--%>
-    <%--                        }--%>
-    <%--                    },--%>
-    <%--                    error: function (jqXHR, textStatus, errorThrown) {--%>
-    <%--                        layer.msg(jqXHR.responseText, {--%>
-    <%--                            time: 2000,--%>
-    <%--                            icon: 5--%>
-    <%--                        });--%>
-    <%--                    }--%>
-    <%--                });--%>
-    <%--            });--%>
-    <%--        }--%>
-    <%--    }--%>
-    <%--};--%>
+    function setFormData(data) {
+        advancedFormData = data;
+        reloadData(data);
+        form.val("layuiadmin-interfaceLog-form", {
+            source: data.source,
+            interfaceType: data.interfaceType,
+            equipmentName: data.equipmentName
+        });
+    }
 
     table.on('sort(LAY-app-interfaceLog-list)', function (obj) {
         table.reload('LAY-app-interfaceLog-list-reload', {
@@ -317,6 +236,38 @@
         return false;
     }
 
+    // 监听按钮点击事件
+    var active = {
+        search: function() {
+            var submit = $("#LAY-app-interfaceLog-search");
+            submit.click();
+            return false;
+        },
+        query: function() {
+            var url = "<%=request.getContextPath() %>/log/interfaceLog/interfaceLog_form_query.jsp";
+            admin.popupRight({
+                type: 2,
+                content: [url, "yes"],
+                btn: ["查询", "重置", "取消"],
+                success: function(layero, index) {
+                    var dataJson = {
+                        win : window,
+                        data: advancedFormData
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function(index, layero) {
+                    var submit = layero.find("iframe").contents().find("#LAY-app-interfaceLog-search-advanced");
+                    submit.click();
+                    top.layer.close(index);
+                },
+                btn2: function(index, layero) {
+                    layero.find("iframe")[0].contentWindow.reset();
+                }
+            });
+        }
+    };
+
 
     table.render({
         elem: "#LAY-app-interfaceLog-list",
@@ -328,7 +279,15 @@
         limit: 10,
         limits: [10, 15, 20, 30],
         toolbar: "#toolbar",
-        defaultToolbar: ["filter"],
+        defaultToolbar: [{
+            title: "查询",
+            layEvent: "search",
+            icon: "layui-icon layui-icon-search layuiadmin-button-btn",
+        }, {
+            title: "高级查询",
+            layEvent: "query",
+            icon: "icon iconfont icon-gaojichaxun",
+        }, "filter"],
         colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;
@@ -435,8 +394,8 @@
             title: "处理开始时间",
             align: "center",
             minWidth: 200,
-            hide: true,
-            templet:function(d) {
+            hide: isHidden("disposeStartTime"),
+            templet: function (d) {
                 return layui.util.toDateString(d.disposeStartTime);
             }
         }, {
@@ -444,7 +403,7 @@
             title: "处理结束时间",
             align: "center",
             minWidth: 200,
-            hide: true,
+            hide: isHidden("disposeEndTime"),
             templet: function (d) {
                 return layui.util.toDateString(d.disposeEndTime);
             }
@@ -453,13 +412,13 @@
             title: "调用者",
             align: "center",
             minWidth: 120,
-            hide: true
+            hide: isHidden("invokerName")
         }, {
             field: "disposeTime",
             title: "处理时长",
             align: "center",
             minWidth: 200,
-            hide: true
+            hide: isHidden("disposeTime")
         }, {
             field: "interfaceName",
             title: "接口名称",
@@ -469,79 +428,47 @@
         }]]
     });
 
-    //监听操作事件
-    <%--table.on("tool(LAY-app-interfaceLog-list)", function (e) {--%>
-    <%--    var data = e.data;--%>
-    <%--    if (e.event == "edit") {--%>
-    <%--        top.layer.open({--%>
-    <%--            type: 2,--%>
-    <%--            title: "编辑设备信息",--%>
-    <%--            content: "<%= request.getContextPath() %>/warn/interfaceLog/alarm_rule_edit.jsp",--%>
-    <%--            area: ["1000px", "560px"],--%>
-    <%--            resize: false,--%>
-    <%--            btn: ["确定", "取消"],--%>
-    <%--            success: function (layero, index) {--%>
-    <%--                var dataJson = {--%>
-    <%--                    data: data,--%>
-    <%--                    win: window--%>
-    <%--                };--%>
-    <%--                layero.find("iframe")[0].contentWindow.SetData(dataJson);--%>
-    <%--            },--%>
-    <%--            yes: function (index, layero) {--%>
-    <%--                var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");--%>
-    <%--                edit.click();--%>
-    <%--            }--%>
+    formReder();
 
-    <%--        });--%>
-    <%--    } else if (e.event == "del") {--%>
-    <%--        layer.confirm("确定删除该设备？", {--%>
-    <%--            icon: 3,--%>
-    <%--            title: "系统提示"--%>
-    <%--        }, function (index) {--%>
-    <%--            $.ajax({--%>
-    <%--                url: "<%= request.getContextPath() %>/warn/interfaceLog/delete/" + data.interfaceLogInt,--%>
-    <%--                type: "DElETE",--%>
-    <%--                data: JSON.stringify({--%>
-    <%--                    interfaceLog: data--%>
-    <%--                }),--%>
-    <%--                cache: false,--%>
-    <%--                contentType: "text/json",--%>
-    <%--                success: function (result) {--%>
-    <%--                    if (result.exception) {--%>
-    <%--                        layer.alert(result.exception.message, {--%>
-    <%--                            icon: 2,--%>
-    <%--                            title: "系统提示"--%>
-    <%--                        });--%>
-    <%--                    } else if (result) {--%>
-    <%--                        layer.msg("删除成功", {--%>
-    <%--                            icon: 1,--%>
-    <%--                            time: 500--%>
-    <%--                        }, function () {--%>
-    <%--                            table.reload("LAY-app-interfaceLog-list-reload");--%>
-    <%--                        });--%>
-    <%--                    } else {--%>
-    <%--                        layer.msg("删除失败！", {--%>
-    <%--                            icon: 2,--%>
-    <%--                            time: 2000--%>
-    <%--                        });--%>
-    <%--                    }--%>
-    <%--                },--%>
-    <%--                error: function (jqXHR, textStatus, errorThrown) {--%>
-    <%--                    layer.msg(jqXHR.responseText, {--%>
-    <%--                        time: 500,--%>
-    <%--                        icon: 5--%>
-    <%--                    });--%>
-    <%--                }--%>
-    <%--            });--%>
-    <%--        });--%>
-    <%--    }--%>
-    <%--});--%>
+    function formReder() {
+        // 文本框回车事件
+        $(".layui-input").on("keydown", function (event) {
+            if (event.keyCode == 13) {
+                focusName = event.target.name;
+                var submit = $("#LAY-app-interfaceLog-search");
+                submit.click();
+                return false;
+            }
+        });
 
-    // //批量选中
-    // $("body").on("click", ".layui-table-body table.layui-table tbody tr td", function () {
-    //     if ($(this).attr("data-field") === "0") return;
-    //     $(this).siblings().eq(0).find("i").click();
-    // });
+
+        //来源下拉框监听事件
+        form.on("select(source)", function (data) {
+            var submit = $("#LAY-app-interfaceLog-search");
+            submit.click();
+        });
+        //接口类型下拉框监听事件
+        form.on("select(interfaceType)", function (data) {
+            var submit = $("#LAY-app-interfaceLog-search");
+            submit.click();
+        });
+
+        //获取接口类型的下拉值
+        layui.admin.renderDictSelect({
+            elem: "#interfaceType",
+            dictTypeId: "API_TYPE",
+        });
+        form.render();
+
+        //获取来源的下拉值
+        layui.admin.renderDictSelect({
+            elem: "#source",
+            dictTypeId: "SOURCE",
+        });
+        form.render();
+
+        form.val("layuiadmin-interfaceLog-form", formData);
+    }
 </script>
 </body>
 </html>

@@ -34,6 +34,7 @@ function submit() {
     		contentType: "text/json",
     		data: JSON.stringify(data.field),
     		success: function(res) {
+    		    debugger;
     			var url = getQueryVariable("url");
     			if (res.code == 0) {
     				if (data.field.remember === "on") {
@@ -71,12 +72,12 @@ function submit() {
 	   				     }
     				});
     			} else {
+                    $('#login').removeClass("layui-btn-disabled").attr("disabled",false);
     				layer.msg(res.msg, {
     				    time: 2000,
                         icon: 5
     				});
     			}
-                $('#login').addClass("layui-btn-disabled").attr("disabled",false);
     		}
     	});
     	return false;

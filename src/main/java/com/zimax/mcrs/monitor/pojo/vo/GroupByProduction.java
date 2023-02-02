@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GroupByProduction {
-    private int coldPress;
-    private int dieCut;
-    private int wind;
-    private int coat;
+    private String processName;
+    private int total;
 }

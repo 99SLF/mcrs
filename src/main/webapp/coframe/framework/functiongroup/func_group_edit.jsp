@@ -85,7 +85,8 @@
 					}, function() {
 						var index = parent.layer.getFrameIndex(window.name);
 						win.layui.table.reload('LAY-app-funcgroup-list-reload');
-						top.layer.close(index);  
+						top.layer.close(index);
+						win.window.updata_select();
 						win.window.updateFunSelect();   
 					});
 				}

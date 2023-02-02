@@ -136,7 +136,7 @@
     var req_data;
 
     //功能名
-    var funName = "list";
+    var funName = "alarm_rule_list";
 
     var hiddenFields = [];
 
@@ -456,6 +456,12 @@
                 }
 
             }
+        }, {
+            title: "操作",
+            align: "center",
+            fixed: "right",
+            width: 200,
+            toolbar: "#table-alarmRule-list"
         }]]
     });
 

@@ -35,9 +35,9 @@
         <div class="layui-col-sm12">
             <label class="layui-form-label"><span style="color:red">*</span>工序描述:</label>
             <div class="layui-input-block">
-            <textarea cols="50" rows="10" style="width:100%;height:100px" name="processRemarks" id="processRemarks"
+            <textarea  name="processRemarks" id="processRemarks"
                       autocomplete="off"
-                      class="layui-input" lay-verify="processRemarks"></textarea>
+                      class="layui-textarea" lay-verify="processRemarks"></textarea>
             </div>
         </div>
     </div>

@@ -470,6 +470,7 @@
         id: "LAY-app-alarmRule-list-reload",
         height: "full-" + getFullSize(),
         data: [],
+        height: 270 ,
         toolbar: "#toolbar",
         defaultToolbar: ["filter"],
         colHideChange: function (col, checked) {
@@ -497,11 +498,11 @@
             };
         },
         cols: [[{
-            type: "checkbox"
-        }, {
-            title: "序号",
-            type: "numbers"
-        }, {
+        //     type: "checkbox"
+        // }, {
+        //     title: "序号",
+        //     type: "numbers"
+        // }, {
             field: "equipmentId",
             title: "设备资源号",
             align: "center",
@@ -550,11 +551,11 @@
             minWidth: 120,
             hide: isHidden("processName")
         }, {
-            field: "ruleMakeFormTime",
+            field: "workStationList",
             title: "工位代码",
             align: "center",
             minWidth: 100,
-            hide: isHidden("ruleMakeFormTime")
+            hide: isHidden("workStationList")
         }, {
             title: "操作",
             align: "center",

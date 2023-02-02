@@ -40,5 +40,5 @@ public interface AccessMonitorMapper {
     List<GroupByDate> groupQueryBydate();
 
     WarnTotalInfo getWarnInfo();
-    GroupByProduction queryProcessAndeqi();
+    GroupByProduction[] queryProcessAndeqi();
 }

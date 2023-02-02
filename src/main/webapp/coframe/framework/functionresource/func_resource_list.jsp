@@ -9,25 +9,50 @@
 <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
-<style type="text/css">
-.layui-card {
-	margin-bottom: 0px
-}
-</style>
+	<style>
+		.layui-card {
+			margin-bottom: 0px
+		}
+		.layui-layer-adminRight {
+			top: 0px !important;
+			bottom: 0;
+			box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
+			border-radius: 0;
+			overflow: auto
+		}
+		.layui-form-item .layui-inline {
+			margin-bottom: 0px !important;
+			margin-right: 0px !important;
+		}
+		.layui-form-label {
+			width: 120px !important;
+			padding: 5px 0px !important;
+		}
+		.layui-form-item .layui-input-inline {
+			float: left;
+			width: 150px;
+			margin-right: 10px;
+		}
+		.layui-input {
+			height: 30px !important;
+		}
+	</style>
 </head>
 <body>
 <div class="layui-card">
-	<div class="layui-form layuiadmin-card-header-auto">
-		<div class="layui-form-item">
-			<div class="layui-inline">
-				<label class="layui-form-label">选择功能：</label>
-				<div class="layui-input-inline">
-					<select name="appId" id="appId" lay-verify="required"  lay-filter="refreshtable" type="select" lay-search="">           		
-               		</select>
-				</div>						
+	<script type="text/html" id="toolbar">
+		<div class="layui-form layuiadmin-card-header-auto" lay-filter="layuiadmin-feeding-form" id="layuiadmin-feeding-form">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">选择功能：</label>
+					<div class="layui-input-inline">
+						<select name="appId" id="appId" lay-verify="required"  lay-filter="refreshtable" type="select" lay-search="">
+						</select>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
+	</script>
 	<div class="layui-card-body">
 		<table id="LAY-app-funcresource-list" lay-filter="LAY-app-funcresource-list"></table>
 		<script type="text/html" id="table-role-list">
@@ -49,6 +74,7 @@
 	var $ = layui.jquery;
 	var num1 = $("#appId").val(); 
 	var num;
+	var focusName = null;
 	var flag = true;
 	//过滤字段
 	var hiddenFields = [];
@@ -106,6 +132,7 @@
 									time: 2000
 								}, function() {
 									table.reload("LAY-app-funcresource-list-reload");
+									updata_select();
 								});
 							} else {
 								layer.msg("删除失败");		
@@ -142,7 +169,27 @@
 		var type = obj.event;
 		active[type] ? active[type].call(this) : "";
 	});
-	
+
+	$.ajax({
+		url: "<%= request.getContextPath() %>/framework/function/query",
+		type: "GET",
+		cache: false,
+		contentType: "text/json",
+		success: function (json) {
+			if (json != null && json.data != null && json.data.length > 0) {
+				$("#appId").empty();
+				for (var i = 0;i <json.data.length; i++) {
+					$("#appId").append(new Option(json.data[i].funcName,json.data[i].funcCode));// 下拉菜单里添加元素
+				}
+				form.render("select");//更新下拉框
+				$("#refreshtable").val(json.data[0].funcCode);
+				funcName = json.data[0].funcName
+				num = json.data[0].funcCode;
+				//var num = $("#appId").val();
+				//select(num,flag);
+			}
+		}
+	});
 	//表格排序
 	table.on('sort(LAY-app-funcresource-list)', function(obj){ 
   		table.reload('LAY-app-funcresource-list-reload', {
@@ -166,11 +213,10 @@
 					for (var i = 0;i <json.data.length; i++) {
 						$("#appId").append(new Option(json.data[i].funcName,json.data[i].funcCode));// 下拉菜单里添加元素											
 					}
-					form.render("select");//更新下拉框
-					$("#refreshtable").val(1);
-					funcName = json.data[0].funcName
-					var num = $("#appId").val();
-					select(num,flag);
+					form.val("layuiadmin-feeding-form",{
+						appId: num,
+					});
+					form.render();
 				}
 			}
 	  });
@@ -202,131 +248,134 @@
 		}
 		return false;
 	}
-	
-	function select(num,flag){
-		if (flag == true) {
-			var data = {
-				funcCode: num
-			};
-	 		table.render({
-				elem: "#LAY-app-funcresource-list",
-				id: "LAY-app-funcresource-list-reload",
-				url: "<%= request.getContextPath() %>/framework/funcResource/query",
-				method: "GET",
-				where: data,
-				height: "full-" + getFullSize(),
-				page: true,
-				limit: 10,
-				colHideChange: function(col, checked) {
-					var field = col.field;
-					var hidden = col.hide;
-					$.ajax({
-						url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
-						type: "GET",
-						cache: false,
-						contentType: "text/json",
-						success: function(result) {
-							if (result) {
-							} else{
-								layer.msg("列筛选失败");
-							}
-						}
-					});
-				},
-				toolbar: "#toolbar",
-				defaultToolbar:[{
-					title: "添加",
-					layEvent: "add",
-					icon: "layui-icon layui-icon-add-circle-fine",
-				},{
-					title: "删除",
-					layEvent: "batchdel",
-					icon: "layui-icon layui-icon-delete",
-				},"filter"],
-				limits: [10, 15, 20, 30],
-				parseData: function(res) {
-					return {
-						code: "0",
-						msg: "",
-						count: res.total,
-						data: res.data
-					};
-				},
-				//数据渲染完的回调。你可以借此做一些其它的操作;curr:当前页码;count:数据总量
-				done: function(res, curr, count){ 
-				},
-				where:{
-					funcCode: $("#appId").val()
-				},
-				//设置表头。值是一个二维数组。方法渲染方式必填
-				cols:[[{
-					type: "checkbox"
-				}, {
-					field: "resName",
-					title: "资源名称",
-					align: "left",
-					hide: isHidden("resName"),
-					minWidth: 150
-				}, { 
-					field: "resType",
-					title: "资源类型",
-					align: "center",
-					hide: isHidden("resType"),
-					minWidth: 150,
-					templet:function(d){
-						if (d.resType == "flow") {
-							return "页面流";
-						} else if (d.resType == "page"){
-							return "页面";
-						} else if (d.resType == "form"){
-							return "表单";
-						} else if (d.resType == "view"){
-							return "视图";
-						} else if (d.resType == "startprocess"){
-							return "启动流程";
-						} else {
-							return "其他";
-						}
+
+	table.render({
+		elem: "#LAY-app-funcresource-list",
+		id: "LAY-app-funcresource-list-reload",
+		url: "<%= request.getContextPath() %>/framework/funcResource/query",
+		method: "GET",
+		height: "full-" + getFullSize(),
+		page: true,
+		limit: 10,
+		colHideChange: function(col, checked) {
+			var field = col.field;
+			var hidden = col.hide;
+			$.ajax({
+				url: "<%=request.getContextPath() %>/cols/filter/set?funName=" + funName + "&field=" + field + "&hidden=" + hidden,
+				type: "GET",
+				cache: false,
+				contentType: "text/json",
+				success: function(result) {
+					if (result) {
+					} else{
+						layer.msg("列筛选失败");
 					}
-				}, {
-					field: "resPath",
-					title: "资源路径",
-					align: "center",
-					hide: isHidden("resPath"),
-					minWidth: 150,
-					templet: function(d){
-						return d.resPath;
-					}
-				}, {
-					field: "comPackName",
-					title: "所属构建包",
-					align: "center",
-					hide: isHidden("comPackName"),
-					minWidth: 150
-				}, {		
-					title: "操作",
-					align: "center",
-					fixed: "right",
-					width: 150,
-					toolbar: "#table-role-list"
-				}]]
+				}
 			});
-		} else {
-			table.reload("LAY-app-funcresource-list");
-		}
- 	}
+		},
+		toolbar: "#toolbar",
+		defaultToolbar:[{
+			title: "添加",
+			layEvent: "add",
+			icon: "layui-icon layui-icon-add-circle-fine",
+		},{
+			title: "删除",
+			layEvent: "batchdel",
+			icon: "layui-icon layui-icon-delete",
+		},"filter"],
+		limits: [10, 15, 20, 30],
+		parseData: function(res) {
+			return {
+				code: "0",
+				msg: "",
+				count: res.total,
+				data: res.data
+			};
+		},
+		//数据渲染完的回调。你可以借此做一些其它的操作;curr:当前页码;count:数据总量
+		done: function(res, curr, count){
+			form.val("layuiadmin-feeding-form",{
+				appId:num,
+			});
+			form.render();
+		},
+		where:{
+			funcCode: $("#appId").val()
+		},
+		//设置表头。值是一个二维数组。方法渲染方式必填
+		cols:[[{
+			type: "checkbox"
+		}, {
+			field: "resName",
+			title: "资源名称",
+			align: "left",
+			hide: isHidden("resName"),
+			minWidth: 150
+		}, {
+			field: "resType",
+			title: "资源类型",
+			align: "center",
+			hide: isHidden("resType"),
+			minWidth: 150,
+			templet:function(d){
+				if (d.resType == "flow") {
+					return "页面流";
+				} else if (d.resType == "page"){
+					return "页面";
+				} else if (d.resType == "form"){
+					return "表单";
+				} else if (d.resType == "view"){
+					return "视图";
+				} else if (d.resType == "startprocess"){
+					return "启动流程";
+				} else {
+					return "其他";
+				}
+			}
+		}, {
+			field: "resPath",
+			title: "资源路径",
+			align: "center",
+			hide: isHidden("resPath"),
+			minWidth: 150,
+			templet: function(d){
+				return d.resPath;
+			}
+		}, {
+			field: "comPackName",
+			title: "所属构建包",
+			align: "center",
+			hide: isHidden("comPackName"),
+			minWidth: 150
+		}, {
+			title: "操作",
+			align: "center",
+			fixed: "right",
+			width: 150,
+			toolbar: "#table-role-list"
+		}]]
+	});
 		
-	form.on("select(refreshtable)", function(data){	  	
+	form.on("select(refreshtable)", function(data){
+		num  = data.value
 		var data = {
 			funcCode: data.value
 		};
-		table.reload("LAY-app-funcresource-list-reload", {
-		      page: {
-		      	curr: 1 //重新从第 1 页开始
-		      },
-		      where:data
-		});
+		reloadData(data);
+		updata_select(flag);
 	});
+	function reloadData(formData) {
+		table.reload("LAY-app-funcresource-list-reload", {
+			page: {
+				//重新从第 1 页开始
+				curr: 1
+			},
+			where: formData
+		});
+		if (focusName) {
+			$("input[name=" + focusName + "]").focus();
+		}
+	}
 		
 	//监听操作事件
 	table.on("tool(LAY-app-funcresource-list)", function(e) {
@@ -372,6 +421,7 @@
 								time: 2000
 							}, function() {
 								table.reload("LAY-app-funcresource-list-reload");
+								updata_select();
 							});
 						} else {
 							layer.msg("删除失败");		

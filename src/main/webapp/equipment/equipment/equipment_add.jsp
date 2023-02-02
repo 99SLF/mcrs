@@ -155,8 +155,8 @@
                 <div class="layui-col-sm12">
                     <label class="layui-form-label">备注:</label>
                     <div class="layui-input-block">
-            <textarea cols="50" rows="10" style="width:100%;height:100px" name="remarks" id="remarks" autocomplete="off"
-                      class="layui-input" lay-verify="remarks" placeholder="备注不能超过255字符"></textarea>
+            <textarea  name="remarks" id="remarks" autocomplete="off"
+                      class="layui-textarea" lay-verify="remarks" placeholder="备注不能超过255字符"></textarea>
                     </div>
                 </div>
             </div>
@@ -258,9 +258,13 @@
                 return "设备连接端口不能超过20字";
             }
         },
-        equipmentIp: function (value, item) {
-            if (value.length > 20) {
-                return "设备连接IP不能超过20个字符";
+        equipmentIp: function(value, item){
+            function isValidIP(ip) {
+                var reg = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
+                return reg.test(ip);
+            }
+            if(isValidIP(value) == false){
+                return '请输入正确的IP地址';
             }
         },
         remarks: function (value, item) {
@@ -395,6 +399,7 @@
                         }, function () {
                             var index = top.layer.getFrameIndex(window.name);
                             win.layui.table.reload("LAY-app-equipment-list-reload");
+                            win.window.formReder();
                             top.layer.close(index);
                             win.window.updata_select();
                         });
@@ -427,7 +432,7 @@
                 , order: obj.type //排序方式
             }
         });
-
+        win.window.formReder();
     });
     //查询过滤字段
     $.ajax({
@@ -466,6 +471,7 @@
         table.reload("workStation", {
             height: "full-" + getFullSize()
         });
+        win.window.formReder();
     });
 
     table.on('toolbar(workStation)', function (obj) {
