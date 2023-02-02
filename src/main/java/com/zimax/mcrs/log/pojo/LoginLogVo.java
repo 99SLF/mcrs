@@ -28,6 +28,11 @@ public class LoginLogVo {
     private String equipmentId;
 
     /**
+     * 设备资源号
+     */
+    private String equipmentName;
+
+    /**
      * APPId
      */
     private String APPId;

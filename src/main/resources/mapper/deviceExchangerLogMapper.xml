@@ -24,14 +24,29 @@
         ON ll.`user` = cur.USER_ID
         <where>
             ll.log_type = '104'
+            <if test="logStatus !=null and logStatus !=''">
+                and ll.log_status like '%${logStatus}%'
+            </if>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
             </if>
-            <if test="equipmentContinuePort !=null and equipmentContinuePort !=''">
-                and eqi.equipment_continue_port like '%${equipmentContinuePort}%'
+            <if test="equipmentName !=null and equipmentName !=''">
+                and eqi.equipment_name like '%${equipmentName}%'
+            </if>
+            <if test="matrixName !=null and matrixName !=''">
+                and bmi.matrix_name like '%${matrixName}%'
+            </if>
+            <if test="factoryName !=null and factoryName !=''">
+                and bfi.factory_name like '%${factoryName}%'
             </if>
             <if test="processName !=null and processName !=''">
                 and bpi.process_name like '%${processName}%'
+            </if>
+            <if test="operationType !=null and operationType !=''">
+                and ll.operation_type like '%${operationType}%'
+            </if>
+            <if test="equipmentContinuePort !=null and equipmentContinuePort !=''">
+                and eqi.equipment_continue_port like '%${equipmentContinuePort}%'
             </if>
             <if test="operateName !=null and operateName !=''">
                 and cur.USER_NAME like '%${operateName}%'
@@ -75,14 +90,29 @@
         ON ll.`user` = cur.USER_ID
         <where>
             ll.log_type = '104'
+            <if test="logStatus !=null and logStatus !=''">
+                and ll.log_status like '%${logStatus}%'
+            </if>
             <if test="equipmentId !=null and equipmentId !=''">
                 and eqi.equipment_id like '%${equipmentId}%'
             </if>
-            <if test="equipmentContinuePort !=null and equipmentContinuePort !=''">
-                and eqi.equipment_continue_port like '%${equipmentContinuePort}%'
+            <if test="equipmentName !=null and equipmentName !=''">
+                and eqi.equipment_name like '%${equipmentName}%'
+            </if>
+            <if test="matrixName !=null and matrixName !=''">
+                and bmi.matrix_name like '%${matrixName}%'
+            </if>
+            <if test="factoryName !=null and factoryName !=''">
+                and bfi.factory_name like '%${factoryName}%'
             </if>
             <if test="processName !=null and processName !=''">
                 and bpi.process_name like '%${processName}%'
+            </if>
+            <if test="operationType !=null and operationType !=''">
+                and ll.operation_type like '%${operationType}%'
+            </if>
+            <if test="equipmentContinuePort !=null and equipmentContinuePort !=''">
+                and eqi.equipment_continue_port like '%${equipmentContinuePort}%'
             </if>
             <if test="operateName !=null and operateName !=''">
                 and cur.USER_NAME like '%${operateName}%'

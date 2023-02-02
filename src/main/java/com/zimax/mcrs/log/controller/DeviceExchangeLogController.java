@@ -24,26 +24,28 @@ public class DeviceExchangeLogController {
     @Autowired
     private DeviceExchangeLogService deviceExchangeLogService;
 
-
-
     /**
      * 查询
-     *
-     * @param equipmentId           设备资源号
+     * @param limit 条数
+     * @param page 页码
+     * @param logStatus 日志状态
+     * @param equipmentId 设备资源号
+     * @param equipmentName 设备名称
+     * @param matrixName 基地名称
+     * @param factoryName 工厂名称
+     * @param processName 工序名称
+     * @param operationType 操作类型
      * @param equipmentContinuePort 设备连接端口
-     * @param processName           使用工序名称
-     * @param operateName           依据USER_ID查询 USER_NAME
-     * @param equipmentExchangeTime          交换时间
-     * @param limit                 记录数
-     * @param page                  页码
-     * @param field                 排序字段
-     * @param order                 排序方式
-     * @return 设备列表
+     * @param operateName 操作人名称
+     * @param equipmentExchangeTime 设备交换时间
+     * @param order
+     * @param field
+     * @return
      */
     @GetMapping("/deviceExchangeLog/query")
-    public Result<?> queryDeviceExchange(String limit, String page, String equipmentId, String equipmentContinuePort, String processName, String operateName, String equipmentExchangeTime, String order, String field) {
-        List deviceExchangeLogs = deviceExchangeLogService.queryDeviceExchangeLog(limit, page, equipmentId, equipmentContinuePort, processName, operateName, equipmentExchangeTime, order, field);
-        return Result.success(deviceExchangeLogs, deviceExchangeLogService.count(equipmentId, equipmentContinuePort, processName, operateName, equipmentExchangeTime));
+    public Result<?> queryDeviceExchange(String limit, String page, String logStatus, String equipmentId,String equipmentName,String matrixName, String factoryName, String processName, String operationType,String equipmentContinuePort, String operateName, String equipmentExchangeTime, String order, String field) {
+        List deviceExchangeLogs = deviceExchangeLogService.queryDeviceExchangeLog(limit, page, logStatus,equipmentId,equipmentName,matrixName,factoryName, processName,operationType,equipmentContinuePort,operateName,equipmentExchangeTime, order, field);
+        return Result.success(deviceExchangeLogs, deviceExchangeLogService.count(logStatus,equipmentId,equipmentName,matrixName,factoryName, processName,operationType,equipmentContinuePort,operateName,equipmentExchangeTime));
     }
 
     /**

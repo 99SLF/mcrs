@@ -15,82 +15,76 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v1">
     <link rel="stylesheet" href="<%=request.getContextPath() %>/iconfont/iconfont.css">
+    <style>
+        .layui-card {
+            margin-bottom: 0px
+        }
+
+        .layui-layer-adminRight {
+            top: 0px !important;
+            bottom: 0;
+            box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
+            border-radius: 0;
+            overflow: auto
+        }
+
+        .layui-form-item .layui-inline {
+            margin-bottom: 0px !important;
+            margin-right: 0px !important;
+        }
+
+        .layui-form-label {
+            width: 120px !important;
+            padding: 5px 0px !important;
+        }
+
+        .layui-form-item .layui-input-inline {
+            float: left;
+            width: 150px;
+            margin-right: 10px;
+        }
+
+        .layui-input {
+            height: 30px !important;
+        }
+    </style>
 </head>
 <body>
-<div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
-            <div class="layui-form-item layui-col-space12">
+<div class="layui-card">
+    <script type="text/html" id="toolbar">
+        <div class="layui-form layuiadmin-card-header-auto" lay-filter="layuiadmin-mesLog-form"
+             id="layuiadmin-mesLog-form">
+            <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">设备名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="equipmentName" placeholder="" autocomplete="off"
-                               class="layui-input">
+                        <input type="text" class="layui-input" name="equipmentName" autocomplete="off"/>
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">终端名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="deviceName" placeholder="" autocomplete="off"
-                               class="layui-input">
+                        <input type="text" class="layui-input" name="deviceName" autocomplete="off"/>
                     </div>
                 </div>
 
-                <div class="layui-inline">
-                    <label class="layui-form-label">设备接入端口：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="equipmentContinuePort" placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                </div>
-
-                <div class="layui-inline">
-                    <label class="layui-form-label">创建时间：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="createTime"  id="createTime"  placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">MES连接IP：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="mesIpAddress" placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                    
-                    <div class="layui-inline layui-search" style="padding-left: 50px">
-                        <button class="layui-btn layuiadmin-btn-list" lay-submit
-                                lay-filter="LAY-app-plcLoglist-search"
-                                id="LAY-app-plcLoglist-search">
-                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                        </button>
+                        <input type="text" class="layui-input" name="mesIpAddress" autocomplete="off"/>
                     </div>
                 </div>
-
+                <div class="layui-inline layui-hide">
+                    <button id="LAY-app-mesLog-search" class="layui-btn layuiadmin-btn-list" lay-submit
+                            lay-filter="LAY-app-mesLog-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
             </div>
-
-
         </div>
-        <div class="layui-card-body">
-            <%--        <div class="layui-toolbar" id="toolbar" hidden="true">--%>
-            <%--            <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i--%>
-            <%--                    class="layui-icon layui-icon-add-circle-fine"></i>新增规则--%>
-            <%--            </button>--%>
-            <%--            <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i--%>
-            <%--                    class="layui-icon layui-icon-delete"></i>删除--%>
-            <%--            </button>--%>
-            <%--        </div>--%>
-
-
-            <table id="LAY-app-plcLog-list" lay-filter="LAY-app-plcLog-list"></table>
-
-            <%--        <script type="text/html" id="table-plcLog-list">--%>
-            <%--            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i--%>
-            <%--                    class="layui-icon layui-icon-edit"></i>编辑</a>--%>
-            <%--            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i--%>
-            <%--                    class="layui-icon layui-icon-delete"></i>删除</a>--%>
-            <%--        </script>--%>
-        </div>
+    </script>
+    <div class="layui-card-body">
+        <table id="LAY-app-mesLog-list" lay-filter="LAY-app-mesLog-list"></table>
     </div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
@@ -108,50 +102,62 @@
     var form = layui.form;
     var $ = layui.jquery;
     var util = layui.util;
+    var admin = layui.admin;
+    var view = layui.view;
 
     //全局参数
     var req_data;
 
     //功能名
     var funName = "mes_log_list";
+    // 高级查询参数
+    var advancedFormData = {};
+    // 焦点名称
+    var focusName = null;
+
 
     var hiddenFields = [];
 
     var laydate = layui.laydate;
-    //日期时间选择器
-    laydate.render({
-        elem: '#createTime',
-        type: 'date'
-    });
 
 
-    //监听搜索
-    form.on("submit(LAY-app-plcLoglist-search)", function (data) {
+    // 监听搜索
+    form.on("submit(LAY-app-mesLog-search)", function(data) {
         var field = data.field;
-        table.reload("LAY-app-plcLog-list-reload", {
-            where: field
+        reloadData(field);
+        var formData = {
+            equipmentName: field.equipmentName,
+            deviceName: field.deviceName,
+            mesIpAddress: field.mesIpAddress
+        };
+        form.val("layuiadmin-mesLog-form", formData);
+        advancedFormData = $.extend(advancedFormData, formData);
+    });
+
+
+    function reloadData(formData) {
+        //读取表格数据 表格id
+        table.reload("LAY-app-mesLog-list-reload", {
+            where: formData
         });
-    });
-
-    // //登录时间监听事件
-    // form.on("input(loginTime)", function(data) {
-    //     var submit = $("#LAY-app-plcLoglist-search");
-    //     submit.click();
-    // });
-
-
-    //文本框回车事件
-    $(".layui-input").on("keydown", function (event) {
-        if (event.keyCode == 13) {
-            var submit = $("#LAY-app-plcLoglist-search");
-            submit.click();
-            return false;
+        formReder();
+        if (focusName) {
+            $("input[name=" + focusName + "]").focus();
         }
-    });
+    }
 
+    function setFormData(data) {
+        advancedFormData = data;
+        reloadData(data);
+        form.val("layuiadmin-mesLog-form", {
+            equipmentName: data.equipmentName,
+            deviceName: data.deviceName,
+            mesIpAddress: data.mesIpAddress
+        });
+    }
 
-    table.on('sort(LAY-app-plcLog-list)', function (obj) {
-        table.reload('LAY-app-plcLog-list-reload', {
+    table.on('sort(LAY-app-mesLog-list)', function (obj) {
+        table.reload('LAY-app-mesLog-list-reload', {
             initSort: obj,
             where: {
                 sortField: obj.field,
@@ -161,14 +167,14 @@
     });
 
     //左侧表头按钮事件监听
-    table.on("toolbar(LAY-app-plcLog-list)", function (obj) {
+    table.on("toolbar(LAY-app-mesLog-list)", function (obj) {
         var type = obj.event;
         active[type] ? active[type].call(this) : "";
     });
 
     //表格排序
-    table.on("sort(LAY-app-plcLog-list)", function (obj) {
-        table.reload("LAY-app-plcLog-list-reload", {
+    table.on("sort(LAY-app-mesLog-list)", function (obj) {
+        table.reload("LAY-app-mesLog-list-reload", {
             initSort: obj,
             where: {
                 sortField: obj.field,
@@ -186,7 +192,7 @@
 
 
     $(window).resize(function () {
-        table.reload("LAY-app-plcLog-list-reload", {
+        table.reload("LAY-app-mesLog-list-reload", {
             height: "full-" + getFullSize()
         });
     });
@@ -217,10 +223,41 @@
         return false;
     }
 
+    // 监听按钮点击事件
+    var active = {
+        search: function() {
+            var submit = $("#LAY-app-mesLog-search");
+            submit.click();
+            return false;
+        },
+        query: function() {
+            var url = "<%=request.getContextPath() %>/log/mesLog/mesLog_form_query.jsp";
+            admin.popupRight({
+                type: 2,
+                content: [url, "yes"],
+                btn: ["查询", "重置", "取消"],
+                success: function(layero, index) {
+                    var dataJson = {
+                        win : window,
+                        data: advancedFormData
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function(index, layero) {
+                    var submit = layero.find("iframe").contents().find("#LAY-app-mesLog-search-advanced");
+                    submit.click();
+                    top.layer.close(index);
+                },
+                btn2: function(index, layero) {
+                    layero.find("iframe")[0].contentWindow.reset();
+                }
+            });
+        }
+    };
 
     table.render({
-        elem: "#LAY-app-plcLog-list",
-        id: "LAY-app-plcLog-list-reload",
+        elem: "#LAY-app-mesLog-list",
+        id: "LAY-app-mesLog-list-reload",
         url: "<%= request.getContextPath() %>/log/mesLog/query",
         method: "GET",
         height: "full-" + getFullSize(),
@@ -287,7 +324,7 @@
             align: "left",
             minWidth: 150,
             hide: isHidden("equipmentName")
-        },{
+        }, {
             field: "aPPId",
             title: "APPID",
             align: "center",
@@ -330,23 +367,37 @@
             minWidth: 200,
             hide: isHidden("createTime"),
             templet: function (d) {
-                if(d.createTime!=null){
+                if (d.createTime != null) {
                     return layui.util.toDateString(d.createTime);
-                }else{
+                } else {
                     return '';
                 }
             }
         }]]
     });
 
+    formReder();
+
+    function formReder() {
+        // 文本框回车事件
+        $(".layui-input").on("keydown", function (event) {
+            if (event.keyCode == 13) {
+                focusName = event.target.name;
+                var submit = $("#LAY-app-mesLog-search");
+                submit.click();
+                return false;
+            }
+        });
+    }
+
     //监听操作事件
-    <%--table.on("tool(LAY-app-plcLog-list)", function (e) {--%>
+    <%--table.on("tool(LAY-app-mesLog-list)", function (e) {--%>
     <%--    var data = e.data;--%>
     <%--    if (e.event == "edit") {--%>
     <%--        top.layer.open({--%>
     <%--            type: 2,--%>
     <%--            title: "编辑设备信息",--%>
-    <%--            content: "<%= request.getContextPath() %>/warn/plcLog/alarm_rule_edit.jsp",--%>
+    <%--            content: "<%= request.getContextPath() %>/warn/mesLog/alarm_rule_edit.jsp",--%>
     <%--            area: ["1000px", "560px"],--%>
     <%--            resize: false,--%>
     <%--            btn: ["确定", "取消"],--%>
@@ -369,10 +420,10 @@
     <%--            title: "系统提示"--%>
     <%--        }, function (index) {--%>
     <%--            $.ajax({--%>
-    <%--                url: "<%= request.getContextPath() %>/warn/plcLog/delete/" + data.plcLogInt,--%>
+    <%--                url: "<%= request.getContextPath() %>/warn/mesLog/delete/" + data.mesLogInt,--%>
     <%--                type: "DElETE",--%>
     <%--                data: JSON.stringify({--%>
-    <%--                    plcLog: data--%>
+    <%--                    mesLog: data--%>
     <%--                }),--%>
     <%--                cache: false,--%>
     <%--                contentType: "text/json",--%>
@@ -387,7 +438,7 @@
     <%--                            icon: 1,--%>
     <%--                            time: 500--%>
     <%--                        }, function () {--%>
-    <%--                            table.reload("LAY-app-plcLog-list-reload");--%>
+    <%--                            table.reload("LAY-app-mesLog-list-reload");--%>
     <%--                        });--%>
     <%--                    } else {--%>
     <%--                        layer.msg("删除失败！", {--%>

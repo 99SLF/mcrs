@@ -1,9 +1,7 @@
 package com.zimax.mcrs.log.controller;
 
 import com.zimax.mcrs.config.Result;
-import com.zimax.mcrs.log.pojo.InterfaceLog;
 import com.zimax.mcrs.log.pojo.LoginLog;
-import com.zimax.mcrs.log.service.InterfaceLogService;
 import com.zimax.mcrs.log.service.LoginLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,9 +34,9 @@ public class LoginLogController {
      * @return
      */
     @GetMapping("/loginLog/query")
-    public Result<?> query(String limit, String page, String equipmentId, String source, String loginUserName, String loginTime, String order, String field) {
-        List loginLogs = loginLogService.queryLoginLogLog(limit, page, equipmentId, source,loginUserName ,loginTime,order, field);
-        return Result.success(loginLogs, loginLogService.count(equipmentId,source,loginUserName,loginTime));
+    public Result<?> query(String limit, String page, String equipmentId,String equipmentName, String source, String loginUserName, String loginTime, String order, String field) {
+        List loginLogs = loginLogService.queryLoginLogLog(limit, page, equipmentId,equipmentName, source,loginUserName ,loginTime,order, field);
+        return Result.success(loginLogs, loginLogService.count(equipmentId,equipmentName,source,loginUserName,loginTime));
     }
 
     /**

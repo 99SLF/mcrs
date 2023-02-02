@@ -38,9 +38,9 @@ public class RfidLogController {
      * @return
      */
     @GetMapping("/rfidLog/query")
-    public Result<?> query(String limit, String page, String equipmentName, String deviceName, String rfidId, String parameterName, String createTime, String order, String field) {
-        List rfidLogList = rfidLogService.queryRfidLog(limit,page, equipmentName, deviceName,rfidId ,parameterName,createTime,order, field);
-        return Result.success(rfidLogList, rfidLogService.count(equipmentName, deviceName,rfidId ,parameterName,createTime));
+    public Result<?> query(String limit, String page,String equipmentId, String equipmentName,String deviceName,String rfidId,String parameterName,String createName,String createTime, String order, String field) {
+        List rfidLogList = rfidLogService.queryRfidLog(limit,page, equipmentId,equipmentName, deviceName,rfidId ,parameterName,createName,createTime,order, field);
+        return Result.success(rfidLogList, rfidLogService.count(equipmentId,equipmentName, deviceName,rfidId ,parameterName,createName,createTime));
     }
 
     /**

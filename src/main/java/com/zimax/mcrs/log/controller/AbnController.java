@@ -26,8 +26,9 @@ public class AbnController {
 
 
     /**
-     *
-     * @param equipmentName 设备资源号
+     *查询
+     * @param equipmentId 设备资源号
+     * @param equipmentName 设备名称
      * @param deviceName 终端名称
      * @param abnType 预警类型
      * @param abnLevel 异常等级
@@ -39,9 +40,9 @@ public class AbnController {
      * @return
      */
     @GetMapping("/abnLog/query")
-    public Result<?> query(String limit, String page, String equipmentName, String deviceName, String abnType, String abnLevel, String equipmentExchangeTime, String order, String field) {
-        List abnLogs = abnLogService.queryAbnLog(limit, page, equipmentName, deviceName,abnType ,abnLevel,equipmentExchangeTime,order, field);
-        return Result.success(abnLogs, abnLogService.count(equipmentName, deviceName,abnType ,abnLevel,equipmentExchangeTime));
+    public Result<?> query(String limit, String page, String equipmentId, String equipmentName, String deviceName, String abnType, String abnLevel, String equipmentExchangeTime, String order, String field) {
+        List abnLogs = abnLogService.queryAbnLog(limit, page, equipmentId,equipmentName, deviceName,abnType ,abnLevel,equipmentExchangeTime,order, field);
+        return Result.success(abnLogs, abnLogService.count(equipmentId,equipmentName, deviceName,abnType ,abnLevel,equipmentExchangeTime));
     }
 
 
@@ -57,7 +58,6 @@ public class AbnController {
         }else {
             return Result.error("1","设备不存在，请先注册设备");
         }
-
     }
 
     /**

@@ -15,25 +15,34 @@
         LEFT JOIN cap_user AS cur
         ON ll.user = cur.USER_ID
         <where>
-        ll.log_type = '102'
-        <if test="createTime !=null and createTime !=''">
-            and ll.create_time like '%${createTime}%'
-        </if>
-        <if test="source !=null and source !=''">
-            and ll.source like '%${source}%'
-        </if>
-        <if test="interfaceType !=null and interfaceType !=''">
-            and ll.interface_type like '%${interfaceType}%'
-        </if>
-        <if test="equipmentIp !=null and equipmentIp !=''">
-            and eqi.equipment_ip like '%${equipmentIp}%'
-        </if>
-        <if test="invokerName !=null and invokerName !=''">
-            and cur.USER_NAME like '%${invokerName}%'
-        </if>
-        <if test="interfaceName !=null and interfaceName !=''">
-            and ll.interface_name like '%${interfaceName}%'
-        </if>
+            ll.log_type = '102'
+            <if test="source !=null and source !=''">
+                and ll.source like '%${source}%'
+            </if>
+            <if test="equipmentIp !=null and equipmentIp !=''">
+                and eqi.equipment_ip like '%${equipmentIp}%'
+            </if>
+            <if test="equipmentName !=null and equipmentName !=''">
+                and eqi.equipment_name like '%${equipmentName}%'
+            </if>
+            <if test="interfaceType !=null and interfaceType !=''">
+                and ll.interface_type like '%${interfaceType}%'
+            </if>
+            <if test="result !=null and result !=''">
+                and ll.result like '%${result}%'
+            </if>
+            <if test="invokerName !=null and invokerName !=''">
+                and cur.USER_NAME like '%${invokerName}%'
+            </if>
+            <if test="disposeTime !=null and disposeTime !=''">
+                and ll.dispose_time like '%${disposeTime}%'
+            </if>
+            <if test="interfaceName !=null and interfaceName !=''">
+                and ll.interface_name like '%${interfaceName}%'
+            </if>
+            <if test="createTime !=null and createTime !=''">
+                and ll.create_time like '%${createTime}%'
+            </if>
         </where>
     </select>
 
@@ -64,23 +73,32 @@
         ON ll.user = cur.USER_ID
         <where>
             ll.log_type = '102'
-            <if test="createTime !=null and createTime !=''">
-                and ll.create_time like '%${createTime}%'
-            </if>
             <if test="source !=null and source !=''">
                 and ll.source like '%${source}%'
-            </if>
-            <if test="interfaceType !=null and interfaceType !=''">
-                and ll.interface_type like '%${interfaceType}%'
             </if>
             <if test="equipmentIp !=null and equipmentIp !=''">
                 and eqi.equipment_ip like '%${equipmentIp}%'
             </if>
+            <if test="equipmentName !=null and equipmentName !=''">
+                and eqi.equipment_name like '%${equipmentName}%'
+            </if>
+            <if test="interfaceType !=null and interfaceType !=''">
+                and ll.interface_type like '%${interfaceType}%'
+            </if>
+            <if test="result !=null and result !=''">
+                and ll.result like '%${result}%'
+            </if>
             <if test="invokerName !=null and invokerName !=''">
                 and cur.USER_NAME like '%${invokerName}%'
             </if>
+            <if test="disposeTime !=null and disposeTime !=''">
+                and ll.dispose_time like '%${disposeTime}%'
+            </if>
             <if test="interfaceName !=null and interfaceName !=''">
                 and ll.interface_name like '%${interfaceName}%'
+            </if>
+            <if test="createTime !=null and createTime !=''">
+                and ll.create_time like '%${createTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -93,9 +111,9 @@
 
     <!--添加接口日志-->
     <insert id="addInterfaceLog" parameterType="com.zimax.mcrs.log.pojo.InterfaceLog">
-        insert into log_log (log_id,log_type,equipment_int,device_id,source,
-                                       interface_type,create_time,json,result,dispose_start_time,
-                                       dispose_end_time,user,dispose_time,interface_name)
+        insert into log_log (log_id, log_type, equipment_int, device_id, source,
+                             interface_type, create_time, json, result, dispose_start_time,
+                             dispose_end_time, user, dispose_time, interface_name)
         values (#{logId}, #{logType}, #{equipmentInt},
                 #{deviceId}, #{source}, #{interfaceType},
                 #{createTime}, #{json}, #{result}, #{disposeStartTime},
@@ -115,7 +133,6 @@
         from eqi_equipment
         where equipment_int = #{equipmentInt}
     </select>
-
 
 
 </mapper>

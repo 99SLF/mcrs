@@ -29,7 +29,8 @@ public interface AbnLogMapper {
      * 计数
      * @return
      */
-    int count(@Param("equipmentName") String equipmentId,
+    int count(@Param("equipmentId") String equipmentId,
+              @Param("equipmentName") String equipmentName,
               @Param("deviceName") String deviceName,
               @Param("abnType") String abnType,
               @Param("abnLevel") String abnLevel,

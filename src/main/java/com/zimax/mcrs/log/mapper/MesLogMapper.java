@@ -27,10 +27,12 @@ public interface MesLogMapper {
      * @return
      */
     int count(
+            @Param("logStatus") String logStatus,
+            @Param("equipmentId") String equipmentId,
             @Param("equipmentName") String equipmentName,
             @Param("deviceName") String deviceName,
             @Param("mesIpAddress") String mesIpAddress,
-            @Param("equipmentContinuePort") String equipmentContinuePort,
+            @Param("createName") String createName,
             @Param("createTime") String createTime
             );
 

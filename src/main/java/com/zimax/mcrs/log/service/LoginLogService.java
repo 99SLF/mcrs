@@ -31,7 +31,7 @@ public class LoginLogService {
     /**
      * 查询所有接口日志信息
      */
-    public List<LoginLogVo> queryLoginLogLog(String limit, String page, String equipmentId, String source, String loginUserName, String loginTime, String order, String field){
+    public List<LoginLogVo> queryLoginLogLog(String limit, String page, String equipmentId,String equipmentName, String source, String loginUserName, String loginTime, String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -46,6 +46,7 @@ public class LoginLogService {
             map.put("limit", Integer.parseInt(limit));
         }
         map.put("equipmentId",equipmentId);
+        map.put("equipmentName",equipmentName);
         map.put("source",source);
         map.put("loginUserName",loginUserName);
         map.put("loginTime",loginTime);
@@ -55,8 +56,8 @@ public class LoginLogService {
     /**
      * 查询记录
      */
-    public int count(String equipmentId,String source,  String loginUserName,String loginTime) {
-        return loginLogMapper.count(equipmentId,source,loginUserName,loginTime);
+    public int count(String equipmentId,String equipmentName,String source,  String loginUserName,String loginTime) {
+        return loginLogMapper.count(equipmentId,equipmentName,source,loginUserName,loginTime);
     }
 
     /**

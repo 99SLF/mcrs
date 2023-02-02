@@ -23,22 +23,20 @@ public interface InterfaceLogMapper {
      */
     List<InterfaceLogVo> queryAll(Map map);
 
-    /**
-     * 定时删除
-     */
-//    List<InterfaceLog> removeTime();
-
 
     /**
      * 计数
      * @return
      */
-    int count(@Param("createTime") String createTime,
-              @Param("source") String source,
-              @Param("interfaceType") String interfaceType,
+    int count(@Param("source") String source,
               @Param("equipmentIp") String equipmentIp,
+              @Param("equipmentName") String equipmentName,
+              @Param("interfaceType") String interfaceType,
+              @Param("result") String result,
               @Param("invokerName") String invokerName,
-              @Param("interfaceName") String methodName
+              @Param("disposeTime") String disposeTime,
+              @Param("interfaceName") String interfaceName,
+              @Param("createTime") String createTime
     );
 
     /**
