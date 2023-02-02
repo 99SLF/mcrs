@@ -528,7 +528,6 @@
                     }
                     return false;
                 }
-
                 //101 是 102 否
                 var isab = contains(enables, '102');
                 var isSame = same(deviceSoftwareTypes);
