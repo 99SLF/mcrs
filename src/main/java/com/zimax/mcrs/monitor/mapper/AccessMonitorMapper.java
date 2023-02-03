@@ -43,6 +43,6 @@ public interface AccessMonitorMapper {
     WarnTotalInfo getWarnInfo();
     GroupByProduction[] queryProcessAndeqi();
     int[] queryFactoryId();
-    int[] queryProcessId();
+    String[] queryProcessName();
     ProcessOnfactory[] queryFactoryAndProcess();
 }

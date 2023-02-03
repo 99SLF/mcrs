@@ -200,6 +200,8 @@
     var processName = []
     var activeWarn = [], hardWarn = [], recordDate = [],eqiByProcess=[]
     var bingData = [],bingProcessName = [];
+    var duiProcessName=[],factotyName=[];
+    var seriesData = [];
     var form = layui.form;
     var chartZhu6 = echarts.init(document.getElementById('EchartZhu6'));
     var chartZhu7 = echarts.init(document.getElementById('EchartZhu7'));
@@ -339,7 +341,37 @@
             }
         }
     });
-    echartDui();
+
+    // 堆叠图
+    $.ajax({
+        url: "<%=request.getContextPath() %>/AccessMonitor/queryProcessAndFactory",
+        type: "GET",
+        async: true,
+        cache: false,
+        contentType: "text/json",
+        success: function (result) {
+            if (result) {
+                var data = result.data;
+                duiProcessName = data.processName;
+               factoryName = data.factoryName;
+               var list = data.dataTotalList;
+               for(var i in processName){
+                   seriesData.push({
+                       name: processName[i],
+                       type: "bar",//柱状图
+                       stack:"Search Engine",
+                       emphasis: {//折线图的高亮状态。
+                           focus: "series",//聚焦当前高亮的数据所在的系列的所有图形。
+                       },
+                       data: list[i]
+                   })
+               }
+                echartDui();
+            } else {
+                layer.msg("查询失败");
+            }
+        }
+    });
 
     function getFullSize() {
         var fluid = $(".layui-fluid");
@@ -417,102 +449,13 @@
         var optionchartDui = {
             tooltip: {},
             legend: {
-                data: ['钢铁侠']
+                data: duiProcessName
             },
             xAxis: {
-                data: ['A', 'B', 'C', 'D', 'E','F','G']
+                data: factoryName
             },
             yAxis: {},
-            series: [
-                {
-                    name: "钢铁侠",
-                    type: "bar",//柱状图
-                    stack:"Search Engine",
-                    emphasis: {//折线图的高亮状态。
-                        focus: "series",//聚焦当前高亮的数据所在的系列的所有图形。
-                    },
-                    data: [320, 332, 301, 334, 390, 330],
-                },
-                {
-                    name: "蜘蛛侠",
-                    type: "bar",
-                    stack: "Search Engine",
-                    emphasis: {
-                        focus: "series",
-                    },
-                    data: [120, 132, 101, 134, 90, 230, 210],
-                },
-                {
-                    name: "绿巨人",
-                    type: "bar",
-                    stack: "Search Engine",//数据堆叠，同个类目轴上系列配置相同的stack值后，后一个系列的值会在前一个系列的值上相加。
-                    emphasis: {
-                        focus: "series",
-                    },
-                    data: [220, 182, 191, 234, 290, 330, 310],
-                },
-                {
-                    name: "黑寡妇",
-                    type: "bar",
-                    stack: "Search Engine",
-                    emphasis: {
-                        focus: "series",
-                    },
-                    data: [150, 232, 201, 154, 190, 330, 410],
-                },
-                {
-                    name: "鹰眼",
-                    type: "bar",
-                    stack:"Search Engine",
-                    data: [862, 1018, 964, 1026, 1679, 1600, 1570],
-                    emphasis: {
-                        focus: "series",
-                    },
-                    // markLine: {//图表标线
-                    //   lineStyle: {//标线的样式
-                    //     type: "dashed",//线的类型:
-                    //   },
-                    //   data: [[{ type: "min" }, { type: "max" }]],
-                    // },
-                },
-                {
-                    name: "雷神",
-                    type: "bar",
-                    // barWidth: 5,//柱形宽度
-                    stack: "Search Engine",
-                    emphasis: {
-                        focus: "series",
-                    },
-                    data: [620, 732, 701, 734, 1090, 1130, 1120],
-                },
-                {
-                    name: "美国队长",
-                    type: "bar",
-                    stack: "Search Engine",
-                    emphasis: {
-                        focus: "series",
-                    },
-                    data: [120, 132, 101, 134, 290, 230, 220],
-                },
-                {
-                    name: "蚁人",
-                    type: "bar",
-                    stack: "Search Engine",
-                    emphasis: {
-                        focus: "series",
-                    },
-                    data: [60, 72, 71, 74, 190, 130, 110],
-                },
-                {
-                    name: "黑豹",
-                    type: "bar",
-                    stack: "Search Engine",
-                    emphasis: {
-                        focus: "series",
-                    },
-                    data: [62, 82, 91, 84, 109, 110, 120],
-                },
-            ],
+            series: seriesData
         };
         chartZhu8.setOption(optionchartDui, true);
     }

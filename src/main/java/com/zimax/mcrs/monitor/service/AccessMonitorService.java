@@ -1,5 +1,6 @@
 package com.zimax.mcrs.monitor.service;
 
+import com.sun.corba.se.impl.oa.toa.TOA;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.monitor.mapper.AccessMonitorMapper;
 import com.zimax.mcrs.monitor.pojo.DeviceAbn;
@@ -79,16 +80,38 @@ public class AccessMonitorService {
     }
     public Map queryProcessAndFactory(){
         int[] factoryId = accessMonitorMapper.queryFactoryId();
-        int[] processId = accessMonitorMapper.queryProcessId();
+        Map<String,Object> map = new HashMap<>();
+        List<List<Integer>> dataTotalList = new ArrayList<List<Integer>>();
+        String[] processNames = accessMonitorMapper.queryProcessName();
         ProcessOnfactory processOnfactoryList[] = accessMonitorMapper.queryFactoryAndProcess();
-        for(int i: processId){
-            for(int j=0;j<processOnfactoryList.length;j++){
-               if(i==0){
-                   
-               }
+        List intData = null;
+        List factoryName = new ArrayList<String>();
+        for(int i=0;i<processNames.length;i++){
+            intData = new ArrayList<Integer>();
+            for(int k=0;k<factoryId.length;k++){
+                for(int j=0;j<processOnfactoryList.length;j++){
+                    if(processNames[i].equals(processOnfactoryList[j].getProcessName())&&factoryId[k]==processOnfactoryList[j].getFactoryId()){
+                        intData.add(processOnfactoryList[j].getTotal());
+                        if(i==0){
+                            factoryName.add(processOnfactoryList[j].getFactoryName());
+                        }
+                        break;
+                    }
+                    if(j==processOnfactoryList.length-1){
+                        intData.add(0);
+                    }
+                }
             }
+            dataTotalList.add(intData);
         }
-        return null;
+        List<String> processName = new ArrayList<String>();
+        for(String x: processNames){
+            processName.add(x);
+        }
+        map.put("factoryName",factoryName);
+        map.put("processName",processName);
+        map.put("dataTotalList",dataTotalList);
+        return map;
     }
 
 }
