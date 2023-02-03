@@ -122,7 +122,7 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">终端软件类型：</label>
+                    <label class="layui-form-label">终端类型：</label>
                     <div class="layui-input-inline">
                         <select name="deviceSoType" id="deviceSoType" lay-filter="deviceSoType"
                                 type="select">
@@ -145,7 +145,7 @@
 
         <script type="text/html" id="table-update_package-list">
             <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="download"><i
-                    class="layui-icon layui-icon-loading"></i>下载</a>
+                    class="layui-icon layui-icon-download-circle"></i>下载</a>
             <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
                     class="layui-icon layui-icon-edit"></i>编辑</a>
             <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
@@ -476,11 +476,11 @@
             field: "version",
             title: "版本号",
             align: "center",
-            minWidth: 80,
+            minWidth: 150,
             hide: isHidden("version")
         }, {
             field: "deviceSoType",
-            title: "终端软件类型",
+            title: "终端类型",
             align: "center",
             minWidth: 150,
             hide: isHidden("deviceSoType"),
@@ -492,7 +492,7 @@
             field: "uploadStrategy",
             title: "更新策略",
             align: "center",
-            minWidth: 120,
+            minWidth: 150,
             hide: isHidden("uploadStrategy"),
             templet: function (d) {
                 return layui.admin.getDictText("UPDATESTRATEGY", d.uploadStrategy);
@@ -523,13 +523,13 @@
             field: "remarks",
             title: "备注",
             align: "center",
-            minWidth: 120,
+            minWidth: 150,
             hide: isHidden("remarks")
         }, {
             title: "操作",
             align: "center",
             fixed: "right",
-            width: 250,
+            width: 220,
             toolbar: "#table-update_package-list"
         }
         ]]
@@ -554,7 +554,7 @@
             submit.click();
         });
 
-        // 获取终端软件类型的下拉值
+        // 获取终端类型的下拉值
         layui.admin.renderDictSelect({
             elem: "#deviceSoType",
             dictTypeId: "DEVICE_SOFTWARE_TYPE"

@@ -179,6 +179,7 @@
             "fileName": data.fileName,
             "remarks": data.remarks,
             "versionUploadTime": util.toDateString(data.versionUploadTime, "yyyy-MM-dd HH:mm:ss")
+            //, "versionUploadTime": util.toDateString(data.versionUploadTime, "yyyy年MM月dd日 HH:mm:ss") //json数据不允许
         });
     }
 
