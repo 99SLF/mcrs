@@ -37,11 +37,10 @@
     </select>
 
     <select id="getWarnByproduction" resultType="com.zimax.mcrs.monitor.pojo.vo.GroupByProduction">
-        select sum(CASE use_process WHEN "101" THEN 1 ELSE 0 END) AS "coldPress",
-               sum(CASE use_process WHEN "102" THEN 1 ELSE 0 END) AS "dieCut",
-               sum(CASE use_process WHEN "103" THEN 1 ELSE 0 END) AS "wind",
-               sum(CASE use_process WHEN "104" THEN 1 ELSE 0 END) AS "coat"
-        from mon_device_abn
+        select b.process_name name ,count(b.process_name) value
+        from mon_device_abn a
+                 left JOIN base_process_info b on a.use_process=b.process_id
+        group by b.process_name
     </select>
 
     <select id="getEqiOnline" resultType="Int">
@@ -57,7 +56,7 @@
     </select>
 
     <select id="queryProcessAndeqi" resultType="com.zimax.mcrs.monitor.pojo.vo.GroupByProduction">
-        SELECT bpi.process_name,count(bpi.process_name) total
+        SELECT bpi.process_name name,count(bpi.process_name) value
         FROM eqi_equipment AS eqi
                  LEFT JOIN base_access_info AS bai ON eqi.acc_point_res_id = bai.acc_point_res_id
                  LEFT JOIN base_process_info AS bpi
@@ -65,6 +64,37 @@
         group by bpi.process_name
 
     </select>
+<!--工厂对应工序的设备数量-->
+    <select id="queryFactoryId" resultType="int">
+        SELECT bfi.factory_name
+        FROM eqi_equipment AS eqi
+                 LEFT JOIN base_access_info AS bai ON eqi.acc_point_res_id = bai.acc_point_res_id
+                 LEFT JOIN base_process_info AS bpi
+                           ON bai.process_id = bpi.process_id
+                 LEFT JOIN base_factory_info AS bfi
+                           ON bpi.factory_id = bfi.factory_id
+        group by bfi.factory_name
+    </select>
+
+    <select id="queryProcessId" resultType="int">
+        SELECT bpi.process_id
+        FROM eqi_equipment AS eqi
+                 LEFT JOIN base_access_info AS bai ON eqi.acc_point_res_id = bai.acc_point_res_id
+                 LEFT JOIN base_process_info AS bpi
+                           ON bai.process_id = bpi.process_id
+        group by bpi.process_id
+    </select>
+    <select id="queryFactoryAndProcess" resultType="com.zimax.mcrs.monitor.pojo.vo.ProcessOnfactory">
+        SELECT bfi.factory_id,bfi.factory_name,bpi.process_name processName,count(bpi.process_id) as total,bpi.process_id
+        FROM eqi_equipment AS eqi
+                 LEFT JOIN base_access_info AS bai ON eqi.acc_point_res_id = bai.acc_point_res_id
+                 LEFT JOIN base_process_info AS bpi
+                           ON bai.process_id = bpi.process_id
+                 LEFT JOIN base_factory_info AS bfi
+                           ON bpi.factory_id = bfi.factory_id
+        group by bpi.process_id
+    </select>
+
 </mapper>
 
 

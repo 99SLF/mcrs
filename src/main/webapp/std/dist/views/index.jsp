@@ -197,8 +197,9 @@
     var layer = layui.layer;
     var table = layui.table;
     var util = layui.util;
+    var processName = []
     var activeWarn = [], hardWarn = [], recordDate = [],eqiByProcess=[]
-    var bingData = [];
+    var bingData = [],bingProcessName = [];
     var form = layui.form;
     var chartZhu6 = echarts.init(document.getElementById('EchartZhu6'));
     var chartZhu7 = echarts.init(document.getElementById('EchartZhu7'));
@@ -306,19 +307,10 @@
         success: function (result) {
             if (result) {
                 var resData = result.data;
-                var jsonData1 = {},jsonData2={},jsonData3 = {},jsonData4={};
-                jsonData1.name = "冷压";
-                jsonData1.value = resData.coldPress;
-                bingData.push(jsonData1);
-                jsonData2.name = "模切";
-                jsonData2.value = resData.dieCut;
-                bingData.push(jsonData2);
-                jsonData3.name = "卷绕";
-                jsonData3.value = resData.wind;
-                bingData.push(jsonData3);
-                jsonData4.name = "涂布";
-                jsonData4.value = resData.coat;
-                bingData.push(jsonData4);
+                bingData = resData
+                for(var i in resData){
+                    bingProcessName.push(resData[i].name)
+                }
                 echartBing();
             } else {
                 layer.msg("查询失败");
@@ -337,10 +329,10 @@
         success: function (result) {
             if (result) {
                 var data = result.data;
-                eqiByProcess.push(data.dieCut);
-                eqiByProcess.push(data.coat);
-                eqiByProcess.push(data.wind);
-                eqiByProcess.push(data.coldPress);
+                for(var i in data){
+                    processName.push(data[i].name)
+                    eqiByProcess.push(data[i].value);
+                }
                 echartZhu();
             } else {
                 layer.msg("查询失败");
@@ -397,13 +389,14 @@
     //             }
     //         }]
     //     };
-    //
+
 
     //指定图表配置项和数据
     function echartZhu(){
         var optionchartZhu = {
+            tooltip: {},
             xAxis: {
-                data: ['模切', '涂布', '卷绕', '冷压']
+                data: processName
             },
             yAxis: {
                 type: 'value'
@@ -422,22 +415,104 @@
     }
     function echartDui(){
         var optionchartDui = {
+            tooltip: {},
+            legend: {
+                data: ['钢铁侠']
+            },
             xAxis: {
-                data: ['A', 'B', 'C', 'D', 'E']
+                data: ['A', 'B', 'C', 'D', 'E','F','G']
             },
             yAxis: {},
             series: [
                 {
-                    data: [10, 22, 28, 43, 49],
-                    type: 'bar',
-                    stack: 'A'
+                    name: "钢铁侠",
+                    type: "bar",//柱状图
+                    stack:"Search Engine",
+                    emphasis: {//折线图的高亮状态。
+                        focus: "series",//聚焦当前高亮的数据所在的系列的所有图形。
+                    },
+                    data: [320, 332, 301, 334, 390, 330],
                 },
                 {
-                    data: [5, 4, 3, 5, 10],
-                    type: 'bar',
-                    stack: 'A'
-                }
-            ]
+                    name: "蜘蛛侠",
+                    type: "bar",
+                    stack: "Search Engine",
+                    emphasis: {
+                        focus: "series",
+                    },
+                    data: [120, 132, 101, 134, 90, 230, 210],
+                },
+                {
+                    name: "绿巨人",
+                    type: "bar",
+                    stack: "Search Engine",//数据堆叠，同个类目轴上系列配置相同的stack值后，后一个系列的值会在前一个系列的值上相加。
+                    emphasis: {
+                        focus: "series",
+                    },
+                    data: [220, 182, 191, 234, 290, 330, 310],
+                },
+                {
+                    name: "黑寡妇",
+                    type: "bar",
+                    stack: "Search Engine",
+                    emphasis: {
+                        focus: "series",
+                    },
+                    data: [150, 232, 201, 154, 190, 330, 410],
+                },
+                {
+                    name: "鹰眼",
+                    type: "bar",
+                    stack:"Search Engine",
+                    data: [862, 1018, 964, 1026, 1679, 1600, 1570],
+                    emphasis: {
+                        focus: "series",
+                    },
+                    // markLine: {//图表标线
+                    //   lineStyle: {//标线的样式
+                    //     type: "dashed",//线的类型:
+                    //   },
+                    //   data: [[{ type: "min" }, { type: "max" }]],
+                    // },
+                },
+                {
+                    name: "雷神",
+                    type: "bar",
+                    // barWidth: 5,//柱形宽度
+                    stack: "Search Engine",
+                    emphasis: {
+                        focus: "series",
+                    },
+                    data: [620, 732, 701, 734, 1090, 1130, 1120],
+                },
+                {
+                    name: "美国队长",
+                    type: "bar",
+                    stack: "Search Engine",
+                    emphasis: {
+                        focus: "series",
+                    },
+                    data: [120, 132, 101, 134, 290, 230, 220],
+                },
+                {
+                    name: "蚁人",
+                    type: "bar",
+                    stack: "Search Engine",
+                    emphasis: {
+                        focus: "series",
+                    },
+                    data: [60, 72, 71, 74, 190, 130, 110],
+                },
+                {
+                    name: "黑豹",
+                    type: "bar",
+                    stack: "Search Engine",
+                    emphasis: {
+                        focus: "series",
+                    },
+                    data: [62, 82, 91, 84, 109, 110, 120],
+                },
+            ],
         };
         chartZhu8.setOption(optionchartDui, true);
     }
@@ -477,7 +552,7 @@
             legend: {
                 orient: 'vertical', //类型垂直,默认水平
                 left: 'left', //类型区分在左 默认居中
-                data: ['模切', '涂布', '卷绕', '冷压']
+                data: bingProcessName
             },
             series: [{
                 type: 'pie', //饼状

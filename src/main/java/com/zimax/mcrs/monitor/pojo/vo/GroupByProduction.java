@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GroupByProduction {
-    private String processName;
-    private int total;
+    private String name;
+    private int value;
 }

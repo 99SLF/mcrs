@@ -5,6 +5,7 @@ import com.zimax.mcrs.monitor.pojo.EquipmentStatus;
 import com.zimax.mcrs.monitor.pojo.SoftwareRunStatus;
 import com.zimax.mcrs.monitor.pojo.vo.GroupByDate;
 import com.zimax.mcrs.monitor.pojo.vo.GroupByProduction;
+import com.zimax.mcrs.monitor.pojo.vo.ProcessOnfactory;
 import com.zimax.mcrs.monitor.pojo.vo.WarnTotalInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -36,9 +37,12 @@ public interface AccessMonitorMapper {
     int getEqiOnline();
     int getAccessOnline();
 
-    GroupByProduction getWarnByproduction();
+    GroupByProduction[] getWarnByproduction();
     List<GroupByDate> groupQueryBydate();
 
     WarnTotalInfo getWarnInfo();
     GroupByProduction[] queryProcessAndeqi();
+    int[] queryFactoryId();
+    int[] queryProcessId();
+    ProcessOnfactory[] queryFactoryAndProcess();
 }

@@ -5,10 +5,7 @@ import com.zimax.mcrs.monitor.mapper.AccessMonitorMapper;
 import com.zimax.mcrs.monitor.pojo.DeviceAbn;
 import com.zimax.mcrs.monitor.pojo.EquipmentStatus;
 import com.zimax.mcrs.monitor.pojo.SoftwareRunStatus;
-import com.zimax.mcrs.monitor.pojo.vo.EqiAndAccessInfo;
-import com.zimax.mcrs.monitor.pojo.vo.GroupByDate;
-import com.zimax.mcrs.monitor.pojo.vo.GroupByProduction;
-import com.zimax.mcrs.monitor.pojo.vo.WarnTotalInfo;
+import com.zimax.mcrs.monitor.pojo.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +48,7 @@ public class AccessMonitorService {
     }
 
 
-    public GroupByProduction getWarnByproduction() {
+    public GroupByProduction[] getWarnByproduction() {
         return accessMonitorMapper.getWarnByproduction();
     }
     public GroupByProduction[] queryProcessAndeqi() {
@@ -79,6 +76,19 @@ public class AccessMonitorService {
         eqiAndAccessInfo.setAccessOnline(accessOnline);
         eqiAndAccessInfo.setEqiOnline(eqiOnline);
         return eqiAndAccessInfo;
+    }
+    public Map queryProcessAndFactory(){
+        int[] factoryId = accessMonitorMapper.queryFactoryId();
+        int[] processId = accessMonitorMapper.queryProcessId();
+        ProcessOnfactory processOnfactoryList[] = accessMonitorMapper.queryFactoryAndProcess();
+        for(int i: processId){
+            for(int j=0;j<processOnfactoryList.length;j++){
+               if(i==0){
+                   
+               }
+            }
+        }
+        return null;
     }
 
 }
