@@ -32,14 +32,14 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>预警事件编码:</label>
             <div class="layui-input-block">
-                <input id="alarmEventId" type="text" name="alarmEventId" lay-verify="required"
+                <input id="alarmEventId" type="text" name="alarmEventId" lay-verify="required|alarmEventId"
                        placeholder="预警事件编码(必填)" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-col-sm6">
             <label class="layui-form-label">预警事件标题:</label>
             <div class="layui-input-block">
-                <input id="alarmEventTitle" type="text" name="alarmEventTitle" lay-verify=""
+                <input id="alarmEventTitle" type="text" name="alarmEventTitle" lay-verify="alarmEventTitle"
                        placeholder="预警事件标题" autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -124,11 +124,13 @@
     var isExist = false;
     var submit = false;
     var win = null;
+    var alarmEventInt = null;
 
 
     function SetData(data) {
         win = data.win ? data.win : window;
         var data = data.data;
+        alarmEventInt = data.alarmEventInt;
         form.val("layuiadmin-app-form-list", {
             "alarmEventInt": data.alarmEventInt,
             "alarmEventId": data.alarmEventId,
@@ -169,67 +171,40 @@
     $("#enableStatus").val("101");
     form.render();
 
-    // //判断字符
-    // form.verify({
-    // 	username: function(value, item) {
-    // 		if (value.length > 10) {
-    // 			return "学生名不能超过10字";
-    // 		}
-    // 	},
-    // 	age: function(value, item) {
-    // 		if (value <= 0||value >=150) {
-    // 			return "请输入正确的年龄";
-    // 		}
-    // 	},
-    // 	teachr: function(value, item) {
-    // 		if (value.length > 10) {
-    // 			return "教师名不能超过10字";
-    // 		}
-    // 	}
-    // });
 
     form.render();
-    // //日期
-    // laydate.render({
-    // 	elem: '#invaldate',
-    // 	format: 'yyyy-MM-dd',
-    // 	//解决时间选择器一闪而过的情况
-    // 	trigger: 'click',
-    // });
-    //
-    // var startDate = laydate.render({
-    // 	elem: '#star_time',
-    // 	//设置日期的类型
-    // 	type: 'date',
-    // 	trigger:'click',
-    // 	done: function(value, date) {
-    // 		if (value != "") {
-    // 			date.month = date.month - 1;
-    // 			date.date = date.date + 1;
-    // 			endDate.config.min = date;
-    // 		} else {
-    // 			endDate.config.min = startDate.config.min;
-    // 		}
-    // 	},
-    // });
-    //
-    // var endDate = laydate.render({
-    // 	//绑定的控件名称
-    // 	elem: '#end_time',
-    // 	//设置日期的类型
-    // 	type: 'date',
-    // 	//theme: '#2c78da',
-    // 	trigger: 'click',
-    // 	done: function(value, date) {
-    // 		if (value != "") {
-    // 			date.month = date.month - 1;
-    // 			date.date = date.date - 1;
-    // 			startDate.config.max = date;
-    // 		} else {
-    // 			startDate.config.max = endDate.config.max;
-    // 		}
-    // 	}
-    // });
+
+    // 判断字符
+    form.verify({
+        alarmEventId: function(value, item) {
+            if(!new RegExp("^[A-Za-z0-9]+$").test(value)){
+                return "输入预警事件编码有误，只能输入英文+数字";
+            }
+            if (value.length > 20) {
+                return "预警事件编码不能超过20字";
+            }
+        },
+        alarmEventTitle: function(value, item) {
+            if(value.length >20){
+                return "预警事件标题不能超过20字";
+            }
+        },
+        upperLimit: function(value, item) {
+            if(value.length >20){
+                return "上限不能超过20字";
+            }
+        },
+        lowerLimit: function(value, item) {
+            if(value.length >20){
+                return "下限不能超过20字";
+            }
+        },
+        alarmEventContent: function(value, item) {
+            if (value.length > 255) {
+                return "备注不能超过255字";
+            }
+        }
+    });
 
     //监听提交
     form.on("submit(layuiadmin-app-form-edit)", function (data) {
@@ -275,7 +250,7 @@
         var alarmEventId = $("#alarmEventId").val();
         if (alarmEventId != null && alarmEventId != "") {
             $.ajax({
-                url: "<%= request.getContextPath() %>/warn/alarmEvent/check/isExist?alarmEventId=" + alarmEventId,
+                url: "<%= request.getContextPath() %>/warn/alarmEvent/check/isExist?alarmEventId=" + alarmEventId + "&alarmEventInt=" + alarmEventInt,
                 type: "GET",
                 cache: false,
                 contentType: "text/json",

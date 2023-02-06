@@ -487,7 +487,7 @@
             field: "alarmEventTitle",
             title: "预警事件标题",
             align: "center",
-            minWidth: 120,
+            minWidth: 150,
             hide: isHidden("alarmEventTitle")
         }, {
             field: "enableStatus",

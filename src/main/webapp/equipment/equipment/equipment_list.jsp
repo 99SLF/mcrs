@@ -454,7 +454,7 @@
             field: "equipmentIp",
             title: "设备连接IP",
             align: "center",
-            minWidth: 120,
+            minWidth: 150,
             hide: isHidden("equipmentIp")
         }, {
             field: "equipmentContinuePort",

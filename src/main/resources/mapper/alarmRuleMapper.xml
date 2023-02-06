@@ -184,6 +184,6 @@
     <select id="countAlarmRule" resultType="int">
         SELECT count(*)
         FROM war_alarm_rule
-        WHERE alarm_rule_id = #{alarmRuleId}
+        WHERE alarm_rule_id = #{alarmRuleId} and alarm_rule_int != #{alarmRuleInt}
     </select>
 </mapper>

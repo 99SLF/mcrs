@@ -432,21 +432,6 @@
                     deviceSoftwareTypes[i] = data[i].deviceSoftwareType;
                 }
 
-                // //1、如果数组长度为一，就返回true
-                // function same(arr) {
-                //     if (arr.length === 1) {
-                //         return true;
-                //     } else {
-                //         //2、如果数组长度大于一，就做数组重复值校验
-                //         let newSet = new Set(arr)
-                //         if (arr.length !== newSet.size) {
-                //             return true;//有重复值
-                //         } else {
-                //             return false;//没有重复
-                //         }
-                //     }
-                // }
-
                 //1、如果数组长度为一，就返回true
                 function same(arr) {
                     if (arr.length === 1) {
@@ -798,6 +783,12 @@
             minWidth: 140,
             hide: isHidden("equipmentId")
         }, {
+            field: "equipTypeName",
+            title: "设备类型",
+            align: "center",
+            minWidth: 100,
+            hide: isHidden("equipTypeName"),
+        }, {
             field: "equipmentIp",
             title: "设备连接IP",
             align: "center",
@@ -856,7 +847,7 @@
             field: "remarks",
             title: "备注",
             align: "center",
-            minWidth: 100,
+            minWidth: 200,
             hide: isHidden("remarks")
         }, {
             title: "操作",

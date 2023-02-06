@@ -29,13 +29,13 @@
                 and eqi.enable like '%${enable}%'
             </if>
             <if test="equipmentInstallLocation !=null and equipmentInstallLocation !=''">
-                and bpi.equipment_install_location like '%${equipmentInstallLocation}%'
+                and eqi.equipment_install_location like '%${equipmentInstallLocation}%'
             </if>
             <if test="equipTypeName !=null and equipTypeName !=''">
                 and bei.equip_type_name like '%${equipTypeName}%'
             </if>
             <if test="protocolCommunication !=null and protocolCommunication !=''">
-                and eqi.protocol_communication like '%${protocolCommunication}%'
+                and bei.protocol_communication like '%${protocolCommunication}%'
             </if>
             <if test="accPointResName !=null and accPointResName !=''">
                 and bai.acc_point_res_name like '%${accPointResName}%'
@@ -44,7 +44,7 @@
                 and bpi.process_name like '%${processName}%'
             </if>
             <if test="createName !=null and createName !=''">
-                and cur.create_name like '%${createName}%'
+                and cur.USER_NAME like '%${createName}%'
             </if>
             <if test="createTime !=null and createTime !=''">
                 and eqi.create_time like '%${createTime}%'
@@ -78,13 +78,13 @@
                 and eqi.enable like '%${enable}%'
             </if>
             <if test="equipmentInstallLocation !=null and equipmentInstallLocation !=''">
-                and bpi.equipment_install_location like '%${equipmentInstallLocation}%'
+                and eqi.equipment_install_location like '%${equipmentInstallLocation}%'
             </if>
             <if test="equipTypeName !=null and equipTypeName !=''">
                 and bei.equip_type_name like '%${equipTypeName}%'
             </if>
             <if test="protocolCommunication !=null and protocolCommunication !=''">
-                and eqi.protocol_communication like '%${protocolCommunication}%'
+                and bei.protocol_communication like '%${protocolCommunication}%'
             </if>
             <if test="accPointResName !=null and accPointResName !=''">
                 and bai.acc_point_res_name like '%${accPointResName}%'
@@ -93,7 +93,7 @@
                 and bpi.process_name like '%${processName}%'
             </if>
             <if test="createName !=null and createName !=''">
-                and cur.create_name like '%${createName}%'
+                and cur.USER_NAME like '%${createName}%'
             </if>
             <if test="createTime !=null and createTime !=''">
                 and eqi.create_time like '%${createTime}%'

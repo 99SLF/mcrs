@@ -134,7 +134,6 @@
                        class="layui-input" readonly>
             </div>
         </div>
-
     </div>
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
@@ -178,6 +177,14 @@
                 <select name="accessMethod" id="accessMethod" lay-filter="" type="select" lay-verify="required">
                     <option value=""></option>
                 </select>
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label">设备类型:</label>
+            <div class="layui-input-block">
+                <input id="" type="text" name="equipTypeName"
+                       lay-verify="" placeholder="" autocomplete="off" class="layui-input"
+                       readonly>
             </div>
         </div>
     </div>
@@ -242,6 +249,7 @@
             "factoryName": data.factoryName,
             "equipmentInt": data.equipmentInt,
             "equipmentId": data.equipmentId,
+            "equipTypeName": data.equipTypeName,
             "equipmentIp": data.equipmentIp,
             "equipmentContinuePort": data.equipmentContinuePort,
             "processName": data.processName,
