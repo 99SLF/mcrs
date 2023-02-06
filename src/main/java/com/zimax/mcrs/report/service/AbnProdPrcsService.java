@@ -26,7 +26,7 @@ public class AbnProdPrcsService {
      */
     public void addAbnProdPrcs(AbnProdPrcs abnProdPrcs){
 
-        abnProdPrcs.setCreateTime(String.valueOf(new Date()));
+        abnProdPrcs.setCreateTime(new Date());
         abnProdPrcsReportMapper.addAbnProdPrcs(abnProdPrcs);
     }
 

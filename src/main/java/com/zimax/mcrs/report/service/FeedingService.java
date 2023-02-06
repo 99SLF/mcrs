@@ -32,7 +32,7 @@ public class FeedingService {
      */
     public void addFeeding(Feeding feeding) {
 
-        feeding.setCreateTime(String.valueOf(new Date()));
+        feeding.setCreateTime(new Date());
         feedingReportMapper.addFeeding(feeding);
     }
 

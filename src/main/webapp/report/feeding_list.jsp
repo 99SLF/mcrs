@@ -46,7 +46,8 @@
 <body>
 <div class="layui-card">
 	<script type="text/html" id="toolbar">
-		<div class="layui-form layuiadmin-card-header-auto" lay-filter="layuiadmin-feeding-form" id="layuiadmin-feeding-form">
+		<div class="layui-form layuiadmin-card-header-auto"
+			 lay-filter="layuiadmin-feeding-form" id="layuiadmin-feeding-form">
 			<div class="layui-form-item">
 				<div class="layui-inline">
 					<label class="layui-form-label">设备资源号：</label>
@@ -303,17 +304,7 @@
 			align: "center",
 			hide: isHidden("prodNumber"),
 			minWidth: 60
-		}, {
-			field: "createTime",
-			title: "创建时间",
-			align: "center",
-			// hide: isHidden("createTime"),
-			hide: true,
-			minWidth: 200,
-			templet: function(d) {
-				return util.toDateString(d.createTime, "yyyy-MM-dd HH:mm:ss");
-			}
-		}, {
+		},{
 			field: "startProdTime",
 			title: "开始生产时间",
 			align: "center",

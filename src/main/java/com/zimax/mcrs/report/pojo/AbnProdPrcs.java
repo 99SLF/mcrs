@@ -60,7 +60,7 @@ public class AbnProdPrcs {
     /**
      * 完工EA数量
      */
-    private int endEANumber;
+    private String endEANumber;
 
     /**
      * 执行步骤
@@ -75,12 +75,12 @@ public class AbnProdPrcs {
     /**
      * 更新时间
      */
-    private String updateTime;
+    private Date updateTime;
 
     /**
      * 创建时间（记录时间）
      */
 //    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 //    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private String createTime;
+    private Date createTime;
 }

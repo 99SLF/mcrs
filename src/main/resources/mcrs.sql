@@ -328,20 +328,20 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- ----------------------------
 DROP TABLE IF EXISTS `rep_abn_prod_prcs`;
 CREATE TABLE `rep_abn_prod_prcs` (
-    `abn_PP_id` int(11) NOT NULL AUTO_INCREMENT,
-    `site_id` varchar(255) NOT NULL,
-    `roll_id` varchar(255) NOT NULL,
-    `equipment_id` varchar(255) NOT NULL,
-    `axis_name` varchar(255) NOT NULL,
-    `vehicle_code` varchar(255) NOT NULL,
-    `prod_SFC_id` varchar(255) NOT NULL,
-    `end_EA_number` int(11) NOT NULL,
-    `perform_step` varchar(255) NOT NULL,
-    `is_end` varchar(255) NOT NULL,
-    `create_time` datetime NOT NULL,
-    `update_time` datetime NOT NULL,
-    PRIMARY KEY (`abn_PP_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
+         `abn_PP_id` int(11) NOT NULL AUTO_INCREMENT,
+         `site_id` varchar(6) NOT NULL,
+         `roll_id` varchar(6) NOT NULL,
+         `equipment_id` varchar(64) NOT NULL,
+         `axis_name` varchar(64) NOT NULL,
+         `vehicle_code` varchar(64) NOT NULL,
+         `prod_SFC_id` varchar(128) NOT NULL,
+         `end_EA_number` varchar(38) NOT NULL,
+         `perform_step` varchar(6) NOT NULL,
+         `is_end` varchar(6) NOT NULL,
+         `create_time` datetime NOT NULL,
+         `update_time` datetime NOT NULL,
+         PRIMARY KEY (`abn_PP_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Table structure for rep_blanking
@@ -349,37 +349,37 @@ CREATE TABLE `rep_abn_prod_prcs` (
 DROP TABLE IF EXISTS `rep_blanking`;
 CREATE TABLE `rep_blanking` (
     `blanking_id` int(11) NOT NULL AUTO_INCREMENT,
-    `equipment_id` varchar(255) NOT NULL,
-    `axis_name` varchar(255) NOT NULL,
-    `antenna_loc` varchar(255) NOT NULL,
-    `vehicle_code` varchar(255) NOT NULL,
-    `prod_SFC_id` varchar(255) NOT NULL,
-    `end_EA_number` int(11) NOT NULL,
-    `in_rice_number` int(11) NOT NULL,
-    `is_end` varchar(255) NOT NULL,
+    `equipment_id` varchar(64) NOT NULL,
+    `axis_name` varchar(64) NOT NULL,
+    `antenna_loc` varchar(64) NOT NULL,
+    `vehicle_code` varchar(64) NOT NULL,
+    `prod_SFC_id` varchar(128) NOT NULL,
+    `end_EA_number` varchar(38) NOT NULL,
+    `in_meter_number` varchar(38) NOT NULL,
+    `is_end` varchar(4) NOT NULL,
     `create_time` datetime NOT NULL,
     `start_prod_time` datetime NOT NULL,
     `end_prod_time` datetime NOT NULL,
-    PRIMARY KEY (`blanking_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
+    PRIMARY KEY (`blanking_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Table structure for rep_feeding
 -- ----------------------------
 DROP TABLE IF EXISTS `rep_feeding`;
 CREATE TABLE `rep_feeding` (
-    `feeding_id` int(11) NOT NULL AUTO_INCREMENT,
-    `equipment_id` varchar(255) NOT NULL,
-    `axis_name` varchar(255) NOT NULL,
-    `in_SFC_id` varchar(255) NOT NULL,
-    `vehicle_code` varchar(255) NOT NULL,
-    `prod_SFC_id` varchar(255) NOT NULL,
-    `prod_number` int(11) NOT NULL,
-    `create_time` datetime NOT NULL,
-    `start_prod_time` datetime NOT NULL,
-    `end_prod_time` datetime NOT NULL,
-    PRIMARY KEY (`feeding_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8;
+       `feeding_id` int(11) NOT NULL AUTO_INCREMENT,
+       `equipment_id` varchar(64) NOT NULL,
+       `axis_name` varchar(64) NOT NULL,
+       `in_SFC_id` varchar(128) NOT NULL,
+       `vehicle_code` varchar(128) NOT NULL,
+       `prod_SFC_id` varchar(128) NOT NULL,
+       `prod_number` varchar(38) NOT NULL,
+       `create_time` datetime NOT NULL,
+       `start_prod_time` datetime NOT NULL,
+       `end_prod_time` datetime NOT NULL,
+       PRIMARY KEY (`feeding_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Table structure for rep_rfid
@@ -387,14 +387,13 @@ CREATE TABLE `rep_feeding` (
 DROP TABLE IF EXISTS `rep_rfid`;
 CREATE TABLE `rep_rfid` (
     `rfid_read_id` int(11) NOT NULL AUTO_INCREMENT,
-    `equipment_id` varchar(255) NOT NULL,
-    `rfid_id` varchar(255) NOT NULL,
-    `antenna_id` varchar(255) NOT NULL,
-    `read_rate` int(11) NOT NULL,
+    `equipment_id` varchar(64) NOT NULL,
+    `RFID_id` varchar(64) NOT NULL,
+    `antenna_id` varchar(64) NOT NULL,
+    `read_rate` varchar(6) NOT NULL,
     `record_time` datetime NOT NULL,
-    PRIMARY KEY (`rfid_read_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8;
-
+    PRIMARY KEY (`rfid_read_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 -- ----------------------------
 -- Table structure for war_alarm_event
 -- ----------------------------
