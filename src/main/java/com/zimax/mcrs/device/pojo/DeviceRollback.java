@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * 终端回退信息
  *
- * @author 林俊杰
+ * @author 李伟杰
  * @date 2022/12/13
  */
 @Data

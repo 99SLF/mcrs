@@ -375,55 +375,67 @@
                 var json = {};
                 json.DeviceIds = ids;
                 json.UploadId = uploadIds;
-                layer.confirm("确定升级所选更新版本？", {
-                    icon: 3,
-                    title: "系统提示"
-                }, function (index) {
-                    $.ajax({
-                        url: "<%= request.getContextPath() %>/equipment/add",
-                        type: "post",
-                        data: JSON.stringify(json),
-                        cache: false,
-                        contentType: "text/json",
-                        success: function (result) {
-                            if (result.exception) {
-                                layer.alert(result.exception.message, {
-                                    icon: 2,
-                                    title: "系统提示"
+                $.ajax({
+                    //获取出当前终端，当前更新包，和处于未升级和升级中的数据
+                    url: "<%= request.getContextPath() %>/upload/recordExistsUg",
+                    type: "post",
+                    data: JSON.stringify(json),
+                    cache: false,
+                    contentType: "text/json",
+                    success: function (result) {
+                        if (result.code == 0) {
+                            layer.confirm("确定升级所选更新版本？", {
+                                icon: 3,
+                                title: "系统提示"
+                            }, function (index) {
+                                $.ajax({
+                                    url: "<%= request.getContextPath() %>/equipment/add",
+                                    type: "post",
+                                    data: JSON.stringify(json),
+                                    cache: false,
+                                    contentType: "text/json",
+                                    success: function (result) {
+                                        if (result.exception) {
+                                            layer.alert(result.exception.message, {
+                                                icon: 2,
+                                                title: "系统提示"
+                                            });
+                                        } else if (result) {
+                                            layer.msg("选择记录添加成功", {
+                                                icon: 1,
+                                                time: 500
+                                            }, function () {
+                                                table.reload("LAY-app-device-list-reload");
+                                            });
+                                        } else {
+                                            layer.msg("选择记录添加失败！", {
+                                                icon: 2,
+                                                time: 2000
+                                            });
+                                        }
+                                    },
+                                    error: function (jqXHR, textStatus, errorThrown) {
+                                        layer.msg(jqXHR.responseText, {
+                                            time: 500,
+                                            icon: 5
+                                        });
+                                    }
                                 });
-                            } else if (result) {
-                                layer.msg("选择记录添加成功", {
+                                var index = top.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                top.layer.close(index); //再执行关闭,先关闭选择的弹窗，不然会top占用，有关闭顺序
+                                top.layer.msg("选择成功！", {
                                     icon: 1,
-                                    time: 500
-                                }, function () {
-                                    table.reload("LAY-app-device-list-reload");
-                                });
-                            } else {
-                                layer.msg("选择记录添加失败！", {
-                                    icon: 2,
                                     time: 2000
                                 });
-                            }
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            layer.msg(jqXHR.responseText, {
-                                time: 500,
-                                icon: 5
+                                top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");
+                                table.reload("LAY-app-device-list-reload");
+
                             });
+                        }else if (result.code == 1) {
+                            layer.msg(result.msg)
                         }
-                    });
-
-                    var index = top.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                    top.layer.close(index); //再执行关闭,先关闭选择的弹窗，不然会top占用，有关闭顺序
-                    top.layer.msg("选择成功！", {
-                        icon: 1,
-                        time: 2000
-                    });
-                    top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");
-                    table.reload("LAY-app-device-list-reload");
-
+                    }
                 });
-
             }
         },
     };

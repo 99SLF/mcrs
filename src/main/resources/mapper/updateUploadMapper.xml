@@ -192,4 +192,24 @@
             version_update_time = #{versionUpdateTime}
         WHERE upload_id = ${uploadId}
     </update>
+
+    <!--通过终端id获取，终端选择更新包升级，添加升级记录之前的是否有这条记录的校验-->
+    <select id="queryUpgradeCheck" parameterType="map" resultType="com.zimax.mcrs.device.pojo.DeviceUpgrade">
+        SELECT *
+        FROM dev_upgrade
+        WHERE upgrade_status in (100, 101)
+          AND device_id = #{deviceId}
+          AND upload_id = #{uploadId}
+    </select>
+
+    <!--通过终端id获取，终端选择更新包升级，添加回退记录之前的是否有这条记录的校验-->
+    <select id="queryRollbackCheck" parameterType="map" resultType="com.zimax.mcrs.device.pojo.DeviceRollback">
+        SELECT *
+        FROM dev_rollback
+        WHERE upgrade_status in (100, 101)
+          AND device_id = #{deviceId}
+          AND upload_id = #{uploadId}
+    </select>
+
+
 </mapper>

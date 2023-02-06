@@ -24,10 +24,11 @@ public class DeviceRollbackService {
 
     @Autowired
     private DeviceRollbackMapper deviceRollbackMapper;
+
     /**
-     * 查询所有终端更新信息
+     * 查询所有终端更新信息（回退表）
      */
-    public List<DeviceRollbackVo> queryDeviceRollback(String page, String limit, String deviceName,String deviceSoftwareType, String version, String versionRollbackPeople, String versionRollbackTime, String order, String field) {
+    public List<DeviceRollbackVo> queryDeviceRollback(String page, String limit, String deviceName, String deviceSoftwareType, String equipmentId, String equipmentName, String equipTypeName, String uploadNumber, String version, String accPointResName, String createName, String versionRollbackTime, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -41,19 +42,26 @@ public class DeviceRollbackService {
             map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
             map.put("limit", Integer.parseInt(limit));
         }
-        map.put("deviceName",deviceName);
-        map.put("deviceSoftwareType",deviceSoftwareType);
-        map.put("version",version);
-        map.put("versionRollbackPeople",versionRollbackPeople);
-        map.put("versionRollbackTime",versionRollbackTime);
+        map.put("deviceName", deviceName);
+        map.put("deviceSoftwareType", deviceSoftwareType);
+        map.put("equipmentId", equipmentId);
+        map.put("equipmentName", equipmentName);
+        map.put("equipTypeName", equipTypeName);
+        map.put("uploadNumber", uploadNumber);
+        map.put("version", version);
+        map.put("accPointResName", accPointResName);
+        map.put("createName", createName);
+        map.put("versionRollbackTime", versionRollbackTime);
         return deviceRollbackMapper.queryAll(map);
     }
 
     /**
-     * 计数
+     * 计数（回退表）
      */
-    public int count(String deviceName,String deviceSoftwareType, String version, String versionRollbackPeople, String versionRollbackTime){
-        return deviceRollbackMapper.count(deviceName,deviceSoftwareType,version,versionRollbackPeople,versionRollbackTime);
+    public int count(String deviceName, String deviceSoftwareType,
+                     String equipmentId, String equipmentName, String equipTypeName, String uploadNumber,
+                     String version, String accPointResName, String createName, String versionRollbackTime) {
+        return deviceRollbackMapper.count(deviceName, deviceSoftwareType,equipmentId , equipmentName,equipTypeName, uploadNumber, version, accPointResName, createName, versionRollbackTime);
     }
 
     /**

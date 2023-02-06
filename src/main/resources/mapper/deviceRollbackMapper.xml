@@ -5,28 +5,18 @@
 
     <!--查询记录数-->
     <select id="count" resultType="int">
-        select
+        SELECT
         count(*)
         FROM
-        dev_rollback AS rol
-        LEFT JOIN
-        eqi_equipment AS eqi
-        ON rol.equipment_int=eqi.equipment_int
-        LEFT JOIN
-        eqi_device AS dev
-        ON rol.device_id=dev.device_id
-        LEFT JOIN
-        upd_upload AS upl
-        ON rol.upload_id=upl.upload_id
-        LEFT JOIN
-        base_access_info AS bai
-        ON eqi.acc_point_res_id = bai.acc_point_res_id
-        LEFT JOIN
-        base_process_info AS bpi
-        ON bai.process_id = bpi.process_id
-        LEFT JOIN
-        base_factory_info AS bfi
-        ON bpi.factory_id = bfi.factory_id
+        dev_rollback AS drb
+        LEFT JOIN eqi_equipment AS eqi ON drb.equipment_int = eqi.equipment_int
+        LEFT JOIN base_equip_info AS bei ON eqi.equip_type_id = bei.equip_type_id
+        LEFT JOIN eqi_device AS dev ON drb.device_id = dev.device_id
+        LEFT JOIN upd_upload AS upl ON drb.upload_id = upl.upload_id
+        LEFT JOIN base_access_info AS bai ON eqi.acc_point_res_id = bai.acc_point_res_id
+        LEFT JOIN base_process_info AS bpi ON bai.process_id = bpi.process_id
+        LEFT JOIN base_factory_info AS bfi ON bpi.factory_id = bfi.factory_id
+        LEFT JOIN cap_user AS cur ON drb.version_rollback_people = cur.USER_ID
         <where>
             <if test="deviceName !=null and deviceName !=''">
                 and dev.device_name LIKE '%${deviceName}%'
@@ -34,14 +24,29 @@
             <if test="deviceSoftwareType !=null and deviceSoftwareType !=''">
                 and dev.device_software_type LIKE '%${deviceSoftwareType}%'
             </if>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id LIKE '%${equipmentId}%'
+            </if>
+            <if test="equipmentName !=null and equipmentName !=''">
+                and eqi.equipment_name LIKE '%${equipmentName}%'
+            </if>
+            <if test="equipTypeName !=null and equipTypeName !=''">
+                and bei.equip_type_name LIKE '%${equipTypeName}%'
+            </if>
+            <if test="uploadNumber !=null and uploadNumber !=''">
+                and upl.upload_number LIKE '%${uploadNumber}%'
+            </if>
             <if test="version !=null and version !=''">
                 and upl.version like '%${version}%'
             </if>
-            <if test="versionRollbackPeople !=null and versionRollbackPeople !=''">
-                and rol.version_rollback_people like '%${versionRollbackPeople}%'
+            <if test="accPointResName !=null and accPointResName !=''">
+                and bai.acc_point_res_name like '%${accPointResName}%'
+            </if>
+            <if test="createName !=null and createName !=''">
+                and cur.USER_NAME like '%${createName}%'
             </if>
             <if test="versionRollbackTime !=null and versionRollbackTime !=''">
-                and rol.version_rollback_time like '%${versionRollbackTime}%'
+                and drb.version_rollback_time like '%${versionRollbackTime}%'
             </if>
         </where>
     </select>
@@ -49,41 +54,38 @@
     <!--查询所有-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.device.pojo.DeviceRollbackVo">
         SELECT
-        rol.device_rollback_id,
-        rol.equipment_int,
-        rol.device_id,
-        rol.upload_id,
-        upl.version,
-        rol.upgrade_status,
-        rol.version_rollback_people,
-        rol.version_rollback_time,
-        eqi.equipment_id,
-        eqi.equipment_name,
+        drb.device_rollback_id,
+        eqi.equipment_int,
+        bei.equip_type_id,
+        drb.device_id,
+        upl.upload_id,
+        bai.acc_point_res_id,
+        bpi.process_id,
+        bfi.factory_id,
+        cur.OPERATOR_ID,
+        dev.app_id,
         dev.device_name,
         dev.device_software_type,
-        bfi.factory_name,
+        eqi.equipment_id,
+        eqi.equipment_name,
+        bei.equip_type_name,
         upl.upload_number,
-        dev.app_id
+        upl.version,
+        drb.upgrade_status,
+        bai.acc_point_res_name,
+        bfi.factory_name,
+        cur.USER_NAME AS createName,
+        drb.version_rollback_time
         FROM
-        dev_rollback AS rol
-        LEFT JOIN
-        eqi_equipment AS eqi
-        ON rol.equipment_int=eqi.equipment_int
-        LEFT JOIN
-        eqi_device AS dev
-        ON rol.device_id=dev.device_id
-        LEFT JOIN
-        upd_upload AS upl
-        ON rol.upload_id=upl.upload_id
-        LEFT JOIN
-        base_access_info AS bai
-        ON eqi.acc_point_res_id = bai.acc_point_res_id
-        LEFT JOIN
-        base_process_info AS bpi
-        ON bai.process_id = bpi.process_id
-        LEFT JOIN
-        base_factory_info AS bfi
-        ON bpi.factory_id = bfi.factory_id
+        dev_rollback AS drb
+        LEFT JOIN eqi_equipment AS eqi ON drb.equipment_int = eqi.equipment_int
+        LEFT JOIN base_equip_info AS bei ON eqi.equip_type_id = bei.equip_type_id
+        LEFT JOIN eqi_device AS dev ON drb.device_id = dev.device_id
+        LEFT JOIN upd_upload AS upl ON drb.upload_id = upl.upload_id
+        LEFT JOIN base_access_info AS bai ON eqi.acc_point_res_id = bai.acc_point_res_id
+        LEFT JOIN base_process_info AS bpi ON bai.process_id = bpi.process_id
+        LEFT JOIN base_factory_info AS bfi ON bpi.factory_id = bfi.factory_id
+        LEFT JOIN cap_user AS cur ON drb.version_rollback_people = cur.USER_ID
         <where>
             <if test="deviceName !=null and deviceName !=''">
                 and dev.device_name LIKE '%${deviceName}%'
@@ -91,14 +93,29 @@
             <if test="deviceSoftwareType !=null and deviceSoftwareType !=''">
                 and dev.device_software_type LIKE '%${deviceSoftwareType}%'
             </if>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id LIKE '%${equipmentId}%'
+            </if>
+            <if test="equipmentName !=null and equipmentName !=''">
+                and eqi.equipment_name LIKE '%${equipmentName}%'
+            </if>
+            <if test="equipTypeName !=null and equipTypeName !=''">
+                and bei.equip_type_name LIKE '%${equipTypeName}%'
+            </if>
+            <if test="uploadNumber !=null and uploadNumber !=''">
+                and upl.upload_number LIKE '%${uploadNumber}%'
+            </if>
             <if test="version !=null and version !=''">
                 and upl.version like '%${version}%'
             </if>
-            <if test="versionRollbackPeople !=null and versionRollbackPeople !=''">
-                and rol.version_rollback_people like '%${versionRollbackPeople}%'
+            <if test="accPointResName !=null and accPointResName !=''">
+                and bai.acc_point_res_name like '%${accPointResName}%'
+            </if>
+            <if test="createName !=null and createName !=''">
+                and cur.USER_NAME like '%${createName}%'
             </if>
             <if test="versionRollbackTime !=null and versionRollbackTime !=''">
-                and rol.version_rollback_time like '%${versionRollbackTime}%'
+                and drb.version_rollback_time like '%${versionRollbackTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">

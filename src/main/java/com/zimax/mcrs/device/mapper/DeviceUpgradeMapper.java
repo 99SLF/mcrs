@@ -11,23 +11,27 @@ import java.util.Map;
 /**
  * 终端版本更新信息
  *
- * @author 林俊杰
+ * @author 李伟杰
  * @date 2022/12/13
  */
 @Mapper
 public interface DeviceUpgradeMapper {
 
     /**
-     * 查询全部的更新信息
+     * 查询全部的更新信息（升级记录表）
      */
     List<DeviceUpgradeVo> queryAll(Map map);
 
     /**
-     * 计数
+     * 计数（升级记录表）
      *
      * @return
      */
-    int count(@Param("deviceName") String deviceName,@Param("deviceSoftwareType") String deviceSoftwareType, @Param("version") String version, @Param("versionUpdater") String versionUpdater ,@Param("versionUpdateTime") String versionUpdateTime);
+    int count(@Param("deviceName") String deviceName,@Param("deviceSoftwareType") String deviceSoftwareType,
+              @Param("equipmentId") String equipmentId,@Param("equipmentName") String equipmentName,
+              @Param("equipTypeName") String equipTypeName,@Param("uploadNumber") String uploadNumber,
+              @Param("version") String version,@Param("accPointResName") String accPointResName, @Param("createName") String createName ,
+              @Param("versionUpdateTime") String versionUpdateTime);
 
 
     void updateDeviceUpgrade(DeviceUpgrade deviceUpgrade);

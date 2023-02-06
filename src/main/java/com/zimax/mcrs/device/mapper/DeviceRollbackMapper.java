@@ -17,17 +17,20 @@ import java.util.Map;
 public interface DeviceRollbackMapper {
 
     /**
-     * 查询全部的更新信息
+     * 查询全部的更新信息（回退表）
      */
     List<DeviceRollbackVo> queryAll(Map map);
 
     /**
-     * 计数
+     * 计数（回退表）
      *
      * @return
      */
-    int count(@Param("deviceName") String deviceName,@Param("deviceSoftwareType") String deviceSoftwareType, @Param("version") String version,
-              @Param("versionRollbackPeople") String versionRollbackPeople,@Param("versionRollbackTime") String versionRollbackTime);
+    int count(@Param("deviceName") String deviceName,@Param("deviceSoftwareType") String deviceSoftwareType,
+              @Param("equipmentId") String equipmentId,@Param("equipmentName") String equipmentName,
+              @Param("equipTypeName") String equipTypeName,@Param("uploadNumber") String uploadNumber,
+              @Param("version") String version,@Param("accPointResName") String accPointResName, @Param("createName") String createName ,
+              @Param("versionRollbackTime") String versionRollbackTime);
 
 
     /**
