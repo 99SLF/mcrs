@@ -41,7 +41,7 @@
     </div>
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">是否启用：</label>
+            <label class="layui-form-label"><span style="color:red">*</span>启用:</label>
             <div class="layui-input-block">
                 <select name="enable" id="enable" lay-filter="" lay-verify="required" type="select">
                     <option value=""></option>
@@ -155,7 +155,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>终端程序安装路径:</label>
             <div class="layui-input-block">
-                <input id="programInstallationPath" type="text" name="programInstallationPath" lay-verify="required"
+                <input id="programInstallationPath" type="text" name="programInstallationPath" lay-verify="required|programInstallationPath"
                        placeholder="" autocomplete="off" class="layui-input" >
             </div>
         </div>
@@ -163,7 +163,7 @@
             <label class="layui-form-label"><span style="color:red">*</span>终端执行程序安装路径:</label>
             <div class="layui-input-block">
                 <input id="executorInstallationPath" type="text" name="executorInstallationPath"
-                       lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                       lay-verify="required|executorInstallationPath" placeholder="" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -330,6 +330,24 @@
         accessMethod: function (value, item) {
             if (value.length > 20) {
                 return "接入方式不能超20字符";
+            }
+        },
+        programInstallationPath: function (value, item) {
+            //文件夹路径的正则表达式:^([a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|]+\\.[^\\\\/:*?<>|]+,)*[a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|.]+(/[^\\\\/:*?\"<>.|]|[/w,/s]*|[\\/])$
+            if(!new RegExp("^([a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|]+\\.[^\\\\/:*?<>|]+,)*[a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|.]+(/[^\\\\/:*?\"<>.|]|[/w,/s]*|[\\/])$").test(value)){
+                return "输入终端程序安装路径有误";
+            }
+            if (value.length > 100) {
+                return "终端程序安装路径不能超过100个字符";
+            }
+        },
+        executorInstallationPath: function (value, item) {
+            //文件路径的正则表达式:^([a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|]+\\.[^\\\\/:*?<>|]+,)*[a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|]+\\.[^\\\\/:*?<>|]+$
+            if(!new RegExp("^([a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|]+\\.[^\\\\/:*?<>|]+,)*[a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|]+\\.[^\\\\/:*?<>|]+$").test(value)){
+                return "输入终端执行程序安装路径有误";
+            }
+            if (value.length > 100) {
+                return "终端执行程序安装路径不能超过100个字符";
             }
         }
 

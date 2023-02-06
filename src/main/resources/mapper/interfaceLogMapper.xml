@@ -19,8 +19,8 @@
             <if test="source !=null and source !=''">
                 and ll.source like '%${source}%'
             </if>
-            <if test="equipmentIp !=null and equipmentIp !=''">
-                and eqi.equipment_ip like '%${equipmentIp}%'
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id like '%${equipmentId}%'
             </if>
             <if test="equipmentName !=null and equipmentName !=''">
                 and eqi.equipment_name like '%${equipmentName}%'
@@ -76,8 +76,8 @@
             <if test="source !=null and source !=''">
                 and ll.source like '%${source}%'
             </if>
-            <if test="equipmentIp !=null and equipmentIp !=''">
-                and eqi.equipment_ip like '%${equipmentIp}%'
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id like '%${equipmentId}%'
             </if>
             <if test="equipmentName !=null and equipmentName !=''">
                 and eqi.equipment_name like '%${equipmentName}%'

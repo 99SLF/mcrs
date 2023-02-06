@@ -228,6 +228,7 @@
                             var index = parent.layer.getFrameIndex(window.name);
                             win.layui.table.reload("LAY-app-alarmRule-list-reload");
                             top.layer.close(index);
+                            win.window.formReder();
                         });
                     }
                 });

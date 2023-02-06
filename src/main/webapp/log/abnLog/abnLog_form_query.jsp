@@ -113,14 +113,14 @@
 	//获取预警等级的下拉值
 	layui.admin.renderDictSelect({
 		elem: "#abnType",
-		dictTypeId: "WARNING_LEVEL",
+		dictTypeId: "WRANING_TYPE",
 	});
 	form.render();
 
 	//获取预警类型的下拉值
 	layui.admin.renderDictSelect({
 		elem: "#abnLevel",
-		dictTypeId: "WRANING_TYPE",
+		dictTypeId: "WARNING_LEVEL",
 	});
 	form.render();
 

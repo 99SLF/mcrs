@@ -31,7 +31,7 @@ public class InterfaceController {
      * @param createTime   创建时间
      * @param source  来源
      * @param interfaceName 接口名称
-     * @param equipmentIp 设备Ip
+     * @param equipmentId 设备资源号
      * @param invokerName 调用者
      * @param interfaceType 接口类型
      * @param limit         记录数
@@ -41,10 +41,10 @@ public class InterfaceController {
      * @return 设备列表
      */
     @GetMapping("/interfaceLog/query")
-    public Result<?> query(String limit, String page,  String source,String equipmentIp,String equipmentName,String interfaceType,String result,
+    public Result<?> query(String limit, String page,  String source,String equipmentId,String equipmentName,String interfaceType,String result,
                            String invokerName,String disposeTime,String interfaceName,String createTime ,String order, String field) {
-        List interfaceLogs = interfaceLogService.queryInterfaceLog(limit, page, source, equipmentIp,equipmentName ,interfaceType,result,invokerName,disposeTime,interfaceName,createTime,order, field);
-        return Result.success(interfaceLogs, interfaceLogService.count(source, equipmentIp,equipmentName ,interfaceType,result,invokerName,disposeTime,interfaceName,createTime));
+        List interfaceLogs = interfaceLogService.queryInterfaceLog(limit, page, source, equipmentId,equipmentName ,interfaceType,result,invokerName,disposeTime,interfaceName,createTime,order, field);
+        return Result.success(interfaceLogs, interfaceLogService.count(source, equipmentId,equipmentName ,interfaceType,result,invokerName,disposeTime,interfaceName,createTime));
     }
 
 

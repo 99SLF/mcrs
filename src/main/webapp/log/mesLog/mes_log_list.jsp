@@ -305,7 +305,7 @@
             type: "numbers"
         }, {
             field: "logStatus",
-            title: "日志类型",
+            title: "日志状态",
             align: "center",
             minWidth: 100,
             hide: isHidden("logStatus"),
