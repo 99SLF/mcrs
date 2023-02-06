@@ -6,13 +6,16 @@ import lombok.NoArgsConstructor;
 
 /**
  * @Author 施林丰
- * @Date:2022/12/26 15:23
+ * @Date:2023/2/2 16:32
  * @Description
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GroupByProduction {
-    private String name;
-    private int value;
+public class ProcessOnfactory {
+    private int factoryId;
+    private String factoryName;
+    private String processName;
+    private int total;
+    private int processId;
 }

@@ -12,6 +12,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <title>添加角色</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css">
+<style>
+	.layui-textarea{
+		height: 5px!important;
+		/*min-height: 60px!important;*/
+	}
+</style>
 </head>
 <body>
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0;">
@@ -20,20 +26,20 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label"><span style="color:red">*</span>角色代码：</label>
 			<div class="layui-input-block">
-				<input id="roleCode" type="text" class="layui-input layui-required" name="capRole/roleCode" lay-verify="required|checkRoleCode" placeholder="角色代码(必填)" autocomplete="off">
+				<input id="roleCode" type="text" class="layui-input layui-required" name="capRole/roleCode" lay-verify="required|chinese|length20" placeholder="角色代码(必填)" autocomplete="off">
 			</div>
 		</div>
 		<div class="layui-col-sm6">
 			<label class="layui-form-label"><span style="color:red">*</span>角色名称：</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input layui-required" name="capRole/roleName" lay-verify="required" placeholder="角色名称(必填)" autocomplete="off">
+				<input type="text" class="layui-input layui-required" name="capRole/roleName" lay-verify="required|length20" placeholder="角色名称(必填)" autocomplete="off">
 			</div>
 		</div>
 	</div>
 	<div class="layui-row layui-form-item">
 		<label class="layui-form-label layui-form-project">角色描述：</label>
 		<div class="layui-input-block layui-textarea-block">
-			<textarea class="layui-textarea field-effect field-content" name="capRole/roleDesc" autocomplete="off" class="layui-textarea"></textarea>
+			<textarea class="layui-textarea" name="capRole/roleDesc" autocomplete="off" lay-verify="length255"class="layui-textarea"></textarea>
 		</div>
 	</div>
 	<div class="layui-form-item layui-hide">

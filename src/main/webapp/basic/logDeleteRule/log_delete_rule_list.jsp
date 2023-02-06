@@ -504,7 +504,7 @@
         }, {
             field: "deleteRuleTitle",
             title: "日志删除标题",
-            align: "center",
+            align: "left",
             minWidth: 200,
             hide: isHidden("deleteRuleTitle"),
             //打开监听

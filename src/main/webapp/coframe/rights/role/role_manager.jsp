@@ -14,36 +14,62 @@
 <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css">
 <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css">
+<style>
+	.layui-card {
+		margin-bottom: 0px
+	}
+	.layui-layer-adminRight {
+		top: 0px !important;
+		bottom: 0;
+		box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
+		border-radius: 0;
+		overflow: auto
+	}
+	.layui-form-item .layui-inline {
+		margin-bottom: 0px !important;
+		margin-right: 0px !important;
+	}
+	.layui-form-label {
+		width: 120px !important;
+		padding: 5px 0px !important;
+	}
+	.layui-form-item .layui-input-inline {
+		float: left;
+		width: 150px;
+		margin-right: 10px;
+	}
+	.layui-input {
+		height: 30px !important;
+	}
+</style>
 </head>
 <body>
 <div class="layui-fluid">
 	<div class="layui-card">
-		<div class="layui-form layui-card-header layuiadmin-card-header-auto">
-			<div class="layui-form-item">
-				<div class="layui-inline">
-					<label class="layui-form-label">角色代码：</label>
-					<div class="layui-input-inline">
-						<input type="text" name="roleCode" placeholder="" autocomplete="off" class="layui-input">
+		<script type="text/html" id="toolbar">
+			<div class="layui-form layuiadmin-card-header-auto" lay-filter="layuiadmin-feeding-form" id="layuiadmin-feeding-form">
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">角色代码：</label>
+						<div class="layui-input-inline">
+							<input type="text" name="roleCode" placeholder="" autocomplete="off" class="layui-input">
+						</div>
 					</div>
-				</div>
-				<div class="layui-inline">
-					<label class="layui-form-label">角色名称：</label>
-					<div class="layui-input-inline">
-						<input type="text" name="roleName" placeholder="" autocomplete="off" class="layui-input">
+					<div class="layui-inline">
+						<label class="layui-form-label">角色名称：</label>
+						<div class="layui-input-inline">
+							<input type="text" name="roleName" placeholder="" autocomplete="off" class="layui-input">
+						</div>
 					</div>
-				</div>
-				<div class="layui-inline layui-search">
-					<button class="layui-btn layuiadmin-btn-list " lay-submit lay-filter="LAY-app-rolelist-search" id="LAY-app-rolelist-search">
-						<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-					</button>
+					<div class="layui-inline layui-hide">
+						<button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-rolelist-search" id="LAY-app-rolelist-search">
+							<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+						</button>
+					</div>
 				</div>
 			</div>
-		</div>
+		</script>
 		<div class="layui-card-body">
-			<div class="layui-toolbar" id="toolbar" hidden="true">
-				<button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-add-circle-fine"></i>添加</button>
-				<button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel" ><i class="layui-icon layui-icon-delete"></i>删除</button>
-			</div>
 			<table id="LAY-app-role-list" lay-filter="LAY-app-role-list"></table>
 			<script type="text/html" id="table-role-list">
 			{{#  if(d.roleId > 1){ }}

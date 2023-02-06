@@ -79,4 +79,9 @@ public class AccessMonitor {
     public Result<?> queryProcessAndeqi() {
         return Result.success(accessMonitorService.queryProcessAndeqi());
     }
+    @GetMapping("/queryProcessAndFactory")
+    public Result<?> queryProcessAndFactory() {
+        return Result.success(accessMonitorService.queryProcessAndFactory());
+    }
+
 }

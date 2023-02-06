@@ -24,21 +24,27 @@ public class AlarmEventController {
     private AlarmEventService alarmEventService;
 
     /**
-     * 条件查询预警事件d
-     * @param alarmEventId 告警事件编码
-     * @param alarmEventTitle 告警事件标题
-     * @param alarmLevel 告警级别
-     * @param alarmCategory 告警分类
-     * @param alarmType 告警类型
-     * @param createName 制单人
-     * @param limit 记录数
+     * 依据条件查询预警事件
      * @param page 页码
-     * @return 角色列表
+     * @param limit 条数
+     * @param alarmEventId 预警规则编码
+     * @param alarmEventTitle 预警规则标题
+     * @param enableStatus 启用状态
+     * @param alarmLevel 预警等级
+     * @param alarmType 预警类型
+     * @param createName 创建人
+     * @param makeFormTime 制单时间(创建时间)
+     * @param updateName 更新人
+     * @param updateTime 更新时间
+     * @param order
+     * @param field
+     * @return
      */
     @GetMapping("/alarmEvent/query")
-    public Result<?> query(String alarmEventId, String alarmEventTitle, String alarmLevel, String alarmCategory,  String alarmType, String createName, String makeFormTime, String limit,  String page, String order, String field) {
-        List alarmEvents = alarmEventService.queryAll(page,limit,alarmEventId,alarmEventTitle,alarmLevel,alarmCategory,alarmType,createName,makeFormTime,order,field);
-        return Result.success(alarmEvents, alarmEventService.count(alarmEventId,alarmEventTitle,alarmLevel,alarmCategory,alarmType,createName,makeFormTime));
+    public Result<?> query(String page, String limit, String alarmEventId, String alarmEventTitle, String enableStatus, String alarmLevel,
+                           String alarmType, String createName, String makeFormTime,String updateName, String updateTime, String order, String field) {
+        List alarmEvents = alarmEventService.queryAll(page,limit,alarmEventId,alarmEventTitle,enableStatus,alarmLevel,alarmType,createName,makeFormTime,updateName,updateTime,order,field);
+        return Result.success(alarmEvents, alarmEventService.count(alarmEventId,alarmEventTitle,enableStatus,alarmLevel,alarmType,createName,makeFormTime,updateName,updateTime));
     }
 
     /**

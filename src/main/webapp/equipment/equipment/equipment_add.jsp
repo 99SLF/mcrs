@@ -16,6 +16,12 @@
     <meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
     <title>设备添加</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
+    <style>
+        .layui-textarea {
+            height: 5px !important;
+            /*min-height: 60px!important;*/
+        }
+    </style>
 </head>
 <body>
 <div class="layui-fluid">
@@ -142,7 +148,7 @@
 
             <div class="layui-form-item layui-row layui-col-space10">
                 <div class="layui-col-sm6">
-                    <label class="layui-form-label"><span style="color:red">*</span>是否启用:</label>
+                    <label class="layui-form-label"><span style="color:red">*</span>启用:</label>
                     <div class="layui-input-block">
                         <select name="enable" id="enable" lay-verify="required" type="select">
                             <option value=""></option>
@@ -217,15 +223,6 @@
         win = data.win ? data.win : window;
     }
 
-    //
-    // //获取设备类型的下拉值
-    // layui.admin.getDictText("ORDER_STATUS",data.orderStatus);
-    // layui.admin.renderDictSelect({
-    //     elem: "#equipTypeName",
-    //     dictTypeId: "EQUIPMENT_PROPERTY",
-    // });
-    // form.render();
-
 
     //获取启用类型的下拉值
     layui.admin.renderDictSelect({
@@ -239,11 +236,15 @@
     // 判断字符
     form.verify({
         equipmentId: function (value, item) {
-            if (value.length > 20) {
-                return "设备资源号不能超过20字符";
+            var equipmentId =  /^[A-Za-z0-9]+$/  ;
+            if(!equipmentId.test(value)){
+                return "输入的设备资源号格式有误，只能输入英文+数字";
             }
         },
         equipmentName: function (value, item) {
+            if(!new RegExp("^[a-zA-Z0-9\u4e00-\u9fa5]+$").test(value)){
+                return "输入设备名称有误，只能输入汉字+英文+数字";
+            }
             if (value.length > 20) {
                 return "设备名称不能超过20字";
             }
@@ -254,8 +255,8 @@
             }
         },
         equipmentContinuePort: function (value, item) {
-            if (value.length > 20) {
-                return "设备连接端口不能超过20字";
+            if(!new RegExp("^([0-9]|[1-9]\d{1,3}|[1-5]\d{4}|6[0-4]\d{4}|65[0-4]\d{2}|655[0-2]\d|6553[0-5])$").test(value)){
+                return "请输入正确的端口号值，正常端口值为1~65535";
             }
         },
         equipmentIp: function(value, item){
@@ -287,7 +288,7 @@
             yes: function (index, layero) {
                 var data = layero.find('iframe')[0].contentWindow.getData();
                 $("#equipTypeId").val(data.equipTypeId);
-                $("#equipTypeName").val(layui.admin.getDictText("EQUIPMENT_PROPERTY", data.equipTypeName));
+                $("#equipTypeName").val(data.equipTypeName);
                 $("#mesIpAddress").val(data.mesIpAddress);
                 $("#protocolCommunication").val(data.protocolCommunication);
                 top.layer.close(index);

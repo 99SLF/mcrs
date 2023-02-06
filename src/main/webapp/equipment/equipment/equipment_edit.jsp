@@ -14,6 +14,12 @@
     <meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
     <title>设备编辑</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
+    <style>
+        .layui-textarea {
+            height: 5px !important;
+            /*min-height: 60px!important;*/
+        }
+    </style>
 </head>
 <body>
 <div class="layui-fluid">
@@ -84,7 +90,7 @@
                 <div class="layui-col-sm6">
                     <label class="layui-form-label"><span style="color:red">*</span>设备连接端口:</label>
                     <div class="layui-input-block">
-                        <input id="equipmentContinuePort" type="text" name="equipmentContinuePort" lay-verify="required"
+                        <input id="equipmentContinuePort" type="text" name="equipmentContinuePort" lay-verify="required|number|equipmentContinuePort"
                                placeholder="" autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -311,13 +317,17 @@
     //判断字符
     form.verify({
         equipmentId: function (value, item) {
-            if (value.length > 20) {
-                return "设备资源号不能超过20个字符";
+            var equipmentId =  /^[A-Za-z0-9]+$/  ;
+            if(!equipmentId.test(value)){
+                return "输入的设备资源号格式有误，请输入英文+数字";
             }
         },
         equipmentName: function (value, item) {
+            if(!new RegExp("^[a-zA-Z0-9\u4e00-\u9fa5]+$").test(value)){
+                return "输入设备名称有误，只能输入汉字+英文+数字";
+            }
             if (value.length > 20) {
-                return "设备名称不能超过20个字符";
+                return "设备名称不能超过20字";
             }
         },
         equipmentIp: function(value, item){
@@ -335,8 +345,12 @@
             }
         },
         equipmentContinuePort: function (value, item) {
-            if (value.length > 20) {
-                return "设备连接端口不能超过20字符";
+            var porttest = /^([0-9]|[1-9]\d{1,3}|[1-5]\d{4}|6[0-4]\d{4}|65[0-4]\d{2}|655[0-2]\d|6553[0-5])$/;
+            if(!porttest.test(value)){
+                return "请输入正确的端口号";
+            }
+            if (value.length > 9) {
+                return "请输入正确的端口号";
             }
         },
         mesContinueIp: function (value, item) {

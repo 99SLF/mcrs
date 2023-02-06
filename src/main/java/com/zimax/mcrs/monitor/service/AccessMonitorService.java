@@ -1,14 +1,12 @@
 package com.zimax.mcrs.monitor.service;
 
+import com.sun.corba.se.impl.oa.toa.TOA;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.monitor.mapper.AccessMonitorMapper;
 import com.zimax.mcrs.monitor.pojo.DeviceAbn;
 import com.zimax.mcrs.monitor.pojo.EquipmentStatus;
 import com.zimax.mcrs.monitor.pojo.SoftwareRunStatus;
-import com.zimax.mcrs.monitor.pojo.vo.EqiAndAccessInfo;
-import com.zimax.mcrs.monitor.pojo.vo.GroupByDate;
-import com.zimax.mcrs.monitor.pojo.vo.GroupByProduction;
-import com.zimax.mcrs.monitor.pojo.vo.WarnTotalInfo;
+import com.zimax.mcrs.monitor.pojo.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +49,7 @@ public class AccessMonitorService {
     }
 
 
-    public GroupByProduction getWarnByproduction() {
+    public GroupByProduction[] getWarnByproduction() {
         return accessMonitorMapper.getWarnByproduction();
     }
     public GroupByProduction[] queryProcessAndeqi() {
@@ -79,6 +77,41 @@ public class AccessMonitorService {
         eqiAndAccessInfo.setAccessOnline(accessOnline);
         eqiAndAccessInfo.setEqiOnline(eqiOnline);
         return eqiAndAccessInfo;
+    }
+    public Map queryProcessAndFactory(){
+        int[] factoryId = accessMonitorMapper.queryFactoryId();
+        Map<String,Object> map = new HashMap<>();
+        List<List<Integer>> dataTotalList = new ArrayList<List<Integer>>();
+        String[] processNames = accessMonitorMapper.queryProcessName();
+        ProcessOnfactory processOnfactoryList[] = accessMonitorMapper.queryFactoryAndProcess();
+        List intData = null;
+        List factoryName = new ArrayList<String>();
+        for(int i=0;i<processNames.length;i++){
+            intData = new ArrayList<Integer>();
+            for(int k=0;k<factoryId.length;k++){
+                for(int j=0;j<processOnfactoryList.length;j++){
+                    if(processNames[i].equals(processOnfactoryList[j].getProcessName())&&factoryId[k]==processOnfactoryList[j].getFactoryId()){
+                        intData.add(processOnfactoryList[j].getTotal());
+                        if(i==0){
+                            factoryName.add(processOnfactoryList[j].getFactoryName());
+                        }
+                        break;
+                    }
+                    if(j==processOnfactoryList.length-1){
+                        intData.add(0);
+                    }
+                }
+            }
+            dataTotalList.add(intData);
+        }
+        List<String> processName = new ArrayList<String>();
+        for(String x: processNames){
+            processName.add(x);
+        }
+        map.put("factoryName",factoryName);
+        map.put("processName",processName);
+        map.put("dataTotalList",dataTotalList);
+        return map;
     }
 
 }

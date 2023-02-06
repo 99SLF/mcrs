@@ -28,7 +28,7 @@ public class InterfaceLogService {
     /**
      * 查询所有接口日志信息
      */
-    public List<InterfaceLogVo> queryInterfaceLog(String limit, String page,  String source,String equipmentIp,String equipmentName,String interfaceType,String result,
+    public List<InterfaceLogVo> queryInterfaceLog(String limit, String page,  String source,String equipmentId,String equipmentName,String interfaceType,String result,
                                                   String invokerName,String disposeTime,String interfaceName,String createTime ,String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
@@ -44,7 +44,7 @@ public class InterfaceLogService {
             map.put("limit", Integer.parseInt(limit));
         }
         map.put("source",source);
-        map.put("equipmentIp",equipmentIp);
+        map.put("equipmentId",equipmentId);
         map.put("equipmentName",equipmentName);
         map.put("interfaceType",interfaceType);
         map.put("result",result);
@@ -58,9 +58,9 @@ public class InterfaceLogService {
     /**
      * 查询记录
      */
-    public int count( String source,String equipmentIp,String equipmentName,String interfaceType,String result,
+    public int count( String source,String equipmentId,String equipmentName,String interfaceType,String result,
                       String invokerName,String disposeTime,String interfaceName,String createTime) {
-        return interfaceLogMapper.count(source, equipmentIp,equipmentName ,interfaceType,result,invokerName,disposeTime,interfaceName,createTime);
+        return interfaceLogMapper.count(source, equipmentId,equipmentName ,interfaceType,result,invokerName,disposeTime,interfaceName,createTime);
     }
 
 

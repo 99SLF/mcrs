@@ -197,8 +197,11 @@
     var layer = layui.layer;
     var table = layui.table;
     var util = layui.util;
+    var processName = []
     var activeWarn = [], hardWarn = [], recordDate = [],eqiByProcess=[]
-    var bingData = [];
+    var bingData = [],bingProcessName = [];
+    var duiProcessName=[],factotyName=[];
+    var seriesData = [];
     var form = layui.form;
     var chartZhu6 = echarts.init(document.getElementById('EchartZhu6'));
     var chartZhu7 = echarts.init(document.getElementById('EchartZhu7'));
@@ -306,19 +309,10 @@
         success: function (result) {
             if (result) {
                 var resData = result.data;
-                var jsonData1 = {},jsonData2={},jsonData3 = {},jsonData4={};
-                jsonData1.name = "冷压";
-                jsonData1.value = resData.coldPress;
-                bingData.push(jsonData1);
-                jsonData2.name = "模切";
-                jsonData2.value = resData.dieCut;
-                bingData.push(jsonData2);
-                jsonData3.name = "卷绕";
-                jsonData3.value = resData.wind;
-                bingData.push(jsonData3);
-                jsonData4.name = "涂布";
-                jsonData4.value = resData.coat;
-                bingData.push(jsonData4);
+                bingData = resData
+                for(var i in resData){
+                    bingProcessName.push(resData[i].name)
+                }
                 echartBing();
             } else {
                 layer.msg("查询失败");
@@ -337,17 +331,47 @@
         success: function (result) {
             if (result) {
                 var data = result.data;
-                eqiByProcess.push(data.dieCut);
-                eqiByProcess.push(data.coat);
-                eqiByProcess.push(data.wind);
-                eqiByProcess.push(data.coldPress);
+                for(var i in data){
+                    processName.push(data[i].name)
+                    eqiByProcess.push(data[i].value);
+                }
                 echartZhu();
             } else {
                 layer.msg("查询失败");
             }
         }
     });
-    echartDui();
+
+    // 堆叠图
+    $.ajax({
+        url: "<%=request.getContextPath() %>/AccessMonitor/queryProcessAndFactory",
+        type: "GET",
+        async: true,
+        cache: false,
+        contentType: "text/json",
+        success: function (result) {
+            if (result) {
+                var data = result.data;
+                duiProcessName = data.processName;
+               factoryName = data.factoryName;
+               var list = data.dataTotalList;
+               for(var i in processName){
+                   seriesData.push({
+                       name: processName[i],
+                       type: "bar",//柱状图
+                       stack:"Search Engine",
+                       emphasis: {//折线图的高亮状态。
+                           focus: "series",//聚焦当前高亮的数据所在的系列的所有图形。
+                       },
+                       data: list[i]
+                   })
+               }
+                echartDui();
+            } else {
+                layer.msg("查询失败");
+            }
+        }
+    });
 
     function getFullSize() {
         var fluid = $(".layui-fluid");
@@ -397,13 +421,14 @@
     //             }
     //         }]
     //     };
-    //
+
 
     //指定图表配置项和数据
     function echartZhu(){
         var optionchartZhu = {
+            tooltip: {},
             xAxis: {
-                data: ['模切', '涂布', '卷绕', '冷压']
+                data: processName
             },
             yAxis: {
                 type: 'value'
@@ -422,22 +447,15 @@
     }
     function echartDui(){
         var optionchartDui = {
+            tooltip: {},
+            legend: {
+                data: duiProcessName
+            },
             xAxis: {
-                data: ['A', 'B', 'C', 'D', 'E']
+                data: factoryName
             },
             yAxis: {},
-            series: [
-                {
-                    data: [10, 22, 28, 43, 49],
-                    type: 'bar',
-                    stack: 'A'
-                },
-                {
-                    data: [5, 4, 3, 5, 10],
-                    type: 'bar',
-                    stack: 'A'
-                }
-            ]
+            series: seriesData
         };
         chartZhu8.setOption(optionchartDui, true);
     }
@@ -477,7 +495,7 @@
             legend: {
                 orient: 'vertical', //类型垂直,默认水平
                 left: 'left', //类型区分在左 默认居中
-                data: ['模切', '涂布', '卷绕', '冷压']
+                data: bingProcessName
             },
             series: [{
                 type: 'pie', //饼状

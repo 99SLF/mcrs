@@ -16,6 +16,12 @@
     <meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
     <title>预警信息添加</title>
     <link rel="stylesheet" href="<%=request.getContextPath() %>/common/layui/css/layui.css">
+    <style>
+        .layui-textarea {
+            height: 5px !important;
+            /*min-height: 60px!important;*/
+        }
+    </style>
 </head>
 <body>
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list"
@@ -90,7 +96,7 @@
             <div class="layui-input-block">
             <textarea cols="50" rows="10" style="width:100%;height:100px" name="alarmEventContent"
                       id="alarmEventContent" autocomplete="off"
-                      class="layui-input" lay-verify="alarmEventContent"></textarea>
+                      class="layui-textarea" lay-verify="alarmEventContent"></textarea>
             </div>
         </div>
     </div>
@@ -242,6 +248,7 @@
                         }, function () {
                             var index = parent.layer.getFrameIndex(window.name);
                             win.layui.table.reload("LAY-app-alarmEvent-list-reload");
+                            win.window.formReder();
                             top.layer.close(index);
                         });
                     }

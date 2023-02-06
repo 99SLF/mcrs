@@ -41,14 +41,33 @@ layui.define(["admin"], function(exports) {
 	
 	//添加接口地址
 	var addUrl = setter.base + "rights/role/add";
-	
+	var focusName = null;
 	//修改接口地址
 	var updateUrl = setter.base + "rights/role/update";
     //删除接口地址
 	var deleteUrl = setter.base + "rights/role/delete";
 	//批量删除接口地址
 	var batchDelUrl = setter.base + "rights/role/batchDelete";
-	
+	form.render();
+	form.verify({
+		//数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
+		chinese: function(value, item){ //value：表单的值、item：表单的DOM对象
+			var reg = new RegExp("[\\u4E00-\\u9FFF]+", "g");
+			if((reg.test(value))){
+				return '此项不能包含中文';
+			}
+		},
+		length20: function(value, item){ //value：表单的值、item：表单的DOM对象
+			if(value.length>20){
+				return '字数已达上限';
+			}
+		},
+		length255: function(value, item){ //value：表单的值、item：表单的DOM对象
+			if(value.length>255){
+				return '字数已达上限';
+			}
+		}
+	});
 	function getFullSize() {
 		var fluid = $(".layui-fluid");
 		var header = $(".layui-card-header");
@@ -114,7 +133,19 @@ layui.define(["admin"], function(exports) {
 					}
 				});
 			},
-			defaultToolbar: ["filter"],
+			defaultToolbar: [{
+				title: "查询",
+				layEvent: "search",
+				icon: "layui-icon layui-icon-search layuiadmin-button-btn",
+			},{
+				title: "添加",
+				layEvent: "add",
+				icon: "layui-icon layui-icon-add-circle-fine",
+			},{
+				title: "删除",
+				layEvent: "batchdel",
+				icon: "layui-icon layui-icon-delete",
+			},"filter"],
 			parseData: function(res) {
 				var t = res.data.length;
 				return {
@@ -156,11 +187,17 @@ layui.define(["admin"], function(exports) {
 				toolbar: "#table-role-list"
 			}]]
 		});
+		formReder();
 	}
 	
 	// 操作集合
 	var active = {
-		
+		search: function() {
+			var submit = $("#LAY-app-rolelist-search");
+			submit.click();
+			return false;
+		},
+
 		/**
 		 * 添加角色
 		 */
@@ -227,6 +264,7 @@ layui.define(["admin"], function(exports) {
 									time: 2000
 								}, function() {
 									table.reload("LAY-app-role-list");
+									formReder();
 								});
 							} else {
 								layer.msg("删除失败");		
@@ -280,6 +318,7 @@ layui.define(["admin"], function(exports) {
 					}, function() {
 						var index = parent.layer.getFrameIndex(window.name);
 						win.layui.table.reload("LAY-app-role-list");
+						formReder();
 						parent.layer.close(index);
 					});
 				}
@@ -291,6 +330,7 @@ layui.define(["admin"], function(exports) {
 				}, function() {
 					var index = parent.layer.getFrameIndex(window.name);
 					win.layui.table.reload("LAY-app-role-list");
+					formReder();
 					parent.layer.close(index);
 				});
 			}
@@ -342,6 +382,7 @@ layui.define(["admin"], function(exports) {
 							}, function() {
 								var index = parent.layer.getFrameIndex(window.name);
 								win.layui.table.reload("LAY-app-role-list");
+								formReder();
 								parent.layer.close(index);
 							});
 						} else {
@@ -368,6 +409,21 @@ layui.define(["admin"], function(exports) {
 				return false;
 			}
 		});
+	}
+	function formReder() {
+		form.render();
+		// 文本框回车事件
+		$(".layui-input").on("keydown", function (event) {
+			if (event.keyCode == 13) {
+				focusName = event.target.name;
+				var submit = $("#LAY-app-rolelist-search");
+				submit.click();
+				return false;
+			}
+		});
+		if (focusName) {
+			$("input[name=" + focusName + "]").focus();
+		}
 	}
 	
 	/**
@@ -403,6 +459,7 @@ layui.define(["admin"], function(exports) {
 			// 加载数据
 			loadData(data);
 		},
+
 		
 		/**
 		 * 管理角色
@@ -414,22 +471,15 @@ layui.define(["admin"], function(exports) {
 				table.reload("LAY-app-role-list", {
 					where: field
 				});
+				formReder();
+				form.val("layuiadmin-feeding-form", field);
 			});
-			
-			// 文本框回车事件
-			$(".layui-input").on("keydown", function(event) {
-				if (event.keyCode == 13) {
-					var submit = $("#LAY-app-rolelist-search");
-					submit.click();
-					return false;
-				}
-			});
-			
 			// 改变窗体大小事件
 			$(window).resize(function () {
 				table.reload("LAY-app-role-list", {
 					height: "full-" + getFullSize()
 				});
+				formReder();
 			});
 			
 			// 查询过滤字段
@@ -437,7 +487,6 @@ layui.define(["admin"], function(exports) {
 			
 			// 渲染表格
 			renderTable();
-
 			// 左侧表头按钮事件监听
 			table.on("toolbar(LAY-app-role-list)", function(obj) {
 				var type = obj.event;
@@ -453,6 +502,7 @@ layui.define(["admin"], function(exports) {
 						order: obj.type
 					}
 				});
+				formReder();
 			});
 			
 			// 监听操作事件
@@ -507,6 +557,7 @@ layui.define(["admin"], function(exports) {
 										time: 2000
 									}, function() {
 										table.reload("LAY-app-role-list");
+										formReder();
 									});
 								} else {
 									layer.msg("删除失败");		
