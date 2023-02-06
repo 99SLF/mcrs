@@ -19,7 +19,7 @@ import java.util.*;
 /**
  * 终端管理
  *
- * @author 林俊杰
+ * @author 李伟杰
  * @date 2022/11/30
  */
 @RestController
@@ -40,7 +40,7 @@ public class DeviceUpgradeController {
     private UpdatePackageService updatePackageService;
 
     /**
-     * 条件查询
+     * 条件查询（升级记录表）
      *
      * @param version            升级版本号
      * @param deviceName         终端名称
@@ -52,9 +52,9 @@ public class DeviceUpgradeController {
      * @return 终端列表
      */
     @GetMapping("/deviceUpgrade/query")
-    public Result<?> queryDeviceUpgrade(String page, String limit, String deviceName, String deviceSoftwareType, String version, String versionUpdater, String versionUpdateTime, String order, String field) {
-        List deviceUpgrade = deviceUpgradeService.queryDeviceUpgrades(page, limit, deviceName, deviceSoftwareType, version, versionUpdater, versionUpdateTime, order, field);
-        return Result.success(deviceUpgrade, deviceUpgradeService.count(deviceName, deviceSoftwareType, version, versionUpdater, versionUpdateTime));
+    public Result<?> queryDeviceUpgrade(String page, String limit, String deviceName, String deviceSoftwareType,String equipmentId,String equipmentName,String equipTypeName,String uploadNumber,  String version, String accPointResName, String createName, String versionUpdateTime, String order, String field) {
+        List deviceUpgrade = deviceUpgradeService.queryDeviceUpgrades(page, limit, deviceName, deviceSoftwareType,equipmentId , equipmentName,equipTypeName, uploadNumber, version, accPointResName, createName, versionUpdateTime, order, field);
+        return Result.success(deviceUpgrade, deviceUpgradeService.count(deviceName, deviceSoftwareType,equipmentId , equipmentName,equipTypeName, uploadNumber, version, accPointResName, createName, versionUpdateTime));
     }
 
 
@@ -83,7 +83,7 @@ public class DeviceUpgradeController {
 //    }
 
     /**
-     * 新增升级记录的升级状态
+     * 新增升级记录的升级状态(终端选择更新包升级)
      */
     @PostMapping("/add")
     public Result<?> addDeviceUpgrade(@RequestBody Map json) {
@@ -122,7 +122,7 @@ public class DeviceUpgradeController {
 
                 //获取更新人
                 IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
-                deviceUpgrade.setVersionUpdater(userObject.getUserName());
+                deviceUpgrade.setVersionUpdater(userObject.getUserId());
 
                 //记录当前更新时间
                 deviceUpgrade.setVersionUpdateTime(new Date());
@@ -173,7 +173,7 @@ public class DeviceUpgradeController {
 
                 //改动了更新包id（为新传过来的id），版本修改人，修改时间
                 IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
-                deviceUpgrade.setVersionUpdater(userObject.getUserName());
+                deviceUpgrade.setVersionUpdater(userObject.getUserId());
                 deviceUpgrade.setVersionUpdateTime(new Date());
                 deviceUpgrade.setUploadId(uploadId);
 

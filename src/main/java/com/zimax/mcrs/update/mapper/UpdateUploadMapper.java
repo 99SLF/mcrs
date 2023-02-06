@@ -3,6 +3,9 @@ package com.zimax.mcrs.update.mapper;
 import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
 import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfoVo;
+import com.zimax.mcrs.device.pojo.DeviceRollback;
+import com.zimax.mcrs.device.pojo.DeviceUpgrade;
+import com.zimax.mcrs.device.pojo.DeviceUploadUpgradeVo;
 import com.zimax.mcrs.update.pojo.UpdateUpload;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -100,6 +103,18 @@ public interface UpdateUploadMapper {
      */
      void updateUpload(UpdateUpload updateUpload) ;
 
+
+
+    /**
+     * 通过终端id获取，终端选择更新包升级，添加升级记录之前的是否有这条记录的校验
+     */
+    List<DeviceUpgrade> queryUpgradeCheck(Map map);
+
+
+    /**
+     * 通过终端id获取，终端选择更新包升级，添加升级记录之前的是否有这条记录的校验
+     */
+    List<DeviceRollback> queryRollbackCheck(Map map);
 
 
 }

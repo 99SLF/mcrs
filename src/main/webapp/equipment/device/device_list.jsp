@@ -260,27 +260,31 @@
                 }
             });
         },
-
         //升级
-
         upgrade: function () {
 
+            debugger;
+            //获取表单的所有内容
             var checkStatus = table.checkStatus("LAY-app-device-list-reload");
-
             var data = checkStatus.data;
-
             var maxVersions = new Array();
+
+
+            //获取所有返回数据的版本号
             for (var i = 0; i < data.length; i++) {
                 maxVersions[i] = data[i].version;
             }
+
             // 获取最大值版本号最大值：
             var maxVersion = maxVersions[0];
 
+            //返回选择数据中所有版本号中的最大值maxVersion
             for (var i = 1; i < maxVersions.length; i++) {
                 var cur = maxVersions[i];
                 cur > maxVersion ? maxVersion = cur : null
             }
-            console.log(maxVersion);
+            // console.log(maxVersion);
+
             if (data.length == 0) {
                 layer.msg("请至少选中一条记录！");
             }
@@ -288,6 +292,7 @@
                 var deviceIds = new Array();
                 var deviceSoftwareTypes = new Array();
                 var enables = new Array();
+                var registerStatuses = new Array();
                 for (var i = 0; i < data.length; i++) {
                     deviceIds[i] = data[i].deviceId;
                 }
@@ -295,7 +300,7 @@
                     deviceSoftwareTypes[i] = data[i].deviceSoftwareType;
                 }
 
-                //1、如果数组长度为一，就返回true
+                //判断该数组中的内容是否都一样，1、如果数组长度为一，就返回true
                 function same(arr) {
                     if (arr.length === 1) {
                         return true;
@@ -312,10 +317,17 @@
                     }
                 }
 
+                //获取是否启用值
                 for (var i = 0; i < data.length; i++) {
                     enables[i] = data[i].enable;
                 }
+                //获取注册状态
+                for (var i = 0; i < data.length; i++) {
+                    registerStatuses[i] = data[i].registerStatus;
+                }
 
+
+                //数值中是否存在未启用(注册状态)的一条数据
                 function contains(arr, val) {
                     for (var i = 0; i < arr.length; i++) {
                         if (arr[i] === val) {
@@ -327,51 +339,58 @@
 
                 //101 是 102 否
                 var isab = contains(enables, '102');
+
+                //101 已注册 102 未注册
+                var isre = contains(registerStatuses, '102');
                 var isSame = same(deviceSoftwareTypes);
                 var deviceSoftwareType = deviceSoftwareTypes[0];
 
-                if (isab == true) {
-                    layer.msg("该终端类型，未启用，无法升级！");
-                } else {
-                    if (isSame == false) {
-                        layer.msg("批量选择终端软件类型，软件类型必须一致！");
+                if (isre == true){
+                    layer.msg("升级的终端，存在未注册！");
+                }else{
+                    if (isab == true) {
+                        layer.msg("所选终端未启用，无法升级！");
                     } else {
-                        // layer.confirm("确定升级所选终端？", {
-                        //     icon: 3,
-                        //     title: "系统提示"
-                        // }, function (index) {
-                        top.layer.open({
-                            //弹窗
-                            type: 2,
-                            title: "选择更新版本",
-                            content: "<%=request.getContextPath() %>/update/update_package_selectVersion.jsp",
-                            area: ["800px", "560px"],
-                            resize: false,
-                            btn: ["确定", "取消"],
-                            success: function (layero, index) {
-                                var dataJson = {
-                                    win: window,
-                                    deviceIds: deviceIds,
-                                    maxVersion: maxVersion,
-                                    deviceSoftwareType: deviceSoftwareType
-                                };
-                                layero.find("iframe")[0].contentWindow.SetData(dataJson);
-                            },
-                            yes: function (index, layero) {
-                                var submit = layero.find("iframe").contents().find("#upgrade");
-                                submit.click();
+                        if (isSame == false) {
+                            layer.msg("升级的终端类型，类型必须一致！");
+                        } else {
+                            // layer.confirm("确定升级所选终端？", {
+                            //     icon: 3,
+                            //     title: "系统提示"
+                            // }, function (index) {
+                            top.layer.open({
+                                //弹窗
+                                type: 2,
+                                title: "选择更新版本",
+                                content: "<%=request.getContextPath() %>/update/update_package_selectVersion.jsp",
+                                area: ["800px", "560px"],
+                                resize: false,
+                                btn: ["确定", "取消"],
+                                success: function (layero, index) {
+                                    var dataJson = {
+                                        win: window,
+                                        deviceIds: deviceIds,
+                                        maxVersion: maxVersion,
+                                        deviceSoftwareType: deviceSoftwareType
+                                    };
+                                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                                },
+                                yes: function (index, layero) {
+                                    var submit = layero.find("iframe").contents().find("#upgrade");
+                                    submit.click();
 
-                                //top.layer.close(index);
-                                <%--top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");--%>
-                            }
-                        });
-                        // table.reload("LAY-app-device-list-reload");
-                        // });
+                                    //top.layer.close(index);
+                                    <%--top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");--%>
+                                }
+                            });
+                            // table.reload("LAY-app-device-list-reload");
+                            // });
 
+                        }
                     }
-
-
                 }
+
+
             }
 
 
@@ -382,12 +401,9 @@
             var checkStatus = table.checkStatus("LAY-app-device-list-reload");
             var data = checkStatus.data;
             var minVersions = new Array();
-
-
             for (var i = 0; i < data.length; i++) {
                 minVersions[i] = data[i].version;
             }
-
 
             // 获取最小值：
             var minVersion = minVersions[0];
@@ -407,12 +423,11 @@
                 var deviceIds = new Array();
                 var deviceSoftwareTypes = new Array();
                 var enables = new Array();
+                var registerStatuses = new Array();
                 //存放到终端数组
                 for (var i = 0; i < data.length; i++) {
                     deviceIds[i] = data[i].deviceId;
                 }
-
-
                 for (var i = 0; i < data.length; i++) {
                     deviceSoftwareTypes[i] = data[i].deviceSoftwareType;
                 }
@@ -448,11 +463,14 @@
 
                     }
                 }
-
+                //获取启用状态
                 for (var i = 0; i < data.length; i++) {
                     enables[i] = data[i].enable;
                 }
-
+                //获取注册状态
+                for (var i = 0; i < data.length; i++) {
+                    registerStatuses[i] = data[i].registerStatus;
+                }
                 function contains(arr, val) {
                     for (var i = 0; i < arr.length; i++) {
                         if (arr[i] === val) {
@@ -463,45 +481,58 @@
                 }
                 //101 是 102 否
                 var isab = contains(enables, '102');
+
+                //101 已注册 102 未注册
+                var isre = contains(registerStatuses, '102');
                 var isSame = same(deviceSoftwareTypes);
                 var deviceSoftwareType = deviceSoftwareTypes[0];
 
-                if (isab == true) {
-                    layer.msg("该终端类型，未启用，无法回退！");
-                } else {
-                    if (isSame == false) {
-                        layer.msg("批量选择终端软件类型，软件类型必须一致！");
+                if (isre == true){
+                    layer.msg("回退的终端，存在未注册！");
+                }else{
+                    if (isab == true) {
+                        layer.msg("所选终端未启用，无法回退！");
                     } else {
-                        top.layer.open({
-                            //弹窗
-                            type: 2,
-                            title: "选择回退版本",
-                            content: "<%=request.getContextPath() %>/update/update_package_selectVersion_rollback.jsp",
-                            area: ["800px", "560px"],
-                            resize: false,
-                            btn: ["确定", "取消"],
-                            success: function (layero, index) {
-                                var dataJson = {
-                                    win: window,
-                                    deviceIds: deviceIds,
-                                    minVersion: minVersion,
-                                    deviceSoftwareType: deviceSoftwareType
-                                };
-                                layero.find("iframe")[0].contentWindow.SetData(dataJson);
-                            },
-                            yes: function (index, layero) {
+                        if (minVersion == "1.0"){
+                            layer.msg("所选终端存在初始版本，无需回退！");
+                        }else {
+                            if (isSame == false) {
+                                layer.msg("回退的终端类型，类型必须一致！");
+                            } else {
+                                top.layer.open({
+                                    //弹窗
+                                    type: 2,
+                                    title: "选择回退版本",
+                                    content: "<%=request.getContextPath() %>/update/update_package_selectVersion_rollback.jsp",
+                                    area: ["800px", "560px"],
+                                    resize: false,
+                                    btn: ["确定", "取消"],
+                                    success: function (layero, index) {
+                                        var dataJson = {
+                                            win: window,
+                                            deviceIds: deviceIds,
+                                            minVersion: minVersion,
+                                            deviceSoftwareType: deviceSoftwareType
+                                        };
+                                        layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                                    },
+                                    yes: function (index, layero) {
 
-                                var submit = layero.find("iframe").contents().find("#rollback");
-                                submit.click();
+                                        var submit = layero.find("iframe").contents().find("#rollback");
+                                        submit.click();
 
-                                //top.layer.close(index);
-                                <%--top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");--%>
+                                        //top.layer.close(index);
+                                        <%--top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");--%>
+                                    }
+                                });
+                                // table.reload("LAY-app-device-list-reload");
                             }
-                        });
-
-                        // table.reload("LAY-app-device-list-reload");
+                        }
                     }
+
                 }
+
+
             }
 
         },

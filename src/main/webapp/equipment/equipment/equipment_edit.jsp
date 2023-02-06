@@ -14,6 +14,12 @@
     <meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
     <title>设备编辑</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
+    <style>
+        .layui-textarea {
+            height: 5px !important;
+            /*min-height: 60px!important;*/
+        }
+    </style>
 </head>
 <body>
 <div class="layui-fluid">

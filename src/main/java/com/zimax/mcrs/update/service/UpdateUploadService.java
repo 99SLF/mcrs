@@ -6,6 +6,9 @@ import com.zimax.components.coframe.framework.pojo.Menu;
 import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
 import com.zimax.mcrs.config.ChangeString;
+import com.zimax.mcrs.device.pojo.DeviceRollback;
+import com.zimax.mcrs.device.pojo.DeviceUpgrade;
+import com.zimax.mcrs.device.pojo.DeviceUploadUpgradeVo;
 import com.zimax.mcrs.report.mapper.AbnProdPrcsReportMapper;
 import com.zimax.mcrs.report.pojo.AbnProdPrcs;
 import com.zimax.mcrs.update.mapper.UpdateUploadMapper;
@@ -247,6 +250,36 @@ public class UpdateUploadService {
         updateUpload.setVersionUpdateTime(new Date());
         updateUploadMapper.updateUpload(updateUpload);
     }
+
+
+
+    /**
+     * 通过终端id获取升级记录为未更新的List(三个主键数据)
+     * （终端选择更新包升级，添加升级记录之前的是否有这条记录的校验）
+     * @param
+     * @return
+     */
+    public List<DeviceUpgrade> queryUpgradeCheck(String deviceId,String uploadId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("deviceId", deviceId);
+        map.put("uploadId", uploadId);
+        return updateUploadMapper.queryUpgradeCheck(map);
+    }
+
+
+    /**
+     * 通过终端id获取回退记录为未更新的List(三个主键数据)
+     * （终端选择更新包升级，添加回退记录之前的是否有这条记录的校验）
+     * @param
+     * @return
+     */
+    public List<DeviceRollback> queryRollbackCheck(String deviceId, String uploadId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("deviceId", deviceId);
+        map.put("uploadId", uploadId);
+        return updateUploadMapper.queryRollbackCheck(map);
+    }
+
 
 
 

@@ -3,18 +3,16 @@ package com.zimax.mcrs.update.controller;
 
 import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
-import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
-import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfoVo;
 import com.zimax.mcrs.config.Result;
+import com.zimax.mcrs.device.pojo.DeviceRollback;
+import com.zimax.mcrs.device.pojo.DeviceUpgrade;
 import com.zimax.mcrs.serialnumber.service.SerialnumberService;
 import com.zimax.mcrs.update.javaBean.UploadJava;
 import com.zimax.mcrs.update.mapper.UpdateUploadMapper;
 import com.zimax.mcrs.update.pojo.UpdateUpload;
 import com.zimax.mcrs.update.service.UpdateUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -333,28 +331,110 @@ public class UpdateUploadController {
     /**
      * (更新包上传管理——编辑)
      * 获取当前软件更新包的最新的版本
+     *
      * @param
      * @return
      */
     @GetMapping("/getLastVersion")
-    public Result<?> getLastVersion(String deviceSoType){
-        Map<String,Object> maps = new HashMap<>();
+    public Result<?> getLastVersion(String deviceSoType) {
+        Map<String, Object> maps = new HashMap<>();
         List<UpdateUpload> updateUploadList = updateUploadService.getLastVersion(deviceSoType);//查询出当前的软件类型的最新的版本号数据
-        maps.put("data",updateUploadList);
+        maps.put("data", updateUploadList);
         return Result.success(updateUploadList);
     }
 
     /**
-     * 更新更新包上传的更新策略和备注
+     * 更新，更新包上传的更新策略和备注（编辑页面）
+     *
      * @param
      * @return
      */
     @PostMapping("/update")
-    public Result<?> updateUpload(@RequestBody  UpdateUpload updateUpload) {
+    public Result<?> updateUpload(@RequestBody UpdateUpload updateUpload) {
         updateUploadService.updateUpload(updateUpload);
         return Result.success();
     }
 
 
+    /**
+     * 终端升级时，判断终端要升级的更新包在升级表中是否已经有这条记录或者改条记录处于升级中，（未升级或升级中 记录数）
+     * 终端选择更新包升级
+     *
+     * @param
+     * @return
+     */
+
+    @PostMapping("/recordExistsUg")
+    public Result<?> recordExistsUg(@RequestBody Map json) {
+
+           //将前端传来的数据做拆分
+        String deviceIds = json.get("DeviceIds").toString().substring(1, json.get("DeviceIds").toString().length() - 1).replace('"', ' ');
+        String uploadIdString = json.get("UploadId").toString();
+        int uploadId = Integer.parseInt(uploadIdString);
+        String[] deviceIdArray = deviceIds.split(",");
+        ArrayList<String> array = new ArrayList<String>();
+        for (String key : deviceIdArray) {
+
+            //1.转型
+            int deviceId = Integer.valueOf(key.replace(" ", ""));
+
+            //2.如果传过来的终端id查询升级表中，所有匹配，终端主键，更新包主键，升级状态为未升级或者时升级状态为升级中的所有数据
+            List<DeviceUpgrade> lists = new ArrayList<DeviceUpgrade>();
+            lists = updateUploadService.queryUpgradeCheck(String.valueOf(deviceId), String.valueOf(uploadId));
+            int i = lists.size();
+            array.add(String.valueOf(i));
+        }
+        Set<String> stringSet = new HashSet<>(array);
+
+            //3.查询没有符合条件的数据，即lists的长度为0 ,可以添加数据
+
+        if (stringSet.size() == 1 && Collections.max(stringSet).equals("0")) {
+            return Result.success("0", "");
+        } else {
+            //4.查询有符合条件的数据，即lists的长度大于0 ,不不可以添加数据
+            return Result.error("1", "升级的版本，正在升级队列中");
+        }
+    }
+
+
+    /**
+     * 终端回退时，判断终端要升级的更新包在回退表中是否已经有这条记录或者该条记录处于回退中，（未回退或回退中 记录数） 100 101
+     * 终端选择更新包升级
+     *
+     * @param
+     * @return
+     */
+
+    @PostMapping("/recordExistsRb")
+    public Result<?> recordExistsRb(@RequestBody Map json) {
+
+        //将前端传来的数据做拆分
+        String deviceIds = json.get("DeviceIds").toString().substring(1, json.get("DeviceIds").toString().length() - 1).replace('"', ' ');
+        String uploadIdString = json.get("UploadId").toString();
+        int uploadId = Integer.parseInt(uploadIdString);
+        String[] deviceIdArray = deviceIds.split(",");
+        ArrayList<String> array = new ArrayList<String>();
+        for (String key : deviceIdArray) {
+
+            //1.转型
+            int deviceId = Integer.valueOf(key.replace(" ", ""));
+
+            //2.如果传过来的终端id查询升级表中，所有匹配，终端主键，更新包主键，升级状态为未回退或者是回退状态为回退中的所有数据
+            List<DeviceRollback> lists = new ArrayList<DeviceRollback>();
+            lists = updateUploadService.queryRollbackCheck(String.valueOf(deviceId), String.valueOf(uploadId));
+            int i = lists.size();
+            array.add(String.valueOf(i));
+        }
+        Set<String> stringSet = new HashSet<>(array);
+
+        //3.查询没有符合条件的数据，即lists的长度为0 ,可以添加数据
+
+        if (stringSet.size() == 1 && Collections.max(stringSet).equals("0")) {
+            return Result.success("0", "");
+        } else {
+            //4.查询有符合条件的数据，即lists的长度大于0 ,不不可以添加数据
+            return Result.error("1", "回退版本，正在回退队列中");
+        }
+    }
 
 }

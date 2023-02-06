@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <!-- 
-  - Author(s): 林俊杰
+  - Author(s): 李伟杰
   - Date: 2022-12-14 10:05:20
   - Description:
 -->
@@ -11,22 +11,57 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=deviceUpgrade-width, initial-scale=1, maximum-scale=1">
     <title>终端回退信息</title>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/common/layui/css/layui.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/std/dist/style/admin.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/std/dist/style/custom.css?v=1.0.0">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/iconfont/iconfont.css">
+    <style>
+        .layui-card {
+            margin-bottom: 0px
+        }
+
+        .layui-layer-adminRight {
+            top: 0px !important;
+            bottom: 0;
+            box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
+            border-radius: 0;
+            overflow: auto
+        }
+
+        .layui-form-item .layui-inline {
+            margin-bottom: 0px !important;
+            margin-right: 0px !important;
+        }
+
+        .layui-form-label {
+            width: 120px !important;
+            padding: 5px 0px !important;
+        }
+
+        .layui-form-item .layui-input-inline {
+            float: left;
+            width: 150px;
+            margin-right: 10px;
+        }
+
+        .layui-input {
+            height: 30px !important;
+        }
+    </style>
 </head>
 <body>
-<div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+<div class="layui-card">
+    <script type="text/html" id="toolbar">
+        <div class="layui-form layuiadmin-card-header-auto" lay-filter="layuiadmin-deviceRollback-form"
+             id="layuiadmin-deviceRollback-form">
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">终端名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="deviceName" placeholder="请输入终端名称" autocomplete="off"
-                               class="layui-input">
+                        <input type="text" class="layui-input" name="deviceName" autocomplete="off"/>
                     </div>
-
+                </div>
+                <div class="layui-inline">
                     <label class="layui-form-label">终端类型：</label>
                     <div class="layui-input-inline">
                         <select name="deviceSoftwareType" id="deviceSoftwareType" lay-filter="deviceSoftwareType"
@@ -38,51 +73,25 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">回退版本号：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="version" placeholder="请输入版本号" autocomplete="off"
-                               class="layui-input">
-                    </div>
-
-                    <label class="layui-form-label">版本回退人：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="versionRollbackPeople" placeholder="请输入版本更改人" autocomplete="off"
-                               class="layui-input">
+                        <input type="text" class="layui-input" name="version" autocomplete="off"/>
                     </div>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">版本回退时间：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="versionRollbackTime"  id="versionRollbackTime" placeholder="请选择版本回退时间"
-                               autocomplete="off" id="test"
-                               class="layui-input">
-                    </div>
-                    <div class="layui-inline layui-search" style="padding-left:15px">
-                        <button class="layui-btn layuiadmin-btn-list" lay-submit
-                                lay-filter="LAY-app-deviceUpgradelist-search"
-                                id="LAY-app-deviceUpgradelist-search">
-                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                        </button>
-                    </div>
+                <div class="layui-inline layui-hide">
+                    <button id="LAY-app-deviceRollback-list-search" class="layui-btn layuiadmin-btn-list" lay-submit
+                            lay-filter="LAY-app-deviceRollback-list-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
                 </div>
-
             </div>
         </div>
+    </script>
+    <div class="layui-card-body">
+        <table id="LAY-app-deviceRollback-list" lay-filter="LAY-app-deviceRollback-list"></table>
 
-        <div class="layui-card-body">
-                        <div class="layui-toolbar" id="toolbar" hidden="true">
-<%--                            <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i--%>
-<%--                                    class="layui-icon layui-icon-add-circle-fine"></i>回退--%>
-<%--                            </button>--%>
-                        </div>
-
-            <table id="LAY-app-deviceUpgrade-list" lay-filter="LAY-app-deviceUpgrade-list"></table>
-
-            <script type="text/html" id="table-deviceUpgrade-list">
-                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="configurationFile"><i
-                        class="layui-icon layui-icon-edit"></i>详情</a>
-                <%--                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i--%>
-                <%--                        class="layui-icon layui-icon-delete"></i>删除</a>--%>
-            </script>
-        </div>
+        <script type="text/html" id="table-deviceRollback-list">
+            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="configurationFile"><i
+                    class="layui-icon layui-icon-file-b"></i>详细</a>
+        </script>
     </div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
@@ -92,7 +101,7 @@
         base: "<%=request.getContextPath()%>/"
     });
 </script>
-
+<%--字典--%>
 <script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
 <script type="text/javascript">
     var layer = layui.layer;
@@ -100,6 +109,9 @@
     var form = layui.form;
     var $ = layui.jquery;
     var util = layui.util;
+    var admin = layui.admin;
+    var view = layui.view;
+
     //全局参数
     var req_data;
 
@@ -109,91 +121,53 @@
     var hiddenFields = [];
 
 
-    var laydate = layui.laydate;
-    //日期时间选择器
-    laydate.render({
-        elem: '#versionRollbackTime',
-        type: 'date'
-    });
+    // 焦点名称
+    var focusName = null;
 
-    layui.admin.renderDictSelect({
-        elem: "#deviceSoftwareType",
-        dictTypeId: "DEVICE_SOFTWARE_TYPE"
-    });
+    // 高级查询参数
+    var advancedFormData = {};
 
     //监听搜索
-    form.on("submit(LAY-app-deviceUpgradelist-search)", function (data) {
+    form.on("submit(LAY-app-deviceRollback-list-search)", function (data) {
         var field = data.field;
-        table.reload("LAY-app-deviceUpgrade-list-reload", {
-            where: field
+        reloadData(field);
+        var formData = {
+            deviceName: field.deviceName,
+            deviceSoftwareType: field.deviceSoftwareType,
+            version: field.version
+        };
+
+        //设置整个表单数据 layuiadmin-update_package-form
+        form.val("layuiadmin-deviceRollback-form", formData);
+        advancedFormData = $.extend(advancedFormData, formData);
+    });
+
+    function reloadData(formData) {
+
+        //读取表格数据 表格id LAY-app-update_package-list-reload
+        table.reload("LAY-app-deviceRollback-list-reload", {
+            where: formData
         });
-    });
-    form.render();
-
-    //下拉框监听事件
-    form.on("select(deviceSoftwareType)", function(data) {
-        var submit = $("#LAY-app-deviceUpgradelist-search");
-        submit.click();
-    });
-
-    // //日期
-    // laydate.render({
-    //     elem: '#test',
-    //     format: 'yyyy-MM-dd',
-    //     trigger: 'click',   //解决时间选择器一闪而过的情况
-    // });
-    //
-    // var startDate = laydate.render({
-    //     elem: '#test',
-    //     type: 'date',//设置日期的类型
-    //     trigger:'click',
-    //     done: function(value, date) {
-    //         if (value != "") {
-    //             date.month = date.month - 1;
-    //             date.date = date.date + 1;
-    //             endDate.config.min = date;
-    //         } else {
-    //             endDate.config.min = startDate.config.min;
-    //         }
-    //     },
-    // });
-
-
-    //文本框回车事件
-    $(".layui-input").on("keydown", function (event) {
-        if (event.keyCode == 13) {
-            var submit = $("#LAY-app-deviceUpgradelist-search");
-            submit.click();
-            return false;
+        formReder();
+        if (focusName) {
+            $("input[name=" + focusName + "]").focus();
         }
-    });
+    }
 
-    <%--var active = {--%>
-    <%--    //设备新建--%>
-    <%--    add: function () {--%>
-    <%--        top.layer.open({--%>
-    <%--            type: 2,--%>
-    <%--            title: "设备新建",--%>
-    <%--            content: "<%= request.getContextPath() %>/deviceUpgrade/deviceUpgrade/deviceUpgrade_add.jsp",--%>
-    <%--            area: ["1000px", "560px"],--%>
-    <%--            resize: false,--%>
-    <%--            btn: ["确定", "取消"],--%>
-    <%--            success: function (layero, index) {--%>
-    <%--                var dataJson = {--%>
-    <%--                    win: window,--%>
-    <%--                };--%>
-    <%--                layero.find("iframe")[0].contentWindow.SetData(dataJson);--%>
-    <%--            },--%>
-    <%--            yes: function (index, layero) {--%>
-    <%--                var submit = layero.find("iframe").contents().find("#layuiadmin-app-form-submit");--%>
-    <%--                submit.click();--%>
-    <%--            }--%>
-    <%--        });--%>
-    <%--    },--%>
-    <%--};--%>
+    function setFormData(data) {
+        advancedFormData = data;
+        reloadData(data);
 
-    table.on('sort(LAY-app-deviceUpgrade-list)', function (obj) {
-        table.reload('LAY-app-deviceUpgrade-list-reload', {
+        //将设置整个表单的数据
+        form.val("layuiadmin-deviceRollback-form", {
+            deviceName: data.deviceName,
+            deviceSoftwareType: data.deviceSoftwareType,
+            version: data.version
+        });
+    }
+
+    table.on('sort(LAY-app-deviceRollback-list)', function (obj) {
+        table.reload('LAY-app-deviceRollback-list-reload', {
             initSort: obj,
             where: {
                 sortField: obj.field,
@@ -203,14 +177,15 @@
     });
 
     //左侧表头按钮事件监听
-    table.on("toolbar(LAY-app-deviceUpgrade-list)", function (obj) {
+    table.on("toolbar(LAY-app-deviceRollback-list)", function (obj) {
         var type = obj.event;
         active[type] ? active[type].call(this) : "";
     });
 
+
     //表格排序
-    table.on("sort(LAY-app-deviceUpgrade-list)", function (obj) {
-        table.reload("LAY-app-deviceUpgrade-list-reload", {
+    table.on("sort(LAY-app-deviceRollback-list)", function (obj) {
+        table.reload("LAY-app-deviceRollback-list-reload", {
             initSort: obj,
             where: {
                 sortField: obj.field,
@@ -228,11 +203,10 @@
 
 
     $(window).resize(function () {
-        table.reload("LAY-app-deviceUpgrade-list-reload", {
+        table.reload("LAY-app-deviceRollback-list-reload", {
             height: "full-" + getFullSize()
         });
     });
-
 
     // 查询过滤字段
     $.ajax({
@@ -260,10 +234,9 @@
         return false;
     }
 
-
     table.render({
-        elem: "#LAY-app-deviceUpgrade-list",
-        id: "LAY-app-deviceUpgrade-list-reload",
+        elem: "#LAY-app-deviceRollback-list",
+        id: "LAY-app-deviceRollback-list-reload",
         url: "<%= request.getContextPath() %>/equipment/deviceRollback/query",
         method: "GET",
         height: "full-" + getFullSize(),
@@ -271,7 +244,15 @@
         limit: 10,
         limits: [10, 15, 20, 30],
         toolbar: "#toolbar",
-        defaultToolbar: ["filter"],
+        defaultToolbar: [{
+            title: "查询",
+            layEvent: "search",
+            icon: "layui-icon layui-icon-search layuiadmin-button-btn",
+        }, {
+            title: "高级查询",
+            layEvent: "query",
+            icon: "icon iconfont icon-gaojichaxun",
+        }, "filter"],
         colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;
@@ -313,7 +294,7 @@
             align: "center",
             minWidth: 120,
             hide: isHidden("deviceSoftwareType"),
-            templet:function(d) {
+            templet: function (d) {
 
                 return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoftwareType);
             }
@@ -330,14 +311,20 @@
             minWidth: 150,
             hide: isHidden("equipmentName")
         }, {
+            field: "equipmentName",
+            title: "设备类型",
+            align: "center",
+            minWidth: 150,
+            hide: isHidden("equipmentName")
+        }, {
             field: "uploadNumber",
-            title: "资源包单号",
+            title: "更新包单号",
             align: "center",
             minWidth: 180,
             hide: isHidden("uploadNumber")
         }, {
             field: "version",
-            title: "升级版本号",
+            title: "回退版本号",
             align: "center",
             minWidth: 100,
             hide: isHidden("version")
@@ -347,54 +334,106 @@
             align: "center",
             minWidth: 150,
             hide: isHidden("upgradeStatus"),
-            templet:function(d) {
+            templet: function (d) {
                 return layui.admin.getDictText("Rollback", d.upgradeStatus);
             }
-        },
-            //     {
-            //     field: "mesContinueIp",
-            //     title: "接入点名称",
-            //     align: "center",
-            //     minWidth: 120,
-            //     hide: isHidden("mesContinueIp")
-            // },
-            //     {
-            //     field: "mesContinueIp",
-            //     title: "设备类型",
-            //     align: "center",
-            //     minWidth: 120,
-            //     hide: isHidden("mesContinueIp")
-            // },
-            {
-                field: "factoryName",
-                title: "工厂名称",
-                align: "center",
-                minWidth: 100,
-                hide: isHidden("factoryName")
-            }, {
-                field: "versionRollbackPeople",
-                title: "版本回退人",
-                align: "center",
-                minWidth: 120,
-                hide: isHidden("versionRollbackPeople")
-            }, {
-                field: "versionRollbackTime",
-                title: "版本回退时间",
-                align: "center",
-                minWidth: 200,
-                hide: isHidden("versionRollbackTime")
-            }, {
-                title: "配置文件",
-                align: "center",
-                fixed: "right",
-                width: 90,
-                toolbar: "#table-deviceUpgrade-list"
+        }, {
+            field: "accPointResName",
+            title: "接入点名称",
+            align: "center",
+            minWidth: 150,
+            hide: isHidden("accPointResName")
+        }, {
+            field: "factoryName",
+            title: "工厂名称",
+            align: "center",
+            minWidth: 150,
+            hide: isHidden("factoryName")
+        }, {
+            field: "createName",
+            title: "版本回退人",
+            align: "center",
+            minWidth: 150,
+            hide: isHidden("createName")
+        }, {
+            field: "versionRollbackTime",
+            title: "版本回退时间",
+            align: "center",
+            minWidth: 200,
+            hide: isHidden("versionRollbackTime")
+        }, {
+            title: "配置文件",
+            align: "center",
+            fixed: "right",
+            width: 90,
+            toolbar: "#table-deviceRollback-list"
 
-            }]]
+        }]]
     });
 
+    formReder();
+
+    function formReder() {
+        // 文本框回车事件
+        $(".layui-input").on("keydown", function (event) {
+            if (event.keyCode == 13) {
+                focusName = event.target.name;
+                var submit = $("#LAY-app-deviceRollback-list-search");
+                submit.click();
+                return false;
+            }
+        });
+
+        //软件类型下拉框监听事件
+        form.on("select(deviceSoftwareType)", function (data) {
+            var submit = $("#LAY-app-deviceRollback-list-search");
+            submit.click();
+        });
+
+        // 获取终端类型的下拉值
+        layui.admin.renderDictSelect({
+            elem: "#deviceSoftwareType",
+            dictTypeId: "DEVICE_SOFTWARE_TYPE"
+        });
+        form.render();
+    }
+
+    var active = {
+        search: function () {
+            //点击搜索
+            var submit = $("#LAY-app-deviceRollback-list-search");
+            submit.click();
+            return false;
+        },
+        //高级搜索
+        query: function () {
+            var url = "<%=request.getContextPath() %>/equipment/deviceUpgrade/device_rollback_from_query.jsp";
+            admin.popupRight({
+                type: 2,
+                content: [url, "yes"],
+                btn: ["查询", "重置", "取消"],
+                success: function (layero, index) {
+                    var dataJson = {
+                        win: window,
+                        data: advancedFormData
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function (index, layero) {
+                    var submit = layero.find("iframe").contents().find("#LAY-app-deviceRollback-list-search-advanced");
+                    submit.click();
+                    top.layer.close(index);
+                },
+                btn2: function (index, layero) {
+                    layero.find("iframe")[0].contentWindow.reset();
+                }
+            });
+        },
+    };
+
+
     //监听操作事件
-    table.on("tool(LAY-app-deviceUpgrade-list)", function (e) {
+    table.on("tool(LAY-app-deviceRollback-list)", function (e) {
         //当前行数据
         var data = e.data;
         var appId = data.aPPId;
@@ -414,7 +453,7 @@
                     layero.find("iframe")[0].contentWindow.SetData(dataJson);
                 },
                 yes: function (index, layero) {
-                    var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");
+                    // var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");
                     parent.layer.close(index);
                 }
 
@@ -422,73 +461,7 @@
         }
     });
 
-    <%--//监听操作事件--%>
-    <%--table.on("tool(LAY-app-deviceUpgrade-list)", function (e) {--%>
-    <%--    var data = e.data;--%>
-    <%--    if (e.event == "edit") {--%>
-    <%--        top.layer.open({--%>
-    <%--            type: 2,--%>
-    <%--            title: "编辑设备信息",--%>
-    <%--            content: "<%= request.getContextPath() %>/deviceUpgrade/deviceUpgrade/deviceUpgrade_edit.jsp",--%>
-    <%--            area: ["1000px", "560px"],--%>
-    <%--            resize: false,--%>
-    <%--            btn: ["确定", "取消"],--%>
-    <%--            success: function (layero, index) {--%>
-    <%--                var dataJson = {--%>
-    <%--                    data: data,--%>
-    <%--                    win: window--%>
-    <%--                };--%>
-    <%--                layero.find("iframe")[0].contentWindow.SetData(dataJson);--%>
-    <%--            },--%>
-    <%--            yes: function (index, layero) {--%>
-    <%--                var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");--%>
-    <%--                edit.click();--%>
-    <%--            }--%>
 
-    <%--        });--%>
-    <%--    } else if (e.event == "del") {--%>
-    <%--        layer.confirm("确定删除该设备？", {--%>
-    <%--            icon: 3,--%>
-    <%--            title: "系统提示"--%>
-    <%--        }, function (index) {--%>
-    <%--            $.ajax({--%>
-    <%--                url: "<%= request.getContextPath() %>/deviceUpgrade/deviceUpgrade/delete/" + data.deviceUpgradeInt,--%>
-    <%--                type: "DElETE",--%>
-    <%--                data: JSON.stringify({--%>
-    <%--                    deviceUpgrade: data--%>
-    <%--                }),--%>
-    <%--                cache: false,--%>
-    <%--                contentType: "text/json",--%>
-    <%--                success: function (result) {--%>
-    <%--                    if (result.exception) {--%>
-    <%--                        layer.alert(result.exception.message, {--%>
-    <%--                            icon: 2,--%>
-    <%--                            title: "系统提示"--%>
-    <%--                        });--%>
-    <%--                    } else if (result) {--%>
-    <%--                        layer.msg("删除成功", {--%>
-    <%--                            icon: 1,--%>
-    <%--                            time: 500--%>
-    <%--                        }, function () {--%>
-    <%--                            table.reload("LAY-app-deviceUpgrade-list-reload");--%>
-    <%--                        });--%>
-    <%--                    } else {--%>
-    <%--                        layer.msg("删除失败！", {--%>
-    <%--                            icon: 2,--%>
-    <%--                            time: 2000--%>
-    <%--                        });--%>
-    <%--                    }--%>
-    <%--                },--%>
-    <%--                error: function (jqXHR, textStatus, errorThrown) {--%>
-    <%--                    layer.msg(jqXHR.responseText, {--%>
-    <%--                        time: 500,--%>
-    <%--                        icon: 5--%>
-    <%--                    });--%>
-    <%--                }--%>
-    <%--            });--%>
-    <%--        });--%>
-    <%--    }--%>
-    <%--});--%>
 
     //批量选中
     $("body").on("click", ".layui-table-body table.layui-table tbody tr td", function () {

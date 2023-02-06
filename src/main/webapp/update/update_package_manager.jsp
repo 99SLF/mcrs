@@ -115,6 +115,13 @@
              id="layuiadmin-update_package-form">
             <div class="layui-form-item">
                 <div class="layui-inline">
+                    <label class="layui-form-label">更新包单号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="uploadNumber" placeholder="" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
                     <label class="layui-form-label">版本号：</label>
                     <div class="layui-input-inline">
                         <input type="text" name="version" placeholder="" autocomplete="off"
@@ -171,10 +178,6 @@
     var admin = layui.admin;
     var view = layui.view;
 
-    layui.admin.renderDictSelect({    //获取终端软件类型
-        elem: "#deviceSoType",
-        dictTypeId: "DEVICE_SOFTWARE_TYPE"
-    });
     //全局参数
     var req_data;
 
@@ -194,6 +197,7 @@
         var field = data.field;
         reloadData(field);
         var formData = {
+            uploadNumber:field.uploadNumber,
             version: field.version,
             deviceSoType: field.deviceSoType
         };
@@ -218,9 +222,9 @@
     function setFormData(data) {
         advancedFormData = data;
         reloadData(data);
-
         //将设置整个表单的数据
         form.val("layuiadmin-update_package-form", {
+            uploadNumber:data.uploadNumber,
             version: data.version,
             deviceSoType: data.deviceSoType
         });

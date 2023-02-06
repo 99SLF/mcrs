@@ -40,23 +40,23 @@ public class DeviceRollbackController {
     private UpdatePackageService UpdatePackageService;
 
     /**
-     * 条件查询
+     * 条件查询(回退记录表)
      *
-     * @param version        升级版本号
-     * @param deviceName         终端名称
-     * @param deviceSoftwareType 终端软件类型
-     * @param versionRollbackPeople 版本更改人
-     * @param versionRollbackTime   版本更改时间
-     * @param limit                 记录数
-     * @param page                  页码
-     * @param field                 排序字段
-     * @param order                 排序方式
+     * @param version             升级版本号
+     * @param deviceName          终端名称
+     * @param deviceSoftwareType  终端软件类型
+     * @param versionRollbackTime 版本更改人
+     * @param createName          版本更改人
+     * @param limit               记录数
+     * @param page                页码
+     * @param field               排序字段
+     * @param order               排序方式
      * @return 终端列表
      */
     @GetMapping("/deviceRollback/query")
-    public Result<?> queryDeviceUpgrade(String page, String limit,  String deviceName, String deviceSoftwareType, String version, String versionRollbackPeople, String versionRollbackTime, String order, String field) {
-        List deviceRollback = deviceRollbackService.queryDeviceRollback(page, limit, deviceName, deviceSoftwareType,version, versionRollbackPeople, versionRollbackTime, order, field);
-        return Result.success(deviceRollback, deviceRollbackService.count(deviceName,deviceSoftwareType, version,versionRollbackPeople,versionRollbackTime));
+    public Result<?> queryDeviceUpgrade(String page, String limit, String deviceName, String deviceSoftwareType, String equipmentId, String equipmentName, String equipTypeName, String uploadNumber, String version, String accPointResName, String createName, String versionRollbackTime, String order, String field) {
+        List deviceRollback = deviceRollbackService.queryDeviceRollback(page, limit, deviceName, deviceSoftwareType, equipmentId, equipmentName, equipTypeName, uploadNumber, version, accPointResName, createName, versionRollbackTime, order, field);
+        return Result.success(deviceRollback, deviceRollbackService.count(deviceName, deviceSoftwareType, equipmentId, equipmentName, equipTypeName, uploadNumber, version, accPointResName, createName, versionRollbackTime));
     }
 
 
@@ -70,7 +70,7 @@ public class DeviceRollbackController {
         //获取前端终端主键
         String deviceIds = json.get("DeviceIds").toString().substring(1, json.get("DeviceIds").toString().length() - 1).replace('"', ' ');
 
-       //获取更新包主键
+        //获取更新包主键
         String uploadIdString = json.get("UploadId").toString();
         int uploadId = Integer.parseInt(uploadIdString);
 
@@ -83,7 +83,7 @@ public class DeviceRollbackController {
 
             //如果传过来的终端id查询数据库所有未回退的记录数。（条件，终端主键，未升级）
             List<DeviceUploadRollbackVo> lists = new ArrayList<DeviceUploadRollbackVo>();
-            lists = deviceRollbackService.queryRollRecordId (String.valueOf(deviceId));
+            lists = deviceRollbackService.queryRollRecordId(String.valueOf(deviceId));
             int i = lists.size();
 
             //没有有数据（list集合，长度数<1），新增一条升级记录
@@ -99,7 +99,7 @@ public class DeviceRollbackController {
 
                 //获取更新人
                 IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
-                deviceRollback.setVersionRollbackPeople(userObject.getUserName());
+                deviceRollback.setVersionRollbackPeople(userObject.getUserId());
 
                 //记录当前更新时间
                 deviceRollback.setVersionRollbackTime(new Date());
@@ -150,7 +150,7 @@ public class DeviceRollbackController {
 
                 //改动了更新包id（为新传过来的id），版本修改人，修改时间
                 IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
-                deviceRollback.setVersionRollbackPeople(userObject.getUserName());
+                deviceRollback.setVersionRollbackPeople(userObject.getUserId());
                 deviceRollback.setVersionRollbackTime(new Date());
                 deviceRollback.setUploadId(uploadId);
 
@@ -164,12 +164,6 @@ public class DeviceRollbackController {
     }
 
 
-
-
-
-
-
-
     /**
      * 检测选择的升级记录信息是否已经回滚记录
      *
@@ -177,9 +171,9 @@ public class DeviceRollbackController {
      */
     @GetMapping("/rollback/check/isExist")
     public Result<?> check(@RequestParam("deviceUpgradeId") String deviceUpgradeId) {
-        if(deviceRollbackService.check(deviceUpgradeId)>0){
-            return Result.error("1","当前所选升级记录，已存在回退记录，请重新选择");
-        }else {
+        if (deviceRollbackService.check(deviceUpgradeId) > 0) {
+            return Result.error("1", "当前所选升级记录，已存在回退记录，请重新选择");
+        } else {
             return Result.success();
         }
 

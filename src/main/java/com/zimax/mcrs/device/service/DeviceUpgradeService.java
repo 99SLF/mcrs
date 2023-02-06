@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * 终端更新记录
  *
- * @author 林俊杰
+ * @author 李伟杰
  * @date 2022/11/30
  */
 @Service
@@ -27,9 +27,11 @@ public class DeviceUpgradeService {
     private DeviceUpgradeMapper deviceUpgradeMapper;
 
     /**
-     * 查询所有终端更新信息
+     * 查询所有终端更新信息（升级记录表）
      */
-    public List<DeviceUpgradeVo> queryDeviceUpgrades(String page, String limit, String deviceName,String deviceSoftwareType, String version, String versionUpdater, String versionUpdateTime, String order, String field) {
+    public List<DeviceUpgradeVo> queryDeviceUpgrades(String page, String limit, String deviceName, String deviceSoftwareType,
+                                                     String equipmentId, String equipmentName, String equipTypeName, String uploadNumber,
+                                                     String version, String accPointResName, String createName, String versionUpdateTime, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -45,17 +47,24 @@ public class DeviceUpgradeService {
         }
         map.put("deviceName", deviceName);
         map.put("deviceSoftwareType", deviceSoftwareType);
+        map.put("equipmentId", equipmentId);
+        map.put("equipmentName", equipmentName);
+        map.put("equipTypeName", equipTypeName);
+        map.put("uploadNumber", uploadNumber);
         map.put("version", version);
-        map.put("versionUpdater", versionUpdater);
+        map.put("accPointResName", accPointResName);
+        map.put("createName", createName);
         map.put("versionUpdateTime", versionUpdateTime);
         return deviceUpgradeMapper.queryAll(map);
     }
 
     /**
-     * 计数
+     * 计数（升级记录表）
      */
-    public int count(String deviceName,String deviceSoftwareType, String version, String versionUpdater, String versionUpdateTime) {
-        return deviceUpgradeMapper.count(deviceName,deviceSoftwareType ,version ,versionUpdater,versionUpdateTime);
+    public int count(String deviceName, String deviceSoftwareType,
+                     String equipmentId, String equipmentName, String equipTypeName, String uploadNumber,
+                     String version, String accPointResName, String createName, String versionUpdateTime) {
+        return deviceUpgradeMapper.count(deviceName, deviceSoftwareType,equipmentId , equipmentName,equipTypeName, uploadNumber, version, accPointResName, createName, versionUpdateTime);
     }
 
     public void updateDeviceUpgrade(DeviceUpgrade deviceUpgrade) {
@@ -69,6 +78,7 @@ public class DeviceUpgradeService {
 
     /**
      * 通过升级记录表的id获取该条升级记录
+     *
      * @param
      * @return
      */
@@ -79,40 +89,44 @@ public class DeviceUpgradeService {
 
     /**
      * 通过终端id获取升级记录为未更新的List(三个主键数据)
+     *
      * @param
      * @return
      */
     public List<DeviceUploadUpgradeVo> queryRecordId(String deviceId) {
         Map<String, Object> map = new HashMap<>();
         map.put("deviceId", deviceId);
-        return deviceUpgradeMapper.queryRecordId(map) ;
+        return deviceUpgradeMapper.queryRecordId(map);
     }
 
     /**
      * 通过终端id获取升级记录为未更新的对象(三个主键数据)
+     *
      * @param
      * @return
      */
     public DeviceUploadUpgradeVo queryRecordIdObject(int deviceId) {
-        return deviceUpgradeMapper.queryRecordIdObject(deviceId) ;
+        return deviceUpgradeMapper.queryRecordIdObject(deviceId);
     }
 
     /**
      * 通过终端id获取当前的版本号
+     *
      * @param
      * @return
      */
     public Device getVersion(int deviceId) {
-        return deviceUpgradeMapper.getVersion(deviceId) ;
+        return deviceUpgradeMapper.getVersion(deviceId);
     }
 
 
     /**
      * 通过终端id获取升级记录数
+     *
      * @param
      * @return
      */
     public int queryRecordIdCount(int deviceId) {
-        return deviceUpgradeMapper.queryRecordIdCount(deviceId) ;
+        return deviceUpgradeMapper.queryRecordIdCount(deviceId);
     }
 }
