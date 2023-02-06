@@ -80,37 +80,37 @@
 	}
 	
 	//判断角色是否已存在
-	$("#roleCode").blur(function() {
-		var roleCode = $("#roleCode").val();
-		if (roleCode != null && roleCode != "") {
-			var sendData = {
-				criteria: {
-					"_expr": [{
-						roleCode: roleCode,
-						"_op": "="
-					}]
-				}
-			};
-			var json = JSON.stringify(sendData);
-			$.ajax({
-				url: "com.zimax.components.coframe.rights.RoleManager.checkRoleExist.biz.ext",
-				type: "POST",
-				data: json,
-				cache: false,
-				contentType: "text/json",
-				cache: false,
-				success: function (text) {
-					if (text.isRoleExist == "true") {
-						isExist = true;
-					} else if (text.isRoleExist == "false") {
-						isExist = false;
-					}
-				}
-			});
-		} else {
-			return;
-		}
-	});
+	// $("#roleCode").blur(function() {
+	// 	var roleCode = $("#roleCode").val();
+	// 	if (roleCode != null && roleCode != "") {
+	// 		var sendData = {
+	// 			criteria: {
+	// 				"_expr": [{
+	// 					roleCode: roleCode,
+	// 					"_op": "="
+	// 				}]
+	// 			}
+	// 		};
+	// 		var json = JSON.stringify(sendData);
+	// 		$.ajax({
+	// 			url: "com.zimax.components.coframe.rights.RoleManager.checkRoleExist.biz.ext",
+	// 			type: "POST",
+	// 			data: json,
+	// 			cache: false,
+	// 			contentType: "text/json",
+	// 			cache: false,
+	// 			success: function (text) {
+	// 				if (text.isRoleExist == "true") {
+	// 					isExist = true;
+	// 				} else if (text.isRoleExist == "false") {
+	// 					isExist = false;
+	// 				}
+	// 			}
+	// 		});
+	// 	} else {
+	// 		return;
+	// 	}
+	// });
 	
 	//监听提交
 // 	form.on("submit(layuiadmin-app-form-edit)", function(data) {

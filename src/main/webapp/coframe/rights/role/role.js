@@ -416,7 +416,7 @@ layui.define(["admin"], function(exports) {
 		$(".layui-input").on("keydown", function (event) {
 			if (event.keyCode == 13) {
 				focusName = event.target.name;
-				var submit = $("#LAY-app-rolelist-search");
+			var submit = $("#LAY-app-rolelist-search");
 				submit.click();
 				return false;
 			}
@@ -586,6 +586,7 @@ layui.define(["admin"], function(exports) {
 		 */
 		add: function() {
 			onSubmit();
+			formReder();
 		},
 		
 		/**
@@ -593,6 +594,7 @@ layui.define(["admin"], function(exports) {
 		 */
 		update: function() {
 			onSubmit();
+			formReder();
 		}
 	};
 	
