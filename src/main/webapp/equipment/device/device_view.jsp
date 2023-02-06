@@ -16,6 +16,12 @@
     <meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
     <title>终端详情</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
+    <style>
+        .layui-textarea {
+            height: 5px !important;
+            /*min-height: 60px!important;*/
+        }
+    </style>
 </head>
 <body>
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list"
@@ -118,9 +124,6 @@
                 <input type="text" class="layui-input" name="equipmentId" id="equipmentId"
                        lay-verify=""
                        autocomplete="off" placeholder="" readonly>
-                <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="selectEquipment"
-                        style="position:absolute;top:0px;right:0px;height:37px"><i
-                        class="layui-icon layui-icon-more"></i></button>
             </div>
         </div>
         <div class="layui-col-sm6">
@@ -183,7 +186,7 @@
             <label class="layui-form-label">备注:</label>
             <div class="layui-input-block">
             <textarea cols="50" rows="10" style="width:100%;height:100px" name="remarks" id="remarks" autocomplete="off"
-                      class="layui-input" lay-verify="remarks" readonly></textarea>
+                      class="layui-textarea" lay-verify="remarks" readonly></textarea>
             </div>
         </div>
     </div>
