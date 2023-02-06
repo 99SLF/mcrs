@@ -34,7 +34,6 @@ function submit() {
     		contentType: "text/json",
     		data: JSON.stringify(data.field),
     		success: function(res) {
-    		    debugger;
     			var url = getQueryVariable("url");
     			if (res.code == 0) {
     				if (data.field.remember === "on") {
