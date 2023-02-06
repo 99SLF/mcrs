@@ -19,6 +19,7 @@ import java.util.Map;
 
 /**
  * 警告规则服务
+ *
  * @author 林俊杰
  * @date 2022/11/29
  */
@@ -31,42 +32,50 @@ public class AlarmRuleService {
     /**
      * 查询所有预警规则
      */
-    public List<AlarmRuleVo> queryAlarmRule(String  page, String limit, String alarmRuleId, String alarmRuleTitle, String monitorLevel, String enable, String alarmEventId, String createName, String ruleMakeFormTime, String order, String field){
+    public List<AlarmRuleVo> queryAlarmRule(String page, String limit, String alarmRuleId, String alarmRuleTitle, String enable,
+                                            String monitorLevel, String alarmRuleDescribe, String createName, String ruleMakeFormTime,
+                                            String updateName, String ruleUpdateTime, String order, String field) {
         ChangeString changeString = new ChangeString();
-        Map<String,Object> map= new HashMap<>();
-        if(order==null){
-            map.put("order","desc");
-            map.put("field","rul.rule_make_form_time");
-        }else{
-            map.put("order",order);
-            map.put("field",changeString.camelUnderline(field));
+        Map<String, Object> map = new HashMap<>();
+        if (order == null) {
+            map.put("order", "desc");
+            map.put("field", "rul.rule_make_form_time");
+        } else {
+            map.put("order", order);
+            map.put("field", changeString.camelUnderline(field));
         }
         if (limit != null) {
             map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
             map.put("limit", Integer.parseInt(limit));
         }
-        map.put("alarmRuleId",alarmRuleId);
-        map.put("alarmRuleTitle",alarmRuleTitle);
-        map.put("monitorLevel",monitorLevel);
-        map.put("enable",enable);
-        map.put("alarmEventId",alarmEventId);
-        map.put("createName",createName);
-        map.put("ruleMakeFormTime",ruleMakeFormTime);
+        map.put("alarmRuleId", alarmRuleId);
+        map.put("alarmRuleTitle", alarmRuleTitle);
+        map.put("enable", enable);
+        map.put("monitorLevel", monitorLevel);
+        map.put("alarmRuleDescribe", alarmRuleDescribe);
+        map.put("createName", createName);
+        map.put("ruleMakeFormTime", ruleMakeFormTime);
+        map.put("updateName", updateName);
+        map.put("ruleUpdateTime", ruleUpdateTime);
         return alarmRuleMapper.queryAll(map);
     }
 
     /**
      * 查询记录
      */
-    public int count(String alarmRuleId, String alarmRuleTitle, String monitorLevel, String enable, String alarmEventId, String createName, String ruleMakeFormTime){
-        return alarmRuleMapper.count(alarmRuleId,alarmRuleTitle,monitorLevel,enable,alarmEventId,createName,ruleMakeFormTime);
+    public int count(String alarmRuleId, String alarmRuleTitle, String enable,
+                     String monitorLevel, String alarmRuleDescribe, String createName, String ruleMakeFormTime,
+                     String updateName, String ruleUpdateTime) {
+        return alarmRuleMapper.count(alarmRuleId, alarmRuleTitle, enable, monitorLevel, alarmRuleDescribe, createName, ruleMakeFormTime,
+                updateName,ruleUpdateTime);
     }
 
     /**
      * 添加预警规则
+     *
      * @param alarmRule 预警规则
      */
-    public void addAlarmRule(AlarmRule alarmRule ){
+    public void addAlarmRule(AlarmRule alarmRule) {
         IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
         alarmRule.setRuleMakeFormPeople(userObject.getUserId());
         alarmRule.setRuleMakeFormTime(new Date());
@@ -82,14 +91,15 @@ public class AlarmRuleService {
 
     /**
      * 删除预警规则
-     * @param  alarmRuleInt 预警规则主键
+     *
+     * @param alarmRuleInt 预警规则主键
      */
-    public void removeAlarmRule(int alarmRuleInt){
+    public void removeAlarmRule(int alarmRuleInt) {
         //从表中获取预警规则的对应监控对象
         List<MonitorEquipment> monitorEquipmentList = alarmRuleMapper.queryMonitorEquipment(alarmRuleInt);
         //如果存在监控对象，删除
-        if(monitorEquipmentList.size()>0){
-            for(MonitorEquipment monitorEquipment: monitorEquipmentList){
+        if (monitorEquipmentList.size() > 0) {
+            for (MonitorEquipment monitorEquipment : monitorEquipmentList) {
                 alarmRuleMapper.removeMonitorEquipment(monitorEquipment.getMonitorEquipmentId());
             }
         }
@@ -98,14 +108,15 @@ public class AlarmRuleService {
 
     /**
      * 修改预警规则
+     *
      * @param alarmRule 预警规则
      */
-    public void updateAlarmRule(AlarmRule alarmRule){
+    public void updateAlarmRule(AlarmRule alarmRule) {
         //修改子表顺序，先删除规则对应的监控对象，再从请求中获取修改后的监控对象，重新添加
         //从表中获取预警规则的对应监控对象
         List<MonitorEquipment> monitorEquipmentList = alarmRuleMapper.queryMonitorEquipment(alarmRule.getAlarmRuleInt());
-        if(monitorEquipmentList.size()>0){
-            for(MonitorEquipment monitorEquipment: monitorEquipmentList){
+        if (monitorEquipmentList.size() > 0) {
+            for (MonitorEquipment monitorEquipment : monitorEquipmentList) {
                 alarmRuleMapper.removeMonitorEquipment(monitorEquipment.getMonitorEquipmentId());
             }
         }
@@ -129,11 +140,11 @@ public class AlarmRuleService {
     public void deleteAlarmRules(List<Integer> alarmRuleInt) {
 
         //从表中获取预警规则的对应监控对象
-        for (Integer a: alarmRuleInt) {
+        for (Integer a : alarmRuleInt) {
             List<MonitorEquipment> monitorEquipmentList = alarmRuleMapper.queryMonitorEquipment(a);
             //如果存在监控对象，删除
-            if(monitorEquipmentList.size()>0){
-                for(MonitorEquipment monitorEquipment: monitorEquipmentList){
+            if (monitorEquipmentList.size() > 0) {
+                for (MonitorEquipment monitorEquipment : monitorEquipmentList) {
                     alarmRuleMapper.removeMonitorEquipment(monitorEquipment.getMonitorEquipmentId());
                 }
             }
@@ -147,19 +158,17 @@ public class AlarmRuleService {
     public AlarmRule getMonitorEquipmentVo(int alarmRuleInt) {
         AlarmRule alarmRule = new AlarmRule();
         List<MonitorEquipmentVo> monitorEquipmentVoList = alarmRuleMapper.queryMonitorEquipmentVo(alarmRuleInt);
-        if (monitorEquipmentVoList!= null && monitorEquipmentVoList.size()>0){
-            for (MonitorEquipmentVo monitorEquipmentVo: monitorEquipmentVoList){
+        if (monitorEquipmentVoList != null && monitorEquipmentVoList.size() > 0) {
+            for (MonitorEquipmentVo monitorEquipmentVo : monitorEquipmentVoList) {
                 List<WorkStation> workStationList = alarmRuleMapper.queryWorkStationList(monitorEquipmentVo.getEquipmentInt());
-                for (WorkStation workStation:workStationList){
+                for (WorkStation workStation : workStationList) {
                     String a = workStation.getWorkStationNum();
-                    if (monitorEquipmentVo.getWorkStationList() == null || monitorEquipmentVo.getWorkStationList() == ""){
+                    if (monitorEquipmentVo.getWorkStationList() == null || monitorEquipmentVo.getWorkStationList() == "") {
                         monitorEquipmentVo.setWorkStationList(a);
-                    }
-                    else {
-                        monitorEquipmentVo.setWorkStationList(monitorEquipmentVo.getWorkStationList()+","+a);
+                    } else {
+                        monitorEquipmentVo.setWorkStationList(monitorEquipmentVo.getWorkStationList() + "," + a);
                     }
                 }
-                System.out.println("========================="+monitorEquipmentVo.getWorkStationList());
             }
             alarmRule.setMonitorEquipmentVoList(monitorEquipmentVoList);
         }
@@ -170,7 +179,7 @@ public class AlarmRuleService {
     /**
      * 查询当前预警规则编码编码是否已经存在
      */
-    public int countAlarmRule(String alarmRuleId){
+    public int countAlarmRule(String alarmRuleId) {
         return alarmRuleMapper.countAlarmRule(alarmRuleId);
     }
 }

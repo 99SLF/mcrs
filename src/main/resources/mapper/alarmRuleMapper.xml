@@ -14,27 +14,33 @@
         LEFT JOIN cap_user AS cu
         ON rul.rule_update_people = cu.USER_ID
         <where>
-        <if test="alarmRuleId !=null and alarmRuleId !=''">
-            and rul.alarm_rule_id like '%${alarmRuleId}%'
-        </if>
-        <if test="alarmRuleTitle !=null and alarmRuleTitle !=''">
-            and rul.alarm_rule_title like '%${alarmRuleTitle}%'
-        </if>
-        <if test="monitorLevel !=null and monitorLevel !=''">
-            and rul.monitor_level like '%${monitorLevel}%'
-        </if>
-        <if test="enable !=null and enable !=''">
-            and rul.enable like '%${enable}%'
-        </if>
-        <if test="alarmEventId !=null and alarmEventId !=''">
-            and eve.alarm_event_id like '%${alarmEventId}%'
-        </if>
-        <if test="createName !=null and createName !=''">
-            and cur.USER_NAME like '%${createName}%'
-        </if>
-        <if test="ruleMakeFormTime !=null and ruleMakeFormTime !=''">
-            and rul.rule_make_form_time like '%${ruleMakeFormTime}%'
-        </if>
+            <if test="alarmRuleId !=null and alarmRuleId !=''">
+                and rul.alarm_rule_id like '%${alarmRuleId}%'
+            </if>
+            <if test="alarmRuleTitle !=null and alarmRuleTitle !=''">
+                and rul.alarm_rule_title like '%${alarmRuleTitle}%'
+            </if>
+            <if test="enable !=null and enable !=''">
+                and rul.enable like '%${enable}%'
+            </if>
+            <if test="monitorLevel !=null and monitorLevel !=''">
+                and rul.monitor_level like '%${monitorLevel}%'
+            </if>
+            <if test="alarmRuleDescribe !=null and alarmRuleDescribe !=''">
+                and rul.alarm_rule_describe like '%${alarmRuleDescribe}%'
+            </if>
+            <if test="createName !=null and createName !=''">
+                and cur.USER_NAME like '%${createName}%'
+            </if>
+            <if test="ruleMakeFormTime !=null and ruleMakeFormTime !=''">
+                and rul.rule_make_form_time like '%${ruleMakeFormTime}%'
+            </if>
+            <if test="updateName !=null and updateName !=''">
+                and cu.USER_NAME like '%${updateName}%'
+            </if>
+            <if test="ruleUpdateTime !=null and ruleUpdateTime !=''">
+                and rul.rule_update_time like '%${ruleUpdateTime}%'
+            </if>
         </where>
     </select>
 
@@ -55,20 +61,26 @@
             <if test="alarmRuleTitle !=null and alarmRuleTitle !=''">
                 and rul.alarm_rule_title like '%${alarmRuleTitle}%'
             </if>
-            <if test="monitorLevel !=null and monitorLevel !=''">
-                and rul.monitor_level like '%${monitorLevel}%'
-            </if>
             <if test="enable !=null and enable !=''">
                 and rul.enable like '%${enable}%'
             </if>
-            <if test="alarmEventId !=null and alarmEventId !=''">
-                and eve.alarm_event_id like '%${alarmEventId}%'
+            <if test="monitorLevel !=null and monitorLevel !=''">
+                and rul.monitor_level like '%${monitorLevel}%'
+            </if>
+            <if test="alarmRuleDescribe !=null and alarmRuleDescribe !=''">
+                and rul.alarm_rule_describe like '%${alarmRuleDescribe}%'
             </if>
             <if test="createName !=null and createName !=''">
                 and cur.USER_NAME like '%${createName}%'
             </if>
             <if test="ruleMakeFormTime !=null and ruleMakeFormTime !=''">
                 and rul.rule_make_form_time like '%${ruleMakeFormTime}%'
+            </if>
+            <if test="updateName !=null and updateName !=''">
+                and cu.USER_NAME like '%${updateName}%'
+            </if>
+            <if test="ruleUpdateTime !=null and ruleUpdateTime !=''">
+                and rul.rule_update_time like '%${ruleUpdateTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -137,7 +149,8 @@
     </select>
 
     <!--添加与预警规则对应的监控对象-->
-    <insert id="addMonitorEquipment" parameterType="com.zimax.mcrs.warn.pojo.MonitorEquipment" keyProperty="monitorEquipmentId"
+    <insert id="addMonitorEquipment" parameterType="com.zimax.mcrs.warn.pojo.MonitorEquipment"
+            keyProperty="monitorEquipmentId"
             useGeneratedKeys="true">
         insert into war_monitor_equipment
         values (#{monitorEquipmentId},
@@ -167,8 +180,8 @@
     </delete>
 
 
-<!--    根据预警规则编号查询该预警编号是否已经存在-->
-    <select id="countAlarmRule"  resultType="int">
+    <!--    根据预警规则编号查询该预警编号是否已经存在-->
+    <select id="countAlarmRule" resultType="int">
         SELECT count(*)
         FROM war_alarm_rule
         WHERE alarm_rule_id = #{alarmRuleId}

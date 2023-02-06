@@ -17,11 +17,11 @@
             <if test="alarmEventTitle !=null and alarmEventTitle !=''">
                 and wae.alarm_event_title like '%${alarmEventTitle}%'
             </if>
+            <if test="enableStatus !=null and enableStatus !=''">
+                and wae.enable_status like '%${enableStatus}%'
+            </if>
             <if test="alarmLevel !=null and alarmLevel !=''">
                 and wae.alarm_level like '%${alarmLevel}%'
-            </if>
-            <if test="alarmCategory !=null and alarmCategory !=''">
-                and wae.alarm_category like '%${alarmCategory}%'
             </if>
             <if test="alarmType !=null and alarmType !=''">
                 and wae.alarm_type like '%${alarmType}%'
@@ -31,6 +31,12 @@
             </if>
             <if test="makeFormTime !=null and makeFormTime !=''">
                 and wae.make_form_time like '%${makeFormTime}%'
+            </if>
+            <if test="updateName !=null and updateName !=''">
+                and cu.USER_NAME like '%${updateName}%'
+            </if>
+            <if test="updateTime !=null and updateTime !=''">
+                and wae.update_time like '%${updateTime}%'
             </if>
         </where>
     </select>
@@ -49,11 +55,11 @@
             <if test="alarmEventTitle !=null and alarmEventTitle !=''">
                 and wae.alarm_event_title like '%${alarmEventTitle}%'
             </if>
+            <if test="enableStatus !=null and enableStatus !=''">
+                and wae.enable_status like '%${enableStatus}%'
+            </if>
             <if test="alarmLevel !=null and alarmLevel !=''">
                 and wae.alarm_level like '%${alarmLevel}%'
-            </if>
-            <if test="alarmCategory !=null and alarmCategory !=''">
-                and wae.alarm_category like '%${alarmCategory}%'
             </if>
             <if test="alarmType !=null and alarmType !=''">
                 and wae.alarm_type like '%${alarmType}%'
@@ -63,6 +69,12 @@
             </if>
             <if test="makeFormTime !=null and makeFormTime !=''">
                 and wae.make_form_time like '%${makeFormTime}%'
+            </if>
+            <if test="updateName !=null and updateName !=''">
+                and cu.USER_NAME like '%${updateName}%'
+            </if>
+            <if test="updateTime !=null and updateTime !=''">
+                and wae.update_time like '%${updateTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">

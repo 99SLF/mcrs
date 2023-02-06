@@ -172,7 +172,7 @@
 		var formData = data.data;
 		form.val("layuiadmin-interfaceLog-form", {
 			source: formData.source,
-			equipmentIp: formData.equipmentIp,
+			equipmentId: formData.equipmentId,
 			equipmentName: formData.equipmentName,
 			interfaceType: formData.interfaceType,
 			result: formData.result,
@@ -186,7 +186,7 @@
 	function reset() {
 		var formData = {
 			source: "",
-			equipmentIp: "",
+			equipmentId: "",
 			equipmentName: "",
 			interfaceType: "",
 			result: "",

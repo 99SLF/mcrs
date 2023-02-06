@@ -324,7 +324,7 @@
         }, {
             field: "equipmentName",
             title: "设备名称",
-            align: "center",
+            align: "left",
             minWidth: 150,
             hide: isHidden("equipmentName")
         }, {

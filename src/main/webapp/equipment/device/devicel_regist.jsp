@@ -62,7 +62,7 @@
 
     <div class="layui-form-item layui-row layui-col-space6">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>是否启用：</label>
+            <label class="layui-form-label"><span style="color:red">*</span>启用:</label>
             <div class="layui-input-block">
                 <select name="enable" id="enable" lay-filter="" type="select"  lay-verify="required">
                     <option value=""></option>
@@ -89,9 +89,9 @@
     </div>
 
     <div class="layui-form-item layui-row layui-col-space6">
-        <label class="layui-form-label"><span style="color:red">*</span>终端程序安装路径</label>
+        <label class="layui-form-label"><span style="color:red">*</span>终端程序安装路径:</label>
         <div class="layui-input-block">
-            <input id="programInstallationPath" type="text" name="programInstallationPath" lay-verify="required"
+            <input id="programInstallationPath" type="text" name="programInstallationPath" lay-verify="required|programInstallationPath"
                    placeholder="终端程序安装路径(必填)" autocomplete="off" class="layui-input">
         </div>
     </div>
@@ -99,7 +99,7 @@
     <div class="layui-form-item layui-row layui-col-space6">
         <label class="layui-form-label"><span style="color:red">*</span>终端执行程序安装路径:</label>
         <div class="layui-input-block">
-            <input id="executorInstallationPath" type="text" name="executorInstallationPath" lay-verify="required"
+            <input id="executorInstallationPath" type="text" name="executorInstallationPath" lay-verify="required|executorInstallationPath"
                    placeholder="" autocomplete="off" class="layui-input">
         </div>
     </div>
@@ -113,27 +113,6 @@
             </div>
         </div>
     </div>
-
-<%--    <div class="layui-inline">--%>
-<%--        <div class="layui-col-sm1">--%>
-<%--            &lt;%&ndash;            <label class="layui-form-label">注册人:</label>&ndash;%&gt;--%>
-<%--            <div class="layui-input-block">--%>
-<%--                <%--%>
-<%--                    IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();--%>
-<%--                %>--%>
-<%--                &lt;%&ndash; <input id="creator" type="text" name="creator" lay-verify="" placeholder="" autocomplete="off" class="layui-input">&ndash;%&gt;--%>
-<%--                <input type="text" class="layui-input" id="creator" name="creator"--%>
-<%--                       value="<%=usetObject.getUserName()%>"/>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        <div class="layui-col-sm1">--%>
-<%--            <div class="layui-input-block">--%>
-<%--                <input type="text" class="layui-input" name="createTime"--%>
-<%--                       value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>" readonly/>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-
 
     <div class="layui-input-block">
         <input id="APPId" type="text" name="APPId" lay-verify="required" placeholder=""
@@ -227,7 +206,25 @@
         // },
         deviceName: function (value, item) {
             if (value.length > 20) {
-                return "终端名称不能超过20个字符,";
+                return "终端名称不能超过20个字符";
+            }
+        },
+        programInstallationPath: function (value, item) {
+            //文件夹路径的正则表达式:^([a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|]+\\.[^\\\\/:*?<>|]+,)*[a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|.]+(/[^\\\\/:*?\"<>.|]|[/w,/s]*|[\\/])$
+            if(!new RegExp("^([a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|]+\\.[^\\\\/:*?<>|]+,)*[a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|.]+(/[^\\\\/:*?\"<>.|]|[/w,/s]*|[\\/])$").test(value)){
+                return "输入终端程序安装路径有误";
+            }
+            if (value.length > 100) {
+                return "终端程序安装路径不能超过100个字符";
+            }
+        },
+        executorInstallationPath: function (value, item) {
+            //文件路径的正则表达式:^([a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|]+\\.[^\\\\/:*?<>|]+,)*[a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|]+\\.[^\\\\/:*?<>|]+$
+            if(!new RegExp("^([a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|]+\\.[^\\\\/:*?<>|]+,)*[a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|]+\\.[^\\\\/:*?<>|]+$").test(value)){
+                return "输入终端程序安装路径有误";
+            }
+            if (value.length > 100) {
+                return "终端程序安装路径不能超过100个字符";
             }
         }
     });

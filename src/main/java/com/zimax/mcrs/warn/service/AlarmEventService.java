@@ -30,7 +30,8 @@ public class AlarmEventService {
     /**
      * 查询全部预警信息
      */
-    public List<AlarmEventVo> queryAll(String page, String limit, String alarmEventId, String alarmEventTitle, String alarmLevel, String alarmCategory, String alarmType, String createName, String makeFormTime, String order, String field){
+    public List<AlarmEventVo> queryAll(String page, String limit, String alarmEventId, String alarmEventTitle, String enableStatus, String alarmLevel,
+                                       String alarmType, String createName, String makeFormTime,String updateName, String updateTime, String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -46,19 +47,22 @@ public class AlarmEventService {
         }
         map.put("alarmEventId", alarmEventId);
         map.put("alarmEventTitle", alarmEventTitle);
+        map.put("enableStatus", enableStatus);
         map.put("alarmLevel", alarmLevel);
-        map.put("alarmCategory", alarmCategory);
         map.put("alarmType", alarmType);
         map.put("createName", createName);
         map.put("makeFormTime", makeFormTime);
+        map.put("updateName", updateName);
+        map.put("updateTime", updateTime);
         return alarmEventMapper.queryAll(map);
     }
 
     /**
      * 查询记录
      */
-    public int count(String alarmEventId, String alarmEventTitle, String alarmLevel, String alarmCategory, String alarmType, String createName, String makeFormTime) {
-        return alarmEventMapper.count(alarmEventId, alarmEventTitle,alarmLevel,alarmCategory,alarmType,createName,makeFormTime);
+    public int count(String alarmEventId, String alarmEventTitle, String enableStatus, String alarmLevel,
+                     String alarmType, String createName, String makeFormTime,String updateName, String updateTime) {
+        return alarmEventMapper.count(alarmEventId, alarmEventTitle,enableStatus,alarmLevel,alarmType,createName,makeFormTime,updateName,updateTime);
     }
 
 

@@ -29,7 +29,7 @@ public interface InterfaceLogMapper {
      * @return
      */
     int count(@Param("source") String source,
-              @Param("equipmentIp") String equipmentIp,
+              @Param("equipmentId") String equipmentId,
               @Param("equipmentName") String equipmentName,
               @Param("interfaceType") String interfaceType,
               @Param("result") String result,

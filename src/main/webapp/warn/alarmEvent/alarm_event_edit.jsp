@@ -245,6 +245,7 @@
                         }, function () {
                             var index = parent.layer.getFrameIndex(window.name);
                             win.layui.table.reload("LAY-app-alarmEvent-list-reload");
+                            win.window.formReder();
                             top.layer.close(index);
                         });
                     }

@@ -14,11 +14,46 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/iconfont/iconfont.css">
+    <style>
+        .layui-card {
+            margin-bottom: 0px
+        }
+
+        .layui-layer-adminRight {
+            top: 0px !important;
+            bottom: 0;
+            box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
+            border-radius: 0;
+            overflow: auto
+        }
+
+        .layui-form-item .layui-inline {
+            margin-bottom: 0px !important;
+            margin-right: 0px !important;
+        }
+
+        .layui-form-label {
+            width: 120px !important;
+            padding: 5px 0px !important;
+        }
+
+        .layui-form-item .layui-input-inline {
+            float: left;
+            width: 150px;
+            margin-right: 10px;
+        }
+
+        .layui-input {
+            height: 30px !important;
+        }
+    </style>
 </head>
 <body>
-<div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+<div class="layui-card">
+    <script type="text/html" id="toolbar">
+        <div class="layui-form layuiadmin-card-header-auto" lay-filter="layuiadmin-alarmEvent-form"
+             id="layuiadmin-alarmEvent-form">
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">预警事件编码：</label>
@@ -34,70 +69,24 @@
                                class="layui-input">
                     </div>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">预警级别：</label>
-                    <div class="layui-input-inline">
-                        <select name="alarmLevel" id="alarmLevel" lay-filter="alarmLevel" type="select">
-                            <option value=""></option>
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">预警类型：</label>
-                    <div class="layui-input-inline">
-                        <select name="alarmType" id="alarmType" lay-filter="alarmType" type="select">
-                            <option value=""></option>
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">制单人：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="createName" placeholder="" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">制单时间：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="makeFormTime" placeholder="" id="makeFormTime"
-                               autocomplete="off"
-                               class="layui-input">
-                    </div>
-
-                    <div class="layui-inline layui-search" style="padding-left: 50px">
-                        <button class="layui-btn layuiadmin-btn-list" lay-submit
-                                lay-filter="LAY-app-alarmEventlist-search"
-                                id="LAY-app-alarmEventlist-search">
-                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                        </button>
-                    </div>
+                <div class="layui-inline layui-hide">
+                    <button id="LAY-app-alarmEvent-list-search" class="layui-btn layuiadmin-btn-list" lay-submit
+                            lay-filter="LAY-app-alarmEvent-list-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
                 </div>
             </div>
         </div>
+    </script>
+    <div class="layui-card-body">
+        <table id="LAY-app-alarmEvent-list" lay-filter="LAY-app-alarmEvent-list"></table>
 
-        <div class="layui-card-body">
-            <div class="layui-toolbar" id="toolbar" hidden="true">
-                <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i
-                        class="layui-icon layui-icon-add-circle-fine"></i>新增事件
-                </button>
-                <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="enable"><i
-                        class="layui-icon layui-icon-ok-circle"></i>启用
-                </button>
-                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i
-                        class="layui-icon layui-icon-delete"></i>删除
-                </button>
-            </div>
-
-            <table id="LAY-app-alarmEvent-list" lay-filter="LAY-app-alarmEvent-list"></table>
-
-            <script type="text/html" id="table-alarmEvent-list">
-                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
-                        class="layui-icon layui-icon-edit"></i>修改</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
-                        class="layui-icon layui-icon-delete"></i>删除</a>
-            </script>
-        </div>
+        <script type="text/html" id="table-alarmEvent-list">
+            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
+                    class="layui-icon layui-icon-edit"></i>编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+                    class="layui-icon layui-icon-delete"></i>删除</a>
+        </script>
     </div>
 </div>
 
@@ -115,6 +104,8 @@
     var $ = layui.jquery;
     var util = layui.util;
     var isExits = false;
+    var admin = layui.admin;
+    var view = layui.view;
 
     //全局参数
     var req_data;
@@ -122,59 +113,100 @@
     //功能名
     var funName = "alarm_event_list";
 
+    // 高级查询参数
+    var advancedFormData = {};
+    // 焦点名称
+    var focusName = null;
+
+    var formData = {};
+
     var hiddenFields = [];
 
     var laydate = layui.laydate;
-    //日期时间选择器
-    laydate.render({
-        elem: '#makeFormTime',
-        type: 'date'
-    });
-
-    //获取预警类型的下拉值
-    layui.admin.renderDictSelect({
-        elem: "#alarmType",
-        dictTypeId: "WRANING_TYPE",
-    });
-    form.render();
-
-    //获取预警级别的下拉值
-    layui.admin.renderDictSelect({
-        elem: "#alarmLevel",
-        dictTypeId: "WARNING_LEVEL",
-    });
-    form.render();
 
     //监听搜索
-    form.on("submit(LAY-app-alarmEventlist-search)", function (data) {
+    form.on("submit(LAY-app-alarmEvent-list-search)", function (data) {
         var field = data.field;
+        reloadData(field);
+        formData = {
+            alarmEventId: field.alarmEventId,
+            alarmEventTitle: field.alarmEventTitle
+        };
+        form.val("layuiadmin-alarmEvent-form", formData);
+        advancedFormData = $.extend(advancedFormData, formData);
+    });
+
+    function reloadData(formData) {
         table.reload("LAY-app-alarmEvent-list-reload", {
-            where: field
+            where: formData
         });
-    });
-
-    //预警类型下拉框监听事件
-    form.on("select(alarmType)", function (data) {
-        var submit = $("#LAY-app-alarmEventlist-search");
-        submit.click();
-    });
-    //预警级别下拉框监听事件
-    form.on("select(alarmLevel)", function (data) {
-        var submit = $("#LAY-app-alarmEventlist-search");
-        submit.click();
-    });
-
-
-    //文本框回车事件
-    $(".layui-input").on("keydown", function (event) {
-        if (event.keyCode == 13) {
-            var submit = $("#LAY-app-alarmEventlist-search");
-            submit.click();
-            return false;
+        formReder();
+        if (focusName) {
+            $("input[name=" + focusName + "]").focus();
         }
-    });
+    }
+
+    function setFormData(data) {
+        advancedFormData = data;
+        reloadData(data);
+        form.val("layuiadmin-alarmEvent-form", {
+            alarmEventId: data.alarmEventId,
+            alarmEventTitle: data.alarmEventTitle
+        });
+    }
+
+    // //预警类型下拉框监听事件
+    // form.on("select(alarmType)", function (data) {
+    //     var submit = $("#LAY-app-alarmEventlist-search");
+    //     submit.click();
+    // });
+    // //预警级别下拉框监听事件
+    // form.on("select(alarmLevel)", function (data) {
+    //     var submit = $("#LAY-app-alarmEventlist-search");
+    //     submit.click();
+    // });
+    //
+    //
+    // //文本框回车事件
+    // $(".layui-input").on("keydown", function (event) {
+    //     if (event.keyCode == 13) {
+    //         var submit = $("#LAY-app-alarmEventlist-search");
+    //         submit.click();
+    //         return false;
+    //     }
+    // });
 
     var active = {
+        //查询按钮
+        search: function () {
+            var submit = $("#LAY-app-alarmEvent-list-search");
+            submit.click();
+            return false;
+        },
+        //高级搜索
+        query: function () {
+            var url = "<%=request.getContextPath() %>/warn/alarmEvent/alarmEvent_form_query.jsp";
+            admin.popupRight({
+                type: 2,
+                content: [url, "yes"],
+                btn: ["查询", "重置", "取消"],
+                success: function (layero, index) {
+                    var dataJson = {
+                        win: window,
+                        data: advancedFormData
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function (index, layero) {
+                    var submit = layero.find("iframe").contents().find("#LAY-app-alarmEvent-search-advanced");
+                    submit.click();
+                    top.layer.close(index);
+                },
+                btn2: function (index, layero) {
+                    layero.find("iframe")[0].contentWindow.reset();
+                }
+            });
+        },
         //预警事件新建
         add: function () {
             top.layer.open({
@@ -230,6 +262,7 @@
                                     time: 2000
                                 }, function () {
                                     table.reload("LAY-app-alarmEvent-list-reload");
+                                    formReder();
                                 });
                             } else {
                                 layer.msg("删除失败");
@@ -287,6 +320,7 @@
                                         time: 2000
                                     }, function () {
                                         table.reload("LAY-app-alarmEvent-list-reload");
+                                        formReder();
                                     });
                                 } else {
                                     layer.msg("启用失败");
@@ -301,9 +335,9 @@
                         });
                     });
                 }
-            } else if(isExits == true){
+            } else if (isExits == true) {
                 layer.msg("当前选择事件存在已启用");
-            }else {
+            } else {
                 layer.msg("启用失败");
             }
         }
@@ -318,6 +352,7 @@
                 sortOrder: obj.type
             }
         });
+        formReder();
     });
 
     //左侧表头按钮事件监听
@@ -335,6 +370,7 @@
                 sortOrder: obj.type
             }
         });
+        formReder();
     });
 
     function getFullSize() {
@@ -349,6 +385,7 @@
         table.reload("LAY-app-alarmEvent-list-reload", {
             height: "full-" + getFullSize()
         });
+        formReder();
     });
 
     // 查询过滤字段
@@ -388,7 +425,23 @@
         limit: 10,
         limits: [10, 15, 20, 30],
         toolbar: "#toolbar",
-        defaultToolbar: ["filter"],
+        defaultToolbar: [{
+            title: "查询",
+            layEvent: "search",
+            icon: "layui-icon layui-icon-search layuiadmin-button-btn",
+        }, {
+            title: "高级查询",
+            layEvent: "query",
+            icon: "icon iconfont icon-gaojichaxun",
+        }, {
+            title: "添加预警事件",
+            layEvent: "add",
+            icon: "layui-icon layui-icon-add-circle-fine",
+        }, {
+            title: "批量删除",
+            layEvent: "batchdel",
+            icon: "layui-icon layui-icon-delete ",
+        }, "filter"],
         colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;
@@ -525,6 +578,24 @@
         }]]
     });
 
+    formReder();
+
+    function formReder() {
+
+        // 文本框回车事件
+        $(".layui-input").on("keydown", function (event) {
+            if (event.keyCode == 13) {
+                focusName = event.target.name;
+                var submit = $("#LAY-app-alarmEvent-list-search");
+                submit.click();
+                return false;
+            }
+        });
+
+        form.val("layuiadmin-alarmEvent-form", formData);
+    }
+
+
     //监听操作事件
     table.on("tool(LAY-app-alarmEvent-list)", function (e) {
         var data = e.data;
@@ -574,6 +645,7 @@
                                 time: 500
                             }, function () {
                                 table.reload("LAY-app-alarmEvent-list-reload");
+                                formReder();
                             });
                         } else {
                             layer.msg("删除失败！", {

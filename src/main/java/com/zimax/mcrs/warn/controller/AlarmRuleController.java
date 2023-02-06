@@ -35,24 +35,26 @@ public class AlarmRuleController {
     }
 
     /**
-     * 条件查询规则
+     * 查询
+     * @param page 页码
+     * @param limit 条数
      * @param alarmRuleId 预警规则编码
      * @param alarmRuleTitle 预警规则标题
-     * @param monitorLevel 监控层级
-     * @param enable 是否启用
-     * @param alarmEventId 告警事件编码
-     * @param createName 规则制单人
-     * @param ruleMakeFormTime 规则制单时间
-     * @param limit 记录数
-     * @param page 页码
-     * @param field 排序字段
-     * @param order 排序方式
-     * @return 预警规则列表
+     * @param enable 启用
+     * @param monitorLevel 监控等级
+     * @param alarmRuleDescribe 预警规则面熟
+     * @param createName 创建人
+     * @param ruleMakeFormTime 规则创建时间
+     * @param updateName 更新人
+     * @param ruleUpdateTime 规则更新时间
+     * @param order
+     * @param field
+     * @return
      */
     @GetMapping("/alarmRule/query")
-    public Result<?> queryAlarmRule(String page, String limit, String alarmRuleId, String alarmRuleTitle, String monitorLevel,String enable, String alarmEventId, String createName, String ruleMakeFormTime, String order, String field) {
-        List alarmRules =  alarmRuleService.queryAlarmRule(page,limit,alarmRuleId,alarmRuleTitle,monitorLevel,enable,alarmEventId,createName,ruleMakeFormTime,order,field);
-        return Result.success( alarmRules,alarmRuleService.count(alarmRuleId,alarmRuleTitle,monitorLevel,enable,alarmEventId,createName,ruleMakeFormTime));
+    public Result<?> queryAlarmRule(String page, String limit, String alarmRuleId, String alarmRuleTitle, String enable, String monitorLevel, String alarmRuleDescribe, String createName, String ruleMakeFormTime, String updateName, String ruleUpdateTime, String order, String field) {
+        List alarmRules =  alarmRuleService.queryAlarmRule(page,limit,alarmRuleId,alarmRuleTitle,enable,monitorLevel,alarmRuleDescribe,createName,ruleMakeFormTime, updateName,ruleUpdateTime,order,field);
+        return Result.success( alarmRules,alarmRuleService.count(alarmRuleId,alarmRuleTitle,enable,monitorLevel,alarmRuleDescribe,createName,ruleMakeFormTime, updateName,ruleUpdateTime));
     }
 
     /**

@@ -50,66 +50,6 @@
     </style>
 </head>
 <body>
-<%--<div class="layui-fluid">--%>
-<%--    <div class="layui-card">--%>
-<%--        <div class="layui-form layui-card-header layuiadmin-card-header-auto">--%>
-<%--            <div class="layui-form-item">--%>
-<%--                <div class="layui-inline">--%>
-<%--                    <label class="layui-form-label">设备资源号：</label>--%>
-<%--                    <div class="layui-input-inline">--%>
-<%--                        <input type="text" name="equipmentId" placeholder="" autocomplete="off"--%>
-<%--                               class="layui-input">--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--                <div class="layui-inline">--%>
-<%--                    <label class="layui-form-label">设备名称：</label>--%>
-<%--                    <div class="layui-input-inline">--%>
-<%--                        <input type="text" name="equipmentName" placeholder="" autocomplete="off"--%>
-<%--                               class="layui-input">--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--                <div class="layui-inline">--%>
-<%--                    <label class="layui-form-label">启用：</label>--%>
-<%--                    <div class="layui-input-inline">--%>
-<%--                        <select name="enable" id="enable" lay-filter="enable" type="select">--%>
-<%--                            <option value=""></option>--%>
-<%--                        </select>--%>
-<%--                    </div>--%>
-<%--                    <div class="layui-inline layui-search" style=" padding-left: 50px">--%>
-<%--                        <button class="layui-btn layuiadmin-btn-list" lay-submit--%>
-<%--                                lay-filter="LAY-app-equipmentlist-search"--%>
-<%--                                id="LAY-app-equipmentlist-search">--%>
-<%--                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>--%>
-<%--                        </button>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-
-<%--        <div class="layui-card-body">--%>
-<%--            <div class="layui-toolbar" id="toolbar" hidden="true">--%>
-<%--                <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i--%>
-<%--                        class="layui-icon layui-icon-add-circle-fine"></i>新建--%>
-<%--                </button>--%>
-<%--                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i--%>
-<%--                        class="layui-icon layui-icon-delete"></i>删除--%>
-<%--                </button>--%>
-<%--&lt;%&ndash;                <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="import"><i&ndash;%&gt;--%>
-<%--&lt;%&ndash;                        class="layui-icon layui-icon-util"></i>导入&ndash;%&gt;--%>
-<%--&lt;%&ndash;                </button>&ndash;%&gt;--%>
-<%--            </div>--%>
-
-<%--            <table id="LAY-app-equipment-list" lay-filter="LAY-app-equipment-list"></table>--%>
-
-<%--            <script type="text/html" id="table-equipment-list">--%>
-<%--                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i--%>
-<%--                        class="layui-icon layui-icon-edit"></i>编辑</a>--%>
-<%--                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i--%>
-<%--                        class="layui-icon layui-icon-delete"></i>删除</a>--%>
-<%--            </script>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</div>--%>
 
 <div class="layui-card">
     <script type="text/html" id="toolbar">
@@ -224,18 +164,6 @@
         });
     }
 
-    // //启用下拉框监听事件
-    // form.on("select(enable)", function (data) {
-    //     var submit = $("#LAY-app-equipmentlist-search");
-    //     submit.click();
-    // });
-    //
-    // //获取启用类型的下拉值
-    // layui.admin.renderDictSelect({
-    //     elem: "#enable",
-    //     dictTypeId: "IS_USE",
-    // });
-    // form.render();
 
 
     var active = {
@@ -510,9 +438,6 @@
             align: "center",
             minWidth: 100,
             hide: isHidden("equipTypeName"),
-            templet: function (d) {
-                return layui.admin.getDictText("EQUIPMENT_PROPERTY", d.equipTypeName);
-            }
         }, {
             field: "mesIpAddress",
             title: "MES连接IP",
