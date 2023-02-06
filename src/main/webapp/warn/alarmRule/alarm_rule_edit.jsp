@@ -34,14 +34,14 @@
                 <div class="layui-col-sm6">
                     <label class="layui-form-label"><span style="color:red">*</span>预警规则编码:</label>
                     <div class="layui-input-block">
-                        <input id="alarmRuleId" type="text" name="alarmRuleId" lay-verify="required"
+                        <input id="alarmRuleId" type="text" name="alarmRuleId" lay-verify="required|alarmRuleId"
                                placeholder="" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-col-sm6">
                     <label class="layui-form-label">预警规则标题:</label>
                     <div class="layui-input-block">
-                        <input id="alarmRuleTitle" type="text" name="alarmRuleTitle" lay-verify="required"
+                        <input id="alarmRuleTitle" type="text" name="alarmRuleTitle" lay-verify="required|alarmRuleTitle"
                                placeholder="" autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -150,6 +150,7 @@
     var win = null;
     var table = layui.table;
     var util = layui.util;
+    var alarmRuleInt = null;
 
     //全局参数
     var req_data;
@@ -183,6 +184,7 @@
     function SetData(data) {
         win = data.win ? data.win : window;
         var data = data.data;
+        alarmRuleInt = data.alarmRuleInt;
         form.val("layuiadmin-app-form-list", {
             "alarmRuleInt": data.alarmRuleInt,
             "alarmRuleId": data.alarmRuleId,
@@ -214,12 +216,34 @@
         form.render();
     }
 
+    // 判断字符
+    form.verify({
+        alarmRuleId: function(value, item) {
+            if(!new RegExp("^[A-Za-z0-9]+$").test(value)){
+                return "输入预警规则编码有误，只能输入汉字+英文+数字";
+            }
+            if (value.length > 32) {
+                return "预警规则编码不能超过32字";
+            }
+        },
+        alarmRuleTitle: function(value, item) {
+            if(value.length >32){
+                return "预警规则标题不能超过32字";
+            }
+        },
+        alarmEventContent: function(value, item) {
+            if(value.length >255){
+                return "规则描述不能超过255字";
+            }
+        }
+    });
+
     //判断预警规则编码是否已存在
     $("#alarmRuleId").blur(function () {
         var alarmRuleId = $("#alarmRuleId").val();
         if (alarmRuleId != null && alarmRuleId != "") {
             $.ajax({
-                url: "<%= request.getContextPath() %>/warn/alarmRule/check/isExist?alarmRuleId=" + alarmRuleId,
+                url: "<%= request.getContextPath() %>/warn/alarmRule/check/isExist?alarmRuleId=" + alarmRuleId + "&alarmRuleInt=" + alarmRuleInt,
                 type: "GET",
                 cache: false,
                 contentType: "text/json",

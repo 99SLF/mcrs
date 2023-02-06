@@ -116,8 +116,8 @@ public class AlarmRuleController {
      * @param alarmRuleId 设备资源号
      */
     @GetMapping("/alarmRule/check/isExist")
-    public Result<?> check(@RequestParam("alarmRuleId") String alarmRuleId) {
-        if(alarmRuleService.countAlarmRule(alarmRuleId)>0){
+    public Result<?> check(@RequestParam("alarmRuleId") String alarmRuleId,@RequestParam("alarmRuleInt") String alarmRuleInt) {
+        if(alarmRuleService.countAlarmRule(alarmRuleId,alarmRuleInt)>0){
             return Result.error("1","当前预警规则编码已存在，请输入正确的预警规则编码");
         }else {
             return Result.success();

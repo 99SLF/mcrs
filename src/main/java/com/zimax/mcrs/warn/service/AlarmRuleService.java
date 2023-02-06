@@ -179,7 +179,7 @@ public class AlarmRuleService {
     /**
      * 查询当前预警规则编码编码是否已经存在
      */
-    public int countAlarmRule(String alarmRuleId) {
-        return alarmRuleMapper.countAlarmRule(alarmRuleId);
+    public int countAlarmRule(String alarmRuleId,String alarmRuleInt) {
+        return alarmRuleMapper.countAlarmRule(alarmRuleId, alarmRuleInt);
     }
 }

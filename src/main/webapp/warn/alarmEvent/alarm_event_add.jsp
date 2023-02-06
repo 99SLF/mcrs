@@ -159,13 +159,16 @@
     // 判断字符
     form.verify({
         alarmEventId: function(value, item) {
+            if(!new RegExp("^[A-Za-z0-9]+$").test(value)){
+                return "输入预警事件编码有误，只能输入英文+数字";
+            }
     		if (value.length > 20) {
-    			return "预警编码不能超过20字";
+    			return "预警事件编码不能超过20字";
     		}
     	},
         alarmEventTitle: function(value, item) {
     		if(value.length >20){
-    			return "预警标题不能超过20字";
+    			return "预警事件标题不能超过20字";
     		}
     	},
         upperLimit: function(value, item) {
