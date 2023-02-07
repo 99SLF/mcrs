@@ -33,7 +33,7 @@ public class RFIDReadRaService {
      */
     public void addRFIDReadRa(RFIDReadRa rfidReadRa) {
 
-        rfidReadRa.setRecordTime(String.valueOf(new Date()));
+        rfidReadRa.setRecordTime(new Date());
         rfidReadRaReportMapper.addRFIDReadRa(rfidReadRa);
     }
 

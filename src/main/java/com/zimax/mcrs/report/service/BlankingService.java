@@ -27,7 +27,7 @@ public class BlankingService {
      */
     public void addBlanking(Blanking blanking){
 
-        blanking.setCreateTime(String.valueOf(new Date()));
+        blanking.setCreateTime(new Date());
         blankingReportMapper.addBlanking(blanking);
     }
 

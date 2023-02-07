@@ -86,7 +86,7 @@ public interface AlarmRuleMapper {
     /**
      * 根据预警规则编码查询预警规则是否存在
      */
-    int countAlarmRule(@Param("alarmRuleId") String alarmRuleId);
+    int countAlarmRule(@Param("alarmRuleId") String alarmRuleId,@Param("alarmRuleInt") String alarmRuleInt);
 
 
 }

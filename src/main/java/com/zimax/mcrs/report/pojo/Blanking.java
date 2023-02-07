@@ -55,17 +55,24 @@ public class Blanking {
     /**
      * 完工EA数量
      */
-    private int endEANumber;
+    private String endEANumber;
 
     /**
      * 收卷米数
      */
-    private int inRiceNumber;
+    private String inMeterNumber;
 
     /**
      * 是否完工
      */
     private String isEnd;
+
+    /**
+     * 创建时间(记录时间)
+     */
+//    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTime;
 
 
     /**
@@ -73,20 +80,14 @@ public class Blanking {
      */
 //    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 //    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private String startProdTime;
+    private Date startProdTime;
 
     /**
      * 结束生产时间
      */
 //    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 //    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private String endProdTime;
+    private Date endProdTime;
 
-    /**
-     * 创建时间(记录时间)
-     */
-//    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private String createTime;
 
 }

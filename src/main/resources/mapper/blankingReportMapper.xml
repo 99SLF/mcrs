@@ -6,8 +6,7 @@
     <!--添加下料报表-->
     <insert id="addBlanking" parameterType="com.zimax.mcrs.report.pojo.Blanking">
         insert into rep_blanking
-        values (#{blankingId}, #{equipmentId}, #{axisName}, #{antennaLoc}, #{vehicleCode},
-                #{prodSFCId}, #{endEANumber}, #{inRiceNumber}, #{isEnd}, #{createTime}, #{startProdTime}, #{endProdTime})
+        values (#{blankingId}, #{equipmentId},#{axisName},#{antennaLoc},#{vehicleCode},#{prodSFCId},#{endEANumber},#{inMeterNumber},#{isEnd}, #{createTime}, #{startProdTime}, #{endProdTime})
     </insert>
 
     <!--    查询记录数-->
@@ -42,7 +41,7 @@
     </select>
     <!--查询下料报表信息-->
     <select id="queryBlankings" parameterType="map" resultType="com.zimax.mcrs.report.pojo.Blanking">
-        select *  from rep_blanking
+        select * from rep_blanking
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and equipment_id like '%${equipmentId}%'

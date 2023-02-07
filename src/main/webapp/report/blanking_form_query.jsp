@@ -158,8 +158,10 @@
         var formData = {
             equipmentId: "",
             axisName: "",
-            prodSFCId: "",
+            antennaLoc: "",
             vehicleCode: "",
+            prodSFCId: "",
+            isEnd: "",
             startProdTime: "",
             endProdTime: ""
         }

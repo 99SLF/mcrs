@@ -117,8 +117,8 @@ public class AlarmEventController {
      * @param alarmEventId 预警事件编码
      */
     @GetMapping("/alarmEvent/check/isExist")
-    public Result<?> check(@RequestParam("alarmEventId") String alarmEventId) {
-        if(alarmEventService.checkAlarmEvent(alarmEventId)>0){
+    public Result<?> check(@RequestParam("alarmEventId") String alarmEventId ,@RequestParam("alarmEventInt") String alarmEventInt) {
+        if(alarmEventService.checkAlarmEvent(alarmEventId,alarmEventInt)>0){
             return Result.error("1","当前预警规则编码已存在，请输入正确的预警规则编码");
         }else {
             return Result.success();

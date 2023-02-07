@@ -54,28 +54,30 @@ public class Feeding {
     /**
      * 上账数量（生产数量）
      */
-    private int prodNumber;
-
-    /**
-     * 开始生产时间
-     */
-//    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private String startProdTime;
-
-    /**
-     * 结束生产时间
-     */
-//    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private String endProdTime;
-
+    private String prodNumber;
 
     /**
      * 创建时间（记录时间）
      */
 //    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 //    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private String createTime;
+    private Date createTime;
+
+    /**
+     * 开始生产时间
+     */
+//    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date startProdTime;
+
+    /**
+     * 结束生产时间
+     */
+//    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date endProdTime;
+
+
+
 
 }

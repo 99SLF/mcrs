@@ -8,79 +8,80 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>下料报表</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
-<%--图标--%>
-<link rel="stylesheet" href="<%=request.getContextPath() %>/iconfont/iconfont.css">
-<style>
-    .layui-card {
-        margin-bottom: 0px
-    }
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>下料报表</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
+    <%--图标--%>
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/iconfont/iconfont.css">
+    <style>
+        .layui-card {
+            margin-bottom: 0px
+        }
 
-    .layui-layer-adminRight {
-        top: 0px !important;
-        bottom: 0;
-        box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
-        border-radius: 0;
-        overflow: auto
-    }
+        .layui-layer-adminRight {
+            top: 0px !important;
+            bottom: 0;
+            box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
+            border-radius: 0;
+            overflow: auto
+        }
 
-    .layui-form-item .layui-inline {
-        margin-bottom: 0px !important;
-        margin-right: 0px !important;
-    }
+        .layui-form-item .layui-inline {
+            margin-bottom: 0px !important;
+            margin-right: 0px !important;
+        }
 
-    .layui-form-label {
-        width: 120px !important;
-        padding: 5px 0px !important;
-    }
+        .layui-form-label {
+            width: 120px !important;
+            padding: 5px 0px !important;
+        }
 
-    .layui-form-item .layui-input-inline {
-        float: left;
-        width: 150px;
-        margin-right: 10px;
-    }
+        .layui-form-item .layui-input-inline {
+            float: left;
+            width: 150px;
+            margin-right: 10px;
+        }
 
-    .layui-input {
-        height: 30px !important;
-    }
-</style>
+        .layui-input {
+            height: 30px !important;
+        }
+    </style>
 </head>
 <body>
 <div class="layui-card">
     <script type="text/html" id="toolbar">
-    <div class="layui-form  layuiadmin-card-header-auto"
-         lay-filter="layuiadmin-blanking-form" id="layuiadmin-blanking-form"> <%--layui-card-header 样式变宽--%>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">设备资源号：</label>
-                <div class="layui-input-inline">
-                    <input type="text" class="layui-input" name="equipmentId"  autocomplete="off" />
+        <div class="layui-form  layuiadmin-card-header-auto"
+             lay-filter="layuiadmin-blanking-form" id="layuiadmin-blanking-form"> <%--layui-card-header 样式变宽--%>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">设备资源号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="equipmentId" autocomplete="off"/>
+                    </div>
                 </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">轴名称：</label>
-                <div class="layui-input-inline">
-                    <input type="text" class="layui-input" name="axisName"  autocomplete="off" />
+                <div class="layui-inline">
+                    <label class="layui-form-label">轴名称：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="axisName" autocomplete="off"/>
+                    </div>
                 </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">天线位置：</label>
-                <div class="layui-input-inline">
-                    <input type="text" class="layui-input" name="antennaLoc" autocomplete="off" />
+                <div class="layui-inline">
+                    <label class="layui-form-label">天线位置：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="antennaLoc" autocomplete="off"/>
+                    </div>
                 </div>
-            </div>
-            <div class="layui-inline layui-hide">
-                <button id="LAY-app-blanking-search" class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-blanking-search">
-                    <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                </button>
+                <div class="layui-inline layui-hide">
+                    <button id="LAY-app-blanking-search" class="layui-btn layuiadmin-btn-list" lay-submit
+                            lay-filter="LAY-app-blanking-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
     </script>
     <div class="layui-card-body">
         <table id="LAY-app-blanking-list" lay-filter="LAY-app-blanking-list"></table>
@@ -147,7 +148,8 @@
             $("input[name=" + focusName + "]").focus();
         }
     }
-        //设置表单值
+
+    //设置表单值
     function setFormData(data) {
         advancedFormData = data;
         reloadData(data);
@@ -167,12 +169,12 @@
 
     // 监听按钮点击事件
     var active = {
-        search: function() {
+        search: function () {
             var submit = $("#LAY-app-blanking-search");
             submit.click();
             return false;
         },
-        query: function() {
+        query: function () {
             //高级查询页面
             var url = "<%=request.getContextPath() %>/report/blanking_form_query.jsp";
             //弹窗
@@ -180,9 +182,9 @@
                 type: 2,
                 content: [url, "yes"],
                 btn: ["查询", "重置", "取消"],
-                success: function(layero, index) {
+                success: function (layero, index) {
                     var dataJson = {
-                        win : window,
+                        win: window,
 
                         //将toorbar值传到页面
                         data: advancedFormData
@@ -190,12 +192,12 @@
                     //传值
                     layero.find("iframe")[0].contentWindow.SetData(dataJson);
                 },
-                yes: function(index, layero) {
+                yes: function (index, layero) {
                     var submit = layero.find("iframe").contents().find("#LAY-app-blanking-search-advanced");
                     submit.click();
                     top.layer.close(index);
                 },
-                btn2: function(index, layero) {
+                btn2: function (index, layero) {
                     layero.find("iframe")[0].contentWindow.reset();
                 }
             });
@@ -203,7 +205,7 @@
     };
 
     //左侧表头按钮事件监听
-    table.on('toolbar(LAY-app-blanking-list)', function(obj){
+    table.on('toolbar(LAY-app-blanking-list)', function (obj) {
         var type = obj.event;
         active[type] ? active[type].call(this) : "";
     });
@@ -336,10 +338,10 @@
             hide: isHidden("endEANumber"),
             minWidth: 150
         }, {
-            field: "inRiceNumber",
+            field: "inMeterNumber",
             title: "收卷米数",
             align: "center",
-            hide: isHidden("inRiceNumber"),
+            hide: isHidden("inMeterNumber"),
             minWidth: 150
         }, {
             field: "isEnd",
@@ -350,16 +352,6 @@
             templet: function (d) {
 
                 return layui.admin.getDictText("IS_END", d.isEnd);
-            }
-        }, {
-            field: "createTime",
-            title: "创建时间",
-            align: "center",
-            hide: isHidden("createTime"),
-            hide: true,
-            minWidth: 200,
-            templet: function (d) {
-                return util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss');
             }
         }, {
             field: "startProdTime",
@@ -384,6 +376,7 @@
     });
 
     formReder();
+
     function formReder() {
         // 文本框回车事件
         $(".layui-input").on("keydown", function (event) {

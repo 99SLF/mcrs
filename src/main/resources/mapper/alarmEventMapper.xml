@@ -138,7 +138,7 @@
     <!--查询记录数-->
     <select id="checkAlarmEvent" resultType="int">
         select count(*) from war_alarm_event
-        where alarm_event_id = #{alarmEventId}
+        where alarm_event_id = #{alarmEventId} and alarm_event_int != #{alarmEventInt}
     </select>
 
 </mapper>

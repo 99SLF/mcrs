@@ -364,16 +364,6 @@
                 return layui.admin.getDictText("IS_END", d.isEnd);
             }
         }, {
-            field: "createTime",
-            title: "创建时间",
-            align: "center",
-            // hide: isHidden("createTime"),
-            hide: true,
-            minWidth: 200,
-            templet:function(d){
-                return util.toDateString(d.createTime,'yyyy-MM-dd HH:mm:ss');
-            }
-        }, {
             field: "updateTime",
             title: "更新时间",
             align: "center",

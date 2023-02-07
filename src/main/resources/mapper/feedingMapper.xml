@@ -6,8 +6,8 @@
     <!--添加上料报表-->
     <insert id="addFeeding" parameterType="com.zimax.mcrs.report.pojo.Feeding">
         insert into rep_feeding
-        values (#{feedingId}, #{equipmentId}, #{axisName}, #{inSFCId}, #{vehicleCode},
-                #{prodSFCId}, #{prodNumber}, #{createTime}, #{startProdTime}, #{endProdTime})
+        values (#{feedingId}, #{equipmentId}, #{axisName}, #{inSFCId}, #{vehicleCode}, #{prodSFCId}, #{prodNumber},
+                #{createTime}, #{startProdTime}, #{endProdTime})
     </insert>
 
     <!--    查询记录数-->
@@ -33,7 +33,7 @@
                 and DATE (start_prod_time) = #{startProdTime}
             </if>
             <if test="endProdTime !=null and endProdTime !=''">
-                and  DATE (end_prod_time)	= #{endProdTime}
+                and DATE (end_prod_time) = #{endProdTime}
             </if>
         </where>
     </select>
@@ -62,7 +62,7 @@
                 and DATE (start_prod_time) = #{startProdTime}
             </if>
             <if test="endProdTime !=null and endProdTime !=''">
-                and  DATE (end_prod_time)	= #{endProdTime}
+                and DATE (end_prod_time) = #{endProdTime}
             </if>
         </where>
         <if test="order !=null and order !=''">
