@@ -2,7 +2,9 @@ package com.zimax.mcrs.log.controller;
 
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.log.pojo.PlcLog;
+import com.zimax.mcrs.log.pojo.PlcLogVo;
 import com.zimax.mcrs.log.pojo.RfidLog;
+import com.zimax.mcrs.log.pojo.RfidLogVo;
 import com.zimax.mcrs.log.service.PlcLogService;
 import com.zimax.mcrs.log.service.RfidLogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,4 +56,12 @@ public class RfidLogController {
         return Result.success();
     }
 
+    /**
+     * 使用POST方式查询日志给CS端
+     */
+    @PostMapping("/rfidLog/CSquery")
+    public Result<?> csQuery(@RequestBody RfidLogVo rfidLogVo) {
+        List rfidLogs = rfidLogService.csQuery(rfidLogVo.getAPPId());
+        return Result.success(rfidLogs);
+    }
 }

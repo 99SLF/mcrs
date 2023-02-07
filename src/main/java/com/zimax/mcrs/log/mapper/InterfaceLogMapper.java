@@ -5,6 +5,7 @@ import com.zimax.mcrs.log.pojo.InterfaceLog;
 import com.zimax.mcrs.log.pojo.InterfaceLogVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
@@ -51,6 +52,10 @@ public interface InterfaceLogMapper {
      */
     int checkEquipment(@Param("equipmentInt") int equipmentInt);
 
-
+    /**
+     * 查询终端对应的的接口日志给终端
+     * @return
+     */
+    List<InterfaceLogVo> csQuery(@RequestParam("APPId") String APPId);
 
 }

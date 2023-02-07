@@ -1,7 +1,9 @@
 package com.zimax.mcrs.log.controller;
 
 import com.zimax.mcrs.config.Result;
+import com.zimax.mcrs.log.pojo.InterfaceLogVo;
 import com.zimax.mcrs.log.pojo.PlcLog;
+import com.zimax.mcrs.log.pojo.PlcLogVo;
 import com.zimax.mcrs.log.service.PlcLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -55,4 +57,13 @@ public class PlcLogController {
         return Result.success();
     }
 
+
+    /**
+     * 使用POST方式查询日志给CS端
+     */
+    @PostMapping("/plcLog/CSquery")
+    public Result<?> csQuery(@RequestBody PlcLogVo plcLogVo) {
+        List plcLogs = plcLogService.csQuery(plcLogVo.getAPPId());
+        return Result.success(plcLogs);
+    }
 }

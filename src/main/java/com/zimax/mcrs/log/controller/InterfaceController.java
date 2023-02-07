@@ -2,7 +2,9 @@ package com.zimax.mcrs.log.controller;
 
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.device.pojo.Equipment;
+import com.zimax.mcrs.log.pojo.DeviceExchangeLogVo;
 import com.zimax.mcrs.log.pojo.InterfaceLog;
+import com.zimax.mcrs.log.pojo.InterfaceLogVo;
 import com.zimax.mcrs.log.service.InterfaceLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -76,6 +78,14 @@ public class InterfaceController {
         return Result.success();
     }
 
+    /**
+     * 使用POST方式查询日志给CS端
+     */
+    @PostMapping("/interfaceLog/CSquery")
+    public Result<?> csQuery(@RequestBody InterfaceLogVo interfaceLogVo) {
+        List interfaceLogs = interfaceLogService.csQuery(interfaceLogVo.getAPPId());
+        return Result.success(interfaceLogs);
+    }
 
 
 }
