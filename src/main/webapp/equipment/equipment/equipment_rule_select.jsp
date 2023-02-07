@@ -29,9 +29,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">使用工序：</label>
                     <div class="layui-input-inline">
-                        <select name="processName" id="processName" lay-filter="processName" type="select" onenter="search">
-                            <option value=""></option>
-                        </select>
+                        <input name="processName" class="layui-input" onenter="search"/>
                     </div>
                 </div>
                 <div class="layui-inline">

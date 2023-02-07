@@ -4,6 +4,7 @@ import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.log.mapper.DeviceExchangeLogMapper;
 import com.zimax.mcrs.log.pojo.DeviceExchangeLog;
 import com.zimax.mcrs.log.pojo.DeviceExchangeLogVo;
+import com.zimax.mcrs.log.pojo.LoginLogVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -77,4 +78,11 @@ public class DeviceExchangeLogService {
         deviceExchangeLogMapper.addDeviceExchangeLog(deviceExchangeLog);
     }
 
+
+    /**
+     * 查询所有设备交换日志信息到CS
+     */
+    public List<DeviceExchangeLogVo> csQuery(String APPId){
+        return deviceExchangeLogMapper.csQuery(APPId);
+    }
 }

@@ -6,6 +6,7 @@ import com.zimax.mcrs.log.pojo.LoginLog;
 import com.zimax.mcrs.log.pojo.LoginLogVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,10 @@ public interface LoginLogMapper {
      */
     void addLoginLog(LoginLog loginLog);
 
-
+    /**
+     * 查询登录日志日志到CS
+     * @return
+     */
+    List<LoginLogVo> csQuery(@RequestParam("APPId") String APPId);
 
 }

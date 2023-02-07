@@ -2,6 +2,7 @@ package com.zimax.mcrs.log.controller;
 
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.log.pojo.LoginLog;
+import com.zimax.mcrs.log.pojo.LoginLogVo;
 import com.zimax.mcrs.log.service.LoginLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -51,4 +52,12 @@ public class LoginLogController {
     }
 
 
+    /**
+     * 使用POST方式查询日志给CS端
+     */
+    @PostMapping("/loginLog/CSquery")
+    public Result<?> csQuery(@RequestBody LoginLogVo loginLogVo) {
+        List loginLogs = loginLogService.csQuery(loginLogVo.getAPPId());
+        return Result.success(loginLogs);
+    }
 }

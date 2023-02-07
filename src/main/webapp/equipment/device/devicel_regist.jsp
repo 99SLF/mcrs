@@ -292,7 +292,7 @@
             title: "选择设备资源",
             area: ["850px", "470px"],
             btn: ["确定", "取消"],
-            content: "<%= request.getContextPath() %>/equipment/equipment/equipment_select.jsp",
+            content: "<%= request.getContextPath() %>/equipment/equipment/equipment_rule_select.jsp",
             yes: function (index, layero) {
                 var data = layero.find('iframe')[0].contentWindow.getData();
                 $("#equipmentInt").val(data.equipmentInt);

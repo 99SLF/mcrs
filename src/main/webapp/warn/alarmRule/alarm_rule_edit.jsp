@@ -81,19 +81,6 @@
                                 class="layui-icon layui-icon-more"></i></button>
                     </div>
                 </div>
-<%--                <div class="layui-col-sm6">--%>
-<%--                    <label class="layui-form-label"><span style="color:red">*</span>监控对象:</label>--%>
-<%--                    <div class="layui-input-block">--%>
-<%--                        <input type="text" class="layui-input" name="monitorObject" id="monitorObject"--%>
-<%--                               lay-verify=""--%>
-<%--                               autocomplete="off" placeholder="" readonly>--%>
-<%--                        <button type="button" class="layui-btn layui-btn-sm layui-btn-primary"--%>
-<%--                                id="onButtonMonitorObject"--%>
-<%--                                style="position:absolute;top:0px;right:0px;height:37px"><i--%>
-<%--                                class="layui-icon layui-icon-more"></i></button>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-
             </div>
 
             <div class="layui-form-item layui-row layui-col-space12">
