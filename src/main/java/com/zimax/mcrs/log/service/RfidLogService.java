@@ -71,4 +71,11 @@ public class RfidLogService {
         rfidLogMapper.addRfidLog(rfidLog);
     }
 
+
+    /**
+     * 查询终端对应的PLC日志给终端
+     */
+    public List<RfidLogVo> csQuery(String APPId){
+        return rfidLogMapper.csQuery(APPId);
+    }
 }

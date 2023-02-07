@@ -107,5 +107,31 @@
         delete from log_rfid_log where rfid_log_id = #{rfidLogId}
     </delete>
 
+    <!--查询所有-->
+    <select id="csQuery" parameterType="map" resultType="com.zimax.mcrs.log.pojo.RfidLogVo">
+        SELECT
+        eqi.equipment_id,
+        eqi.equipment_name,
+        dev.app_id,
+        dev.device_name,
+        ll.rfid_id,
+        eqi.equipment_ip,
+        eqi.equipment_continue_port,
+        ll.parameter_name,
+        ll.parameter_num,
+        cur.USER_NAME AS createName,
+        ll.create_time
+        FROM log_log AS ll
+        LEFT JOIN eqi_equipment AS eqi
+        ON ll.equipment_int = eqi.equipment_int
+        LEFT JOIN eqi_device AS dev
+        ON ll.device_id = dev.device_id
+        LEFT JOIN cap_user AS cur
+        ON ll.creator = cur.USER_ID
+        where
+            ll.log_type  = '106' and dev.app_id = #{APPId}
+        ORDER BY ll.create_time DESC
+    </select>
+
 
 </mapper>

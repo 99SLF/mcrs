@@ -27,6 +27,10 @@
             margin-left: 150px;
             min-height: 36px
         }
+        .layui-textarea{
+            height: 5px!important;
+            /*min-height: 60px!important;*/
+        }
     </style>
     <script src="common/layui/layui.all.js"></script>
     <script type="text/javascript">
@@ -38,17 +42,17 @@
     <input id="fileId" name="fileId" type="hidden" />
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>文件名:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>文件名：</label>
             <div class="layui-input-block">
                 <input id="fileName" type="text" name="fileName" lay-verify="required" placeholder=""
                        autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
 
-        <div class="layui-col-sm4">
-            <label class="layui-form-label">版本号：</label>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><span style="color:red">*</span>版本号：</label>
             <div class="layui-input-block">
-                <input id="version" type="text" name="version" lay-verify="required" placeholder="请输入版本号"
+                <input id="version" type="text" name="version" lay-verify="required|chinese|length20" placeholder="请输入版本号"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -57,7 +61,7 @@
     <div>
         <div class="layui-form-item layui-row layui-col-space10">
             <div class="layui-col-sm6">
-                <label class="layui-form-label" id="showName"><span style="color:red">*</span></label>
+                <label class="layui-form-label" id="showName"></label>
                 <div class="layui-input-block layui-upload" style="width: 400px">
                     <button type="button" name="url" class="layui-btn layui-btn-sm"
                             id="test1"><i class="layui-icon">&#xe67c;</i>附件上传
@@ -72,7 +76,7 @@
         <label class="layui-form-label">备注：</label>
         <div class="layui-input-block">
                 <textarea class="layui-textarea field-effect field-content" name="remark" id="remark"
-                          autocomplete="off" placeholder="" lay-verify="remark"></textarea>
+                          autocomplete="off" placeholder="" lay-verify="length255"></textarea>
         </div>
     </div>
     <div class="layui-form-item layui-hide">
@@ -101,16 +105,34 @@
     var submit = false;
     var isExist = false;
     var win = null;
-
+    form.verify({
+        //数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
+        chinese: function(value, item){ //value：表单的值、item：表单的DOM对象
+            var reg = new RegExp("[\\u4E00-\\u9FFF]+", "g");
+            if((reg.test(value))){
+                return '此项不能包含中文';
+            }
+        },
+        length20: function(value, item){ //value：表单的值、item：表单的DOM对象
+            if(value.length>20){
+                return '字数已达上限';
+            }
+        },
+        length255: function(value, item){ //value：表单的值、item：表单的DOM对象
+            if(value.length>255){
+                return '字数已达上限';
+            }
+        }
+    });
     function SetData(data) {
         win = data.win ? data.win : window;
         form.val('layuiadmin-app-form-list', {
             "fileId": data.fileId,
         });
         if(data.fileId==1){
-            document.getElementById("showName").innerHTML="升级程序安装包";
+            document.getElementById("showName").innerHTML="升级程序安装包：";
         }else{
-            document.getElementById("showName").innerHTML="帮助文档";
+            document.getElementById("showName").innerHTML="帮助文档：";
         }
     }
     form.render();

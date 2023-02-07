@@ -70,4 +70,11 @@ public class LoginLogService {
         loginLogMapper.addLoginLog(loginLog);
     }
 
+    /**
+     * 查询所有登录日志信息
+     */
+    public List<LoginLogVo> csQuery(String APPId){
+        return loginLogMapper.csQuery(APPId);
+    }
+
 }

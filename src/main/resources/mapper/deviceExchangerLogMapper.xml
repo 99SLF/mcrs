@@ -131,12 +131,49 @@
 
     <!--添加设备交换日志-->
     <insert id="addDeviceExchangeLog" parameterType="com.zimax.mcrs.log.pojo.DeviceExchangeLog">
-        insert into log_log (log_id,log_type,log_status,equipment_int,device_id,
-                             operation_type,operation_content,user,
-                             equipment_exchange_time,create_time)
-        values (#{logId}, #{logType}, #{logStatus},#{equipmentInt}, #{deviceId},
+        insert into log_log (log_id, log_type, log_status, equipment_int, device_id,
+                             operation_type, operation_content, user,
+                             equipment_exchange_time, create_time)
+        values (#{logId}, #{logType}, #{logStatus}, #{equipmentInt}, #{deviceId},
                 #{operationType}, #{operationContent}, #{user},
                 #{equipmentExchangeTime}, #{createTime})
     </insert>
+
+
+    <!--查询所有-->
+    <select id="csQuery" parameterType="map" resultType="com.zimax.mcrs.log.pojo.DeviceExchangeLogVo">
+        SELECT ll.log_status,
+               eqi.equipment_id,
+               eqi.equipment_name,
+               dev.app_id,
+               eqi.equipment_ip,
+               eqi.equipment_continue_port,
+               bmi.matrix_name,
+               bfi.factory_name,
+               bpi.process_name,
+               ll.operation_type,
+               operation_content,
+               cur.USER_NAME AS operateName,
+               ll.equipment_exchange_time
+        FROM log_log AS ll
+                 LEFT JOIN eqi_equipment AS eqi
+                           ON ll.equipment_int = eqi.equipment_int
+                 LEFT JOIN eqi_device AS dev
+                           ON ll.device_id = dev.device_id
+                 LEFT JOIN base_access_info AS bai
+                           ON eqi.acc_point_res_id = bai.acc_point_res_id
+                 LEFT JOIN base_process_info AS bpi
+                           ON bai.process_id = bpi.process_id
+                 LEFT JOIN base_factory_info AS bfi
+                           ON bpi.factory_id = bfi.factory_id
+                 LEFT JOIN base_matrix_info AS bmi
+                           ON bfi.matrix_id = bmi.matrix_id
+                 LEFT JOIN cap_user AS cur
+                           ON ll.`user` = cur.USER_ID
+        where ll.log_type = '104'
+          and dev.app_id = #{APPId}
+        ORDER BY ll.equipment_exchange_time DESC
+    </select>
+
 
 </mapper>

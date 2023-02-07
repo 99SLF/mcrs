@@ -2,6 +2,8 @@ package com.zimax.mcrs.log.controller;
 
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.log.pojo.MesLog;
+import com.zimax.mcrs.log.pojo.MesLogVo;
+import com.zimax.mcrs.log.pojo.PlcLogVo;
 import com.zimax.mcrs.log.pojo.RfidLog;
 import com.zimax.mcrs.log.service.MesLogService;
 import com.zimax.mcrs.log.service.RfidLogService;
@@ -52,6 +54,15 @@ public class MesLogController {
     public Result<?> addMesLog(@RequestBody MesLog mesLog) {
         mesLogService.addMesLog(mesLog);
         return Result.success();
+    }
+
+    /**
+     * 使用POST方式查询日志给CS端
+     */
+    @PostMapping("/mesLog/CSquery")
+    public Result<?> csQuery(@RequestBody MesLogVo mesLogVo) {
+        List mesLogs = mesLogService.csQuery(mesLogVo.getAPPId());
+        return Result.success(mesLogs);
     }
 
 
