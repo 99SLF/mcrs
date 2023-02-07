@@ -655,7 +655,7 @@
                 content: "<%= request.getContextPath() %>/update/update_package_detailed.jsp",
                 area: ["600px", "500px"],
                 resize: false,
-                // btn: ["确定", "取消"],
+                btn: ["关闭"],
                 success: function (layero, index) {
                     var dataJson = {
                         data: data,
@@ -664,8 +664,7 @@
                     layero.find("iframe")[0].contentWindow.SetData(dataJson);
                 },
                 yes: function (index, layero) {
-                    // var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");
-                    // edit.click();
+                    parent.layer.close(index);
                 }
 
             });

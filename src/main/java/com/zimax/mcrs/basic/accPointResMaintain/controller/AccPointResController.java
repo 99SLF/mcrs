@@ -59,11 +59,11 @@ public class AccPointResController {
     }
 
     /**
-     * 条件查询
+     * 条件查询（接入点模块显示）
      *
      * @param accPointResCode 接入点代码
      * @param accPointResName 接入点名称
-     * @param creator         制单人
+     * @param accCreatorName  制单人
      * @param createTime      制单时间
      * @param limit           记录数
      * @param page            页码
@@ -72,9 +72,9 @@ public class AccPointResController {
      * @return 终端列表
      */
     @GetMapping("/query")
-    public Result<?> queryAccPointRes(String page, String limit, String accPointResCode, String accPointResName, String creator, String createTime, String order, String field) {
-        List AccPointRes = accPointResService.queryAccPointRes(page, limit, accPointResCode, accPointResName, creator, createTime, order, field);
-        return Result.success(AccPointRes, accPointResService.count(accPointResCode, accPointResName, creator, createTime));
+    public Result<?> queryAccPointRes(String page, String limit, String accPointResCode, String accPointResName, String isEnable, String matrixCode, String factoryCode, String accCreatorName, String createTime, String accUpdaterName, String updateTime, String order, String field) {
+        List AccPointRes = accPointResService.queryAccPointRes(page, limit, accPointResCode, accPointResName, isEnable, matrixCode, factoryCode, accCreatorName, createTime, accUpdaterName, updateTime, order, field);
+        return Result.success(AccPointRes, accPointResService.countAll(accPointResCode, accPointResName, isEnable, matrixCode, factoryCode, accCreatorName, createTime, accUpdaterName, updateTime));
     }
 
 
@@ -89,9 +89,10 @@ public class AccPointResController {
         return Result.success();
 
     }
+
     @GetMapping("/getCount")
     public Result<?> getCount() {
-        return Result.success(accPointResService.count(null,null,null,null));
+        return Result.success(accPointResService.count(null, null, null, null));
 
     }
 
@@ -113,6 +114,7 @@ public class AccPointResController {
 
     /**
      * 批量启用接入点
+     *
      * @param accPointResIds 接入点主键
      */
     @PostMapping("/accPointRes/enable")

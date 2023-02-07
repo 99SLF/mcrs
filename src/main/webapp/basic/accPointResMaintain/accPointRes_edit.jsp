@@ -16,6 +16,20 @@
     <meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
     <title>接入点信息维护编辑</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
+    <style>
+        .layui-form-label {
+            width: 120px;
+        }
+
+        .layui-input-block {
+            margin-left: 150px;
+            min-height: 30px
+        }
+        .layui-textarea{
+            height: 5px!important;
+            /*min-height: 60px!important;*/
+        }
+    </style>
 </head>
 <body>
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list"
@@ -24,14 +38,14 @@
     <input type="hidden" name="accPointResId" value="default">
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>接入点代码:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>接入点代码：</label>
             <div class="layui-input-block">
                 <input id="accPointResCode" type="text" name="accPointResCode" lay-verify="required|accPointResCode"
                        placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>接入点名称:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>接入点名称：</label>
             <div class="layui-input-block">
                 <input id="accPointResName" type="text" name="accPointResName" lay-verify="required|accPointResName"
                        placeholder="请输入接入点名称(必填)" autocomplete="off" class="layui-input" lay-filter="accPointResName">
@@ -41,7 +55,7 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>是否启用:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>是否启用：</label>
             <div class="layui-input-block">
                 <select name="isEnable" id="isEnable" lay-filter="isEnable" lay-verify="required|isEnable"
                         type="select">
@@ -50,7 +64,7 @@
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>基地代码:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>基地代码：</label>
             <div class="layui-input-block">
                 <%--   lay-filter 对应下面的form.on事件过滤         --%>
                 <select name="matrixCode" id="matrixCode" lay-filter="matrixCode" lay-verify="required|matrixCode"
@@ -62,7 +76,7 @@
     </div>
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>工厂代码:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>工厂代码：</label>
             <div class="layui-input-block">
                 <select name="factoryCode" id="factoryCode" lay-filter="factoryCode" lay-verify="required|factoryCode"
                         type="select">
@@ -71,7 +85,7 @@
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label">工厂名称:</label>
+            <label class="layui-form-label">工厂名称：</label>
             <div class="layui-input-block">
                 <input id="factoryName" type="text" name="factoryName" lay-verify="" placeholder="请先选择工厂代码"
                        autocomplete="off" class="layui-input" readonly>
@@ -102,25 +116,11 @@
     </div>
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm12">
-            <label class="layui-form-label">工序描述:</label>
+            <label class="layui-form-label">工序描述：</label>
             <div class="layui-input-block">
                 <textarea cols="50" rows="10" style="width:100%;height:100px" name="processRemarks" id="processRemarks"
-                          autocomplete="off" class="layui-input" lay-verify="" readonly></textarea>
+                          autocomplete="off" class="layui-textarea" lay-verify="" readonly></textarea>
             </div>
-        </div>
-    </div>
-
-    <div class="layui-form-item layui-row layui-col-space12" style="padding-top: 30px">
-        <div class="layui-form-item layui-row layui-hide">
-            <div class="layui-input-block">
-                <%--java代码--%>
-                <%IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();%>
-                <input type="text" class="layui-hide" name="updater" value="<%=usetObject.getUserName()%>" readonly/>
-            </div>
-        </div>
-        <div class="layui-input-block">
-            <input type="text" class="layui-hide" name="updateTime"
-                   value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>" readonly/>
         </div>
     </div>
     <div class="layui-form-item layui-hide">
@@ -154,6 +154,9 @@
     // 判断字符
     form.verify({
         accPointResName: function (value, item) {
+            if(!new RegExp("^[a-zA-Z0-9\u4e00-\u9fa5]+$").test(value)){
+                return "输入名称有误，只能输入汉字+英文+数字";
+            }
             if (value.length > 20) {
                 return "接入点名称不能超过20字符";
             }
@@ -171,15 +174,30 @@
             }
         },
 
+        matrixName: function (value, item) {
+            if (value.length = 0) {
+                return "基地名称不能为空";
+            }
+        },
         factoryCode: function (value, item) {
             if (value.length = 0) {
                 return "请选择工厂代码";
+            }
+        },
+        factoryName: function (value, item) {
+            if (value.length = 0) {
+                return "工厂名称不能为空";
             }
         },
 
         processCode: function (value, item) {
             if (value.length = 0) {
                 return "请选择工序代码";
+            }
+        },
+        processName: function (value, item) {
+            if (value.length = 0) {
+                return "工序名称不能为空";
             }
         }
 
@@ -474,7 +492,7 @@
                             time: 500
                         }, function () {
                             var index = parent.layer.getFrameIndex(window.name);
-                            win.layui.table.reload("LAY-app-device-list-reload");
+                            win.layui.table.reload("LAY-app-accPoint-list-reload");
                             top.layer.close(index);
                         });
                     }
