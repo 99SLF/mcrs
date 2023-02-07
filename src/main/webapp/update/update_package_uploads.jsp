@@ -25,8 +25,12 @@
 
         .layui-input-block {
             margin-left: 150px;
-            min-height: 36px;
+            min-height: 30px
+        }
 
+        .layui-textarea {
+            height: 5px !important;
+            /*min-height: 60px!important;*/
         }
     </style>
     <script src="common/layui/layui.all.js"></script>
@@ -66,7 +70,7 @@
         <%--            </div>--%>
         <%--        </div>--%>
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>终端软件类型:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>终端类型：</label>
             <div class="layui-input-block">
                 <%--下拉选择框--%>
                 <select name="deviceSoType" id="deviceSoType" lay-filter="deviceSoType"
@@ -87,7 +91,7 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>是否为主要版本</label>
+            <label class="layui-form-label"><span style="color:red">*</span>是否为主要版本：</label>
             <div class="layui-input-block">
                 <select name="majorVersion" id="majorVersion" lay-filter="majorVersion"
                         lay-verify="majorVersion|required" type="select" disabled>
@@ -106,9 +110,8 @@
     </div>
 
     <div class="layui-form-item layui-row layui-col-space10">
-
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>更新策略:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>更新策略：</label>
             <div class="layui-input-block">
                 <%--下拉选择框--%>
                 <select name="uploadStrategy" id="uploadStrategy" lay-filter="uploadStrategy"
@@ -121,7 +124,7 @@
     <div>
         <div class="layui-form-item layui-row layui-col-space10">
             <div class="layui-col-sm6">
-                <label class="layui-form-label"><span style="color:red">*</span>更新包</label>
+                <label class="layui-form-label"><span style="color:red">*</span>更新包：</label>
                 <div class="layui-input-block layui-upload" style="width: 400px">
                     <button type="button" name="url" class="layui-btn layui-btn-sm"
                             id="test1"><i class="layui-icon">&#xe67c;</i>附件上传
@@ -133,10 +136,12 @@
     </div>
 
     <div class="layui-form-item layui-row layui-col-space10">
-        <label class="layui-form-label">备注：</label>
-        <div class="layui-input-block">
+        <div class="layui-col-sm12">
+            <label class="layui-form-label">备注：</label>
+            <div class="layui-input-block">
                 <textarea class="layui-textarea field-effect field-content" name="remarks" id="remarks"
                           autocomplete="off" placeholder="" lay-verify="remarks"></textarea>
+            </div>
         </div>
     </div>
 
@@ -152,10 +157,11 @@
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label" style="margin-top: 10px;">制单人:</label>
+            <label class="layui-form-label" style="margin-top: 10px;">制单人：</label>
             <div class="layui-input-block" style="width: 200px;margin-top: 10px; ">
-                <%IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();%>
-                <input type="text" class="layui-input" id="uploader" name="uploader" value="<%=usetObject.getUserName()%>" size="150" readonly/>
+                <%IUserObject useObject = DataContextManager.current().getMUODataContext().getUserObject();%>
+                <input type="text" class="layui-input" id="uploader" name="uploader"
+                       value="<%=useObject.getUserName()%>" size="150" readonly/>
             </div>
         </div>
     </div>
@@ -237,7 +243,7 @@
     form.verify({
         deviceSoType: function (value, item) { //value：表单的值、item：表单的DOM对象
             if (value.length < 1) {
-                return '请选择是终端软件类型';
+                return '请选择终端软件类型';
             }
         },
     });

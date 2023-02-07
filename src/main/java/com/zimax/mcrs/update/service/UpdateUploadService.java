@@ -58,9 +58,9 @@ public class UpdateUploadService {
      */
     public int countAll(String uploadNumber,
                      String version, String deviceSoType,
-                     String uploadStrategy, String uploader, String versionUploadTime) {
+                     String uploadStrategy, String uplName, String versionUploadTime) {
 
-        return updateUploadMapper.countAll(uploadNumber,version, deviceSoType,uploadStrategy,uploader,versionUploadTime);
+        return updateUploadMapper.countAll(uploadNumber,version, deviceSoType,uploadStrategy,uplName,versionUploadTime);
     }
     /**
      * 查询所有更新包信息(更新包上传管理)
@@ -68,7 +68,7 @@ public class UpdateUploadService {
     public List<UpdateUpload> queryUpdateUploadAll(String page, String limit,
                                                    String uploadNumber,
                                                    String version, String deviceSoType,
-                                                   String uploadStrategy, String uploader, String versionUploadTime,
+                                                   String uploadStrategy, String uplName, String versionUploadTime,
                                                    String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
@@ -87,7 +87,7 @@ public class UpdateUploadService {
         map.put("version", version);
         map.put("deviceSoType", deviceSoType);
         map.put("uploadStrategy", uploadStrategy);
-        map.put("uploader", uploader);
+        map.put("uplName", uplName);
         map.put("versionUploadTime", versionUploadTime);
         return updateUploadMapper.queryUpdateUploadAll(map);
 

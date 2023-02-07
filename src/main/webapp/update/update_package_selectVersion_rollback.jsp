@@ -35,7 +35,7 @@
                         <input type="text" name="version" placeholder="请输入版本号" autocomplete="off"
                                class="layui-input">
                     </div>
-                    <label class="layui-form-label">终端软件类型：</label>
+                    <label class="layui-form-label">终端类型：</label>
                     <div class="layui-input-inline">
                         <%--下拉选择框--%>
                         <select name="deviceSoType" id="deviceSoType" lay-filter="deviceSoType"
@@ -103,7 +103,7 @@
         minVersion = dataJson.minVersion ? dataJson.minVersion : "";
         deviceSoftwareType = dataJson.deviceSoftwareType ? dataJson.deviceSoftwareType : "";
 
-        saiXuan();
+        shaiXuan();
     }
 
     //全局参数
@@ -229,7 +229,7 @@
         return false;
     }
 
-    function saiXuan() {
+    function shaiXuan() {
         table.render({
             elem: "#LAY-app-device-list",
             id: "LAY-app-device-list-reload",
@@ -300,7 +300,7 @@
                 }
             }, {
                 field: "deviceSoType",
-                title: "终端软件类型",
+                title: "终端类型",
                 align: "center",
                 minWidth: 150,
                 hide: isHidden("deviceSoType"),

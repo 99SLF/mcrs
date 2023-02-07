@@ -429,7 +429,7 @@
         }, {
             title: "更新包上传",
             layEvent: "add",
-            icon: "layui-icon layui-icon-upload",
+            icon: "layui-icon layui-icon-upload-circle",
         }, {
             title: "批量删除",
             layEvent: "batchdel",

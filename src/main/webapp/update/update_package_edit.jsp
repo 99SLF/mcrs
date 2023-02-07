@@ -23,8 +23,12 @@
 
         .layui-input-block {
             margin-left: 150px;
-            min-height: 36px;
+            min-height: 30px
+        }
 
+        .layui-textarea {
+            height: 5px !important;
+            /*min-height: 60px!important;*/
         }
     </style>
     <script src="common/layui/layui.all.js"></script>
@@ -35,8 +39,9 @@
     <%--	需要隐藏主键,主键必要	--%>
     <input type="hidden" name="uploadId" value="default">
     <div class="layui-form-item layui-row layui-col-space10">
+
         <div class="layui-col-sm6">
-            <label class="layui-form-label">终端软件类型:</label>
+            <label class="layui-form-label">终端软件类型：</label>
             <div class="layui-input-block">
                 <input id="deviceSoType" type="text" name="deviceSoType" lay-verify="deviceSoType|required"
                        placeholder=""
@@ -54,7 +59,7 @@
     </div>
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">更新包是否主版本</label>
+            <label class="layui-form-label">是否为主要版本：</label>
             <div class="layui-input-block">
                 <input id="majorVersion" type="text" name="majorVersion" lay-verify="required|majorVersion"
                        placeholder=" " autocomplete="off" class="layui-input" readonly>
@@ -71,7 +76,7 @@
     </div>
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>更新策略:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>更新策略：</label>
             <div class="layui-input-block">
                 <%--下拉选择框--%>
                 <select name="uploadStrategy" id="uploadStrategy" lay-filter="uploadStrategy"
@@ -93,10 +98,12 @@
         </div>
     </div>
     <div class="layui-form-item layui-row layui-col-space10">
-        <label class="layui-form-label">备注：</label>
-        <div class="layui-input-block">
+        <div class="layui-col-sm12">
+            <label class="layui-form-label">备注：</label>
+            <div class="layui-input-block">
                 <textarea class="layui-textarea field-effect field-content" name="remarks" id="remarks"
                           autocomplete="off" placeholder="" lay-verify="remarks"></textarea>
+            </div>
         </div>
     </div>
     <div class="layui-form-item layui-row layui-col-space12">
@@ -107,12 +114,12 @@
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label" style="margin-top: 10px;">制单人:</label>
-            <div class="layui-input-block" style="width: 200px;margin-top: 10px; ">
-                <%IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();%>
-                <input type="text" class="layui-input" id="uploader" name="uploader"
-                       value="<%=usetObject.getUserName()%>" size="150" readonly/>
-            </div>
+            <%--需要通过id--%>
+            <label class="layui-form-label" style="margin-top: 10px;">制单人：</label>
+                <div class="layui-input-block" style="width: 200px;margin-top: 10px; ">
+                    <input id="uploader" type="text" name="uploader"
+                           autocomplete="off" class="layui-input" disabled>
+                </div>
         </div>
     </div>
     <div class="layui-form-item layui-hide">
@@ -154,6 +161,7 @@
         win = data.win ? data.win : window;
         var data = data.data;
         var deviceSoTypeVal = data.deviceSoType;
+        var uploadIdVal = data.uploadId;
         //通过终端软件类型查询最新的上传更新包版本号
         var lastversionVal = "";
         $.ajax({
@@ -167,29 +175,30 @@
 
             }
         })
-
         form.val("layuiadmin-app-form-list", {
             //需要传入主键
             "uploadId": data.uploadId,
             "deviceSoType": layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", data.deviceSoType),
-            "lastversion" : lastversion,
+            "lastversion": lastversion,
             "majorVersion": layui.admin.getDictText("ISMAINVERSION", data.majorVersion),
             "version": data.version,
             "uploadStrategy": data.uploadStrategy,
             "fileName": data.fileName,
             "remarks": data.remarks,
-            "versionUploadTime": util.toDateString(data.versionUploadTime, "yyyy-MM-dd HH:mm:ss")
+            "versionUploadTime": util.toDateString(data.versionUploadTime, "yyyy-MM-dd HH:mm:ss"),
             //, "versionUploadTime": util.toDateString(data.versionUploadTime, "yyyy年MM月dd日 HH:mm:ss") //json数据不允许
+            "uploader" : data.uplName
+
         });
     }
 
     //判断字符
     form.verify({
-        remarks: function (value, item) {
-            if (value.length > 255) {
-                return "终端名称不能超过225个字符";
+        uploadStrategy: function (value, item) { //value：表单的值、item：表单的DOM对象
+            if (value.length < 1) {
+                return '请选择更新策略';
             }
-        }
+        },
     });
 
 

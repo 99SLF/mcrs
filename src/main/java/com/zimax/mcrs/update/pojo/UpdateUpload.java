@@ -127,5 +127,11 @@ public class UpdateUpload {
     @TableField(exist = false)
     private String uplName;
 
+    /**
+     * 修改人
+     */
+    @TableField(exist = false)
+    private String updName;
+
 
 }
