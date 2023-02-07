@@ -493,7 +493,7 @@
 			content: "<%= request.getContextPath() %>/coframe/dict/edit_dict.jsp",
 			title: "添加字典项",
 			type: 2,
-			area: ['370px','400px'],
+			area: ['400px','420px'],
 			resize: false,
 			btn: ["确定", "取消"],
 			yes: function(index, layero) {

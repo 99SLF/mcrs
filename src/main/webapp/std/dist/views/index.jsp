@@ -534,12 +534,12 @@
             };
         },
         cols: [[{
-            field: "exchange_time",
+            field: "equipmentExchangeTime",
             title: "操作时间",
             align: "center",
-            minWidth: 30,
+            width: 180,
             templet: function (d) {
-                return util.toDateString(d.exchangeTime);
+                return util.toDateString(d.equipmentExchangeTime);
             },
         }, {
             field: "equipmentId",
@@ -548,21 +548,29 @@
             minWidth: 100,
         }, {
             field: "aPPId",
-            title: "终端名称",
+            title: "APPID",
             align: "center",
             minWidth: 50,
-        }, {
-            field: "aPPId",
+        },{
+            field: "equipmentName",
+            title: "设备名称",
+            align: "center",
+            minWidth: 50,
+        },{
+            field: "operationType",
+            title: "操作类型",
+            align: "center",
+            minWidth: 90,
+            templet: function (d) {
+                return layui.admin.getDictText("OPERATE_TYPE", d.operationType);
+            }
+        },{
+            field: "operationContent",
             title: "操作内容",
             align: "center",
             minWidth: 100,
-        }, {
-            field: "aPPId",
-            title: "操作结果",
-            align: "center",
-            minWidth: 90,
-        }, {
-            field: "operator",
+        },{
+            field: "operateName",
             title: "操作人员",
             align: "center",
             width: 100,
@@ -588,7 +596,7 @@
             field: "operationTime",
             title: "操作时间",
             align: "center",
-            minWidth: 180,
+            width: 180,
             templet: function (d) {
                 return util.toDateString(d.operationTime);
             },
@@ -596,14 +604,17 @@
             field: "operationContent",
             title: "操作内容",
             align: "center",
-            minWidth: 200,
+            width: 200,
         }, {
             field: "operationResult",
             title: "操作结果",
             align: "center",
             minWidth: 200,
+            templet: function (d) {
+                return layui.admin.getDictText("OPERATE_RESULT", d.result);
+            }
         }, {
-            field: "operator",
+            field: "operateName",
             title: "操作人",
             align: "center",
             minWidth: 208,

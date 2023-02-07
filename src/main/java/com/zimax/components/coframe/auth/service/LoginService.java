@@ -54,7 +54,7 @@ public class LoginService {
         if (result.getCode() == "1") {
             return Result.error("1", result.getMsg());
         }
-        if (!"1".equals(user.getStatus())) {
+        if (!"102".equals(user.getStatus())) {
             return Result.error("1", "用户无权限登录，请联系系统管理员！");
         }
         if (user.getPassword().equals(userService.encodePassword(password))) {

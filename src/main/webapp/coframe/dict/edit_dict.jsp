@@ -13,9 +13,13 @@
 <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css">
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js"></script>
 <style>
+	.layui-form-label{
+		width:100px;
+	}
    	.layui-form-select {
+		margin-left: 20px;
    		width: 200px;
-   	}	
+   	}
 </style>
 <body>
 	<form  id="dict_form" class="layui-form" lay-filter="operaterform" action="">
@@ -25,13 +29,13 @@
 		<input type="hidden" name="action" class="layui-input" />
 	  	<br>
 		<div class="layui-form-item">
-		    <label class="layui-form-label">上级字典项</label>
+		    <label class="layui-form-label">上级字典项：</label>
 		    <div class="layui-input-inline">
 		      	<input type="text" name="parentId" style="width:200px;"  autocomplete="off" class="layui-input" readonly="true">
 		    </div>
 		</div>
 	  	<div class="layui-form-item">
-		    <label class="layui-form-label">类型名称</label>
+		    <label class="layui-form-label"><span style="color:red">*</span>类型名称：</label>
 		    <div class="layui-input-block">
 		    	<select name="dictTypeId" id="dictTypeId" lay-verify="required" style="width:200px;" lay-filter="">
            	 		<!-- <option value="">请选择类型代码</option> -->
@@ -39,19 +43,19 @@
 		    </div>
 	  	</div>	
 	  	<div class="layui-form-item">
-	   		<label class="layui-form-label">字典项代码</label>
+	   		<label class="layui-form-label"><span style="color:red">*</span>字典项代码：</label>
 	    	<div class="layui-input-block">
 	      		<input type="text" name="dictId" id="dictId" style="width:200px;" required  lay-verify="required"  autocomplete="off" class="layui-input">
 	    	</div>
 	  	</div>
 	  	<div class="layui-form-item">
-	   		<label class="layui-form-label">字典项名称</label>
+	   		<label class="layui-form-label"><span style="color:red">*</span>字典项名称：</label>
 	    	<div class="layui-input-block">
 	      		<input type="text" name="dictName"  style="width:200px;" required  lay-verify="required"  autocomplete="off" class="layui-input">
 	    	</div>
 	  	</div>
 	  	<div class="layui-form-item">
-	   		<label class="layui-form-label">排序</label>
+	   		<label class="layui-form-label"><span style="color:red">*</span>排序：</label>
 	    	<div class="layui-input-block">
 	      		<input type="text" name="sortNo"  style="width:200px;" required  lay-verify="required"  autocomplete="off" class="layui-input">
 	    	</div>

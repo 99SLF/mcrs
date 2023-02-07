@@ -14,7 +14,7 @@
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js"></script>
 <style>
 	.layui-form-label{
-	    width:100px;
+	    width:120px;
 	}
 	.layui-input-block{
 	   	margin-left:100px;
@@ -29,19 +29,19 @@
 	  	<br>
 
 		<div class="layui-form-item">
-		    <label class="layui-form-label">上级类型代码</label>
+		    <label class="layui-form-label"><span style="color:red">*</span>上级类型代码：</label>
 		    <div class="layui-input-inline">
 		      	<input type="text" name="parentId" style="width:200px;"  autocomplete="off" class="layui-input layui-disabled" readonly="true">
 		    </div>
 		</div>
 	  	<div class="layui-form-item">
-		    <label class="layui-form-label">类型代码</label>
+		    <label class="layui-form-label"><span style="color:red">*</span>类型代码：</label>
 		    <div class="layui-input-block">
 		      <input type="text" name="dictTypeId" id="dictTypeId" style="width:200px;" required  autocomplete="off"  lay-verify="required" class="layui-input">
 		    </div>
 	  	</div>
 	  	<div class="layui-form-item">
-	   		<label class="layui-form-label">类型名称</label>
+	   		<label class="layui-form-label"><span style="color:red">*</span>类型名称：</label>
 	    	<div class="layui-input-block">
 	      		<input type="text" name="dictTypeName"  style="width:200px;" required autocomplete="off"  lay-verify="required"  autocomplete="off" class="layui-input">
 	    	</div>
