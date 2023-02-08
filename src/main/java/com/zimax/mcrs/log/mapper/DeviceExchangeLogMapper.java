@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zimax.mcrs.log.pojo.DeviceExchangeLog;
 import com.zimax.mcrs.log.pojo.DeviceExchangeLogVo;
 import com.zimax.mcrs.log.pojo.InterfaceLogVo;
+import com.zimax.mcrs.log.pojo.LoginLogVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
@@ -45,5 +47,11 @@ public interface DeviceExchangeLogMapper extends BaseMapper<DeviceExchangeLog> {
      */
     void addDeviceExchangeLog(DeviceExchangeLog deviceExchangeLog);
 
+
+    /**
+     * 查询设备交换日志到CS
+     * @return
+     */
+    List<DeviceExchangeLogVo> csQuery(@RequestParam("APPId") String APPId);
 
 }

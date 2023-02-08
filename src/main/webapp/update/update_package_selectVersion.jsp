@@ -25,7 +25,6 @@
 </head>
 <body>
 <div class="layui-fluid">
-
     <div class="layui-card">
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item">
@@ -35,7 +34,7 @@
                         <input type="text" name="version" placeholder="请输入版本号" autocomplete="off"
                                class="layui-input">
                     </div>
-                    <label class="layui-form-label">终端软件类型：</label>
+                    <label class="layui-form-label">终端类型：</label>
                     <div class="layui-input-inline">
                         <%--下拉选择框--%>
                         <select name="deviceSoType" id="deviceSoType" lay-filter="deviceSoType"
@@ -55,9 +54,7 @@
         </div>
 
         <div class="layui-card-body">
-
             <table id="LAY-app-device-list" lay-filter="LAY-app-device-list"></table>
-
             <div class="layui-form layui-card-header layuiadmin-card-header-auto layui-hide">
                 <div class="layui-form-item">
                     <div class="layui-inline" style="float: right">
@@ -102,7 +99,7 @@
         deviceSoftwareType = dataJson.deviceSoftwareType ? dataJson.deviceSoftwareType : "";
 
         //这个方法被终端页面选择调用，才先执行方法， 将表单渲染做成方法，就会在终端调用的时候一起执行，而不会取不到maxVersion的值，让表单在取到maxVersion的时候就执行
-        saiXuan();
+        shaiXuan();
     }
     //全局参数
     var req_data;
@@ -229,7 +226,7 @@
     }
 
     //先做数据筛选，在渲染表单
-    function saiXuan(){
+    function shaiXuan(){
         table.render({
             elem: "#LAY-app-device-list",
             id: "LAY-app-device-list-reload",
@@ -300,7 +297,7 @@
                 }
             }, {
                 field: "deviceSoType",
-                title: "终端软件类型",
+                title: "终端类型",
                 align: "center",
                 minWidth: 150,
                 hide: isHidden("deviceSoType"),

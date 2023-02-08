@@ -25,6 +25,29 @@ public interface AccPointResMapper {
     List<AccPointResVo> queryAccPointRes(Map map);
 
     /**
+     * 计数
+     *
+     * @return
+     */
+    int countAll(@Param("accPointResCode") String accPointResCode,
+              @Param("accPointResName") String accPointResName,
+              @Param("isEnable") String isEnable,
+              @Param("matrixCode") String matrixCode,
+              @Param("factoryCode") String factoryCode,
+              @Param("accCreatorName") String accCreatorName,
+              @Param("createTime") String createTime,
+              @Param("accUpdaterName") String accUpdaterName,
+              @Param("updateTime") String updateTime
+
+    );
+
+    int count(@Param("accPointResCode") String accPointResCode,
+                 @Param("accPointResName") String accPointResName,
+                 @Param("accCreatorName") String accCreatorName,
+                 @Param("createTime") String createTime
+    );
+
+    /**
      * 新增信息
      *
      * @return
@@ -45,14 +68,6 @@ public interface AccPointResMapper {
 
 
     /**
-     * 计数
-     *
-     * @return
-     */
-    int count(@Param("accPointResCode") String accPointResCode, @Param("accPointResName") String accPointResName, @Param("creator") String creator, @Param("createTime") String createTime);
-
-
-    /**
      * 批量删除
      *
      * @param accPointResIds
@@ -62,6 +77,7 @@ public interface AccPointResMapper {
 
     /**
      * 弃用了
+     *
      * @param
      * @return
      */

@@ -98,4 +98,9 @@ public class AccPointResVo {
      */
     private String updateTime;
 
+
+    private String accCreatorName;
+
+    private String accUpdaterName;
+
 }

@@ -43,7 +43,7 @@ public interface UpdateUploadMapper {
      */
     int countAll(@Param("uploadNumber") String uploadNumber, @Param("version") String version,
               @Param("deviceSoType") String deviceSoType, @Param("uploadStrategy") String uploadStrategy,
-              @Param("uploader") String uploader, @Param("versionUploadTime") String versionUploadTime);
+              @Param("uplName") String uplName, @Param("versionUploadTime") String versionUploadTime);
 
     /**
      *

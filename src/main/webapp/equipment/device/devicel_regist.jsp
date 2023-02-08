@@ -213,6 +213,9 @@
         //     }
         // },
         deviceName: function (value, item) {
+            if(!new RegExp("^[a-zA-Z0-9\u4e00-\u9fa5]+$").test(value)){
+                return "输入终端名称有误，只能输入汉字+英文+数字";
+            }
             if (value.length > 20) {
                 return "终端名称不能超过20个字符";
             }
@@ -228,7 +231,7 @@
         },
         executorInstallationPath: function (value, item) {
             //文件路径的正则表达式:^([a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|]+\\.[^\\\\/:*?<>|]+,)*[a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|]+\\.[^\\\\/:*?<>|]+$
-            if (!new RegExp("^([a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|]+\\.[^\\\\/:*?<>|]+,)*[a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|]+\\.[^\\\\/:*?<>|]+$").test(value)) {
+            if(!new RegExp("^.*?\.(exe)$").test(value)){
                 return "输入终端程序安装路径有误";
             }
             if (value.length > 100) {
@@ -292,7 +295,7 @@
             title: "选择设备资源",
             area: ["850px", "470px"],
             btn: ["确定", "取消"],
-            content: "<%= request.getContextPath() %>/equipment/equipment/equipment_select.jsp",
+            content: "<%= request.getContextPath() %>/equipment/equipment/equipment_rule_select.jsp",
             yes: function (index, layero) {
                 var data = layero.find('iframe')[0].contentWindow.getData();
                 $("#equipmentInt").val(data.equipmentInt);

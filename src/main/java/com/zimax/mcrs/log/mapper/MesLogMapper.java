@@ -4,6 +4,7 @@ package com.zimax.mcrs.log.mapper;
 import com.zimax.mcrs.log.pojo.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
@@ -43,5 +44,11 @@ public interface MesLogMapper {
      */
     void addMesLog(MesLog mesLog);
 
+
+    /**
+     * 查询终端对应的所有的MES日志给终端
+     * @return
+     */
+    List<MesLogVo> csQuery(@RequestParam("APPId") String APPId);
 
 }

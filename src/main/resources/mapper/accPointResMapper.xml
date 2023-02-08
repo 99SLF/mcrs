@@ -14,11 +14,13 @@
     <!--    查询接入点表单记录数-->
     <select id="count" resultType="int">
         SELECT
-        count(*)
+        count(*),e.USER_NAME AS accCreatorName , f.USER_NAME AS accUpdaterName
         FROM base_access_info a
         LEFT JOIN base_process_info b ON a.process_id = b.process_id
         LEFT JOIN base_factory_info c ON b.factory_id = c.factory_id
         LEFT JOIN base_matrix_info d ON c.matrix_id = d.matrix_id
+        LEFT JOIN cap_user e ON a.creator = e.USER_ID
+        LEFT JOIN cap_user f ON a.updater = f.USER_ID
         <where>
             <if test="accPointResCode !=null and accPointResCode !=''">
                 and a.acc_point_res_code like '%${accPointResCode}%'
@@ -26,8 +28,8 @@
             <if test="accPointResName !=null and accPointResName !=''">
                 and a.acc_point_res_name like '%${accPointResName}%'
             </if>
-            <if test="creator !=null and creator !=''">
-                and a.creator like '%${creator}%'
+            <if test="accCreatorName !=null and accCreatorName !=''">
+                and e.USER_NAME like '%${accCreatorName}%'
             </if>
             <if test="createTime !=null and createTime !=''">
                 and a.create_time like '%${createTime}%'
@@ -35,18 +37,46 @@
         </where>
     </select>
 
-
-    <!--更新一条选信息-->
-    <update id="updateAccPointRes" parameterType="com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes">
-        UPDATE base_access_info
-        SET process_id            = #{processId},
-            acc_point_res_code = #{accPointResCode},
-            acc_point_res_name = #{accPointResName},
-            is_enable          = #{isEnable},
-            updater            = #{updater},
-            update_time        =#{updateTime,jdbcType=DATE}
-        WHERE acc_point_res_id = ${accPointResId}
-    </update>
+    <!--    查询接入点表单记录数-->
+    <select id="countAll" resultType="int">
+        SELECT
+        count(*), e.USER_NAME AS accCreatorName , f.USER_NAME AS accUpdaterName
+        FROM base_access_info a
+        LEFT JOIN base_process_info b ON a.process_id = b.process_id
+        LEFT JOIN base_factory_info c ON b.factory_id = c.factory_id
+        LEFT JOIN base_matrix_info d ON c.matrix_id = d.matrix_id
+        LEFT JOIN cap_user e ON a.creator = e.USER_ID
+        LEFT JOIN cap_user f ON a.updater = f.USER_ID
+        <where>
+            <if test="accPointResCode !=null and accPointResCode !=''">
+                and a.acc_point_res_code like '%${accPointResCode}%'
+            </if>
+            <if test="accPointResName !=null and accPointResName !=''">
+                and a.acc_point_res_name like '%${accPointResName}%'
+            </if>
+            <if test="isEnable !=null and isEnable !=''">
+                and a.is_enable like '%${isEnable}%'
+            </if>
+            <if test="matrixCode !=null and matrixCode !=''">
+                and d.matrix_code like '%${matrixCode}%'
+            </if>
+            <if test="factoryCode !=null and factoryCode !=''">
+                and c.factory_code like '%${factoryCode}%'
+            </if>
+            <if test="accCreatorName !=null and accCreatorName !=''">
+                and e.USER_NAME like '%${accCreatorName}%'
+            </if>
+            <if test="createTime !=null and createTime !=''">
+                and a.create_time like '%${createTime}%'
+            </if>
+            <if test="accUpdaterName !=null and accUpdaterName !=''">
+                and f.USER_NAME like '%${accUpdaterName}%'
+            </if>
+            <if test="updateTime !=null and updateTime !=''">
+                and a.update_time like '%${updateTime}%'
+            </if>
+        </where>
+    </select>
 
     <!--列表显示接入点信息-->
     <select id="queryAccPointRes" parameterType="map"
@@ -67,11 +97,14 @@
         a.creator,
         a.create_time,
         a.updater,
-        a.update_time
+        a.update_time,
+        e.USER_NAME AS accCreatorName , f.USER_NAME AS accUpdaterName
         FROM base_access_info a
         LEFT JOIN base_process_info b ON a.process_id = b.process_id
         LEFT JOIN base_factory_info c ON b.factory_id = c.factory_id
         LEFT JOIN base_matrix_info d ON c.matrix_id = d.matrix_id
+        LEFT JOIN cap_user e ON a.creator = e.USER_ID
+        LEFT JOIN cap_user f ON a.updater = f.USER_ID
         <where>
             <if test="accPointResCode !=null and accPointResCode !=''">
                 and a.acc_point_res_code like '%${accPointResCode}%'
@@ -79,11 +112,26 @@
             <if test="accPointResName !=null and accPointResName !=''">
                 and a.acc_point_res_name like '%${accPointResName}%'
             </if>
-            <if test="creator !=null and creator !=''">
-                and a.creator like '%${creator}%'
+            <if test="isEnable !=null and isEnable !=''">
+                and a.is_enable like '%${isEnable}%'
+            </if>
+            <if test="matrixCode !=null and matrixCode !=''">
+                and d.matrix_code like '%${matrixCode}%'
+            </if>
+            <if test="factoryCode !=null and factoryCode !=''">
+                and c.factory_code like '%${factoryCode}%'
+            </if>
+            <if test="accCreatorName !=null and accCreatorName !=''">
+                and e.USER_NAME like '%${accCreatorName}%'
             </if>
             <if test="createTime !=null and createTime !=''">
                 and a.create_time like '%${createTime}%'
+            </if>
+            <if test="accUpdaterName !=null and accUpdaterName !=''">
+                and f.USER_NAME like '%${accUpdaterName}%'
+            </if>
+            <if test="updateTime !=null and updateTime !=''">
+                and a.update_time like '%${updateTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -93,6 +141,20 @@
             limit ${begin},${limit}
         </if>
     </select>
+
+
+    <!--更新一条选信息-->
+    <update id="updateAccPointRes" parameterType="com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes">
+        UPDATE base_access_info
+        SET process_id         = #{processId},
+            acc_point_res_code = #{accPointResCode},
+            acc_point_res_name = #{accPointResName},
+            is_enable          = #{isEnable},
+            updater            = #{updater},
+            update_time        =#{updateTime}
+        WHERE acc_point_res_id = ${accPointResId}
+    </update>
+
 
     <!--根据主键删除-->
     <delete id="deleteAccPointRes" parameterType="int">
@@ -132,7 +194,7 @@
     <update id="enable" parameterType="java.util.List">
         update base_access_info
         set is_enable  = #{isEnable},
-            updater=#{updater},
+            updater= #{updater},
             update_time=#{updateTime}
         where acc_point_res_id = #{accPointResId}
     </update>

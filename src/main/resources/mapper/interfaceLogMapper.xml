@@ -120,13 +120,6 @@
                 #{disposeEndTime}, #{user}, #{disposeTime}, #{interfaceName})
     </insert>
 
-    <!--    &lt;!&ndash;根据主键删除设备&ndash;&gt;-->
-    <!--    <delete id="removeEquipment" parameterType="int">-->
-    <!--        delete-->
-    <!--        from eqi_equipment-->
-    <!--        where equipment_int = #{equipmentInt}-->
-    <!--    </delete>-->
-
     <!--依据设备资源号获取设备信息-->
     <select id="checkEquipment" resultType="int">
         select count(*)
@@ -134,5 +127,35 @@
         where equipment_int = #{equipmentInt}
     </select>
 
+
+    <!--查询当前访问终端的所有接口信息给终端-->
+    <select id="csQuery" parameterType="map" resultType="com.zimax.mcrs.log.pojo.InterfaceLogVo">
+        SELECT
+        ll.source,
+        eqi.equipment_id,
+        eqi.equipment_name,
+        dev.app_id,
+        ll.interface_type,
+        eqi.equipment_ip,
+        eqi.equipment_continue_port,
+        ll.create_time,
+        ll.json,
+        ll.result,
+        ll.dispose_start_time,
+        ll.dispose_end_time,
+        cur.USER_NAME AS invokerName,
+        ll.dispose_time,
+        ll.interface_name
+        FROM log_log AS ll
+        LEFT JOIN eqi_equipment AS eqi
+        ON ll.equipment_int = eqi.equipment_int
+        LEFT JOIN eqi_device AS dev
+        on ll.device_id = dev.device_id
+        LEFT JOIN cap_user AS cur
+        ON ll.user = cur.USER_ID
+        where
+            ll.log_type = '102' and dev.app_id = #{APPId}
+        ORDER BY ll.create_time DESC
+    </select>
 
 </mapper>

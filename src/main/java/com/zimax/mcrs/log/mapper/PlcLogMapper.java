@@ -5,6 +5,7 @@ import com.zimax.mcrs.log.pojo.PlcLog;
 import com.zimax.mcrs.log.pojo.PlcLogVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ import java.util.Map;
 public interface PlcLogMapper {
 
     /**
-     * 查询所有的plc日志日志
+     * 查询所有的plc日志
      * @return
      */
     List<PlcLogVo> queryAll(Map map);
@@ -44,6 +45,12 @@ public interface PlcLogMapper {
      * @return
      */
     void addPlcLog(PlcLog plcLog);
+
+    /**
+     * 查询终端对应的所有的plc日志给终端
+     * @return
+     */
+    List<PlcLogVo> csQuery(@RequestParam("APPId") String APPId);
 
 
 

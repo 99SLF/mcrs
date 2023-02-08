@@ -36,7 +36,7 @@ public class AccPointResService {
      * 查询所有接入点信息
      * @return
      */
-    public List<AccPointResVo> queryAccPointRes(String page, String limit, String accPointResCode, String accPointResName, String creator, String createTime, String order, String field) {
+    public List<AccPointResVo> queryAccPointRes(String page, String limit, String accPointResCode, String accPointResName, String isEnable,String matrixCode,String factoryCode,  String accCreatorName, String createTime,String accUpdaterName, String updateTime, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -52,18 +52,26 @@ public class AccPointResService {
         }
         map.put("accPointResCode",accPointResCode);
         map.put("accPointResName",accPointResName);
-        map.put("creator",creator);
+        map.put("isEnable",isEnable);
+        map.put("matrixCode",matrixCode);
+        map.put("factoryCode",factoryCode);
+        map.put("accCreatorName",accCreatorName);
         map.put("createTime",createTime);
+        map.put("accUpdaterName",accUpdaterName);
+        map.put("updateTime",updateTime);
         return accPointResMapper.queryAccPointRes(map);
     }
 
     /**
      * 查询记录
      */
-    public int count(String accPointResCode, String accPointResName, String creator, String createTime){
-        return accPointResMapper.count(accPointResCode,accPointResName,creator,createTime);
+    public int countAll(String accPointResCode, String accPointResName, String isEnable,String matrixCode , String factoryCode ,String accCreatorName, String createTime,String accUpdaterName, String updateTime){
+        return accPointResMapper.countAll(accPointResCode, accPointResName,isEnable,matrixCode,factoryCode, accCreatorName, createTime,accUpdaterName,updateTime);
     }
 
+    public int count(String accPointResCode, String accPointResName,String accCreatorName, String createTime){
+        return accPointResMapper.count(accPointResCode, accPointResName,accCreatorName, createTime);
+    }
 
     /**
      * 新增
@@ -72,6 +80,9 @@ public class AccPointResService {
     public void addAccPointRes(AccPointRes accPointRes) {
         String coding = serialnumberService.getSerialNum("jrdCod").replace("_", "");
         accPointRes.setAccPointResCode(coding);
+        IUserObject useObject = DataContextManager.current().getMUODataContext().getUserObject();
+        accPointRes.setCreator(useObject.getUserId());
+        accPointRes.setCreateTime(new Date());
         accPointResMapper.addAccPointRes(accPointRes);
     }
 
@@ -88,8 +99,8 @@ public class AccPointResService {
      */
     public void updateAccPointRes(AccPointRes accPointRes) {
         //域名要一致才可以，127.0.0.1和localhost不一样
-        IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
-        accPointRes.setUpdater(usetObject.getUserName());
+        IUserObject useObject = DataContextManager.current().getMUODataContext().getUserObject();
+        accPointRes.setUpdater(useObject.getUserId());
         accPointRes.setUpdateTime(new Date());
         accPointResMapper.updateAccPointRes(accPointRes);
     }
@@ -126,11 +137,11 @@ public class AccPointResService {
      */
     public void enable(List<Integer> accPointResIds) {
         AccPointRes accPointRes = new AccPointRes();
-        IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
+        IUserObject useObject = DataContextManager.current().getMUODataContext().getUserObject();
         for (Integer integer:accPointResIds){
             accPointRes.setAccPointResId(integer);
             accPointRes.setIsEnable("101");
-            accPointRes.setUpdater(usetObject.getUserName());
+            accPointRes.setUpdater(useObject.getUserId());
             accPointRes.setUpdateTime(new Date());
             accPointResMapper.enable(accPointRes);
         }

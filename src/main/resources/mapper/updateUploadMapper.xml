@@ -10,30 +10,47 @@
                 #{uploadUuid}, #{uploadFileSize}, #{uploadFileType}, #{uuidFile}, #{updater}, #{versionUpdateTime})
     </insert>
 
-    <!--查询更新包上传管理显示记录数-->
+    <!--查询更新包上传管理显示记录数(主页面显示)-->
     <select id="queryUpdateUploadAll" parameterType="map" resultType="com.zimax.mcrs.update.pojo.UpdateUpload">
         SELECT
-        *,b.USER_NAME AS uplName
-        FROM upd_upload a
+        b.USER_NAME AS uplName,
+        c.USER_NAME AS updName,
+        a.upload_id,
+        a.upload_number,
+        a.version,
+        a.major_version,
+        a.device_so_type,
+        a.upload_strategy,
+        a.file_name,
+        a.uploader,
+        a.version_upload_time,
+        a.remarks,
+        a.major_version,
+        a.download_url,
+        a.updater,
+        a.version_update_time
+        FROM
+        upd_upload a
         LEFT JOIN cap_user b ON a.uploader = b.USER_ID
+        LEFT JOIN cap_user c ON a.updater = c.USER_ID
         <where>
             <if test="uploadNumber !=null and uploadNumber !=''">
-                and upload_number like '%${uploadNumber}%'
+                and a.upload_number like '%${uploadNumber}%'
             </if>
             <if test="version !=null and version !=''">
-                and version like '%${version}%'
+                and a.version like '%${version}%'
             </if>
             <if test="deviceSoType !=null and deviceSoType !=''">
-                and device_so_type like '%${deviceSoType}%'
+                and a.device_so_type like '%${deviceSoType}%'
             </if>
             <if test="uploadStrategy !=null and uploadStrategy !=''">
-                and upload_strategy like '%${uploadStrategy}%'
+                and a.upload_strategy like '%${uploadStrategy}%'
             </if>
-            <if test="uploader !=null and uploader !=''">
-                and uploader like '%${uploader}%'
+            <if test="uplName !=null and uplName !=''">
+                and b.USER_NAME like '%${uplName}%'
             </if>
             <if test="versionUploadTime !=null and versionUploadTime !=''">
-                and version_upload_time like '%${versionUploadTime}%'
+                and a.version_upload_time like '%${versionUploadTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -44,27 +61,32 @@
         </if>
     </select>
 
-    <!-- 查询更新包上传管理显示记录数-->
+    <!-- 查询更新包上传管理显示记录数(主页面显示)-->
     <select id="countAll" resultType="int">
-        select count(*) from upd_upload
+        SELECT
+        count(*),b.USER_NAME AS uplName,c.USER_NAME AS updName
+        FROM
+        upd_upload a
+        LEFT JOIN cap_user b ON a.uploader = b.USER_ID
+        LEFT JOIN cap_user c ON a.updater = c.USER_ID
         <where>
             <if test="uploadNumber !=null and uploadNumber !=''">
-                and upload_number like '%${uploadNumber}%'
+                and a.upload_number like '%${uploadNumber}%'
             </if>
             <if test="version !=null and version !=''">
-                and version like '%${version}%'
+                and a.version like '%${version}%'
             </if>
             <if test="deviceSoType !=null and deviceSoType !=''">
-                and device_so_type like '%${deviceSoType}%'
+                and a.device_so_type like '%${deviceSoType}%'
             </if>
             <if test="uploadStrategy !=null and uploadStrategy !=''">
-                and upload_strategy like '%${uploadStrategy}%'
+                and a.upload_strategy like '%${uploadStrategy}%'
             </if>
-            <if test="uploader !=null and uploader !=''">
-                and uploader like '%${uploader}%'
+            <if test="uplName !=null and uplName !=''">
+                and b.USER_NAME like '%${uplName}%'
             </if>
             <if test="versionUploadTime !=null and versionUploadTime !=''">
-                and version_upload_time like '%${versionUploadTime}%'
+                and a.version_upload_time like '%${versionUploadTime}%'
             </if>
         </where>
     </select>

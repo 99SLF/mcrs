@@ -2,6 +2,7 @@ package com.zimax.mcrs.log.service;
 
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.log.mapper.PlcLogMapper;
+import com.zimax.mcrs.log.pojo.InterfaceLogVo;
 import com.zimax.mcrs.log.pojo.PlcLog;
 import com.zimax.mcrs.log.pojo.PlcLogVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +82,11 @@ public class PlcLogService {
         plcLogMapper.addPlcLog(plcLog);
     }
 
-
+    /**
+     * 查询终端对应的PLC日志给终端
+     */
+    public List<PlcLogVo> csQuery(String APPId){
+        return plcLogMapper.csQuery(APPId);
+    }
 
 }

@@ -255,8 +255,9 @@
             }
         },
         equipmentContinuePort: function (value, item) {
-            if(!new RegExp("^([0-9]|[1-9]\d{1,3}|[1-5]\d{4}|6[0-4]\d{4}|65[0-4]\d{2}|655[0-2]\d|6553[0-5])$").test(value)){
-                return "请输入正确的端口号值，正常端口值为1~65535";
+            var porttest = /^([0-9]|[1-9]\d{1,3}|[1-5]\d{4}|6[0-4]\d{4}|65[0-4]\d{2}|655[0-2]\d|6553[0-5])$/;
+            if(!porttest.test(value)){
+                return "请输入正确的端口号";
             }
         },
         equipmentIp: function(value, item){

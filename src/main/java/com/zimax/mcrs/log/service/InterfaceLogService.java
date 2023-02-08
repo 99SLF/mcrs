@@ -3,6 +3,7 @@ package com.zimax.mcrs.log.service;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.device.pojo.Equipment;
 import com.zimax.mcrs.log.mapper.InterfaceLogMapper;
+import com.zimax.mcrs.log.pojo.DeviceExchangeLogVo;
 import com.zimax.mcrs.log.pojo.InterfaceLog;
 import com.zimax.mcrs.log.pojo.InterfaceLogVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,5 +86,10 @@ public class InterfaceLogService {
         interfaceLogMapper.addInterfaceLog(interfaceLog);
     }
 
-
+    /**
+     * 查询终端对应的接口日志给终端
+     */
+    public List<InterfaceLogVo> csQuery(String APPId){
+        return interfaceLogMapper.csQuery(APPId);
+    }
 }

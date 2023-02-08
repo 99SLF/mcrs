@@ -2,7 +2,9 @@ package com.zimax.mcrs.log.controller;
 
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.log.pojo.DeviceExchangeLog;
+import com.zimax.mcrs.log.pojo.DeviceExchangeLogVo;
 import com.zimax.mcrs.log.pojo.InterfaceLog;
+import com.zimax.mcrs.log.pojo.LoginLogVo;
 import com.zimax.mcrs.log.service.DeviceExchangeLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -56,6 +58,15 @@ public class DeviceExchangeLogController {
     public Result<?> addDeviceExchangeLog(@RequestBody DeviceExchangeLog deviceExchangeLog) {
         deviceExchangeLogService.addDeviceExchangeLog(deviceExchangeLog);
         return Result.success();
+    }
+
+    /**
+     * 使用POST方式查询日志给CS端
+     */
+    @PostMapping("/deviceExchangeLog/CSquery")
+    public Result<?> csQuery(@RequestBody DeviceExchangeLogVo deviceExchangeLogVo) {
+        List deviceExchangeLogs = deviceExchangeLogService.csQuery(deviceExchangeLogVo.getAPPId());
+        return Result.success(deviceExchangeLogs);
     }
 
 }

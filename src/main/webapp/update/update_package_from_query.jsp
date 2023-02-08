@@ -70,7 +70,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">上传人：</label>
         <div class="layui-input-block" >
-            <input type="text" class="layui-input" name="uploader" autocomplete="off" />
+            <input type="text" class="layui-input" name="uplName" autocomplete="off" />
         </div>
     </div>
     <div class="layui-form-item">
@@ -146,7 +146,7 @@
             version: formData.version,
             deviceSoType: formData.deviceSoType,
             uploadStrategy: formData.uploadStrategy,
-            uploader: formData.uploader,
+            uplName: formData.uplName,
             versionUploadTime: formData.versionUploadTime ? util.toDateString(formData.versionUploadTime, "yyyy-MM-dd") : ""
         });
     }
@@ -157,7 +157,7 @@
             version: "",
             deviceSoType: "",
             uploadStrategy: "",
-            uploader: "",
+            uplName: "",
             versionUploadTime: ""
         }
         win.setFormData(formData);

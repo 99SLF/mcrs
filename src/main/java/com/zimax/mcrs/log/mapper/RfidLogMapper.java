@@ -7,6 +7,7 @@ import com.zimax.mcrs.log.pojo.RfidLog;
 import com.zimax.mcrs.log.pojo.RfidLogVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
@@ -46,5 +47,11 @@ public interface RfidLogMapper {
      */
     void addRfidLog(RfidLog rfidLog);
 
+
+    /**
+     * 查询终端对应所有的rfid交换日志给终端
+     * @return
+     */
+    List<RfidLogVo> csQuery(@RequestParam("APPId")String APPId);
 
 }

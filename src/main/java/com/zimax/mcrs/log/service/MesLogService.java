@@ -3,10 +3,7 @@ package com.zimax.mcrs.log.service;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.log.mapper.MesLogMapper;
 import com.zimax.mcrs.log.mapper.RfidLogMapper;
-import com.zimax.mcrs.log.pojo.MesLog;
-import com.zimax.mcrs.log.pojo.MesLogVo;
-import com.zimax.mcrs.log.pojo.RfidLog;
-import com.zimax.mcrs.log.pojo.RfidLogVo;
+import com.zimax.mcrs.log.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,5 +68,11 @@ public class MesLogService {
         mesLogMapper.addMesLog(mesLog);
     }
 
+    /**
+     * 查询终端对应的PLC日志给终端
+     */
+    public List<MesLogVo> csQuery(String APPId){
+        return mesLogMapper.csQuery(APPId);
+    }
 
 }

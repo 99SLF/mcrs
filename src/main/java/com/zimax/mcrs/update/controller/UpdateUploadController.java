@@ -179,10 +179,10 @@ public class UpdateUploadController {
     public Result<?> queryUpdateUploadAll(String page, String limit,
                                           String uploadNumber,
                                           String version, String deviceSoType,
-                                          String uploadStrategy, String uploader, String versionUploadTime,
+                                          String uploadStrategy, String uplName, String versionUploadTime,
                                           String order, String field) {
-        List UpdateUpload = updateUploadService.queryUpdateUploadAll(page, limit, uploadNumber, version, deviceSoType, uploadStrategy, uploader, versionUploadTime, order, field);
-        return Result.success(UpdateUpload, updateUploadService.countAll(uploadNumber, version, deviceSoType, uploadStrategy, uploader, versionUploadTime));
+        List UpdateUpload = updateUploadService.queryUpdateUploadAll(page, limit, uploadNumber, version, deviceSoType, uploadStrategy, uplName, versionUploadTime, order, field);
+        return Result.success(UpdateUpload, updateUploadService.countAll(uploadNumber, version, deviceSoType, uploadStrategy, uplName, versionUploadTime));
     }
 
 
