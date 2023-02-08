@@ -21,12 +21,13 @@
 
 
     <select id="groupQueryBydate" resultType="com.zimax.mcrs.monitor.pojo.vo.GroupByDate">
-        select date_format(t1.occur_time, '%Y-%m-%d')              as recordDate,
-               sum(CASE warning_type WHEN "101" THEN 1 ELSE 0 END) AS "activeWarn",
-               sum(CASE warning_type WHEN "100" THEN 1 ELSE 0 END) AS "hardWarn"
-        from mon_device_abn t1
-        group by date_format(t1.occur_time, '%Y-%m-%d')
-        ORDER BY t1.occur_time desc limit 0,7
+        select date_format(t1.equipment_exchange_time,'%Y-%m-%d') as recordDate,
+               sum(CASE abn_type WHEN "101" THEN 1 ELSE 0 END) AS "activeWarn",
+               sum(CASE abn_type WHEN "100" THEN 1 ELSE 0 END) AS "hardWarn"
+        from log_log t1
+        where t1.log_type=108
+        group by date_format(t1.equipment_exchange_time, '%Y-%m-%d')
+        ORDER BY t1.equipment_exchange_time desc limit 0,7
     </select>
     <!--    告警信息-->
     <select id="getWarnInfo" resultType="com.zimax.mcrs.monitor.pojo.vo.WarnTotalInfo">

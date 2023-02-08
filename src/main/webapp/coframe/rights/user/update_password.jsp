@@ -1,8 +1,10 @@
-<%--<%@page import="org.apache.commons.lang.StringUtils"%>--%>
+<%@ page import="com.zimax.cap.party.IUserObject" %>
+<%@ page import="com.zimax.cap.datacontext.DataContextManager" %><%--<%@page import="org.apache.commons.lang.StringUtils"%>--%>
 <%--<%@page import="com.mes.access.http.security.config.HttpSecurityConfig"%>--%>
 <%@page pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%--<%@page import="com.zimes.cap.AppUserManager"%>--%>
+
 <html>
 <!-- 
   - Author(s): SSW
@@ -80,7 +82,7 @@
 <%--			</div>--%>
 <%--		</div>--%>
 <%--	</div>-->--%>
-	
+<<%         IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();%>
 	<div class="layui-fluid">
     	<div class="layui-row layui-col-space15">
       		<div class="layui-col-md12">
@@ -89,7 +91,7 @@
           			<div class="layui-card-body" pad15>
 	            		<div class="layui-form" lay-filter="">
 	            			<input id="operatorId" type="hidden" class="layui-hidden" name="user/operatorId"/>
-							<input id="userId" type="hidden" class="layui-hidden" name="user/userId" value="<%=AppUserManager.getCurrentUserId() %>"/>
+							<input id="userId" type="hidden" class="layui-hidden" name="user/userId" value="<%=userObject.getUserId() %>"/>
 	              			<div class="layui-form-item">
 		                		<label class="layui-form-label">当前密码</label>
 		                		<div class="layui-input-inline">
