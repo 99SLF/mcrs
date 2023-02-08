@@ -88,7 +88,7 @@
     <!--添加预警事件-->
     <insert id="addAlarmEvent" parameterType="com.zimax.mcrs.warn.pojo.AlarmEvent">
         insert into war_alarm_event
-        values (#{alarmEventInt},#{alarmEventId}, #{alarmEventTitle}, #{enableStatus},
+        values (#{alarmEventInt}, #{alarmEventId}, #{alarmEventTitle}, #{enableStatus},
                 #{alarmLevel}, #{upperLimit},
                 #{lowerLimit}, #{alarmEventContent},
                 #{alarmType}, #{makeFormPeople}, #{makeFormTime},
@@ -118,7 +118,7 @@
         where alarm_event_int = #{alarmEventInt}
     </update>
 
-<!--    批量删除-->
+    <!--    批量删除-->
     <delete id="deleteAlarmEvents" parameterType="com.zimax.mcrs.warn.pojo.AlarmEvent">
         delete from war_alarm_event where alarm_event_int in
         <foreach collection="list" item="id" separator="," open="(" close=")">
@@ -137,8 +137,16 @@
 
     <!--查询记录数-->
     <select id="checkAlarmEvent" resultType="int">
-        select count(*) from war_alarm_event
-        where alarm_event_id = #{alarmEventId} and alarm_event_int != #{alarmEventInt}
+        select count(*)
+        from war_alarm_event
+        where alarm_event_id = #{alarmEventId}
+          and alarm_event_int != #{alarmEventInt}
     </select>
 
+    <!--依据预警事件主键查询预警事件信息-->
+    <select id="queryAlarmEvent" resultType="com.zimax.mcrs.warn.pojo.AlarmEvent">
+        select *
+        from war_alarm_event
+        where alarm_event_int = #{alarmEventInt}
+    </select>
 </mapper>

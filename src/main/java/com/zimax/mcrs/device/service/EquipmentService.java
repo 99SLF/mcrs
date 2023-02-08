@@ -247,7 +247,7 @@ public class EquipmentService {
 
     /**
      * 生成操作日志
-     * 如果修改终端名称，需要指明修改前的终端，故重写此方法
+     * 如果修改设备名称，需要指明修改前的设备，故重写此方法
      */
     public void addOperationLog(Equipment equipment1, Equipment equipment2) {
         //获取当前用户信息
