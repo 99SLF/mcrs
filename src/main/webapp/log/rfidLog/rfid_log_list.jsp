@@ -294,7 +294,7 @@
         }, {
             field: "equipmentName",
             title: "设备名称",
-            align: "left",
+            align: "center",
             minWidth: 150,
             hide: isHidden("equipmentName")
         }, {
@@ -330,13 +330,13 @@
         }, {
             field: "parameterName",
             title: "参数名称",
-            align: "left",
+            align: "center",
             minWidth: 120,
             hide: isHidden("parameterName")
         },{
             field: "parameterNum",
             title: "参数值",
-            align: "left",
+            align: "center",
             minWidth: 120,
             hide: isHidden("parameterNum")
         }, {

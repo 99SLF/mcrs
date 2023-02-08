@@ -180,5 +180,10 @@
         where work_station_id = #{workStationId}
     </delete>
 
+    <!--    依据设备主键查询设备信息-->
+    <select id="queryEquipment" resultType="com.zimax.mcrs.device.pojo.Equipment">
+        SELECT * FROM eqi_equipment
+        WHERE equipment_int = #{equipmentint}
+    </select>
 
 </mapper>

@@ -99,4 +99,9 @@ public interface EquipmentMapper {
      */
     void removeWorkStation(int workStationId);
 
+
+    /**
+     * 根据主键查询设备信息
+     */
+    Equipment queryEquipment(int equipmentInt);
 }

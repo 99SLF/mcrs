@@ -7,6 +7,8 @@ import com.zimax.components.coframe.rights.pojo.Role;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.device.mapper.DeviceMapper;
 import com.zimax.mcrs.device.pojo.*;
+import com.zimax.mcrs.log.pojo.OperationLog;
+import com.zimax.mcrs.log.service.OperationLogService;
 import com.zimax.mcrs.update.pojo.UpdateUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,12 +32,20 @@ public class DeviceService {
     @Autowired
     private DeviceUpgradeService deviceUpgradeService;
 
+    @Autowired
+    private OperationLogService operationLogService;
+
     /**
      * 查询所有终端信息
      * @return
      */
     public List<DeviceVo> queryDevices(String  page, String limit, String equipmentId, String deviceSoftwareType,String enable,String deviceName, String processName, String factoryName,
                                        String version,String needUpdate,String registerStatus,String programInstallationPath,String createTime, String order, String field) {
+        //如果条件不为null(为null的情况为不点击查询按钮),将本次操作插入到操作日志中
+        if (equipmentId != null || deviceSoftwareType != null || enable != null || deviceName != null || processName != null || factoryName != null || version != null || needUpdate != null || registerStatus != null || programInstallationPath != null || createTime != null) {
+            Device device = new Device();
+            addOperationLog(device, 1);
+        }
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -100,6 +110,8 @@ public class DeviceService {
         deviceUpgrade.setVersionUpdater(userObject.getUserName());
         deviceUpgrade.setVersionUpdateTime(new Date());
         deviceUpgradeService.addDeviceUpgrade(deviceUpgrade);
+        //调用方法生成接口日志
+        addOperationLog(device, 2);
     }
 
     /**
@@ -107,6 +119,11 @@ public class DeviceService {
      * @param deviceId 依据deviceId来注销终端
      */
     public void logoutDevice(int deviceId) {
+
+        //新建终端对象存储被删除的终端信息
+        Device device = selectDevice(deviceId);
+        //生成操作日志
+        addOperationLog(device, 3);
         deviceMapper.logoutDevice(deviceId);
     }
 
@@ -114,6 +131,12 @@ public class DeviceService {
      * 修改终端
      */
     public void updateDevice(Device device) {
+        Device device1 = selectDevice(device.getDeviceId());
+        if (device1.getDeviceName().equals(device.getDeviceName())) {
+            addOperationLog(device1, 4);
+        } else {
+            addOperationLog(device1, device);
+        }
         deviceMapper.updateDevice(device);
     }
 
@@ -139,6 +162,10 @@ public class DeviceService {
      * 批量删除终端
      */
     public void deleteDevices(List<Integer> deviceId) {
+        for (Integer a:deviceId){
+            Device device = selectDevice(a);
+            addOperationLog(device, 3);
+        }
         deviceMapper.deleteDevices(deviceId);
     }
 
@@ -182,4 +209,62 @@ public class DeviceService {
         return  deviceMapper.checkEquipment(equipmentInt);
     }
 
+
+    public Device selectDevice(int deviceId){
+        return deviceMapper.selectDevice(deviceId);
+    }
+
+
+
+    /**
+     * 终端生成操作日志
+     * 此处生成增，删，部分改，查询日志操作日志
+     */
+    public void addOperationLog(Device device, int a) {
+        //获取当前用户信息
+        IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
+        //创建操作日志对象
+        OperationLog operationLog = new OperationLog();
+        operationLog.setLogStatus("101");
+        operationLog.setResult("101");
+        operationLog.setUser(userObject.getUserId());
+        operationLog.setOperationTime(new Date());
+        switch (a) {
+            case 1:
+                operationLog.setOperationType("104");
+                operationLog.setOperationContent("查询终端");
+                break;
+            case 2:
+                operationLog.setOperationType("101");
+                operationLog.setOperationContent("注册终端:" + device.getDeviceName());
+                break;
+            case 3:
+                operationLog.setOperationType("103");
+                operationLog.setOperationContent("删除终端:" + device.getDeviceName());
+                break;
+            case 4:
+                operationLog.setOperationType("102");
+                operationLog.setOperationContent("修改终端:" + device.getDeviceName());
+                break;
+        }
+        operationLogService.addOperationLog(operationLog);
+    }
+
+    /**
+     * 生成操作日志
+     * 如果修改终端名称，需要指明修改前的终端，故重写此方法
+     */
+    public void addOperationLog(Device device1, Device device2) {
+        //获取当前用户信息
+        IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
+        //创建操作日志对象
+        OperationLog operationLog = new OperationLog();
+        operationLog.setLogStatus("101");
+        operationLog.setResult("101");
+        operationLog.setOperationType("102");
+        operationLog.setOperationContent("修改终端:将终端" + device1.getDeviceName() + "的名称修改为" + device2.getDeviceName());
+        operationLog.setUser(userObject.getUserId());
+        operationLog.setOperationTime(new Date());
+        operationLogService.addOperationLog(operationLog);
+    }
 }

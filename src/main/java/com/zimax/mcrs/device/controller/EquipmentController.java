@@ -3,10 +3,13 @@ package com.zimax.mcrs.device.controller;
 import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
 import com.zimax.mcrs.config.Result;
+import com.zimax.mcrs.device.pojo.Device;
 import com.zimax.mcrs.device.pojo.Equipment;
 import com.zimax.mcrs.device.service.EquipmentService;
 import com.zimax.mcrs.log.pojo.InterfaceLog;
+import com.zimax.mcrs.log.pojo.OperationLog;
 import com.zimax.mcrs.log.service.InterfaceLogService;
+import com.zimax.mcrs.log.service.OperationLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +27,7 @@ import java.util.List;
 @RequestMapping("/equipment")
 public class EquipmentController {
 
+    //设备服务层
     @Autowired
     private EquipmentService equipmentService;
 
@@ -61,6 +65,8 @@ public class EquipmentController {
     @PostMapping("/equipment/add")
     public Result<?> addEquipment(@RequestBody Equipment equipment) {
         equipmentService.addEquipment(equipment);
+
+
 //        InterfaceLog interfaceLog = new InterfaceLog();
 //        interfaceLog.setEquipmentInt(equipment.getEquipmentInt());
 //        interfaceLog.setInterfaceType("101");

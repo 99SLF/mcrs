@@ -315,5 +315,11 @@
         where equipment_int =  #{equipmentInt}
     </select>
 
+<!--   依据终端主键查询 -->
+    <select id="selectDevice" parameterType="map" resultType="com.zimax.mcrs.device.pojo.Device">
+        select * from eqi_device
+        where device_id =  #{deviceId}
+    </select>
+
 
 </mapper>

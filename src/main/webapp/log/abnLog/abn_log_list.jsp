@@ -355,7 +355,7 @@
             }, {
                 field: "equipmentName",
                 title: "设备名称",
-                align: "left",
+                align: "center",
                 hide: isHidden("equipmentName"),
                 minWidth: 100
 
@@ -368,13 +368,13 @@
             }, {
                 field: "deviceName",
                 title: "终端名称",
-                align: "left",
+                align: "center",
                 hide: isHidden("deviceName"),
                 minWidth: 150
             }, {
                 field: "abnTitle",
                 title: "预警标题",
-                align: "left",
+                align: "center",
                 hide: isHidden("abnTitle"),
                 minWidth: 150
             }, {
@@ -398,7 +398,7 @@
             }, {
                 field: "abnContent",
                 title: "预警内容",
-                align: "left",
+                align: "center",
                 hide: isHidden("abnContent"),
                 minWidth: 200
             }, {

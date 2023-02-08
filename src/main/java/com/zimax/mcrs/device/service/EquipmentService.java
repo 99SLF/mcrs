@@ -4,9 +4,12 @@ import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.device.mapper.EquipmentMapper;
+import com.zimax.mcrs.device.pojo.Device;
 import com.zimax.mcrs.device.pojo.Equipment;
 import com.zimax.mcrs.device.pojo.EquipmentVo;
 import com.zimax.mcrs.device.pojo.WorkStation;
+import com.zimax.mcrs.log.pojo.OperationLog;
+import com.zimax.mcrs.log.service.OperationLogService;
 import com.zimax.mcrs.warn.pojo.MonitorEquipment;
 import com.zimax.mcrs.warn.pojo.MonitorEquipmentVo;
 import org.apache.ibatis.annotations.Param;
@@ -30,10 +33,18 @@ public class EquipmentService {
     @Autowired
     private EquipmentMapper equipmentMapper;
 
+    //操作日志服务层
+    @Autowired
+    private OperationLogService operationLogService;
+
     /**
      * 查询所有
      */
     public List<EquipmentVo> queryEquipments(String limit, String page,String equipmentId,String equipmentName, String enable, String equipmentInstallLocation, String equipTypeName, String protocolCommunication, String accPointResName, String processName, String createName, String createTime, String order, String field) {
+        if (equipmentId!=null||equipmentName!=null||enable!=null||equipmentInstallLocation!=null||equipTypeName!=null||protocolCommunication!=null||accPointResName!=null||processName!=null||createName!=null||createTime!=null){
+            Equipment equipment = new Equipment();
+            addOperationLog(equipment,1);
+        }
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -77,6 +88,7 @@ public class EquipmentService {
                 equipmentMapper.addWorkStation(workStation);
             }
         }
+        addOperationLog(equipment, 2);
     }
 
     /**
@@ -92,6 +104,8 @@ public class EquipmentService {
                 equipmentMapper.removeWorkStation(workStation.getWorkStationId());
             }
         }
+        Equipment equipment = queryEquipment(equipmentInt);
+        addOperationLog(equipment,3);
         equipmentMapper.removeEquipment(equipmentInt);
     }
 
@@ -105,6 +119,12 @@ public class EquipmentService {
             for(WorkStation workStation: workStationList){
                 equipmentMapper.removeWorkStation(workStation.getWorkStationId());
             }
+        }
+        Equipment equipment1 = queryEquipment(equipment.getEquipmentInt());
+        if (equipment1.getEquipmentName().equals(equipment.getEquipmentName())) {
+            addOperationLog(equipment1, 4);
+        } else {
+            addOperationLog(equipment1, equipment);
         }
         equipmentMapper.updateEquipment(equipment);
         //如果工位不为空，则添加至工位表
@@ -138,6 +158,10 @@ public class EquipmentService {
                     equipmentMapper.removeEquipment(workStation.getWorkStationId());
                 }
             }
+        }
+        for (Integer a:equipmentInt){
+            Equipment equipment = queryEquipment(a);
+            addOperationLog(equipment,3);
         }
         equipmentMapper.deleteEquipments(equipmentInt);
     }
@@ -174,5 +198,69 @@ public class EquipmentService {
         return equipment;
     }
 
+    /**
+     * 根据设备主键查询设备
+     * @param equipmentInt
+     * @return
+     */
+    public Equipment queryEquipment(int equipmentInt){
+        Equipment equipment = equipmentMapper.queryEquipment(equipmentInt);
+        return equipment;
+    }
+
+
+
+    /**
+     * 设备资产生成操作日志
+     * 此处生成增，删，部分改，查询日志操作日志
+     */
+    public void addOperationLog(Equipment equipment, int a) {
+        //获取当前用户信息
+        IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
+        //创建操作日志对象
+        OperationLog operationLog = new OperationLog();
+        operationLog.setLogStatus("101");
+        operationLog.setResult("101");
+        operationLog.setUser(userObject.getUserId());
+        operationLog.setOperationTime(new Date());
+        switch (a) {
+            case 1:
+                operationLog.setOperationType("104");
+                operationLog.setOperationContent("查询设备");
+                break;
+            case 2:
+                operationLog.setOperationType("101");
+                operationLog.setOperationContent("添加设备:"+equipment.getEquipmentName());
+                break;
+            case 3:
+                operationLog.setOperationType("103");
+                operationLog.setOperationContent("删除设备:"+equipment.getEquipmentName());
+                break;
+            case 4:
+                operationLog.setOperationType("102");
+                operationLog.setOperationContent("修改设备:"+equipment.getEquipmentName());
+                break;
+        }
+        operationLogService.addOperationLog(operationLog);
+    }
+
+
+    /**
+     * 生成操作日志
+     * 如果修改终端名称，需要指明修改前的终端，故重写此方法
+     */
+    public void addOperationLog(Equipment equipment1, Equipment equipment2) {
+        //获取当前用户信息
+        IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
+        //创建操作日志对象
+        OperationLog operationLog = new OperationLog();
+        operationLog.setLogStatus("101");
+        operationLog.setResult("101");
+        operationLog.setOperationType("102");
+        operationLog.setOperationContent("修改设备:将设备" + equipment1.getEquipmentName() + "的名称修改为" + equipment2.getEquipmentName());
+        operationLog.setUser(userObject.getUserId());
+        operationLog.setOperationTime(new Date());
+        operationLogService.addOperationLog(operationLog);
+    }
 
 }
