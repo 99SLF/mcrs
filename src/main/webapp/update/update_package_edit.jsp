@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <!--
-  - Author(s): 李伟杰
+  - Author(s): 李伟杰 林俊杰
   - Date: 2023-1-30 20:13:14
   - Description:
 -->
@@ -41,7 +41,7 @@
     <div class="layui-form-item layui-row layui-col-space10">
 
         <div class="layui-col-sm6">
-            <label class="layui-form-label">终端软件类型：</label>
+            <label class="layui-form-label">终端类型：</label>
             <div class="layui-input-block">
                 <input id="deviceSoType" type="text" name="deviceSoType" lay-verify="deviceSoType|required"
                        placeholder=""

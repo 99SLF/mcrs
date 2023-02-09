@@ -9,6 +9,7 @@ import com.zimax.mcrs.log.service.InterfaceLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -72,7 +73,7 @@ public class InterfaceController {
      * @param interfaceLog 接口日志信息
      */
     @PostMapping("/interfaceLog/add")
-    public Result<?> addInterfaceLog(@RequestBody InterfaceLog interfaceLog) {
+    public Result<?> addInterfaceLog(@RequestBody InterfaceLog interfaceLog) throws ParseException {
 //        checkInterface(interfaceLog.getEquipmentInt());
         interfaceLogService.addInterfaceLog(interfaceLog);
         return Result.success();

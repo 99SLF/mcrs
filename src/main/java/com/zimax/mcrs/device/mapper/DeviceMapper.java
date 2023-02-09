@@ -131,4 +131,10 @@ public interface DeviceMapper {
      */
     int checkEquipment(@Param("equipmentInt")int equipmentInt);
 
+    /**
+     * 依据终端主键查询终端信息
+     *
+     * @return
+     */
+    Device selectDevice(@Param("deviceId") int deviceId);
 }

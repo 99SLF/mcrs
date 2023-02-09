@@ -717,7 +717,7 @@
         }, {
             field: "deviceName",
             title: "终端名称",
-            align: "left",
+            align: "center",
             minWidth: 150,
             hide: isHidden("deviceName"),
             //打开监听

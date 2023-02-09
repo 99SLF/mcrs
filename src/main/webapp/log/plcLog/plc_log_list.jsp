@@ -296,7 +296,7 @@
         }, {
             field: "equipmentName",
             title: "设备名称",
-            align: "left",
+            align: "center",
             minWidth: 150,
             hide: isHidden("equipmentName")
         }, {
@@ -308,13 +308,13 @@
         }, {
             field: "deviceName",
             title: "终端名称",
-            align: "left",
+            align: "center",
             minWidth: 150,
             hide: isHidden("deviceName")
         }, {
             field: "plcGroupName",
             title: "PLC组别名称",
-            align: "left",
+            align: "center",
             minWidth: 120,
             hide: isHidden("plcGroupName")
         }, {
@@ -329,13 +329,13 @@
         }, {
             field: "mapAddress",
             title: "映射地址",
-            align: "left",
+            align: "center",
             minWidth: 120,
             hide: isHidden("mapAddress")
         }, {
             field: "tagName",
             title: "标签名称",
-            align: "left",
+            align: "center",
             minWidth: 120,
             hide: isHidden("tagName")
         }, {

@@ -58,9 +58,9 @@ public class EquipController {
      * @return msg 返回信息
      */
     @GetMapping("/query")
-    public Result<?> queryEquipInfos(String page, String limit, String equipTypeCode, String equipTypeName, String creator, String createTime, String order, String field) {
-        List EquipInfos = equipService.queryEquipInfos(page, limit, equipTypeCode, equipTypeName, creator, createTime, order, field);
-        return Result.success(EquipInfos, equipService.count(equipTypeCode, equipTypeName, creator, createTime));
+    public Result<?> queryEquipInfos(String page, String limit, String equipTypeCode, String equipTypeName, String creator, String createTime,String protocolCommunication, String order, String field) {
+        List EquipInfos = equipService.queryEquipInfos(page, limit, equipTypeCode, equipTypeName, creator, createTime,protocolCommunication, order, field);
+        return Result.success(EquipInfos, equipService.count(equipTypeCode, equipTypeName, creator, createTime,protocolCommunication));
     }
 
 

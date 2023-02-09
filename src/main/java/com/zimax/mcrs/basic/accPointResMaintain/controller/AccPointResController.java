@@ -72,9 +72,9 @@ public class AccPointResController {
      * @return 终端列表
      */
     @GetMapping("/query")
-    public Result<?> queryAccPointRes(String page, String limit, String accPointResCode, String accPointResName, String isEnable, String matrixCode, String factoryCode, String accCreatorName, String createTime, String accUpdaterName, String updateTime, String order, String field) {
-        List AccPointRes = accPointResService.queryAccPointRes(page, limit, accPointResCode, accPointResName, isEnable, matrixCode, factoryCode, accCreatorName, createTime, accUpdaterName, updateTime, order, field);
-        return Result.success(AccPointRes, accPointResService.countAll(accPointResCode, accPointResName, isEnable, matrixCode, factoryCode, accCreatorName, createTime, accUpdaterName, updateTime));
+    public Result<?> queryAccPointRes(String page, String limit, String accPointResCode, String accPointResName, String isEnable, String matrixCode, String factoryCode, String accCreatorName, String createTime, String accUpdaterName, String updateTime, String matrixName,String order, String field) {
+        List AccPointRes = accPointResService.queryAccPointRes(page, limit, accPointResCode, accPointResName, isEnable, matrixCode, factoryCode, accCreatorName, createTime, accUpdaterName, updateTime,matrixName, order, field);
+        return Result.success(AccPointRes, accPointResService.countAll(accPointResCode, accPointResName, isEnable, matrixCode, factoryCode, accCreatorName, createTime, accUpdaterName, updateTime,matrixName));
     }
 
 

@@ -5,7 +5,10 @@ import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.device.pojo.Device;
+import com.zimax.mcrs.device.pojo.DeviceVo;
 import com.zimax.mcrs.device.service.DeviceService;
+import com.zimax.mcrs.log.pojo.OperationLog;
+import com.zimax.mcrs.log.service.OperationLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +30,9 @@ public class DeviceController {
     @Autowired
     private DeviceService deviceService;
 
+    @Autowired
+    private OperationLogService operationLogService;
+
     /**
      * 注册终端
      *
@@ -40,6 +46,7 @@ public class DeviceController {
         device.setCreator(usetObject.getUserId());
         device.setCreateTime(new Date());
         deviceService.registrationDevice(device);
+
         return Result.success();
     }
 
@@ -50,7 +57,6 @@ public class DeviceController {
      */
     @DeleteMapping("/device/logoutDevice/{deviceId}")
     public Result<?> logoutTerminal(@PathVariable("deviceId") int deviceId) {
-
         deviceService.logoutDevice(deviceId);
         return Result.success();
     }
@@ -70,28 +76,28 @@ public class DeviceController {
     /**
      * 条件查询
      *
-     * @param deviceSoftwareType    终端软件类型
-     * @param deviceName 终端名称
-     * @param limit       记录数
-     * @param page        页码
-     * @param field       排序字段
-     * @param order       排序方式
+     * @param deviceSoftwareType 终端软件类型
+     * @param deviceName         终端名称
+     * @param limit              记录数
+     * @param page               页码
+     * @param field              排序字段
+     * @param order              排序方式
      * @return 终端列表
      */
     @GetMapping("/device/query")
-    public Result<?> queryDevice(String  page, String limit, String equipmentId, String deviceSoftwareType,String enable, String deviceName, String processName, String factoryName,
-                                 String version,String needUpdate,String registerStatus,String programInstallationPath,String createTime,String order, String field) {
-        List devices = deviceService.queryDevices(page, limit, equipmentId, deviceSoftwareType,enable, deviceName,processName,factoryName,version,needUpdate,registerStatus,programInstallationPath,createTime,order, field);
-        return Result.success(devices, deviceService.counts(equipmentId, deviceSoftwareType,enable, deviceName,processName,factoryName,version,needUpdate,registerStatus,programInstallationPath,createTime));
+    public Result<?> queryDevice(String page, String limit, String equipmentId, String deviceSoftwareType, String enable, String deviceName, String processName, String factoryName,
+                                 String version, String needUpdate, String registerStatus, String programInstallationPath, String createTime, String order, String field) {
+        List devices = deviceService.queryDevices(page, limit, equipmentId, deviceSoftwareType, enable, deviceName, processName, factoryName, version, needUpdate, registerStatus, programInstallationPath, createTime, order, field);
+        return Result.success(devices, deviceService.counts(equipmentId, deviceSoftwareType, enable, deviceName, processName, factoryName, version, needUpdate, registerStatus, programInstallationPath, createTime));
     }
 
     /**
      * 查询数据给监控
      */
     @GetMapping("/device/monitor")
-    public Result toMonitor(String equipmentId, String APPId){
+    public Result toMonitor(String equipmentId, String APPId) {
         List devices = deviceService.toMonitor();
-        return  Result.success(devices,deviceService.count(equipmentId,APPId));
+        return Result.success(devices, deviceService.count(equipmentId, APPId));
     }
 
 
@@ -103,9 +109,11 @@ public class DeviceController {
     @DeleteMapping("/device/batchDelete")
     public Result<?> deleteDevices(@RequestBody Integer[] deviceIds) {
         deviceService.deleteDevices(Arrays.asList(deviceIds));
+
         return Result.success();
 
     }
+
     @GetMapping("/device/count")
     public Result<?> queryCount(String equipmentId, String APPId) {
         return Result.success(deviceService.count(equipmentId, APPId));
@@ -119,9 +127,9 @@ public class DeviceController {
      */
     @GetMapping("/device/check/isExist")
     public Result<?> check(@RequestParam("APPId") String APPId) {
-        if(deviceService.checkAPPId(APPId)>0){
-            return Result.error("1","当前APPId已存在，请重新选择正确的设备和终端软件类型");
-        }else {
+        if (deviceService.checkAPPId(APPId) > 0) {
+            return Result.error("1", "当前APPId已存在，请重新选择正确的设备和终端软件类型");
+        } else {
             return Result.success();
         }
 
@@ -135,28 +143,28 @@ public class DeviceController {
      */
     @GetMapping("/device/checkDST/isExist")
     public Result<?> checkDeviceSoftwareType(@RequestParam("deviceSoftwareType") String deviceSoftwareType) {
-        if(deviceService.checkDeviceSoftwareType(deviceSoftwareType)>0){
+        if (deviceService.checkDeviceSoftwareType(deviceSoftwareType) > 0) {
             return Result.success();
-        }else {
-            return Result.error("1","当前终端软件类型不存在更新包，请上传更新包后重新注册");
+        } else {
+            return Result.error("1", "当前终端软件类型不存在更新包，请上传更新包后重新注册");
         }
 
     }
 
     /**
      * 查询当前选择设备是否被注册
+     *
      * @param equipmentInt 设备主键
      * @return
      */
     @GetMapping("/device/checkEquipment/isExist")
-    public Result<?> checkEquipment(@RequestParam("equipmentInt") int equipmentInt){
+    public Result<?> checkEquipment(@RequestParam("equipmentInt") int equipmentInt) {
         System.out.println(equipmentInt);
-        if (deviceService.checkEquipment(equipmentInt)>0){
-            return Result.error("1","当前选择设备已被注册，请重新选择未注册设备");
-        }else {
+        if (deviceService.checkEquipment(equipmentInt) > 0) {
+            return Result.error("1", "当前选择设备已被注册，请重新选择未注册设备");
+        } else {
             return Result.success();
         }
-}
-
+    }
 
 }

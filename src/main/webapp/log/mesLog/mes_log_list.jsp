@@ -321,7 +321,7 @@
         }, {
             field: "equipmentName",
             title: "设备名称",
-            align: "left",
+            align: "center",
             minWidth: 150,
             hide: isHidden("equipmentName")
         }, {
@@ -351,7 +351,7 @@
         }, {
             field: "mesContent",
             title: "交互内容",
-            align: "left",
+            align: "center",
             minWidth: 120,
             hide: isHidden("mesContent")
         }, {
