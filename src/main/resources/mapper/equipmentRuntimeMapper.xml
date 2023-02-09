@@ -5,28 +5,30 @@
 
     <!--    plc查询记录数-->
     <select id="countEQP" resultType="int">
-        select count(*) from mon_equipment_status
+        select count(*) from mon_equipment_status a
+        LEFT JOIN eqi_equipment b ON a.equipment_id = b.equipment_id
         <where>
-            access_type="101"
+            a.access_type="101"
             <if test="equipmentId !=null and equipmentId !=''">
-                and equipment_id like '%${equipmentId}%'
+                and a.equipment_id like '%${equipmentId}%'
             </if>
             <if test="accessStatus !=null and accessStatus !=''">
-                and access_status like '%${accessStatus}%'
+                and a.access_status like '%${accessStatus}%'
             </if>
         </where>
 
     </select>
     <!--查询plc运行状态信息-->
     <select id="queryEquipmentAccessP" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.EquipmentStatus">
-        select * from mon_equipment_status
+        select * from mon_equipment_status a
+        LEFT JOIN eqi_equipment b ON a.equipment_id = b.equipment_id
         <where>
-            access_type="101"
+            a.access_type="101"
             <if test="equipmentId !=null and equipmentId !=''">
-                and equipment_id like '%${equipmentId}%'
+                and a.equipment_id like '%${equipmentId}%'
             </if>
             <if test="accessStatus !=null and accessStatus !=''">
-                and access_status like '%${accessStatus}%'
+                and a.access_status like '%${accessStatus}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -39,34 +41,36 @@
 
     <!--RFID查询记录数-->
     <select id="countEQR" resultType="int">
-        select count(*) from mon_equipment_status
+        select count(*) from mon_equipment_status a
+        LEFT JOIN eqi_equipment b ON a.equipment_id = b.equipment_id
         <where>
-            access_type="102"
+            a.access_type="102"
             <if test="equipmentId !=null and equipmentId !=''">
-                and equipment_id like '%${equipmentId}%'
+                and a.equipment_id like '%${equipmentId}%'
             </if>
             <if test="accessStatus !=null and accessStatus !=''">
-                and access_status like '%${accessStatus}%'
+                and a.access_status like '%${accessStatus}%'
             </if>
             <if test="antennaStatus !=null and antennaStatus !=''">
-                and antenna_status like '%${antennaStatus}%'
+                and a.antenna_status like '%${antennaStatus}%'
             </if>
         </where>
 
     </select>
     <!--查询RFID运行状态信息-->
     <select id="queryEquipmentAccessR" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.EquipmentStatus">
-        select * from mon_equipment_status
+        select * from mon_equipment_status a
+        LEFT JOIN eqi_equipment b ON a.equipment_id = b.equipment_id
         <where>
-            access_type="102"
+            a.access_type="102"
             <if test="equipmentId !=null and equipmentId !=''">
-                and equipment_id like '%${equipmentId}%'
+                and a.equipment_id like '%${equipmentId}%'
             </if>
             <if test="accessStatus !=null and accessStatus !=''">
-                and access_status like '%${accessStatus}%'
+                and a.access_status like '%${accessStatus}%'
             </if>
             <if test="antennaStatus !=null and antennaStatus !=''">
-                and antenna_status like '%${antennaStatus}%'
+                and a.antenna_status like '%${antennaStatus}%'
             </if>
         </where>
         <if test="order !=null and order !=''">

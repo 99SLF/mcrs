@@ -50,11 +50,11 @@ public class DeviceAbnormalAlarm {
     public Result<?> queryDeviceAbnormalAlarm(String page, String limit,
                                               String equipmentId, String deviceName,
                                               String useProcess, String warningType,
-                                              String warningLevel,
+                                              String warningLevel, String warningContent,
                                               String occurTime,
                                               String order, String field) {
-        List DeviceAbnormalAlarms = deviceAbnormalAlarmService.queryDeviceAbnormalAlarm(page, limit, equipmentId, deviceName, useProcess, warningType, warningLevel, occurTime, order, field);
-        return Result.success(DeviceAbnormalAlarms, deviceAbnormalAlarmService.countAA(equipmentId, deviceName, useProcess, warningType,warningLevel, occurTime));
+        List DeviceAbnormalAlarms = deviceAbnormalAlarmService.queryDeviceAbnormalAlarm(page, limit, equipmentId, deviceName, useProcess, warningType, warningLevel,warningContent, occurTime, order, field);
+        return Result.success(DeviceAbnormalAlarms, deviceAbnormalAlarmService.countAA(equipmentId, deviceName, useProcess, warningType,warningLevel,warningContent , occurTime));
     }
 
 

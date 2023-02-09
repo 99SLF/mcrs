@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * 终端运行状态
+ *
  * @author 李伟杰
  * @date 2022/12/3
  */
@@ -25,14 +26,13 @@ public class DeviceRuntime {
     /**
      * 分页查询终端运行状态
      *
-     * @param page        页记录数
-     * @param limit       页码
-     * @param equipmentId 设备资源号
-     * @param APPId       APPId
-     * @param deviceSoftwareType   终端软件类型
-     * @param deviceSoRunStatus      终端软件运行状态
-     * @param order       排序方式
-     * @param field       排序字段
+     * @param page               页记录数
+     * @param limit              页码
+     * @param equipmentId        设备资源号
+     * @param deviceSoftwareType 终端软件类型
+     * @param deviceSoRunStatus  终端软件运行状态
+     * @param order              排序方式
+     * @param field              排序字段
      * @return 信息列表
      * @return total 总记录数
      * @return code 状态码
@@ -40,11 +40,16 @@ public class DeviceRuntime {
      */
     @GetMapping("/query")
     public Result<?> queryDeviceRuntime(String page, String limit,
-                                     String equipmentId, String APPId,
-                                     String deviceSoftwareType, String deviceSoRunStatus,
-                                     String order, String field) {
+                                        String equipmentId, String equipmentName,
+                                        String deviceName, String deviceSoftwareType,
+                                        String deviceSoRunStatus, String accessStatus,
+                                        String cpuRate, String storageRate,
+                                        String errorRate,
+                                        String order, String field) {
 
-        List DeviceRuntime = deviceRuntimeService.queryDeviceRuntime(page, limit, equipmentId, APPId, deviceSoftwareType, deviceSoRunStatus,order, field);
-        return Result.success(DeviceRuntime, deviceRuntimeService.countDR(equipmentId, APPId, deviceSoftwareType, deviceSoRunStatus));
+        List DeviceRuntime = deviceRuntimeService.queryDeviceRuntime(page, limit, equipmentId, equipmentName, deviceName, deviceSoftwareType, deviceSoRunStatus, accessStatus, cpuRate, storageRate, errorRate, order, field);
+        return Result.success(DeviceRuntime, deviceRuntimeService.countDR(equipmentId, equipmentName, deviceName, deviceSoftwareType, deviceSoRunStatus, accessStatus, cpuRate, storageRate, errorRate));
+//        return Result.success(deviceRuntimeService.countDR(equipmentId, equipmentName, deviceName, deviceSoftwareType, deviceSoRunStatus, accessStatus, cpuRate, storageRate, errorRate));
+
     }
 }

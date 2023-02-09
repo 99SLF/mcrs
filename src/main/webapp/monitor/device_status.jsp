@@ -63,15 +63,7 @@
         </div>
     </div>
     <div class="layui-card-body">
-        <%--        <div class="layui-toolbar" id="toolbar" hidden="true">--%>
-        <%--            <button class="layui-btn layuiadmin-btn-list layui-btn-sm"  lay-event="add"><i class="layui-icon layui-icon-add-circle-fine"></i>添加</button>--%>
-        <%--            <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i class="layui-icon layui-icon-delete"></i>删除</button>--%>
-        <%--        </div>--%>
         <table id="LAY-app-application-list" lay-filter="LAY-app-application-list"></table>
-        <%--        <script type="text/html" id="table-role-list">--%>
-        <%--            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>--%>
-        <%--            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>--%>
-        <%--        </script>--%>
     </div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>

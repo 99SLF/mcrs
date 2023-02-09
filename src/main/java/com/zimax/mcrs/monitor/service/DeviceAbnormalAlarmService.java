@@ -28,7 +28,7 @@ public class DeviceAbnormalAlarmService {
     public List<DeviceAbnVo> queryDeviceAbnormalAlarm(String page, String limit,
                                                       String equipmentId, String deviceName,
                                                       String useProcess, String warningType,
-                                                      String warningLevel,
+                                                      String warningLevel,String warningContent,
                                                       String occurTime,
                                                       String order, String field) {
         ChangeString changeString = new ChangeString();
@@ -50,6 +50,7 @@ public class DeviceAbnormalAlarmService {
         map.put("useProcess", useProcess);
         map.put("warningType", warningType);
         map.put("warningLevel", warningLevel);
+        map.put("warningContent", warningContent);
         map.put("occurTime", occurTime);
         return deviceAbnormalAlarmMapper.queryDeviceAbnormalAlarm(map);
 
@@ -61,8 +62,8 @@ public class DeviceAbnormalAlarmService {
      */
     public int countAA(String equipmentId, String deviceName,
                        String useProcess, String warningType,
-                       String warningLevel,
+                       String warningLevel,String warningContent,
                        String occurTime) {
-        return deviceAbnormalAlarmMapper.countAA(equipmentId, deviceName, useProcess, warningType,warningLevel, occurTime);
+        return deviceAbnormalAlarmMapper.countAA(equipmentId, deviceName, useProcess, warningType,warningLevel,warningContent, occurTime);
     }
 }

@@ -31,7 +31,7 @@ private EquipmentRuntimeMapper equipmentRuntimeMapper;
 
         if (order == null) {
             map.put("order", "desc");
-            map.put("field", "equipment_id");
+            map.put("field", "a.equipment_id");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));
@@ -67,7 +67,7 @@ private EquipmentRuntimeMapper equipmentRuntimeMapper;
 
         if (order == null) {
             map.put("order", "desc");
-            map.put("field", "equipment_id");
+            map.put("field", "a.equipment_id");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));

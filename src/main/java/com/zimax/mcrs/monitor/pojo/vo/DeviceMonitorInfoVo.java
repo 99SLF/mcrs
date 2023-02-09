@@ -26,6 +26,7 @@ public class DeviceMonitorInfoVo {
 
     private int softwareRunId;
 
+
     /**
      * 设备接入状态编号
      */
@@ -37,17 +38,22 @@ public class DeviceMonitorInfoVo {
      */
     private int equipmentInt;
 
+
     /**
      * 设备资源号
      */
     private String equipmentId;
 
+    /**
+     * 设备名称
+     */
+
+    private String equipmentName;
 
     /**
-     * APPId
+     * 终端名称
      */
-    private String APPId;
-
+    private String deviceName;
 
     /**
      * 终端软件类型
@@ -55,19 +61,16 @@ public class DeviceMonitorInfoVo {
     private String deviceSoftwareType;
 
     /**
-     * 终端预警条数
-     */
-    private String deviceWarning;
-
-    /**
      * 终端软件运行状态
      */
     private String deviceSoRunStatus;
+
 
     /**
      * 接入状态(正常异常)
      */
     private String accessStatus;
+
 
     /**
      * cup运行率
@@ -84,4 +87,22 @@ public class DeviceMonitorInfoVo {
      *
      */
     private String errorRate;
+
+
+    /**
+     * APPId
+     */
+    private String APPId;
+
+    /**
+     * 终端预警条数
+     */
+    private String deviceWarning;
+
+
+
+
+
+
+
 }

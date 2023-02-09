@@ -23,6 +23,9 @@
             <if test="warningLevel !=null and warningLevel !=''">
                 and warning_level like '%${warningLevel}%'
             </if>
+            <if test="warningContent !=null and warningContent !=''">
+                and warning_content like '%${warningContent}%'
+            </if>
             <if test="occurTime !=null and occurTime !=''">
                 and DATE (occur_time) =#{occurTime}
             </if>
@@ -47,6 +50,9 @@
             </if>
             <if test="warningLevel !=null and warningLevel !=''">
                 and warning_level like '%${warningLevel}%'
+            </if>
+            <if test="warningContent !=null and warningContent !=''">
+                and warning_content like '%${warningContent}%'
             </if>
             <if test="occurTime !=null and occurTime !=''">
                 and DATE (occur_time) =#{occurTime}
