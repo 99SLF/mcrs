@@ -59,7 +59,7 @@ public class EquipService {
     /**
      * 查询所有信息
      */
-    public List<EquipTypeInfoVo> queryEquipInfos(String page, String limit, String equipTypeCode, String equipTypeName, String creator, String createTime, String order, String field) {
+    public List<EquipTypeInfoVo> queryEquipInfos(String page, String limit, String equipTypeCode, String equipTypeName, String creator, String createTime, String protocolCommunication,String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
@@ -77,6 +77,7 @@ public class EquipService {
         map.put("equipTypeName", equipTypeName);
         map.put("creator", creator);
         map.put("createTime", createTime);
+        map.put("protocolCommunication", protocolCommunication);
         return equipMapper.queryEquipInfos(map);
 
     }
@@ -87,8 +88,8 @@ public class EquipService {
      * @param
      * @return
      */
-    public int count(String equipTypeCode, String equipTypeName, String creator, String createTime) {
-        return equipMapper.count(equipTypeCode, equipTypeName, creator, createTime);
+    public int count(String equipTypeCode, String equipTypeName, String creator, String createTime,String protocolCommunication) {
+        return equipMapper.count(equipTypeCode, equipTypeName, creator, createTime,protocolCommunication);
     }
 
     /**

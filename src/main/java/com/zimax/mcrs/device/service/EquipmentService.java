@@ -176,12 +176,31 @@ public class EquipmentService {
     }
 
     /**
-     * 检测设备连接IP是否存在
+     * 检测设备资源号是否存在
+     *
+     * @param equipmentId 设备资源号
+     */
+    public int checkExistence(String equipmentId) {
+        return equipmentMapper.checkEquipmentId(equipmentId);
+    }
+
+
+    /**
+     * 编辑时检测设备连接IP是否存在，并排除当前设备
      *
      * @param equipmentIp 设备连接Ip
      */
     public int checkEquipmentIp(String equipmentIp,String equipmentInt) {
         return equipmentMapper.checkEquipmentIp(equipmentIp,equipmentInt);
+    }
+
+    /**
+     * 注册时检测设备连接IP是否存在
+     *
+     * @param equipmentIp 设备连接Ip
+     */
+    public int checkIpExistence(String equipmentIp) {
+        return equipmentMapper.checkExistenceIp(equipmentIp);
     }
 
     /**

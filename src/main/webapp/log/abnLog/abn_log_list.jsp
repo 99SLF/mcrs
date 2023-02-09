@@ -361,9 +361,9 @@
 
             }, {
                 field: "aPPId",
-                title: "APPId",
+                title: "APPID",
                 align: "center",
-                hide: isHidden("aPPId"),
+                hide: isHidden("APPID"),
                 minWidth: 300
             }, {
                 field: "deviceName",

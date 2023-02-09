@@ -6,13 +6,15 @@ import com.zimax.mcrs.log.mapper.InterfaceLogMapper;
 import com.zimax.mcrs.log.pojo.DeviceExchangeLogVo;
 import com.zimax.mcrs.log.pojo.InterfaceLog;
 import com.zimax.mcrs.log.pojo.InterfaceLogVo;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * 接口日志
@@ -78,11 +80,27 @@ public class InterfaceLogService {
      * 添加接口日志
      * @param interfaceLog
      */
-    public void addInterfaceLog(InterfaceLog interfaceLog) {
+    public void addInterfaceLog(InterfaceLog interfaceLog) throws ParseException {
         //在添加时声明日志类型
         interfaceLog.setLogType("102");
         //设置日志创建时间
         interfaceLog.setCreateTime(new Date());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateStr1 = sdf.format(Date.parse(interfaceLog.getDisposeStartTime()+""));
+        String dateStr2 = sdf.format(Date.parse(interfaceLog.getDisposeEndTime()+""));
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date firstTime = df.parse(dateStr1);
+        Date currentTime = df.parse(dateStr2);
+        DecimalFormat decimalFormat = new DecimalFormat("00");
+        long diff = currentTime.getTime() - firstTime.getTime();//得到的差值
+        long hours = diff / (1000 * 60 * 60); //获取时
+        long minutes = (diff - hours * (1000 * 60 * 60)) / (1000 * 60);  //获取分钟
+        long s = (diff / 1000 - hours * 60 * 60 - minutes * 60);//获取秒
+        String countTime = "" + decimalFormat.format(hours) + ":" + decimalFormat.format(minutes) + ":" + decimalFormat.format(s);
+
+        interfaceLog.setDisposeTime(countTime);
         interfaceLogMapper.addInterfaceLog(interfaceLog);
     }
 

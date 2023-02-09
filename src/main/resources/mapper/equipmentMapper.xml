@@ -161,6 +161,13 @@
         where equipment_ip = #{equipmentIp} and equipment_int != #{equipmentInt}
     </select>
 
+    <!--在注册时候查询当前设备连接Ip是否存在-->
+    <select id="checkExistenceIp" resultType="int">
+        select count(*)
+        from eqi_equipment
+        where equipment_ip = #{equipmentIp}
+    </select>
+
     <!--查询设备对应工位信息-->
     <select id="queryWorkStation" resultType="com.zimax.mcrs.device.pojo.WorkStation">
         select *

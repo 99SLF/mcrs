@@ -36,7 +36,7 @@ public class AccPointResService {
      * 查询所有接入点信息
      * @return
      */
-    public List<AccPointResVo> queryAccPointRes(String page, String limit, String accPointResCode, String accPointResName, String isEnable,String matrixCode,String factoryCode,  String accCreatorName, String createTime,String accUpdaterName, String updateTime, String order, String field) {
+    public List<AccPointResVo> queryAccPointRes(String page, String limit, String accPointResCode, String accPointResName, String isEnable,String matrixCode,String factoryCode,  String accCreatorName, String createTime,String accUpdaterName, String updateTime, String matrixName,String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
@@ -59,14 +59,15 @@ public class AccPointResService {
         map.put("createTime",createTime);
         map.put("accUpdaterName",accUpdaterName);
         map.put("updateTime",updateTime);
+        map.put("matrixName",matrixName);
         return accPointResMapper.queryAccPointRes(map);
     }
 
     /**
      * 查询记录
      */
-    public int countAll(String accPointResCode, String accPointResName, String isEnable,String matrixCode , String factoryCode ,String accCreatorName, String createTime,String accUpdaterName, String updateTime){
-        return accPointResMapper.countAll(accPointResCode, accPointResName,isEnable,matrixCode,factoryCode, accCreatorName, createTime,accUpdaterName,updateTime);
+    public int countAll(String accPointResCode, String accPointResName, String isEnable,String matrixCode , String factoryCode ,String accCreatorName, String createTime,String accUpdaterName, String updateTime,String matrixName){
+        return accPointResMapper.countAll(accPointResCode, accPointResName,isEnable,matrixCode,factoryCode, accCreatorName, createTime,accUpdaterName,updateTime,matrixName);
     }
 
     public int count(String accPointResCode, String accPointResName,String accCreatorName, String createTime){

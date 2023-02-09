@@ -345,7 +345,7 @@
         var equipmentIp = $("#equipmentIp").val();
         if (equipmentIp != null && equipmentIp != "") {
             $.ajax({
-                url: "<%= request.getContextPath() %>/equipment/equipmentIp/check/isExist?equipmentIp=" + equipmentIp,
+                url: "<%= request.getContextPath() %>/equipment/equipmentIp/check/query?equipmentIp=" + equipmentIp,
                 type: "GET",
                 cache: false,
                 contentType: "text/json",
