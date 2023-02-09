@@ -186,4 +186,11 @@
         FROM war_alarm_rule
         WHERE alarm_rule_id = #{alarmRuleId} and alarm_rule_int != #{alarmRuleInt}
     </select>
+
+    <!--    根据预警规则主键查询该预警编号是否已经存在-->
+    <select id="queryAlarmRule" resultType="com.zimax.mcrs.warn.pojo.AlarmRule">
+        SELECT *
+        FROM war_alarm_rule
+        WHERE alarm_rule_int = #{alarmRuleInt}
+    </select>
 </mapper>

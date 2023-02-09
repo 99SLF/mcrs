@@ -14,6 +14,7 @@ import java.util.Map;
 
 /**
  * RFID日志
+ *
  * @author 林俊杰
  * @date 2023/1/13
  */
@@ -23,43 +24,50 @@ public class MesLogService {
     @Autowired
     private MesLogMapper mesLogMapper;
 
+    @Autowired
+    private AddOperationLog addOperationLog;
 
     /**
      * 查询所有RFID日志信息
      */
-    public List<MesLogVo> queryMesLog(String limit, String page, String logStatus,String equipmentId,String equipmentName, String deviceName, String mesIpAddress,String createName, String createTime, String order, String field){
+    public List<MesLogVo> queryMesLog(String limit, String page, String logStatus, String equipmentId, String equipmentName, String deviceName, String mesIpAddress, String createName, String createTime, String order, String field) {
+
+        if (logStatus != null || equipmentId != null || equipmentName != null || deviceName != null || mesIpAddress != null || createName != null || createTime != null) {
+            addOperationLog.addOperationLog(5);
+        }
         ChangeString changeString = new ChangeString();
-        Map<String,Object> map= new HashMap<>();
-        if(order==null){
-            map.put("order","desc");
-            map.put("field","ll.create_time");
-        }else{
-            map.put("order",order);
-            map.put("field",changeString.camelUnderline(field));
+        Map<String, Object> map = new HashMap<>();
+        if (order == null) {
+            map.put("order", "desc");
+            map.put("field", "ll.create_time");
+        } else {
+            map.put("order", order);
+            map.put("field", changeString.camelUnderline(field));
         }
         if (limit != null) {
             map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
             map.put("limit", Integer.parseInt(limit));
         }
-        map.put("logStatus",logStatus);
-        map.put("equipmentId",equipmentId);
-        map.put("equipmentName",equipmentName);
-        map.put("deviceName",deviceName);
-        map.put("mesIpAddress",mesIpAddress);
-        map.put("createName",createName);
-        map.put("createTime",createTime);
+        map.put("logStatus", logStatus);
+        map.put("equipmentId", equipmentId);
+        map.put("equipmentName", equipmentName);
+        map.put("deviceName", deviceName);
+        map.put("mesIpAddress", mesIpAddress);
+        map.put("createName", createName);
+        map.put("createTime", createTime);
         return mesLogMapper.queryAll(map);
     }
 
     /**
      * 查询记录
      */
-    public int count( String logStatus,String equipmentId,String equipmentName, String deviceName, String mesIpAddress,String createName, String createTime) {
-        return mesLogMapper.count(logStatus,equipmentId,equipmentName,deviceName,mesIpAddress,createName,createTime);
+    public int count(String logStatus, String equipmentId, String equipmentName, String deviceName, String mesIpAddress, String createName, String createTime) {
+        return mesLogMapper.count(logStatus, equipmentId, equipmentName, deviceName, mesIpAddress, createName, createTime);
     }
 
     /**
      * 添加Mes交换日志
+     *
      * @param mesLog mes交换日志
      */
     public void addMesLog(MesLog mesLog) {
@@ -71,7 +79,7 @@ public class MesLogService {
     /**
      * 查询终端对应的PLC日志给终端
      */
-    public List<MesLogVo> csQuery(String APPId){
+    public List<MesLogVo> csQuery(String APPId) {
         return mesLogMapper.csQuery(APPId);
     }
 
