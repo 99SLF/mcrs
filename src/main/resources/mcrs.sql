@@ -6,7 +6,7 @@ Source Server Version : 50550
 Source Host           : localhost:3305
 Source Database       : mcrs
 
-Target Server Type    : MYSQL
+Target Server Type    : MYSrQL
 Target Server Version : 50550
 File Encoding         : 65001
 
