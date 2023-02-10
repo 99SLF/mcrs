@@ -266,6 +266,10 @@
         <property name="mapperInterface" value="com.zimax.mcrs.monitor.mapper.SoftwareRuntimeMapper"/>
     </bean>
 
+    <bean id="OrganizationMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.components.coframe.org.mapper.OrganizationMapper"/>
+    </bean>
     <bean id="DeviceRuntimeMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.mcrs.monitor.mapper.DeviceRuntimeMapper"/>
