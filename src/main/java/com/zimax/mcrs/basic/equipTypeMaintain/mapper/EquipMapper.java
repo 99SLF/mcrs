@@ -33,7 +33,7 @@ public interface EquipMapper {
      */
     List<EquipTypeInfoVo> queryEquipInfos(Map map);
 
-    int count(@Param("equipTypeCode") String equipTypeCode, @Param("equipTypeName") String equipTypeName ,@Param("creator") String creator, @Param("createTime") String createTime);
+    int count(@Param("equipTypeCode") String equipTypeCode, @Param("equipTypeName") String equipTypeName ,@Param("creator") String creator, @Param("createTime") String createTime,@Param("protocolCommunication") String protocolCommunication);
 
 
 

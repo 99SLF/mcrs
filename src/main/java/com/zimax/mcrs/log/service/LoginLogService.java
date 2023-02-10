@@ -18,6 +18,7 @@ import java.util.Map;
 
 /**
  * 登录日志
+ *
  * @author 林俊杰
  * @date 2023/1/11
  */
@@ -27,41 +28,50 @@ public class LoginLogService {
     @Autowired
     private LoginLogMapper loginLogMapper;
 
+    @Autowired
+    private AddOperationLog addOperationLog;
+
 
     /**
      * 查询所有接口日志信息
      */
-    public List<LoginLogVo> queryLoginLogLog(String limit, String page, String equipmentId,String equipmentName, String source, String loginUserName, String loginTime, String order, String field){
+    public List<LoginLogVo> queryLoginLogLog(String limit, String page, String equipmentId, String equipmentName, String source, String loginUserName, String loginTime, String order, String field) {
+
+        if (equipmentId != null || equipmentName != null || source != null || loginUserName != loginUserName || loginTime != null) {
+            addOperationLog.addOperationLog(4);
+
+        }
         ChangeString changeString = new ChangeString();
-        Map<String,Object> map= new HashMap<>();
-        if(order==null){
-            map.put("order","desc");
-            map.put("field","ll.login_time");
-        }else{
-            map.put("order",order);
-            map.put("field",changeString.camelUnderline(field));
+        Map<String, Object> map = new HashMap<>();
+        if (order == null) {
+            map.put("order", "desc");
+            map.put("field", "ll.login_time");
+        } else {
+            map.put("order", order);
+            map.put("field", changeString.camelUnderline(field));
         }
         if (limit != null) {
             map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
             map.put("limit", Integer.parseInt(limit));
         }
-        map.put("equipmentId",equipmentId);
-        map.put("equipmentName",equipmentName);
-        map.put("source",source);
-        map.put("loginUserName",loginUserName);
-        map.put("loginTime",loginTime);
+        map.put("equipmentId", equipmentId);
+        map.put("equipmentName", equipmentName);
+        map.put("source", source);
+        map.put("loginUserName", loginUserName);
+        map.put("loginTime", loginTime);
         return loginLogMapper.queryAll(map);
     }
 
     /**
      * 查询记录
      */
-    public int count(String equipmentId,String equipmentName,String source,  String loginUserName,String loginTime) {
-        return loginLogMapper.count(equipmentId,equipmentName,source,loginUserName,loginTime);
+    public int count(String equipmentId, String equipmentName, String source, String loginUserName, String loginTime) {
+        return loginLogMapper.count(equipmentId, equipmentName, source, loginUserName, loginTime);
     }
 
     /**
      * 添加登录日志
+     *
      * @param loginLog
      */
     public void addLoginLog(LoginLog loginLog) {
@@ -73,7 +83,7 @@ public class LoginLogService {
     /**
      * 查询所有登录日志信息
      */
-    public List<LoginLogVo> csQuery(String APPId){
+    public List<LoginLogVo> csQuery(String APPId) {
         return loginLogMapper.csQuery(APPId);
     }
 

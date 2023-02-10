@@ -3,10 +3,13 @@ package com.zimax.mcrs.device.controller;
 import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
 import com.zimax.mcrs.config.Result;
+import com.zimax.mcrs.device.pojo.Device;
 import com.zimax.mcrs.device.pojo.Equipment;
 import com.zimax.mcrs.device.service.EquipmentService;
 import com.zimax.mcrs.log.pojo.InterfaceLog;
+import com.zimax.mcrs.log.pojo.OperationLog;
 import com.zimax.mcrs.log.service.InterfaceLogService;
+import com.zimax.mcrs.log.service.OperationLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +27,7 @@ import java.util.List;
 @RequestMapping("/equipment")
 public class EquipmentController {
 
+    //设备服务层
     @Autowired
     private EquipmentService equipmentService;
 
@@ -61,6 +65,8 @@ public class EquipmentController {
     @PostMapping("/equipment/add")
     public Result<?> addEquipment(@RequestBody Equipment equipment) {
         equipmentService.addEquipment(equipment);
+
+
 //        InterfaceLog interfaceLog = new InterfaceLog();
 //        interfaceLog.setEquipmentInt(equipment.getEquipmentInt());
 //        interfaceLog.setInterfaceType("101");
@@ -132,13 +138,13 @@ public class EquipmentController {
 
 
     /**
-     * 检测设备连接IP是否存在
+     * 在编辑页面时候检测设备连接IP是否存在，并且不计算自身
      *
      * @param equipmentIp 设备连接IP
      * @param equipmentInt 设备主键
      */
     @GetMapping("/equipmentIp/check/isExist")
-    public Result<?> checkEquipmentIp(@RequestParam("equipmentIp") String equipmentIp,@RequestParam("equipmentInt") String equipmentInt) {
+    public Result<?> checkEquipmentIp(@RequestParam("equipmentIp") String equipmentIp,@RequestParam("equipmentInt")String equipmentInt) {
         if(equipmentService.checkEquipmentIp(equipmentIp,equipmentInt)>0){
             return Result.error("1","当前IP已被占用存在，请重新输入正确IP");
         }else {
@@ -146,6 +152,20 @@ public class EquipmentController {
         }
     }
 
+
+    /**
+     * 注册时候检测设备连接IP是否存在
+     *
+     * @param equipmentIp 设备连接IP
+     */
+    @GetMapping("/equipmentIp/check/query")
+    public Result<?> checkEquipmentIp(@RequestParam("equipmentIp") String equipmentIp) {
+        if(equipmentService.checkIpExistence(equipmentIp)>0){
+            return Result.error("1","当前IP已被占用存在，请重新输入正确IP");
+        }else {
+            return Result.success();
+        }
+    }
 
     /**
      * 查询设备资产对应的工位信息

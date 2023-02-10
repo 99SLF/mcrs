@@ -32,6 +32,11 @@ public class DeviceAbnVo {
     private String deviceName;
 
     /**
+     * 终端名称
+     */
+    private String equipmentName;
+
+    /**
      * 使用工序
      */
     private String useProcess;

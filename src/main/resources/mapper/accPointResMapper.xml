@@ -75,6 +75,9 @@
             <if test="updateTime !=null and updateTime !=''">
                 and a.update_time like '%${updateTime}%'
             </if>
+            <if test="matrixName !=null and matrixName !=''">
+                and d.matrix_name like '%${matrixName}%'
+            </if>
         </where>
     </select>
 
@@ -132,6 +135,9 @@
             </if>
             <if test="updateTime !=null and updateTime !=''">
                 and a.update_time like '%${updateTime}%'
+            </if>
+            <if test="matrixName !=null and matrixName !=''">
+                and d.matrix_name like '%${matrixName}%'
             </if>
         </where>
         <if test="order !=null and order !=''">

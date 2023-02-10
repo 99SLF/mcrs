@@ -27,6 +27,9 @@
             <if test="createTime !=null and createTime !=''">
                 and create_time like #{createTime}
             </if>
+            <if test="protocolCommunication !=null and protocolCommunication !=''">
+                and protocol_communication = #{protocolCommunication}
+            </if>
         </where>
     </select>
 
@@ -46,6 +49,9 @@
             </if>
             <if test="createTime !=null and createTime !=''">
                 and create_time = #{createTime}
+            </if>
+            <if test="protocolCommunication !=null and protocolCommunication !=''">
+                and protocol_communication = #{protocolCommunication}
             </if>
         </where>
         <if test="order !=null and order !=''">

@@ -37,7 +37,8 @@ public interface AccPointResMapper {
               @Param("accCreatorName") String accCreatorName,
               @Param("createTime") String createTime,
               @Param("accUpdaterName") String accUpdaterName,
-              @Param("updateTime") String updateTime
+              @Param("updateTime") String updateTime,
+              @Param("matrixName") String matrixName
 
     );
 

@@ -5,38 +5,59 @@
 
     <!--    查询软件运行状态记录数-->
     <select id="countSO" resultType="int">
-        select count(*) from mon_soft_status
+        select count(*) from mon_soft_status a
+        LEFT JOIN eqi_equipment  b ON a.equipment_id= b.equipment_id
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
-                and equipment_id like '%${equipmentId}%'
+                and a.equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="equipmentName !=null and equipmentName !=''">
+                and b.equipment_name like '%${equipmentName}%'
             </if>
             <if test="deviceName !=null and deviceName !=''">
-                and device_name like '%${deviceName}%'
+                and a.device_name like '%${deviceName}%'
             </if>
             <if test="deviceSoType !=null and deviceSoType !=''">
-                and device_so_type like '%${deviceSoType}%'
+                and a.device_so_type like '%${deviceSoType}%'
             </if>
             <if test="deviceSoRunStatus !=null and deviceSoRunStatus !=''">
-                and device_so_run_status like '%${deviceSoRunStatus}%'
+                and a.device_so_run_status like '%${deviceSoRunStatus}%'
             </if>
         </where>
     </select>
 
     <!--查询软件运行状态信息-->
-    <select id="querySoRuntimes" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.SoftwareRunStatus">
-        select * from mon_soft_status
+    <select id="querySoRuntimes" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.vo.SoftwareRunStatusVo">
+        select
+        a.software_run_id,
+        a.equipment_id,
+        a.app_id,
+        a.device_name,
+        a.device_so_type,
+        a.device_so_run_status,
+        a.cpu_rate,
+        a.storage_rate,
+        a.error_rate,
+        a.create_time,
+        b.equipment_name
+
+        from mon_soft_status a
+        LEFT JOIN eqi_equipment  b ON a.equipment_id= b.equipment_id
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
-                and equipment_id like '%${equipmentId}%'
+                and a.equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="equipmentName !=null and equipmentName !=''">
+                and b.equipment_name like '%${equipmentName}%'
             </if>
             <if test="deviceName !=null and deviceName !=''">
-                and device_name like '%${deviceName}%'
+                and a.device_name like '%${deviceName}%'
             </if>
             <if test="deviceSoType !=null and deviceSoType !=''">
-                and device_so_type like '%${deviceSoType}%'
+                and a.device_so_type like '%${deviceSoType}%'
             </if>
             <if test="deviceSoRunStatus !=null and deviceSoRunStatus !=''">
-                and device_so_run_status like '%${deviceSoRunStatus}%'
+                and a.device_so_run_status like '%${deviceSoRunStatus}%'
             </if>
         </where>
         <if test="order !=null and order !=''">

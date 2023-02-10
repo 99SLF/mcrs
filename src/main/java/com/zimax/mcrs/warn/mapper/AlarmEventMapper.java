@@ -72,4 +72,11 @@ public interface AlarmEventMapper {
      * 判断当前输入的预警时间编码是否已存在
      */
     int checkAlarmEvent(@Param("alarmEventId") String alarmEventId,@Param("alarmEventInt") String alarmEventInt);
+
+    /**
+     * 根据预警事件主键查询预警事件信息
+     */
+    AlarmEvent queryAlarmEvent(int alarmEventInt);
+
+
 }

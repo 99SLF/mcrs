@@ -717,7 +717,7 @@
         }, {
             field: "deviceName",
             title: "终端名称",
-            align: "left",
+            align: "center",
             minWidth: 150,
             hide: isHidden("deviceName"),
             //打开监听
@@ -791,7 +791,7 @@
             hide: isHidden("equipTypeName"),
         }, {
             field: "equipmentIp",
-            title: "设备连接IP",
+            title: "设备IP",
             align: "center",
             minWidth: 120,
             hide: isHidden("equipmentIp")

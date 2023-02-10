@@ -97,7 +97,7 @@
                 </div>
 
                 <div class="layui-col-sm6">
-                    <label class="layui-form-label"><span style="color:red">*</span>设备连接IP:</label>
+                    <label class="layui-form-label"><span style="color:red">*</span>设备IP:</label>
                     <div class="layui-input-block">
                         <input id="equipmentIp" type="text" name="equipmentIp" lay-verify="required|equipmentIp"
                                placeholder="" autocomplete="off" class="layui-input">
@@ -340,12 +340,12 @@
         }
     });
 
-    //判断设备连接Ip是否已存在
+    //判断设备Ip是否已存在
     $("#equipmentIp").blur(function () {
         var equipmentIp = $("#equipmentIp").val();
         if (equipmentIp != null && equipmentIp != "") {
             $.ajax({
-                url: "<%= request.getContextPath() %>/equipment/equipmentIp/check/isExist?equipmentIp=" + equipmentIp,
+                url: "<%= request.getContextPath() %>/equipment/equipmentIp/check/query?equipmentIp=" + equipmentIp,
                 type: "GET",
                 cache: false,
                 contentType: "text/json",

@@ -181,10 +181,7 @@
             field: "equipTypeName",
             title: "设备类型",
             align: "center",
-            minWidth: 120,
-            templet:function(d) {
-                return layui.admin.getDictText("EQUIPMENT_PROPERTY", d.equipTypeName);
-            }
+            minWidth: 120
         }, {
             field: "equipmentInstallLocation",
             title: "设备安装位置",
@@ -192,7 +189,7 @@
             minWidth: 150
         }, {
             field: "equipmentIp",
-            title: "设备连接IP",
+            title: "设备IP",
             align: "center",
             minWidth: 150,
         }, {

@@ -452,7 +452,7 @@
             hide: isHidden("protocolCommunication")
         }, {
             field: "equipmentIp",
-            title: "设备连接IP",
+            title: "设备IP",
             align: "center",
             minWidth: 150,
             hide: isHidden("equipmentIp")

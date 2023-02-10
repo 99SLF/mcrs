@@ -29,15 +29,18 @@ public class DeviceAbnormalAlarm {
     private AccessMonitorService accessMonitorService;
 
     /**
-     * 分页查询终端异常预警信息
+     * 分页查询终端异常预警信息(监控内容显示)
      *
      * @param page         页记录数
      * @param limit        页码
      * @param equipmentId  设备资源号
-     * @param deviceName 终端名称
-     * @param useProcess  使用工序
-     * @param warningType 预警类型
+     * @param equipmentName   设备名称
+     * @param deviceName   终端名称
+     * @param useProcess   使用工序
+     * @param warningTitle  预警标题
+     * @param warningType  预警类型
      * @param warningLevel 预警等级
+     * @param warningContent 预警内容
      * @param occurTime    发生时间
      * @param order        排序方式
      * @param field        排序字段
@@ -48,29 +51,23 @@ public class DeviceAbnormalAlarm {
      */
     @GetMapping("/query")
     public Result<?> queryDeviceAbnormalAlarm(String page, String limit,
-                                              String equipmentId, String deviceName,
-                                              String useProcess, String warningType,
-                                              String warningLevel,
-                                              String occurTime,
+                                              String equipmentId,  String equipmentName, String deviceName,
+                                              String useProcess, String warningTitle ,String warningType,
+                                              String warningLevel, String warningContent, String occurTime,
                                               String order, String field) {
-        List DeviceAbnormalAlarms = deviceAbnormalAlarmService.queryDeviceAbnormalAlarm(page, limit, equipmentId, deviceName, useProcess, warningType, warningLevel, occurTime, order, field);
-        return Result.success(DeviceAbnormalAlarms, deviceAbnormalAlarmService.countAA(equipmentId, deviceName, useProcess, warningType,warningLevel, occurTime));
+        List DeviceAbnormalAlarms = deviceAbnormalAlarmService.queryDeviceAbnormalAlarm(page, limit, equipmentId, equipmentName,deviceName, useProcess,warningTitle, warningType, warningLevel, warningContent, occurTime, order, field);
+        return Result.success(DeviceAbnormalAlarms, deviceAbnormalAlarmService.countAA(equipmentId, equipmentName,deviceName, useProcess,warningTitle, warningType, warningLevel, warningContent, occurTime));
     }
-
-
-
-
-
-
 
 
     @GetMapping("/getWarnByproduction")
     public Result<?> getWarnByproduction() {
         return Result.success(accessMonitorService.getWarnByproduction());
     }
+
     @GetMapping("/groupQueryBydate")
     public Result<?> groupQueryBydate() {
-        List<GroupByDate>dateList = accessMonitorService.groupQueryBydate();
+        List<GroupByDate> dateList = accessMonitorService.groupQueryBydate();
         return Result.success(dateList);
     }
 

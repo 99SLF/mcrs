@@ -84,7 +84,7 @@ public class InterfaceLog {
     /**
      * 处理时长
      */
-    private Date disposeTime;
+    private String disposeTime;
 
     /**
      * 接口名称

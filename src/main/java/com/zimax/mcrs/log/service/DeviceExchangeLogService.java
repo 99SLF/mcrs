@@ -24,7 +24,8 @@ public class DeviceExchangeLogService {
     @Autowired
     private DeviceExchangeLogMapper deviceExchangeLogMapper;
 
-
+    @Autowired
+    private AddOperationLog addOperationLog;
     /**
      * 查询所有的设备交换日志
      * @return DeviceExchangeLog
@@ -32,6 +33,9 @@ public class DeviceExchangeLogService {
     public List<DeviceExchangeLogVo> queryDeviceExchangeLog(String limit, String page, String logStatus, String equipmentId,String equipmentName,String matrixName,
                                                             String factoryName, String processName, String operationType,String equipmentContinuePort,
                                                             String operateName, String equipmentExchangeTime, String order, String field){
+        if (logStatus!=null||equipmentId!=null||equipmentName!=null||matrixName!=null||factoryName!=null||processName!=null||operationType!=null||equipmentContinuePort!=null||operateName!=null||equipmentExchangeTime!=null){
+            addOperationLog.addOperationLog(2);
+        }
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){

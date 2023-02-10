@@ -88,5 +88,10 @@ public interface AlarmRuleMapper {
      */
     int countAlarmRule(@Param("alarmRuleId") String alarmRuleId,@Param("alarmRuleInt") String alarmRuleInt);
 
+    /**
+     * 根据预警事件主键查询预警事件信息
+     */
+    AlarmRule queryAlarmRule(int alarmRuleInt);
+
 
 }
