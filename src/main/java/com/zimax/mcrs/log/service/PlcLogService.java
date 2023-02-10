@@ -24,12 +24,20 @@ public class PlcLogService {
     @Autowired
     private PlcLogMapper plcLogMapper;
 
+    @Autowired
+    private AddOperationLog addOperationLog;
+
 
     /**
      * 查询所有plc日志信息
      */
     public List<PlcLogVo> queryPlcLog(String limit, String page, String equipmentId,String equipmentName,String deviceName,String plcGroupName,
                                       String groupType,String tagName,String createName,String createTime, String order, String field){
+        if (equipmentId!=null||equipmentName!=null||deviceName!=null||plcGroupName!=null||groupType!=null||tagName!=null||createName!=null||createTime!=null){
+            addOperationLog.addOperationLog(7);
+
+        }
+
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){

@@ -97,7 +97,7 @@
                 </div>
 
                 <div class="layui-col-sm6">
-                    <label class="layui-form-label">设备连接IP:</label>
+                    <label class="layui-form-label">设备IP:</label>
                     <div class="layui-input-block">
                         <input id="equipmentIp" type="text" name="equipmentIp" lay-verify="required"
                                placeholder="" autocomplete="off" class="layui-input" readonly>

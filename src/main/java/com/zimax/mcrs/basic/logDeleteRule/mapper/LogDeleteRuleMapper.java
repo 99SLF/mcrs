@@ -24,7 +24,6 @@ public interface LogDeleteRuleMapper {
      */
     List<LogDeleteRuleVo> queryAll(Map map);
 
-
     /**
      * 计数
      *
@@ -34,36 +33,11 @@ public interface LogDeleteRuleMapper {
               @Param("logType") String logType);
 
 
-//    /**
-//     * 添加删除规则
-//     * @param logDeleteRule
-//     */
-//    void addLogDeleteRule(LogDeleteRule logDeleteRule);
-//
-//    /**
-//     * 删除日志删除规则
-//     *
-//     * @return
-//     */
-//    void removeLogDeleteRule(int ruleDeleteId);
-
     /**
      * 修改删除规则
      * @param logDeleteRule
      */
     void updateLogDeleteRule(LogDeleteRule logDeleteRule);
-
-//    /**
-//     * 批量删除
-//     * @param ruleDeleteId
-//     */
-//    void deleteLogDeleteRules(List<Integer> ruleDeleteId);
-
-//    /**
-//     * 检查当前规则编码是否存在
-//     */
-//    int checkLogDeleteRule(@Param("deleteRuleNum") String deleteRuleNum);
-
 
     /**
      * 启用
@@ -85,4 +59,8 @@ public interface LogDeleteRuleMapper {
      */
     void deleteLog(@Param("logType")String logType,@Param("deleteTime")String deleteTime);
 
+    /**
+     * 根据主键查询日志删除规则信息
+     */
+    LogDeleteRule queryLogDeleteRule(@Param("ruleDeleteId")int ruleDeleteId);
 }

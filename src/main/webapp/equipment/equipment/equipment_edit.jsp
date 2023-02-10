@@ -96,7 +96,7 @@
                 </div>
 
                 <div class="layui-col-sm6">
-                    <label class="layui-form-label"><span style="color:red">*</span>设备连接IP:</label>
+                    <label class="layui-form-label"><span style="color:red">*</span>设备IP:</label>
                     <div class="layui-input-block">
                         <input id="equipmentIp" type="text" name="equipmentIp" lay-verify="required|equipmentIp"
                                placeholder="" autocomplete="off" class="layui-input">
@@ -367,7 +367,7 @@
 
     form.render();
 
-    //判断设备连接Ip是否已被占用
+    //判断设备Ip是否已被占用
     $("#equipmentIp").blur(function () {
         var equipmentIp = $("#equipmentIp").val();
         if (equipmentIp != null && equipmentIp != "") {

@@ -27,10 +27,17 @@ public class OperationLogService {
     @Autowired
     private OperationLogMapper operationLogMapper;
 
+    @Autowired
+    private AddOperationLog addOperationLog;
+
     /**
      * 查询所有操作日志信息
      */
     public List<OperationLogVo> queryOperationLog(String limit, String page, String logStatus, String operationType, String operationTime,String result, String operateName,String order, String field){
+        if (logStatus!=null||operationType!=null||operationTime!=null||result!=null||operateName!=null){
+            addOperationLog.addOperationLog(6);
+        }
+
         ChangeString changeString = new ChangeString();
         Map<String,Object> map= new HashMap<>();
         if(order==null){
