@@ -56,18 +56,18 @@ public class DeviceMonitorInfoVo {
     private String deviceName;
 
     /**
-     * 终端软件类型
+     * 终端软件类型，字典
      */
     private String deviceSoftwareType;
 
     /**
-     * 终端软件运行状态
+     * 终端软件运行状态，字典
      */
     private String deviceSoRunStatus;
 
 
     /**
-     * 接入状态(正常异常)
+     * 接入状态(正常异常)，字典
      */
     private String accessStatus;
 
@@ -95,7 +95,7 @@ public class DeviceMonitorInfoVo {
     private String APPId;
 
     /**
-     * 终端预警条数
+     * 终端预警条数（sql自定义）
      */
     private String deviceWarning;
 

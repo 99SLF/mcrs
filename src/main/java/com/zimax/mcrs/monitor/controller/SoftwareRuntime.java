@@ -23,7 +23,7 @@ public class SoftwareRuntime {
     private SoftwareRuntimeService softwareRuntimeService;
 
     /**
-     * 分页查询软件运行状态
+     * 分页查询软件运行状态(监控模块显示)
      *
      * @param page        页记录数
      * @param limit       页码
@@ -40,10 +40,10 @@ public class SoftwareRuntime {
      */
     @GetMapping("/querySoRuntimes")
     public Result<?> querySoRuntimes(String page, String limit,
-                                     String equipmentId, String deviceName,
+                                     String equipmentId, String equipmentName,String deviceName,
                                      String deviceSoType, String deviceSoRunStatus,
                                      String order, String field) {
-        List SoRuntimes = softwareRuntimeService.querySoRuntimes(page, limit, equipmentId, deviceName, deviceSoType, deviceSoRunStatus,order, field);
-        return Result.success(SoRuntimes, softwareRuntimeService.countSO(equipmentId, deviceName, deviceSoType, deviceSoRunStatus));
+        List SoRuntimes = softwareRuntimeService.querySoRuntimes(page, limit, equipmentId,equipmentName, deviceName, deviceSoType, deviceSoRunStatus,order, field);
+        return Result.success(SoRuntimes, softwareRuntimeService.countSO(equipmentId,equipmentName, deviceName, deviceSoType, deviceSoRunStatus));
     }
 }

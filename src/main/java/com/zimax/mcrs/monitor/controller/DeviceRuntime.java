@@ -24,13 +24,18 @@ public class DeviceRuntime {
     private DeviceRuntimeService deviceRuntimeService;
 
     /**
-     * 分页查询终端运行状态
+     * 分页查询终端运行状态（监控显示页面）
      *
      * @param page               页记录数
      * @param limit              页码
      * @param equipmentId        设备资源号
      * @param deviceSoftwareType 终端软件类型
-     * @param deviceSoRunStatus  终端软件运行状态
+     * @param deviceName         终端名称
+     * @param deviceSoftwareType 终端软件类型
+     * @param deviceSoRunStatus  软件运行状态
+     * @param cpuRate            cpu使用情况
+     * @param storageRate        内存占用率
+     * @param errorRate          误读率
      * @param order              排序方式
      * @param field              排序字段
      * @return 信息列表

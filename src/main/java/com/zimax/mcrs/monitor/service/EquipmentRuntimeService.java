@@ -3,6 +3,7 @@ package com.zimax.mcrs.monitor.service;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.monitor.mapper.EquipmentRuntimeMapper;
 import com.zimax.mcrs.monitor.pojo.EquipmentStatus;
+import com.zimax.mcrs.monitor.pojo.vo.EquipmentStatusVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +24,9 @@ private EquipmentRuntimeMapper equipmentRuntimeMapper;
     /**
      * 查询PLC设备接入信息
      */
-    public List<EquipmentStatus> queryEquipmentAccessP(String page, String limit,
-                                                       String equipmentId, String accessStatus,
-                                                       String order, String field) {
+    public List<EquipmentStatusVo> queryEquipmentAccessP(String page, String limit,
+                                                         String equipmentId, String accessStatus,
+                                                         String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
 
@@ -58,7 +59,7 @@ private EquipmentRuntimeMapper equipmentRuntimeMapper;
     /**
      * 查询RFID设备接入信息
      */
-    public List<EquipmentStatus> queryEquipmentAccessR(String page, String limit,
+    public List<EquipmentStatusVo> queryEquipmentAccessR(String page, String limit,
                                                     String equipmentId, String accessStatus,
                                                     String antennaStatus,
                                                     String order, String field) {

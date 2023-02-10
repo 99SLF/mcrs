@@ -6,56 +6,84 @@
 
     <!--终端告警信息记录数-->
     <select id="countAA" resultType="int">
-        select count(*) from mon_device_abn
+        select
+        count(*)
+        from mon_device_abn a
+        LEFT JOIN eqi_equipment b ON a.equipment_id = b.equipment_id
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
-                and equipment_id like '%${equipmentId}%'
+                and a.equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="equipmentName !=null and equipmentName !=''">
+                and b.equipment_name like '%${equipmentName}%'
             </if>
             <if test="deviceName !=null and deviceName !=''">
-                and device_name like '%${deviceName}%'
+                and a.device_name like '%${deviceName}%'
             </if>
             <if test="useProcess !=null and useProcess !=''">
-                and use_process like '%${useProcess}%'
+                and a.use_process like '%${useProcess}%'
+            </if>
+            <if test="warningTitle !=null and warningTitle !=''">
+                and a.warning_title like '%${warningTitle}%'
             </if>
             <if test="warningType !=null and warningType !=''">
-                and warning_type like '%${warningType}%'
+                and a.warning_type like '%${warningType}%'
             </if>
             <if test="warningLevel !=null and warningLevel !=''">
-                and warning_level like '%${warningLevel}%'
+                and a.warning_level like '%${warningLevel}%'
             </if>
             <if test="warningContent !=null and warningContent !=''">
-                and warning_content like '%${warningContent}%'
+                and a.warning_content like '%${warningContent}%'
             </if>
             <if test="occurTime !=null and occurTime !=''">
-                and DATE (occur_time) =#{occurTime}
+                and a.occur_time like '%${occurTime}%'
             </if>
         </where>
 
     </select>
     <!--查询终端告警信息-->
     <select id="queryDeviceAbnormalAlarm" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.vo.DeviceAbnVo">
-        select * from mon_device_abn
+        select
+        a.device_abn_id,
+        a.equipment_id,
+        b.equipment_name,
+        a.app_id,
+        a.device_name,
+        a.use_process,
+        a.warning_title,
+        a.warning_type,
+        a.warning_level,
+        a.warning_content,
+        a.occur_time
+        from mon_device_abn a
+        LEFT JOIN eqi_equipment b ON a.equipment_id = b.equipment_id
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
-                and equipment_id like '%${equipmentId}%'
+                and a.equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="equipmentName !=null and equipmentName !=''">
+                and b.equipment_name like '%${equipmentName}%'
             </if>
             <if test="deviceName !=null and deviceName !=''">
-                and device_name like '%${deviceName}%'
+                and a.device_name like '%${deviceName}%'
             </if>
             <if test="useProcess !=null and useProcess !=''">
-                and use_process like '%${useProcess}%'
+                and a.use_process like '%${useProcess}%'
+            </if>
+            <if test="warningTitle !=null and warningTitle !=''">
+                and a.warning_title like '%${warningTitle}%'
             </if>
             <if test="warningType !=null and warningType !=''">
-                and warning_type like '%${warningType}%'
+                and a.warning_type like '%${warningType}%'
             </if>
             <if test="warningLevel !=null and warningLevel !=''">
-                and warning_level like '%${warningLevel}%'
+                and a.warning_level like '%${warningLevel}%'
             </if>
             <if test="warningContent !=null and warningContent !=''">
-                and warning_content like '%${warningContent}%'
+                and a.warning_content like '%${warningContent}%'
             </if>
             <if test="occurTime !=null and occurTime !=''">
-                and DATE (occur_time) =#{occurTime}
+                and a.occur_time like '%${occurTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">

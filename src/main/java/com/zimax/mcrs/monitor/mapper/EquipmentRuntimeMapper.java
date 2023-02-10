@@ -1,6 +1,7 @@
 package com.zimax.mcrs.monitor.mapper;
 
 import com.zimax.mcrs.monitor.pojo.EquipmentStatus;
+import com.zimax.mcrs.monitor.pojo.vo.EquipmentStatusVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -20,7 +21,7 @@ public interface EquipmentRuntimeMapper {
      * @param
      * @return
      */
-    List<EquipmentStatus> queryEquipmentAccessP(Map map);
+    List<EquipmentStatusVo> queryEquipmentAccessP(Map map);
 
     /**
      * 查询PLC设备接入记录数
@@ -35,7 +36,7 @@ public interface EquipmentRuntimeMapper {
      * @param
      * @return
      */
-    List<EquipmentStatus> queryEquipmentAccessR(Map map);
+    List<EquipmentStatusVo> queryEquipmentAccessR(Map map);
 
     /**
      * 查询RFID设备接入记录数

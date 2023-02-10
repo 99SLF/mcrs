@@ -19,7 +19,7 @@
 
     </select>
     <!--查询plc运行状态信息-->
-    <select id="queryEquipmentAccessP" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.EquipmentStatus">
+    <select id="queryEquipmentAccessP" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.vo.EquipmentStatusVo">
         select * from mon_equipment_status a
         LEFT JOIN eqi_equipment b ON a.equipment_id = b.equipment_id
         <where>
@@ -58,7 +58,7 @@
 
     </select>
     <!--查询RFID运行状态信息-->
-    <select id="queryEquipmentAccessR" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.EquipmentStatus">
+    <select id="queryEquipmentAccessR" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.vo.EquipmentStatusVo">
         select * from mon_equipment_status a
         LEFT JOIN eqi_equipment b ON a.equipment_id = b.equipment_id
         <where>

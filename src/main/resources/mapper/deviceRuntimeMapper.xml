@@ -45,31 +45,31 @@
         ) total
         <where>
             <if test="equipmentId != null and equipmentId !=''">
-                and b.equipment_id like '%${equipmentId}%'
+                and equipment_id like '%${equipmentId}%'
             </if>
             <if test="equipmentName != null and equipmentName !=''">
-                and b.equipment_name like '%${equipmentName}%'
+                and equipment_name like '%${equipmentName}%'
             </if>
             <if test="deviceName != null and deviceName !=''">
-                and a.device_name like '%${deviceName}%'
+                and device_name like '%${deviceName}%'
             </if>
             <if test="deviceSoftwareType != null and deviceSoftwareType !=''">
-                and a.device_software_type like '%${deviceSoftwareType}%'
+                and device_software_type like '%${deviceSoftwareType}%'
             </if>
             <if test="deviceSoRunStatus != null and deviceSoRunStatus !=''">
-                and e.device_so_run_status like '%${deviceSoRunStatus}%'
+                and device_so_run_status like '%${deviceSoRunStatus}%'
             </if>
             <if test="accessStatus != null and accessStatus !=''">
-                and d.access_status like '%${accessStatus}%'
+                and access_status like '%${accessStatus}%'
             </if>
             <if test="cpuRate != null and cpuRate !=''">
-                and e.cpu_rate like '%${cpuRate}%'
+                and cpu_rate like '%${cpuRate}%'
             </if>
             <if test="storageRate != null and storageRate !=''">
-                and e.storage_rate like '%${storageRate}%'
+                and storage_rate like '%${storageRate}%'
             </if>
             <if test="errorRate != null and errorRate !=''">
-                and e.error_rate like '%${errorRate}%'
+                and error_rate like '%${errorRate}%'
             </if>
         </where>
     </select>
