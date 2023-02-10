@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.components.coframe.org.mapper.OrganizationMapper">
+    <!--    查询记录数-->
+    <select id="count" resultType="int">
+        select count(*) from org_organization
+        <where>
+            <if test="parentOrgId !=null and parentOrgId !=''">
+                and parent_org_id = #{parentOrgId}
+            </if>
+            <if test="orgCode !=null and orgCode !=''">
+                and org_code = '${orgCode}'
+            </if>
+            <if test="orgType !=null and orgType !=''">
+                and org_type = '${orgType}'
+            </if>
+        </where>
+    </select>
+    <!--查询所有-->
+    <select id="queryOrg" parameterType="map" resultType="com.zimax.components.coframe.org.pojo.Organization">
+        select * from org_organization
+        <where>
+            <if test="parentOrgId !=null and parentOrgId !=''">
+                and parent_org_id = '${parentOrgId}'
+            </if>
+            <if test="orgCode !=null and orgCode !=''">
+                and org_code = '${orgCode}'
+            </if>
+            <if test="orgType !=null and orgType !=''">
+                and org_type = '${orgType}'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+</mapper>

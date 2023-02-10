@@ -105,7 +105,7 @@ public class PartyAuthService implements IPartyAuthService {
 	}
 
 	// GradeAuthBean在另一个构件包，所以直接用BeanFactory获取
-	private GradeAuthService getGradeAuthService() {
+	public GradeAuthService getGradeAuthService() {
 		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 		return context.getBean(GradeAuthService.SPRING_BEAN_NAME, GradeAuthService.class);
 	}
