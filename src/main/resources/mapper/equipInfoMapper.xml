@@ -13,22 +13,47 @@
 
     <!--    查询记录数-->
     <select id="count" resultType="int">
-        select count(*) from base_equip_info
+        SELECT
+        count(*),
+        b.USER_NAME AS accCreatorName,
+        c.USER_NAME AS accUpdaterName
+        FROM
+        base_equip_info a
+        LEFT JOIN cap_user b ON a.creator = b.USER_ID
+        LEFT JOIN cap_user c ON a.updater = c.USER_ID
         <where>
             <if test="equipTypeCode !=null and equipTypeCode !=''">
-                and equip_type_code like '%${equipTypeCode}%'
+                and a.equip_type_code like '%${equipTypeCode}%'
             </if>
             <if test="equipTypeName !=null and equipTypeName !=''">
-                and equip_type_name like '%${equipTypeName}%'
+                and a.equip_type_name like '%${equipTypeName}%'
             </if>
-            <if test="creator !=null and creator !=''">
-                and creator like '%${creator}%'
+            <if test="equipTypeEnable !=null and equipTypeEnable !=''">
+                and a.equip_type_enable like '%${equipTypeEnable}%'
             </if>
-            <if test="createTime !=null and createTime !=''">
-                and create_time like #{createTime}
+            <if test="manufacturer !=null and manufacturer !=''">
+                and a.manufacturer like '%${manufacturer}%'
+            </if>
+            <if test="equipControllerModel !=null and equipControllerModel !=''">
+                and a.equip_controller_model like '%${equipControllerModel}%'
             </if>
             <if test="protocolCommunication !=null and protocolCommunication !=''">
-                and protocol_communication = #{protocolCommunication}
+                and a.protocol_communication like '%${manufacturer}%'
+            </if>
+            <if test="mesIpAddress !=null and mesIpAddress !=''">
+                and a.mes_ip_address like '%${mesIpAddress}%'
+            </if>
+            <if test="equipCreatorName !=null and equipCreatorName !=''">
+                and b.USER_NAME like '%${equipCreatorName}%'
+            </if>
+            <if test="createTime !=null and createTime !=''">
+                and a.create_time like '%${createTime}%'
+            </if>
+            <if test="equipUpdaterName !=null and equipUpdaterName !=''">
+                and c.USER_NAME like '%${equipUpdaterName}%'
+            </if>
+            <if test="updateTime !=null and updateTime !=''">
+                and a.update_time like '%${updateTime}%'
             </if>
         </where>
     </select>
@@ -36,22 +61,57 @@
     <!--列表显示-->
     <select id="queryEquipInfos" parameterType="map"
             resultType="com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfoVo">
-        select * from base_equip_info
+        SELECT
+        a.equip_type_id,
+        a.equip_type_code,
+        a.equip_type_name,
+        a.equip_type_enable,
+        a.manufacturer,
+        a.equip_controller_model,
+        a.protocol_communication,
+        a.mes_ip_address,
+        a.remarks,
+        b.USER_NAME AS equipCreatorName,
+        a.create_time,
+        c.USER_NAME AS equipUpdaterName,
+        a.update_time
+        FROM
+        base_equip_info a
+        LEFT JOIN cap_user b ON a.creator = b.USER_ID
+        LEFT JOIN cap_user c ON a.updater = c.USER_ID
         <where>
             <if test="equipTypeCode !=null and equipTypeCode !=''">
-                and equip_type_code like '%${equipTypeCode}%'
+                and a.equip_type_code like '%${equipTypeCode}%'
             </if>
             <if test="equipTypeName !=null and equipTypeName !=''">
-                and equip_type_name like '%${equipTypeName}%'
+                and a.equip_type_name like '%${equipTypeName}%'
             </if>
-            <if test="creator !=null and creator !=''">
-                and creator like '%${creator}%'
+            <if test="equipTypeEnable !=null and equipTypeEnable !=''">
+                and a.equip_type_enable like '%${equipTypeEnable}%'
             </if>
-            <if test="createTime !=null and createTime !=''">
-                and create_time = #{createTime}
+            <if test="manufacturer !=null and manufacturer !=''">
+                and a.manufacturer like '%${manufacturer}%'
+            </if>
+            <if test="equipControllerModel !=null and equipControllerModel !=''">
+                and a.equip_controller_model like '%${equipControllerModel}%'
             </if>
             <if test="protocolCommunication !=null and protocolCommunication !=''">
-                and protocol_communication = #{protocolCommunication}
+                and a.protocol_communication like '%${manufacturer}%'
+            </if>
+            <if test="mesIpAddress !=null and mesIpAddress !=''">
+                and a.mes_ip_address like '%${mesIpAddress}%'
+            </if>
+            <if test="equipCreatorName !=null and equipCreatorName !=''">
+                and b.USER_NAME like '%${equipCreatorName}%'
+            </if>
+            <if test="createTime !=null and createTime !=''">
+                and a.create_time like '%${createTime}%'
+            </if>
+            <if test="equipUpdaterName !=null and equipUpdaterName !=''">
+                and c.USER_NAME like '%${equipUpdaterName}%'
+            </if>
+            <if test="updateTime !=null and updateTime !=''">
+                and a.update_time like '%${updateTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -65,8 +125,7 @@
     <!--更新一条选中信息-->
     <update id="updateEquipInfo" parameterType="com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo">
         UPDATE base_equip_info
-        SET info_id                = #{infoId},
-            equip_type_code        = #{equipTypeCode},
+        SET
             equip_type_enable      = #{equipTypeEnable},
             manufacturer           = #{manufacturer},
             equip_type_name        = #{equipTypeName},
@@ -74,10 +133,8 @@
             protocol_communication = #{protocolCommunication},
             mes_ip_address         = #{mesIpAddress},
             remarks                = #{remarks},
-            create_time            = #{creator},
-            create_time            = #{createTime,jdbcType=DATE},
             updater                = #{updater},
-            update_time            = #{updateTime,jdbcType=DATE}
+            update_time            = #{updateTime}
         WHERE equip_type_id = ${equipTypeId}
     </update>
 

@@ -107,22 +107,22 @@
             </div>
         </div>
     </div>
-    <div class="layui-form-item layui-row layui-col-space12" style="padding-top: 30px">
-        <div class="layui-form-item layui-row layui-hide">
-            <div class="layui-input-block">
-                <%--java代码--%>
-                <%
-                    IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
-                %>
-                <input type="text" class="layui-hide" name="updater" value="<%=usetObject.getUserName()%>"
-                       readonly/>
-            </div>
-        </div>
-        <div class="layui-input-block">
-            <input type="text" class="layui-hide" name="updateTime"
-                   value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>" readonly/>
-        </div>
-    </div>
+<%--    <div class="layui-form-item layui-row layui-col-space12" style="padding-top: 30px">--%>
+<%--        <div class="layui-form-item layui-row layui-hide">--%>
+<%--            <div class="layui-input-block">--%>
+<%--                &lt;%&ndash;java代码&ndash;%&gt;--%>
+<%--                <%--%>
+<%--                    IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();--%>
+<%--                %>--%>
+<%--                <input type="text" class="layui-hide" name="updater" value="<%=usetObject.getUserName()%>"--%>
+<%--                       readonly/>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div class="layui-input-block">--%>
+<%--            <input type="text" class="layui-hide" name="updateTime"--%>
+<%--                   value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>" readonly/>--%>
+<%--        </div>--%>
+<%--    </div>--%>
     <div class="layui-form-item layui-hide">
         <input type="button" lay-submit lay-filter="layuiadmin-app-form-edit" id="layuiadmin-app-form-edit"
                value="确认修改">
@@ -263,7 +263,7 @@
                             time: 500
                         }, function () {
                             var index = parent.layer.getFrameIndex(window.name);
-                            win.layui.table.reload("LAY-app-device-list-reload");
+                            win.layui.table.reload("LAY-app-equipmentType-list-reload");
                             top.layer.close(index);
                         });
                     }

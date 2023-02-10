@@ -68,6 +68,11 @@ public class EquipTypeInfoVo {
      */
     private String creator;
 
+    /**
+     * 创建人
+     */
+    private String equipCreatorName;
+
 
     /**
      * 制单时间
@@ -78,6 +83,11 @@ public class EquipTypeInfoVo {
      * 修改人
      */
     private String updater;
+
+    /**
+     * 修改人name
+     */
+    private String equipUpdaterName;
 
     /**
      * 修改时间

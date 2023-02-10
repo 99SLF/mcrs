@@ -42,14 +42,10 @@ public class EquipController {
 
 
     /**
-     * 分页查询所有设备信息
+     * 分页查询所有设备信息(设备类型管理的主页面)
      *
      * @param page          页记录数
      * @param limit         页码
-     * @param equipTypeCode 代码
-     * @param equipTypeName 名称
-     * @param creator       制单人
-     * @param createTime    制单时间
      * @param field         排序字段
      * @param order         排序方式
      * @return 数据列表
@@ -58,14 +54,25 @@ public class EquipController {
      * @return msg 返回信息
      */
     @GetMapping("/query")
-    public Result<?> queryEquipInfos(String page, String limit, String equipTypeCode, String equipTypeName, String creator, String createTime,String protocolCommunication, String order, String field) {
-        List EquipInfos = equipService.queryEquipInfos(page, limit, equipTypeCode, equipTypeName, creator, createTime,protocolCommunication, order, field);
-        return Result.success(EquipInfos, equipService.count(equipTypeCode, equipTypeName, creator, createTime,protocolCommunication));
+    public Result<?> queryEquipInfos(String page, String limit,
+                                     String equipTypeCode,
+                                     String equipTypeName,
+                                     String equipTypeEnable,
+                                     String manufacturer,
+                                     String equipControllerModel,
+                                     String protocolCommunication,
+                                     String mesIpAddress,
+                                     String equipCreatorName,
+                                     String createTime,
+                                     String equipUpdaterName,
+                                     String updateTime, String order, String field) {
+        List EquipInfos = equipService.queryEquipInfos(page, limit, equipTypeCode,equipTypeName, equipTypeEnable, manufacturer, equipControllerModel, protocolCommunication, mesIpAddress, equipCreatorName, createTime, equipUpdaterName, updateTime, order, field);
+        return Result.success(EquipInfos, equipService.count(equipTypeCode,equipTypeName, equipTypeEnable, manufacturer, equipControllerModel, protocolCommunication, mesIpAddress, equipCreatorName, createTime, equipUpdaterName, updateTime));
     }
 
 
     /**
-     * 更新用户
+     * 更新设备类型信息
      *
      * @param equipTypeInfo 设备信息维护信息
      * @return
@@ -91,6 +98,7 @@ public class EquipController {
 
     /**
      * 批量启用接入点
+     *
      * @param equipTypeIds 接入点主键
      */
     @PostMapping("/enable")

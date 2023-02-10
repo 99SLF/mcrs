@@ -14,84 +14,82 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/iconfont/iconfont.css">
     <style>
+        .layui-card {
+            margin-bottom: 0px
+        }
+
+        .layui-layer-adminRight {
+            top: 0px !important;
+            bottom: 0;
+            box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
+            border-radius: 0;
+            overflow: auto
+        }
+
+        .layui-form-item .layui-inline {
+            margin-bottom: 0px !important;
+            margin-right: 0px !important;
+        }
 
         .layui-form-label {
-            padding-left: 0px;
-            width: 85px;
-        }
-        .layui-input{
-
-            width: 180px;
-        }
-        zdr{
-            width: 80px;
+            width: 120px !important;
+            padding: 5px 0px !important;
         }
 
+        .layui-form-item .layui-input-inline {
+            float: left;
+            width: 150px;
+            margin-right: 10px;
+        }
+
+        .layui-input {
+            height: 30px !important;
+        }
     </style>
 </head>
 <body>
-<div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+<div class="layui-card">
+    <script type="text/html" id="toolbar">
+        <div class="layui-form layuiadmin-card-header-auto" lay-filter="layuiadmin-equipmentType-form"
+             id="layuiadmin-equipmentType-form">
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">设备类型代码：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="equipTypeCode" placeholder="设备类型代码" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                    <label class="layui-form-label">设备类型名称：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="equipTypeName" placeholder="设备类型名称" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                    <label class="layui-form-label">制单人：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="creator" placeholder="请输入" autocomplete="off"
-                               class="layui-input">
-                    </div>
-                    <label class="layui-form-label">制单时间：</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="createTime" placeholder="选择时间" autocomplete="off"
+                        <input type="text" name="equipTypeCode" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
-
-                <div class="layui-inline layui-search">
-                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-devicelist-search"
-                            id="LAY-app-devicelist-search">
+                <div class="layui-inline">
+                    <label class="layui-form-label">设备类型名称：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="equipTypeName" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline layui-hide">
+                    <button id="LAY-app-equipmentType-list-search"
+                            class="layui-btn layuiadmin-btn-list"
+                            lay-submit lay-filter="LAY-app-equipmentType-list-search">
                         <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                     </button>
                 </div>
             </div>
         </div>
-
-        <div class="layui-card-body">
-            <div class="layui-toolbar" id="toolbar" hidden="true">
-                <button class="layui-btn layuiadmin-btn-list layui-btn-sm" lay-event="add"><i
-                        class="layui-icon layui-icon-add-circle-fine"></i>新增设备类型
-                </button>
-                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="enable"><i
-                        class="layui-icon layui-icon-refresh"></i>启用
-                </button>
-                <button class="layui-btn layuiadmin-btn-list layui-btn-danger layui-btn-sm" lay-event="batchdel"><i
-                        class="layui-icon layui-icon-delete"></i>删除
-                </button>
-            </div>
-
-            <table id="LAY-app-device-list" lay-filter="LAY-app-device-list"></table>
-
-            <script type="text/html" id="table-device-list">
-                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
-                        class="layui-icon layui-icon-edit"></i>编辑</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
-                        class="layui-icon layui-icon-delete"></i>删除</a>
-            </script>
-
-        </div>
+    </script>
+    <div class="layui-card-body">
+        <table id="LAY-app-equipmentType-list" lay-filter="LAY-app-equipmentType-list"></table>
+        <script type="text/html" id="table-equipmentType-list">
+            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
+                    class="layui-icon layui-icon-edit"></i>编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+                    class="layui-icon layui-icon-delete"></i>删除</a>
+        </script>
     </div>
 </div>
+
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
 
 <script>
@@ -107,8 +105,8 @@
     var form = layui.form;
     var $ = layui.jquery;
     var util = layui.util;
-    //全加载：日期
-    var laydate = layui.laydate;
+    var admin = layui.admin;
+    var view = layui.view;
 
     //全局参数
     var req_data;
@@ -118,25 +116,91 @@
 
     var hiddenFields = [];
 
+    //全加载：日期
+    var laydate = layui.laydate;
+    var isExits = false;
+
+    // 焦点名称
+    var focusName = null;
+
+    // 高级查询参数
+    var advancedFormData = {};
+
     //监听搜索
-    form.on("submit(LAY-app-devicelist-search)", function (data) {
+    form.on("submit(LAY-app-equipmentType-list-search)", function (data) {
+
+
         var field = data.field;
-        table.reload("LAY-app-device-list-reload", {
-            where: field
+        reloadData(field);
+        var formData = {
+            equipTypeCode: field.equipTypeCode,
+            equipTypeName: field.equipTypeName
+        };
+
+        //设置整个表单数据 layuiadmin-update_package-form
+        form.val("layuiadmin-equipmentType-form", formData);
+        advancedFormData = $.extend(advancedFormData, formData);
+
+
+        // table.reload("LAY-app-device-list-reload", {
+        //     where: field
+        // });
+    });
+
+    function reloadData(formData) {
+
+        //读取表格数据 表格id LAY-app-update_package-list-reload
+        table.reload("LAY-app-equipmentType-list-reload", {
+            where: formData
         });
-    });
-
-
-    //文本框回车事件
-    $(".layui-input").on("keydown", function (event) {
-        if (event.keyCode == 13) {
-            var submit = $("#LAY-app-devicelist-search");
-            submit.click();
-            return false;
+        formReder();
+        if (focusName) {
+            $("input[name=" + focusName + "]").focus();
         }
-    });
+    }
+
+    function setFormData(data) {
+        advancedFormData = data;
+        reloadData(data);
+        //将设置整个表单的数据
+        form.val("layuiadmin-equipmentType-form", {
+            equipTypeCode: data.equipTypeCode,
+            equipTypeName: data.equipTypeName
+        });
+    }
+
 
     var active = {
+        search: function () {
+            //点击搜索
+            var submit = $("#LAY-app-equipmentType-list-search");
+            submit.click();
+            return false;
+        },
+        //高级搜索
+        query: function () {
+            var url = "<%=request.getContextPath() %>/basic/equipType/equipType_list_form_query.jsp";
+            admin.popupRight({
+                type: 2,
+                content: [url, "yes"],
+                btn: ["查询", "重置", "取消"],
+                success: function (layero, index) {
+                    var dataJson = {
+                        win: window,
+                        data: advancedFormData
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function (index, layero) {
+                    var submit = layero.find("iframe").contents().find("#LAY-app-equipmentType-search-advanced");
+                    submit.click();
+                    top.layer.close(index);
+                },
+                btn2: function (index, layero) {
+                    layero.find("iframe")[0].contentWindow.reset();
+                }
+            });
+        },
         //设备新建
         add: function () {
             top.layer.open({
@@ -160,7 +224,7 @@
         },
         //批量删除
         batchdel: function () {
-            var checkStatus = table.checkStatus("LAY-app-device-list-reload");
+            var checkStatus = table.checkStatus("LAY-app-equipmentType-list-reload");
             var data = checkStatus.data;
             if (data.length == 0) {
                 layer.msg("请至少选中一条记录！");
@@ -191,7 +255,7 @@
                                     icon: 1,
                                     time: 2000
                                 }, function () {
-                                    table.reload("LAY-app-device-list-reload");
+                                    table.reload("LAY-app-equipmentType-list-reload");
                                 });
                             } else {
                                 layer.msg("删除失败");
@@ -209,7 +273,7 @@
             }
         },
         enable: function () {
-            var checkStatus = table.checkStatus("LAY-app-device-list-reload");
+            var checkStatus = table.checkStatus("LAY-app-equipmentType-list-reload");
             var data = checkStatus.data;
             if (data.length == 0) {
                 layer.msg("请至少选中一条记录！");
@@ -249,7 +313,7 @@
                                         icon: 1,
                                         time: 2000
                                     }, function () {
-                                        table.reload("LAY-app-device-list-reload");
+                                        table.reload("LAY-app-equipmentType-list-reload");
                                     });
                                 } else {
                                     layer.msg("启用失败");
@@ -272,8 +336,8 @@
         }
     };
 
-    table.on('sort(LAY-app-device-list)', function (obj) {
-        table.reload('LAY-app-device-list-reload', {
+    table.on('sort(LAY-app-equipmentType-list)', function (obj) {
+        table.reload('LAY-app-equipmentType-list-reload', {
             initSort: obj,
             where: {
                 sortField: obj.field,
@@ -283,14 +347,14 @@
     });
 
     //左侧表头按钮事件监听
-    table.on("toolbar(LAY-app-device-list)", function (obj) {
+    table.on("toolbar(LAY-app-equipmentType-list)", function (obj) {
         var type = obj.event;
         active[type] ? active[type].call(this) : "";
     });
 
     //表格排序
-    table.on("sort(LAY-app-device-list)", function (obj) {
-        table.reload("LAY-app-device-list-reload", {
+    table.on("sort(LAY-app-equipmentType-list)", function (obj) {
+        table.reload("LAY-app-equipmentType-list-reload", {
             initSort: obj,
             where: {
                 sortField: obj.field,
@@ -308,7 +372,7 @@
 
 
     $(window).resize(function () {
-        table.reload("LAY-app-device-list-reload", {
+        table.reload("LAY-app-equipmentType-list-reload", {
             height: "full-" + getFullSize()
         });
     });
@@ -341,8 +405,8 @@
 
     // 查询
     table.render({
-        elem: "#LAY-app-device-list",
-        id: "LAY-app-device-list-reload",
+        elem: "#LAY-app-equipmentType-list",
+        id: "LAY-app-equipmentType-list-reload",
         url: "<%= request.getContextPath() %>/EquipController/query",
         method: "GET",
         height: "full-" + getFullSize(),
@@ -350,7 +414,27 @@
         limit: 10,
         limits: [10, 15, 20, 30],
         toolbar: "#toolbar",
-        defaultToolbar: ["filter"],
+        defaultToolbar: [{
+            title: "查询",
+            layEvent: "search",
+            icon: "layui-icon layui-icon-search layuiadmin-button-btn",
+        }, {
+            title: "高级查询",
+            layEvent: "query",
+            icon: "icon iconfont icon-gaojichaxun",
+        }, {
+            title: "新增设备类型",
+            layEvent: "add",
+            icon: "layui-icon layui-icon-add-circle",
+        }, {
+            title: "批量删除",
+            layEvent: "batchdel",
+            icon: "layui-icon layui-icon-delete ",
+        }, {
+            title: "启用设备",
+            layEvent: "enable",
+            icon: "layui-icon layui-icon-ok-circle",
+        }, "filter"],
         colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;
@@ -427,12 +511,6 @@
             minWidth: 150,
             hide: isHidden("protocolCommunication")
         }, {
-            field: "manufacturer",
-            title: "工厂名称",
-            align: "center",
-            minWidth: 150,
-            hide: isHidden("manufacturer")
-        }, {
             field: "mesIpAddress",
             title: "MES连接IP地址",
             align: "center",
@@ -445,14 +523,14 @@
             minWidth: 150,
             hide: isHidden("remarks")
         }, {
-            field: "creator",
-            title: "制单人",
+            field: "equipCreatorName",
+            title: "创建人",
             align: "center",
             minWidth: 150,
-            hide: isHidden("creator")
+            hide: isHidden("equipCreatorName")
         }, {
             field: "createTime",
-            title: "制单时间",
+            title: "创建时间",
             align: "center",
             minWidth: 200,
             hide: isHidden("createTime"),
@@ -460,19 +538,24 @@
                 return layui.util.toDateString(data.createTime, "yyyy-MM-dd HH:mm:ss");
             }
         }, {
-            field: "updater",
+            field: "equipUpdaterName",
             title: "修改人",
             align: "center",
             minWidth: 150,
-            hide: isHidden("updater")
+            hide: isHidden("equipUpdaterName")
         }, {
             field: "updateTime",
             title: "修改时间",
             align: "center",
             minWidth: 200,
             hide: isHidden("updateTime"),
-            templet: function (data) {
-                return layui.util.toDateString(data.updateTime, "yyyy-MM-dd HH:mm:ss");
+            templet: function (d) {
+                if (d.updateTime != null) {
+                    return layui.util.toDateString(d.updateTime);
+                } else {
+                    return '';
+                }
+
             }
             // templet:function (data) {
             //     if (data.updateTime !==null || data.updateTime !=="") {
@@ -485,13 +568,33 @@
             align: "center",
             fixed: "right",
             width: 150,
-            toolbar: "#table-device-list"
+            toolbar: "#table-equipmentType-list"
         }]]
     });
 
+    formReder();
+
+    function formReder() {
+        // 文本框回车事件
+        $(".layui-input").on("keydown", function (event) {
+            if (event.keyCode == 13) {
+                focusName = event.target.name;
+                var submit = $("#LAY-app-equipmentType-list-search");
+                submit.click();
+                return false;
+            }
+        });
+
+        //软件类型下拉框监听事件
+        form.on("select(isEnable)", function (data) {
+            var submit = $("#LAY-app-equipmentType-list-search");
+            submit.click();
+        });
+    }
+
 
     //监听操作事件
-    table.on("tool(LAY-app-device-list)", function (e) {
+    table.on("tool(LAY-app-equipmentType-list)", function (e) {
         var data = e.data;
         if (e.event == "edit") {
             top.layer.open({
@@ -538,7 +641,7 @@
                                 icon: 1,
                                 time: 500
                             }, function () {
-                                table.reload("LAY-app-device-list-reload");
+                                table.reload("LAY-app-equipmentType-list-reload");
                             });
                         } else {
                             layer.msg("删除失败！", {
@@ -562,8 +665,9 @@
                 content: "<%= request.getContextPath() %>/basic/equipType/equipType_detailed.jsp",
                 area: ["800px", "500px"],
                 resize: false,
-                btn: ["确定", "取消"],
+                btn: ["关闭"],
                 success: function (layero, index) {
+                    debugger;
                     var dataJson = {
                         data: data,
                         win: window
@@ -571,8 +675,7 @@
                     layero.find("iframe")[0].contentWindow.SetData(dataJson);
                 },
                 yes: function (index, layero) {
-                    var edit = layero.find("iframe").contents().find("#layuiadmin-app-form-edit");
-                    edit.click();
+                    parent.layer.close(index);
                 }
 
             });

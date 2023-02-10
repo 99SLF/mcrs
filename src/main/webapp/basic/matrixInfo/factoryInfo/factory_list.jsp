@@ -23,7 +23,11 @@
 
 		.layui-input-block {
 			margin-left: 150px;
-			min-height: 36px
+			min-height: 30px
+		}
+		.layui-textarea{
+			height: 5px!important;
+			/*min-height: 60px!important;*/
 		}
 	</style>
 </head>

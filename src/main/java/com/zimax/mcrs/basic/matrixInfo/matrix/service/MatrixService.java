@@ -41,6 +41,9 @@ public class MatrixService {
 
         String coding = serialnumberService.getSerialNum("jdCod").replace("_", "");
         matrix.setMatrixCode(coding);
+        IUserObject useObject = DataContextManager.current().getMUODataContext().getUserObject();
+        matrix.setCreator(useObject.getUserId());
+        matrix.setCreateTime(new Date());
         matrixMapper.addMatrix(matrix);
 
     }
@@ -50,8 +53,8 @@ public class MatrixService {
      */
     public void updateMatrix(Matrix matrix) {
 
-        IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
-        matrix.setUpdater(usetObject.getUserName());
+        IUserObject useObject = DataContextManager.current().getMUODataContext().getUserObject();
+        matrix.setUpdater(useObject.getUserId());
         matrix.setUpdateTime(new Date());
         matrixMapper.updateMatrix(matrix);
     }

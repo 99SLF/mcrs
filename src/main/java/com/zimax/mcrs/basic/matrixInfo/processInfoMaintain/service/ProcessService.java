@@ -40,6 +40,9 @@ public class ProcessService {
     public void addProcessInfo(ProcessInfo processInfo){
         String coding = serialnumberService.getSerialNum("gxpCod").replace("_", "");
         processInfo.setProcessCode(coding);
+        IUserObject useObject = DataContextManager.current().getMUODataContext().getUserObject();
+        processInfo.setCreator(useObject.getUserId());
+        processInfo.setCreateTime(new Date());
         processMapper.addProcessInfo(processInfo);
     }
 
@@ -47,8 +50,8 @@ public class ProcessService {
      * 编辑
      */
     public void updateProcessInfo(ProcessInfo processInfo) {
-        IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
-        processInfo.setUpdater(usetObject.getUserName());
+        IUserObject useObject = DataContextManager.current().getMUODataContext().getUserObject();
+        processInfo.setUpdater(useObject.getUserId());
         processInfo.setUpdateTime(new Date());
         processMapper.updateProcessInfo(processInfo);
     }

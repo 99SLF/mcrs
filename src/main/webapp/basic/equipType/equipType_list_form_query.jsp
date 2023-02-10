@@ -8,7 +8,7 @@
   - Description:
 -->
 <head>
-    <title>接入点新增高级查询</title>
+    <title>设备类型高级查询</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
@@ -23,60 +23,76 @@
             margin-bottom: 10px !important;
         }
         .layui-form-label {
-            width: 100px !important;
+            width: 105px !important;
             padding: 5px 0px !important;
+            white-space: pre-wrap  !important;
         }
         .layui-input {
             height: 30px !important;
         }
+
     </style>
 </head>
 <body>
-<div class="layui-form" lay-filter="layuiadmin-accPoint-form" id="layuiadmin-accPoint-form">
+<div class="layui-form" lay-filter="layuiadmin-equipmentType-form" id="layuiadmin-equipmentType-form">
     <fieldset class="layui-elem-field layui-field-title">
         <legend>高级搜索</legend>
     </fieldset>
     <div class="layui-form-item">
-        <label class="layui-form-label">接入点代码：</label>
+        <label class="layui-form-label">设备类型代码：</label>
         <div class="layui-input-inline">
-            <input type="text" name="accPointResCode" placeholder="" autocomplete="off"
+            <input type="text" name="equipTypeCode" placeholder="" autocomplete="off"
                    class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">接入点名称：</label>
+        <label class="layui-form-label">设备类型名称：</label>
         <div class="layui-input-inline">
-            <input type="text" name="accPointResName" placeholder="" autocomplete="off"
+            <input type="text" name="equipTypeName" placeholder="" autocomplete="off"
                    class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">启用：</label>
         <div class="layui-input-inline">
-            <select name="isEnable" id="isEnable" lay-filter="isEnable"
+            <select name="equipTypeEnable" id="equipTypeEnable" lay-filter="equipTypeEnable"
                     type="select">
                 <option value=""></option>
             </select>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">基地代码：</label>
+        <label class="layui-form-label">厂家：</label>
         <div class="layui-input-inline">
-            <input type="text" name="matrixCode" placeholder="" autocomplete="off"
+            <input type="text" name="manufacturer" placeholder="" autocomplete="off"
                    class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">工厂代码：</label>
+        <label class="layui-form-label">控制器型号：</label>
         <div class="layui-input-inline">
-            <input type="text" name="factoryCode" placeholder="" autocomplete="off"
+            <input type="text" name="equipControllerModel" placeholder="" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">支持通信协议：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="protocolCommunication" placeholder="" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">MES连接IP：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="mesIpAddress" placeholder="" autocomplete="off"
                    class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">创建人：</label>
         <div class="layui-input-block" >
-            <input type="text" class="layui-input" name="accCreatorName" autocomplete="off" />
+            <input type="text" class="layui-input" name="equipCreatorName" autocomplete="off" />
         </div>
     </div>
     <div class="layui-form-item">
@@ -88,7 +104,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">修改人：</label>
         <div class="layui-input-block" >
-            <input type="text" class="layui-input" name="accUpdaterName" autocomplete="off" />
+            <input type="text" class="layui-input" name="equipUpdaterName" autocomplete="off" />
         </div>
     </div>
     <div class="layui-form-item">
@@ -99,7 +115,7 @@
     </div>
     <div class="layui-form-item layui-hide">
         <div class="layui-inline layui-search" style="padding-left:15px">
-            <button id="LAY-app-accPoint-search-advanced" class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-accPoint-search-advanced">
+            <button id="LAY-app-equipmentType-search-advanced" class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-equipmentType-search-advanced">
                 <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
             </button>
         </div>
@@ -134,7 +150,7 @@
     });
 
     layui.admin.renderDictSelect({
-        elem: "#isEnable",
+        elem: "#equipTypeEnable",
         dictTypeId: "IS_USE",
     });
     form.render();
@@ -145,7 +161,7 @@
     // 文本框回车事件
     $(".layui-input").on("keydown", function(event) {
         if (event.keyCode == 13) {
-            var submit = $("#LAY-app-accPoint-search-advanced");
+            var submit = $("#LAY-app-equipmentType-search-advanced");
             submit.click();
             return false;
         }
@@ -154,36 +170,40 @@
     function SetData(data) {
         win = data.win ? data.win : window;
         var formData = data.data;
-        form.val("layuiadmin-accPoint-form", {
-            accPointResCode:formData.accPointResCode,
-            accPointResName: formData.accPointResName,
-            isEnable: formData.isEnable,
-            matrixCode: formData.matrixCode,
-            factoryCode: formData.factoryCode,
-            accCreatorName: formData.accCreatorName,
+        form.val("layuiadmin-equipmentType-form", {
+            equipTypeCode:formData.equipTypeCode,
+            equipTypeName:formData.equipTypeName,
+            equipTypeEnable: formData.equipTypeEnable,
+            manufacturer: formData.manufacturer,
+            equipControllerModel: formData.equipControllerModel,
+            protocolCommunication: formData.protocolCommunication,
+            mesIpAddress:formData.mesIpAddress,
+            equipCreatorName: formData.equipCreatorName,
             createTime: formData.createTime ? util.toDateString(formData.createTime, "yyyy-MM-dd") : "",
-            accUpdaterName: formData.accUpdaterName,
+            equipUpdaterName: formData.equipUpdaterName,
             updateTime: formData.updateTime ? util.toDateString(formData.updateTime, "yyyy-MM-dd") : ""
         });
     }
 
     function reset() {
         var formData = {
-            accPointResCode:"",
-            accPointResName: "",
-            isEnable: "",
-            matrixCode: "",
-            factoryCode: "",
-            accCreatorName: "",
+            equipTypeCode:"",
+            equipTypeName:"",
+            equipTypeEnable: "",
+            manufacturer: "",
+            equipControllerModel: "",
+            protocolCommunication: "",
+            mesIpAddress: "",
+            equipCreatorName: "",
             createTime: "",
-            accUpdaterName: "",
+            equipUpdaterName: "",
             updateTime: "",
         }
         win.setFormData(formData);
     }
 
     //监听提交
-    form.on("submit(LAY-app-accPoint-search-advanced)", function(data) {
+    form.on("submit(LAY-app-equipmentType-search-advanced)", function(data) {
         win.setFormData(data.field);
         win.layer.closeAll("iframe");
     });

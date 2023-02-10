@@ -217,45 +217,6 @@
             scroll: "#toolbarDiv",
             //拓展按钮
             toolbarExt: [{
-                toolbarId: "addTreeNode", icon: "dtree-icon-wefill", title: "新增", handler: function (node, $div) {
-                    var change = node.recordData.infoType;
-                    var parentId = node.recordData.realId;
-                    switch (change) {
-                        case "root":
-                            x = "<%= request.getContextPath() %>/basic/matrixInfo/matrix/matrix_add.jsp" , y = "新增基地"
-                            break;
-                        case "matrix":
-                            x = "<%= request.getContextPath() %>/basic/matrixInfo/factoryInfo/factory_add.jsp", y = "新增工厂"
-                            break;
-                        case "factory":
-                            x = "<%= request.getContextPath() %>/basic/matrixInfo/process/process_add.jsp", y = "新增工序"
-                            break;
-                        case "process":
-                            x = "none", y = ""
-                            break;
-                    }
-                    // 添加的表单元素，就新增页面
-                    top.layer.open({
-                        type: 2,
-                        title: y,
-                        content: x,
-                        area: ["800px", "500px"],
-                        resize: false,
-                        btn: ["确定", "取消"],
-                        success: function (layero, index) {
-                            var dataJson = {
-                                win: window,
-                                parentId: parentId
-                            };
-                            layero.find("iframe")[0].contentWindow.SetData(dataJson);
-                        },
-                        yes: function (index, layero) {
-                            var submit = layero.find("iframe").contents().find("#layuiadmin-app-form-submit");
-                            submit.click();
-                        }
-                    })
-                }
-            }, {
                 toolbarId: "editTreeNode", icon: "dtree-icon-bianji", title: "编辑", handler: function (node, $div) {
                     var change = node.recordData.infoType;
                     var key = node.recordData.realId;
@@ -299,8 +260,9 @@
                         }
                     })
                 }
+
             }, {
-                toolbarId: "delTreeNode", icon: "dtree-icon-roundclose", title: "删除", handler: function (node, $div) {
+                toolbarId: "delTreeNode", icon: "dtree-icon-jian1", title: "删除", handler: function (node, $div) {
                     // layer.msg(JSON.stringify(node));
                     var change = node.recordData.infoType;
                     var realId = node.recordData.realId;
@@ -318,41 +280,88 @@
                             z = "<%= request.getContextPath() %>/ProcessController/removeProcess?realId="+ realId, o = "删除工序";
                             break;
                     }
-                    $.ajax({
-                        url: z,
-                        type: "post",
-                        cache: false,
-                        contentType: "text/json",
-                        success: function (result) {
-                            if (result.exception) {
-                                layer.alert(result.exception.message, {
-                                    icon: 2,
-                                    title: "系统提示"
-                                });
-                            } else if (result.code==0) {
-                                layer.msg("删除成功", {
-                                    icon: 1,
-                                    time: 500
-                                }, function () {
-                                    // table.reload("LAY-app-equipment-list-reload");
-                                    rendTree();
+                    layer.confirm("确定"+o+"信息？", {
+                        icon: 3,
+                        title: "系统提示"
+                    },function (index){
+                        $.ajax({
+                            url: z,
+                            type: "post",
+                            cache: false,
+                            contentType: "text/json",
+                            success: function (result) {
 
-                                });
-                            } else if(result.code == 1) {
-                                layer.msg(result.msg, {
-                                    icon: 2,
-                                    time: 2000
+                                if (result.exception) {
+                                    layer.alert(result.exception.message, {
+                                        icon: 2,
+                                        title: "系统提示"
+                                    });
+                                } else if (result.code==0) {
+                                    layer.msg("删除成功", {
+                                        icon: 1,
+                                        time: 500
+                                    }, function () {
+                                        // table.reload("LAY-app-equipment-list-reload");
+                                        rendTree();
+
+                                    });
+                                } else if(result.code == 1) {
+                                    layer.msg(result.msg, {
+                                        icon: 2,
+                                        time: 2000
+                                    });
+                                }
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                layer.msg(jqXHR.responseText, {
+                                    time: 500,
+                                    icon: 5
                                 });
                             }
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            layer.msg(jqXHR.responseText, {
-                                time: 500,
-                                icon: 5
-                            });
-                        }
+                        });
                     });
-                },
+
+                }
+
+            }, {
+                toolbarId: "addTreeNode", icon: "dtree-icon-jia1", title: "新增", handler: function (node, $div) {
+                    var change = node.recordData.infoType;
+                    var parentId = node.recordData.realId;
+                    switch (change) {
+                        case "root":
+                            x = "<%= request.getContextPath() %>/basic/matrixInfo/matrix/matrix_add.jsp" , y = "新增基地"
+                            break;
+                        case "matrix":
+                            x = "<%= request.getContextPath() %>/basic/matrixInfo/factoryInfo/factory_add.jsp", y = "新增工厂"
+                            break;
+                        case "factory":
+                            x = "<%= request.getContextPath() %>/basic/matrixInfo/process/process_add.jsp", y = "新增工序"
+                            break;
+                        case "process":
+                            x = "none", y = ""
+                            break;
+                    }
+                    // 添加的表单元素，就新增页面
+                    top.layer.open({
+                        type: 2,
+                        title: y,
+                        content: x,
+                        area: ["800px", "500px"],
+                        resize: false,
+                        btn: ["确定", "取消"],
+                        success: function (layero, index) {
+                            var dataJson = {
+                                win: window,
+                                parentId: parentId
+                            };
+                            layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                        },
+                        yes: function (index, layero) {
+                            var submit = layero.find("iframe").contents().find("#layuiadmin-app-form-submit");
+                            submit.click();
+                        }
+                    })
+                }
 
 
             }],

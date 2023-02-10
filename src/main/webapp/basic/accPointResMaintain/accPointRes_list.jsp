@@ -138,7 +138,6 @@
 
     //监听搜索
     form.on("submit(LAY-app-accPoint-list-search)", function (data) {
-        var field = data.field;
 
         var field = data.field;
         reloadData(field);
@@ -190,7 +189,7 @@
         },
         //高级搜索
         query: function () {
-            var url = "<%=request.getContextPath() %>/basic/accPointResMaintain/accPointRes_from_query.jsp";
+            var url = "<%=request.getContextPath() %>/basic/accPointResMaintain/accPointRes_form_query.jsp";
             admin.popupRight({
                 type: 2,
                 content: [url, "yes"],
