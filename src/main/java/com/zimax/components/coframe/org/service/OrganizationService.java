@@ -31,7 +31,6 @@ public class OrganizationService {
     @Autowired
     private PartyAuthService partyAuthService;
     public List<Organization> queryOrg(String page, String limit, Integer parentOrgId, String orgCode, String orgType,String order, String field) {
-
            ChangeString changeString = new ChangeString();
            Map<String, Object> map = new HashMap<>();
            if (order == null) {
@@ -49,8 +48,6 @@ public class OrganizationService {
            map.put("orgCode", orgCode);
            map.put("orgType", orgType);
            map.put("orgSeq", null);
-
-
         return organizationMapper.queryOrg(map);
     }
 
