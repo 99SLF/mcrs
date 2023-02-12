@@ -181,7 +181,7 @@ CREATE TABLE `cap_role` (
 -- ----------------------------
 DROP TABLE IF EXISTS `cap_user`;
 CREATE TABLE `cap_user` (
-    `OPERATOR_ID` int(18) NOT NULL AUTO_INCREMENT,
+    `OPERATOR_ID` int(9) NOT NULL AUTO_INCREMENT,
     `TENANT_ID` varchar(64) DEFAULT NULL,
     `USER_ID` varchar(64) NOT NULL,
     `PASSWORD` varchar(100) DEFAULT NULL,
@@ -189,10 +189,10 @@ CREATE TABLE `cap_user` (
     `USER_NAME` varchar(64) DEFAULT NULL,
     `AUTH_MODE` varchar(255) DEFAULT NULL,
     `STATUS` varchar(16) DEFAULT NULL,
-    `UNLOCK_TIME` datetime NOT NULL,
+    `UNLOCK_TIME` datetime DEFAULT NULL,
     `MENU_TYPE` varchar(255) DEFAULT NULL,
-    `LAST_LOGIN` datetime NOT NULL,
-    `ERR_COUNT` int(10) DEFAULT NULL,
+    `LAST_LOGIN` datetime DEFAULT NULL,
+    `ERR_COUNT` decimal(10,0) DEFAULT NULL,
     `START_DATE` date DEFAULT NULL,
     `END_DATE` date DEFAULT NULL,
     `VALID_TIME` varchar(255) DEFAULT NULL,
@@ -201,14 +201,18 @@ CREATE TABLE `cap_user` (
     `EMAIL` varchar(255) DEFAULT NULL,
     `CREATOR` varchar(64) DEFAULT NULL,
     `CREATE_TIME` datetime NOT NULL,
-    PRIMARY KEY (`OPERATOR_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+    `USER_TYPE` varchar(64) DEFAULT NULL,
+    `USER_PHONE` varchar(255) DEFAULT NULL,
+    `USER_DESCRIPTION` varchar(255) DEFAULT NULL,
+    `UPDATER` varchar(64) DEFAULT NULL,
+    `UPDATE_TIME` datetime DEFAULT NULL,
+    PRIMARY KEY (`OPERATOR_ID`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of cap_user
 -- ----------------------------
-INSERT INTO `cap_user` VALUES ('1', 'default', 'sysadmin', 'k2xvHUmCHWw=', '2028-06-10', '系统管理员', 'local', '1', '2013-03-16 11:58:31', 'default', '2013-03-16 11:58:31', null, null, null, null, null, null, null, 'sysadmin', '2013-03-16 11:58:31');
-
+INSERT INTO `cap_user` VALUES ('1', 'default', 'sysadmin', 'k2xvHUmCHWw=', '2028-06-10', '系统管理员', 'local', '102', '2013-03-16 11:58:31', 'default', '2013-03-16 11:58:31', null, null, null, null, null, null, null, 'sysadmin', '2013-03-16 11:58:31', '101', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for dev_rollback
