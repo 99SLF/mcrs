@@ -1,7 +1,10 @@
 package com.zimax.components.coframe.rights.mapper;
 
+import com.zimax.components.coframe.rights.pojo.PartyAuth;
 import com.zimax.components.coframe.rights.pojo.User;
+import com.zimax.components.coframe.rights.pojo.UserPartyAuthVo;
 import com.zimax.components.coframe.rights.pojo.UserVo;
+import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -25,7 +28,12 @@ public interface UserMapper {
       */
      List<UserVo> queryUsers(Map map);
 
-     int count(@Param("status") String status, @Param("userName") String userName);
+     int count(@Param("userId") String userId, @Param("userName") String userName,
+               @Param("roleNameList") String roleNameList, @Param("userType") String userType,
+               @Param("status") String status, @Param("userCreator") String userCreator,
+               @Param("userUpdater") String userUpdater
+
+     );
 
 //     /**
 //      * 查询匹配密码的用户记录数,用户
@@ -49,6 +57,19 @@ public interface UserMapper {
       * 批量删除用户
       */
      void deleteUsers(List<Integer> operatorIds);
+
+     /**
+      * 通过用户登录名查询到用户的角色类型
+      *
+      * @param userId 用户操作编号数组
+      */
+
+     List<UserPartyAuthVo> getRoleName(@Param("userId") String userId);
+
+     /**
+      * 批量删除用户分配权限信息
+      */
+     void deleteUsersAuth(String userId);
 
      /**
       * 获取用户

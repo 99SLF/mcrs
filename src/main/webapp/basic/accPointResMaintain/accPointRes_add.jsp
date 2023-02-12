@@ -119,7 +119,7 @@
             <div class="layui-input-block">
             <textarea cols="50" rows="10" style="width:100%;height:100px" name="processRemarks" id="processRemarks"
                       autocomplete="off"
-                      class="layui-textarea" lay-verify="" readonly></textarea>
+                      class="layui-textarea" lay-verify=""></textarea>
             </div>
         </div>
     </div>

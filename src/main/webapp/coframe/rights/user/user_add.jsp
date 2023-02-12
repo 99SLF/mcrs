@@ -13,12 +13,17 @@
     <title>添加用户</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <style>
-        .layui-form-label{
+        .layui-form-label {
             width: 120px;
         }
+
         .layui-input-block {
             margin-left: 150px;
-            min-height: 36px
+            min-height: 30px
+        }
+        .layui-textarea{
+            height: 5px!important;
+            /*min-height: 60px!important;*/
         }
     </style>
 </head>
@@ -27,14 +32,14 @@
      style="padding: 20px 30px 0 0;">
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">用户登录名:<span style="color:red">*</span></label>
+            <label class="layui-form-label"><span style="color:red">*</span>用户登录账号名：</label>
             <div class="layui-input-block">
                 <input id="userId" type="text" name="userId" lay-verify="required|checkUserId" placeholder="用户登录名(必填)"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label">用户名称:<span style="color:red">*</span></label>
+            <label class="layui-form-label"><span style="color:red">*</span>用户名称：</label>
             <div class="layui-input-block">
                 <input id="userName" type="text" name="userName" lay-verify="required" placeholder="用户名称(必填)"
                        autocomplete="off" class="layui-input">
@@ -44,48 +49,74 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">登录密码:<span style="color:red">*</span></label>
+            <label class="layui-form-label"><span style="color:red">*</span>登录密码：</label>
             <div class="layui-input-block">
                 <input type="password" name="password" lay-verify="required" placeholder="登录密码(必填)" autocomplete="off"
                        class="layui-input">
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label">密码失效日期</label>
+            <label class="layui-form-label"><span style="color:red">*</span>用户状态：</label>
             <div class="layui-input-block">
-                <input type="text" name="invalDate" id="invaldate" autocomplete="off" class="layui-input">
+                <%--下拉选择框--%>
+                <select name="status" id="status" lay-filter="status" lay-verify="required">
+                </select>
             </div>
         </div>
     </div>
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">有效开始时间:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>用户类型：</label>
             <div class="layui-input-block">
-                <input type="text" name="startDate" id="startdate" autocomplete="off" class="layui-input">
+                <%--下拉选择框--%>
+                <select name="userType" id="userType" lay-filter="userType" lay-verify="required">
+                </select>
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label">有效截止时间：</label>
+            <label class="layui-form-label"><span style="color:red">*</span>密码失效日期：</label>
             <div class="layui-input-block">
-                <input type="text" name="endDate" id="enddate" autocomplete="off" class="layui-input">
+                <input type="text" name="invalDate" id="invaldate" autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item layui-row layui-col-space10">
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><span style="color:red">*</span>有效开始时间：</label>
+            <div class="layui-input-block">
+                <input type="text" name="startDate" id="startdate" autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><span style="color:red">*</span>有效截止时间：</label>
+            <div class="layui-input-block">
+                <input type="text" name="endDate" id="enddate" autocomplete="off" class="layui-input" lay-verify="required">
             </div>
         </div>
     </div>
 
     <div class="layui-form-item layui-row layui-col-space10">
+        <div class="layui-col-sm6">
+            <label class="layui-form-label">手机号：</label>
+            <div class="layui-input-block">
+                <input type="text" name="userPhone" id="userPhone" lay-verify="" autocomplete="off" class="layui-input">
+            </div>
+        </div>
         <div class="layui-col-sm6">
             <label class="layui-form-label">邮箱地址：</label>
             <div class="layui-input-block">
                 <input type="text" name="email" id="email" lay-verify="" autocomplete="off" class="layui-input">
             </div>
         </div>
-        <div class="layui-col-sm6">
-            <label class="layui-form-label">用户状态：<span style="color:red">*</span></label>
+    </div>
+    <div class="layui-form-item layui-row layui-col-space10">
+        <div class="layui-col-sm12">
+            <label class="layui-form-label">用户描述：</label>
             <div class="layui-input-block">
-                <%--下拉选择框--%>
-                <select name="status" id="status" lay-filter="status" lay-verify="required">
-                </select>
+            <textarea cols="50" rows="10" style="width:100%;height:100px" name="userDescription" id="userDescription"
+                      autocomplete="off"
+                      class="layui-textarea" lay-verify="" ></textarea>
             </div>
         </div>
     </div>
@@ -136,8 +167,12 @@
     	elem: "#menuType",
     	dictTypeId: "COF_SKINLAYOUT"
     });
+    layui.admin.renderDictSelect({	   //获取用户类型下拉值
+        elem: "#userType",
+        dictTypeId: "USER_TYPE"
+    });
 
-    $("#status").val("1");
+    $("#status").val("102");
     $("#authMode").val("local");
     $("#menuType").val("default");
     $("#tenantId").val("default");
@@ -228,7 +263,7 @@
     			type: "GET",
     			// data: json,
                 // data: userId,
-    			cache: false,
+                async: false,
     			contentType: "text/json",
     			cache: false,
     			success: function(text) {
