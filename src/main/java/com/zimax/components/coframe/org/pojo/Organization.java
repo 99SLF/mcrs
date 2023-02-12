@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * @Author 施林丰
  * @Date:2023/2/9 8:46
@@ -32,12 +34,12 @@ public class Organization {
     String linkTel;
     String email;
     String webUrll;
-    Data startDate;
-    Data endDate;
+    Date startDate;
+    Date endDate;
     String status;
     String area;
-    Data createTime;
-    Data lastUpdatel;
+    Date createTime;
+    Date lastUpdatel;
     Integer updator;
     Integer sortNo;
     String isLeaf;
