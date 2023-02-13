@@ -47,6 +47,8 @@ public class User {
      */
     private String userName;
 
+
+
     /**
      * 登录密码(添加页面)
      */
@@ -81,6 +83,9 @@ public class User {
      * 邮箱地址(添加页面)
      */
     private String email;
+
+
+
 
     /**
      * 用户状态(添加页面)
@@ -156,6 +161,33 @@ public class User {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date createTime;
 
+    /**
+     * 用户类型(添加页面)
+     */
+    private String userType;
+
+    /**
+     * 手机号(添加页面)
+     */
+    private String userPhone;
+
+    /**
+     * 用户描述(添加页面)
+     */
+    private String userDescription;
+
+    /**
+     * 修改人
+     */
+    private String updater;
+
+    /**
+     * 修改时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date updateTime;
 }
 
 

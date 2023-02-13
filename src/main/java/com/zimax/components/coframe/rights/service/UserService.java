@@ -5,8 +5,11 @@ import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
 import com.zimax.components.coframe.rights.DefaultUserManager;
 import com.zimax.components.coframe.rights.mapper.UserMapper;
+import com.zimax.components.coframe.rights.pojo.PartyAuth;
 import com.zimax.components.coframe.rights.pojo.User;
+import com.zimax.components.coframe.rights.pojo.UserPartyAuthVo;
 import com.zimax.components.coframe.rights.pojo.UserVo;
+import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
 import com.zimax.mcrs.config.ChangeString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +42,7 @@ public class UserService {
 			String creator = DataContextManager.current().getMUODataContext().getUserObject().getUserId();
 
 //			IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
-//			user.setCreateor(usetObject.getUserName());
+//			user.setCreator(useObject.getUserName());
 			user.setCreator(creator);
 			user.setPassword(encrypt(user.getPassword()));
 			user.setCreateTime(new Date());
@@ -63,19 +66,27 @@ public class UserService {
 	 * @param
 	 * @return
 	 */
-	public int count(String status, String userName) {
-		return userMapper.count(status, userName);
+	public int count(String userId, String userName,
+					 String roleName, String userType,
+					 String status, String userCreator,
+					 String userUpdater) {
+		return userMapper.count(userId, userName, roleName, userType, status, userCreator, userUpdater);
 	}
 
 	/**
 	 * 查询所有用户信息
 	 */
-	public List<UserVo> queryUsers(String page, String limit, String status, String userName, String order, String field) {
+	public List<UserVo> queryUsers(String page, String limit,
+								   String userId, String userName,
+								   String roleNameList, String userType,
+								   String status, String userCreator,
+								   String userUpdater,
+								   String order, String field) {
 		ChangeString changeString = new ChangeString();
 		Map<String, Object> map = new HashMap<>();
 		if (order == null) {
 			map.put("order", "asc");
-			map.put("field", "create_time");
+			map.put("field", "cur.create_time");
 		} else {
 			map.put("order", order);
 			map.put("field", changeString.camelUnderline(field));
@@ -84,8 +95,13 @@ public class UserService {
 			map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
 			map.put("limit", Integer.parseInt(limit));
 		}
-		map.put("status", status);
+		map.put("userId", userId);
 		map.put("userName", userName);
+		map.put("roleNameList", roleNameList);
+		map.put("userType", userType);
+		map.put("status", status);
+		map.put("userCreator", userCreator);
+		map.put("userUpdater", userUpdater);
 		return userMapper.queryUsers(map);
 
 	}
@@ -123,10 +139,28 @@ public class UserService {
 		userMapper.deleteUsers(operatorIds);
 	}
 
+
+	/**
+	 * 通过用户登录名查询到用户的角色类型
+	 *
+	 * @param userId 用户操作编号数组
+	 */
+
+	public List<UserPartyAuthVo> getRoleName(String userId) {
+		return userMapper.getRoleName(userId);
+
+	}
+
 	/**
 	 * 编辑，更新用户
 	 */
 	public void updateUser(User user) {
+		String updater = DataContextManager.current().getMUODataContext().getUserObject().getUserId();
+
+//			IUserObject useObject = DataContextManager.current().getMUODataContext().getUserObject();
+//			user.setCreator(useObject.getUserName());
+		user.setUpdater(updater);
+		user.setUpdateTime(new Date());
 		userMapper.updateUser(user);
 	}
 //	/**
@@ -171,6 +205,14 @@ public class UserService {
 		userMapper.deleteUser(operatorId);
 	}
 
+	/**
+	 * 删除用户分配权限信息
+	 *
+	 * @param userId 权限操作编号
+	 */
+	public void deleteUsersAuth(String userId) {
+		userMapper.deleteUsersAuth(userId);
+	}
 
 
 	/**

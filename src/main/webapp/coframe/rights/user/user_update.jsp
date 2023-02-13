@@ -12,21 +12,35 @@
 <meta name="viewport" content="width=equipment-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <title>修改用户</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
-<style type="text/css"></style>
+	<style>
+		.layui-form-label {
+			width: 120px;
+		}
+
+		.layui-input-block {
+			margin-left: 150px;
+			min-height: 30px
+		}
+		.layui-textarea{
+			height: 5px!important;
+			/*min-height: 60px!important;*/
+		}
+	</style>
 </head>
 <body>
-<div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0;white-space：nowrap">
+<div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list"
+	 style="padding: 20px 30px 0 0 ">
 	<input type="hidden" name="operatorId" value="default">
 	<input type="hidden" name="password" value="default">
 		<div class="layui-form-item layui-row layui-col-space10">
 		<div class="layui-col-sm6">
-			<label class="layui-form-label" >用户登录名:<span style="color:red">*</span></label>
+			<label class="layui-form-label" ><span style="color:red">*</span>用户登录账号名：</label>
 			<div class="layui-input-block">
 				<input id="userId" type="text" name="userId" lay-verify="required|checkUserId" placeholder="用户登录名(必填)" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-col-sm6">
-			<label class="layui-form-label" >用户名称:<span style="color:red">*</span></label>
+			<label class="layui-form-label" ><span style="color:red">*</span>用户名称：</label>
 			<div class="layui-input-block">
 				<input id="userName" type="text" name="userName" lay-verify="required" placeholder="角色名称(必填)" autocomplete="off" class="layui-input">
 			</div>
@@ -35,41 +49,66 @@
 	
 	<div class="layui-form-item layui-row layui-col-space10">
 		<div class="layui-col-sm6">
-			<label class="layui-form-label">密码失效日期</label>
+			<label class="layui-form-label">密码失效日期：</label>
 			<div class="layui-input-block">
-	  			<input type="text" name="invalDate" id="invaldate" autocomplete="off" class="layui-input">
+	  			<input type="text" name="invalDate" id="invaldate" autocomplete="off" class="layui-input" lay-verify="required">
+			</div>
+		</div>
+		<div class="layui-col-sm6">
+			<label class="layui-form-label"><span style="color:red">*</span>用户状态：</label>
+			<div class="layui-input-block">
+				<%--下拉选择框--%>
+				<select name="status" id="status" lay-filter="status" lay-verify="required">
+				</select>
 			</div>
 		</div>
 	</div>
-	
 	<div class="layui-form-item layui-row layui-col-space10">
 		<div class="layui-col-sm6">
-			<label class="layui-form-label" >有效开始时间:</label>
+			<label class="layui-form-label"><span style="color:red">*</span>用户类型：</label>
 			<div class="layui-input-block">
-	  			<input type="text" name="startDate" id="startdate" autocomplete="off" class="layui-input" >
+				<%--下拉选择框--%>
+				<select name="userType" id="userType" lay-filter="userType" lay-verify="required">
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="layui-form-item layui-row layui-col-space10">
+		<div class="layui-col-sm6">
+			<label class="layui-form-label" >有效开始时间：</label>
+			<div class="layui-input-block">
+	  			<input type="text" name="startDate" id="startdate" autocomplete="off" class="layui-input" lay-verify="required" >
 			</div>
 		</div>
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" >有效截止时间：</label>
 			<div class="layui-input-block">
-	  			<input type="text" name="endDate" id="enddate" autocomplete="off" class="layui-input" >
+	  			<input type="text" name="endDate" id="enddate" autocomplete="off" class="layui-input" lay-verify="required" >
 			</div>
 		</div>
 	</div>
 	
 	<div class="layui-form-item layui-row layui-col-space10">
 		<div class="layui-col-sm6">
-			<label class="layui-form-label" >邮箱地址：</label>
+			<label class="layui-form-label">手机号：</label>
 			<div class="layui-input-block">
-	       		<input type="text" name="email" id="email" lay-verify="" autocomplete="off" class="layui-input">
+				<input type="text" name="userPhone" id="userPhone" lay-verify="" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-col-sm6">
-			<label class="layui-form-label">用户状态：</label>
+			<label class="layui-form-label" >邮箱地址：</label>
 			<div class="layui-input-block">
-				<select name="status" id="status" lay-filter="status" type="select"  >
-					 <option value=""></option>
-				</select>		
+				<input type="text" name="email" id="email" lay-verify="" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+	</div>
+	<div class="layui-form-item layui-row layui-col-space10">
+		<div class="layui-col-sm12">
+			<label class="layui-form-label">用户描述：</label>
+			<div class="layui-input-block">
+            <textarea cols="50" rows="10" style="width:100%;height:100px" name="userDescription" id="userDescription"
+					  autocomplete="off"
+					  class="layui-textarea" lay-verify="" ></textarea>
 			</div>
 		</div>
 	</div>
@@ -99,7 +138,11 @@
   		elem: "#status",
   		dictTypeId: "COF_USERSTATUS"
     });
- 
+
+	layui.admin.renderDictSelect({    //获取用户状态的下拉值
+		elem: "#userType",
+		dictTypeId: "USER_TYPE"
+	});
 	form.render();
 	//日期
 	laydate.render({
@@ -153,6 +196,9 @@
 			"invalDate": util.toDateString(data.invalDate, "yyyy-MM-dd"),
 			"startDate": util.toDateString(data.startDate, "yyyy-MM-dd"),
 			"endDate": util.toDateString(data.endDate, "yyyy-MM-dd"),
+			"userType" : data.userType,
+			"userPhone" : data.userPhone,
+			"userDescription" : data.userDescription,
 			"email": data.email,
 			"status": data.status,
 		});

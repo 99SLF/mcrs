@@ -9,18 +9,49 @@
         values (#{operatorId}, #{tenantId}, #{userId}, #{password}, #{invalDate}, #{userName}, #{authMode}, #{status},
                 #{unlockTime}, #{menuType},
                 #{lastLogin}, #{errCount}, #{startDate}, #{endDate}, #{validTime}, #{macCode}, #{ipAddress}, #{email},
-                #{creator}, #{createTime})
+                #{creator}, #{createTime}, #{userType}, #{userPhone}, #{userDescription}, #{updater}, #{updateTime})
     </insert>
 
     <!--    查询记录数-->
     <select id="count" resultType="int">
-        select count(*) from cap_user
+        SELECT count(*) , curCrator.USER_NAME AS userCreator,
+        curUpdater.USER_NAME AS userUpdater
+        FROM
+        (
+        SELECT
+        a.USER_ID,
+        GROUP_CONCAT(DISTINCT c.role_name) AS roleNameList
+        FROM
+        cap_user a
+        LEFT JOIN cap_party_auth b ON a.USER_ID = b.PARTY_ID
+        LEFT JOIN cap_role c ON b.ROLE_ID = c.role_id
+        GROUP BY
+        a.USER_ID
+        ) AS roleList
+        LEFT JOIN cap_user AS cur ON roleList.USER_ID = cur.USER_ID
+        LEFT JOIN cap_user AS curCrator ON cur.CREATOR = curCrator.USER_ID
+        LEFT JOIN cap_user AS curUpdater ON cur.UPDATER = curUpdater.USER_ID
         <where>
-            <if test="status !=null and status !=''">
-                and status like '%${status}%'
+            <if test="userId !=null and userId !=''">
+                and roleList.USER_ID like '%${userId}%'
             </if>
             <if test="userName !=null and userName !=''">
-                and user_name like '%${userName}%'
+                and cur.USER_NAME like '%${userName}%'
+            </if>
+            <if test="roleNameList !=null and roleNameList !=''">
+                and roleNameList like '%${roleNameList}%'
+            </if>
+            <if test="userType !=null and userType !=''">
+                and cur.USER_TYPE like '%${userType}%'
+            </if>
+            <if test="status !=null and status !=''">
+                and cur.STATUS like '%${status}%'
+            </if>
+            <if test="userCreator !=null and userCreator !=''">
+                and curCrator.USER_NAME like '%${userCreator}%'
+            </if>
+            <if test="userUpdater !=null and userUpdater !=''">
+                and curUpdater.USER_NAME like '%${userUpdater}%'
             </if>
         </where>
     </select>
@@ -52,13 +83,51 @@
     <!--查询所用户信息-->
     <!--列表显示-->
     <select id="queryUsers" parameterType="map" resultType="com.zimax.components.coframe.rights.pojo.UserVo">
-        select * from cap_user
+        SELECT
+        cur.OPERATOR_ID,
+        roleList.USER_ID,
+        cur.USER_NAME,
+        roleNameList,
+        cur.USER_TYPE,
+        cur. STATUS,
+        curCrator.USER_NAME AS userCreator,
+        curUpdater.USER_NAME AS userUpdater
+        FROM
+        (
+        SELECT
+        a.USER_ID,
+        GROUP_CONCAT(DISTINCT c.role_name) AS roleNameList
+        FROM
+        cap_user a
+        LEFT JOIN cap_party_auth b ON a.USER_ID = b.PARTY_ID
+        LEFT JOIN cap_role c ON b.ROLE_ID = c.role_id
+        GROUP BY
+        a.USER_ID
+        ) AS roleList
+        LEFT JOIN cap_user AS cur ON roleList.USER_ID = cur.USER_ID
+        LEFT JOIN cap_user AS curCrator ON cur.CREATOR = curCrator.USER_ID
+        LEFT JOIN cap_user AS curUpdater ON cur.UPDATER = curUpdater.USER_ID
         <where>
-            <if test="status !=null and status !=''">
-                and status like '%${status}%'
+            <if test="userId !=null and userId !=''">
+                and roleList.USER_ID like '%${userId}%'
             </if>
             <if test="userName !=null and userName !=''">
-                and user_name like '%${userName}%'
+                and cur.USER_NAME like '%${userName}%'
+            </if>
+            <if test="roleNameList !=null and roleNameList !=''">
+                and roleNameList like '%${roleNameList}%'
+            </if>
+            <if test="userType !=null and userType !=''">
+                and cur.USER_TYPE like '%${userType}%'
+            </if>
+            <if test="status !=null and status !=''">
+                and cur.STATUS like '%${status}%'
+            </if>
+            <if test="userCreator !=null and userCreator !=''">
+                and curCrator.USER_NAME like '%${userCreator}%'
+            </if>
+            <if test="userUpdater !=null and userUpdater !=''">
+                and curUpdater.USER_NAME like '%${userUpdater}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -72,18 +141,18 @@
     <!--更新一条选中的用户信息-->
     <update id="updateUser" parameterType="com.zimax.components.coframe.rights.pojo.User">
         UPDATE cap_user
-        SET
-            user_id     = #{userId},
-            user_name   = #{userName},
-            inval_date  = #{invalDate,jdbcType=DATE},
-            start_date  = #{startDate,jdbcType=DATE},
-            end_date    = #{endDate,jdbcType=DATE},
-            email       = #{email},
-            status      = #{status},
-            auth_mode   = #{authMode},
-            menu_type   = #{menuType},
-            ip_address  = #{ipAddress},
-            valid_time  = #{validTime,jdbcType=DATE}
+        SET user_id          = #{userId},
+            user_name        = #{userName},
+            inval_date       = #{invalDate},
+            status           = #{status},
+            user_type        = #{userType},
+            start_date       = #{startDate},
+            end_date         = #{endDate},
+            user_phone       = #{userPhone},
+            email            = #{email},
+            user_description = #{userDescription},
+            updater          = #{updater},
+            update_time      = #{updateTime}
         WHERE operator_id = ${operatorId}
     </update>
     <!--    主键删除-->
@@ -92,13 +161,34 @@
         from cap_user
         where operator_id = #{operatorId}
     </delete>
-    <!--    批量删除-->
+    <!--    批量删除用户-->
     <delete id="deleteUsers" parameterType="java.util.List">
         delete from cap_user where operator_id in
         <foreach collection="list" item="id" separator="," open="(" close=")">
             #{id}
         </foreach>
     </delete>
+    <!--    批量删除用户权限-->
+    <delete id="deleteUsersAuth" parameterType="string">
+        delete
+        from cap_party_auth
+        where PARTY_ID = #{userId}
+    </delete>
+    <!--通过用户登录名查询到用户的角色类型-->
+    <select id="getRoleName" parameterType="map"
+            resultType="com.zimax.components.coframe.rights.pojo.UserPartyAuthVo">
+        SELECT
+        *
+        FROM
+        cap_party_auth a
+        LEFT JOIN cap_role b ON a.ROLE_ID = b.role_id
+        <where>
+            <if test="userId !=null and userId !=''">
+                and PARTY_ID = #{userId}
+            </if>
+        </where>
+    </select>
+
     <!--获取一个用户信息-->
     <select id="getUser" resultType="com.zimax.components.coframe.rights.pojo.User">
         select *
@@ -119,29 +209,29 @@
         where user_id = #{userId}
     </select>
 
-<!--    &lt;!&ndash;重置密码&ndash;&gt;-->
-<!--    <update id="updatePasswords">-->
-<!--        update cap_user set password = #{password} in-->
-<!--        <foreach collection="userIds" open="(" separator="," close=")" item="item" index="index">-->
-<!--            #{item.userId}-->
-<!--        </foreach>-->
-<!--    </update>-->
+    <!--    &lt;!&ndash;重置密码&ndash;&gt;-->
+    <!--    <update id="updatePasswords">-->
+    <!--        update cap_user set password = #{password} in-->
+    <!--        <foreach collection="userIds" open="(" separator="," close=")" item="item" index="index">-->
+    <!--            #{item.userId}-->
+    <!--        </foreach>-->
+    <!--    </update>-->
 
-        <!--重置密码-->
-        <update id="updatePasswords">
-            update cap_user
-            <trim prefix="set" suffixOverrides=",">
-                <trim prefix="password = case" suffix="end,">
-                    <foreach collection="list" item="item" index="index">
-                        <if test="item.password != null and item.password != ''">
-                            when user_id = #{item.userId} then #{item.password}
-                        </if>
-                    </foreach>
-                </trim>
+    <!--重置密码-->
+    <update id="updatePasswords">
+        update cap_user
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="password = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.password != null and item.password != ''">
+                        when user_id = #{item.userId} then #{item.password}
+                    </if>
+                </foreach>
             </trim>
-            where user_id in
-            <foreach collection="list" item="user" index="index" separator="," open="(" close=")">
-                (#{user.userId})
-            </foreach>
-        </update>
+        </trim>
+        where user_id in
+        <foreach collection="list" item="user" index="index" separator="," open="(" close=")">
+            (#{user.userId})
+        </foreach>
+    </update>
 </mapper>

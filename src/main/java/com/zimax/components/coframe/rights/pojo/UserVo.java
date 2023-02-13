@@ -1,6 +1,12 @@
 package com.zimax.components.coframe.rights.pojo;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 
 /**
@@ -131,4 +137,50 @@ public class UserVo {
      */
 
     private String createTime;
+
+    /**
+     * 用户类型(添加页面)
+     */
+    private String userType;
+
+    /**
+     * 手机号(添加页面)
+     */
+    private String userPhone;
+
+    /**
+     * 用户描述(添加页面)
+     */
+    private String userDescription;
+
+    /**
+     * 修改人
+     */
+    private String updater;
+
+    /**
+     * 修改时间
+     */
+
+    private String updateTime;
+
+    /**
+     * 角色名字
+     */
+    private String roleName;
+
+    /**
+     * 创建人(前端显示重命名)
+     */
+    private String userCreator;
+
+    /**
+     * 修改人(前端显示重命名)
+     */
+    private String userUpdater;
+
+    /**
+     * 角色名称集合
+     */
+    private String roleNameList;
 }

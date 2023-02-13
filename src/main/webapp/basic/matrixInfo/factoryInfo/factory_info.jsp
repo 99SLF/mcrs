@@ -16,6 +16,20 @@
     <meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
     <title>当前基地信息详情</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
+    <style>
+        .layui-form-label {
+            width: 120px;
+        }
+
+        .layui-input-block {
+            margin-left: 150px;
+            min-height: 30px
+        }
+        .layui-textarea{
+            height: 5px!important;
+            /*min-height: 60px!important;*/
+        }
+    </style>
 </head>
 <body>
 <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list"

@@ -52,6 +52,9 @@ public class EquipService {
         //编码规则，参数是编码规则表功能编码functionNum,title_rule 不能为空,function_name 唯一编码  currentvalue 当前流水号 number_rule {流水规则} 接受方式，num_basis
         String coding = serialnumberService.getSerialNum("sbCod").replace("_", "");
         equipTypeInfo.setEquipTypeCode(coding);
+        String creator = DataContextManager.current().getMUODataContext().getUserObject().getUserId();
+        equipTypeInfo.setCreator(creator);
+        equipTypeInfo.setCreateTime(new Date());
         equipMapper.addEquipInfo(equipTypeInfo);
 
     }
@@ -59,12 +62,23 @@ public class EquipService {
     /**
      * 查询所有信息
      */
-    public List<EquipTypeInfoVo> queryEquipInfos(String page, String limit, String equipTypeCode, String equipTypeName, String creator, String createTime, String protocolCommunication,String order, String field) {
+    public List<EquipTypeInfoVo> queryEquipInfos(String page, String limit,
+                                                 String equipTypeCode,
+                                                 String equipTypeName,
+                                                 String equipTypeEnable,
+                                                 String manufacturer,
+                                                 String equipControllerModel,
+                                                 String protocolCommunication,
+                                                 String mesIpAddress,
+                                                 String equipCreatorName,
+                                                 String createTime,
+                                                 String equipUpdaterName,
+                                                 String updateTime, String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
             map.put("order", "asc");
-            map.put("field", "equip_type_code");
+            map.put("field", "a.equip_type_code");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));
@@ -75,9 +89,15 @@ public class EquipService {
         }
         map.put("equipTypeCode", equipTypeCode);
         map.put("equipTypeName", equipTypeName);
-        map.put("creator", creator);
-        map.put("createTime", createTime);
+        map.put("equipTypeEnable", equipTypeEnable);
+        map.put("manufacturer", manufacturer);
+        map.put("equipControllerModel", equipControllerModel);
         map.put("protocolCommunication", protocolCommunication);
+        map.put("mesIpAddress", mesIpAddress);
+        map.put("equipCreatorName", equipCreatorName);
+        map.put("createTime", createTime);
+        map.put("equipUpdaterName", equipUpdaterName);
+        map.put("updateTime", updateTime);
         return equipMapper.queryEquipInfos(map);
 
     }
@@ -88,14 +108,27 @@ public class EquipService {
      * @param
      * @return
      */
-    public int count(String equipTypeCode, String equipTypeName, String creator, String createTime,String protocolCommunication) {
-        return equipMapper.count(equipTypeCode, equipTypeName, creator, createTime,protocolCommunication);
+    public int count(String equipTypeCode,
+                     String equipTypeName,
+                     String equipTypeEnable,
+                     String manufacturer,
+                     String equipControllerModel,
+                     String protocolCommunication,
+                     String mesIpAddress,
+                     String equipCreatorName,
+                     String createTime,
+                     String equipUpdaterName,
+                     String updateTime) {
+        return equipMapper.count(equipTypeCode,equipTypeName, equipTypeEnable, manufacturer, equipControllerModel, protocolCommunication, mesIpAddress, equipCreatorName, createTime, equipUpdaterName, updateTime);
     }
 
     /**
      * 编辑
      */
     public void updateEquipInfo(EquipTypeInfo equipTypeInfo) {
+        String creator = DataContextManager.current().getMUODataContext().getUserObject().getUserId();
+        equipTypeInfo.setUpdater(creator);
+        equipTypeInfo.setUpdateTime(new Date());
         equipMapper.updateEquipInfo(equipTypeInfo);
     }
 

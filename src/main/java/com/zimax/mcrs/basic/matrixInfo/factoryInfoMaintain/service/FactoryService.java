@@ -34,7 +34,9 @@ public class FactoryService {
     public void addFactoryInfo(FactoryInfo factoryInfo){
         String coding = serialnumberService.getSerialNum("gcCod").replace("_", "");
         factoryInfo.setFactoryCode(coding);
-
+        IUserObject useObject = DataContextManager.current().getMUODataContext().getUserObject();
+        factoryInfo.setCreator(useObject.getUserId());
+        factoryInfo.setCreateTime(new Date());
         factoryMapper.addFactoryInfo(factoryInfo);
     }
 
@@ -64,8 +66,8 @@ public class FactoryService {
      */
     public void updateFactoryInfo(FactoryInfo factoryInfo) {
 
-        IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
-        factoryInfo.setUpdater(usetObject.getUserName());
+        IUserObject useObject = DataContextManager.current().getMUODataContext().getUserObject();
+        factoryInfo.setUpdater(useObject.getUserId());
         factoryInfo.setUpdateTime(new Date());
         factoryMapper.updateFactoryInfo(factoryInfo);
     }

@@ -25,6 +25,10 @@
             margin-left: 150px;
             min-height: 30px
         }
+        .layui-textarea{
+            height: 5px!important;
+            /*min-height: 60px!important;*/
+        }
     </style>
 </head>
 <body>
@@ -49,19 +53,19 @@
             </div>
         </div>
     </div>
-    <div class="layui-form-item layui-row layui-hide">
-        <div class="layui-input-block">
-            <input type="text" class="layui-hide" name="createTime"
-                   value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>" readonly/>
-        </div>
-    </div>
-    <div class="layui-form-item layui-row layui-hide">
-        <div class="layui-input-block">
-            <%IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();%>
-            <input type="text" class="layui-hide" name="creator" value="<%=usetObject.getUserId()%>"
-                   readonly/>
-        </div>
-    </div>
+<%--    <div class="layui-form-item layui-row layui-hide">--%>
+<%--        <div class="layui-input-block">--%>
+<%--            <input type="text" class="layui-hide" name="createTime"--%>
+<%--                   value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>" readonly/>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--    <div class="layui-form-item layui-row layui-hide">--%>
+<%--        <div class="layui-input-block">--%>
+<%--            <%IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();%>--%>
+<%--            <input type="text" class="layui-hide" name="creator" value="<%=usetObject.getUserId()%>"--%>
+<%--                   readonly/>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
     <div class="layui-form-item layui-hide">
         <input type="button" lay-submit lay-filter="layuiadmin-app-form-submit"
