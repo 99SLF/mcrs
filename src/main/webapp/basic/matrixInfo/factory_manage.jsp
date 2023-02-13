@@ -7,7 +7,7 @@
   - Description:
 -->
 <head>
-    <title>管理</title>
+    <title>基础数据树管理</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
@@ -222,6 +222,7 @@
                     var key = node.recordData.realId;
                     var context = node.context;
                     var detail = node.recordData.detail;
+                    var parentId = node.recordData.realId;
                     switch (change) {
                         case "root":
                             z = "none", o = "";
@@ -250,7 +251,8 @@
                                 win: window,
                                 key: key,
                                 context:context,
-                                detail:detail
+                                detail:detail,
+                                parentId:parentId
                             };
                             layero.find("iframe")[0].contentWindow.SetData(dataJson);
                         },

@@ -79,4 +79,20 @@ public interface MatrixMapper {
      */
 
     List<Matrix> queryMatrixNode(int nodeId);
+
+    /**
+     * （基础数据目录树，添加）
+     * 检测相同父节点下的基地名称是否存在
+     *
+     * @param parentId 上级节点的id
+     */
+    int checkMatrixNameAdd(@Param("parentId") String parentId,@Param("matrixName") String matrixName);
+
+    /**
+     * （基础数据目录树，编辑）
+     * 检测相同父节点下的基地名称是否存在
+     *
+     * @param parentId 上级节点的id
+     */
+    int checkMatrixNameEdit(@Param("parentId") String parentId,@Param("matrixName") String matrixName);
 }

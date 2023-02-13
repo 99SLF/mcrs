@@ -25,8 +25,9 @@
             margin-left: 150px;
             min-height: 30px
         }
-        .layui-textarea{
-            height: 5px!important;
+
+        .layui-textarea {
+            height: 5px !important;
             /*min-height: 60px!important;*/
         }
     </style>
@@ -50,23 +51,23 @@
             <div class="layui-input-block">
             <textarea name="matrixAddress" id="matrixAddress"
                       autocomplete="off"
-                      class="layui-textarea" lay-verify="" ></textarea>
+                      class="layui-textarea" lay-verify="matrixAddress"></textarea>
             </div>
         </div>
     </div>
-<%--    <div class="layui-form-item layui-row layui-hide">--%>
-<%--        <div class="layui-input-block">--%>
-<%--            <input type="text" class="layui-hide" name="createTime"--%>
-<%--                   value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>" readonly/>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--    <div class="layui-form-item layui-row layui-hide">--%>
-<%--        <div class="layui-input-block">--%>
-<%--            <%IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();%>--%>
-<%--            <input type="text" class="layui-hide" name="creator" value="<%=usetObject.getUserId()%>"--%>
-<%--                   readonly/>--%>
-<%--        </div>--%>
-<%--    </div>--%>
+    <%--    <div class="layui-form-item layui-row layui-hide">--%>
+    <%--        <div class="layui-input-block">--%>
+    <%--            <input type="text" class="layui-hide" name="createTime"--%>
+    <%--                   value="<%=(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())%>" readonly/>--%>
+    <%--        </div>--%>
+    <%--    </div>--%>
+    <%--    <div class="layui-form-item layui-row layui-hide">--%>
+    <%--        <div class="layui-input-block">--%>
+    <%--            <%IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();%>--%>
+    <%--            <input type="text" class="layui-hide" name="creator" value="<%=usetObject.getUserId()%>"--%>
+    <%--                   readonly/>--%>
+    <%--        </div>--%>
+    <%--    </div>--%>
 
     <div class="layui-form-item layui-hide">
         <input type="button" lay-submit lay-filter="layuiadmin-app-form-submit"
@@ -105,9 +106,30 @@
     // 判断字符
     form.verify({
         matrixAddress: function (value, item) {
+            debugger;
             if (value.length > 225) {
                 return "基地地址内容不能超过255个字";
             }
+        },
+        matrixName: function (value,item){
+            var flag = "1";
+            var checkResult = "";
+            $.ajax({
+                url: "<%=request.getContextPath()%>/MatrixController/check/isExist?parentId=" + parentId + "&matrixName=" + value +"&flag=" + flag,
+                type: "GET",
+                async: false,
+                contentType: "text/json",
+                cache: false,
+                success: function (text) {
+                    debugger;
+                    if (text.code == "1") {
+                        checkResult = "基地名称已存在";
+                    }
+                },
+                error: function() {
+                }
+            });
+            return checkResult;
         }
     });
 
@@ -139,12 +161,47 @@
                         win.rendTree();
                     }
                 });
+            } else if (isExist == true) {
+                submit = false;
+                layer.msg("基地已存在，请重新输入", {
+                    icon: 2,
+                    time: 2000
+                });
+                submit = false;
             }
         } else {
             layer.msg("请稍等");
         }
         return false;
     });
+
+
+    // 判断基地名称是否已存在
+    $("#matrixName").blur(function () {
+        var matrixName = $("#matrixName").val();
+        if (matrixName != null && matrixName != "") {
+            $.ajax({
+                url: "<%=request.getContextPath()%>/MatrixController/check/isExist?parentId=" + parentId + "&matrixName=" + matrixName,
+                type: "GET",
+                async: false,
+                contentType: "text/json",
+                cache: false,
+                success: function (text) {
+                    //通过接口返回，返回检测记录条数
+                    if (text.code == "1") {
+                        isExist = true;
+                    } else {
+                        isExist = false;
+                    }
+                }
+            });
+        } else {
+            return;
+        }
+    });
+
+
+
 </script>
 </body>
 </html>

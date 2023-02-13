@@ -164,5 +164,18 @@
         </where>
     </select>
 
+    <select id="checkFactoryNameAdd" resultType="int">
+        select count(*)
+        from base_factory_info
+        where factory_name = #{factoryName}
+          and matrix_id = #{parentId}
+    </select>
+
+    <select id="checkFactoryNameEdit" resultType="int">
+        select count(*)
+        from base_factory_info
+        where factory_name = #{factoryName}
+          and factory_id != #{parentId}
+    </select>
 </mapper>
 

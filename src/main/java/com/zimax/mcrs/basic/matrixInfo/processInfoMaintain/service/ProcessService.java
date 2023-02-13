@@ -196,4 +196,23 @@ public class ProcessService {
         return processMapper.queryProcessNode(nodeId);
 
     }
+    /**
+     * （基础数据目录树）
+     * 检测相同父节点下的工序名称是否存在
+     *
+     * @param parentId 上级节点的id
+     */
+    public int  checkProcessNameAdd(String parentId,String processName) {
+        return processMapper.checkProcessNameAdd(parentId,processName) ;
+    }
+
+    /**
+     * （基础数据目录树）
+     * 检测相同父节点下的工序名称是否存在
+     *
+     * @param parentId 上级节点的id
+     */
+    public int  checkProcessNameEdit(String parentId,String processName) {
+        return processMapper.checkProcessNameEdit(parentId,processName) ;
+    }
 }

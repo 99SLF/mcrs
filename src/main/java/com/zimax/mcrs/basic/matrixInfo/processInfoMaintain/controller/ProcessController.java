@@ -186,4 +186,30 @@ public class ProcessController {
         maps.put("data",processInfo);
         return Result.success(processInfo);
     }
+
+    /**
+     * （基础数据目录树）
+     * 检测相同父节点下的工序名称是否存在
+     *
+     * @param parentId 上级节点的id
+     */
+    @GetMapping("/check/isExist")
+    public Result<?> checkProcessName(@RequestParam("parentId") String parentId,@RequestParam("processName") String processName,@RequestParam("flag") String flag) {
+        if(flag.equals("1")){
+            if (processService.checkProcessNameAdd(parentId,processName) > 0) {
+                return Result.error("1", "节点下该工序已存在");
+            } else {
+                return Result.success();
+            }
+        }else {
+            if (processService.checkProcessNameEdit (parentId,processName) > 0) {
+                return Result.error("1", "节点下该工序已存在");
+            } else {
+                return Result.success();
+            }
+        }
+
+
+    }
 }
+

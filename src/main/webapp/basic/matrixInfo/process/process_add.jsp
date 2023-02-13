@@ -108,6 +108,26 @@
             if (value.length > 225) {
                 return "工序描述内容不能超过255个字";
             }
+        },
+        processName: function (value,item){
+            var flag = "1";
+            var checkResult = "";
+            $.ajax({
+                url: "<%=request.getContextPath()%>/ProcessController/check/isExist?parentId=" + parentId + "&processName=" + value +"&flag=" + flag,
+                type: "GET",
+                async: false,
+                contentType: "text/json",
+                cache: false,
+                success: function (text) {
+                    debugger;
+                    if (text.code == "1") {
+                        checkResult = "工序名称已存在";
+                    }
+                },
+                error: function() {
+                }
+            });
+            return checkResult;
         }
     });
 
@@ -137,16 +157,44 @@
                             top.layer.close(index);
                         });
                         win.rendTree();
-
                     }
                 });
+            } else if (isExist == true) {
+                submit = false;
+                layer.msg("工序已存在，请重新输入", {
+                    icon: 2,
+                    time: 2000
+                });
+                submit = false;
             }
-            var index = parent.layer.getFrameIndex(window.name);
-            top.layer.close(index);
         } else {
             layer.msg("请稍等");
         }
         return false;
+    });
+    // 判断工序名称是否已存在
+    $("#processName").blur(function () {
+        var processName = $("#processName").val();
+        if (processName != null && processName != "") {
+            $.ajax({
+                url: "<%=request.getContextPath()%>/ProcessController/check/isExist?parentId=" + parentId + "&processName=" + processName,
+                type: "GET",
+                async: false,
+                contentType: "text/json",
+                cache: false,
+                success: function (text) {
+                    debugger;
+                    //通过接口返回，返回检测记录条数
+                    if (text.code == "1") {
+                        isExist = true;
+                    } else {
+                        isExist = false;
+                    }
+                }
+            });
+        } else {
+            return;
+        }
     });
 </script>
 </body>

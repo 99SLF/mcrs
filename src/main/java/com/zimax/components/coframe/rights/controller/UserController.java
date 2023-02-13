@@ -185,7 +185,7 @@ public class UserController {
     @GetMapping("/check/isExist")
     public Result<?> checkUser(@RequestParam("userId") String userId) {
         if (userService.checkUser(userId) > 0) {
-            return Result.error("1", "用户以存在");
+            return Result.error("1", "用户已存在");
         } else {
             return Result.success();
         }

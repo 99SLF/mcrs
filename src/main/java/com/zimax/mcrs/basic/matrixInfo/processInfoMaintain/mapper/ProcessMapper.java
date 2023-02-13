@@ -94,4 +94,20 @@ public interface ProcessMapper {
      */
 
     List<ProcessInfo> queryProcessNode(int nodeId);
+
+    /**
+     * （基础数据目录树）
+     * 检测相同父节点下的工序名称是否存在
+     *
+     * @param parentId 上级节点的id
+     */
+    int checkProcessNameAdd(@Param("parentId") String parentId,@Param("processName") String processName);
+
+    /**
+     * （基础数据目录树）
+     * 检测相同父节点下的工序名称是否存在
+     *
+     * @param parentId 上级节点的id
+     */
+    int checkProcessNameEdit(@Param("parentId") String parentId,@Param("processName") String processName);
 }

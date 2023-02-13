@@ -151,4 +151,25 @@ public class MatrixService {
         return matrixMapper.queryMatrixNode(nodeId);
 
     }
+
+
+    /**
+     * （基础数据目录树,添加校验）
+     * 检测相同父节点下的基地名称是否存在
+     *
+     * @param parentId 上级节点的id
+     */
+    public int  checkMatrixNameAdd(String parentId,String matrixName) {
+        return matrixMapper.checkMatrixNameAdd(parentId,matrixName) ;
+    }
+
+    /**
+     * （基础数据目录树，编辑校验）
+     * 检测相同父节点下的基地名称是否存在
+     *
+     * @param parentId 上级节点的id
+     */
+    public int  checkMatrixNameEdit(String parentId,String matrixName) {
+        return matrixMapper.checkMatrixNameEdit(parentId,matrixName) ;
+    }
 }
