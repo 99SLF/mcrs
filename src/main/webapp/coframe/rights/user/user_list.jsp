@@ -316,6 +316,13 @@
             if (data.length == 0) {
                 layer.msg("请至少选中一条记录！");
             } else {
+                if (data[0].operatorId == 1) {
+                    layer.msg("选择用户不能进行此操作", {
+                        icon: 7,
+                        time: 2000
+                    });
+                    return;
+                }
                 // if (data.length > 0) {
                 // 	var userIds = new Array();
                 // 	for (var i=0; i<data.length;i++) {
@@ -524,6 +531,7 @@
             title: "重置密码",
             layEvent: "resetPassword",
             icon: "layui-icon layui-icon-password",
+
         }, {
             title: "批量删除",
             layEvent: "batchdel",
@@ -579,33 +587,6 @@
             hide: isHidden("userName"),
             minWidth: 120
         }, {
-            field: "roleNameList",
-            title: "角色名称",
-            align: "center",
-            sort: true,
-            minWidth: 250,
-            hide: isHidden("roleNameList")
-            <%--templet: function(d) {--%>
-            <%--    debugger;--%>
-            <%--    var  userId = d.userId;--%>
-            <%--    var  roleName =new Array();--%>
-            <%--        $.ajax({--%>
-            <%--            url: "<%= request.getContextPath() %>/user/getRoleName?userId=" + userId,--%>
-            <%--            type: "GET",--%>
-            <%--            async: false,--%>
-            <%--            cache: false,--%>
-            <%--            contentType: "text/json",--%>
-            <%--            success: function(data) {--%>
-            <%--                debugger;--%>
-            <%--                for (var i = 0; i < data.data.length; i++) {--%>
-            <%--                    roleName[i] = data.data[i].roleName;--%>
-            <%--                }--%>
-            <%--            }--%>
-            <%--        });--%>
-            <%--    // return roleName;--%>
-            <%--}--%>
-
-        }, {
             field: "userType",
             title: "用户类型",
             align: "center",
@@ -637,6 +618,32 @@
                 // }
                 return layui.admin.getDictText("COF_USERSTATUS", d.status);
             }
+        }, {
+            field: "roleNameList",
+            title: "角色名称",
+            align: "center",
+            minWidth: 250,
+            hide: isHidden("roleNameList")
+            <%--templet: function(d) {--%>
+            <%--    debugger;--%>
+            <%--    var  userId = d.userId;--%>
+            <%--    var  roleName =new Array();--%>
+            <%--        $.ajax({--%>
+            <%--            url: "<%= request.getContextPath() %>/user/getRoleName?userId=" + userId,--%>
+            <%--            type: "GET",--%>
+            <%--            async: false,--%>
+            <%--            cache: false,--%>
+            <%--            contentType: "text/json",--%>
+            <%--            success: function(data) {--%>
+            <%--                debugger;--%>
+            <%--                for (var i = 0; i < data.data.length; i++) {--%>
+            <%--                    roleName[i] = data.data[i].roleName;--%>
+            <%--                }--%>
+            <%--            }--%>
+            <%--        });--%>
+            <%--    // return roleName;--%>
+            <%--}--%>
+
         }, {
             field: "userPhone",
             title: "手机号",
@@ -695,7 +702,6 @@
         });
         form.render();
     }
-
 
 
     //监听操作事件

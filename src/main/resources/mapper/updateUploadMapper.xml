@@ -95,7 +95,7 @@
     <select id="queryUpdateUpload" parameterType="map" resultType="com.zimax.mcrs.update.pojo.UpdateUpload">
         select * from upd_upload
         <where>
-            version &gt; #{maxVersion} and
+            version &gt; ${maxVersion} and
             device_so_type = #{deviceSoftwareType}
             <if test="version !=null and version !=''">
                 and version like '%${version}%'
@@ -129,7 +129,7 @@
     <select id="queryUpdateUploadRo" parameterType="map" resultType="com.zimax.mcrs.update.pojo.UpdateUpload">
         select * from upd_upload
         <where>
-            version &lt; #{minVersion} and
+            version &lt; ${minVersion} and
             device_so_type = #{deviceSoftwareType}
             <if test="version !=null and version !=''">
                 and version like '%${version}%'
