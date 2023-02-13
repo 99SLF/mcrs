@@ -104,7 +104,7 @@ public class UpdateUploadService {
         return updateUploadMapper.count(version, deviceSoType);
     }
     /**
-     * 查询所有升级更新包信息
+     * 查询所有升级更新包信息（筛选）
      */
     public List<UpdateUpload> queryUpdateUpload(String page, String limit, String version, String deviceSoType, String order, String field ,String maxVersion , String deviceSoftwareType) {
         ChangeString changeString = new ChangeString();
@@ -122,7 +122,7 @@ public class UpdateUploadService {
         }
         map.put("version", version);
         map.put("deviceSoType", deviceSoType);
-        map.put("maxVersion", maxVersion);
+        map.put("maxVersion", Double.parseDouble(maxVersion));
         map.put("deviceSoftwareType", deviceSoftwareType);
         return updateUploadMapper.queryUpdateUpload(map);
 
@@ -147,7 +147,7 @@ public class UpdateUploadService {
         }
         map.put("version", version);
         map.put("deviceSoType", deviceSoType);
-        map.put("minVersion", minVersion);
+        map.put("minVersion", Double.parseDouble(minVersion));
         map.put("deviceSoftwareType", deviceSoftwareType);
         return updateUploadMapper.queryUpdateUploadRo(map);
 

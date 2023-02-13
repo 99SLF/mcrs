@@ -187,7 +187,7 @@ public class UpdateUploadController {
 
 
     /**
-     * 显示升级更新包信息
+     * 显示升级更新包信息（赛选升级）
      *
      * @param
      * @param page         页记录数
@@ -212,7 +212,7 @@ public class UpdateUploadController {
     }
 
     /**
-     * 显示回退更新包信息
+     * 显示回退更新包信息（筛选回退）
      *
      * @param
      * @param page         页记录数
