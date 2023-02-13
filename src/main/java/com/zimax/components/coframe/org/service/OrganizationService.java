@@ -1,11 +1,14 @@
 package com.zimax.components.coframe.org.service;
 
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.zimax.cap.party.Party;
 import com.zimax.components.coframe.auth.service.PartyAuthService;
 import com.zimax.components.coframe.framework.mapper.FuncGroupMapper;
 import com.zimax.components.coframe.framework.pojo.FuncGroup;
 import com.zimax.components.coframe.org.mapper.OrganizationMapper;
+import com.zimax.components.coframe.org.pojo.Employee;
 import com.zimax.components.coframe.org.pojo.Organization;
+import com.zimax.components.coframe.org.pojo.Position;
 import com.zimax.components.coframe.rights.gradeauth.GradeAuthService;
 import com.zimax.mcrs.config.ChangeString;
 import org.springframework.beans.factory.BeanFactory;
@@ -68,6 +71,60 @@ public class OrganizationService {
      */
     public int count(Integer parentOrgId, String orgCode, String orgType) {
         return organizationMapper.count(parentOrgId,orgCode,orgType);
+    }
+
+    /**
+     * 渲染机构
+     */
+    public void queryTreeChildNodes(Integer nodeId, String nodeType) {
+        if(nodeId!=null){
+            Organization[] organizations = querySubOrgs(nodeId);
+            Position[] positions = queryPositionsOfOrg(nodeId);
+            Employee[]  employees = queryEmployeesOfOrgNotInPosition(nodeId);
+
+
+        }else if("OrgPosition".equals(nodeType)){
+
+        }else{
+
+        }
+    }
+
+    /**
+     * 查询机构下的子机构
+     * @param orgid
+     * @return
+     */
+    public Organization[] querySubOrgs(Integer orgid) {
+        Organization[] organizations = organizationMapper.querySubOrgs(orgid);
+        return organizations;
+    }
+    /**
+     * 查询机构下的员工
+     * （在机构的岗位下则过滤掉）
+     * @param orgid
+     * @return
+     */
+    public Position[] queryPositionsOfOrg(Integer orgid) {
+        if (orgid==null) {
+            return new Position[0];
+        }
+        return organizationMapper.queryPositionsOfOrg(orgid);
+    }
+
+    /**
+     * 查询机构下的岗位
+     * @param orgid
+     * @return
+     */
+    public Employee[] queryEmployeesOfOrgNotInPosition(Integer orgid) {
+        if (orgid==null) {
+            return new Employee[0];
+        }
+        return organizationMapper.queryEmployeesOfOrgNotInPosition(orgid);
+    }
+    public void buildOrgTreeNodes(Integer orgid) {
+
     }
 
 }

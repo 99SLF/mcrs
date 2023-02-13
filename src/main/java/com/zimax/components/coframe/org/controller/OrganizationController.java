@@ -18,7 +18,7 @@ import java.util.List;
  */
 @RestController
 @ResponseBody
-@RequestMapping("/org")
+@RequestMapping("/organization")
 public class OrganizationController {
     @Autowired
     OrganizationService organizationService;
@@ -35,7 +35,7 @@ public class OrganizationController {
      * @param order       排序方式
      * @return 应用列表
      */
-    @GetMapping("/Organization/queryOrg")
+    @GetMapping("/queryOrg")
     public Result<?> queryOrg(String limit, String page, Integer parentOrgId, String orgCode, String orgType, String order, String field) {
         List organizations = organizationService.queryOrg(page, limit, parentOrgId, orgCode, orgType, order, field);
         return Result.success(organizations, organizationService.count(parentOrgId, orgCode, orgType));
@@ -46,7 +46,7 @@ public class OrganizationController {
      *
      * @param organization 机构信息
      */
-    @PostMapping("/Organization/addOrg")
+    @PostMapping("/addOrg")
     public Result<?> addOrg(@RequestBody Organization organization) {
         //addOrgapplicationService.addApplication(application);
         return Result.success();
@@ -57,7 +57,7 @@ public class OrganizationController {
      *
      * @param appId 应用信息编号
      */
-    @DeleteMapping("/Organization/deleteNodes")
+    @DeleteMapping("/deleteNodes")
     public Result<?> deleteNodes(@RequestBody int appId) {
         // applicationService.deleteApplication(appId);
         return Result.success();
@@ -68,8 +68,19 @@ public class OrganizationController {
      *
      * @param organizationDelVo 删除机构信息
      */
-    @PutMapping("/Organization/updateOrg")
+    @PutMapping("/updateOrg")
     public Result<?> updateOrg(@RequestBody OrganizationDelVo organizationDelVo) {
+        //applicationService.updateApplication(application);
+        return Result.success();
+    }
+    /**
+     * 渲染加载机构
+     *
+     * @param nodeId 结点id，机构或岗位的id
+     * @param nodeType 结点类型：机构或岗位
+     */
+    @PostMapping("/queryTreeChildNodes")
+    public Result<?> queryTreeChildNodes(Integer nodeId, String nodeType) {
         //applicationService.updateApplication(application);
         return Result.success();
     }

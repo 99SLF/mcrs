@@ -38,4 +38,32 @@
             limit ${begin},${limit}
         </if>
     </select>
+
+    <select id="querySubOrgs"  resultType="com.zimax.components.coframe.org.pojo.Organization">
+        select * from org_organization
+        <where>
+            <if test="parentOrgId !=null and parentOrgId !=''">
+                and parent_org_id = '${parentOrgId}'
+            </if>
+            <if test="parentOrgId ==null or parentOrgId ==''">
+                and parent_org_id is NULl
+            </if>
+        </where>
+            order by sortNo asc
+    </select>
+    <select id="queryPositionsOfOrg"  resultType="com.zimax.components.coframe.org.pojo.Position">
+        select * from org_position
+        <where>
+            <if test="orgId !=null and orgId !=''">
+                and org_id = '${orgId}'
+            </if>
+        </where>
+        and mana_posi is NULl
+    </select>
+    <select id="queryEmployeesOfOrgNotInPosition"  resultType="com.zimax.components.coframe.org.pojo.Employee">
+        SELECT E.* FROM ORG_EMPLOYEE E,ORG_EMP_ORG O WHERE E.EMP_ID = O.EMP_ID AND O.ORG_ID ='${orgId}'
+            AND E.EMP_ID NOT IN
+            (SELECT EMP_ID FROM ORG_EMP_POSITION EP,ORG_POSITION P
+            WHERE EP.POSITION_ID=P.POSITION_ID AND P.ORG_ID='${orgId}')   ORDER BY E.SORT_NO
+    </select>
 </mapper>
