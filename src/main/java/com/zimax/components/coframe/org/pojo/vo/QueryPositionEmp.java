@@ -1,6 +1,5 @@
-package com.zimax.components.coframe.org.pojo;
+package com.zimax.components.coframe.org.pojo.vo;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,14 +8,13 @@ import java.util.Date;
 
 /**
  * @Author 施林丰
- * @Date:2023/2/11 10:47
+ * @Date:2023/2/13 14:39
  * @Description
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("org_employee")
-public class Employee {
+public class QueryPositionEmp {
     int empId;
     String empCode;
     Integer operatorId;
@@ -30,4 +28,5 @@ public class Employee {
     Integer orgId;
     String tenantId;
     Integer sortNo;
+    Integer positionId;
 }

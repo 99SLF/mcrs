@@ -270,6 +270,10 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.components.coframe.org.mapper.OrganizationMapper"/>
     </bean>
+    <bean id="PositionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.components.coframe.org.mapper.PositionMapper"/>
+    </bean>
     <bean id="DeviceRuntimeMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.mcrs.monitor.mapper.DeviceRuntimeMapper"/>
@@ -324,14 +328,26 @@
         <property name="mapperInterface" value="com.zimax.mcrs.log.mapper.MesLogMapper"/>
     </bean>
     <bean id="GradeAuthBean" class="com.zimax.components.coframe.rights.gradeauth.GradeAuthService"></bean>
-
     <bean id="PartyAuthService" class="com.zimax.components.coframe.auth.service.PartyAuthService"></bean>
 
+    <bean id="OrgTreeNodeHelperBean" class="com.zimax.components.coframe.org.OrgTreeNodeHelper">
+        <property name="organizationService" ref="OrganizationBean"/>
+    </bean>
+
+    <bean id="OrgTreeService" class="com.zimax.components.coframe.org.service.OrgTreeService"></bean>
     <bean id="RoleBean" class="com.zimax.components.coframe.rights.service.RoleService">
         <property name="roleMapper" ref="RoleMapper"/>
         <property name="gradeAuthService" ref="GradeAuthBean"/>
         <property name="resAuthMapper" ref="ResAuthMapper"/>
         <property name="partyAuthMapper" ref="PartyAuthMapper"/>
+
+    </bean>
+
+    <bean id="OrganizationBean" class="com.zimax.components.coframe.org.service.OrganizationService">
+        <property name="organizationMapper" ref="OrganizationMapper"/>
+        <property name="gradeAuthService" ref="GradeAuthBean"/>
+        <property name="orgTreeService" ref="OrgTreeService"/>
+        <property name="partyAuthService" ref="PartyAuthService"/>
     </bean>
 
     <bean id="FunctionBean" class="com.zimax.components.coframe.framework.service.FunctionService">

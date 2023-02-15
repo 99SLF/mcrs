@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author 施林丰
@@ -22,7 +23,6 @@ import java.util.List;
 public class OrganizationController {
     @Autowired
     OrganizationService organizationService;
-
     /**
      * 查询组织机构
      *
@@ -49,18 +49,22 @@ public class OrganizationController {
     @PostMapping("/addOrg")
     public Result<?> addOrg(@RequestBody Organization organization) {
         //addOrgapplicationService.addApplication(application);
-        return Result.success();
+        return Result.success(organizationService.addOrganization(organization));
     }
 
     /**
      * 删除机构
      *
-     * @param appId 应用信息编号
+     * @param map 应用信息编号
      */
     @DeleteMapping("/deleteNodes")
-    public Result<?> deleteNodes(@RequestBody int appId) {
+    public Result<?> deleteNodes(@RequestBody Map<String,String> map) {
+//        for (Map.Entry<String,String> entry:map.entrySet()){
+//            System.out.print("得到键为：==="+entry.getKey());
+//            System.out.println("得到值为：==="+entry.getValue());
+//        }
         // applicationService.deleteApplication(appId);
-        return Result.success();
+        return Result.success(organizationService.deleteNodes(map));
     }
 
     /**
@@ -79,10 +83,15 @@ public class OrganizationController {
      * @param nodeId 结点id，机构或岗位的id
      * @param nodeType 结点类型：机构或岗位
      */
-    @PostMapping("/queryTreeChildNodes")
+    @GetMapping("/queryTreeChildNodes")
     public Result<?> queryTreeChildNodes(Integer nodeId, String nodeType) {
         //applicationService.updateApplication(application);
-        return Result.success();
+        return Result.success(organizationService.queryTreeChildNodes(nodeId,nodeType));
+    }
+    @PostMapping("/queryOrganizationsByIds")
+    public Result<?> queryOrganizationsByIds(@RequestBody Integer[] ids) {
+        //applicationService.updateApplication(application);
+        return Result.success(organizationService.queryOrganizationsByIds(ids));
     }
 
 

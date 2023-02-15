@@ -2,6 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zimax.components.coframe.org.mapper.OrganizationMapper">
+
+    <resultMap type="com.zimax.components.coframe.org.pojo.Organization" id="Org_Map">
+        <result column="org_id"  property="orgId"/>
+        <result column="org_code"  property="orgCode"/>
+        <result column="org_name"  property="orgName"/>
+        <result column="org_level"  property="orgLevel"/>
+        <result column="org_degree"  property="orgDegree"/>
+        <result column="parent_org_id"  property="parentOrgId"/>
+        <result column="org_seq"  property="orgSeq"/>
+        <result column="org_type"  property="orgType"/>
+        <result column="status"  property="status"/>
+        <result column="create_time"  property="createTime"/>
+        <result column="last_updatel"  property="lastUpdatel"/>
+        <result column="sort_no"  property="sortNo"/>
+        <result column="is_leaf"  property="isLeaf"/>
+        <result column="sub_count"  property="subCount"/>
+        <result column="remark"  property="remark"/>
+        <result column="tenant_id"  property="tenantId"/>
+        <association property="organization">
+            <result column="porg_id"  property="orgId"/>
+            <result column="porg_code"  property="orgCode"/>
+            <result column="porg_name"  property="orgName"/>
+        </association>
+    </resultMap>
     <!--    查询记录数-->
     <select id="count" resultType="int">
         select count(*) from org_organization
@@ -49,7 +73,7 @@
                 and parent_org_id is NULl
             </if>
         </where>
-            order by sortNo asc
+            order by sort_no asc
     </select>
     <select id="queryPositionsOfOrg"  resultType="com.zimax.components.coframe.org.pojo.Position">
         select * from org_position
@@ -66,4 +90,38 @@
             (SELECT EMP_ID FROM ORG_EMP_POSITION EP,ORG_POSITION P
             WHERE EP.POSITION_ID=P.POSITION_ID AND P.ORG_ID='${orgId}')   ORDER BY E.SORT_NO
     </select>
+
+    <select id="queryOrganizationsByIds"  resultMap="Org_Map">
+        select a.*,b.ORG_ID porg_id,b.ORG_CODE porg_code,b.ORG_NAME porg_name from org_organization a
+	 	left join org_organization b on a.PARENT_ORG_ID=b.ORG_ID where a.ORG_ID in
+        <foreach collection="ids" item="id"  index="index"  separator="," open="(" close=")">
+            #{id}
+        </foreach>
+        order by sort_no asc
+    </select>
+    <select id="queryOrganizationsByOrgCode"  resultType="com.zimax.components.coframe.org.pojo.Organization">
+        select * from org_organization
+        <where>
+            <if test="orgCode !=null and orgCode !=''">
+                and org_code = #{orgCode}
+            </if>
+        </where>
+    </select>
+    <select id="queryOrganizationsByOrgId"  resultType="com.zimax.components.coframe.org.pojo.Organization">
+        select * from org_organization
+        <where>
+            <if test="orgId !=null and orgId !=''">
+                and org_id = #{orgId}
+            </if>
+        </where>
+    </select>
+    <insert id="insertOrganization"  parameterType="com.zimax.components.coframe.org.pojo.Organization" keyProperty="orgId" useGeneratedKeys="true">
+        insert into org_organization (org_id) value(#{orgId})
+    </insert>
+
+    <update id="updateOrganization" parameterType="com.zimax.components.coframe.org.pojo.Organization">
+        update org_organization set org_code=#{orgCode},org_name=#{orgName},org_level=#{orgLevel},org_degree=#{orgDegree},org_seq=#{orgSeq},org_type=#{orgType},status=#{status},sub_count=#{subCount},sort_no=#{sortNo},last_update=#{lastUpdate},CREATE_TIME=#{createTime},PARENT_ORG_ID=#{parentOrgId}
+        where org_id=#{orgId}
+    </update>
+
 </mapper>

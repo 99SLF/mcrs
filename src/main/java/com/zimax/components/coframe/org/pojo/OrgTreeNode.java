@@ -18,4 +18,9 @@ public class OrgTreeNode {
     String nodeType;
     String nodeName;
     String iconCls;
+    Integer orgId;
+    String orgName;
+    Integer pid;
+    boolean isLeaf;
+    boolean expanded;
 }

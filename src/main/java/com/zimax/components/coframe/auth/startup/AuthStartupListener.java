@@ -125,6 +125,8 @@ public class AuthStartupListener implements ServletContextListener {
         partyTypeModel.setIsLeaf("true");
         partyModel.addPartyTypeModel(partyTypeModel);
 
+        //org
+
         // role_user_ref
         PartyTypeRefModel partyTypeRefModel = new PartyTypeRefModel();
         partyTypeRefModel.setRefID("role_user_ref");
