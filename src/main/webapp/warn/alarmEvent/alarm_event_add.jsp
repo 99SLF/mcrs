@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <!--
-  - Author(s): 林俊杰
+  - Author(s): 林俊杰，李伟杰
   - Date: 2022-12-01 16:06:00
   - Description:
 -->
@@ -28,7 +28,7 @@
      style="padding: 20px 30px 0 0;">
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>预警事件编码:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>预警事件编码：</label>
             <div class="layui-input-block">
                 <input id="alarmEventId" type="text" name="alarmEventId" lay-verify="required|alarmEventId"
                        placeholder="预警事件编码(必填)" autocomplete="off" class="layui-input">
@@ -36,7 +36,7 @@
         </div>
 
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>预警事件标题:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>预警事件标题：</label>
             <div class="layui-input-block">
                 <input id="alarmEventTitle" type="text" name="alarmEventTitle" lay-verify="required|alarmEventTitle"
                        placeholder="预警事件标题" autocomplete="off" class="layui-input">
@@ -45,7 +45,7 @@
     </div>
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>预警级别:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>预警级别：</label>
             <div class="layui-input-block">
                 <select name="alarmLevel" id="alarmLevel"  lay-verify="required" lay-filter="" type="select" >
                     <option value=""></option>
@@ -54,7 +54,7 @@
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>预警类型:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>预警类型：</label>
             <div class="layui-input-block">
                 <select name="alarmType" id="alarmType"  lay-verify="required" lay-filter="" type="select" >
                     <option value=""></option>
@@ -64,7 +64,7 @@
     </div>
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>上限:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>上限：</label>
             <div class="layui-input-block">
                 <input id="upperLimit" type="text" name="upperLimit" lay-verify="required|upperLimit|number"
                        placeholder="请输入上限" autocomplete="off" class="layui-input">
@@ -72,7 +72,7 @@
         </div>
 
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>下限:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>下限：</label>
             <div class="layui-input-block">
                 <input id="lowerLimit" type="text" name="lowerLimit" lay-verify="required|lowerLimit|number" placeholder="请输入下限"
                        autocomplete="off" class="layui-input">
@@ -89,15 +89,14 @@
                 </select>
             </div>
         </div>
-    </div>
-    <div class="layui-form-item layui-row layui-col-space10">
-        <div class="layui-col-sm12">
-            <label class="layui-form-label">内容:</label>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><span style="color:red">*</span>预警内容：</label>
             <div class="layui-input-block">
-            <textarea cols="50" rows="10" style="width:100%;height:100px" name="alarmEventContent"
-                      id="alarmEventContent" autocomplete="off"
-                      class="layui-textarea" lay-verify="alarmEventContent"></textarea>
+                <select name="alarmEventContent" id="alarmEventContent" lay-filter="alarmEventContent" type="select" lay-verify="required">
+                    <option value=""></option>
+                </select>
             </div>
+
         </div>
     </div>
 
@@ -152,6 +151,12 @@
         elem: "#enableStatus",
         dictTypeId: "IS_USE",
     });
+
+    //获取预警内容的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#alarmEventContent",
+        dictTypeId: "WARNING_CONTENT",
+    });
     //设置启用的默认值
     $("#enableStatus").val("101");
     form.render();
@@ -180,12 +185,12 @@
             if(value.length >20){
                 return "下限不能超过20字";
             }
-        },
-        alarmEventContent: function(value, item) {
-    		if (value.length > 255) {
-    			return "备注不能超过255字";
-    		}
-    	}
+        }
+        // alarmEventContent: function(value, item) {
+    	// 	if (value.length > 255) {
+    	// 		return "备注不能超过255字";
+    	// 	}
+    	// }
     });
 
     // form.render();
