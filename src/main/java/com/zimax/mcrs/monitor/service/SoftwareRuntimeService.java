@@ -2,7 +2,6 @@ package com.zimax.mcrs.monitor.service;
 
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.monitor.mapper.SoftwareRuntimeMapper;
-import com.zimax.mcrs.monitor.pojo.SoftwareRunStatus;
 import com.zimax.mcrs.monitor.pojo.vo.SoftwareRunStatusVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,13 +24,13 @@ public class SoftwareRuntimeService {
      */
     public List<SoftwareRunStatusVo> querySoRuntimes(String page, String limit,
                                                      String equipmentId,String equipmentName, String deviceName,
-                                                     String deviceSoType, String deviceSoRunStatus,
+                                                     String deviceSoftwareType, String deviceSoftwareStatus,
                                                      String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
             map.put("order", "desc");
-            map.put("field", "create_time");
+            map.put("field", "mdr.device_name");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));
@@ -43,15 +42,15 @@ public class SoftwareRuntimeService {
         map.put("equipmentId", equipmentId);
         map.put("equipmentName", equipmentName);
         map.put("deviceName", deviceName);
-        map.put("deviceSoType", deviceSoType);
-        map.put("deviceSoRunStatus", deviceSoRunStatus);
+        map.put("deviceSoftwareType", deviceSoftwareType);
+        map.put("deviceSoftwareStatus", deviceSoftwareStatus);
         return softwareRuntimeMapper.querySoRuntimes(map);
 
     }
 
     public int countSO(String equipmentId,String equipmentName, String deviceName,
-                       String deviceSoType, String deviceSoRunStatus) {
-        return softwareRuntimeMapper.countSO(equipmentId, equipmentName ,deviceName, deviceSoType, deviceSoRunStatus);
+                       String deviceSoftwareType, String deviceSoftwareStatus) {
+        return softwareRuntimeMapper.countSO(equipmentId, equipmentName ,deviceName, deviceSoftwareType, deviceSoftwareStatus);
     }
 
 }

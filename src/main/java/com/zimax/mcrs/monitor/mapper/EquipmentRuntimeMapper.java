@@ -1,6 +1,5 @@
 package com.zimax.mcrs.monitor.mapper;
 
-import com.zimax.mcrs.monitor.pojo.EquipmentStatus;
 import com.zimax.mcrs.monitor.pojo.vo.EquipmentStatusVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

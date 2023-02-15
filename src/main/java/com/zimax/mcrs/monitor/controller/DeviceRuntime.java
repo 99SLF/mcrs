@@ -32,7 +32,7 @@ public class DeviceRuntime {
      * @param deviceSoftwareType 终端软件类型
      * @param deviceName         终端名称
      * @param deviceSoftwareType 终端软件类型
-     * @param deviceSoRunStatus  软件运行状态
+     * @param deviceSoftwareStatus  软件运行状态
      * @param cpuRate            cpu使用情况
      * @param storageRate        内存占用率
      * @param errorRate          误读率
@@ -47,13 +47,13 @@ public class DeviceRuntime {
     public Result<?> queryDeviceRuntime(String page, String limit,
                                         String equipmentId, String equipmentName,
                                         String deviceName, String deviceSoftwareType,
-                                        String deviceSoRunStatus, String accessStatus,
+                                        String deviceSoftwareStatus, String accessStatus,
                                         String cpuRate, String storageRate,
                                         String errorRate,
                                         String order, String field) {
 
-        List DeviceRuntime = deviceRuntimeService.queryDeviceRuntime(page, limit, equipmentId, equipmentName, deviceName, deviceSoftwareType, deviceSoRunStatus, accessStatus, cpuRate, storageRate, errorRate, order, field);
-        return Result.success(DeviceRuntime, deviceRuntimeService.countDR(equipmentId, equipmentName, deviceName, deviceSoftwareType, deviceSoRunStatus, accessStatus, cpuRate, storageRate, errorRate));
+        List DeviceRuntime = deviceRuntimeService.queryDeviceRuntime(page, limit, equipmentId, equipmentName, deviceName, deviceSoftwareType, deviceSoftwareStatus, accessStatus, cpuRate, storageRate, errorRate, order, field);
+        return Result.success(DeviceRuntime, deviceRuntimeService.countDR(equipmentId, equipmentName, deviceName, deviceSoftwareType, deviceSoftwareStatus, accessStatus, cpuRate, storageRate, errorRate));
 //        return Result.success(deviceRuntimeService.countDR(equipmentId, equipmentName, deviceName, deviceSoftwareType, deviceSoRunStatus, accessStatus, cpuRate, storageRate, errorRate));
 
     }

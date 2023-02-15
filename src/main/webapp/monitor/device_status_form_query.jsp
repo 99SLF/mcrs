@@ -66,7 +66,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">运行状态：</label>
         <div class="layui-input-inline">
-            <select name="deviceSoRunStatus" id="deviceSoRunStatus" lay-filter="deviceSoRunStatus"
+            <select name="deviceSoftwareStatus" id="deviceSoftwareStatus" lay-filter="deviceSoftwareStatus"
                     type="select">
                 <option value=""></option>
             </select>
@@ -133,7 +133,7 @@
     form.render();
     //获取软件运行状态
     layui.admin.renderDictSelect({
-        elem: "#deviceSoRunStatus",
+        elem: "#deviceSoftwareStatus",
         dictTypeId: "DEVICE_SOFTWARE_STATUS",
     });
     form.render();
@@ -160,7 +160,7 @@
             equipmentName: formData.equipmentName,
             deviceName : formData.deviceName,
             deviceSoftwareType: formData.deviceSoftwareType,
-            deviceSoRunStatus: formData.deviceSoRunStatus,
+            deviceSoftwareStatus: formData.deviceSoftwareStatus,
             accessStatus: formData.accessStatus ,
             cpuRate: formData.cpuRate ,
             storageRate: formData.storageRate ,
@@ -174,7 +174,7 @@
             equipmentName: "",
             deviceName: "",
             deviceSoftwareType: "",
-            deviceSoRunStatus: "",
+            deviceSoftwareStatus: "",
             accessStatus: "",
             cpuRate: "",
             storageRate: "",

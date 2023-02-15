@@ -1,4 +1,4 @@
-package com.zimax.mcrs.monitor.pojo;
+package com.zimax.mcrs.monitor.pojo.monDeviceStatus;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -11,24 +11,24 @@ import java.util.Date;
 
 /**
  * @author 李伟杰
- * @date 2023/1/3 10:35
+ * @date 2023/2/14 14:23
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("mon_equipment_status")
-public class EquipmentStatus {
+@TableName("mon_device_history")
+public class MonitorDeviceHistory {
 
     /**
-     * 设备接入状态编号
+     * 终端历史状态记录主键（不对外提供自增）
      */
     @TableId(type = IdType.AUTO)
-    private int equipmentStatusId;
+    private int deviceHistoryId;
 
     /**
-     * 设备资源号
+     * 终端名称
      */
-    private String equipmentId;
+    private String deviceName;
 
     /**
      * 接入类型(plc或rfid)   ACCESS_TYPE
@@ -41,9 +41,8 @@ public class EquipmentStatus {
      */
     private String accessType;
 
-
     /**
-     * 接入状态(正常异常)
+     * 接入状态(正常异常)硬件
      * EQUIPMENT_ACCESS_STATUS
      * 101
      * 正常
@@ -53,6 +52,12 @@ public class EquipmentStatus {
      *
      */
     private String accessStatus;
+
+    /**
+     * 运行状态（软件）
+     */
+    private String deviceSoftwareStatus;
+
 
     /**
      * 天线状态（plc可以可以为空，rfid必填）
@@ -67,10 +72,47 @@ public class EquipmentStatus {
      */
     private String antennaStatus;
 
+
     /**
-     * 创建时间
+     * 预警内容
+     */
+    private String warningContent;
+
+
+    /**
+     * cup使用率
+     */
+    private String cpuRate;
+
+    /**
+     * 内存使用率
+     */
+    private String storageRate;
+
+    /**
+     * 误读率
+     *
+     */
+    private String errorRate;
+
+
+    /**
+     * 发生时间
+     */
+    private Date occurrenceTime;
+
+
+    /**
+     * 备注
+     */
+    private String remarks;
+
+    /**
+     * 创建时间（服务端时间）,不对外提供
      *
      */
     private Date createTime;
+
+
 
 }

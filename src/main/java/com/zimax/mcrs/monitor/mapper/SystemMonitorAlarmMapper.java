@@ -1,6 +1,5 @@
 package com.zimax.mcrs.monitor.mapper;
 
-import com.zimax.mcrs.monitor.pojo.DeviceAbn;
 import com.zimax.mcrs.monitor.pojo.vo.DeviceAbnVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

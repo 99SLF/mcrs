@@ -1,14 +1,12 @@
 package com.zimax.mcrs.monitor.mapper;
 
-import com.zimax.mcrs.monitor.pojo.DeviceAbn;
-import com.zimax.mcrs.monitor.pojo.EquipmentStatus;
-import com.zimax.mcrs.monitor.pojo.SoftwareRunStatus;
+import com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceHistory;
+import com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus;
 import com.zimax.mcrs.monitor.pojo.vo.GroupByDate;
 import com.zimax.mcrs.monitor.pojo.vo.GroupByProduction;
 import com.zimax.mcrs.monitor.pojo.vo.ProcessOnfactory;
 import com.zimax.mcrs.monitor.pojo.vo.WarnTotalInfo;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -20,20 +18,45 @@ import java.util.Map;
 @Mapper
 public interface AccessMonitorMapper {
 
-    /**
-     * 新增软件运行状态信息
-     */
-    void addSoftwareRunStatus(SoftwareRunStatus softwareRunStatus);
+//    /**
+//     * 新增软件运行状态信息
+//     */
+//    void addSoftwareRunStatus(SoftwareRunStatus softwareRunStatus);
+//
+//    /**
+//     * 新增设备接入状态信息
+//     */
+//    void addEquipmentStatus(EquipmentStatus equipmentStatus);
+//
+//    /**
+//     * 新增终端异常预警信息
+//     */
+//    void addDeviceAbn(DeviceAbn deviceAbn);
+
 
     /**
-     * 新增设备接入状态信息
+     * 对外获取终端设备，硬件软件的运行状态（表+++mon_device_history）
      */
-    void addEquipmentStatus(EquipmentStatus equipmentStatus);
+    void addMonitorDeviceStatus(MonitorDeviceHistory monitorDeviceHistory);
+
+    void updateMonitorDeviceStatus(MonitorDeviceStatus monitorDeviceStatus);
 
     /**
-     * 新增终端异常预警信息
+     * 对内每次注册一个终端信息的话，就新增表里一条终端名为注册名的监控信息（表+++mon_device_real）
      */
-    void addDeviceAbn(DeviceAbn deviceAbn);
+    void addMonitorDeviceReal(MonitorDeviceStatus monitorDeviceStatus);
+
+    /**
+     * 对内每次注销一个终端信息的话，就修改表里一条终端名为注册名的监控信息（表+++mon_device_real）
+     */
+    void updateMonitorDeviceRealExist(MonitorDeviceStatus deviceName);
+
+
+    /**
+     * 检查终端状态表，是否存在该终端数据
+     */
+    List<MonitorDeviceStatus> checkDevice(Map map);
+
     int getEqiOnline();
     int getAccessOnline();
 

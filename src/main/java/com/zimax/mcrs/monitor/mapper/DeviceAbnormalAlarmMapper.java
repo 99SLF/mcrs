@@ -1,6 +1,5 @@
 package com.zimax.mcrs.monitor.mapper;
 
-import com.zimax.mcrs.monitor.pojo.DeviceAbn;
 import com.zimax.mcrs.monitor.pojo.vo.DeviceAbnVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -29,8 +28,8 @@ public interface DeviceAbnormalAlarmMapper {
      * @return
      */
     int countAA(@Param("equipmentId") String equipmentId,@Param("equipmentName") String equipmentName, @Param("deviceName") String deviceName,
-                @Param("useProcess") String useProcess,@Param("warningTitle") String warningTitle, @Param("warningType") String warningType,
-                @Param("warningLevel") String warningLevel,@Param("warningContent") String warningContent,
-                @Param("occurTime") String occurTime
+                @Param("processName") String processName,@Param("alarmEventTitle") String alarmEventTitle, @Param("alarmType") String alarmType,
+                @Param("alarmLevel") String alarmLevel,@Param("alarmEventContent") String alarmEventContent,
+                @Param("occurrenceTime") String occurrenceTime
     );
 }

@@ -11,10 +11,22 @@ import java.util.Date;
 @Data
 public class SoftwareRunStatusVo {
 
+
     /**
-     * 软件运行状态编号
+     * 终端主键
      */
-    private int softwareRunId;
+    private int deviceId;
+
+    /**
+     * 终端状态表主键
+     */
+
+    private int deviceRealId;
+
+    /**
+     * 设备主键
+     */
+    private int equipmentInt;
 
     /**
      * 设备资源号
@@ -40,32 +52,11 @@ public class SoftwareRunStatusVo {
     /**
      * 终端软件类型
      */
-    private String deviceSoType;
+    private String deviceSoftwareType;
 
     /**
      * 终端软件运行状态
      */
-    private String deviceSoRunStatus;
+    private String deviceSoftwareStatus;
 
-    /**
-     * cup使用率
-     */
-    private String cpuRate;
-
-    /**
-     * 内存使用量
-     */
-    private String storageRate;
-
-    /**
-     * 误读率
-     *
-     */
-    private String errorRate;
-
-    /**
-     * 创建时间
-     *
-     */
-    private Date createTime;
 }

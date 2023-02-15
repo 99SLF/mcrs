@@ -11,15 +11,54 @@ import lombok.Data;
 @Data
 public class DeviceAbnVo {
 
+
+
     /**
-     * 终端异常编号
+     * 终端主键
      */
-    private int deviceAbnId;
+    private int deviceId;
+
+    /**
+     * 终端状态表主键
+     */
+
+    private int deviceRealId;
+
+    /**
+     * 设备主键
+     */
+    private int equipmentInt;
+
+    /**
+     * 预警事件主键
+     */
+    private int alarmEventInt;
+
+    /**
+     * 预警事件编码
+     */
+    private String alarmEventId;
+
+    /**
+     * 接入点主键
+     */
+    private int accPointResId;
+
+    /**
+     * 工序主键
+     */
+    private int processId;
 
     /**
      * 设备资源号
      */
     private String equipmentId;
+
+    /**
+     * 设备名称
+     */
+
+    private String equipmentName;
 
     /**
      * APPID
@@ -31,45 +70,41 @@ public class DeviceAbnVo {
      */
     private String deviceName;
 
-    /**
-     * 终端名称
-     */
-    private String equipmentName;
 
     /**
      * 使用工序
      */
-    private String useProcess;
+    private String processName;
 
     /**
      * 预警标题
      *
      */
-    private String warningTitle;
+    private String alarmEventTitle;
 
     /**
      * 预警类型
      *
      */
-    private String warningType;
+    private String alarmType;
 
     /**
      * 预警等级
      *
      */
-    private String warningLevel;
+    private String alarmLevel;
 
     /**
      * 预警内容
      *
      */
-    private String warningContent;
+    private String alarmEventContent;
 
     /**
      * 发生时间
      *
      */
-    private String occurTime;
+    private String occurrenceTime;
 
 
     /**
@@ -78,9 +113,5 @@ public class DeviceAbnVo {
      */
     private String remarks;
 
-    /**
-     * 创建时间
-     *
-     */
-    private String createTime;
+
 }

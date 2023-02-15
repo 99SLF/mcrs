@@ -8,82 +8,101 @@
     <select id="countAA" resultType="int">
         select
         count(*)
-        from mon_device_abn a
-        LEFT JOIN eqi_equipment b ON a.equipment_id = b.equipment_id
+        FROM
+        mon_device_real AS mdr
+        LEFT JOIN eqi_device AS dev ON mdr.device_name = dev.device_name
+        LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
+        LEFT JOIN war_alarm_event AS wae ON mdr.warning_content = wae.alarm_event_content
+        LEFT JOIN base_access_info AS bai ON equ.acc_point_res_id = bai.acc_point_res_id
+        LEFT JOIN base_process_info AS bpi ON bai.process_id = bpi.process_id
         <where>
+            and mdr.device_exists = 0
             <if test="equipmentId !=null and equipmentId !=''">
-                and a.equipment_id like '%${equipmentId}%'
+                and equ.equipment_id like '%${equipmentId}%'
             </if>
             <if test="equipmentName !=null and equipmentName !=''">
-                and b.equipment_name like '%${equipmentName}%'
+                and equ.equipment_name like '%${equipmentName}%'
             </if>
             <if test="deviceName !=null and deviceName !=''">
-                and a.device_name like '%${deviceName}%'
+                and mdr.device_name like '%${deviceName}%'
             </if>
-            <if test="useProcess !=null and useProcess !=''">
-                and a.use_process like '%${useProcess}%'
+            <if test="processName !=null and processName !=''">
+                and bpi.process_name like '%${processName}%'
             </if>
-            <if test="warningTitle !=null and warningTitle !=''">
-                and a.warning_title like '%${warningTitle}%'
+            <if test="alarmEventTitle !=null and alarmEventTitle !=''">
+                and wae.alarm_event_title like '%${alarmEventTitle}%'
             </if>
-            <if test="warningType !=null and warningType !=''">
-                and a.warning_type like '%${warningType}%'
+            <if test="alarmType !=null and alarmType !=''">
+                and wae.alarm_type like '%${alarmType}%'
             </if>
-            <if test="warningLevel !=null and warningLevel !=''">
-                and a.warning_level like '%${warningLevel}%'
+            <if test="alarmLevel !=null and alarmLevel !=''">
+                and wae.alarm_level like '%${alarmLevel}%'
             </if>
-            <if test="warningContent !=null and warningContent !=''">
-                and a.warning_content like '%${warningContent}%'
+            <if test="alarmEventContent !=null and alarmEventContent !=''">
+                and wae.alarm_event_content like '%${alarmEventContent}%'
             </if>
-            <if test="occurTime !=null and occurTime !=''">
-                and a.occur_time like '%${occurTime}%'
+            <if test="occurrenceTime !=null and occurrenceTime !=''">
+                and mdr.occurrence_time like '%${occurrenceTime}%'
             </if>
         </where>
 
     </select>
     <!--查询终端告警信息-->
     <select id="queryDeviceAbnormalAlarm" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.vo.DeviceAbnVo">
-        select
-        a.device_abn_id,
-        a.equipment_id,
-        b.equipment_name,
-        a.app_id,
-        a.device_name,
-        a.use_process,
-        a.warning_title,
-        a.warning_type,
-        a.warning_level,
-        a.warning_content,
-        a.occur_time
-        from mon_device_abn a
-        LEFT JOIN eqi_equipment b ON a.equipment_id = b.equipment_id
+        SELECT
+        mdr.device_real_id,
+        dev.device_id,
+        equ.equipment_int,
+        wae.alarm_event_id,
+        wae.alarm_event_int,
+        bai.acc_point_res_id,
+        bpi.process_id,
+        equ.equipment_id,
+        equ.equipment_name,
+        dev.app_id,
+        mdr.device_name,
+        bpi.process_name,
+        wae.alarm_event_title,
+        wae.alarm_type,
+        wae.alarm_level,
+        wae.alarm_event_content,
+        mdr.occurrence_time,
+        mdr.remarks
+        FROM
+        mon_device_real AS mdr
+        LEFT JOIN eqi_device AS dev ON mdr.device_name = dev.device_name
+        LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
+        LEFT JOIN war_alarm_event AS wae ON mdr.warning_content = wae.alarm_event_content
+        LEFT JOIN base_access_info AS bai ON equ.acc_point_res_id = bai.acc_point_res_id
+        LEFT JOIN base_process_info AS bpi ON bai.process_id = bpi.process_id
         <where>
+            and mdr.device_exists = 0
             <if test="equipmentId !=null and equipmentId !=''">
-                and a.equipment_id like '%${equipmentId}%'
+                and equ.equipment_id like '%${equipmentId}%'
             </if>
             <if test="equipmentName !=null and equipmentName !=''">
-                and b.equipment_name like '%${equipmentName}%'
+                and equ.equipment_name like '%${equipmentName}%'
             </if>
             <if test="deviceName !=null and deviceName !=''">
-                and a.device_name like '%${deviceName}%'
+                and mdr.device_name like '%${deviceName}%'
             </if>
-            <if test="useProcess !=null and useProcess !=''">
-                and a.use_process like '%${useProcess}%'
+            <if test="processName !=null and processName !=''">
+                and bpi.process_name like '%${processName}%'
             </if>
-            <if test="warningTitle !=null and warningTitle !=''">
-                and a.warning_title like '%${warningTitle}%'
+            <if test="alarmEventTitle !=null and alarmEventTitle !=''">
+                and wae.alarm_event_title like '%${alarmEventTitle}%'
             </if>
-            <if test="warningType !=null and warningType !=''">
-                and a.warning_type like '%${warningType}%'
+            <if test="alarmType !=null and alarmType !=''">
+                and wae.alarm_type like '%${alarmType}%'
             </if>
-            <if test="warningLevel !=null and warningLevel !=''">
-                and a.warning_level like '%${warningLevel}%'
+            <if test="alarmLevel !=null and alarmLevel !=''">
+                and wae.alarm_level like '%${alarmLevel}%'
             </if>
-            <if test="warningContent !=null and warningContent !=''">
-                and a.warning_content like '%${warningContent}%'
+            <if test="alarmEventContent !=null and alarmEventContent !=''">
+                and wae.alarm_event_content like '%${alarmEventContent}%'
             </if>
-            <if test="occurTime !=null and occurTime !=''">
-                and a.occur_time like '%${occurTime}%'
+            <if test="occurrenceTime !=null and occurrenceTime !=''">
+                and mdr.occurrence_time like '%${occurrenceTime}%'
             </if>
         </where>
         <if test="order !=null and order !=''">

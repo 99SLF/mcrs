@@ -137,4 +137,9 @@ public interface DeviceMapper {
      * @return
      */
     Device selectDevice(@Param("deviceId") int deviceId);
+
+    /**
+     * 通过终端主键获取终端信息
+     */
+    Device getDeviceName(int deviceId);
 }

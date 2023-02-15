@@ -57,7 +57,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">终端类型：</label>
         <div class="layui-input-inline">
-            <select name="deviceSoType" id="deviceSoType" lay-filter="deviceSoType"
+            <select name="deviceSoftwareType" id="deviceSoftwareType" lay-filter="deviceSoftwareType"
                     type="select">
                 <option value=""></option>
             </select>
@@ -66,7 +66,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">运行状态：</label>
         <div class="layui-input-inline">
-            <select name="deviceSoRunStatus" id="deviceSoRunStatus" lay-filter="deviceSoRunStatus"
+            <select name="deviceSoftwareStatus" id="deviceSoftwareStatus" lay-filter="deviceSoftwareStatus"
                     type="select">
                 <option value=""></option>
             </select>
@@ -99,13 +99,13 @@
 
     //获取软件类型的下拉值
     layui.admin.renderDictSelect({
-        elem: "#deviceSoType",
+        elem: "#deviceSoftwareType",
         dictTypeId: "DEVICE_SOFTWARE_TYPE",
     });
     form.render();
     //获取软件运行状态
     layui.admin.renderDictSelect({
-        elem: "#deviceSoRunStatus",
+        elem: "#deviceSoftwareStatus",
         dictTypeId: "DEVICE_SOFTWARE_STATUS",
     });
     form.render();
@@ -126,8 +126,8 @@
             equipmentId: formData.equipmentId,
             equipmentName: formData.equipmentName,
             deviceName : formData.deviceName,
-            deviceSoType: formData.deviceSoType,
-            deviceSoRunStatus: formData.deviceSoRunStatus
+            deviceSoftwareType: formData.deviceSoftwareType,
+            deviceSoftwareStatus: formData.deviceSoftwareStatus
         });
     }
 
@@ -136,8 +136,8 @@
             equipmentId: "",
             equipmentName: "",
             deviceName: "",
-            deviceSoType: "",
-            deviceSoRunStatus: ""
+            deviceSoftwareType: "",
+            deviceSoftwareStatus: ""
 
         }
         win.setFormData(formData);

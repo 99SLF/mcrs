@@ -114,6 +114,24 @@
     // 焦点名称
     var focusName = null;
 
+    //获取软件类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#deviceSoftwareType",
+        dictTypeId: "DEVICE_SOFTWARE_TYPE",
+    });
+    form.render();
+    //获取软件运行状态
+    layui.admin.renderDictSelect({
+        elem: "#deviceSoftwareStatus",
+        dictTypeId: "DEVICE_SOFTWARE_STATUS",
+    });
+    form.render();
+    //接入状态
+    layui.admin.renderDictSelect({
+        elem: "#accessStatus",
+        dictTypeId: "EQUIPMENT_ACCESS_STATUS",
+    });
+    form.render();
 
     // 监听搜索
     form.on("submit(LAY-app-device_status-search)", function (data) {
@@ -320,13 +338,14 @@
                 return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoftwareType);
             }
         }, {
-            field: "deviceSoRunStatus",
+            field: "deviceSoftwareStatus",
             title: "运行状态",
             align: "center",
-            hide: isHidden("deviceSoRunStatus"),
+            hide: isHidden("deviceSoftwareStatus"),
             minWidth: 80,
             templet: function (d) {
-                return layui.admin.getDictText("DEVICE_SOFTWARE_STATUS", d.deviceSoRunStatus);
+                debugger;
+                return layui.admin.getDictText("DEVICE_SOFTWARE_STATUS", d.deviceSoftwareStatus);
             }
         }, {
             field: "accessStatus",
@@ -338,10 +357,10 @@
                 return layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", d.accessStatus);
             }
         }, {
-            field: "deviceWarning",
+            field: "deviceWarningNum",
             title: "累计终端告警",
             align: "center",
-            hide: isHidden("deviceWarning"),
+            hide: isHidden("deviceWarningNum"),
             minWidth: 220
         }, {
             field: "cpuRate",
@@ -384,14 +403,26 @@
             submit.click();
         });
 
-
         //获取软件类型的下拉值
         layui.admin.renderDictSelect({
             elem: "#deviceSoftwareType",
             dictTypeId: "DEVICE_SOFTWARE_TYPE",
         });
         form.render();
+        //获取软件运行状态
+        layui.admin.renderDictSelect({
+            elem: "#deviceSoftwareStatus",
+            dictTypeId: "DEVICE_SOFTWARE_STATUS",
+        });
+        form.render();
+        //接入状态
+        layui.admin.renderDictSelect({
+            elem: "#accessStatus",
+            dictTypeId: "EQUIPMENT_ACCESS_STATUS",
+        });
+        form.render();
     }
+
 
     $(window).resize(function () {
         table.reload("LAY-app-device_status-list-reload", {

@@ -15,28 +15,32 @@ public class DeviceMonitorInfoVo {
     private int deviceId;
 
     /**
-     * 终端异常编号
+     * 终端状态表主键
      */
 
-    private int deviceAbnId;
-
-    /**
-     * 软件运行状态编号
-     */
-
-    private int softwareRunId;
-
-
-    /**
-     * 设备接入状态编号
-     */
-
-    private int equipmentStatusId;
+    private int deviceRealId;
 
     /**
      * 设备主键
      */
     private int equipmentInt;
+
+    /**
+     * 终端名称
+     */
+    private String deviceName;
+
+
+    /**
+     * 终端软件类型，字典
+     */
+    private String deviceSoftwareType;
+
+
+    /**
+     * APPId
+     */
+    private String APPId;
 
 
     /**
@@ -44,26 +48,12 @@ public class DeviceMonitorInfoVo {
      */
     private String equipmentId;
 
+
     /**
      * 设备名称
      */
 
     private String equipmentName;
-
-    /**
-     * 终端名称
-     */
-    private String deviceName;
-
-    /**
-     * 终端软件类型，字典
-     */
-    private String deviceSoftwareType;
-
-    /**
-     * 终端软件运行状态，字典
-     */
-    private String deviceSoRunStatus;
 
 
     /**
@@ -73,12 +63,23 @@ public class DeviceMonitorInfoVo {
 
 
     /**
-     * cup运行率
+     * 运行状态（软件）
+     */
+    private String deviceSoftwareStatus;
+
+
+    /**
+     * 终端预警条数,不对外提供
+     */
+    private int deviceWarningNum;
+
+    /**
+     * cup使用率
      */
     private String cpuRate;
 
     /**
-     * 内存使用量
+     * 内存使用率
      */
     private String storageRate;
 
@@ -89,15 +90,21 @@ public class DeviceMonitorInfoVo {
     private String errorRate;
 
 
-    /**
-     * APPId
-     */
-    private String APPId;
 
-    /**
-     * 终端预警条数（sql自定义）
-     */
-    private String deviceWarning;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

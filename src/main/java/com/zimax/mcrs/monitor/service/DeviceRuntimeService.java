@@ -28,7 +28,7 @@ public class DeviceRuntimeService {
     public List<DeviceMonitorInfoVo> queryDeviceRuntime( String page, String limit,
                                                          String equipmentId, String equipmentName,
                                                          String deviceName, String deviceSoftwareType,
-                                                         String deviceSoRunStatus, String accessStatus,
+                                                         String deviceSoftwareStatus, String accessStatus,
                                                          String cpuRate, String storageRate,
                                                          String errorRate,
                                                          String order, String field) {
@@ -36,7 +36,7 @@ public class DeviceRuntimeService {
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
             map.put("order", "asc");
-            map.put("field", "b.equipment_id");
+            map.put("field", "mdr.device_name");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));
@@ -49,7 +49,7 @@ public class DeviceRuntimeService {
         map.put("equipmentName", equipmentName);
         map.put("deviceName", deviceName);
         map.put("deviceSoftwareType", deviceSoftwareType);
-        map.put("deviceSoRunStatus", deviceSoRunStatus);
+        map.put("deviceSoftwareStatus", deviceSoftwareStatus);
         map.put("accessStatus", accessStatus);
         map.put("cpuRate", cpuRate);
         map.put("storageRate", storageRate);
@@ -61,10 +61,10 @@ public class DeviceRuntimeService {
 
     public int countDR(String equipmentId, String equipmentName,
                        String deviceName, String deviceSoftwareType,
-                       String deviceSoRunStatus, String accessStatus,
+                       String deviceSoftwareStatus, String accessStatus,
                        String cpuRate, String storageRate,
                        String errorRate) {
-        return deviceRuntimeMapper.countDR(equipmentId,  equipmentName, deviceName,  deviceSoftwareType, deviceSoRunStatus,  accessStatus, cpuRate,  storageRate, errorRate);
+        return deviceRuntimeMapper.countDR(equipmentId,  equipmentName, deviceName,  deviceSoftwareType, deviceSoftwareStatus,  accessStatus, cpuRate,  storageRate, errorRate);
     }
 
 }

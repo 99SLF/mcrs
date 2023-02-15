@@ -2,7 +2,6 @@ package com.zimax.mcrs.monitor.service;
 
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.monitor.mapper.EquipmentRuntimeMapper;
-import com.zimax.mcrs.monitor.pojo.EquipmentStatus;
 import com.zimax.mcrs.monitor.pojo.vo.EquipmentStatusVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,7 @@ private EquipmentRuntimeMapper equipmentRuntimeMapper;
 
         if (order == null) {
             map.put("order", "desc");
-            map.put("field", "a.equipment_id");
+            map.put("field", "equ.equipment_id");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));
@@ -68,7 +67,7 @@ private EquipmentRuntimeMapper equipmentRuntimeMapper;
 
         if (order == null) {
             map.put("order", "desc");
-            map.put("field", "a.equipment_id");
+            map.put("field", "equ.equipment_id");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));
