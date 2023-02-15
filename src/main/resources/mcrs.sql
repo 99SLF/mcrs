@@ -855,57 +855,48 @@ CREATE TABLE `upd_record` (
 
 
 -- ----------------------------
--- Table structure for mon_device_abn
+-- Table structure for mon_device_history
 -- ----------------------------
-DROP TABLE IF EXISTS `mon_device_abn`;
-CREATE TABLE `mon_device_abn` (
-      `device_abn_id` int(11) NOT NULL AUTO_INCREMENT,
-      `equipment_id` varchar(255) DEFAULT NULL,
-      `app_id` varchar(255) DEFAULT NULL,
-      `device_name` varchar(255) DEFAULT NULL,
-      `use_process` varchar(255) DEFAULT NULL,
-      `warning_title` varchar(255) DEFAULT NULL,
-      `warning_type` varchar(255) DEFAULT NULL,
-      `warning_level` varchar(255) DEFAULT NULL,
-      `warning_content` varchar(255) DEFAULT NULL,
-      `occur_time` datetime DEFAULT NULL,
-      `remarks` varchar(255) DEFAULT NULL,
-      `create_time` datetime DEFAULT NULL,
-      PRIMARY KEY (`device_abn_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `mon_device_history`;
+CREATE TABLE `mon_device_history` (
+      `device_history_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '终端历史状态记录主键',
+      `device_name` varchar(64) NOT NULL COMMENT '终端名称\n',
+      `access_type` varchar(20) NOT NULL COMMENT '接入类型(plc或rfid)',
+      `access_status` varchar(20) NOT NULL COMMENT '接入状态(正常异常)硬件',
+      `device_software_status` varchar(20) NOT NULL COMMENT ' 运行状态（软件）',
+      `antenna_status` varchar(20) DEFAULT NULL COMMENT ' 天线状态（plc可以可以为空，rfid必填）',
+      `warning_content` varchar(128) NOT NULL COMMENT '预警内容',
+      `cpu_rate` varchar(20) NOT NULL COMMENT 'cup使用率',
+      `storage_rate` varchar(20) NOT NULL COMMENT '内存使用率',
+      `error_rate` varchar(20) NOT NULL COMMENT '误读率',
+      `occurrence_time` datetime NOT NULL COMMENT '发生时间',
+      `remarks` varchar(128) DEFAULT NULL COMMENT '备注',
+      `create_time` datetime DEFAULT NULL COMMENT '创建时间（服务端时间）,不对外提供',
+      PRIMARY KEY (`device_history_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for mon_equipment_status
+-- Table structure for mon_device_real
 -- ----------------------------
-DROP TABLE IF EXISTS `mon_equipment_status`;
-CREATE TABLE `mon_equipment_status` (
-    `equipment_status_id` int(11) NOT NULL AUTO_INCREMENT,
-    `equipment_id` varchar(255) DEFAULT NULL,
-    `access_type` varchar(255) DEFAULT NULL,
-    `access_status` varchar(255) DEFAULT NULL,
-    `antenna_status` varchar(255) DEFAULT NULL,
-    `create_time` datetime DEFAULT NULL,
-    PRIMARY KEY (`equipment_status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for mon_soft_status
--- ----------------------------
-DROP TABLE IF EXISTS `mon_soft_status`;
-CREATE TABLE `mon_soft_status` (
-       `software_run_id` int(11) NOT NULL AUTO_INCREMENT,
-       `equipment_id` varchar(255) DEFAULT NULL,
-       `app_id` varchar(255) DEFAULT NULL,
-       `device_name` varchar(255) DEFAULT NULL,
-       `device_so_type` varchar(255) DEFAULT NULL,
-       `device_so_run_status` varchar(255) DEFAULT NULL,
-       `cpu_rate` varchar(255) DEFAULT NULL,
-       `storage_rate` varchar(255) DEFAULT NULL,
-       `error_rate` varchar(255) DEFAULT NULL,
-       `create_time` datetime DEFAULT NULL,
-       PRIMARY KEY (`software_run_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
+DROP TABLE IF EXISTS `mon_device_real`;
+CREATE TABLE `mon_device_real` (
+   `device_real_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '终端历史状态记录主键（不对外提供自增）',
+   `device_name` varchar(64) DEFAULT NULL COMMENT '终端名称',
+   `device_exists` int(11) DEFAULT NULL COMMENT '终端存在情况（0表示不存在，1表示存在）',
+   `access_type` varchar(20) DEFAULT NULL COMMENT '接入类型(plc或rfid)',
+   `access_status` varchar(20) DEFAULT NULL COMMENT '接入状态(正常异常)硬件',
+   `device_software_status` varchar(20) DEFAULT NULL COMMENT '运行状态（软件）',
+   `antenna_status` varchar(20) DEFAULT NULL COMMENT '天线状态（plc可以可以为空，rfid必填）',
+   `warning_content` varchar(20) DEFAULT NULL COMMENT '预警内容(字典)',
+   `cpu_rate` varchar(20) DEFAULT NULL COMMENT 'cup使用率',
+   `storage_rate` varchar(20) DEFAULT NULL COMMENT '内存使用率',
+   `error_rate` varchar(20) DEFAULT NULL COMMENT '误读率',
+   `occurrence_time` datetime DEFAULT NULL COMMENT '发生时间',
+   `remarks` varchar(128) DEFAULT NULL COMMENT ' 备注',
+   `create_time` datetime DEFAULT NULL COMMENT '终端创建时间（服务端时间）,不对外提供',
+   `device_warning_num` int(11) DEFAULT NULL COMMENT '终端预警条数,不对外提供',
+   PRIMARY KEY (`device_real_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for log_abn_log

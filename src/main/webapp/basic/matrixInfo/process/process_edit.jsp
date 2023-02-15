@@ -75,19 +75,14 @@
     var isExist = false;
     var submit = false;
 
-    // 判断字符
-    form.verify({
-        processRemarks: function (value, item) {
-            if (value.length > 225) {
-                return "工序描述输入不能超过255个字";
-            }
-        }
-    });
+
+
 
     var win = null;
     var key = "";
     var context = "";
     var detail = "";
+    var parentId = "";
 
     function SetData(dataJson) {
         //编辑页面取的是管理页面表格数据，做编辑操作，表格值必须都要有
@@ -95,6 +90,7 @@
         key = dataJson.key ? dataJson.key : "";
         context = dataJson.context ? dataJson.context : "";
         detail = dataJson.detail ? dataJson.detail : "";
+        parentId = dataJson.parentId ? dataJson.parentId : "";
 
         form.val("layuiadmin-app-form-list", {
             //要有主键
@@ -104,6 +100,60 @@
         });
     }
 
+    // 判断字符
+    form.verify({
+        processRemarks: function (value, item) {
+            if (value.length > 225) {
+                return "工序描述内容不能超过255个字";
+            }
+        },
+        processName: function (value,item){
+            var flag = "0";
+            var checkResult = "";
+            $.ajax({
+                url: "<%=request.getContextPath()%>/ProcessController/check/isExist?parentId=" + parentId + "&processName=" + value +"&flag=" + flag,
+                type: "GET",
+                async: false,
+                contentType: "text/json",
+                cache: false,
+                success: function (text) {
+                    debugger;
+                    if (text.code == "1") {
+                        checkResult = "工序名称已存在";
+                    }
+                },
+                error: function() {
+                }
+            });
+            return checkResult;
+        }
+    });
+
+
+    // 判断工序名称是否已存在
+    $("#processName").blur(function () {
+        var processName = $("#processName").val();
+        if (processName != null && processName != "") {
+            $.ajax({
+                url: "<%=request.getContextPath()%>/ProcessController/check/isExist?parentId=" + key + "&processName=" + processName,
+                type: "GET",
+                async: false,
+                contentType: "text/json",
+                cache: false,
+                success: function (text) {
+                    debugger;
+                    //通过接口返回，返回检测记录条数
+                    if (text.code == "1") {
+                        isExist = true;
+                    } else {
+                        isExist = false;
+                    }
+                }
+            });
+        } else {
+            return;
+        }
+    });
 
     //监听提交
     form.on("submit(layuiadmin-app-form-edit)", function (dataJson) {
@@ -128,6 +178,12 @@
                         });
                         win.rendTree();
                     }
+                });
+            } else if(isExist == true) {
+                submit = false;
+                layer.msg("工序已存在，请重新输入", {
+                    icon: 2,
+                    time: 2000
                 });
             }
         } else {

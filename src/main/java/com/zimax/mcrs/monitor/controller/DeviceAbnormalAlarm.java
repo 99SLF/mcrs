@@ -36,12 +36,12 @@ public class DeviceAbnormalAlarm {
      * @param equipmentId  设备资源号
      * @param equipmentName   设备名称
      * @param deviceName   终端名称
-     * @param useProcess   使用工序
-     * @param warningTitle  预警标题
-     * @param warningType  预警类型
-     * @param warningLevel 预警等级
-     * @param warningContent 预警内容
-     * @param occurTime    发生时间
+     * @param processName   使用工序
+     * @param alarmEventTitle  预警标题
+     * @param alarmType  预警类型
+     * @param alarmLevel 预警等级
+     * @param alarmEventContent 预警内容
+     * @param occurrenceTime    发生时间
      * @param order        排序方式
      * @param field        排序字段
      * @return 信息列表
@@ -52,11 +52,11 @@ public class DeviceAbnormalAlarm {
     @GetMapping("/query")
     public Result<?> queryDeviceAbnormalAlarm(String page, String limit,
                                               String equipmentId,  String equipmentName, String deviceName,
-                                              String useProcess, String warningTitle ,String warningType,
-                                              String warningLevel, String warningContent, String occurTime,
+                                              String processName, String alarmEventTitle ,String alarmType,
+                                              String alarmLevel, String alarmEventContent, String occurrenceTime,
                                               String order, String field) {
-        List DeviceAbnormalAlarms = deviceAbnormalAlarmService.queryDeviceAbnormalAlarm(page, limit, equipmentId, equipmentName,deviceName, useProcess,warningTitle, warningType, warningLevel, warningContent, occurTime, order, field);
-        return Result.success(DeviceAbnormalAlarms, deviceAbnormalAlarmService.countAA(equipmentId, equipmentName,deviceName, useProcess,warningTitle, warningType, warningLevel, warningContent, occurTime));
+        List DeviceAbnormalAlarms = deviceAbnormalAlarmService.queryDeviceAbnormalAlarm(page, limit, equipmentId, equipmentName,deviceName, processName,alarmEventTitle, alarmType, alarmLevel, alarmEventContent, occurrenceTime, order, field);
+        return Result.success(DeviceAbnormalAlarms, deviceAbnormalAlarmService.countAA(equipmentId, equipmentName,deviceName, processName,alarmEventTitle, alarmType, alarmLevel, alarmEventContent, occurrenceTime));
     }
 
 

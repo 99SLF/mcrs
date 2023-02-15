@@ -3,76 +3,76 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zimax.mcrs.monitor.mapper.DeviceRuntimeMapper">
 
-    <!--    查询终端运行状态记录数-->
-    <select id="countDR" resultType="int">
-        SELECT
-        COUNT(*)
-        FROM
-        (
-        SELECT
-        a.device_id,
-        b.equipment_int,
-        e.software_run_id,
-        d.equipment_status_id,
-        c.device_abn_id,
-        b.equipment_id,
-        b.equipment_name,
-        a.app_id,
-        a.device_name,
-        a.device_software_type,
-        e.device_so_run_status,
-        d.access_status,
-        e.cpu_rate,
-        e.storage_rate,
-        e.error_rate,
-        MAX(e.create_time) time,
-        (
-        SELECT
-        COUNT(*)
-        FROM
-        mon_device_abn f
-        WHERE
-        f.equipment_id = b.equipment_id
-        ) AS device_warning
-        FROM
-        eqi_device a
-        RIGHT JOIN eqi_equipment b ON a.equipment_int = b.equipment_int
-        LEFT JOIN mon_soft_status e ON e.equipment_id = b.equipment_id
-        LEFT JOIN mon_equipment_status d ON d.equipment_id = b.equipment_id
-        LEFT JOIN mon_device_abn c ON c.equipment_id = b.equipment_id
-        GROUP BY
-        b.equipment_id
-        ) total
-        <where>
-            <if test="equipmentId != null and equipmentId !=''">
-                and equipment_id like '%${equipmentId}%'
-            </if>
-            <if test="equipmentName != null and equipmentName !=''">
-                and equipment_name like '%${equipmentName}%'
-            </if>
-            <if test="deviceName != null and deviceName !=''">
-                and device_name like '%${deviceName}%'
-            </if>
-            <if test="deviceSoftwareType != null and deviceSoftwareType !=''">
-                and device_software_type like '%${deviceSoftwareType}%'
-            </if>
-            <if test="deviceSoRunStatus != null and deviceSoRunStatus !=''">
-                and device_so_run_status like '%${deviceSoRunStatus}%'
-            </if>
-            <if test="accessStatus != null and accessStatus !=''">
-                and access_status like '%${accessStatus}%'
-            </if>
-            <if test="cpuRate != null and cpuRate !=''">
-                and cpu_rate like '%${cpuRate}%'
-            </if>
-            <if test="storageRate != null and storageRate !=''">
-                and storage_rate like '%${storageRate}%'
-            </if>
-            <if test="errorRate != null and errorRate !=''">
-                and error_rate like '%${errorRate}%'
-            </if>
-        </where>
-    </select>
+    <!--    &lt;!&ndash;    查询终端运行状态记录数&ndash;&gt;-->
+    <!--    <select id="countDR" resultType="int">-->
+    <!--        SELECT-->
+    <!--        COUNT(*)-->
+    <!--        FROM-->
+    <!--        (-->
+    <!--        SELECT-->
+    <!--        a.device_id,-->
+    <!--        b.equipment_int,-->
+    <!--        e.software_run_id,-->
+    <!--        d.equipment_status_id,-->
+    <!--        c.device_abn_id,-->
+    <!--        b.equipment_id,-->
+    <!--        b.equipment_name,-->
+    <!--        a.app_id,-->
+    <!--        a.device_name,-->
+    <!--        a.device_software_type,-->
+    <!--        e.device_so_run_status,-->
+    <!--        d.access_status,-->
+    <!--        e.cpu_rate,-->
+    <!--        e.storage_rate,-->
+    <!--        e.error_rate,-->
+    <!--        MAX(e.create_time) time,-->
+    <!--        (-->
+    <!--        SELECT-->
+    <!--        COUNT(*)-->
+    <!--        FROM-->
+    <!--        mon_device_abn f-->
+    <!--        WHERE-->
+    <!--        f.equipment_id = b.equipment_id-->
+    <!--        ) AS device_warning-->
+    <!--        FROM-->
+    <!--        eqi_device a-->
+    <!--        RIGHT JOIN eqi_equipment b ON a.equipment_int = b.equipment_int-->
+    <!--        LEFT JOIN mon_soft_status e ON e.equipment_id = b.equipment_id-->
+    <!--        LEFT JOIN mon_equipment_status d ON d.equipment_id = b.equipment_id-->
+    <!--        LEFT JOIN mon_device_abn c ON c.equipment_id = b.equipment_id-->
+    <!--        GROUP BY-->
+    <!--        b.equipment_id-->
+    <!--        ) total-->
+    <!--        <where>-->
+    <!--            <if test="equipmentId != null and equipmentId !=''">-->
+    <!--                and equipment_id like '%${equipmentId}%'-->
+    <!--            </if>-->
+    <!--            <if test="equipmentName != null and equipmentName !=''">-->
+    <!--                and equipment_name like '%${equipmentName}%'-->
+    <!--            </if>-->
+    <!--            <if test="deviceName != null and deviceName !=''">-->
+    <!--                and device_name like '%${deviceName}%'-->
+    <!--            </if>-->
+    <!--            <if test="deviceSoftwareType != null and deviceSoftwareType !=''">-->
+    <!--                and device_software_type like '%${deviceSoftwareType}%'-->
+    <!--            </if>-->
+    <!--            <if test="deviceSoRunStatus != null and deviceSoRunStatus !=''">-->
+    <!--                and device_so_run_status like '%${deviceSoRunStatus}%'-->
+    <!--            </if>-->
+    <!--            <if test="accessStatus != null and accessStatus !=''">-->
+    <!--                and access_status like '%${accessStatus}%'-->
+    <!--            </if>-->
+    <!--            <if test="cpuRate != null and cpuRate !=''">-->
+    <!--                and cpu_rate like '%${cpuRate}%'-->
+    <!--            </if>-->
+    <!--            <if test="storageRate != null and storageRate !=''">-->
+    <!--                and storage_rate like '%${storageRate}%'-->
+    <!--            </if>-->
+    <!--            <if test="errorRate != null and errorRate !=''">-->
+    <!--                and error_rate like '%${errorRate}%'-->
+    <!--            </if>-->
+    <!--        </where>-->
+    <!--    </select>-->
     <!--    &lt;!&ndash;查询终端软件运行状态&ndash;&gt;-->
     <!--    <select id="queryDeviceRuntime" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.vo.DeviceMonitorInfoVo">-->
     <!--        SELECT * ,COUNT(*) AS device_warning-->
@@ -103,74 +103,165 @@
     <!--    </select>-->
 
     <!--查询终端软件运行状态-->
+    <!--    <select id="queryDeviceRuntime" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.vo.DeviceMonitorInfoVo">-->
+    <!--        SELECT-->
+    <!--        a.device_id,-->
+    <!--        b.equipment_int,-->
+    <!--        e.software_run_id,-->
+    <!--        d.equipment_status_id,-->
+    <!--        c.device_abn_id,-->
+    <!--        b.equipment_id,-->
+    <!--        b.equipment_name,-->
+    <!--        a.app_id,-->
+    <!--        a.device_name,-->
+    <!--        a.device_software_type,-->
+    <!--        e.device_so_run_status,-->
+    <!--        e.cpu_rate,-->
+    <!--        e.storage_rate,-->
+    <!--        e.error_rate,-->
+    <!--        d.access_status,-->
+    <!--        MAX(e.create_time) time,-->
+    <!--        (-->
+    <!--        SELECT-->
+    <!--        COUNT(*)-->
+    <!--        FROM-->
+    <!--        mon_device_abn f-->
+    <!--        WHERE-->
+    <!--        f.equipment_id = b.equipment_id-->
+    <!--        ) AS device_warning-->
+    <!--        FROM-->
+    <!--        eqi_device a-->
+    <!--        RIGHT JOIN eqi_equipment b ON a.equipment_int = b.equipment_int-->
+    <!--        LEFT JOIN mon_soft_status e ON e.equipment_id = b.equipment_id-->
+    <!--        LEFT JOIN mon_equipment_status d ON d.equipment_id = b.equipment_id-->
+    <!--        LEFT JOIN mon_device_abn c ON c.equipment_id = b.equipment_id-->
+    <!--        GROUP BY-->
+    <!--        b.equipment_id-->
+    <!--        <trim prefix="having" suffixOverrides="and">-->
+    <!--            <if test="equipmentId != null and equipmentId !=''">-->
+    <!--                b.equipment_id like '%${equipmentId}%' and-->
+    <!--            </if>-->
+    <!--            <if test="equipmentName != null and equipmentName !=''">-->
+    <!--                b.equipment_name like '%${equipmentName}%' and-->
+    <!--            </if>-->
+    <!--            <if test="deviceName != null and deviceName !=''">-->
+    <!--                a.device_name like '%${deviceName}%' and-->
+    <!--            </if>-->
+    <!--            <if test="deviceSoftwareType != null and deviceSoftwareType !=''">-->
+    <!--                a.device_software_type like '%${deviceSoftwareType}%' and-->
+    <!--            </if>-->
+    <!--            <if test="deviceSoRunStatus != null and deviceSoRunStatus !=''">-->
+    <!--                e.device_so_run_status like '%${deviceSoRunStatus}%' and-->
+    <!--            </if>-->
+    <!--            <if test="accessStatus != null and accessStatus !=''">-->
+    <!--                d.access_status like '%${accessStatus}%' and-->
+    <!--            </if>-->
+    <!--            <if test="cpuRate != null and cpuRate !=''">-->
+    <!--                e.cpu_rate like '%${cpuRate}%' and-->
+    <!--            </if>-->
+    <!--            <if test="storageRate != null and storageRate !=''">-->
+    <!--                e.storage_rate like '%${storageRate}%' and-->
+    <!--            </if>-->
+    <!--            <if test="errorRate != null and errorRate !=''">-->
+    <!--                e.error_rate like '%${errorRate}%' and-->
+    <!--            </if>-->
+    <!--        </trim>-->
+    <!--        <if test="order !=null and order !=''">-->
+    <!--            order by ${field} ${order}-->
+    <!--        </if>-->
+    <!--        <if test="limit !=null and limit !=''">-->
+    <!--            limit ${begin},${limit}-->
+    <!--        </if>-->
+    <!--    </select>-->
+
     <select id="queryDeviceRuntime" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.vo.DeviceMonitorInfoVo">
         SELECT
-        a.device_id,
-        b.equipment_int,
-        e.software_run_id,
-        d.equipment_status_id,
-        c.device_abn_id,
-        b.equipment_id,
-        b.equipment_name,
-        a.app_id,
-        a.device_name,
-        a.device_software_type,
-        e.device_so_run_status,
-        d.access_status,
-        e.cpu_rate,
-        e.storage_rate,
-        e.error_rate,
-        MAX(e.create_time) time,
-        (
-        SELECT
-        COUNT(*)
-        FROM
-        mon_device_abn f
-        WHERE
-        f.equipment_id = b.equipment_id
-        ) AS device_warning
-        FROM
-        eqi_device a
-        RIGHT JOIN eqi_equipment b ON a.equipment_int = b.equipment_int
-        LEFT JOIN mon_soft_status e ON e.equipment_id = b.equipment_id
-        LEFT JOIN mon_equipment_status d ON d.equipment_id = b.equipment_id
-        LEFT JOIN mon_device_abn c ON c.equipment_id = b.equipment_id
-        GROUP BY
-        b.equipment_id
-        <trim prefix="having" suffixOverrides="and">
-            <if test="equipmentId != null and equipmentId !=''">
-                b.equipment_id like '%${equipmentId}%' and
+        mdr.device_real_id,
+        dev.device_id,
+        equ.equipment_int,
+        mdr.device_name,
+        dev.device_software_type,
+        dev.app_id,
+        equ.equipment_id,
+        equ.equipment_name,
+        mdr.access_status,
+        mdr.device_software_status,
+        mdr.device_warning_num,
+        mdr.cpu_rate,
+        mdr.storage_rate,
+        mdr.error_rate
+        FROM mon_device_real AS mdr
+        LEFT JOIN eqi_device AS dev ON mdr.device_name = dev.device_name
+        LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
+        <where>
+            and mdr.device_exists = 0
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equ.equipment_id like '%${equipmentId}%'
             </if>
-            <if test="equipmentName != null and equipmentName !=''">
-                b.equipment_name like '%${equipmentName}%' and
+            <if test="equipmentName !=null and equipmentName !=''">
+                and equ.equipment_name like '%${equipmentName}%'
             </if>
-            <if test="deviceName != null and deviceName !=''">
-                a.device_name like '%${deviceName}%' and
+            <if test="deviceName !=null and deviceName !=''">
+                and mdr.device_name like '%${deviceName}%'
             </if>
-            <if test="deviceSoftwareType != null and deviceSoftwareType !=''">
-                a.device_software_type like '%${deviceSoftwareType}%' and
+            <if test="deviceSoftwareType !=null and deviceSoftwareType !=''">
+                and dev.device_software_type like '%${deviceSoftwareType}%'
             </if>
-            <if test="deviceSoRunStatus != null and deviceSoRunStatus !=''">
-                e.device_so_run_status like '%${deviceSoRunStatus}%' and
+            <if test="deviceSoftwareStatus !=null and deviceSoftwareStatus !=''">
+                and mdr.device_software_status like '%${deviceSoftwareStatus}%'
             </if>
-            <if test="accessStatus != null and accessStatus !=''">
-                d.access_status like '%${accessStatus}%' and
+            <if test="accessStatus !=null and accessStatus !=''">
+                and mdr.access_status like '%${accessStatus}%'
             </if>
-            <if test="cpuRate != null and cpuRate !=''">
-                e.cpu_rate like '%${cpuRate}%' and
+            <if test="cpuRate !=null and cpuRate !=''">
+                and mdr.cpu_rate like '%${cpuRate}%'
             </if>
-            <if test="storageRate != null and storageRate !=''">
-                e.storage_rate like '%${storageRate}%' and
+            <if test="storageRate !=null and storageRate !=''">
+                and mdr.storage_rate like '%${storageRate}%'
             </if>
-            <if test="errorRate != null and errorRate !=''">
-                e.error_rate like '%${errorRate}%' and
+            <if test="errorRate !=null and errorRate !=''">
+                and mdr.error_rate like '%${errorRate}%'
             </if>
-        </trim>
-        <if test="order !=null and order !=''">
-            order by ${field} ${order}
-        </if>
-        <if test="limit !=null and limit !=''">
-            limit ${begin},${limit}
-        </if>
+        </where>
     </select>
+
+
+        <!--    查询终端运行状态记录数-->
+        <select id="countDR" resultType="int">
+            SELECT
+            COUNT(*)
+            FROM mon_device_real AS mdr
+            LEFT JOIN eqi_device AS dev ON mdr.device_name = dev.device_name
+            LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
+            <where>
+                and mdr.device_exists = 0
+                <if test="equipmentId !=null and equipmentId !=''">
+                    and equ.equipment_id like '%${equipmentId}%'
+                </if>
+                <if test="equipmentName !=null and equipmentName !=''">
+                    and equ.equipment_name like '%${equipmentName}%'
+                </if>
+                <if test="deviceName !=null and deviceName !=''">
+                    and mdr.device_name like '%${deviceName}%'
+                </if>
+                <if test="deviceSoftwareType !=null and deviceSoftwareType !=''">
+                    and dev.device_software_type like '%${deviceSoftwareType}%'
+                </if>
+                <if test="deviceSoftwareStatus !=null and deviceSoftwareStatus !=''">
+                    and mdr.device_software_status like '%${deviceSoftwareStatus}%'
+                </if>
+                <if test="accessStatus !=null and accessStatus !=''">
+                    and mdr.access_status like '%${accessStatus}%'
+                </if>
+                <if test="cpuRate !=null and cpuRate !=''">
+                    and mdr.cpu_rate like '%${cpuRate}%'
+                </if>
+                <if test="storageRate !=null and storageRate !=''">
+                    and mdr.storage_rate like '%${storageRate}%'
+                </if>
+                <if test="errorRate !=null and errorRate !=''">
+                    and mdr.error_rate like '%${errorRate}%'
+                </if>
+            </where>
+        </select>
 </mapper>

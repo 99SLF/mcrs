@@ -9,6 +9,7 @@ import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.Matrix;
 import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.MatrixVo;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.config.Result;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -191,4 +192,29 @@ public class FactoryController {
         return Result.success(factoryInfo);
     }
 
+    /**
+     * （基础数据目录树）
+     * 检测相同父节点下的工厂名称是否存在
+     *
+     * @param parentId 上级节点的id
+     */
+    @GetMapping("/check/isExist")
+    public Result<?> checkFactoryName(@RequestParam("parentId") String parentId,@RequestParam("factoryName") String factoryName,@RequestParam("flag") String flag)  {
+        if(flag.equals("1")){
+            //添加
+            if (factoryService.checkFactoryNameAdd(parentId,factoryName) > 0) {
+                return Result.error("1", "节点下该工厂已存在");
+            } else {
+                return Result.success();
+            }
+        }else {
+            //编辑
+            if (factoryService.checkFactoryNameEdit(parentId,factoryName) > 0) {
+                return Result.error("1", "节点下该工厂已存在");
+            } else {
+                return Result.success();
+            }
+        }
+
+    }
 }

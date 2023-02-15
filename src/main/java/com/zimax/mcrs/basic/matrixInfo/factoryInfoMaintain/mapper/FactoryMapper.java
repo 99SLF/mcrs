@@ -96,4 +96,20 @@ public interface FactoryMapper {
      * @return
      */
     List<FactoryInfo> queryFactoryNode(int nodeId);
+
+    /**
+     * （基础数据目录树，添加）
+     * 检测相同父节点下的工厂名称是否存在
+     *
+     * @param parentId 上级节点的id
+     */
+    int checkFactoryNameAdd(@Param("parentId") String parentId,@Param("factoryName") String factoryName);
+
+    /**
+     * （基础数据目录树，编辑）
+     * 检测相同父节点下的工厂名称是否存在
+     *
+     * @param parentId 上级节点的id
+     */
+    int checkFactoryNameEdit(@Param("parentId") String parentId,@Param("factoryName") String factoryName);
 }

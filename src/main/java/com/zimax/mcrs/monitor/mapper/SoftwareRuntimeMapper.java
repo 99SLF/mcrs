@@ -1,6 +1,5 @@
 package com.zimax.mcrs.monitor.mapper;
 
-import com.zimax.mcrs.monitor.pojo.SoftwareRunStatus;
 import com.zimax.mcrs.monitor.pojo.vo.SoftwareRunStatusVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -29,7 +28,7 @@ public interface SoftwareRuntimeMapper {
      * @return
      */
     int countSO(@Param("equipmentId") String equipmentId,@Param("equipmentName") String equipmentName, @Param("deviceName") String deviceName,
-                @Param("deviceSoType") String deviceSoType, @Param("deviceSoRunStatus") String deviceSoRunStatus
+                @Param("deviceSoftwareType") String deviceSoftwareType, @Param("deviceSoftwareStatus") String deviceSoftwareStatus
     );
 
 }

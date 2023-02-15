@@ -41,7 +41,6 @@
     </select>
 
 
-
     <!--新增接入点信息显示选择基地代码-->
     <select id="selectList" parameterType="map" resultType="com.zimax.mcrs.basic.matrixInfo.matrix.pojo.Matrix">
         SELECT *
@@ -104,5 +103,19 @@
                 and matrix_id = #{nodeId}
             </if>
         </where>
+    </select>
+
+    <select id="checkMatrixNameAdd" resultType="int">
+        select count(*)
+        from base_matrix_info
+        where matrix_name = #{matrixName}
+          and parent_id = #{parentId}
+    </select>
+
+    <select id="checkMatrixNameEdit" resultType="int">
+        select count(*)
+        from base_matrix_info
+        where matrix_name = #{matrixName}
+          and matrix_id != #{parentId}
     </select>
 </mapper>

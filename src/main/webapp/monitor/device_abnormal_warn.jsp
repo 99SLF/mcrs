@@ -71,7 +71,7 @@
                     <label class="layui-form-label">使用工序：</label>
                     <div class="layui-input-inline">
                         <div class="layui-input-inline">
-                            <input type="text" class="layui-input" name="useProcess" autocomplete="off">
+                            <input type="text" class="layui-input" name="processName" autocomplete="off">
                         </div>
                     </div>
                 </div>
@@ -122,7 +122,7 @@
         var formData = {
             equipmentId: field.equipmentId,
             deviceName: field.deviceName,
-            useProcess: field.useProcess
+            processName: field.processName
         };
         form.val("layuiadmin-device_abnormal-form", formData);
         advancedFormData = $.extend(advancedFormData, formData);
@@ -146,7 +146,7 @@
         form.val("layuiadmin-device_abnormal-form", {
             equipmentId: data.equipmentId,
             deviceName: data.deviceName,
-            useProcess: data.useProcess
+            processName: data.processName
         });
     }
 
@@ -311,52 +311,56 @@
             minWidth: 150
         }, {
             //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
-            field: "useProcess",
+            field: "processName",
             title: "使用工序",
             align: "center",
-            hide: isHidden("useProcess"),
+            hide: isHidden("processName"),
             minWidth: 80
         }, {
             //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
-            field: "warningTitle",
+            field: "alarmEventTitle",
             title: "预警标题",
             align: "center",
             minWidth: 150,
-            hide: isHidden("warningTitle")
+            hide: isHidden("alarmEventTitle")
 
         }, {
-            field: "warningType",
+            field: "alarmType",
             title: "预警类型",
             align: "center",
-            hide: isHidden("warningType"),
+            hide: isHidden("alarmType"),
             minWidth: 150,
             templet: function (d) {
-                return layui.admin.getDictText("WRANING_TYPE", d.warningType);
+                return layui.admin.getDictText("WRANING_TYPE", d.alarmType);
             }
         }, {
-            field: "warningLevel",
+            field: "alarmLevel",
             title: "预警等级",
             align: "center",
-            hide: isHidden("warningLevel"),
+            hide: isHidden("alarmLevel"),
             minWidth: 150,
             templet: function (d) {
 
-                return layui.admin.getDictText("WARNING_LEVEL", d.warningLevel);
+                return layui.admin.getDictText("WARNING_LEVEL", d.alarmLevel);
             }
         }, {
-            field: "warningContent",
+            field: "alarmEventContent",
             title: "预警内容",
             align: "center",
-            hide: isHidden("warningContent"),
-            minWidth: 150
+            hide: isHidden("alarmEventContent"),
+            minWidth: 150,
+            templet: function (d) {
+
+                return layui.admin.getDictText("WARNING_CONTENT", d.alarmEventContent);
+            }
         }, {
-            field: "occurTime",
+            field: "occurrenceTime",
             title: "发生时间",
             align: "center",
-            hide: isHidden("occurTime"),
+            hide: isHidden("occurrenceTime"),
             minWidth: 200,
             templet: function (d) {
-                return util.toDateString(d.occurTime, 'yyyy-MM-dd HH:mm:ss');
+                return util.toDateString(d.occurrenceTime, 'yyyy-MM-dd HH:mm:ss');
             }
         }, {
             field: "remarks",

@@ -198,4 +198,24 @@ public class FactoryService {
         return factoryMapper.queryFactoryNode(nodeId);
 
     }
+
+    /**
+     * （基础数据目录树,添加）
+     * 检测相同父节点下的工厂名称是否存在
+     *
+     * @param parentId 上级节点的id
+     */
+    public int  checkFactoryNameAdd(String parentId,String factoryName) {
+        return factoryMapper.checkFactoryNameAdd(parentId,factoryName) ;
+    }
+
+    /**
+     * （基础数据目录树，编辑）
+     * 检测相同父节点下的工厂名称是否存在
+     *
+     * @param parentId 上级节点的id
+     */
+    public int  checkFactoryNameEdit(String parentId,String factoryName) {
+        return factoryMapper.checkFactoryNameEdit(parentId,factoryName) ;
+    }
 }

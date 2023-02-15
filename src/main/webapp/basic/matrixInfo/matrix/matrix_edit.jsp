@@ -91,6 +91,7 @@
     var key = "";
     var context = "";
     var detail = "";
+    var parentId = "";
 
     function SetData(dataJson) {
         //编辑页面取的是管理页面表格数据，做编辑操作，表格值必须都要有
@@ -98,6 +99,7 @@
         key = dataJson.key ? dataJson.key : "";
         context = dataJson.context ? dataJson.context : "";
         detail = dataJson.detail ? dataJson.detail : "";
+        parentId = dataJson.parentId ? dataJson.parentId : "";
 
         form.val("layuiadmin-app-form-list", {
             //要有主键
@@ -109,6 +111,61 @@
 
 
     }
+    // 判断字符
+    form.verify({
+        matrixAddress: function (value, item) {
+            debugger;
+            if (value.length > 225) {
+                return "基地地址内容不能超过255个字";
+            }
+        },
+        matrixName: function (value,item){
+            debugger;
+            var flag = "0";
+            var checkResult = "";
+            $.ajax({
+                url: "<%=request.getContextPath()%>/FactoryController/check/isExist?parentId=" + parentId + "&factoryName=" + value +"&flag=" + flag,
+                type: "GET",
+                async: false,
+                contentType: "text/json",
+                cache: false,
+                success: function (text) {
+                    debugger;
+                    if (text.code == "1") {
+                        checkResult = "基地名称已存在";
+                    }
+                },
+                error: function() {
+                }
+            });
+            return checkResult;
+        }
+    });
+    // 判断基地名称是否已存在
+    $("#matrixName").blur(function () {
+        debugger;
+        var matrixName = $("#matrixName").val();
+        if (matrixName != null && matrixName != "") {
+            $.ajax({
+                url: "<%=request.getContextPath()%>/MatrixController/check/isExist?parentId=" + key + "&matrixName=" + matrixName,
+                type: "GET",
+                async: false,
+                contentType: "text/json",
+                cache: false,
+                success: function (text) {
+                    debugger;
+                    //通过接口返回，返回检测记录条数
+                    if (text.code == "1") {
+                        isExist = true;
+                    } else {
+                        isExist = false;
+                    }
+                }
+            });
+        } else {
+            return;
+        }
+    });
 
     //监听提交
     form.on("submit(layuiadmin-app-form-edit)", function (dataJson) {
@@ -134,6 +191,12 @@
                         });
                         win.rendTree();
                     }
+                });
+            } else if(isExist == true) {
+                submit = false;
+                layer.msg("基地已存在，请重新输入", {
+                    icon: 2,
+                    time: 2000
                 });
             }
         } else {

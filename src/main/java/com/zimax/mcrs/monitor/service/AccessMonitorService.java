@@ -1,11 +1,8 @@
 package com.zimax.mcrs.monitor.service;
 
-import com.sun.corba.se.impl.oa.toa.TOA;
-import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.monitor.mapper.AccessMonitorMapper;
-import com.zimax.mcrs.monitor.pojo.DeviceAbn;
-import com.zimax.mcrs.monitor.pojo.EquipmentStatus;
-import com.zimax.mcrs.monitor.pojo.SoftwareRunStatus;
+import com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceHistory;
+import com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus;
 import com.zimax.mcrs.monitor.pojo.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,33 +18,74 @@ public class AccessMonitorService {
     @Autowired
     private AccessMonitorMapper accessMonitorMapper;
 
-    /**
-     * 新增软件运行状态信息
-     */
-    public void addSoftwareRunStatus(SoftwareRunStatus softwareRunStatus){
+//    /**
+//     * 新增软件运行状态信息
+//     */
+//    public void addSoftwareRunStatus(SoftwareRunStatus softwareRunStatus){
+//
+//        softwareRunStatus.setCreateTime(new Date());
+//        accessMonitorMapper.addSoftwareRunStatus(softwareRunStatus);
+//    }
+//
+//    /**
+//     * 新增设备接入状态信息
+//     */
+//    public void addEquipmentStatus( EquipmentStatus equipmentStatus){
+//
+//        equipmentStatus.setCreateTime(new Date());
+//        accessMonitorMapper.addEquipmentStatus(equipmentStatus);
+//    }
+//
+//    /**
+//     * 新增终端异常预警信息
+//     */
+//    public void addDeviceAbn(DeviceAbn deviceAbn){
+//
+//        deviceAbn.setCreateTime(new Date());
+//        accessMonitorMapper.addDeviceAbn(deviceAbn);
+//    }
 
-        softwareRunStatus.setCreateTime(new Date());
-        accessMonitorMapper.addSoftwareRunStatus(softwareRunStatus);
+
+    /**
+     * 对外获取终端设备，硬件软件的运行状态（表+++mon_device_history）
+     */
+    public void addMonitorDeviceStatus(MonitorDeviceHistory monitorDeviceHistory){
+        monitorDeviceHistory.setCreateTime(new Date());
+        accessMonitorMapper.addMonitorDeviceStatus(monitorDeviceHistory);
     }
 
     /**
-     * 新增设备接入状态信息
+     * 对内每次被调用新增接口存终端状态信息时，就往终端状态表里修改一条终端名为，存在的当前终端名称为接口添加名称的监控信息（表+++mon_device_real）
      */
-    public void addEquipmentStatus( EquipmentStatus equipmentStatus){
+    public void updateMonitorDeviceStatus(MonitorDeviceStatus monitorDeviceStatus){
+        accessMonitorMapper.updateMonitorDeviceStatus(monitorDeviceStatus);
+    }
 
-        equipmentStatus.setCreateTime(new Date());
-        accessMonitorMapper.addEquipmentStatus(equipmentStatus);
+
+    /**
+     * 对内每次注册一个终端信息的话，就往表里新增一条终端名为注册名的监控信息（表+++mon_device_real）
+     */
+    public void addMonitorDeviceReal(MonitorDeviceStatus monitorDeviceStatus){
+        monitorDeviceStatus.setCreateTime(new Date());
+        accessMonitorMapper.addMonitorDeviceReal(monitorDeviceStatus);
     }
 
     /**
-     * 新增终端异常预警信息
+     * 对内每次注销一个终端信息的话，就修改表里一条终端名为注册名的监控信息（表+++mon_device_real）
      */
-    public void addDeviceAbn(DeviceAbn deviceAbn){
-
-        deviceAbn.setCreateTime(new Date());
-        accessMonitorMapper.addDeviceAbn(deviceAbn);
+    public void updateMonitorDeviceRealExist(MonitorDeviceStatus monitorDeviceStatus){
+        accessMonitorMapper.updateMonitorDeviceRealExist(monitorDeviceStatus);
     }
 
+
+    /**
+     * 通过终端名称查询是否存在该终端数据
+     */
+    public List<MonitorDeviceStatus> checkDevice(String deviceName) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("deviceName", deviceName);
+        return accessMonitorMapper.checkDevice(map);
+    }
 
     public GroupByProduction[] getWarnByproduction() {
         return accessMonitorMapper.getWarnByproduction();

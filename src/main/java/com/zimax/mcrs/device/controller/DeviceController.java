@@ -5,10 +5,10 @@ import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.device.pojo.Device;
-import com.zimax.mcrs.device.pojo.DeviceVo;
 import com.zimax.mcrs.device.service.DeviceService;
-import com.zimax.mcrs.log.pojo.OperationLog;
 import com.zimax.mcrs.log.service.OperationLogService;
+import com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus;
+import com.zimax.mcrs.monitor.service.AccessMonitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * 终端管理
  *
- * @author 林俊杰
+ * @author 林俊杰,李伟杰
  * @date 2022/11/30
  */
 @RestController
@@ -33,6 +33,10 @@ public class DeviceController {
     @Autowired
     private OperationLogService operationLogService;
 
+    //监控
+    @Autowired
+    private AccessMonitorService accessMonitorService;
+
     /**
      * 注册终端
      *
@@ -45,8 +49,14 @@ public class DeviceController {
         device.setVersion("1.0");
         device.setCreator(usetObject.getUserId());
         device.setCreateTime(new Date());
-        deviceService.registrationDevice(device);
 
+        //当终端注册的时候，在终端状态表中生成一条该终端名称的终端状态初始化信息(监控信息)
+        String deviceName = device.getDeviceName();
+        MonitorDeviceStatus monitorDeviceStatus = new MonitorDeviceStatus();
+        monitorDeviceStatus.setDeviceName(deviceName);
+        accessMonitorService.addMonitorDeviceReal(monitorDeviceStatus);
+
+        deviceService.registrationDevice(device);
         return Result.success();
     }
 
@@ -57,6 +67,14 @@ public class DeviceController {
      */
     @DeleteMapping("/device/logoutDevice/{deviceId}")
     public Result<?> logoutTerminal(@PathVariable("deviceId") int deviceId) {
+
+        //根据终端主键获取终端信息（名称）
+        String deviceName= deviceService.getDeviceName(deviceId).getDeviceName();
+        //通过终端名称修改实时终端监控表
+        MonitorDeviceStatus monitorDeviceStatus = new MonitorDeviceStatus();
+        monitorDeviceStatus.setDeviceName(deviceName);
+        monitorDeviceStatus.setDeviceExists(1);
+        accessMonitorService.updateMonitorDeviceRealExist(monitorDeviceStatus);
         deviceService.logoutDevice(deviceId);
         return Result.success();
     }

@@ -20,7 +20,7 @@ import java.util.Map;
 
 /**
  * 设备终端服务
- * @author 林俊杰
+ * @author 林俊杰,李伟杰
  * @date 2022/11/30
  */
 @Service
@@ -266,5 +266,12 @@ public class DeviceService {
         operationLog.setUser(userObject.getUserId());
         operationLog.setOperationTime(new Date());
         operationLogService.addOperationLog(operationLog);
+    }
+
+    /**
+     * 通过终端主键获取终端名称
+     */
+    public Device getDeviceName(int deviceId){
+        return deviceMapper.getDeviceName(deviceId);
     }
 }

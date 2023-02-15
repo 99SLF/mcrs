@@ -12,11 +12,22 @@ import java.util.Date;
  */
 @Data
 public class EquipmentStatusVo {
+
     /**
-     * 设备接入状态编号
+     * 终端主键
      */
-    @TableId(type = IdType.AUTO)
-    private int equipmentStatusId;
+    private int deviceId;
+
+    /**
+     * 终端状态表主键
+     */
+
+    private int deviceRealId;
+
+    /**
+     * 设备主键
+     */
+    private int equipmentInt;
 
     /**
      * 设备资源号
@@ -35,10 +46,6 @@ public class EquipmentStatusVo {
     private String accessType;
 
 
-    /**
-     * 终端名称
-     */
-    private String deviceName;
 
     /**
      * 设备名称
@@ -70,10 +77,5 @@ public class EquipmentStatusVo {
      */
     private String antennaStatus;
 
-    /**
-     * 创建时间
-     *
-     */
-    private Date createTime;
 
 }

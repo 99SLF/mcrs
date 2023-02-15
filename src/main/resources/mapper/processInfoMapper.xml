@@ -155,4 +155,18 @@
             </if>
         </where>
     </select>
+
+    <select id="checkProcessNameAdd" resultType="int">
+        select count(*)
+        from base_process_info
+        where process_name = #{processName} and
+            factory_id = #{parentId}
+    </select>
+
+    <select id="checkProcessNameEdit" resultType="int">
+        select count(*)
+        from base_process_info
+        where process_name = #{processName} and
+            process_id != #{parentId}
+    </select>
 </mapper>

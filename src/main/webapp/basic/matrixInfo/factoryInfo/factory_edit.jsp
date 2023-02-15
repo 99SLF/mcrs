@@ -81,6 +81,7 @@
     var key = "";
     var context = "";
     var detail = "";
+    var parentId = "";
 
     function SetData(dataJson) {
         //编辑页面取的是管理页面表格数据，做编辑操作，表格值必须都要有
@@ -88,6 +89,7 @@
         key = dataJson.key ? dataJson.key : "";
         context = dataJson.context ? dataJson.context : "";
         detail = dataJson.detail ? dataJson.detail : "";
+        parentId = dataJson.parentId ? dataJson.parentId : "";
         form.val("layuiadmin-app-form-list", {
             //要有主键
             "factoryId": dataJson.key,
@@ -96,6 +98,60 @@
         });
     }
 
+    // 判断字符
+    form.verify({
+        factoryAddress: function (value, item) {
+            if (value.length > 225) {
+                return "工厂地址输入不能超过255个字";
+            }
+        },
+        factoryName: function (value,item){
+            var flag = "0";
+            var checkResult = "";
+            $.ajax({
+                url: "<%=request.getContextPath()%>/FactoryController/check/isExist?parentId=" + parentId + "&factoryName=" + value +"&flag=" + flag,
+                type: "GET",
+                async: false,
+                contentType: "text/json",
+                cache: false,
+                success: function (text) {
+                    debugger;
+                    if (text.code == "1") {
+                        checkResult = "工厂名称已存在";
+                    }
+                },
+                error: function() {
+                }
+            });
+            return checkResult;
+        }
+    });
+
+    // 判断工厂名称是否已存在
+    $("#factoryName").blur(function () {
+        var factoryName = $("#factoryName").val();
+        if (factoryName != null && factoryName != "") {
+            $.ajax({
+                url: "<%=request.getContextPath()%>/FactoryController/check/isExist?parentId=" + key + "&factoryName=" + factoryName,
+                type: "GET",
+                // data: json,
+                // data: userId,
+                async: false,
+                contentType: "text/json",
+                cache: false,
+                success: function (text) {
+                    //通过接口返回，返回检测记录条数
+                    if (text.code == "1") {
+                        isExist = true;
+                    } else {
+                        isExist = false;
+                    }
+                }
+            });
+        } else {
+            return;
+        }
+    });
 
 
     //监听提交
@@ -121,6 +177,12 @@
                         });
                         win.rendTree();
                     }
+                });
+            } else if(isExist == true) {
+                submit = false;
+                layer.msg("工厂已存在，请重新输入", {
+                    icon: 2,
+                    time: 2000
                 });
             }
         } else {

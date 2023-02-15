@@ -2,30 +2,70 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zimax.mcrs.monitor.mapper.AccessMonitorMapper">
+
+    <!--    <insert id="addSoftwareRunStatus" parameterType="com.zimax.mcrs.monitor.pojo.SoftwareRunStatus">-->
+    <!--        insert into mon_soft_status-->
+    <!--        values (#{softwareRunId}, #{equipmentId}, #{APPId}, #{deviceName}, #{deviceSoType},-->
+    <!--                #{deviceSoRunStatus}, #{cpuRate}, #{storageRate}, #{errorRate}, #{createTime})-->
+    <!--    </insert>-->
+
+    <!--    <insert id="addEquipmentStatus" parameterType="com.zimax.mcrs.monitor.pojo.EquipmentStatus">-->
+    <!--        insert into mon_equipment_status-->
+    <!--        values (#{equipmentStatusId}, #{equipmentId}, #{accessType}, #{accessStatus}, #{antennaStatus}, #{createTime})-->
+    <!--    </insert>-->
+
+    <!--    <insert id="addDeviceAbn" parameterType="com.zimax.mcrs.monitor.pojo.DeviceAbn">-->
+    <!--        insert into mon_device_abn-->
+    <!--        values (#{deviceAbnId}, #{equipmentId}, #{APPId}, #{deviceName}, #{useProcess}, #{warningTitle},#{warningType}, #{warningLevel}, #{warningContent}, #{occurTime}, #{remarks}, #{createTime})-->
+    <!--    </insert>-->
+
     <!--添加监控信息-->
-    <insert id="addSoftwareRunStatus" parameterType="com.zimax.mcrs.monitor.pojo.SoftwareRunStatus">
-        insert into mon_soft_status
-        values (#{softwareRunId}, #{equipmentId}, #{APPId}, #{deviceName}, #{deviceSoType},
-                #{deviceSoRunStatus}, #{cpuRate}, #{storageRate}, #{errorRate}, #{createTime})
+    <insert id="addMonitorDeviceStatus"
+            parameterType="com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceHistory">
+        insert into mon_device_history
+        values (#{deviceHistoryId}, #{deviceName}, #{accessType}, #{accessStatus}, #{deviceSoftwareStatus},
+                #{antennaStatus}, #{warningContent},
+                #{cpuRate}, #{storageRate}, #{errorRate}, #{occurrenceTime}, #{remarks}, #{createTime})
     </insert>
-
-    <insert id="addEquipmentStatus" parameterType="com.zimax.mcrs.monitor.pojo.EquipmentStatus">
-        insert into mon_equipment_status
-        values (#{equipmentStatusId}, #{equipmentId}, #{accessType}, #{accessStatus}, #{antennaStatus}, #{createTime})
+    <!--添加监控实时信息-->
+    <insert id="addMonitorDeviceReal" parameterType="com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus">
+        insert into mon_device_real
+        values (#{deviceRealId}, #{deviceName}, #{deviceExists}, #{accessType}, #{accessStatus},
+                #{deviceSoftwareStatus}, #{antennaStatus},
+                #{warningContent}, #{cpuRate}, #{storageRate}, #{errorRate}, #{occurrenceTime}, #{remarks},
+                #{createTime}, #{deviceWarningNum})
     </insert>
+    <update id="updateMonitorDeviceRealExist"
+            parameterType="com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus">
+        UPDATE mon_device_real
+        SET device_exists = #{deviceExists}
+        WHERE device_name = #{deviceName}
+    </update>
 
-    <insert id="addDeviceAbn" parameterType="com.zimax.mcrs.monitor.pojo.DeviceAbn">
-        insert into mon_device_abn
-        values (#{deviceAbnId}, #{equipmentId}, #{APPId}, #{deviceName}, #{useProcess}, #{warningTitle},#{warningType}, #{warningLevel}, #{warningContent}, #{occurTime}, #{remarks}, #{createTime})
-    </insert>
-
+    <update id="updateMonitorDeviceStatus"
+            parameterType="com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus">
+        UPDATE mon_device_real
+        SET access_type            = #{accessType},
+            access_status          = #{accessStatus},
+            device_software_status = #{deviceSoftwareStatus},
+            antenna_status         = #{antennaStatus},
+            warning_content        = #{warningContent},
+            cpu_rate               = #{cpuRate},
+            storage_rate           = #{storageRate},
+            error_rate             = #{errorRate},
+            occurrence_time        = #{occurrenceTime},
+            remarks                = #{remarks},
+            device_warning_num     = #{deviceWarningNum}
+        WHERE device_exists = 0
+          and device_name = #{deviceName}
+    </update>
 
     <select id="groupQueryBydate" resultType="com.zimax.mcrs.monitor.pojo.vo.GroupByDate">
-        select date_format(t1.equipment_exchange_time,'%Y-%m-%d') as recordDate,
-               sum(CASE abn_type WHEN "101" THEN 1 ELSE 0 END) AS "activeWarn",
-               sum(CASE abn_type WHEN "100" THEN 1 ELSE 0 END) AS "hardWarn"
+        select date_format(t1.equipment_exchange_time, '%Y-%m-%d') as recordDate,
+               sum(CASE abn_type WHEN "101" THEN 1 ELSE 0 END)     AS "activeWarn",
+               sum(CASE abn_type WHEN "100" THEN 1 ELSE 0 END)     AS "hardWarn"
         from log_log t1
-        where t1.log_type=108
+        where t1.log_type = 108
         group by date_format(t1.equipment_exchange_time, '%Y-%m-%d')
         ORDER BY t1.equipment_exchange_time desc limit 0,7
     </select>
@@ -38,9 +78,10 @@
     </select>
 
     <select id="getWarnByproduction" resultType="com.zimax.mcrs.monitor.pojo.vo.GroupByProduction">
-        select b.process_name name ,count(b.process_name) value
+        select b.process_name name, count(b.process_name) value
         from mon_device_abn a
-                 left JOIN base_process_info b on a.use_process=b.process_id
+            left JOIN base_process_info b
+        on a.use_process=b.process_id
         group by b.process_name
     </select>
 
@@ -57,15 +98,16 @@
     </select>
 
     <select id="queryProcessAndeqi" resultType="com.zimax.mcrs.monitor.pojo.vo.GroupByProduction">
-        SELECT bpi.process_name name,count(bpi.process_name) value
+        SELECT bpi.process_name name, count(bpi.process_name) value
         FROM eqi_equipment AS eqi
-                 LEFT JOIN base_access_info AS bai ON eqi.acc_point_res_id = bai.acc_point_res_id
-                 LEFT JOIN base_process_info AS bpi
-                           ON bai.process_id = bpi.process_id
+            LEFT JOIN base_access_info AS bai
+        ON eqi.acc_point_res_id = bai.acc_point_res_id
+            LEFT JOIN base_process_info AS bpi
+            ON bai.process_id = bpi.process_id
         group by bpi.process_name
 
     </select>
-<!--工厂对应工序的设备数量-->
+    <!--工厂对应工序的设备数量-->
     <select id="queryFactoryId" resultType="int">
         SELECT bfi.factory_id
         FROM eqi_equipment AS eqi
@@ -86,7 +128,11 @@
         group by bpi.process_name
     </select>
     <select id="queryFactoryAndProcess" resultType="com.zimax.mcrs.monitor.pojo.vo.ProcessOnfactory">
-        SELECT bfi.factory_id,bfi.factory_name,bpi.process_name processName,count(bpi.process_id) as total,bpi.process_id
+        SELECT bfi.factory_id,
+               bfi.factory_name,
+               bpi.process_name         processName,
+               count(bpi.process_id) as total,
+               bpi.process_id
         FROM eqi_equipment AS eqi
                  LEFT JOIN base_access_info AS bai ON eqi.acc_point_res_id = bai.acc_point_res_id
                  LEFT JOIN base_process_info AS bpi
@@ -96,6 +142,12 @@
         group by bpi.process_id
     </select>
 
+    <select id="checkDevice" parameterType="map"
+            resultType="com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus">
+        SELECT *
+        FROM mon_device_real
+        WHERE device_exists != 1 AND device_name =#{deviceName}
+    </select>
 </mapper>
 
 

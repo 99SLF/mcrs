@@ -321,5 +321,8 @@
         where device_id =  #{deviceId}
     </select>
 
-
+    <select id="getDeviceName" resultType="com.zimax.mcrs.device.pojo.Device">
+        select * from eqi_device
+        where device_id =  #{deviceId}
+    </select>
 </mapper>

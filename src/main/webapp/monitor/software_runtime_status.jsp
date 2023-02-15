@@ -69,7 +69,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">终端类型：</label>
                     <div class="layui-input-inline">
-                        <select name="deviceSoType" id="deviceSoType" lay-filter="deviceSoType"
+                        <select name="deviceSoftwareType" id="deviceSoftwareType" lay-filter="deviceSoftwareType"
                                 type="select">
                             <option value=""></option>
                         </select>
@@ -122,7 +122,7 @@
         var formData = {
             equipmentName: field.equipmentName,
             deviceName: field.deviceName,
-            deviceSoType: field.deviceSoType
+            deviceSoftwareType: field.deviceSoftwareType
         };
         form.val("layuiadmin-software_status-form", formData);
         advancedFormData = $.extend(advancedFormData, formData);
@@ -146,7 +146,7 @@
         form.val("layuiadmin-software_status-form", {
             equipmentName: data.equipmentName,
             deviceName: data.deviceName,
-            deviceSoType: data.deviceSoType
+            deviceSoftwareType: data.deviceSoftwareType
         });
     }
 
@@ -320,24 +320,24 @@
                 minWidth: 100
 
             }, {
-                field: "deviceSoType",
+                field: "deviceSoftwareType",
                 title: "终端类型",
                 align: "center",
-                hide: isHidden("deviceSoType"),
+                hide: isHidden("deviceSoftwareType"),
                 minWidth: 100,
                 templet: function (d) {
 
-                    return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoType);
+                    return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoftwareType);
                 }
 
             }, {
-                field: "deviceSoRunStatus",
+                field: "deviceSoftwareStatus",
                 title: "运行状态",
                 align: "center",
-                hide: isHidden("deviceSoRunStatus"),
+                hide: isHidden("deviceSoftwareStatus"),
                 minWidth: 150,
                 templet: function (d) {
-                    return layui.admin.getDictText("DEVICE_SOFTWARE_STATUS", d.deviceSoRunStatus);
+                    return layui.admin.getDictText("DEVICE_SOFTWARE_STATUS", d.deviceSoftwareStatus);
                 }
             }
         ]]
@@ -356,7 +356,7 @@
         });
 
         //软件类型下拉框监听事件
-        form.on("select(deviceSoType)", function (data) {
+        form.on("select(deviceSoftwareType)", function (data) {
             var submit = $("#LAY-app-software_status-search");
             submit.click();
         });
@@ -364,7 +364,7 @@
 
         //获取软件类型的下拉值
         layui.admin.renderDictSelect({
-            elem: "#deviceSoType",
+            elem: "#deviceSoftwareType",
             dictTypeId: "DEVICE_SOFTWARE_TYPE",
         });
         form.render();

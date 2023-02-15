@@ -2,7 +2,6 @@ package com.zimax.mcrs.monitor.service;
 
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.monitor.mapper.DeviceAbnormalAlarmMapper;
-import com.zimax.mcrs.monitor.pojo.DeviceAbn;
 import com.zimax.mcrs.monitor.pojo.vo.DeviceAbnVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,15 +26,15 @@ public class DeviceAbnormalAlarmService {
      */
     public List<DeviceAbnVo> queryDeviceAbnormalAlarm(String page, String limit,
                                                       String equipmentId,  String equipmentName, String deviceName,
-                                                      String useProcess, String warningTitle ,String warningType,
-                                                      String warningLevel, String warningContent, String occurTime,
-                                                      String order, String field) {
+                                                      String processName, String alarmEventTitle ,String alarmType,
+                                                      String alarmLevel, String alarmEventContent, String occurrenceTime,
+                                                      String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
 
         if (order == null) {
             map.put("order", "desc");
-            map.put("field", "a.create_time");
+            map.put("field", "mdr.device_name");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));
@@ -47,12 +46,12 @@ public class DeviceAbnormalAlarmService {
         map.put("equipmentId", equipmentId);
         map.put("equipmentName", equipmentName);
         map.put("deviceName", deviceName);
-        map.put("useProcess", useProcess);
-        map.put("warningType", warningType);
-        map.put("warningTitle", warningTitle);
-        map.put("warningLevel", warningLevel);
-        map.put("warningContent", warningContent);
-        map.put("occurTime", occurTime);
+        map.put("processName", processName);
+        map.put("alarmEventTitle", alarmEventTitle);
+        map.put("alarmType", alarmType);
+        map.put("alarmLevel", alarmLevel);
+        map.put("alarmEventContent", alarmEventContent);
+        map.put("occurrenceTime", occurrenceTime);
         return deviceAbnormalAlarmMapper.queryDeviceAbnormalAlarm(map);
 
     }
@@ -62,8 +61,8 @@ public class DeviceAbnormalAlarmService {
      * @return
      */
     public int countAA(String equipmentId,  String equipmentName, String deviceName,
-                       String useProcess, String warningTitle ,String warningType,
-                       String warningLevel, String warningContent, String occurTime) {
-        return deviceAbnormalAlarmMapper.countAA(equipmentId,equipmentName, deviceName, useProcess,warningTitle, warningType,warningLevel,warningContent, occurTime);
+                       String processName, String alarmEventTitle ,String alarmType,
+                       String alarmLevel, String alarmEventContent, String occurrenceTime) {
+        return deviceAbnormalAlarmMapper.countAA(equipmentId, equipmentName,deviceName, processName,alarmEventTitle, alarmType, alarmLevel, alarmEventContent, occurrenceTime);
     }
 }

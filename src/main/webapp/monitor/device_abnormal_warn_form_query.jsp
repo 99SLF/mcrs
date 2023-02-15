@@ -57,19 +57,19 @@
     <div class="layui-form-item">
         <label class="layui-form-label">使用工序：</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" name="useProcess" autocomplete="off" />
+            <input type="text" class="layui-input" name="processName" autocomplete="off" />
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">预警标题：</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" name="warningTitle" autocomplete="off" />
+            <input type="text" class="layui-input" name="alarmEventTitle" autocomplete="off" />
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">预警类型：</label>
         <div class="layui-input-inline">
-            <select name="warningType" id="warningType" lay-filter="warningType"
+            <select name="alarmType" id="alarmType" lay-filter="alarmType"
                     type="select">
                 <option value=""></option>
             </select>
@@ -78,7 +78,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">预警等级：</label>
         <div class="layui-input-inline">
-            <select name="warningLevel" id="warningLevel" lay-filter="warningLevel"
+            <select name="alarmLevel" id="alarmLevel" lay-filter="alarmLevel"
                     type="select">
                 <option value=""></option>
             </select>
@@ -87,7 +87,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">发生时间：</label>
         <div class="layui-input-block">
-            <input id="occurTime" type="text" class="layui-input" name="occurTime" autocomplete="off" />
+            <input id="occurrenceTime" type="text" class="layui-input" name="occurrenceTime" autocomplete="off" />
         </div>
     </div>
     <div class="layui-form-item layui-hide">
@@ -116,21 +116,26 @@
 
     // 开始时间选择器
     laydate.render({
-        elem: "#occurTime",
+        elem: "#occurrenceTime",
         type: "date",
         trigger: "click"
     });
 
     //获取预警类型类型的下拉值
     layui.admin.renderDictSelect({
-        elem: "#warningType",
+        elem: "#alarmType",
         dictTypeId: "WRANING_TYPE",
     });
     form.render();
     //获取预警等级
     layui.admin.renderDictSelect({
-        elem: "#warningLevel",
+        elem: "#alarmLevel",
         dictTypeId: "WARNING_LEVEL",
+    });
+    //获取预警内容
+    layui.admin.renderDictSelect({
+        elem: "#alarmEventContent",
+        dictTypeId: "WARNING_CONTENT",
     });
     form.render();
     // 文本框回车事件
@@ -149,11 +154,11 @@
             equipmentId: formData.equipmentId,
             equipmentName: formData.equipmentName,
             deviceName : formData.deviceName,
-            useProcess: formData.useProcess,
-            warningTitle: formData.warningTitle,
-            warningType: formData.warningType ,
-            warningLevel: formData.warningLevel ,
-            occurTime: formData.occurTime ? util.toDateString(formData.occurTime, "yyyy-MM-dd") : ""
+            processName: formData.processName,
+            alarmEventTitle: formData.alarmEventTitle,
+            alarmType: formData.alarmType ,
+            alarmLevel: formData.alarmLevel ,
+            occurrenceTime: formData.occurrenceTime ? util.toDateString(formData.occurrenceTime, "yyyy-MM-dd") : ""
         });
     }
 
@@ -162,11 +167,11 @@
             equipmentId: "",
             equipmentName: "",
             deviceName : "",
-            useProcess: "",
-            warningTitle: "",
-            warningType: "" ,
-            warningLevel: "",
-            occurTime: ""
+            processName: "",
+            alarmEventTitle: "",
+            alarmType: "" ,
+            alarmLevel: "",
+            occurrenceTime: ""
 
         }
         win.setFormData(formData);

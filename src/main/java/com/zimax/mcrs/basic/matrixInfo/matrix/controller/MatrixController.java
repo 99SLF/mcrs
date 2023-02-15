@@ -150,6 +150,31 @@ public class MatrixController {
         return Result.success(matrixInfo);
     }
 
+
+    /**
+     * （基础数据目录树）
+     * 检测相同父节点下的基地名称是否存在
+     *
+     * @param parentId 上级节点的id
+     */
+    @GetMapping("/check/isExist")
+    public Result<?> checkMatrixName(@RequestParam("parentId") String parentId,@RequestParam("matrixName") String matrixName,@RequestParam("flag") String flag) {
+        if(flag.equals("1")){
+            if (matrixService.checkMatrixNameAdd(parentId,matrixName) > 0) {
+                return Result.error("1", "节点下该基地已存在");
+            } else {
+                return Result.success();
+            }
+        }else {
+            if (matrixService.checkMatrixNameEdit(parentId,matrixName) > 0) {
+                return Result.error("1", "节点下该基地已存在");
+            } else {
+                return Result.success();
+            }
+        }
+
+
+    }
 }
 
 
