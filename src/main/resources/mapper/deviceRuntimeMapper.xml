@@ -223,6 +223,12 @@
                 and mdr.error_rate like '%${errorRate}%'
             </if>
         </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
     </select>
 
 
