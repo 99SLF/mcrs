@@ -25,7 +25,8 @@
         insert into mon_device_history
         values (#{deviceHistoryId}, #{deviceName}, #{accessType}, #{accessStatus}, #{deviceSoftwareStatus},
                 #{antennaStatus}, #{warningContent},
-                #{cpuRate}, #{storageRate}, #{errorRate}, #{occurrenceTime}, #{remarks}, #{createTime})
+                #{cpuRate}, #{storageRate}, #{errorRate}, #{occurrenceTime}, #{remarks}, #{createTime},
+                #{longinCreateTime}, #{longoutCreateTime})
     </insert>
     <!--添加监控实时信息-->
     <insert id="addMonitorDeviceReal" parameterType="com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus">
@@ -55,9 +56,13 @@
             error_rate             = #{errorRate},
             occurrence_time        = #{occurrenceTime},
             remarks                = #{remarks},
-            device_warning_num     = #{deviceWarningNum}
-        WHERE device_exists = 0
-          and device_name = #{deviceName}
+            device_warning_num     = CASE
+                                         WHEN #{warningContent} = '' THEN device_warning_num
+                                         WHEN #{warningContent} IS NULL THEN device_warning_num
+                                         ELSE device_warning_num +1  END
+        where device_exists = 0
+          and device_name =
+              #{deviceName}
     </update>
 
     <select id="groupQueryBydate" resultType="com.zimax.mcrs.monitor.pojo.vo.GroupByDate">
@@ -148,6 +153,27 @@
         FROM mon_device_real
         WHERE device_exists != 1 AND device_name =#{deviceName}
     </select>
+
+    <!--    <update id="updateMonitorDeviceStatus" >-->
+    <!--        update mon_device_real-->
+    <!--        <set>-->
+    <!--            <trim prefix="access_type = case" suffix="end,">-->
+    <!--                <foreach collection="list" item="item">-->
+    <!--                    <if test="item.accessType != null">-->
+    <!--                        when device_name=#{item.device_name} then #{item.accessType}-->
+    <!--                    </if>-->
+    <!--                    <if test="item.accessType == null">-->
+    <!--                        when device_name=#{item.device_name} then access_type &#45;&#45; 若传入的属性为null，则保持数据库原值-->
+    <!--                    </if>-->
+    <!--                </foreach>-->
+    <!--            </trim>-->
+    <!--        </set>-->
+    <!--        where `device_name` in-->
+    <!--        <foreach collection="list" item="item" index="index" separator="," open="(" close=")">-->
+    <!--            #{item.device_name}-->
+    <!--        </foreach>-->
+    <!--    </update>-->
+
 </mapper>
 
 
