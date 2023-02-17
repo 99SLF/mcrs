@@ -1,7 +1,10 @@
 package com.zimax.components.coframe.org.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.zimax.components.coframe.framework.pojo.Application;
 import com.zimax.components.coframe.framework.service.ApplicationService;
+import com.zimax.components.coframe.org.pojo.OrgTreeNode;
 import com.zimax.components.coframe.org.pojo.Organization;
 import com.zimax.components.coframe.org.pojo.vo.OrganizationDelVo;
 import com.zimax.components.coframe.org.service.OrganizationService;
@@ -9,7 +12,9 @@ import com.zimax.mcrs.config.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author 施林丰
@@ -18,11 +23,10 @@ import java.util.List;
  */
 @RestController
 @ResponseBody
-@RequestMapping("/org")
+@RequestMapping("/organization")
 public class OrganizationController {
     @Autowired
     OrganizationService organizationService;
-
     /**
      * 查询组织机构
      *
@@ -35,7 +39,7 @@ public class OrganizationController {
      * @param order       排序方式
      * @return 应用列表
      */
-    @GetMapping("/Organization/queryOrg")
+    @GetMapping("/queryOrg")
     public Result<?> queryOrg(String limit, String page, Integer parentOrgId, String orgCode, String orgType, String order, String field) {
         List organizations = organizationService.queryOrg(page, limit, parentOrgId, orgCode, orgType, order, field);
         return Result.success(organizations, organizationService.count(parentOrgId, orgCode, orgType));
@@ -46,21 +50,44 @@ public class OrganizationController {
      *
      * @param organization 机构信息
      */
-    @PostMapping("/Organization/addOrg")
+    @PostMapping("/addOrg")
     public Result<?> addOrg(@RequestBody Organization organization) {
         //addOrgapplicationService.addApplication(application);
-        return Result.success();
+        return Result.success(organizationService.addOrganization(organization));
     }
 
     /**
      * 删除机构
      *
-     * @param appId 应用信息编号
+     * @param map 应用信息编号
      */
-    @DeleteMapping("/Organization/deleteNodes")
-    public Result<?> deleteNodes(@RequestBody int appId) {
+    @DeleteMapping("/deleteNodes")
+    public Result<?> deleteNodes(@RequestBody Map<String,String> map) {
+//        for (Map.Entry<String,String> entry:map.entrySet()){
+//            System.out.print("得到键为：==="+entry.getKey());
+//            System.out.println("得到值为：==="+entry.getValue());
+//        }
         // applicationService.deleteApplication(appId);
-        return Result.success();
+//        String  str = JSON.parse((String)map.get("childs")).toString();
+//
+//        JSONArray jsonArray=JSONArray.parseArray(str);
+//        List<Organization> childs = new ArrayList<>();
+//        for (int i=0;i<jsonArray.size();i++){
+//            childs.add(JSON.toJavaObject(jsonArray.getJSONObject(i),Organization.class));
+//        }
+
+
+        String str = JSON.parse((String) map.get("childs")).toString();
+        JSONArray jsonArray = JSONArray.parseArray(str);
+        List<OrgTreeNode> orgTreeNodeArrayList = new ArrayList<>();
+        for (int i = 0; i < jsonArray.size(); i++) {
+            orgTreeNodeArrayList.add(JSON.toJavaObject(jsonArray.getJSONObject(i), OrgTreeNode.class));
+        }
+        OrgTreeNode[] childs  = new OrgTreeNode[orgTreeNodeArrayList.size()];
+        for(int i =0;i<orgTreeNodeArrayList.size();i++){
+            childs[i] = orgTreeNodeArrayList.get(i);
+        }
+        return Result.success(organizationService.deleteNodes(childs,map.get("parentId"),  map.get("parentType"),  map.get("isDeleteCascade")));
     }
 
     /**
@@ -68,10 +95,26 @@ public class OrganizationController {
      *
      * @param organizationDelVo 删除机构信息
      */
-    @PutMapping("/Organization/updateOrg")
+    @PutMapping("/updateOrg")
     public Result<?> updateOrg(@RequestBody OrganizationDelVo organizationDelVo) {
         //applicationService.updateApplication(application);
         return Result.success();
+    }
+    /**
+     * 渲染加载机构
+     *
+     * @param nodeId 结点id，机构或岗位的id
+     * @param nodeType 结点类型：机构或岗位
+     */
+    @GetMapping("/queryTreeChildNodes")
+    public Result<?> queryTreeChildNodes(Integer nodeId, String nodeType) {
+        //applicationService.updateApplication(application);
+        return Result.success(organizationService.queryTreeChildNodes(nodeId,nodeType));
+    }
+    @PostMapping("/queryOrganizationsByIds")
+    public Result<?> queryOrganizationsByIds(@RequestBody Integer[] ids) {
+        //applicationService.updateApplication(application);
+        return Result.success(organizationService.queryOrganizationsByIds(ids));
     }
 
 

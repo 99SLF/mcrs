@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.components.coframe.org.mapper.PositionMapper">
+    <!--    查询记录数-->
+
+    <!--查询所有-->
+
+
+    <select id="querySubOrgs"  resultType="com.zimax.components.coframe.org.pojo.Organization">
+        select * from org_organization
+        <where>
+            <if test="parentOrgId !=null and parentOrgId !=''">
+                and parent_org_id = '${parentOrgId}'
+            </if>
+            <if test="parentOrgId ==null or parentOrgId ==''">
+                and parent_org_id is NULl
+            </if>
+        </where>
+        order by sort_no asc
+    </select>
+    <select id="querySubPositions"  resultType="com.zimax.components.coframe.org.pojo.Position">
+        select * from org_position
+        <where>
+            <if test="manaPosi !=null and manaPosi !=''">
+                and mana_posi = '${manaPosi}'
+            </if>
+        </where>
+    </select>
+
+    <select id="queryEmployeesOfPosition"  resultType="com.zimax.components.coframe.org.pojo.vo.QueryPositionEmp">
+        select emp.*, emppos.position_id
+            from org_emp_position emppos inner join org_employee emp
+        on emppos.emp_id = emp.emp_id
+        <where>
+            <if test="positionId !=null and positionId !=''">
+                and position_id = ${positionId}
+            </if>
+        </where>
+        order by sort_no asc
+    </select>
+    <delete id="deletePosition">
+        delete from org_position
+        <where>
+            <if test="positionId !=null and positionId !=''">
+                and position_id = ${positionId}
+            </if>
+        </where>
+    </delete>
+
+</mapper>

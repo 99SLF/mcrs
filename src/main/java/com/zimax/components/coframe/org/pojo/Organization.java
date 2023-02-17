@@ -1,11 +1,13 @@
 package com.zimax.components.coframe.org.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author 施林丰
@@ -21,31 +23,18 @@ public class Organization {
     String orgCode;
     String orgName;
     Integer orgLevel;
-    String orgorgDegree;
+    String orgDegree;
     Integer parentOrgId;
     String orgSeq;
     String orgType;
-    String orgAddr;
-    String zipCode;
-    Integer manaPosition;
-    Integer managerId;
-    String orgManager;
-    String linkMan;
-    String linkTel;
-    String email;
-    String webUrll;
-    Date startDate;
-    Date endDate;
     String status;
-    String area;
     Date createTime;
-    Date lastUpdatel;
-    Integer updator;
+    Date lastUpdate;
     Integer sortNo;
     String isLeaf;
     Integer subCount;
     String remark;
     String tenantId;
-    String appId;
-
+    @TableField(exist = false)
+    Organization organization;//父节点
 }
