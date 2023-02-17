@@ -1,23 +1,20 @@
 package com.zimax.components.coframe.org.service;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.zimax.cap.datacontext.DataContextManager;
+import com.zimax.cap.party.IUserObject;
 import com.zimax.cap.party.Party;
 import com.zimax.components.coframe.auth.service.PartyAuthService;
-import com.zimax.components.coframe.framework.mapper.FuncGroupMapper;
-import com.zimax.components.coframe.framework.pojo.FuncGroup;
-import com.zimax.components.coframe.org.GradeAuthOrgService;
 import com.zimax.components.coframe.org.OrgHelper;
-import com.zimax.components.coframe.org.OrgTreeNodeConvertor;
 import com.zimax.components.coframe.org.OrgTreeNodeHelper;
 import com.zimax.components.coframe.org.interfaces.IOrganizationService;
 import com.zimax.components.coframe.org.mapper.OrganizationMapper;
+import com.zimax.components.coframe.org.mapper.PositionMapper;
 import com.zimax.components.coframe.org.pojo.Employee;
 import com.zimax.components.coframe.org.pojo.OrgTreeNode;
 import com.zimax.components.coframe.org.pojo.Organization;
 import com.zimax.components.coframe.org.pojo.Position;
 import com.zimax.components.coframe.org.pojo.vo.OrgResponse;
-import com.zimax.components.coframe.org.pojo.vo.OrganizationDelVo;
 import com.zimax.components.coframe.org.pojo.vo.QueryPositionEmp;
 import com.zimax.components.coframe.rights.gradeauth.GradeAuthService;
 import com.zimax.mcrs.config.ChangeString;
@@ -37,6 +34,25 @@ public class OrganizationService implements IOrganizationService {
     private PartyAuthService partyAuthService;
     private OrgTreeService orgTreeService;
     private GradeAuthService gradeAuthService;
+    private PositionMapper positionMapper;
+    private EmployeeService employeeService;
+
+    public EmployeeService getEmployeeService() {
+        return employeeService;
+    }
+
+    public void setEmployeeService(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+
+    public PositionMapper getPositionMapper() {
+        return positionMapper;
+    }
+
+    public void setPositionMapper(PositionMapper positionMapper) {
+        this.positionMapper = positionMapper;
+    }
+
     public OrganizationMapper getOrganizationMapper() {
         return organizationMapper;
     }
@@ -123,11 +139,11 @@ public class OrganizationService implements IOrganizationService {
         } else if ("OrgPosition".equals(nodeType)) {
             Position[] positions = orgTreeService.querySubPositions(nodeId);
             QueryPositionEmp[] queryPositionEmps = orgTreeService.queryEmployeesOfPosition(nodeId);
-            return OrgTreeNodeHelper.buidPositionTreeNodes(positions,queryPositionEmps);
+            return OrgTreeNodeHelper.buidPositionTreeNodes(positions, queryPositionEmps);
         } else {
             List<Party> managedOrgList = gradeAuthService.getManagedOrgList();
-            List<Party>test = new ArrayList<>();
-            if(managedOrgList.size()==0){
+            List<Party> test = new ArrayList<>();
+            if (managedOrgList.size() == 0) {
                 Party party = new Party();
                 party.setId("1");
                 party.setCode("zjhsr");
@@ -158,7 +174,7 @@ public class OrganizationService implements IOrganizationService {
      * @return
      */
     public Position[] queryPositionsOfOrg(Integer orgid) {
-        if (orgid == null) {
+        if (StringUtils.isBlank(String.valueOf(orgid))) {
             return new Position[0];
         }
         return organizationMapper.queryPositionsOfOrg(orgid);
@@ -177,6 +193,11 @@ public class OrganizationService implements IOrganizationService {
         return organizationMapper.queryEmployeesOfOrgNotInPosition(orgid);
     }
 
+    @Override
+    public Employee[] queryEmployeesOfOrg(Integer orgid) {
+        return new Employee[0];
+    }
+
 
     public OrgResponse addOrganization(Organization org) {
         if (!validateOrgcode(org)) {
@@ -184,7 +205,7 @@ public class OrganizationService implements IOrganizationService {
         }
         organizationMapper.insertOrganization(org);
         Organization parentOrg = org.getOrganization();
-        if (parentOrg != null && parentOrg.getOrgId() !=0) {
+        if (parentOrg != null && parentOrg.getOrgId() != 0) {
             parentOrg = getOrganization(parentOrg);
         }
         OrgHelper.expandOrganizationPropertyByParent(org, parentOrg);
@@ -196,6 +217,7 @@ public class OrganizationService implements IOrganizationService {
         }
         return new OrgResponse(true, "添加成功");
     }
+
     /**
      * 检验机构code是否合格
      *
@@ -203,43 +225,81 @@ public class OrganizationService implements IOrganizationService {
      * @return true合格，false不合格
      */
     public boolean validateOrgcode(Organization org) {
-        Organization[] orgs =organizationMapper.queryOrganizationsByOrgCode(org.getOrgCode());
+        Organization[] orgs = organizationMapper.queryOrganizationsByOrgCode(org.getOrgCode());
         if (orgs == null || orgs.length == 0) {
             return true;
         }
-        if (org.getOrgId()!=0 && orgs[0].getOrgId()!=(org.getOrgId())) {// 修改的情况，只能为1个
+        if (org.getOrgId() != 0 && orgs[0].getOrgId() != (org.getOrgId())) {// 修改的情况，只能为1个
             return orgs.length == 1;
         } else {// 新增,必定没有
             return orgs.length == 0;
         }
     }
+
     /**
      * 删除机构树
      *
-     * @param map
+     * @param
      */
-    public OrgResponse deleteNodes(Map map) {
-        String str = (String)map.get("childs");
-        Map childs = (Map) JSON.parse(str);
-        int i=0;
-//        for(i=0;i<childs.size();i++){
-//            deleteNode(childs.get("nodeId"),hashMap.get("nodeType"),(String)map.get("parentId"),(String)map.get("parentType"),(String)map.get("isDeleteCascade"));
-//        }
-//        Organization [] organizations = organizationDelVo.getOrganization();
-//        for(Organization organization: organizations){
-//
-//        }
-        return null;
+    public OrgResponse deleteNodes(OrgTreeNode[] childs,String parentId,String parentType,String isDeleteCascade) {
+        OrgResponse orgResponse = new OrgResponse();
+        int i = 0;
+        for (i = 0; i < childs.length; i++) {
+            orgResponse = deleteNode(childs[i].getNodeId(), childs[i].getNodeType(), parentId, parentType, isDeleteCascade, orgResponse);
+        }
+        return orgResponse;
     }
-    public void deleteNode(String nodeId,String nodeType,String parentId,String parentType,String isDeleteCascade) {
 
+    public OrgResponse deleteNode(String nodeId, String nodeType, String parentId, String parentType, String isDeleteCascade, OrgResponse orgResponse) {
+        if ("Organization".equals(nodeType) && "1".equals(nodeId)) {
+            orgResponse.setFlag(false);
+            orgResponse.setMessage("系统机构不能删除");
+        } else {
+            IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
+            String userId = userObject.getUserId();
+            if (!"1".equals(userId) && "Organization".equals(nodeType) && "Root".equals(parentType)) {
+                orgResponse.setFlag(false);
+                orgResponse.setMessage("顶级机构不能删除");
+            } else {
+                OrgTreeNode[] childs = queryAllChildNodes(nodeId, nodeType);
+                deleteNodes( childs, nodeId, nodeType, isDeleteCascade);
+                deleteCurrentNode(nodeId,nodeType,parentId,parentType,isDeleteCascade);
+                orgResponse.setFlag(true);
+                orgResponse.setMessage("删除成功");
+            }
+
+        }
+        return orgResponse;
     }
+
+    public OrgTreeNode[] queryAllChildNodes(String nodeId, String nodeType) {
+        Organization[] organizations = null;
+        Position[] positions = null;
+        Employee[] employees = null;
+        QueryPositionEmp[] queryPositionEmp = null;
+        if("Organization".equals(nodeType)){
+            organizations = organizationMapper.querySubOrgs(Integer.parseInt(nodeId));
+            positions = organizationMapper.queryPositionsOfOrg(Integer.parseInt(nodeId));
+            employees = organizationMapper.queryEmployeesOfOrg(nodeId);
+            return OrgTreeNodeHelper.buildOrgTreeNodes(organizations, positions, employees);
+        }else if("Position".equals(nodeType)){
+            positions = positionMapper.querySubPositions(Integer.parseInt(nodeId));
+            queryPositionEmp = positionMapper.queryEmployeesOfPosition(Integer.parseInt(nodeId));
+            employees = convertDataObjects(employees,queryPositionEmp);
+            return OrgTreeNodeHelper.buildOrgTreeNodes(organizations, positions, employees);
+        }else{
+            return OrgTreeNodeHelper.buildOrgTreeNodes(organizations, positions, employees);
+        }
+    }
+
     public void deleteOrganization(Organization[] orgOrganizations) {
 
     }
 
     public void deleteOrganization(String id) {
-
+        if (!StringUtils.isBlank(id)) {
+            organizationMapper.deleteOrganization(id);
+        }
     }
 
     public Organization getOrganization(Organization orgOrganization) {
@@ -254,8 +314,29 @@ public class OrganizationService implements IOrganizationService {
         return organizationMapper.queryOrganizationsByIds(ids);
     }
 
-
-    public Employee[] queryEmployeesOfOrg(Integer orgid) {
-        return new Employee[0];
+    /**
+     * 查询机构下的所有员工
+     *
+     * @param orgid
+     * @return
+     */
+    public Employee[] queryEmployeesOfOrg(String orgid) {
+        if (StringUtils.isBlank(orgid)) {
+            return new Employee[0];
+        }
+       return organizationMapper.queryEmployeesOfOrg(orgid);
+    }
+    public Employee[] convertDataObjects(Employee[] employees,QueryPositionEmp[]queryPositionEmps){
+        employees = (Employee[]) queryPositionEmps;
+        return employees;
+    }
+    public void deleteCurrentNode(String nodeId,String nodeType,String parentId,String parentType,String isDeleteCascade ){
+        if("Organization".equals(nodeType)){
+            deleteOrganization(nodeId);
+        }else if("Position".equals(nodeType)){
+            positionMapper.deletePosition(nodeId);
+        }else {
+           employeeService.deleteEmployee(nodeId,parentId,parentType,isDeleteCascade);
+        }
     }
 }

@@ -1,7 +1,10 @@
 package com.zimax.components.coframe.org.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.zimax.components.coframe.framework.pojo.Application;
 import com.zimax.components.coframe.framework.service.ApplicationService;
+import com.zimax.components.coframe.org.pojo.OrgTreeNode;
 import com.zimax.components.coframe.org.pojo.Organization;
 import com.zimax.components.coframe.org.pojo.vo.OrganizationDelVo;
 import com.zimax.components.coframe.org.service.OrganizationService;
@@ -9,6 +12,7 @@ import com.zimax.mcrs.config.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -64,7 +68,26 @@ public class OrganizationController {
 //            System.out.println("得到值为：==="+entry.getValue());
 //        }
         // applicationService.deleteApplication(appId);
-        return Result.success(organizationService.deleteNodes(map));
+//        String  str = JSON.parse((String)map.get("childs")).toString();
+//
+//        JSONArray jsonArray=JSONArray.parseArray(str);
+//        List<Organization> childs = new ArrayList<>();
+//        for (int i=0;i<jsonArray.size();i++){
+//            childs.add(JSON.toJavaObject(jsonArray.getJSONObject(i),Organization.class));
+//        }
+
+
+        String str = JSON.parse((String) map.get("childs")).toString();
+        JSONArray jsonArray = JSONArray.parseArray(str);
+        List<OrgTreeNode> orgTreeNodeArrayList = new ArrayList<>();
+        for (int i = 0; i < jsonArray.size(); i++) {
+            orgTreeNodeArrayList.add(JSON.toJavaObject(jsonArray.getJSONObject(i), OrgTreeNode.class));
+        }
+        OrgTreeNode[] childs  = new OrgTreeNode[orgTreeNodeArrayList.size()];
+        for(int i =0;i<orgTreeNodeArrayList.size();i++){
+            childs[i] = orgTreeNodeArrayList.get(i);
+        }
+        return Result.success(organizationService.deleteNodes(childs,map.get("parentId"),  map.get("parentType"),  map.get("isDeleteCascade")));
     }
 
     /**

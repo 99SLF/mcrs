@@ -26,4 +26,6 @@ public interface OrganizationMapper {
     Organization queryOrganizationsByOrgId(int orgId);
     void insertOrganization(Organization organization);
     void updateOrganization(Organization organization);
+    Employee[] queryEmployeesOfOrg(String orgId);
+    void deleteOrganization(String orgId);
 }

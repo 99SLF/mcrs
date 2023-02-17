@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.components.coframe.org.mapper.EmpOrgMapper">
+    <delete id="deleteEmpOrg">
+        delete from org_emp_org where org_id=${orgId} and emp_id=${empId}
+    </delete>
+    <select id="queryEmpOrgAll"  resultType="com.zimax.components.coframe.org.pojo.EmpOrg">
+        select * from org_emp_org
+        <where>
+            <if test="empId !=null and empId !='' and empId!=0">
+                and emp_id = ${empId}
+            </if>
+        </where>
+    </select>
+</mapper>

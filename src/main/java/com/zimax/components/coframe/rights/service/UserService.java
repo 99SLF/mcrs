@@ -26,6 +26,14 @@ import java.util.Map;
 @Service
 public class UserService {
 
+	public UserMapper getUserMapper() {
+		return userMapper;
+	}
+
+	public void setUserMapper(UserMapper userMapper) {
+		this.userMapper = userMapper;
+	}
+
 	/**
 	 * 用户数据操作
 	 */

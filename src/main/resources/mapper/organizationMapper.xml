@@ -48,6 +48,9 @@
             <if test="parentOrgId !=null and parentOrgId !=''">
                 and parent_org_id = '${parentOrgId}'
             </if>
+            <if test="parentOrgId ==null || parentOrgId ==''">
+                and parent_org_id is NULL
+            </if>
             <if test="orgCode !=null and orgCode !=''">
                 and org_code = '${orgCode}'
             </if>
@@ -123,5 +126,17 @@
         update org_organization set org_code=#{orgCode},org_name=#{orgName},org_level=#{orgLevel},org_degree=#{orgDegree},org_seq=#{orgSeq},org_type=#{orgType},status=#{status},sub_count=#{subCount},sort_no=#{sortNo},last_update=#{lastUpdate},CREATE_TIME=#{createTime},PARENT_ORG_ID=#{parentOrgId}
         where org_id=#{orgId}
     </update>
+    <select id="queryEmployeesOfOrg"  resultType="com.zimax.components.coframe.org.pojo.Employee">
+        select * from org_employee
+        <where>
+            <if test="orgId !=null and orgId !=''">
+                and org_id = ${orgId}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteOrganization">
+        delete from org_organization where org_id=#{orgId}
+    </delete>
 
 </mapper>

@@ -1,5 +1,6 @@
 package com.zimax.components.coframe.org.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,20 +8,19 @@ import lombok.NoArgsConstructor;
 
 /**
  * @Author 施林丰
- * @Date:2023/2/11 17:28
+ * @Date:2023/2/16 9:08
  * @Description
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrgTreeNode {
-    String nodeId;
-    String nodeType;
-    String nodeName;
-    String iconCls;
-    Integer orgId;
-    String orgName;
-    Integer pid;
-    String isLeaf;
-    String expanded;
+@TableName("org_emp_org")
+public class EmpOrg {
+    int orgId;
+    int empId;
+    String isMain;
+    String tenantId;
+    String appId;
+    @TableField(exist = false)
+    Employee employee;
 }

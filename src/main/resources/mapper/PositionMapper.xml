@@ -39,4 +39,13 @@
         </where>
         order by sort_no asc
     </select>
+    <delete id="deletePosition">
+        delete from org_position
+        <where>
+            <if test="positionId !=null and positionId !=''">
+                and position_id = ${positionId}
+            </if>
+        </where>
+    </delete>
+
 </mapper>

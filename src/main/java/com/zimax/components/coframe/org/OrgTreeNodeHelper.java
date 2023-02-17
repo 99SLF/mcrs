@@ -75,8 +75,8 @@ public class OrgTreeNodeHelper {
             } else {
                 node.setPid(null);
             }
-            node.setLeaf(false);
-            node.setExpanded(false);
+            node.setIsLeaf("false");
+            node.setExpanded("false");
             results.add(node);
         }
 

@@ -14,5 +14,6 @@ import org.apache.ibatis.annotations.Param;
 public interface PositionMapper {
     Position[] querySubPositions(@Param("manaPosi") Integer manaPosi);
     QueryPositionEmp[] queryEmployeesOfPosition(Integer positionId);
+    void deletePosition(String positionid);
 
 }
