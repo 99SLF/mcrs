@@ -7,7 +7,10 @@ import com.zimax.mcrs.monitor.service.AccessMonitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import java.util.Date;
 import java.util.List;
 
@@ -82,54 +85,38 @@ public class AccessMonitor {
     @PostMapping("/deviceStatus")
     public Result<?> addMonitorDeviceStatus(@RequestBody MonitorDeviceHistory monitorDeviceHistory) {
 
-        //通过终端名称表查询，终端状态表，存在状态状态为0的数据条数，正常只有一条，如果等于0的话，返回该终端还为注册无终端信息
+
         String deviceName = monitorDeviceHistory.getDeviceName();
-        List<MonitorDeviceStatus> lists = new ArrayList<MonitorDeviceStatus>();
-        lists = accessMonitorService.checkDevice(deviceName);
-        int deviceWarningNum = 0;
-        for (MonitorDeviceStatus monitorDeviceStatus : lists) {
-            deviceWarningNum = monitorDeviceStatus.getDeviceWarningNum();
-        }
+        String accessType = monitorDeviceHistory.getAccessType();
+        String accessStatus = monitorDeviceHistory.getAccessStatus();
+        String deviceSoftwareStatus = monitorDeviceHistory.getDeviceSoftwareStatus();
+        String antennaStatus = monitorDeviceHistory.getAntennaStatus();
+        String warningContent = monitorDeviceHistory.getWarningContent();
+        String cpuRate = monitorDeviceHistory.getCpuRate();
+        String storageRate = monitorDeviceHistory.getStorageRate();
+        String errorRate = monitorDeviceHistory.getErrorRate();
+        Date occurrenceTime = monitorDeviceHistory.getOccurrenceTime();
+        String remarks = monitorDeviceHistory.getRemarks();
 
-        int i = lists.size();
+        //调试
+        MonitorDeviceStatus monitorDeviceStatus = new MonitorDeviceStatus();
+        monitorDeviceStatus.setDeviceName(deviceName);
+        monitorDeviceStatus.setAccessType(accessType);
+        monitorDeviceStatus.setAccessStatus(accessStatus);
+        monitorDeviceStatus.setDeviceSoftwareStatus(deviceSoftwareStatus);
+        monitorDeviceStatus.setAntennaStatus(antennaStatus);
+        monitorDeviceStatus.setWarningContent(warningContent);
+        monitorDeviceStatus.setCpuRate(cpuRate);
+        monitorDeviceStatus.setStorageRate(storageRate);
+        monitorDeviceStatus.setErrorRate(errorRate);
+        monitorDeviceStatus.setOccurrenceTime(occurrenceTime);
+        monitorDeviceStatus.setRemarks(remarks);
+        //调用修改终端实时表的接口
+        int i = accessMonitorService.updateMonitorDeviceStatus(monitorDeviceStatus);
         if (i == 0) {
-            return Result.error("1", "该终端还未注册");
-        } else {
-
-            String accessType = monitorDeviceHistory.getAccessType();
-            String accessStatus = monitorDeviceHistory.getAccessStatus();
-            String deviceSoftwareStatus = monitorDeviceHistory.getDeviceSoftwareStatus();
-            String antennaStatus = monitorDeviceHistory.getAntennaStatus();
-            String warningContent = monitorDeviceHistory.getWarningContent();
-            String cpuRate = monitorDeviceHistory.getCpuRate();
-            String storageRate = monitorDeviceHistory.getStorageRate();
-            String errorRate = monitorDeviceHistory.getErrorRate();
-            Date occurrenceTime = monitorDeviceHistory.getOccurrenceTime();
-            String remarks = monitorDeviceHistory.getRemarks();
-
-            MonitorDeviceStatus monitorDeviceStatus = new MonitorDeviceStatus();
-            monitorDeviceStatus.setDeviceName(deviceName);
-            monitorDeviceStatus.setAccessType(accessType);
-            monitorDeviceStatus.setAccessStatus(accessStatus);
-            monitorDeviceStatus.setDeviceSoftwareStatus(deviceSoftwareStatus);
-            monitorDeviceStatus.setAntennaStatus(antennaStatus);
-            monitorDeviceStatus.setWarningContent(warningContent);
-            monitorDeviceStatus.setCpuRate(cpuRate);
-            monitorDeviceStatus.setStorageRate(storageRate);
-            monitorDeviceStatus.setErrorRate(errorRate);
-            monitorDeviceStatus.setOccurrenceTime(occurrenceTime);
-            monitorDeviceStatus.setRemarks(remarks);
-            if(warningContent == null || warningContent.length() <= 0){
-                monitorDeviceStatus.setDeviceWarningNum(deviceWarningNum);
-            }else {
-                monitorDeviceStatus.setDeviceWarningNum(deviceWarningNum+1);
-            }
-            //调用终端状态表的新增接口
-            accessMonitorService.addMonitorDeviceStatus(monitorDeviceHistory);
-            //调用修改终端实时表的接口
-            accessMonitorService.updateMonitorDeviceStatus(monitorDeviceStatus);
-            return Result.success();
+            return Result.error("1", "终端未注册");
         }
+        return Result.success();
 
     }
 

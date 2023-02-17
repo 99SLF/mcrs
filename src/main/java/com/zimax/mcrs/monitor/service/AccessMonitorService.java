@@ -56,9 +56,11 @@ public class AccessMonitorService {
 
     /**
      * 对内每次被调用新增接口存终端状态信息时，就往终端状态表里修改一条终端名为，存在的当前终端名称为接口添加名称的监控信息（表+++mon_device_real）
+     * @return
      */
-    public void updateMonitorDeviceStatus(MonitorDeviceStatus monitorDeviceStatus){
-        accessMonitorMapper.updateMonitorDeviceStatus(monitorDeviceStatus);
+    public int updateMonitorDeviceStatus(MonitorDeviceStatus monitorDeviceStatus){
+        return  accessMonitorMapper.updateMonitorDeviceStatus(monitorDeviceStatus);
+
     }
 
 

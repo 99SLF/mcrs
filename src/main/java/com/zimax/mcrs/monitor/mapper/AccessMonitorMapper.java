@@ -39,7 +39,7 @@ public interface AccessMonitorMapper {
      */
     void addMonitorDeviceStatus(MonitorDeviceHistory monitorDeviceHistory);
 
-    void updateMonitorDeviceStatus(MonitorDeviceStatus monitorDeviceStatus);
+    int updateMonitorDeviceStatus(MonitorDeviceStatus monitorDeviceStatus);
 
     /**
      * 对内每次注册一个终端信息的话，就新增表里一条终端名为注册名的监控信息（表+++mon_device_real）
