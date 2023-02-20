@@ -880,19 +880,18 @@ CREATE TABLE `mon_device_history` (
 -- ----------------------------
 DROP TABLE IF EXISTS `mon_device_real`;
 CREATE TABLE `mon_device_real` (
-       `app_id` varchar(32) NOT NULL COMMENT 'appid',
-       `device_exists` int(11) DEFAULT NULL COMMENT '终端存在情况（0表示不存在，1表示存在）',
-       `access_type` varchar(20) DEFAULT NULL COMMENT '接入类型(plc或rfid)',
-       `access_status` varchar(20) DEFAULT NULL COMMENT '接入状态(正常异常)硬件',
-       `device_software_status` varchar(20) DEFAULT NULL COMMENT '运行状态（软件）',
-       `antenna_status` varchar(20) DEFAULT NULL COMMENT '天线状态（plc可以可以为空，rfid必填）',
-       `warning_content` varchar(20) DEFAULT NULL COMMENT '预警内容(字典)',
-       `cpu_rate` varchar(20) DEFAULT NULL COMMENT 'cup使用率',
-       `storage_rate` varchar(20) DEFAULT NULL COMMENT '内存使用率',
-       `error_rate` varchar(20) DEFAULT NULL COMMENT '误读率',
-       `occurrence_time` datetime DEFAULT NULL COMMENT '发生时间',
-       `device_warning_num` int(11) DEFAULT NULL COMMENT '终端预警条数,不对外提供',
-       PRIMARY KEY (`app_id`)
+   `app_id` varchar(32) NOT NULL COMMENT 'appid',
+   `access_type` varchar(20) DEFAULT NULL COMMENT '接入类型(plc或rfid)',
+   `access_status` varchar(20) DEFAULT NULL COMMENT '接入状态(正常异常)硬件',
+   `device_software_status` varchar(20) DEFAULT NULL COMMENT '运行状态（软件）',
+   `antenna_status` varchar(20) DEFAULT NULL COMMENT '天线状态（plc可以可以为空，rfid必填）',
+   `warning_content` varchar(20) DEFAULT NULL COMMENT '预警内容(字典)',
+   `cpu_rate` varchar(20) DEFAULT NULL COMMENT 'cup使用率',
+   `storage_rate` varchar(20) DEFAULT NULL COMMENT '内存使用率',
+   `error_rate` varchar(20) DEFAULT NULL COMMENT '误读率',
+   `occurrence_time` datetime DEFAULT NULL COMMENT '发生时间',
+   `device_warning_num` int(11) DEFAULT NULL COMMENT '终端预警条数,不对外提供',
+   PRIMARY KEY (`app_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------

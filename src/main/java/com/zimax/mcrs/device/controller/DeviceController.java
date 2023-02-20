@@ -70,12 +70,9 @@ public class DeviceController {
     public Result<?> logoutTerminal(@PathVariable("deviceId") int deviceId) {
 
         //根据终端主键获取终端信息（名称）
-        String APPId= deviceService.getDeviceName(deviceId).getAPPId();
+        String appId= deviceService.getDeviceName(deviceId).getAPPId();
         //通过终端名称修改实时终端监控表
-        MonitorDeviceStatus monitorDeviceStatus = new MonitorDeviceStatus();
-        monitorDeviceStatus.setAppId(APPId);
-        monitorDeviceStatus.setDeviceExists(1);
-        accessMonitorService.updateMonitorDeviceRealExist(monitorDeviceStatus);
+        accessMonitorService.deleteDeviceStatus(appId);
         deviceService.logoutDevice(deviceId);
         return Result.success();
     }

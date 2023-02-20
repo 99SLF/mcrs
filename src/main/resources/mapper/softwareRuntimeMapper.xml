@@ -10,7 +10,6 @@
         LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
         LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
         <where>
-            and mdr.device_exists = 0
             <if test="equipmentId !=null and equipmentId !=''">
                 and equ.equipment_id like '%${equipmentId}%'
             </if>
@@ -44,7 +43,6 @@
         LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
         LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
         <where>
-            and mdr.device_exists = 0
             <if test="equipmentId !=null and equipmentId !=''">
                 and equ.equipment_id like '%${equipmentId}%'
             </if>

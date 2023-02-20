@@ -16,7 +16,6 @@
         LEFT JOIN base_access_info AS bai ON equ.acc_point_res_id = bai.acc_point_res_id
         LEFT JOIN base_process_info AS bpi ON bai.process_id = bpi.process_id
         <where>
-            and mdr.device_exists = 0
             <if test="equipmentId !=null and equipmentId !=''">
                 and equ.equipment_id like '%${equipmentId}%'
             </if>
@@ -74,7 +73,6 @@
         LEFT JOIN base_access_info AS bai ON equ.acc_point_res_id = bai.acc_point_res_id
         LEFT JOIN base_process_info AS bpi ON bai.process_id = bpi.process_id
         <where>
-            and mdr.device_exists = 0
             <if test="equipmentId !=null and equipmentId !=''">
                 and equ.equipment_id like '%${equipmentId}%'
             </if>
