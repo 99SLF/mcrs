@@ -50,7 +50,6 @@ public class AccessMonitorService {
      * 对外获取终端设备，硬件软件的运行状态（表+++mon_device_history）
      */
     public void addMonitorDeviceStatus(MonitorDeviceHistory monitorDeviceHistory){
-        monitorDeviceHistory.setCreateTime(new Date());
         accessMonitorMapper.addMonitorDeviceStatus(monitorDeviceHistory);
     }
 
@@ -68,7 +67,6 @@ public class AccessMonitorService {
      * 对内每次注册一个终端信息的话，就往表里新增一条终端名为注册名的监控信息（表+++mon_device_real）
      */
     public void addMonitorDeviceReal(MonitorDeviceStatus monitorDeviceStatus){
-        monitorDeviceStatus.setCreateTime(new Date());
         accessMonitorMapper.addMonitorDeviceReal(monitorDeviceStatus);
     }
 

@@ -284,21 +284,21 @@
             align: "center",
             // sort: true,
             hide: isHidden("equipmentId"),
-            minWidth: 100
+            minWidth: 150
         },{
             field: "equipmentName",
             title: "设备名称",
             align: "center",
             // sort: true,
             hide: isHidden("equipmentName"),
-            minWidth: 100
+            minWidth: 150
         },{
             field: "accessType",
             title: "接入类型",
             align: "center",
             // sort: true,
             hide: isHidden("accessType"),
-            minWidth: 100,
+            minWidth: 150,
             templet: function (d) {
 
                 return layui.admin.getDictText("ACCESS_TYPE", d.accessType);
@@ -308,7 +308,7 @@
             field: "accessStatus",
             title: "接入状态",
             align: "center",
-            minWidth: 100,
+            minWidth: 150,
             hide: isHidden("accessStatus"),
             templet: function (d) {
 
@@ -320,7 +320,7 @@
             title: "天线状态",
             align: "center",
             hide: isHidden("antennaStatus"),
-            minWidth: 100,
+            minWidth: 150,
             templet: function (d) {
 
                 return layui.admin.getDictText("ANTENNA_TYPE", d.antennaStatus);

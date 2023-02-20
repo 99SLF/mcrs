@@ -305,34 +305,34 @@
             align: "center",
             // sort: true,
             hide: isHidden("equipmentId"),
-            minWidth: 120
+            minWidth: 150
         }, {
             field: "equipmentName",
             title: "设备名称",
             align: "center",
             // sort: true,
             hide: isHidden("equipmentName"),
-            minWidth: 120
+            minWidth: 150
         }, {
             //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
             field: "aPPId",
             title: "APPID",
             align: "center",
             hide: isHidden("aPPId"),
-            minWidth: 120
+            minWidth: 150
         }, {
             field: "deviceName",
             title: "终端名称",
             align: "center",
             // sort: true,
             hide: isHidden("deviceName"),
-            minWidth: 120
+            minWidth: 150
         }, {
             field: "deviceSoftwareType",
             title: "终端类型",
             align: "center",
             hide: isHidden("deviceSoftwareType"),
-            minWidth: 80,
+            minWidth: 150,
             templet: function (d) {
 
                 return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoftwareType);
@@ -342,7 +342,7 @@
             title: "运行状态",
             align: "center",
             hide: isHidden("deviceSoftwareStatus"),
-            minWidth: 80,
+            minWidth: 150,
             templet: function (d) {
                 debugger;
                 return layui.admin.getDictText("DEVICE_SOFTWARE_STATUS", d.deviceSoftwareStatus);
@@ -352,7 +352,7 @@
             title: "接入状态",
             align: "center",
             hide: isHidden("accessStatus"),
-            minWidth: 80,
+            minWidth: 150,
             templet: function (d) {
                 return layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", d.accessStatus);
             }
@@ -361,25 +361,25 @@
             title: "累计终端告警",
             align: "center",
             hide: isHidden("deviceWarningNum"),
-            minWidth: 220
+            minWidth: 150
         }, {
             field: "cpuRate",
             title: "cup使用率",
             align: "center",
             hide: isHidden("cpuRate"),
-            minWidth: 60
+            minWidth: 150
         }, {
             field: "storageRate",
             title: "内存使用率",
             align: "center",
             hide: isHidden("storageRate"),
-            minWidth: 60
+            minWidth: 150
         }, {
             field: "errorRate",
             title: "误读率",
             align: "center",
             hide: isHidden("errorRate"),
-            minWidth: 60
+            minWidth: 150
         }
         ]]
     });

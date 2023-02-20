@@ -7,10 +7,10 @@
     <!--终端告警信息记录数-->
     <select id="countAA" resultType="int">
         select
-        count(*)
+        count(dev.device_name)
         FROM
         mon_device_real AS mdr
-        LEFT JOIN eqi_device AS dev ON mdr.device_name = dev.device_name
+        LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
         LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
         LEFT JOIN war_alarm_event AS wae ON mdr.warning_content = wae.alarm_event_content
         LEFT JOIN base_access_info AS bai ON equ.acc_point_res_id = bai.acc_point_res_id
@@ -24,7 +24,7 @@
                 and equ.equipment_name like '%${equipmentName}%'
             </if>
             <if test="deviceName !=null and deviceName !=''">
-                and mdr.device_name like '%${deviceName}%'
+                and dev.device_name like '%${deviceName}%'
             </if>
             <if test="processName !=null and processName !=''">
                 and bpi.process_name like '%${processName}%'
@@ -50,7 +50,6 @@
     <!--查询终端告警信息-->
     <select id="queryDeviceAbnormalAlarm" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.vo.DeviceAbnVo">
         SELECT
-        mdr.device_real_id,
         dev.device_id,
         equ.equipment_int,
         wae.alarm_event_id,
@@ -59,18 +58,17 @@
         bpi.process_id,
         equ.equipment_id,
         equ.equipment_name,
-        dev.app_id,
-        mdr.device_name,
+        mdr.app_id,
+        dev.device_name,
         bpi.process_name,
         wae.alarm_event_title,
         wae.alarm_type,
         wae.alarm_level,
         wae.alarm_event_content,
-        mdr.occurrence_time,
-        mdr.remarks
+        mdr.occurrence_time
         FROM
         mon_device_real AS mdr
-        LEFT JOIN eqi_device AS dev ON mdr.device_name = dev.device_name
+        LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
         LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
         LEFT JOIN war_alarm_event AS wae ON mdr.warning_content = wae.alarm_event_content
         LEFT JOIN base_access_info AS bai ON equ.acc_point_res_id = bai.acc_point_res_id
@@ -84,7 +82,7 @@
                 and equ.equipment_name like '%${equipmentName}%'
             </if>
             <if test="deviceName !=null and deviceName !=''">
-                and mdr.device_name like '%${deviceName}%'
+                and dev.device_name like '%${deviceName}%'
             </if>
             <if test="processName !=null and processName !=''">
                 and bpi.process_name like '%${processName}%'

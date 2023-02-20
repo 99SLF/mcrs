@@ -235,7 +235,6 @@
     }
 
 
-
     table.render({
         elem: "#LAY-app-sysadmin_monitor-list",
         id: "LAY-app-sysadmin_monitor-list-reload",
@@ -291,7 +290,7 @@
             align: "center",
             // sort: true,
             hide: isHidden("warningTitle"),
-            minWidth: 100
+            minWidth: 150
         }, {
             //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
             field: "warningType",
@@ -320,23 +319,22 @@
             align: "center",
             hide: isHidden("warningContent"),
             minWidth: 150
-        }
-            , {
-                field: "occurTime",
-                title: "发生时间",
-                align: "center",
-                hide: isHidden("occurTime"),
-                minWidth: 100,
-                templet: function (d) {
-                    return util.toDateString(d.occurTime, 'yyyy-MM-dd HH:mm:ss');
-                }
-            }, {
-                field: "remarks",
-                title: "备注",
-                align: "center",
-                hide: isHidden("remarks"),
-                minWidth: 100
+        }, {
+            field: "occurTime",
+            title: "发生时间",
+            align: "center",
+            hide: isHidden("occurTime"),
+            minWidth: 150,
+            templet: function (d) {
+                return util.toDateString(d.occurTime, 'yyyy-MM-dd HH:mm:ss');
             }
+        }, {
+            field: "remarks",
+            title: "备注",
+            align: "center",
+            hide: isHidden("remarks"),
+            minWidth: 150
+        }
 
         ]]
     });

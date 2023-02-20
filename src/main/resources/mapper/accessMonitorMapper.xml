@@ -31,16 +31,15 @@
     <!--添加监控实时信息-->
     <insert id="addMonitorDeviceReal" parameterType="com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus">
         insert into mon_device_real
-        values (#{deviceRealId}, #{deviceName}, #{deviceExists}, #{accessType}, #{accessStatus},
+        values (MD5(#{appId}), #{deviceExists}, #{accessType}, #{accessStatus},
                 #{deviceSoftwareStatus}, #{antennaStatus},
-                #{warningContent}, #{cpuRate}, #{storageRate}, #{errorRate}, #{occurrenceTime}, #{remarks},
-                #{createTime}, #{deviceWarningNum})
+                #{warningContent}, #{cpuRate}, #{storageRate}, #{errorRate}, #{occurrenceTime}, #{deviceWarningNum})
     </insert>
     <update id="updateMonitorDeviceRealExist"
             parameterType="com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus">
         UPDATE mon_device_real
         SET device_exists = #{deviceExists}
-        WHERE device_name = #{deviceName}
+        WHERE app_id = #{appId}
     </update>
 
     <update id="updateMonitorDeviceStatus"
@@ -55,14 +54,12 @@
             storage_rate           = #{storageRate},
             error_rate             = #{errorRate},
             occurrence_time        = #{occurrenceTime},
-            remarks                = #{remarks},
             device_warning_num     = CASE
                                          WHEN #{warningContent} = '' THEN device_warning_num
                                          WHEN #{warningContent} IS NULL THEN device_warning_num
-                                         ELSE device_warning_num +1  END
+                                         ELSE device_warning_num + 1 END
         where device_exists = 0
-          and device_name =
-              #{deviceName}
+          and app_id = #{appId}
     </update>
 
     <select id="groupQueryBydate" resultType="com.zimax.mcrs.monitor.pojo.vo.GroupByDate">

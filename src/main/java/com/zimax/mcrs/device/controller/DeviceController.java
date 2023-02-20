@@ -3,6 +3,7 @@ package com.zimax.mcrs.device.controller;
 
 import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
+import com.zimax.components.websocket.WebSocket;
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.device.pojo.Device;
 import com.zimax.mcrs.device.service.DeviceService;
@@ -44,16 +45,16 @@ public class DeviceController {
      */
     @PostMapping("/device/registrationDevice")
     public Result<?> registrationDevice(@RequestBody Device device) {
-        IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
+        IUserObject useObject = DataContextManager.current().getMUODataContext().getUserObject();
         device.setRegisterStatus("102");
         device.setVersion("1.0");
-        device.setCreator(usetObject.getUserId());
+        device.setCreator(useObject.getUserId());
         device.setCreateTime(new Date());
 
         //当终端注册的时候，在终端状态表中生成一条该终端名称的终端状态初始化信息(监控信息)
-        String deviceName = device.getDeviceName();
+        String APPId = device.getAPPId();
         MonitorDeviceStatus monitorDeviceStatus = new MonitorDeviceStatus();
-        monitorDeviceStatus.setDeviceName(deviceName);
+        monitorDeviceStatus.setAppId(APPId);
         accessMonitorService.addMonitorDeviceReal(monitorDeviceStatus);
 
         deviceService.registrationDevice(device);
@@ -69,10 +70,10 @@ public class DeviceController {
     public Result<?> logoutTerminal(@PathVariable("deviceId") int deviceId) {
 
         //根据终端主键获取终端信息（名称）
-        String deviceName= deviceService.getDeviceName(deviceId).getDeviceName();
+        String APPId= deviceService.getDeviceName(deviceId).getAPPId();
         //通过终端名称修改实时终端监控表
         MonitorDeviceStatus monitorDeviceStatus = new MonitorDeviceStatus();
-        monitorDeviceStatus.setDeviceName(deviceName);
+        monitorDeviceStatus.setAppId(APPId);
         monitorDeviceStatus.setDeviceExists(1);
         accessMonitorService.updateMonitorDeviceRealExist(monitorDeviceStatus);
         deviceService.logoutDevice(deviceId);
@@ -106,6 +107,9 @@ public class DeviceController {
     public Result<?> queryDevice(String page, String limit, String equipmentId, String deviceSoftwareType, String enable, String deviceName, String processName, String factoryName,
                                  String version, String needUpdate, String registerStatus, String programInstallationPath, String createTime, String order, String field) {
         List devices = deviceService.queryDevices(page, limit, equipmentId, deviceSoftwareType, enable, deviceName, processName, factoryName, version, needUpdate, registerStatus, programInstallationPath, createTime, order, field);
+
+//        WebSocket.invok("bb");
+
         return Result.success(devices, deviceService.counts(equipmentId, deviceSoftwareType, enable, deviceName, processName, factoryName, version, needUpdate, registerStatus, programInstallationPath, createTime));
     }
 

@@ -176,12 +176,11 @@
 
     <select id="queryDeviceRuntime" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.vo.DeviceMonitorInfoVo">
         SELECT
-        mdr.device_real_id,
         dev.device_id,
         equ.equipment_int,
-        mdr.device_name,
+        dev.device_name,
         dev.device_software_type,
-        dev.app_id,
+        mdr.app_id,
         equ.equipment_id,
         equ.equipment_name,
         mdr.access_status,
@@ -191,7 +190,7 @@
         mdr.storage_rate,
         mdr.error_rate
         FROM mon_device_real AS mdr
-        LEFT JOIN eqi_device AS dev ON mdr.device_name = dev.device_name
+        LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
         LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
         <where>
             and mdr.device_exists = 0
@@ -202,7 +201,7 @@
                 and equ.equipment_name like '%${equipmentName}%'
             </if>
             <if test="deviceName !=null and deviceName !=''">
-                and mdr.device_name like '%${deviceName}%'
+                and dev.device_name like '%${deviceName}%'
             </if>
             <if test="deviceSoftwareType !=null and deviceSoftwareType !=''">
                 and dev.device_software_type like '%${deviceSoftwareType}%'
@@ -235,9 +234,9 @@
         <!--    查询终端运行状态记录数-->
         <select id="countDR" resultType="int">
             SELECT
-            COUNT(*)
+            COUNT(dev.device_name)
             FROM mon_device_real AS mdr
-            LEFT JOIN eqi_device AS dev ON mdr.device_name = dev.device_name
+            LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
             LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
             <where>
                 and mdr.device_exists = 0
@@ -248,7 +247,7 @@
                     and equ.equipment_name like '%${equipmentName}%'
                 </if>
                 <if test="deviceName !=null and deviceName !=''">
-                    and mdr.device_name like '%${deviceName}%'
+                    and dev.device_name like '%${deviceName}%'
                 </if>
                 <if test="deviceSoftwareType !=null and deviceSoftwareType !=''">
                     and dev.device_software_type like '%${deviceSoftwareType}%'

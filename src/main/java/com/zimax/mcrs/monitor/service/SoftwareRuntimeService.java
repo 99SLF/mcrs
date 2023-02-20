@@ -30,7 +30,7 @@ public class SoftwareRuntimeService {
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
             map.put("order", "desc");
-            map.put("field", "mdr.device_name");
+            map.put("field", "dev.device_name");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));
