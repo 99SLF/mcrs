@@ -92,13 +92,13 @@
 
     <select id="getEqiOnline" resultType="Int">
         select count(*) as eqiOnline
-        from mon_soft_status
-        where device_so_run_status = "101"
+        from mon_device_real
+        where device_software_status = "101"
     </select>
 
     <select id="getAccessOnline" resultType="Int">
         select count(*) as accessOnline
-        from mon_equipment_status
+        from mon_device_real
         where access_status = "101"
     </select>
 
