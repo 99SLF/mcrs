@@ -253,8 +253,8 @@
     table.render({
         elem: "#LAY-app-device_status-list",
         id: "LAY-app-device_status-list-reload",
-        <%--url: "<%= request.getContextPath() %>/DeviceRuntime/query",--%>
-        data:[],
+        url: "<%= request.getContextPath() %>/DeviceRuntime/query",
+        // data:[],
         method: "GET",
         height: "full-" + getFullSize(),
         page: true,
