@@ -95,6 +95,7 @@ public class AccessMonitor {
     }
 
 
+
     @GetMapping("/deviceAndaccess")
     public Result<?> getEqiAndAccess() {
         return Result.success(accessMonitorService.getEqiAndAccess());

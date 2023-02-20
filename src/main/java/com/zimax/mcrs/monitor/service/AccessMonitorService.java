@@ -62,6 +62,12 @@ public class AccessMonitorService {
 
     }
 
+    /**
+     * appid删除终端状态
+     */
+    public void deleteDeviceStatus(String appId) {
+        accessMonitorMapper.deleteDeviceStatus(appId);
+    }
 
     /**
      * 对内每次注册一个终端信息的话，就往表里新增一条终端名为注册名的监控信息（表+++mon_device_real）

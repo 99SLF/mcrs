@@ -42,6 +42,10 @@ public interface AccessMonitorMapper {
     int updateMonitorDeviceStatus(MonitorDeviceStatus monitorDeviceStatus);
 
     /**
+     * appid删除终端状态
+     */
+    void deleteDeviceStatus(String operatorId);
+    /**
      * 对内每次注册一个终端信息的话，就新增表里一条终端名为注册名的监控信息（表+++mon_device_real）
      */
     void addMonitorDeviceReal(MonitorDeviceStatus monitorDeviceStatus);
