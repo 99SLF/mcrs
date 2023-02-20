@@ -83,34 +83,8 @@ public class AccessMonitor {
      * 对外获取终端设备，硬件软件的运行状态（表+++mon_device_history）
      */
     @PostMapping("/deviceStatus")
-    public Result<?> addMonitorDeviceStatus(@RequestBody MonitorDeviceHistory monitorDeviceHistory) {
+    public Result<?> addMonitorDeviceStatus(@RequestBody MonitorDeviceStatus monitorDeviceStatus) {
 
-
-        String deviceName = monitorDeviceHistory.getDeviceName();
-        String accessType = monitorDeviceHistory.getAccessType();
-        String accessStatus = monitorDeviceHistory.getAccessStatus();
-        String deviceSoftwareStatus = monitorDeviceHistory.getDeviceSoftwareStatus();
-        String antennaStatus = monitorDeviceHistory.getAntennaStatus();
-        String warningContent = monitorDeviceHistory.getWarningContent();
-        String cpuRate = monitorDeviceHistory.getCpuRate();
-        String storageRate = monitorDeviceHistory.getStorageRate();
-        String errorRate = monitorDeviceHistory.getErrorRate();
-        Date occurrenceTime = monitorDeviceHistory.getOccurrenceTime();
-        String remarks = monitorDeviceHistory.getRemarks();
-
-        //调试
-        MonitorDeviceStatus monitorDeviceStatus = new MonitorDeviceStatus();
-        monitorDeviceStatus.setDeviceName(deviceName);
-        monitorDeviceStatus.setAccessType(accessType);
-        monitorDeviceStatus.setAccessStatus(accessStatus);
-        monitorDeviceStatus.setDeviceSoftwareStatus(deviceSoftwareStatus);
-        monitorDeviceStatus.setAntennaStatus(antennaStatus);
-        monitorDeviceStatus.setWarningContent(warningContent);
-        monitorDeviceStatus.setCpuRate(cpuRate);
-        monitorDeviceStatus.setStorageRate(storageRate);
-        monitorDeviceStatus.setErrorRate(errorRate);
-        monitorDeviceStatus.setOccurrenceTime(occurrenceTime);
-        monitorDeviceStatus.setRemarks(remarks);
         //调用修改终端实时表的接口
         int i = accessMonitorService.updateMonitorDeviceStatus(monitorDeviceStatus);
         if (i == 0) {

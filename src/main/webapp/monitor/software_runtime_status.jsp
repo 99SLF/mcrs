@@ -289,7 +289,7 @@
                 align: "center",
                 // sort: true,
                 hide: isHidden("equipmentId"),
-                minWidth: 100
+                minWidth: 150
             },
             {
                 field: "equipmentName",
@@ -297,13 +297,13 @@
                 align: "center",
                 // sort: true,
                 hide: isHidden("equipmentName"),
-                minWidth: 120
+                minWidth: 150
             },  {
                 //field:设定字段名。字段名的设定非常重要不能弄成APPId，识别不了，且是表格数据列的唯一标识;title:设定标题名称
                 field: "aPPId",
                 title: "APPID",
                 align: "center",
-                minWidth: 100,
+                minWidth: 150,
                 hide: isHidden("aPPId")
                 // templet: function(d){
                 //     if (d.appType==1) {
@@ -317,14 +317,14 @@
                 title: "终端名称",
                 align: "center",
                 hide: isHidden("deviceName"),
-                minWidth: 100
+                minWidth: 150
 
             }, {
                 field: "deviceSoftwareType",
                 title: "终端类型",
                 align: "center",
                 hide: isHidden("deviceSoftwareType"),
-                minWidth: 100,
+                minWidth: 150,
                 templet: function (d) {
 
                     return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoftwareType);

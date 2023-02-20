@@ -21,16 +21,12 @@ import java.util.Date;
 public class MonitorDeviceStatus {
 
 
-    /**
-     * 终端历史状态记录主键（不对外提供自增）
-     */
-    @TableId(type = IdType.AUTO)
-    private int deviceRealId;
+
 
     /**
-     * 终端名称
+     * appid(主键),非自增
      */
-    private String deviceName;
+    private String appId;
 
 
     /**
@@ -109,21 +105,13 @@ public class MonitorDeviceStatus {
      */
     private Date occurrenceTime;
 
-    /**
-     * 备注
-     */
-    private String remarks;
-
-    /**
-     * 终端创建时间（服务端时间）,不对外提供
-     *
-     */
-    private Date createTime;
 
     /**
      * 终端预警条数,不对外提供
      */
     private int deviceWarningNum;
+
+
 
 
 

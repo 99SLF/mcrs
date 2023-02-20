@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 
 import java.util.Date;
 
@@ -19,16 +20,13 @@ import java.util.Date;
 @TableName("mon_device_history")
 public class MonitorDeviceHistory {
 
-    /**
-     * 终端历史状态记录主键（不对外提供自增）
-     */
-    @TableId(type = IdType.AUTO)
-    private int deviceHistoryId;
+
+
 
     /**
-     * 终端名称
+     * appid(主键),非自增
      */
-    private String deviceName;
+    private String appId;
 
     /**
      * 接入类型(plc或rfid)   ACCESS_TYPE
@@ -102,16 +100,8 @@ public class MonitorDeviceHistory {
     private Date occurrenceTime;
 
 
-    /**
-     * 备注
-     */
-    private String remarks;
 
-    /**
-     * 创建时间（服务端时间）,不对外提供
-     *
-     */
-    private Date createTime;
+
 
 
 

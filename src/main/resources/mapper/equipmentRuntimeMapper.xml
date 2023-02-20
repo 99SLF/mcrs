@@ -5,10 +5,10 @@
 
     <!--    plc查询记录数-->
     <select id="countEQP" resultType="int">
-        select count(*)
+        select count(dev.device_name)
         FROM
         mon_device_real AS mdr
-        LEFT JOIN eqi_device AS dev ON mdr.device_name = dev.device_name
+        LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
         LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
         <where>
             and mdr.device_exists = 0 AND mdr.access_type = "101"
@@ -25,7 +25,6 @@
     <select id="queryEquipmentAccessP" parameterType="map"
             resultType="com.zimax.mcrs.monitor.pojo.vo.EquipmentStatusVo">
         SELECT
-        mdr.device_real_id,
         dev.device_id,
         equ.equipment_int,
         equ.equipment_id,
@@ -34,7 +33,7 @@
         mdr.access_status
         FROM
         mon_device_real AS mdr
-        LEFT JOIN eqi_device AS dev ON mdr.device_name = dev.device_name
+        LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
         LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
         <where>
             and mdr.device_exists = 0 AND mdr.access_type = "101"
@@ -55,10 +54,10 @@
 
     <!--RFID查询记录数-->
     <select id="countEQR" resultType="int">
-        select count(*)
+        select count(dev.device_name)
         FROM
         mon_device_real AS mdr
-        LEFT JOIN eqi_device AS dev ON mdr.device_name = dev.device_name
+        LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
         LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
         <where>
             AND mdr.device_exists = 0
@@ -79,7 +78,6 @@
     <select id="queryEquipmentAccessR" parameterType="map"
             resultType="com.zimax.mcrs.monitor.pojo.vo.EquipmentStatusVo">
         SELECT
-        mdr.device_real_id,
         dev.device_id,
         equ.equipment_int,
         equ.equipment_id,
@@ -89,7 +87,7 @@
         mdr.antenna_status
         FROM
         mon_device_real AS mdr
-        LEFT JOIN eqi_device AS dev ON mdr.device_name = dev.device_name
+        LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
         LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
         <where>
             AND mdr.device_exists = 0

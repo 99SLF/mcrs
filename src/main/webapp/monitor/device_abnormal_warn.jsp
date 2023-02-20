@@ -294,7 +294,7 @@
             align: "center",
             // sort: true,
             hide: isHidden("equipmentName"),
-            minWidth: 120
+            minWidth: 150
         },{
             //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
             field: "aPPId",
@@ -315,7 +315,7 @@
             title: "使用工序",
             align: "center",
             hide: isHidden("processName"),
-            minWidth: 80
+            minWidth: 150
         }, {
             //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
             field: "alarmEventTitle",
@@ -362,12 +362,7 @@
             templet: function (d) {
                 return util.toDateString(d.occurrenceTime, 'yyyy-MM-dd HH:mm:ss');
             }
-        }, {
-            field: "remarks",
-            title: "备注",
-            align: "center",
-            hide: isHidden("remarks"),
-            minWidth: 150
+
         }]]
     });
 
