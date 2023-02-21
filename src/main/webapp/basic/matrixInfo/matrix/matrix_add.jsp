@@ -107,7 +107,7 @@
     form.verify({
         matrixAddress: function (value, item) {
             debugger;
-            if (value.length > 225) {
+            if (value.length > 255) {
                 return "基地地址内容不能超过255个字";
             }
         },
