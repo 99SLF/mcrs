@@ -479,11 +479,11 @@
             minWidth: 120,
             hide: isHidden("processName")
         }, {
-            field: "ruleMakeFormTime",
+            field: "workStationList",
             title: "工位代码",
             align: "center",
             minWidth: 100,
-            hide: isHidden("ruleMakeFormTime")
+            hide: isHidden("workStationList")
         }, {
             title: "操作",
             align: "center",

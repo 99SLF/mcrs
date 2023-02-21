@@ -62,7 +62,7 @@
                         <input type="text" class="layui-input" name="equipTypeName" id="equipTypeName"
                                lay-verify=""
                                autocomplete="off" placeholder="" readonly>
-                        <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="selectequipType"
+                        <button type="button" class="layui-btn layui-btn-sm layui-btn-primary layui-hide" id="selectequipType"
                                 style="position:absolute;top:0px;right:0px;height:37px"><i
                                 class="layui-icon layui-icon-more" readonly=""></i></button>
                     </div>
@@ -113,7 +113,7 @@
                         <input type="text" class="layui-input" name="accPointResName" id="accPointResName"
                                lay-verify=""
                                autocomplete="off" placeholder="" readonly>
-                        <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="selectAcc"
+                        <button type="button" class="layui-btn layui-btn-sm layui-btn-primary layui-hide" id="selectAcc"
                                 style="position:absolute;top:0px;right:0px;height:37px"><i
                                 class="layui-icon layui-icon-more"></i></button>
                     </div>

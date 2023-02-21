@@ -351,7 +351,7 @@
         height: "full-" + getFullSize(),
         page: true,
         limit: 10,
-        limits: [10, 15, 20, 30],
+        limits: [10, 20, 40, 80],
         toolbar: "#toolbar",
         defaultToolbar: [{
             title: "查询",

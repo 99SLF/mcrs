@@ -145,6 +145,12 @@
                            ON wme.equipment_int = eqi.equipment_int
                  LEFT JOIN base_access_info AS bai
                            ON eqi.acc_point_res_id = bai.acc_point_res_id
+                 LEFT JOIN base_process_info AS bpi
+                           ON bai.process_id = bpi.process_id
+                 LEFT JOIN base_factory_info bfi
+                           ON bpi.factory_id = bfi.factory_id
+                 LEFT JOIN base_matrix_info AS bmi
+                           on bfi.matrix_id = bmi.matrix_id
         WHERE wme.alarm_rule_int = #{alarmRuleInt}
     </select>
 
@@ -184,7 +190,8 @@
     <select id="countAlarmRule" resultType="int">
         SELECT count(*)
         FROM war_alarm_rule
-        WHERE alarm_rule_id = #{alarmRuleId} and alarm_rule_int != #{alarmRuleInt}
+        WHERE alarm_rule_id = #{alarmRuleId}
+          and alarm_rule_int != #{alarmRuleInt}
     </select>
 
     <!--    根据预警规则主键查询该预警编号是否已经存在-->

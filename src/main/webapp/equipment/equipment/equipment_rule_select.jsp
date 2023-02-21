@@ -1,4 +1,4 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" session="false" %>
 <!DOCTYPE html>
 <html>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="layui-inline">
                     <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-deviceInfo-search"
-                    id="LAY-app-deviceInfo-search">
+                            id="LAY-app-deviceInfo-search">
                         <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                     </button>
                 </div>
@@ -89,7 +89,6 @@
     form.render();
 
 
-
     //监听搜索
     form.on("submit(LAY-app-deviceInfo-search)", function (data) {
         var field = data.field;
@@ -107,7 +106,7 @@
     });
 
     //使用工序下拉框监听事件
-    form.on("select(processName)", function(data) {
+    form.on("select(processName)", function (data) {
         var submit = $("#LAY-app-deviceInfo-search");
         submit.click();
     });
@@ -160,6 +159,7 @@
         limits: [10, 15, 20, 30],
         where: {"isEquipment": "1"},
         parseData: function (res) {
+            debugger;
             return {
                 code: "0",
                 msg: res.msg,
@@ -212,9 +212,13 @@
             title: "使用工序",
             align: "center",
             minWidth: 150,
+        }, {
+            field: "workStationList",
+            title: "工位",
+            align: "center",
+            minWidth: 150,
         }]]
     });
-
 
 
     function GetData() {
@@ -222,8 +226,6 @@
         tableData = checkStatus.data;
         return tableData;
     }
-
-
 
 
     // $("body").on("click", ".layui-table-body table.layui-table tbody tr td", function () {

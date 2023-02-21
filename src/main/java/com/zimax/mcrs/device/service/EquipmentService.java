@@ -40,10 +40,10 @@ public class EquipmentService {
     /**
      * 查询所有
      */
-    public List<EquipmentVo> queryEquipments(String limit, String page,String equipmentId,String equipmentName, String enable, String equipmentInstallLocation, String equipTypeName, String protocolCommunication, String accPointResName, String processName, String createName, String createTime, String order, String field) {
-        if (equipmentId!=null||equipmentName!=null||enable!=null||equipmentInstallLocation!=null||equipTypeName!=null||protocolCommunication!=null||accPointResName!=null||processName!=null||createName!=null||createTime!=null){
+    public List<EquipmentVo> queryEquipments(String limit, String page, String equipmentId, String equipmentName, String enable, String equipmentInstallLocation, String equipTypeName, String protocolCommunication, String accPointResName, String processName, String createName, String createTime, String order, String field) {
+        if (equipmentId != null || equipmentName != null || enable != null || equipmentInstallLocation != null || equipTypeName != null || protocolCommunication != null || accPointResName != null || processName != null || createName != null || createTime != null) {
             Equipment equipment = new Equipment();
-            addOperationLog(equipment,1);
+            addOperationLog(equipment, 1);
         }
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
@@ -68,6 +68,7 @@ public class EquipmentService {
         map.put("processName", processName);
         map.put("createName", createName);
         map.put("createTime", createTime);
+
         return equipmentMapper.queryAll(map);
     }
 
@@ -99,13 +100,13 @@ public class EquipmentService {
     public void removeEquipment(int equipmentInt) {
         List<WorkStation> workStationList = equipmentMapper.queryWorkStation(equipmentInt);
         //如果存在工位信息，删除
-        if(workStationList.size()>0){
-            for(WorkStation workStation: workStationList){
+        if (workStationList.size() > 0) {
+            for (WorkStation workStation : workStationList) {
                 equipmentMapper.removeWorkStation(workStation.getWorkStationId());
             }
         }
         Equipment equipment = queryEquipment(equipmentInt);
-        addOperationLog(equipment,3);
+        addOperationLog(equipment, 3);
         equipmentMapper.removeEquipment(equipmentInt);
     }
 
@@ -115,8 +116,8 @@ public class EquipmentService {
     public void updateEquipment(Equipment equipment) {
         List<WorkStation> workStationList = equipmentMapper.queryWorkStation(equipment.getEquipmentInt());
         //如果存在工位信息，删除
-        if(equipment.getWorkStationList() != null){
-            for(WorkStation workStation: workStationList){
+        if (equipment.getWorkStationList() != null) {
+            for (WorkStation workStation : workStationList) {
                 equipmentMapper.removeWorkStation(workStation.getWorkStationId());
             }
         }
@@ -128,7 +129,7 @@ public class EquipmentService {
         }
         equipmentMapper.updateEquipment(equipment);
         //如果工位不为空，则添加至工位表
-        if (equipment.getWorkStationList() != null ) {
+        if (equipment.getWorkStationList() != null) {
             for (WorkStation workStation : equipment.getWorkStationList()) {
                 workStation.setEquipmentInt(equipment.getEquipmentInt());
                 equipmentMapper.addWorkStation(workStation);
@@ -140,9 +141,9 @@ public class EquipmentService {
     /**
      * 查询记录数
      */
-    public int count(String equipmentId,String equipmentName, String enable, String equipmentInstallLocation, String equipTypeName, String protocolCommunication, String accPointResName, String processName, String createName, String createTime) {
-        return equipmentMapper.count(equipmentId, equipmentName ,enable,equipmentInstallLocation, equipTypeName,
-                protocolCommunication,accPointResName,processName,createName,createTime);
+    public int count(String equipmentId, String equipmentName, String enable, String equipmentInstallLocation, String equipTypeName, String protocolCommunication, String accPointResName, String processName, String createName, String createTime) {
+        return equipmentMapper.count(equipmentId, equipmentName, enable, equipmentInstallLocation, equipTypeName,
+                protocolCommunication, accPointResName, processName, createName, createTime);
     }
 
     /**
@@ -150,18 +151,18 @@ public class EquipmentService {
      */
     public void deleteEquipments(List<Integer> equipmentInt) {
         //从表中获取设备的对应工位信息
-        for (Integer a: equipmentInt) {
+        for (Integer a : equipmentInt) {
             List<WorkStation> workStationList = equipmentMapper.queryWorkStation(a);
             //如果存在工位信息，删除
-            if(workStationList.size()>0){
-                for(WorkStation workStation: workStationList){
+            if (workStationList.size() > 0) {
+                for (WorkStation workStation : workStationList) {
                     equipmentMapper.removeEquipment(workStation.getWorkStationId());
                 }
             }
         }
-        for (Integer a:equipmentInt){
+        for (Integer a : equipmentInt) {
             Equipment equipment = queryEquipment(a);
-            addOperationLog(equipment,3);
+            addOperationLog(equipment, 3);
         }
         equipmentMapper.deleteEquipments(equipmentInt);
     }
@@ -190,8 +191,8 @@ public class EquipmentService {
      *
      * @param equipmentIp 设备连接Ip
      */
-    public int checkEquipmentIp(String equipmentIp,String equipmentInt) {
-        return equipmentMapper.checkEquipmentIp(equipmentIp,equipmentInt);
+    public int checkEquipmentIp(String equipmentIp, String equipmentInt) {
+        return equipmentMapper.checkEquipmentIp(equipmentIp, equipmentInt);
     }
 
     /**
@@ -205,13 +206,14 @@ public class EquipmentService {
 
     /**
      * 查询设备对应的工位
+     *
      * @param equipmentInt
      * @return
      */
-    public Equipment queryWorkStation(int equipmentInt){
+    public Equipment queryWorkStation(int equipmentInt) {
         Equipment equipment = new Equipment();
         List<WorkStation> workStationList = equipmentMapper.queryWorkStation(equipmentInt);
-        if (workStationList!= null && workStationList.size()>0){
+        if (workStationList != null && workStationList.size() > 0) {
             equipment.setWorkStationList(workStationList);
         }
         return equipment;
@@ -219,14 +221,14 @@ public class EquipmentService {
 
     /**
      * 根据设备主键查询设备
+     *
      * @param equipmentInt
      * @return
      */
-    public Equipment queryEquipment(int equipmentInt){
+    public Equipment queryEquipment(int equipmentInt) {
         Equipment equipment = equipmentMapper.queryEquipment(equipmentInt);
         return equipment;
     }
-
 
 
     /**
@@ -249,15 +251,15 @@ public class EquipmentService {
                 break;
             case 2:
                 operationLog.setOperationType("101");
-                operationLog.setOperationContent("添加设备:"+equipment.getEquipmentName());
+                operationLog.setOperationContent("添加设备:" + equipment.getEquipmentName());
                 break;
             case 3:
                 operationLog.setOperationType("103");
-                operationLog.setOperationContent("删除设备:"+equipment.getEquipmentName());
+                operationLog.setOperationContent("删除设备:" + equipment.getEquipmentName());
                 break;
             case 4:
                 operationLog.setOperationType("102");
-                operationLog.setOperationContent("修改设备:"+equipment.getEquipmentName());
+                operationLog.setOperationContent("修改设备:" + equipment.getEquipmentName());
                 break;
         }
         operationLogService.addOperationLog(operationLog);
@@ -282,4 +284,31 @@ public class EquipmentService {
         operationLogService.addOperationLog(operationLog);
     }
 
+
+    /**
+     * 查询设备对应的工位并将其set到每个设备中
+     *
+     * @param equipmentVos
+     * @return
+     */
+    public List<EquipmentVo> setWorkStation(List<EquipmentVo> equipmentVos) {
+//        接收到控制层传过来的List，循环遍历它
+        for (EquipmentVo equipmentVo : equipmentVos) {
+//            取出每个equipmentVo中的所有工位
+            List<WorkStation> workStationList = equipmentMapper.queryWorkStation(equipmentVo.getEquipmentInt());
+//            循环遍历每个工位代码
+            for (WorkStation workStation:workStationList){
+//                如果equipmentVo中的工位为空，且判断其是否为第一位
+                if (equipmentVo.getWorkStationList()==null||equipmentVo.getWorkStationList()=="") {
+//                    将获取到的工位存入equipmentVo中的工位
+                    equipmentVo.setWorkStationList(workStation.getWorkStationNum());
+                }
+//                如果在循环中，单独取出的equipmentVo中的工位不为空，拼接它，即在工位不止一位的情况下，使用-拼接字符串
+                else {
+                    equipmentVo.setWorkStationList(equipmentVo.getWorkStationList()+"-"+workStation.getWorkStationNum());
+                }
+            }
+        }
+        return equipmentVos;
+    }
 }

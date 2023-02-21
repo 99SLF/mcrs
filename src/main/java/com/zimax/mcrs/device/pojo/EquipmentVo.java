@@ -118,9 +118,14 @@ public class EquipmentVo {
      */
     private String remarks;
 
+//    /**
+//     *工位列表
+//     */
+//    @TableField(exist = false)
+//    List<WorkStation> workStationList;
+
     /**
      *工位列表
      */
-    @TableField(exist = false)
-    List<WorkStation> workStationList;
+    String workStationList;
 }

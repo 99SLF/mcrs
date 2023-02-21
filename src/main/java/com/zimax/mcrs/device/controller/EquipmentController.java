@@ -5,6 +5,8 @@ import com.zimax.cap.party.IUserObject;
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.device.pojo.Device;
 import com.zimax.mcrs.device.pojo.Equipment;
+import com.zimax.mcrs.device.pojo.EquipmentVo;
+import com.zimax.mcrs.device.pojo.WorkStation;
 import com.zimax.mcrs.device.service.EquipmentService;
 import com.zimax.mcrs.log.pojo.InterfaceLog;
 import com.zimax.mcrs.log.pojo.OperationLog;
@@ -53,8 +55,10 @@ public class EquipmentController {
      */
     @GetMapping("/equipment/query")
     public Result<?> query( String limit,  String page, String equipmentId,String equipmentName, String enable, String equipmentInstallLocation, String equipTypeName, String protocolCommunication, String accPointResName, String processName, String createName, String createTime,String order, String field) {
-        List equipments = equipmentService.queryEquipments(limit, page,equipmentId, equipmentName ,enable,equipmentInstallLocation, equipTypeName, protocolCommunication,accPointResName,processName,createName,createTime ,order, field);
-        return Result.success(equipments, equipmentService.count(equipmentId, equipmentName ,enable,equipmentInstallLocation, equipTypeName, protocolCommunication,accPointResName,processName,createName,createTime));
+        List<EquipmentVo> equipments = equipmentService.queryEquipments(limit, page,equipmentId, equipmentName ,enable,equipmentInstallLocation, equipTypeName, protocolCommunication,accPointResName,processName,createName,createTime ,order, field);
+        List<EquipmentVo> equipments1 = equipmentService.setWorkStation(equipments);
+        System.out.println(equipments1);
+        return Result.success(equipments1, equipmentService.count(equipmentId, equipmentName ,enable,equipmentInstallLocation, equipTypeName, protocolCommunication,accPointResName,processName,createName,createTime));
     }
 
     /**
