@@ -105,11 +105,17 @@
     // 判断字符
     form.verify({
         processRemarks: function (value, item) {
-            if (value.length > 225) {
+            if (value.length > 255) {
                 return "工序描述内容不能超过255个字";
             }
         },
         processName: function (value,item){
+            if(!new RegExp("^[a-zA-Z0-9\u4e00-\u9fa5]+$").test(value)){
+                return "输入终端名称有误，只能输入汉字+英文+数字";
+            }
+            if (value.length > 20) {
+                return "工序名称不能超过20个字符";
+            }
             var flag = "1";
             var checkResult = "";
             $.ajax({
