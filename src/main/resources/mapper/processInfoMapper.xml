@@ -171,7 +171,7 @@
           and process_id != #{parentId}
     </select>
 
-    <select id="getFactory" resultType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo">
+    <select id="getProcess" resultType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo">
         select *
         from base_process_info
         where process_id = #{parentId}
