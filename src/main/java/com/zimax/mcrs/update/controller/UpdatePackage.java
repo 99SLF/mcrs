@@ -87,7 +87,7 @@ public class UpdatePackage {
                 //2.1.3、查询更新策略
                 //2.1.3.1、更新策略为手动更新，返回 是否升级、版本号、更新策略
                 String version = deviceRollbackVo.getVersion();
-                if (deviceRollbackVo.getUploadStrategy().equals("002")) {
+                if ("102".equals(deviceRollbackVo.getUploadStrategy())) {
                     upgradeData.setUpdatetype("1");
                     upgradeData.setVersionID(version);
                     upgradeData.setIfUpdate(true);
@@ -143,7 +143,7 @@ public class UpdatePackage {
                     //3、查询更新策略
                     //3.1、更新策略为手动更新，返回 是否升级、版本号、更新策略
                     String version = deviceUpgradeVo.getVersion();
-                    if (deviceUpgradeVo.getUploadStrategy().equals("002")) {
+                    if ("102".equals(deviceUpgradeVo.getUploadStrategy())) {
                         upgradeData.setUpdatetype("0");
                         upgradeData.setVersionID(version);
                         upgradeData.setIfUpdate(true);
