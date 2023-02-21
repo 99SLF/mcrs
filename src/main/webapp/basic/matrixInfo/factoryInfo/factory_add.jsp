@@ -110,11 +110,17 @@
     // 判断字符
     form.verify({
         factoryAddress: function (value, item) {
-            if (value.length > 225) {
+            if (value.length > 255) {
                 return "工厂地址输入不能超过255个字";
             }
         },
         factoryName: function (value,item){
+            if(!new RegExp("^[a-zA-Z0-9\u4e00-\u9fa5]+$").test(value)){
+                return "输入工厂名称有误，只能输入汉字+英文+数字";
+            }
+            if (value.length > 20) {
+                return "工厂名称不能超过20个字符";
+            }
             var flag = "1";
             var checkResult = "";
             $.ajax({
