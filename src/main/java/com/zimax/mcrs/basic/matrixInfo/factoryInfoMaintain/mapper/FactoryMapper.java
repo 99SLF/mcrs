@@ -111,5 +111,14 @@ public interface FactoryMapper {
      *
      * @param parentId 上级节点的id
      */
-    int checkFactoryNameEdit(@Param("parentId") String parentId,@Param("factoryName") String factoryName);
+    int checkFactoryNameEdit(@Param("parentId") String parentId,@Param("factoryName") String factoryName,@Param("matrixId") String matrixId);
+
+
+    /**
+     * 根据工厂id获取一条工厂信息
+     * @param
+     * @return
+     */
+    FactoryInfo getFactory(int factoryId);
+
 }

@@ -1,6 +1,7 @@
 package com.zimax.components.websocket;
 
 import com.alibaba.fastjson.JSON;
+import com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -28,13 +29,13 @@ public class Util {
     }
 
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public static Map toMap(JSONObject jsonObject) {
         Map result = new HashMap();
         if (jsonObject == null) {
             return result;
         }
-        for (Iterator iterator = jsonObject.keys(); iterator.hasNext();) {
+        for (Iterator iterator = jsonObject.keys(); iterator.hasNext(); ) {
             Object key = iterator.next();
             try {
                 result.put(key, jsonObject.get(key.toString()));

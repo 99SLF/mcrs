@@ -208,8 +208,11 @@ public class FactoryController {
                 return Result.success();
             }
         }else {
-            //编辑
-            if (factoryService.checkFactoryNameEdit(parentId,factoryName) > 0) {
+            //编辑的时候parentId就是当前节点的id，用当前的节点查询出他的基地id
+            FactoryInfo factoryInfo =  factoryService.getFactory(Integer.parseInt(parentId));
+            String matrixId = String.valueOf(factoryInfo.getMatrixId());
+
+            if (factoryService.checkFactoryNameEdit(parentId,factoryName,matrixId) > 0) {
                 return Result.error("1", "节点下该工厂已存在");
             } else {
                 return Result.success();

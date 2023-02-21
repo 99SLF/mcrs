@@ -1,4 +1,5 @@
 package com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.controller;
+import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo;
 import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
 import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfoVo;
 import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.service.ProcessService;
@@ -202,7 +203,11 @@ public class ProcessController {
                 return Result.success();
             }
         }else {
-            if (processService.checkProcessNameEdit (parentId,processName) > 0) {
+
+            ProcessInfo processInfo =  processService.getProcess(Integer.parseInt(parentId));
+            String factoryId = String.valueOf(processInfo.getFactoryId());
+
+            if (processService.checkProcessNameEdit (parentId,processName,factoryId) > 0) {
                 return Result.error("1", "节点下该工序已存在");
             } else {
                 return Result.success();

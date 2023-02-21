@@ -124,7 +124,7 @@
             var flag = "0";
             var checkResult = "";
             $.ajax({
-                url: "<%=request.getContextPath()%>/FactoryController/check/isExist?parentId=" + parentId + "&factoryName=" + value +"&flag=" + flag,
+                url: "<%=request.getContextPath()%>/MatrixController/check/isExist?parentId=" + parentId + "&matrixName=" + value +"&flag=" + flag,
                 type: "GET",
                 async: false,
                 contentType: "text/json",

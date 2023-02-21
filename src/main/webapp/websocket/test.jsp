@@ -28,28 +28,28 @@
 </script>
 
 <script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/jquery.loadJSON.js"></script>
+<script type="text/javascript"
+        src="<%=request.getContextPath()%>/common/components/websocket/jquery.loadJSON.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/WebSocket.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/jquery.WebSocket.js"></script>
+<script type="text/javascript"
+        src="<%=request.getContextPath()%>/common/components/websocket/jquery.WebSocket.js"></script>
 <script type="text/javascript">
     var $ = layui.$;
 
-    function invok() {
-        ws2.send("{invok:'test1',params:{aa:123}}");
-    }
-    var ws1 = new $.websocket({
-        protocol : "mcrs/websocket/test",
-        port : "8089",
-        onOpen: function(event) {
-            ws1.send("aa");
+    var test = new $.websocket({
+        protocol: "mcrs/websocket/test",
+        port: "8089",
+        onOpen: function (event) {
+            test.send("aa");
         },
-        onError: function(event) {
+        onError: function (event) {
         },
-        onMessage: function(event) {
-            console.info(event.data);
+        onMessage: function (event) {
+            var json = JSON.parse(event.data);
+            console.info(json);
         },
-        onClose: function(event) {
-            ws1 = null;
+        onClose: function (event) {
+            test = null;
         }
     });
 </script>

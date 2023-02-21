@@ -175,7 +175,16 @@
         select count(*)
         from base_factory_info
         where factory_name = #{factoryName}
+          and matrix_id = #{matrixId}
           and factory_id != #{parentId}
     </select>
+
+    <select id="getFactory" resultType="com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo">
+        select *
+        from base_factory_info
+        where factory_id = #{parentId}
+    </select>
+
+
 </mapper>
 

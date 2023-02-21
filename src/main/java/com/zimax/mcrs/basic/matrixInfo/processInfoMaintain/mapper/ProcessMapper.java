@@ -109,5 +109,13 @@ public interface ProcessMapper {
      *
      * @param parentId 上级节点的id
      */
-    int checkProcessNameEdit(@Param("parentId") String parentId,@Param("processName") String processName);
+    int checkProcessNameEdit(@Param("parentId") String parentId,@Param("processName") String processName,@Param("factoryId") String factoryId);
+
+    /**
+     * 根据工序id获取一条工厂信息
+     * @param
+     * @return
+     */
+
+    ProcessInfo getProcess(int processId);
 }

@@ -215,7 +215,17 @@ public class FactoryService {
      *
      * @param parentId 上级节点的id
      */
-    public int  checkFactoryNameEdit(String parentId,String factoryName) {
-        return factoryMapper.checkFactoryNameEdit(parentId,factoryName) ;
+    public int  checkFactoryNameEdit(String parentId,String factoryName,String matrixId) {
+        return factoryMapper.checkFactoryNameEdit(parentId,factoryName,matrixId) ;
+    }
+
+    /**
+     * 根据工厂id获取一条工厂信息
+     * @param
+     * @return
+     */
+    public FactoryInfo getFactory(int factoryId){
+
+        return factoryMapper.getFactory(factoryId);
     }
 }

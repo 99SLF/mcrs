@@ -212,7 +212,17 @@ public class ProcessService {
      *
      * @param parentId 上级节点的id
      */
-    public int  checkProcessNameEdit(String parentId,String processName) {
-        return processMapper.checkProcessNameEdit(parentId,processName) ;
+    public int  checkProcessNameEdit(String parentId,String processName,String factoryId) {
+        return processMapper.checkProcessNameEdit(parentId,processName,factoryId) ;
+    }
+
+    /**
+     * 根据工序id获取一条工厂信息
+     * @param
+     * @return
+     */
+    public ProcessInfo getProcess(int processId){
+
+        return processMapper.getProcess(processId);
     }
 }

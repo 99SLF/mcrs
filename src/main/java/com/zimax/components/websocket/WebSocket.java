@@ -26,9 +26,11 @@ public class WebSocket {
     private static Map<String, List<Session>> sessionMap = new HashMap<String, List<Session>>();
 
     @SuppressWarnings("rawtypes")
-    public static void invok(String text) {
+    public static void push(String json) {
         try {
-            session.getBasicRemote().sendText(text);
+            if (session != null && session.isOpen()) {
+                session.getBasicRemote().sendText(json);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
