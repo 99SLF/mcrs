@@ -207,7 +207,7 @@
                 type: 2,
                 title: "新增设备类型",
                 content: "<%= request.getContextPath() %>/basic/equipType/equipType_add.jsp",
-                area: ["800px", "500px"],
+                area: ["800px", "480px"],
                 resize: false,
                 btn: ["确定", "取消"],
                 success: function (layero, index) {
@@ -601,7 +601,7 @@
                 type: 2,
                 title: "编辑设备类型信息维护",
                 content: "<%= request.getContextPath() %>/basic/equipType/equipType_edit.jsp",
-                area: ["800px", "500px"],
+                area: ["800px", "480px"],
                 resize: false,
                 btn: ["确定", "取消"],
                 success: function (layero, index) {
@@ -663,7 +663,7 @@
                 type: 2,
                 title: "编辑设备类型信息维护",
                 content: "<%= request.getContextPath() %>/basic/equipType/equipType_detailed.jsp",
-                area: ["800px", "500px"],
+                area: ["800px", "480px"],
                 resize: false,
                 btn: ["关闭"],
                 success: function (layero, index) {

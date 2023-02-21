@@ -25,6 +25,10 @@
             margin-left: 150px;
             min-height: 30px
         }
+        .layui-textarea {
+            height: 5px !important;
+            /*min-height: 60px!important;*/
+        }
     </style>
 </head>
 <body>
@@ -38,7 +42,7 @@
             <label class="layui-form-label"><span style="color:red">*</span>设备类型代码:</label>
             <div class="layui-input-block">
                 <input id="equipTypeCode" type="text" name="equipTypeCode" lay-verify="required|equipTypeCode"
-                       placeholder=" " autocomplete="off" class="layui-input" >
+                       placeholder=" " autocomplete="off" class="layui-input" readonly >
             </div>
         </div>
         <div class="layui-col-sm6">
@@ -103,7 +107,7 @@
             <label class="layui-form-label">备注:</label>
             <div class="layui-input-block">
             <textarea cols="50" rows="10" style="width:100%;height:100px" name="remarks" id="remarks" autocomplete="off"
-                      class="layui-input" lay-verify="remarks"></textarea>
+                      class="layui-textarea" lay-verify="remarks"></textarea>
             </div>
         </div>
     </div>
@@ -171,11 +175,17 @@
 
     form.verify({
         equipTypeName: function (value, item) {
+            if(!new RegExp("^[a-zA-Z0-9\u4e00-\u9fa5]+$").test(value)){
+                return "输入设备类型名称有误，只能输入汉字+英文+数字";
+            }
             if (value.length > 20) {
                 return "设备类型名称不能超过20字符";
             }
         },
         manufacturer: function (value, item) {
+            if(!new RegExp("^[a-zA-Z0-9\u4e00-\u9fa5]+$").test(value)){
+                return "输入厂家名称有误，只能输入汉字+英文+数字";
+            }
             if (value.length > 20) {
                 return "厂家不能超过20字";
             }
@@ -187,12 +197,16 @@
         },
         protocolCommunication: function (value, item) {
             if (value.length > 50) {
-                return "支持的通信协议不能超过20个字符";
+                return "支持的通信协议不能超过50个字符";
             }
         },
         mesIpAddress: function (value, item) {
-            if (value.length > 50) {
-                return "MES连接IP不能超过20个字符";
+            function isValidIP(ip) {
+                var reg = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
+                return reg.test(ip);
+            }
+            if(isValidIP(value) == false){
+                return '请输入正确的IP地址';
             }
         },
         remarks: function (value, item) {
