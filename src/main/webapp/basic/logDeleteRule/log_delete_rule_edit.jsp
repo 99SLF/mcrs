@@ -44,6 +44,25 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
+            <label class="layui-form-label"><span style="color:red">*</span>日志类型:</label>
+            <div class="layui-input-block">
+                <select name="logType" id="logType" lay-filter="" lay-verify="required" type="select">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><span style="color:red">*</span>是否启用：</label>
+            <div class="layui-input-block">
+                <select name="enable" id="enable" lay-filter="enable" lay-verify="required" type="select">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-row layui-col-space10">
+        <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>保留时间数(天):</label>
             <div class="layui-input-block">
                 <input id="retentionTime" type="text" name="retentionTime" lay-verify="required|number"
@@ -53,24 +72,6 @@
         </div>
     </div>
 
-    <div class="layui-form-item layui-row layui-col-space10">
-        <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>是否启用：</label>
-            <div class="layui-input-block">
-                <select name="enable" id="enable" lay-filter="enable" lay-verify="required" type="select">
-                    <option value=""></option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>日志类型:</label>
-            <div class="layui-input-block">
-                <select name="logType" id="logType" lay-filter="" lay-verify="required" type="select">
-                    <option value=""></option>
-                </select>
-            </div>
-        </div>
-    </div>
 
     <div class="layui-form-item layui-hide">
         <input type="button" lay-submit lay-filter="layuiadmin-app-form-edit" id="layuiadmin-app-form-edit"
