@@ -188,20 +188,31 @@ public class AlarmRuleService {
      * 查询预警规则对应的监控对象
      */
     public AlarmRule getMonitorEquipmentVo(int alarmRuleInt) {
+        //新建一个预警规则对象
         AlarmRule alarmRule = new AlarmRule();
+        //依据预警规则主机按查询该预警规则的监控对象
         List<MonitorEquipmentVo> monitorEquipmentVoList = alarmRuleMapper.queryMonitorEquipmentVo(alarmRuleInt);
+        //如果监控对象不为空
         if (monitorEquipmentVoList != null && monitorEquipmentVoList.size() > 0) {
+            //将监控对象每一个单独取出
             for (MonitorEquipmentVo monitorEquipmentVo : monitorEquipmentVoList) {
+                //根据监控对象查询每个监控对象的工位代码
                 List<WorkStation> workStationList = alarmRuleMapper.queryWorkStationList(monitorEquipmentVo.getEquipmentInt());
+                //将每个工位代码单独取出
                 for (WorkStation workStation : workStationList) {
+                    //将工位代码赋值给a
                     String a = workStation.getWorkStationNum();
+                    //如果此时整个工位为空
                     if (monitorEquipmentVo.getWorkStationList() == null || monitorEquipmentVo.getWorkStationList() == "") {
                         monitorEquipmentVo.setWorkStationList(a);
-                    } else {
-                        monitorEquipmentVo.setWorkStationList(monitorEquipmentVo.getWorkStationList() + "," + a);
+                    }
+                    //如果此时不为空
+                    else {
+                        monitorEquipmentVo.setWorkStationList(monitorEquipmentVo.getWorkStationList() + "-" + a);
                     }
                 }
             }
+            //将循环完成的监控对象set到监控对象中
             alarmRule.setMonitorEquipmentVoList(monitorEquipmentVoList);
         }
         return alarmRule;
@@ -268,5 +279,7 @@ public class AlarmRuleService {
         operationLog.setOperationTime(new Date());
         operationLogService.addOperationLog(operationLog);
     }
+
+
 
 }

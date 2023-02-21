@@ -514,6 +514,7 @@
                 count: res.total,
                 data: res.data
             };
+
         },
         cols: [[{
         //     type: "checkbox"
