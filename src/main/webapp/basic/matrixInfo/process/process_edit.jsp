@@ -113,7 +113,7 @@
             if (value.length > 20) {
                 return "工序名称不能超过20个字符";
             }
-            var flag = "1";
+            var flag = "0";
             var checkResult = "";
             $.ajax({
                 url: "<%=request.getContextPath()%>/ProcessController/check/isExist?parentId=" + parentId + "&processName=" + value +"&flag=" + flag,
