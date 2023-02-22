@@ -1,5 +1,7 @@
 package com.zimax.mcrs.monitor.mapper;
 
+import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo;
+import com.zimax.mcrs.device.pojo.Equipment;
 import com.zimax.mcrs.monitor.pojo.vo.EquipmentStatusVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -46,4 +48,5 @@ public interface EquipmentRuntimeMapper {
                  @Param("antennaStatus") String antennaStatus
     );
 
+    List<Equipment> findEquipmentId(String appId);
 }

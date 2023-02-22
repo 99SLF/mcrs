@@ -4,13 +4,12 @@
 - Description:
 -->
 <%@page pageEncoding="UTF-8" %>
-<%--<%@page import="com.mes.foundation.eoscommon.ResourcesMessageUtil"%>--%>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>终端异常预警</title>
+    <title>终端状态</title>
     <link rel="stylesheet" href="<%=request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath() %>/std/dist/style/custom.css?v=1.0.0">
@@ -53,12 +52,12 @@
 <div class="layui-card">
     <script type="text/html" id="toolbar">
         <div class="layui-form layuiadmin-card-header-auto"
-             lay-filter="layuiadmin-device_abnormal-form" id="layuiadmin-device_abnormal-form">
+             lay-filter="layuiadmin-device_status-form" id="layuiadmin-device_status-form">
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">设备资源号：</label>
+                    <label class="layui-form-label">设备名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" class="layui-input" name="equipmentId" autocomplete="off">
+                        <input type="text" class="layui-input" name="equipmentName" autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -68,16 +67,17 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">使用工序：</label>
+                    <label class="layui-form-label">终端类型：</label>
                     <div class="layui-input-inline">
-                        <div class="layui-input-inline">
-                            <input type="text" class="layui-input" name="processName" autocomplete="off">
-                        </div>
+                        <select name="deviceSoftwareType" id="deviceSoftwareType" lay-filter="deviceSoftwareType"
+                                type="select">
+                            <option value=""></option>
+                        </select>
                     </div>
                 </div>
                 <div class="layui-inline layui-hide">
-                    <button id="LAY-app-device_abnormal-search" class="layui-btn layuiadmin-btn-list" lay-submit
-                            lay-filter="LAY-app-device_abnormal-search">
+                    <button id="LAY-app-device_status-search" class="layui-btn layuiadmin-btn-list" lay-submit
+                            lay-filter="LAY-app-device_status-search">
                         <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                     </button>
                 </div>
@@ -85,7 +85,7 @@
         </div>
     </script>
     <div class="layui-card-body">
-        <table id="LAY-app-device_abnormal-list" lay-filter="LAY-app-device_abnormal-list"></table>
+        <table id="LAY-app-device_status-list" lay-filter="LAY-app-device_status-list"></table>
     </div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
@@ -93,17 +93,13 @@
     layui.config({
         base: "<%=request.getContextPath()%>/"
     });
-    /*websocket 的jQuery转换*/
     jQuery = layui.$;
 </script>
 <%--字典--%>
 <script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
-<%--wesocket 引用类--%>
-<script type="text/javascript"
-        src="<%=request.getContextPath()%>/common/components/websocket/jquery.loadJSON.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/jquery.loadJSON.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/WebSocket.js"></script>
-<script type="text/javascript"
-        src="<%=request.getContextPath()%>/common/components/websocket/jquery.WebSocket.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/jquery.WebSocket.js"></script>
 <script type="text/javascript">
     var layer = layui.layer;
     var table = layui.table;
@@ -112,36 +108,52 @@
     var util = layui.util;
     var admin = layui.admin;
     var view = layui.view;
-
-    //wesocket 引用
     var $ = layui.$;
     // 过滤字段
     var hiddenFields = [];
     // 功能名
-    var funName = "device_abnormal_list";
+    var funName = "device_status_list";
     // 高级查询参数
     var advancedFormData = {};
     // 焦点名称
     var focusName = null;
 
+    //获取软件类型的下拉值
+    layui.admin.renderDictSelect({
+        elem: "#deviceSoftwareType",
+        dictTypeId: "DEVICE_SOFTWARE_TYPE",
+    });
+    form.render();
+    //获取软件运行状态
+    layui.admin.renderDictSelect({
+        elem: "#deviceSoftwareStatus",
+        dictTypeId: "DEVICE_SOFTWARE_STATUS",
+    });
+    form.render();
+    //接入状态
+    layui.admin.renderDictSelect({
+        elem: "#accessStatus",
+        dictTypeId: "EQUIPMENT_ACCESS_STATUS",
+    });
+    form.render();
 
     // 监听搜索
-    form.on("submit(LAY-app-device_abnormal-search)", function (data) {
+    form.on("submit(LAY-app-device_status-search)", function (data) {
         var field = data.field;
         reloadData(field);
         var formData = {
-            equipmentId: field.equipmentId,
+            equipmentName: field.equipmentName,
             deviceName: field.deviceName,
-            processName: field.processName
+            deviceSoftwareType: field.deviceSoftwareType
         };
-        form.val("layuiadmin-device_abnormal-form", formData);
+        form.val("layuiadmin-device_status-form", formData);
         advancedFormData = $.extend(advancedFormData, formData);
     });
 
 
     function reloadData(formData) {
         //读取表格数据 表格id
-        table.reload("LAY-app-device_abnormal-list-reload", {
+        table.reload("LAY-app-device_status-list-reload", {
             where: formData
         });
         formReder();
@@ -153,10 +165,10 @@
     function setFormData(data) {
         advancedFormData = data;
         reloadData(data);
-        form.val("layuiadmin-device_abnormal-form", {
-            equipmentId: data.equipmentId,
+        form.val("layuiadmin-device_status-form", {
+            equipmentName: data.equipmentName,
             deviceName: data.deviceName,
-            processName: data.processName
+            deviceSoftwareType: data.deviceSoftwareType
         });
     }
 
@@ -169,12 +181,12 @@
     // 监听按钮点击事件
     var active = {
         search: function () {
-            var submit = $("#LAY-app-device_abnormal-search");
+            var submit = $("#LAY-app-device_status-search");
             submit.click();
             return false;
         },
         query: function () {
-            var url = "<%=request.getContextPath() %>/monitor/device_abnormal_warn_form_query.jsp";
+            var url = "<%=request.getContextPath() %>/monitor/device_status_form_query.jsp";
             admin.popupRight({
                 type: 2,
                 content: [url, "yes"],
@@ -187,7 +199,7 @@
                     layero.find("iframe")[0].contentWindow.SetData(dataJson);
                 },
                 yes: function (index, layero) {
-                    var submit = layero.find("iframe").contents().find("#LAY-app-device_abnormal-search-advanced");
+                    var submit = layero.find("iframe").contents().find("#LAY-app-device_status-search-advanced");
                     submit.click();
                     top.layer.close(index);
                 },
@@ -199,14 +211,14 @@
     };
 
     // 右侧表头按钮事件监听
-    table.on("toolbar(LAY-app-device_abnormal-list)", function (obj) {
+    table.on("toolbar(LAY-app-device_status-list)", function (obj) {
         var type = obj.event;
         active[type] ? active[type].call(this) : "";
     });
 
     // 表格排序
-    table.on("sort(LAY-app-device_abnormal-list)", function (obj) {
-        table.reload("LAY-app-device_abnormal-list-reload", {
+    table.on("sort(LAY-app-device_status-list)", function (obj) {
+        table.reload("LAY-app-device_status-list-reload", {
             initSort: obj,
             where: {
                 field: obj.field,
@@ -241,11 +253,12 @@
         return false;
     }
 
+
     table.render({
-        elem: "#LAY-app-device_abnormal-list",
-        id: "LAY-app-device_abnormal-list-reload",
-        url: "<%= request.getContextPath() %>/DeviceAbnormalAlarm/query",
-        method: "get",
+        elem: "#LAY-app-device_status-list",
+        id: "LAY-app-device_status-list-reload",
+        url: "<%= request.getContextPath() %>/DeviceRuntime/query",
+        method: "GET",
         height: "full-" + getFullSize(),
         page: true,
         limit: 10,
@@ -259,7 +272,6 @@
             layEvent: "query",
             icon: "icon iconfont icon-gaojichaxun",
         }, "filter"],
-        //列筛选
         colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;
@@ -313,68 +325,71 @@
             hide: isHidden("aPPId"),
             minWidth: 150
         }, {
-            //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
             field: "deviceName",
             title: "终端名称",
             align: "center",
+            // sort: true,
             hide: isHidden("deviceName"),
             minWidth: 150
         }, {
-            //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
-            field: "processName",
-            title: "使用工序",
+            field: "deviceSoftwareType",
+            title: "终端类型",
             align: "center",
-            hide: isHidden("processName"),
+            hide: isHidden("deviceSoftwareType"),
+            minWidth: 150,
+            templet: function (d) {
+
+
+                return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoftwareType);
+            }
+        }, {
+            field: "deviceSoftwareStatus",
+            title: "运行状态",
+            align: "center",
+            hide: isHidden("deviceSoftwareStatus"),
+            minWidth: 150,
+            templet: function (d) {
+
+                return layui.admin.getDictText("DEVICE_SOFTWARE_STATUS", d.deviceSoftwareStatus);
+            }
+        }, {
+            field: "accessStatus",
+            title: "接入状态",
+            align: "center",
+            hide: isHidden("accessStatus"),
+            minWidth: 150,
+            templet: function (d) {
+                return layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", d.accessStatus);
+            }
+        }, {
+            field: "deviceWarningNum",
+            title: "累计终端告警",
+            align: "center",
+            hide: isHidden("deviceWarningNum"),
             minWidth: 150
         }, {
-            //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
-            field: "alarmEventTitle",
-            title: "预警标题",
+            field: "cpuRate",
+            title: "cup使用率",
             align: "center",
-            minWidth: 150,
-            hide: isHidden("alarmEventTitle")
-
+            hide: isHidden("cpuRate"),
+            minWidth: 150
         }, {
-            field: "alarmType",
-            title: "预警类型",
+            field: "storageRate",
+            title: "内存使用率",
             align: "center",
-            hide: isHidden("alarmType"),
-            minWidth: 150,
-            templet: function (d) {
-                return layui.admin.getDictText("WRANING_TYPE", d.alarmType);
-            }
+            hide: isHidden("storageRate"),
+            minWidth: 150
         }, {
-            field: "alarmLevel",
-            title: "预警等级",
+            field: "errorRate",
+            title: "误读率",
             align: "center",
-            hide: isHidden("alarmLevel"),
-            minWidth: 150,
-            templet: function (d) {
-
-                return layui.admin.getDictText("WARNING_LEVEL", d.alarmLevel);
-            }
-        }, {
-            field: "alarmEventContent",
-            title: "预警内容",
-            align: "center",
-            hide: isHidden("alarmEventContent"),
-            minWidth: 150,
-            templet: function (d) {
-
-                return layui.admin.getDictText("WARNING_CONTENT", d.alarmEventContent);
-            }
-        }, {
-            field: "occurrenceTime",
-            title: "发生时间",
-            align: "center",
-            hide: isHidden("occurrenceTime"),
-            minWidth: 200,
-            templet: function (d) {
-                return util.toDateString(d.occurrenceTime, 'yyyy-MM-dd HH:mm:ss');
-            }
-
-        }]]
+            hide: isHidden("errorRate"),
+            minWidth: 150
+        }
+        ]]
     });
+
+debugger;
     var host = window.location.host;
     var port = host.split(":");
     var json = ""
@@ -382,8 +397,8 @@
     contextPath = contextPath.substring(1);
 
     //判断当前浏览器是否支持WebSocket
-    var deviceAbnormalWarn = new $.websocket({
-        protocol: contextPath + "/websocket/device_abnormal_warn",
+    var deviceStatus = new $.websocket({
+        protocol: contextPath + "/websocket/device_status_copy",
         domain: port[0],
         port: port[1],
         onOpen: function (event) {
@@ -392,32 +407,14 @@
         },
         onMessage: function (event) {
 
-            debugger;
             json = JSON.parse(event.data);
-            //通过预警事件编码查出预警标题，预警类型，预警等级，预警内容
-            var warningContent = json.warningContent;
-            var occurrenceTime = layui.util.toDateString(json.occurrenceTime);
-            var alarmEventContent = "";
-            var alarmEventTitle = "";
-            var alarmLevel = "";
-            var alarmType = "";
-            $.ajax({
-                url: "<%=request.getContextPath()%>/DeviceAbnormalAlarm/findAlarmEvent?warningContent=" + warningContent,
-                type: "GET",
-                async: false,
-                contentType: "text/json",
-                cache: false,
-                success: function (data) {
-                    debugger;
-                    alarmEventContent = data.data[0].alarmEventContent;
-                    alarmEventTitle = data.data[0].alarmEventTitle;
-                    alarmLevel = data.data[0].alarmLevel;
-                    alarmType = data.data[0].alarmType;
-
-                }
-            });
-            var _trs = $(".layui-table-body.layui-table-main:eq(0) tbody:eq(0)").children();
-
+            //测试修改数据的方法!
+            //$("tr:eq(1)  td:eq(2)"):这代表了要选中表格的第二行中的第三个单元格
+            //如果在后面再加上.text() 代表要取出这个单元格中的文本。
+            //html()方法返回被选元素的内容，即括号内未设置参数。若设置参数，返回设置参数的内容。并且该参数内容覆盖所有想匹配的元素的内容,参数可为函数，即function(index,dcontent)
+            // $("p").html("AAA");所有p标签的内容变为：AAA
+            debugger;
+            var _trs=$(".layui-table-body.layui-table-main:eq(0) tbody:eq(0)").children();
             function find(tr, appId) {
                 var _tds = $(tr).children();
                 var bool = false;
@@ -432,36 +429,31 @@
                 });
                 return bool;
             }
-
             function update(tr, json) {
                 var _tds = $(tr).children();
                 _tds.each(function (j) {
                     var _td = _tds[j];
                     var dataField = $(_td).attr("data-field");
-                    switch (dataField) {
-                        case "alarmEventTitle":
-                            $($(_td).children()[0]).html(alarmEventTitle);
-                            break;
-
-                        case "alarmType":
-                            $($(_td).children()[0]).html(layui.admin.getDictText("WRANING_TYPE", alarmType));
-                            break;
-
-                        case "alarmLevel":
-                            $($(_td).children()[0]).html(layui.admin.getDictText("WARNING_LEVEL", alarmLevel));
-                            break;
-
-                        case "alarmEventContent":
-                            $($(_td).children()[0]).html(alarmEventContent);
-                            break;
-
-                        case "occurrenceTime":
-                            $($(_td).children()[0]).html(occurrenceTime);
-                            break;
+                    if (dataField === "accessStatus") {
+                        $($(_td).children()[0]).html(json.accessStatus);
                     }
+                    // if (dataField === "deviceSoftwareType") {
+                    //     $($(_td).children()[0]).html(json.deviceSoftwareType);
+                    // }
+                    // if (dataField === "cpuRate") {
+                    //     $($(_td).children()[0]).html(json.cpuRate);
+                    // }
+                    // if (dataField === "storageRate") {
+                    //     $($(_td).children()[0]).html(json.storageRate);
+                    // }
+                    // if (dataField === "errorRate") {
+                    //     $($(_td).children()[0]).html(json.errorRate);
+                    // }
+                    // if (dataField === "occurrenceTime") {
+                    //     $($(_td).children()[0]).html(json.occurrenceTime);
+                    // }
                 });
             }
-
             _trs.each(function (i) {
                 var _tr = _trs[i];
                 if (find(_tr, json.appId)) {
@@ -469,13 +461,14 @@
                 }
 
             });
-
-
         },
         onClose: function (event) {
-            deviceAbnormalWarn = null;
+            deviceStatus = null;
         }
     });
+
+
+
     formReder();
 
     function formReder() {
@@ -483,15 +476,41 @@
         $(".layui-input").on("keydown", function (event) {
             if (event.keyCode == 13) {
                 focusName = event.target.name;
-                var submit = $("#LAY-app-device_abnormal-search");
+                var submit = $("#LAY-app-device_status-search");
                 submit.click();
                 return false;
             }
         });
+
+        //软件类型下拉框监听事件
+        form.on("select(deviceSoftwareType)", function (data) {
+            var submit = $("#LAY-app-device_status-search");
+            submit.click();
+        });
+
+        //获取软件类型的下拉值
+        layui.admin.renderDictSelect({
+            elem: "#deviceSoftwareType",
+            dictTypeId: "DEVICE_SOFTWARE_TYPE",
+        });
+        form.render();
+        //获取软件运行状态
+        layui.admin.renderDictSelect({
+            elem: "#deviceSoftwareStatus",
+            dictTypeId: "DEVICE_SOFTWARE_STATUS",
+        });
+        form.render();
+        //接入状态
+        layui.admin.renderDictSelect({
+            elem: "#accessStatus",
+            dictTypeId: "EQUIPMENT_ACCESS_STATUS",
+        });
+        form.render();
     }
 
+
     $(window).resize(function () {
-        table.reload("LAY-app-device_abnormal-list-reload", {
+        table.reload("LAY-app-device_status-list-reload", {
             height: "full-" + getFullSize()
         });
     });

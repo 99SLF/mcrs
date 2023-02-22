@@ -1,6 +1,8 @@
 package com.zimax.mcrs.monitor.service;
 
+import com.zimax.mcrs.basic.matrixInfo.factoryInfoMaintain.pojo.FactoryInfo;
 import com.zimax.mcrs.config.ChangeString;
+import com.zimax.mcrs.device.pojo.Equipment;
 import com.zimax.mcrs.monitor.mapper.EquipmentRuntimeMapper;
 import com.zimax.mcrs.monitor.pojo.vo.EquipmentStatusVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,5 +93,11 @@ private EquipmentRuntimeMapper equipmentRuntimeMapper;
                         String antennaStatus) {
         return equipmentRuntimeMapper.countEQR(equipmentId, accessStatus, antennaStatus);
     }
+
+    public List<Equipment> findEquipmentId(String appId) {
+        return equipmentRuntimeMapper.findEquipmentId(appId);
+
+    }
+
 
 }

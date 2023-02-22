@@ -87,10 +87,17 @@
     layui.config({
         base: "<%=request.getContextPath()%>/"
     });
+    /*websocket 的jQuery转换*/
+    jQuery = layui.$;
 </script>
 <%--字典--%>
 <script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
+<%--wesocket 引用类--%>
+<script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/jquery.loadJSON.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/WebSocket.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/jquery.WebSocket.js"></script>
 <script type="text/javascript">
+
     var layer = layui.layer;
     var table = layui.table;
     var form = layui.form;
@@ -99,6 +106,8 @@
     var admin = layui.admin;
     var view = layui.view;
 
+    //wesocket 引用
+    var $ = layui.$;
     // 过滤字段
     var hiddenFields = [];
     // 功能名
@@ -330,7 +339,84 @@
 
         ]]
     });
+    var host = window.location.host;
+    var port = host.split(":");
+    var json = ""
+    var contextPath = "<%=request.getContextPath() %>";
+    contextPath = contextPath.substring(1);
 
+    //判断当前浏览器是否支持WebSocket
+    var rfid = new $.websocket({
+        protocol: contextPath + "/websocket/rfid",
+        domain: port[0],
+        port: port[1],
+        onOpen: function (event) {
+        },
+        onError: function (event) {
+        },
+        onMessage: function (event) {
+
+            debugger;
+            json = JSON.parse(event.data);
+            var accessTypeVal = json.accessType;
+            var appId = json.appId
+            if (accessTypeVal == "102"){
+                var equipmentId = "";
+                $.ajax({
+                    url: "<%=request.getContextPath()%>/EquipmentRuntime/findEquipmentId?appId=" + appId ,
+                    type: "GET",
+                    async: false,
+                    contentType: "text/json",
+                    cache: false,
+                    success: function (data) {
+                        equipmentId = data.data[0].equipmentId;
+                    }
+                });
+                var _trs=$(".layui-table-body.layui-table-main:eq(0) tbody:eq(0)").children();
+                function find(tr, appId) {
+                    var _tds = $(tr).children();
+                    var bool = false;
+                    _tds.each(function (j) {
+                        var _td = _tds[j];
+                        var dataField = $(_td).attr("data-field");
+                        if (dataField === "equipmentId") {
+                            if ($($(_td).children()[0]).html() === equipmentId) {
+                                bool = true;
+                            }
+                        }
+                    });
+                    return bool;
+                }
+                function update(tr, json) {
+                    var _tds = $(tr).children();
+                    _tds.each(function (j) {
+                        var _td = _tds[j];
+                        var dataField = $(_td).attr("data-field");
+                        switch (dataField) {
+                            case "accessStatus":
+                                $($(_td).children()[0]).html(layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS",json.accessStatus));
+                                break;
+                            case "antennaStatus":
+                                $($(_td).children()[0]).html(layui.admin.getDictText("ANTENNA_TYPE",json.antennaStatus));
+                                break;
+                        }
+                    });
+                }
+                _trs.each(function (i) {
+                    var _tr = _trs[i];
+                    if (find(_tr, json.appId)) {
+                        update(_tr, json);
+                    }
+
+                });
+
+            }
+
+        },
+        onClose: function (event) {
+            rfid = null;
+        }
+    });
 
     formReder();
 

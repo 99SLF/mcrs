@@ -107,4 +107,18 @@
             limit ${begin},${limit}
         </if>
     </select>
+
+
+    <select id="findEquipmentId" resultType="com.zimax.mcrs.device.pojo.Equipment">
+        SELECT
+        eqt.equipment_id
+        FROM eqi_equipment AS eqt
+        LEFT JOIN eqi_device AS ede ON eqt.equipment_int = ede.equipment_int
+        WHERE ede.app_id = #{appId}
+    </select>
+
+
+
+
+
 </mapper>

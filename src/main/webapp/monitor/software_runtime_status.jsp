@@ -93,9 +93,18 @@
     layui.config({
         base: "<%=request.getContextPath()%>/"
     });
+
+    /*websocket 的jQuery转换*/
+    jQuery = layui.$;
+
 </script>
 <%--字典--%>
 <script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
+
+<%--wesocket 引用类--%>
+<script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/jquery.loadJSON.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/WebSocket.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/jquery.WebSocket.js"></script>
 <script type="text/javascript">
     var layer = layui.layer;
     var table = layui.table;
@@ -104,6 +113,9 @@
     var util = layui.util;
     var admin = layui.admin;
     var view = layui.view;
+
+    //wesocket 引用
+    var $ = layui.$;
 
     // 过滤字段
     var hiddenFields = [];
@@ -342,6 +354,66 @@
             }
         ]]
     });
+
+    debugger;
+    var host = window.location.host;
+    var port = host.split(":");
+    var json = ""
+    var contextPath = "<%=request.getContextPath() %>";
+    contextPath = contextPath.substring(1);
+
+    //判断当前浏览器是否支持WebSocket
+    var softwareStatus = new $.websocket({
+        protocol: contextPath + "/websocket/software_runtime_status",
+        domain: port[0],
+        port: port[1],
+        onOpen: function (event) {
+        },
+        onError: function (event) {
+        },
+        onMessage: function (event) {
+
+            json = JSON.parse(event.data);
+            var _trs=$(".layui-table-body.layui-table-main:eq(0) tbody:eq(0)").children();
+            function find(tr, appId) {
+                var _tds = $(tr).children();
+                var bool = false;
+                _tds.each(function (j) {
+                    var _td = _tds[j];
+                    var dataField = $(_td).attr("data-field");
+                    if (dataField === "aPPId") {
+                        if ($($(_td).children()[0]).html() === appId) {
+                            bool = true;
+                        }
+                    }
+                });
+                return bool;
+            }
+            function update(tr, json) {
+                var _tds = $(tr).children();
+                _tds.each(function (j) {
+                    var _td = _tds[j];
+                    var dataField = $(_td).attr("data-field");
+                    switch (dataField) {
+                        case "deviceSoftwareStatus":
+                            $($(_td).children()[0]).html(layui.admin.getDictText("DEVICE_SOFTWARE_STATUS",json.deviceSoftwareStatus));
+                            break;
+                    }
+                });
+            }
+            _trs.each(function (i) {
+                var _tr = _trs[i];
+                if (find(_tr, json.appId)) {
+                    update(_tr, json);
+                }
+
+            });
+        },
+        onClose: function (event) {
+            softwareStatus = null;
+        }
+    });
+
     formReder();
 
     function formReder() {

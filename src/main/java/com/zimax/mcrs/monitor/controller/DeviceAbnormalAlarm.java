@@ -1,16 +1,21 @@
 package com.zimax.mcrs.monitor.controller;
 
 import com.zimax.mcrs.config.Result;
+import com.zimax.mcrs.device.pojo.Equipment;
 import com.zimax.mcrs.monitor.pojo.vo.GroupByDate;
 import com.zimax.mcrs.monitor.pojo.vo.GroupByProduction;
 import com.zimax.mcrs.monitor.service.AccessMonitorService;
 import com.zimax.mcrs.monitor.service.DeviceAbnormalAlarmService;
+import com.zimax.mcrs.warn.pojo.AlarmEvent;
+import com.zimax.mcrs.warn.pojo.AlarmEventVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 终端异常预警信息
@@ -74,5 +79,21 @@ public class DeviceAbnormalAlarm {
     @GetMapping("/getWarnInfo")
     public Result<?> getWarnInfo() {
         return Result.success(accessMonitorService.getWarnInfo());
+    }
+
+
+    /**
+     * @param
+     * @return
+     *通过预警事件编码查出预警标题，预警类型，预警等级，预警内容---warningContent
+     * */
+    @GetMapping("/findAlarmEvent")
+    public Result<?> findAlarmEvent(String warningContent){
+
+        Map<String,Object> maps = new HashMap<>();
+        List<AlarmEventVo> alarmEvent = accessMonitorService.findAlarmEvent(warningContent);
+        maps.put("data",alarmEvent);
+        return Result.success(alarmEvent);
+
     }
 }

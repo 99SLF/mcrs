@@ -93,9 +93,13 @@
     layui.config({
         base: "<%=request.getContextPath()%>/"
     });
+    jQuery = layui.$;
 </script>
 <%--字典--%>
 <script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/jquery.loadJSON.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/WebSocket.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/jquery.WebSocket.js"></script>
 <script type="text/javascript">
     var layer = layui.layer;
     var table = layui.table;
@@ -104,7 +108,7 @@
     var util = layui.util;
     var admin = layui.admin;
     var view = layui.view;
-
+    var $ = layui.$;
     // 过滤字段
     var hiddenFields = [];
     // 功能名
@@ -254,7 +258,6 @@
         elem: "#LAY-app-device_status-list",
         id: "LAY-app-device_status-list-reload",
         url: "<%= request.getContextPath() %>/DeviceRuntime/query",
-        // data:[],
         method: "GET",
         height: "full-" + getFullSize(),
         page: true,
@@ -336,6 +339,7 @@
             minWidth: 150,
             templet: function (d) {
 
+
                 return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoftwareType);
             }
         }, {
@@ -345,7 +349,7 @@
             hide: isHidden("deviceSoftwareStatus"),
             minWidth: 150,
             templet: function (d) {
-                debugger;
+
                 return layui.admin.getDictText("DEVICE_SOFTWARE_STATUS", d.deviceSoftwareStatus);
             }
         }, {
@@ -384,6 +388,89 @@
         }
         ]]
     });
+
+debugger;
+    var host = window.location.host;
+    var port = host.split(":");
+    var json = ""
+    var contextPath = "<%=request.getContextPath() %>";
+    contextPath = contextPath.substring(1);
+
+    //判断当前浏览器是否支持WebSocket
+    var deviceStatus = new $.websocket({
+        protocol: contextPath + "/websocket/device_status",
+        domain: port[0],
+        port: port[1],
+        onOpen: function (event) {
+        },
+        onError: function (event) {
+        },
+        onMessage: function (event) {
+
+            json = JSON.parse(event.data);
+            //测试修改数据的方法!
+            //$("tr:eq(1)  td:eq(2)"):这代表了要选中表格的第二行中的第三个单元格
+            //如果在后面再加上.text() 代表要取出这个单元格中的文本。
+            //html()方法返回被选元素的内容，即括号内未设置参数。若设置参数，返回设置参数的内容。并且该参数内容覆盖所有想匹配的元素的内容,参数可为函数，即function(index,dcontent)
+            // $("p").html("AAA");所有p标签的内容变为：AAA
+            debugger;
+            var _trs=$(".layui-table-body.layui-table-main:eq(0) tbody:eq(0)").children();
+            function find(tr, appId) {
+                var _tds = $(tr).children();
+                var bool = false;
+                _tds.each(function (j) {
+                    var _td = _tds[j];
+                    var dataField = $(_td).attr("data-field");
+                    if (dataField === "aPPId") {
+                        if ($($(_td).children()[0]).html() === appId) {
+                            bool = true;
+                        }
+                    }
+                });
+                return bool;
+            }
+            function update(tr, json) {
+                var _tds = $(tr).children();
+                _tds.each(function (j) {
+                    var _td = _tds[j];
+                    var dataField = $(_td).attr("data-field");
+                    switch (dataField) {
+                        case "accessStatus":
+                            $($(_td).children()[0]).html(layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS",json.accessStatus));
+                            break;
+
+                        case "deviceSoftwareStatus":
+                            $($(_td).children()[0]).html(layui.admin.getDictText("DEVICE_SOFTWARE_STATUS",json.deviceSoftwareStatus));
+                            break;
+
+                        case "cpuRate":
+                            $($(_td).children()[0]).html(json.cpuRate);
+                            break;
+
+                        case "storageRate":
+                            $($(_td).children()[0]).html(json.storageRate);
+                            break;
+
+                        case "errorRate":
+                            $($(_td).children()[0]).html(json.errorRate);
+                            break;
+                    }
+                });
+            }
+            _trs.each(function (i) {
+                var _tr = _trs[i];
+                if (find(_tr, json.appId)) {
+                    update(_tr, json);
+                }
+
+            });
+        },
+        onClose: function (event) {
+            deviceStatus = null;
+        }
+    });
+
+
 
     formReder();
 

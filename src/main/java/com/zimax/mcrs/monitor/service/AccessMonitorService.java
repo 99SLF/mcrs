@@ -1,9 +1,12 @@
 package com.zimax.mcrs.monitor.service;
 
+import com.zimax.mcrs.device.pojo.Equipment;
 import com.zimax.mcrs.monitor.mapper.AccessMonitorMapper;
+import com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceAlarm;
 import com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceHistory;
 import com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus;
 import com.zimax.mcrs.monitor.pojo.vo.*;
+import com.zimax.mcrs.warn.pojo.AlarmEventVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -158,4 +161,19 @@ public class AccessMonitorService {
         return map;
     }
 
+
+    /**
+     * 将终端告警信息存储到终端告警记录表中（表+++mon_device_alarm）
+     */
+
+        public void addDeviceAlarm(MonitorDeviceAlarm monitorDeviceAlarm){
+
+        accessMonitorMapper.addDeviceAlarm(monitorDeviceAlarm);
+    }
+
+
+    public List<AlarmEventVo> findAlarmEvent(String warningContent) {
+        return accessMonitorMapper.findAlarmEvent(warningContent);
+
+    }
 }

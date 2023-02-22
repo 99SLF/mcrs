@@ -23,17 +23,15 @@
     <insert id="addMonitorDeviceStatus"
             parameterType="com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceHistory">
         insert into mon_device_history
-        values (#{deviceHistoryId}, #{deviceName}, #{accessType}, #{accessStatus}, #{deviceSoftwareStatus},
-                #{antennaStatus}, #{warningContent},
-                #{cpuRate}, #{storageRate}, #{errorRate}, #{occurrenceTime}, #{remarks}, #{createTime},
-                #{longinCreateTime}, #{longoutCreateTime})
+        values (#{appId}, #{accessType}, #{accessStatus}, #{deviceSoftwareStatus},
+                #{antennaStatus}, #{warningContent}, #{cpuRate}, #{storageRate}, #{errorRate}, #{occurrenceTime})
     </insert>
     <!--添加监控实时信息-->
     <insert id="addMonitorDeviceReal" parameterType="com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus">
         insert into mon_device_real
         values (MD5(#{appId}), #{accessType}, #{accessStatus},
                 #{deviceSoftwareStatus}, #{antennaStatus},
-                #{warningContent}, #{cpuRate}, #{storageRate}, #{errorRate}, #{occurrenceTime}, #{deviceWarningNum})
+                #{warningContent}, #{cpuRate}, #{storageRate}, #{errorRate}, #{occurrenceTime})
     </insert>
     <update id="updateMonitorDeviceRealExist"
             parameterType="com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus">
@@ -53,14 +51,13 @@
             cpu_rate               = #{cpuRate},
             storage_rate           = #{storageRate},
             error_rate             = #{errorRate},
-            occurrence_time        = #{occurrenceTime},
-            device_warning_num     = CASE
-                                         WHEN #{warningContent} = '' THEN device_warning_num
-                                         WHEN #{warningContent} IS NULL THEN device_warning_num
-                                         ELSE device_warning_num + 1 END
+            occurrence_time        = #{occurrenceTime}
         where app_id = #{appId}
     </update>
-
+    <!--device_warning_num     = CASE
+                                             WHEN #{warningContent} = '' THEN device_warning_num
+                                             WHEN #{warningContent} IS NULL THEN device_warning_num
+                                             ELSE device_warning_num + 1 END-->
     <delete id="deleteDeviceStatus" parameterType="string">
         delete
         from mon_device_real
@@ -175,6 +172,22 @@
     <!--            #{item.device_name}-->
     <!--        </foreach>-->
     <!--    </update>-->
+    <insert id="addDeviceAlarm"
+            parameterType="com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceAlarm">
+        insert into mon_device_alarm
+        values (#{deviceAlarmId}, #{appId}, #{warningContent}, #{accessStatus}, #{deviceSoftwareStatus}, #{antennaStatus})
+    </insert>
+
+    <select id="findAlarmEvent" resultType="com.zimax.mcrs.warn.pojo.AlarmEventVo">
+        SELECT
+            alarm_event_title,
+            alarm_type,
+            alarm_level,
+            alarm_event_content
+        FROM
+            war_alarm_event
+        WHERE alarm_event_id = #{warningContent}
+    </select>
 
 </mapper>
 

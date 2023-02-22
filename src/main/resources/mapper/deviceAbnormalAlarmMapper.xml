@@ -12,7 +12,7 @@
         mon_device_real AS mdr
         LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
         LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
-        LEFT JOIN war_alarm_event AS wae ON mdr.warning_content = wae.alarm_event_content
+        LEFT JOIN war_alarm_event AS wae ON mdr.warning_content = wae.alarm_event_id
         LEFT JOIN base_access_info AS bai ON equ.acc_point_res_id = bai.acc_point_res_id
         LEFT JOIN base_process_info AS bpi ON bai.process_id = bpi.process_id
         <where>
@@ -69,7 +69,7 @@
         mon_device_real AS mdr
         LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
         LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
-        LEFT JOIN war_alarm_event AS wae ON mdr.warning_content = wae.alarm_event_content
+        LEFT JOIN war_alarm_event AS wae ON mdr.warning_content = wae.alarm_event_id
         LEFT JOIN base_access_info AS bai ON equ.acc_point_res_id = bai.acc_point_res_id
         LEFT JOIN base_process_info AS bpi ON bai.process_id = bpi.process_id
         <where>

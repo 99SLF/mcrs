@@ -53,6 +53,7 @@ public class DeviceRuntime {
                                         String order, String field) {
 
         List DeviceRuntime = deviceRuntimeService.queryDeviceRuntime(page, limit, equipmentId, equipmentName, deviceName, deviceSoftwareType, deviceSoftwareStatus, accessStatus, cpuRate, storageRate, errorRate, order, field);
+
         return Result.success(DeviceRuntime, deviceRuntimeService.countDR(equipmentId, equipmentName, deviceName, deviceSoftwareType, deviceSoftwareStatus, accessStatus, cpuRate, storageRate, errorRate));
 //        return Result.success(deviceRuntimeService.countDR(equipmentId, equipmentName, deviceName, deviceSoftwareType, deviceSoRunStatus, accessStatus, cpuRate, storageRate, errorRate));
 

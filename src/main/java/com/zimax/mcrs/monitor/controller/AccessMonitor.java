@@ -1,9 +1,17 @@
 package com.zimax.mcrs.monitor.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zimax.components.websocket.Util;
+import com.zimax.components.websocket.WebSocket;
 import com.zimax.mcrs.config.Result;
+import com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceAlarm;
 import com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceHistory;
 import com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus;
 import com.zimax.mcrs.monitor.service.AccessMonitorService;
+import lombok.SneakyThrows;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -82,6 +90,7 @@ public class AccessMonitor {
     /**
      * 对外获取终端设备，硬件软件的运行状态（表+++mon_device_history）
      */
+    @SneakyThrows
     @PostMapping("/deviceStatus")
     public Result<?> addMonitorDeviceStatus(@RequestBody MonitorDeviceStatus monitorDeviceStatus) {
 
@@ -90,7 +99,51 @@ public class AccessMonitor {
         if (i == 0) {
             return Result.error("1", "终端未注册");
         }
-        return Result.success();
+        String accessStatus = monitorDeviceStatus.getAccessStatus();
+        String deviceSoftwareStatus =monitorDeviceStatus.getDeviceSoftwareStatus();
+        String antennaStatus =monitorDeviceStatus.getAntennaStatus();
+        String appId = monitorDeviceStatus.getAppId();
+        String warningContent = monitorDeviceStatus.getWarningContent();
+
+        //创建Jackson的核心对象， ObjectMapper
+        ObjectMapper mapper = new ObjectMapper();
+        //100是运行状态和接入状态都是正常的，异常就传具体的异常值
+        if (!accessStatus.equals("101") || !deviceSoftwareStatus.equals("101") || !warningContent.equals("101") || !antennaStatus.equals("101")){
+            MonitorDeviceAlarm  monitorDeviceAlarm = new MonitorDeviceAlarm();
+            monitorDeviceAlarm.setAppId(appId);
+            monitorDeviceAlarm.setWarningContent(warningContent);
+            monitorDeviceAlarm.setAccessStatus(accessStatus);
+            monitorDeviceAlarm.setDeviceSoftwareStatus(deviceSoftwareStatus);
+            monitorDeviceAlarm.setAntennaStatus(antennaStatus);
+            accessMonitorService.addDeviceAlarm(monitorDeviceAlarm);
+
+            //将java对象转成json字符串
+            String json = mapper.writeValueAsString(monitorDeviceStatus);
+            //将所有信息打包发到终端状态
+            WebSocket.push("device_status",json);
+            WebSocket.push("software_runtime_status",json);
+            WebSocket.push("plc",json);
+            WebSocket.push("rfid",json);
+            WebSocket.push("device_abnormal_warn",json);
+
+
+
+            return Result.success("01","异常添加成功");
+
+        }else {
+
+            //将java对象转成json字符串
+            String json = mapper.writeValueAsString(monitorDeviceStatus);
+            //将所有信息打包发到终端状态
+            WebSocket.push("device_status",json);
+            WebSocket.push("software_runtime_status",json);
+            WebSocket.push("plc",json);
+            WebSocket.push("rfid",json);
+
+            return Result.success("0","终端暂无异常");
+        }
+
+
 
     }
 
@@ -110,5 +163,7 @@ public class AccessMonitor {
     public Result<?> queryProcessAndFactory() {
         return Result.success(accessMonitorService.queryProcessAndFactory());
     }
+
+
 
 }

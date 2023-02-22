@@ -29,10 +29,10 @@ public class MonitorDeviceStatus {
     private String appId;
 
 
-    /**
-     * 终端存在情况（0表示不存在，1表示存在）
-     */
-    private int deviceExists;
+//    /**
+//     * 终端存在情况（0表示不存在，1表示存在）
+//     */
+//    private int deviceExists;
 
     /**
      * 接入类型(plc或rfid)   ACCESS_TYPE
@@ -78,7 +78,7 @@ public class MonitorDeviceStatus {
 
 
     /**
-     * 预警内容(字典)
+     * 预警内容(字典)101正常
      */
     private String warningContent;
 
@@ -106,10 +106,6 @@ public class MonitorDeviceStatus {
     private Date occurrenceTime;
 
 
-    /**
-     * 终端预警条数,不对外提供
-     */
-    private int deviceWarningNum;
 
 
 

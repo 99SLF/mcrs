@@ -1,11 +1,14 @@
 package com.zimax.mcrs.monitor.mapper;
 
+import com.zimax.mcrs.device.pojo.Equipment;
+import com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceAlarm;
 import com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceHistory;
 import com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus;
 import com.zimax.mcrs.monitor.pojo.vo.GroupByDate;
 import com.zimax.mcrs.monitor.pojo.vo.GroupByProduction;
 import com.zimax.mcrs.monitor.pojo.vo.ProcessOnfactory;
 import com.zimax.mcrs.monitor.pojo.vo.WarnTotalInfo;
+import com.zimax.mcrs.warn.pojo.AlarmEventVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -72,4 +75,10 @@ public interface AccessMonitorMapper {
     int[] queryFactoryId();
     String[] queryProcessName();
     ProcessOnfactory[] queryFactoryAndProcess();
+
+
+
+    void addDeviceAlarm(MonitorDeviceAlarm monitorDeviceAlarm);
+
+    List<AlarmEventVo> findAlarmEvent(String warningContent);
 }

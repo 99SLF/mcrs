@@ -185,7 +185,6 @@
         equ.equipment_name,
         mdr.access_status,
         mdr.device_software_status,
-        mdr.device_warning_num,
         mdr.cpu_rate,
         mdr.storage_rate,
         mdr.error_rate
