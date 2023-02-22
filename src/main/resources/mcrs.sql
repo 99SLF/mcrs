@@ -855,12 +855,25 @@ CREATE TABLE `upd_record` (
 
 
 -- ----------------------------
+-- Table structure for mon_device_alarm
+-- ----------------------------
+DROP TABLE IF EXISTS `mon_device_alarm`;
+CREATE TABLE `mon_device_alarm` (
+    `device_alarm_id` int(11) NOT NULL AUTO_INCREMENT,
+    `app_id` varchar(32) NOT NULL,
+    `warning_content` varchar(64) DEFAULT NULL,
+    `access_status` varchar(12) DEFAULT NULL,
+    `device_software_status` varchar(12) DEFAULT NULL,
+    `antennaStatus` varchar(12) DEFAULT NULL,
+    PRIMARY KEY (`device_alarm_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Table structure for mon_device_history
 -- ----------------------------
 DROP TABLE IF EXISTS `mon_device_history`;
 CREATE TABLE `mon_device_history` (
-      `device_history_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '终端历史状态记录主键',
-      `device_name` varchar(64) NOT NULL COMMENT '终端名称\n',
+      `app_id` varchar(32) NOT NULL COMMENT '终端名称\n',
       `access_type` varchar(20) NOT NULL COMMENT '接入类型(plc或rfid)',
       `access_status` varchar(20) NOT NULL COMMENT '接入状态(正常异常)硬件',
       `device_software_status` varchar(20) NOT NULL COMMENT ' 运行状态（软件）',
@@ -870,10 +883,8 @@ CREATE TABLE `mon_device_history` (
       `storage_rate` varchar(20) NOT NULL COMMENT '内存使用率',
       `error_rate` varchar(20) NOT NULL COMMENT '误读率',
       `occurrence_time` datetime NOT NULL COMMENT '发生时间',
-      `remarks` varchar(128) DEFAULT NULL COMMENT '备注',
-      `create_time` datetime DEFAULT NULL COMMENT '创建时间（服务端时间）,不对外提供',
-      PRIMARY KEY (`device_history_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+      PRIMARY KEY (`app_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mon_device_real
@@ -890,10 +901,8 @@ CREATE TABLE `mon_device_real` (
    `storage_rate` varchar(20) DEFAULT NULL COMMENT '内存使用率',
    `error_rate` varchar(20) DEFAULT NULL COMMENT '误读率',
    `occurrence_time` datetime DEFAULT NULL COMMENT '发生时间',
-   `device_warning_num` int(11) DEFAULT NULL COMMENT '终端预警条数,不对外提供',
    PRIMARY KEY (`app_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 -- ----------------------------
 -- Table structure for log_abn_log
 -- ----------------------------
