@@ -521,10 +521,7 @@
             title: "内容",
             align: "center",
             minWidth: 150,
-            hide: isHidden("alarmEventContent"),
-            templet: function (d) {
-                return layui.admin.getDictText("WARNING_CONTENT", d.alarmEventContent);
-            }
+            hide: isHidden("alarmEventContent")
         }, {
             field: "upperLimit",
             title: "上限",
