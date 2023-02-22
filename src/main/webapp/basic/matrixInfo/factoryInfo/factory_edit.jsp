@@ -106,6 +106,12 @@
             }
         },
         factoryName: function (value,item){
+            if(!new RegExp("^[a-zA-Z0-9\u4e00-\u9fa5]+$").test(value)){
+                return "输入工厂名称有误，只能输入汉字+英文+数字";
+            }
+            if (value.length > 20) {
+                return "工厂名称不能超过20个字符";
+            }
             var flag = "0";
             var checkResult = "";
             $.ajax({
