@@ -207,7 +207,7 @@
                 type: 2,
                 title: "新增设备类型",
                 content: "<%= request.getContextPath() %>/basic/equipType/equipType_add.jsp",
-                area: ["800px", "480px"],
+                area: ["800px", "450px"],
                 resize: false,
                 btn: ["确定", "取消"],
                 success: function (layero, index) {

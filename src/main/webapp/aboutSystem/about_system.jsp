@@ -25,7 +25,7 @@
             <table id="LAY-app-device-list" lay-filter="LAY-app-device-list"></table>
             <script type="text/html" id="table-device-list">
                 <a  class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
-                        class="layui-icon layui-icon-edit" ></i>修改</a>
+                        class="layui-icon layui-icon-edit" ></i>编辑</a>
                 <a  class="layui-btn layui-btn-normal layui-btn-xs" lay-event="download"><i
                         class="layui-icon layui-icon-download-circle" ></i>下载</a>
             </script>
