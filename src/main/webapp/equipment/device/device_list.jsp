@@ -352,9 +352,9 @@
                 var deviceSoftwareType = deviceSoftwareTypes[0];
                 debugger;
                 var deviceSoftwareTypeLength = layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", deviceSoftwareType);
-                if (isre == true){
+                if (isre == true) {
                     layer.msg("升级的终端，存在未注册！");
-                }else{
+                } else {
                     if (isab == true) {
                         layer.msg("所选终端未启用，无法升级！");
                     } else {
@@ -385,18 +385,20 @@
                             //         fn();
                             //     },
                             // }, function() {
-                            layer.alert('<span>终端类型：</span>' + deviceSoftwareTypeLength +'</br>'+ '<span>终端数量：</span>' + numLength , {
-                                time: 5*1000
-                                ,skin: 'layui-layer-molv' //样式类名
-                                ,success: function(layero, index){
-                                    var timeNum = this.time/1000, setText = function(start){
-                                        layer.title((start ? timeNum : --timeNum) + ' 秒后关闭', index);
+                            layer.alert('<span>终端类型：</span>' + deviceSoftwareTypeLength + '</br>' + '<span>终端数量：</span>' + numLength, {
+                                time: 5 * 1000
+                                , skin: 'layui-layer-molv' //样式类名
+                                , btn: ["升级"]
+                                , closeBtn: ''
+                                , success: function (layero, index) {
+                                    var timeNum = this.time / 1000, setText = function (start) {
+                                        layer.title((start ? timeNum : --timeNum) + ' 秒后自动关闭', index);
                                     };
                                     setText(!0);
                                     this.timer = setInterval(setText, 1000);
-                                    if(timeNum <= 0) clearInterval(this.timer);
+                                    if (timeNum <= 0) clearInterval(this.timer);
                                 }
-                                ,end: function(){
+                                , end: function () {
                                     clearInterval(this.timer);
                                     top.layer.open({
                                         //弹窗
@@ -426,7 +428,7 @@
                                     });
                                 }
                             });
-                                // table.reload("LAY-app-device-list-reload");
+                            // table.reload("LAY-app-device-list-reload");
                             // });
 
 
@@ -443,6 +445,7 @@
         rollback: function () {
             var checkStatus = table.checkStatus("LAY-app-device-list-reload");
             var data = checkStatus.data;
+            var numLength = data.length;
             var minVersions = new Array();
             for (var i = 0; i < data.length; i++) {
                 minVersions[i] = data[i].version;
@@ -491,6 +494,7 @@
 
                     }
                 }
+
                 //获取启用状态
                 for (var i = 0; i < data.length; i++) {
                     enables[i] = data[i].enable;
@@ -499,6 +503,7 @@
                 for (var i = 0; i < data.length; i++) {
                     registerStatuses[i] = data[i].registerStatus;
                 }
+
                 function contains(arr, val) {
                     for (var i = 0; i < arr.length; i++) {
                         if (arr[i] === val) {
@@ -507,6 +512,7 @@
                     }
                     return false;
                 }
+
                 //101 是 102 否
                 var isab = contains(enables, '102');
 
@@ -514,45 +520,64 @@
                 var isre = contains(registerStatuses, '102');
                 var isSame = same(deviceSoftwareTypes);
                 var deviceSoftwareType = deviceSoftwareTypes[0];
-
-                if (isre == true){
+                var deviceSoftwareTypeLength = layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", deviceSoftwareType);
+                if (isre == true) {
                     layer.msg("回退的终端，存在未注册！");
-                }else{
+                } else {
                     if (isab == true) {
                         layer.msg("所选终端未启用，无法回退！");
                     } else {
-                        if (minVersion == "1.0"){
+                        if (minVersion == "1.0") {
                             layer.msg("所选终端存在初始版本，无需回退！");
-                        }else {
+                        } else {
                             if (isSame == false) {
                                 layer.msg("回退的终端类型，类型必须一致！");
                             } else {
-                                top.layer.open({
-                                    //弹窗
-                                    type: 2,
-                                    title: "选择回退版本",
-                                    content: "<%=request.getContextPath() %>/update/update_package_selectVersion_rollback.jsp",
-                                    area: ["800px", "560px"],
-                                    resize: false,
-                                    btn: ["确定", "取消"],
-                                    success: function (layero, index) {
-                                        var dataJson = {
-                                            win: window,
-                                            deviceIds: deviceIds,
-                                            minVersion: minVersion,
-                                            deviceSoftwareType: deviceSoftwareType
+
+                                layer.alert('<span>终端类型：</span>' + deviceSoftwareTypeLength + '</br>' + '<span>终端数量：</span>' + numLength, {
+                                    time: 5 * 1000
+                                    , skin: 'layui-layer-molv' //样式类名
+                                    , btn: ["回退"]
+                                    , closeBtn: ''
+                                    , success: function (layero, index) {
+                                        var timeNum = this.time / 1000, setText = function (start) {
+                                            layer.title((start ? timeNum : --timeNum) + ' 秒后自动关闭', index);
                                         };
-                                        layero.find("iframe")[0].contentWindow.SetData(dataJson);
-                                    },
-                                    yes: function (index, layero) {
+                                        setText(!0);
+                                        this.timer = setInterval(setText, 1000);
+                                        if (timeNum <= 0) clearInterval(this.timer);
+                                    }
+                                    , end: function () {
+                                        clearInterval(this.timer);
+                                        top.layer.open({
+                                            //弹窗
+                                            type: 2,
+                                            title: "选择回退版本",
+                                            content: "<%=request.getContextPath() %>/update/update_package_selectVersion_rollback.jsp",
+                                            area: ["800px", "560px"],
+                                            resize: false,
+                                            btn: ["确定", "取消"],
+                                            success: function (layero, index) {
+                                                var dataJson = {
+                                                    win: window,
+                                                    deviceIds: deviceIds,
+                                                    minVersion: minVersion,
+                                                    deviceSoftwareType: deviceSoftwareType
+                                                };
+                                                layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                                            },
+                                            yes: function (index, layero) {
 
-                                        var submit = layero.find("iframe").contents().find("#rollback");
-                                        submit.click();
+                                                var submit = layero.find("iframe").contents().find("#rollback");
+                                                submit.click();
 
-                                        //top.layer.close(index);
-                                        <%--top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");--%>
+                                                //top.layer.close(index);
+                                                <%--top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");--%>
+                                            }
+                                        });
                                     }
                                 });
+
                                 // table.reload("LAY-app-device-list-reload");
                             }
                         }
