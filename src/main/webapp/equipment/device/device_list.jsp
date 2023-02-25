@@ -47,6 +47,11 @@
         .layui-input {
             height: 30px !important;
         }
+
+        .layui-layer-dialog .layui-layer-padding {
+            padding: 20px 20px 20px 20px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -267,6 +272,7 @@
             //获取表单的所有内容
             var checkStatus = table.checkStatus("LAY-app-device-list-reload");
             var data = checkStatus.data;
+            var numLength = data.length;
             var maxVersions = new Array();
 
 
@@ -344,7 +350,8 @@
                 var isre = contains(registerStatuses, '102');
                 var isSame = same(deviceSoftwareTypes);
                 var deviceSoftwareType = deviceSoftwareTypes[0];
-
+                debugger;
+                var deviceSoftwareTypeLength = layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", deviceSoftwareType);
                 if (isre == true){
                     layer.msg("升级的终端，存在未注册！");
                 }else{
@@ -358,34 +365,70 @@
                             //     icon: 3,
                             //     title: "系统提示"
                             // }, function (index) {
-                            top.layer.open({
-                                //弹窗
-                                type: 2,
-                                title: "选择更新版本",
-                                content: "<%=request.getContextPath() %>/update/update_package_selectVersion.jsp",
-                                area: ["800px", "560px"],
-                                resize: false,
-                                btn: ["确定", "取消"],
-                                success: function (layero, index) {
-                                    debugger;
-                                    var dataJson = {
-                                        win: window,
-                                        deviceIds: deviceIds,
-                                        maxVersion: maxVersion,
-                                        deviceSoftwareType: deviceSoftwareType
+                            // layer.msg('<span style="color: red">终端类型：</span>' + deviceSoftwareTypeLength +'</br>'+ '<span>终端数量：</span>' + numLength , {
+                            //     icon: 3,
+                            //     time : 800000,
+                            //     shade: 0.6,
+                            //     success: function(layero,index){
+                            //         var msg = layero.text();
+                            //         var i = 300;
+                            //         var timer = null;
+                            //         var fn = function() {
+                            //             layero.find(".layui-layer-content").text('倒计时：'+i +msg);
+                            //             if(!i) {
+                            //                 layer.close(index);
+                            //                 clearInterval(timer);
+                            //             }
+                            //             i--;
+                            //         };
+                            //         timer = setInterval(fn, 1000);
+                            //         fn();
+                            //     },
+                            // }, function() {
+                            layer.alert('<span>终端类型：</span>' + deviceSoftwareTypeLength +'</br>'+ '<span>终端数量：</span>' + numLength , {
+                                time: 5*1000
+                                ,skin: 'layui-layer-molv' //样式类名
+                                ,success: function(layero, index){
+                                    var timeNum = this.time/1000, setText = function(start){
+                                        layer.title((start ? timeNum : --timeNum) + ' 秒后关闭', index);
                                     };
-                                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
-                                },
-                                yes: function (index, layero) {
-                                    var submit = layero.find("iframe").contents().find("#upgrade");
-                                    submit.click();
+                                    setText(!0);
+                                    this.timer = setInterval(setText, 1000);
+                                    if(timeNum <= 0) clearInterval(this.timer);
+                                }
+                                ,end: function(){
+                                    clearInterval(this.timer);
+                                    top.layer.open({
+                                        //弹窗
+                                        type: 2,
+                                        title: "选择更新版本",
+                                        content: "<%=request.getContextPath() %>/update/update_package_selectVersion.jsp",
+                                        area: ["800px", "560px"],
+                                        resize: false,
+                                        btn: ["确定", "取消"],
+                                        success: function (layero, index) {
+                                            debugger;
+                                            var dataJson = {
+                                                win: window,
+                                                deviceIds: deviceIds,
+                                                maxVersion: maxVersion,
+                                                deviceSoftwareType: deviceSoftwareType
+                                            };
+                                            layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                                        },
+                                        yes: function (index, layero) {
+                                            var submit = layero.find("iframe").contents().find("#upgrade");
+                                            submit.click();
 
-                                    //top.layer.close(index);
-                                    <%--top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");--%>
+                                            //top.layer.close(index);
+                                            <%--top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");--%>
+                                        }
+                                    });
                                 }
                             });
-                            // table.reload("LAY-app-device-list-reload");
+                                // table.reload("LAY-app-device-list-reload");
                             // });
+
 
                         }
                     }
@@ -393,7 +436,6 @@
 
 
             }
-
 
         },
 
