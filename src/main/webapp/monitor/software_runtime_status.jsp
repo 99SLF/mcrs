@@ -349,7 +349,15 @@
                 hide: isHidden("deviceSoftwareStatus"),
                 minWidth: 150,
                 templet: function (d) {
-                    return layui.admin.getDictText("DEVICE_SOFTWARE_STATUS", d.deviceSoftwareStatus);
+                    var deviceSoftwareStatus = layui.admin.getDictText("DEVICE_SOFTWARE_STATUS", d.deviceSoftwareStatus);
+                    if (d.deviceSoftwareStatus == "101") {
+
+                        return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + deviceSoftwareStatus + '</span>';
+
+                    } else if (d.deviceSoftwareStatus == "102") {
+                        return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + deviceSoftwareStatus + '</span>';
+
+                    }
                 }
             }
         ]]
@@ -396,7 +404,20 @@
                     var dataField = $(_td).attr("data-field");
                     switch (dataField) {
                         case "deviceSoftwareStatus":
-                            $($(_td).children()[0]).html(layui.admin.getDictText("DEVICE_SOFTWARE_STATUS",json.deviceSoftwareStatus));
+                            var deviceSoftwareStatus = layui.admin.getDictText("DEVICE_SOFTWARE_STATUS", json.deviceSoftwareStatus)
+                            if (json.deviceSoftwareStatus == "101") {
+                                debugger;
+                                $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
+                                $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
+                                $($(_td).children()[0]).children("span").eq(1).html(deviceSoftwareStatus);
+
+                            }
+                            if (json.deviceSoftwareStatus == "102") {
+                                //每次的表格数据都是静态的，要对应，不然.className+='layui-bg-green'找不找修改模块，两种状态都要配,之前错误，只做了101，正常状态
+                                $($(_td).children()[0]).children("span").eq(0).removeClass('layui-bg-green');
+                                $($(_td).children()[0]).children("span").eq(1).attr("style", "color:red");
+                                $($(_td).children()[0]).children("span").eq(1).html(deviceSoftwareStatus);
+                            }
                             break;
                     }
                 });

@@ -332,7 +332,14 @@
             title: "预警标题",
             align: "center",
             minWidth: 150,
-            hide: isHidden("alarmEventTitle")
+            hide: isHidden("alarmEventTitle"),
+            templet: function (d) {
+                if (d.alarmEventTitle == "正常") {
+                    return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + "正常" + '</span>';
+                }else {
+                    return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + d.alarmEventTitle + '</span>';
+                }
+            }
 
         }, {
             field: "alarmType",
@@ -341,7 +348,12 @@
             hide: isHidden("alarmType"),
             minWidth: 150,
             templet: function (d) {
-                return layui.admin.getDictText("WRANING_TYPE", d.alarmType);
+              var alarmType =  layui.admin.getDictText("WRANING_TYPE", d.alarmType);
+                if (d.alarmType == "103") {
+                    return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + alarmType + '</span>';
+                }else {
+                    return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + alarmType + '</span>';
+                }
             }
         }, {
             field: "alarmLevel",
@@ -350,19 +362,27 @@
             hide: isHidden("alarmLevel"),
             minWidth: 150,
             templet: function (d) {
-
-                return layui.admin.getDictText("WARNING_LEVEL", d.alarmLevel);
+                var alarmLevel =  layui.admin.getDictText("WARNING_LEVEL", d.alarmLevel);
+                if (d.alarmLevel == "101") {
+                    return '<span style="color:green">' + alarmLevel + '</span>';
+                }else {
+                    return '<span style="color:red">' + alarmLevel + '</span>';
+                }
             }
         }, {
             field: "alarmEventContent",
             title: "预警内容",
             align: "center",
             hide: isHidden("alarmEventContent"),
-            minWidth: 150,
-            templet: function (d) {
-
-                return layui.admin.getDictText("WARNING_CONTENT", d.alarmEventContent);
-            }
+            minWidth: 150
+            // ,templet: function (d) {
+            //     // var alarmEventContent = layui.admin.getDictText("WARNING_CONTENT", d.alarmEventContent);
+            //     if (d.alarmEventContent == "正常") {
+            //         return '<span style="color:green">' + "正常" + '</span>';
+            //     }else {
+            //         return '<span style="color:red">' + d.alarmEventContent + '</span>';
+            //     }
+            // }
         }, {
             field: "occurrenceTime",
             title: "发生时间",
@@ -440,15 +460,45 @@
                     var dataField = $(_td).attr("data-field");
                     switch (dataField) {
                         case "alarmEventTitle":
-                            $($(_td).children()[0]).html(alarmEventTitle);
+                            if (alarmEventTitle == "正常") {
+                                debugger;
+                                $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
+                                $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
+                                $($(_td).children()[0]).children("span").eq(1).html(alarmEventTitle);
+
+                            }else {
+                                $($(_td).children()[0]).children("span").eq(0).removeClass('layui-bg-green');
+                                $($(_td).children()[0]).children("span").eq(1).attr("style", "color:red");
+                                $($(_td).children()[0]).children("span").eq(1).html(alarmEventTitle);
+                            }
+
                             break;
 
                         case "alarmType":
-                            $($(_td).children()[0]).html(layui.admin.getDictText("WRANING_TYPE", alarmType));
+                            var alarmTypeVal= layui.admin.getDictText("WRANING_TYPE", alarmType);
+                            if (alarmType == "103") {
+                                debugger;
+                                $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
+                                $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
+                                $($(_td).children()[0]).children("span").eq(1).html(alarmTypeVal);
+
+                            }else {
+                                $($(_td).children()[0]).children("span").eq(0).removeClass('layui-bg-green');
+                                $($(_td).children()[0]).children("span").eq(1).attr("style", "color:red");
+                                $($(_td).children()[0]).children("span").eq(1).html(alarmTypeVal);
+                            }
                             break;
 
                         case "alarmLevel":
-                            $($(_td).children()[0]).html(layui.admin.getDictText("WARNING_LEVEL", alarmLevel));
+                           var alarmLevelVal =  layui.admin.getDictText("WARNING_LEVEL", alarmLevel);
+                            if(alarmLevel == "101"){
+                                $($(_td).children()[0]).children("span").eq(0).attr("style", "color:green");
+                                $($(_td).children()[0]).children("span").eq(0).html(alarmLevelVal);
+                            }else {
+                                $($(_td).children()[0]).children("span").eq(0).attr("style", "color:red");
+                                $($(_td).children()[0]).children("span").eq(0).html(alarmLevelVal);
+                            }
+
                             break;
 
                         case "alarmEventContent":

@@ -87,9 +87,14 @@ public interface UserMapper {
      void updatePasswords(List<User> users);
 
      /**
-      * 检查用户是否存在
+      * 检查用户是否存在（添加）
       */
      int checkUser(@Param("userId") String userId);
+
+     /**
+      * 检查用户是否存在（编辑）
+      */
+     int checkUserEdit(@Param("userId") String userId,@Param("operatorId") String operatorId);
 
      /**
       * 获取用户

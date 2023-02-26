@@ -97,9 +97,11 @@
 </script>
 <%--字典--%>
 <script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/jquery.loadJSON.js"></script>
+<script type="text/javascript"
+        src="<%=request.getContextPath()%>/common/components/websocket/jquery.loadJSON.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/WebSocket.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/jquery.WebSocket.js"></script>
+<script type="text/javascript"
+        src="<%=request.getContextPath()%>/common/components/websocket/jquery.WebSocket.js"></script>
 <script type="text/javascript">
     var layer = layui.layer;
     var table = layui.table;
@@ -349,8 +351,15 @@
             hide: isHidden("deviceSoftwareStatus"),
             minWidth: 150,
             templet: function (d) {
+                var deviceSoftwareStatus = layui.admin.getDictText("DEVICE_SOFTWARE_STATUS", d.deviceSoftwareStatus);
+                if (d.deviceSoftwareStatus == "101") {
 
-                return layui.admin.getDictText("DEVICE_SOFTWARE_STATUS", d.deviceSoftwareStatus);
+                    return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + deviceSoftwareStatus + '</span>';
+
+                } else if (d.deviceSoftwareStatus == "102") {
+                    return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + deviceSoftwareStatus + '</span>';
+
+                }
             }
         }, {
             field: "accessStatus",
@@ -359,7 +368,15 @@
             hide: isHidden("accessStatus"),
             minWidth: 150,
             templet: function (d) {
-                return layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", d.accessStatus);
+                var accessStatus = layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", d.accessStatus);
+                if (d.accessStatus == "101") {
+
+                    return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + accessStatus + '</span>';
+
+                } else if (d.accessStatus == "102") {
+                    return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + accessStatus + '</span>';
+
+                }
             }
         }, {
             field: "deviceWarningNum",
@@ -389,7 +406,7 @@
         ]]
     });
 
-debugger;
+
     var host = window.location.host;
     var port = host.split(":");
     var json = ""
@@ -413,8 +430,9 @@ debugger;
             //如果在后面再加上.text() 代表要取出这个单元格中的文本。
             //html()方法返回被选元素的内容，即括号内未设置参数。若设置参数，返回设置参数的内容。并且该参数内容覆盖所有想匹配的元素的内容,参数可为函数，即function(index,dcontent)
             // $("p").html("AAA");所有p标签的内容变为：AAA
-            debugger;
-            var _trs=$(".layui-table-body.layui-table-main:eq(0) tbody:eq(0)").children();
+
+            var _trs = $(".layui-table-body.layui-table-main:eq(0) tbody:eq(0)").children();
+
             function find(tr, appId) {
                 var _tds = $(tr).children();
                 var bool = false;
@@ -429,6 +447,7 @@ debugger;
                 });
                 return bool;
             }
+
             function update(tr, json) {
                 var _tds = $(tr).children();
                 _tds.each(function (j) {
@@ -436,12 +455,38 @@ debugger;
                     var dataField = $(_td).attr("data-field");
                     switch (dataField) {
                         case "accessStatus":
-                            $($(_td).children()[0]).html(layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS",json.accessStatus));
+                           var accessStatus= layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", json.accessStatus)
+                            if (json.accessStatus == "101") {
+                                debugger;
+                                $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
+                                $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
+                                $($(_td).children()[0]).children("span").eq(1).html(accessStatus);
+
+                            }
+                            if (json.accessStatus == "102") {
+                                $($(_td).children()[0]).children("span").eq(0).removeClass('layui-bg-green');
+                                $($(_td).children()[0]).children("span").eq(1).attr("style", "color:red");
+                                $($(_td).children()[0]).children("span").eq(1).html(accessStatus);
+                            }
                             break;
 
                         case "deviceSoftwareStatus":
-                            $($(_td).children()[0]).html(layui.admin.getDictText("DEVICE_SOFTWARE_STATUS",json.deviceSoftwareStatus));
+                            var deviceSoftwareStatus = layui.admin.getDictText("DEVICE_SOFTWARE_STATUS", json.deviceSoftwareStatus)
+                            if (json.deviceSoftwareStatus == "101") {
+                                debugger;
+                                $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
+                                $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
+                                $($(_td).children()[0]).children("span").eq(1).html(deviceSoftwareStatus);
+
+                            }
+                            if (json.deviceSoftwareStatus == "102") {
+                                //每次的表格数据都是静态的，要对应，不然.className+='layui-bg-green'找不找修改模块，两种状态都要配,之前错误，只做了101，正常状态
+                                $($(_td).children()[0]).children("span").eq(0).removeClass('layui-bg-green');
+                                $($(_td).children()[0]).children("span").eq(1).attr("style", "color:red");
+                                $($(_td).children()[0]).children("span").eq(1).html(deviceSoftwareStatus);
+                            }
                             break;
+
 
                         case "cpuRate":
                             $($(_td).children()[0]).html(json.cpuRate);
@@ -457,6 +502,7 @@ debugger;
                     }
                 });
             }
+
             _trs.each(function (i) {
                 var _tr = _trs[i];
                 if (find(_tr, json.appId)) {
@@ -469,7 +515,6 @@ debugger;
             deviceStatus = null;
         }
     });
-
 
 
     formReder();

@@ -130,12 +130,21 @@ public class UserService {
 	}
 
 	/**
-	 * 检测用户是否存在
+	 * 检测用户是否存在(添加)
 	 *
 	 * @param userId 用户编号
 	 */
 	public int  checkUser(String userId) {
 		return userMapper.checkUser(userId) ;
+	}
+
+	/**
+	 * 检测用户是否存在（编辑）
+	 *
+	 * @param userId 用户编号
+	 */
+	public int  checkUserEdit(String userId,String operatorId) {
+		return userMapper.checkUserEdit(userId,operatorId) ;
 	}
 
 	/**

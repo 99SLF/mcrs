@@ -14,7 +14,7 @@
 
     <!--    查询记录数-->
     <select id="count" resultType="int">
-        SELECT count(*) , curCrator.USER_NAME AS userCreator,
+        SELECT count(cur.OPERATOR_ID) , curCrator.USER_NAME AS userCreator,
         curUpdater.USER_NAME AS userUpdater
         FROM
         (
@@ -89,9 +89,15 @@
         cur.USER_NAME,
         roleNameList,
         cur.USER_TYPE,
-        cur. STATUS,
+        cur.STATUS,
         curCrator.USER_NAME AS userCreator,
-        curUpdater.USER_NAME AS userUpdater
+        curUpdater.USER_NAME AS userUpdater,
+        cur.USER_PHONE,
+        cur.EMAIL,
+        cur.USER_DESCRIPTION,
+        cur.INVAL_DATE,
+        cur.START_DATE,
+        cur.END_DATE
         FROM
         (
         SELECT
@@ -202,11 +208,19 @@
         where user_id = #{userId}
     </select>
 
-    <!--获取一个用户信息条数-->
+    <!--获取一个用户信息条数，添加-->
     <select id="checkUser" resultType="int">
         select count(*)
         from cap_user
         where user_id = #{userId}
+    </select>
+
+    <!--获取一个用户信息条数，编辑-->
+    <select id="checkUserEdit" resultType="int">
+        SELECT count(*)
+        FROM cap_user
+        where user_id = #{userId}
+          and operator_id != #{operatorId}
     </select>
 
     <!--    &lt;!&ndash;重置密码&ndash;&gt;-->

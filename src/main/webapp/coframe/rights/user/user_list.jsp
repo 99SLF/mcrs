@@ -274,6 +274,7 @@
                     type: 2,
                     title: "用户授权",
                     btn: ["关闭"],
+                    closeBtn: '',
                     area: ["650px", "510px"],
                     resize: false,
                     content: [url, "yes"], //弹窗不出现滚动条
@@ -284,6 +285,7 @@
                             partyType: "user"
                         };
                         layero.find("iframe")[0].contentWindow.SetData(dataJson);
+
                     }
                 });
             }
@@ -605,25 +607,29 @@
             hide: isHidden("status"),
             /*挂起，正常，锁定，注销*/
             templet: function (d) {
+                debugger;
+              var statusVal =  layui.admin.getDictText("COF_USERSTATUS", d.status);
+                if (d.status == "102"){
+                return '<span class="layui-badge-dot layui-bg-green"></span>' + "  "+ '<span style="color:#00fd00">' + statusVal + '</span>';
 
-                // if (d.status==1) {
-                // 	return "挂起";
-                // } else if (d.status==2){
-                // 	return "正常"
-                //
-                // }else if (d.status==3){
-                // 	return "锁定";
-                // }else{
-                // 	return "注销"
-                // }
-                return layui.admin.getDictText("COF_USERSTATUS", d.status);
+                }else if(d.status == "101") {
+                    return '<span style="color:#dafa02">' + statusVal + '</span>';
+
+                }else if(d.status == "103") {
+                    return '<span style="color:#03f8a1">' + statusVal + '</span>';
+
+                }else if(d.status == "104") {
+
+                    return '<span style="color:#f60419">' + statusVal + '</span>';
+
+                }
             }
         }, {
             field: "roleNameList",
             title: "角色名称",
             align: "center",
             minWidth: 250,
-            hide: isHidden("roleNameList")
+            hide: isHidden("roleNameList"),
             <%--templet: function(d) {--%>
             <%--    debugger;--%>
             <%--    var  userId = d.userId;--%>
@@ -643,6 +649,13 @@
             <%--        });--%>
             <%--    // return roleName;--%>
             <%--}--%>
+            templet: function (d) {
+                if (!('roleNameList' in d) ) {
+                	return '<span style="color:#f60419">' + "暂未分配权限" + '</span>';
+                }else {
+                    return  d.roleNameList;
+                }
+            }
 
         }, {
             field: "userPhone",
@@ -732,10 +745,11 @@
             top.layer.open({
                 type: 2,
                 title: "查看用户详情",
-                content: "<%= request.getContextPath() %>/basic/accPointResMaintain/accPointRes_detailed.jsp",
+                content: "<%= request.getContextPath() %>/coframe/rights/user/user_view.jsp",
                 area: ["800px", "500px"],
                 resize: false,
                 btn: ["关闭"],
+                closeBtn: '',
                 success: function (layero, index) {
                     debugger;
                     var dataJson = {

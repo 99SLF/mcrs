@@ -318,8 +318,15 @@
             minWidth: 150,
             hide: isHidden("accessStatus"),
             templet: function (d) {
+                var accessStatus = layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", d.accessStatus);
+                if (d.accessStatus == "101") {
 
-                return layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", d.accessStatus);
+                    return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + accessStatus + '</span>';
+
+                } else if (d.accessStatus == "102") {
+                    return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + accessStatus + '</span>';
+
+                }
             }
 
         }
@@ -382,7 +389,19 @@
                         var dataField = $(_td).attr("data-field");
                         switch (dataField) {
                             case "accessStatus":
-                                $($(_td).children()[0]).html(layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS",json.accessStatus));
+                                var accessStatus= layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", json.accessStatus)
+                                if (json.accessStatus == "101") {
+                                    debugger;
+                                    $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
+                                    $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
+                                    $($(_td).children()[0]).children("span").eq(1).html(accessStatus);
+
+                                }
+                                if (json.accessStatus == "102") {
+                                    $($(_td).children()[0]).children("span").eq(0).removeClass('layui-bg-green');
+                                    $($(_td).children()[0]).children("span").eq(1).attr("style", "color:red");
+                                    $($(_td).children()[0]).children("span").eq(1).html(accessStatus);
+                                }
                                 break;
                         }
                     });

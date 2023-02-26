@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <!-- 
-  - Author(s): SSW
+  - Author(s): SSW ，李伟杰
   - Date: 2021-03-30 10:42:05
   - Description:
 -->
@@ -121,8 +121,14 @@
 						type: "POST",
 						contentType: "text/json",
 						success: function(text) {
-							if (text.result) {
-								layer.msg("取消授权成功");
+						    debugger;
+							if (text.code) {
+								layer.msg("取消授权成功",{
+                                    icon: 1,
+                                    time: 1000
+                                },function (){
+                                    win.layui.table.reload('LAY-app-user-list-reload');
+                                });
 							}
 						},
 						error: function() {
@@ -135,11 +141,17 @@
 						data: json,
 						type: "POST",
 						contentType: "text/json",
-						success: function(text) {
-							if (text.result) {
-								layer.msg("授权成功");
-							}
-						},
+                        success: function(text) {
+                            debugger;
+                            if (text.code) {
+                                layer.msg("授权成功",{
+                                    icon: 1,
+                                    time: 1000
+                                },function (){
+                                    win.layui.table.reload('LAY-app-user-list-reload');
+                                });
+                            }
+                        },
 						error: function() {
 						}
 					});

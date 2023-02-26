@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <!-- 
-  - Author(s): SSW
-  - Date: 2021-03-30 10:42:05
+  - Author(s): 李伟杰
+  - Date: 2023-01-30 10:42:05
   - Description:
 -->
 <head>
@@ -21,8 +21,9 @@
             margin-left: 150px;
             min-height: 30px
         }
-        .layui-textarea{
-            height: 5px!important;
+
+        .layui-textarea {
+            height: 5px !important;
             /*min-height: 60px!important;*/
         }
     </style>
@@ -41,7 +42,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>用户名称：</label>
             <div class="layui-input-block">
-                <input id="userName" type="text" name="userName" lay-verify="required" placeholder="用户名称(必填)"
+                <input id="userName" type="text" name="userName" lay-verify="required|userName" placeholder="用户名称(必填)"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -77,7 +78,8 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>密码失效日期：</label>
             <div class="layui-input-block">
-                <input type="text" name="invalDate" id="invaldate" autocomplete="off" class="layui-input" lay-verify="required">
+                <input type="text" name="invalDate" id="invaldate" autocomplete="off" class="layui-input"
+                       lay-verify="required">
             </div>
         </div>
     </div>
@@ -85,13 +87,15 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>有效开始时间：</label>
             <div class="layui-input-block">
-                <input type="text" name="startDate" id="startdate" autocomplete="off" class="layui-input" lay-verify="required">
+                <input type="text" name="startDate" id="startdate" autocomplete="off" class="layui-input"
+                       lay-verify="required">
             </div>
         </div>
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>有效截止时间：</label>
             <div class="layui-input-block">
-                <input type="text" name="endDate" id="enddate" autocomplete="off" class="layui-input" lay-verify="required">
+                <input type="text" name="endDate" id="enddate" autocomplete="off" class="layui-input"
+                       lay-verify="required">
             </div>
         </div>
     </div>
@@ -100,13 +104,15 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label">手机号：</label>
             <div class="layui-input-block">
-                <input type="text" name="userPhone" id="userPhone" lay-verify="" autocomplete="off" class="layui-input">
+                <input type="text" name="userPhone" id="userPhone" lay-verify="phone" autocomplete="off"
+                       class="layui-input">
             </div>
         </div>
         <div class="layui-col-sm6">
             <label class="layui-form-label">邮箱地址：</label>
             <div class="layui-input-block">
-                <input type="text" name="email" id="email" lay-verify="" autocomplete="off" class="layui-input">
+                <input type="text" name="email" id="email" lay-verify="checkEmail" autocomplete="off"
+                       class="layui-input">
             </div>
         </div>
     </div>
@@ -116,7 +122,7 @@
             <div class="layui-input-block">
             <textarea cols="50" rows="10" style="width:100%;height:100px" name="userDescription" id="userDescription"
                       autocomplete="off"
-                      class="layui-textarea" lay-verify="" ></textarea>
+                      class="layui-textarea" lay-verify="userDescription"></textarea>
             </div>
         </div>
     </div>
@@ -156,16 +162,16 @@
     });
 
     layui.admin.renderDictSelect({    //获取用户状态的下拉值
-    	elem: "#status",
-    	dictTypeId: "COF_USERSTATUS",
+        elem: "#status",
+        dictTypeId: "COF_USERSTATUS",
     });
     layui.admin.renderDictSelect({	 //获取用户权限的下拉值
-    	elem: "#authMode",
-    	dictTypeId: "COF_AUTHMODE"
+        elem: "#authMode",
+        dictTypeId: "COF_AUTHMODE"
     });
     layui.admin.renderDictSelect({	   //获取菜单布局的下拉值
-    	elem: "#menuType",
-    	dictTypeId: "COF_SKINLAYOUT"
+        elem: "#menuType",
+        dictTypeId: "COF_SKINLAYOUT"
     });
     layui.admin.renderDictSelect({	   //获取用户类型下拉值
         elem: "#userType",
@@ -179,7 +185,59 @@
     //表单加载
     form.render();
 
+    //判断字符
+    form.verify({
+        checkUserId: function (value, item) {
+            debugger;
+            if (!new RegExp("^[a-zA-Z0-9_]+$").test(value)) {
+                return "输入用户登录名称有误，只能输入英文字母、数字、下划线";
+            }
+            if (value.length > 20) {
+                return "输入用户登录名称有误，不能超过20个字符";
+            }
+            var checkResult = "";
+            var flag = "1";
+            $.ajax({
+                url: "<%=request.getContextPath()%>/user/check/isExist?userId=" + value + "&flag=" + flag + "&operatorId=" + 0,
+                type: "GET",
+                // data: json,
+                // data: userId,
+                async: false,
+                contentType: "text/json",
+                cache: false,
+                success: function (text) {
+                    debugger;
+                    if (text.code == "1") {
+                        checkResult = "登录名账号名已存在";
+                    }
+                },
+                error: function () {
+                }
+            });
+            return checkResult;
+        },
+        userName: function (value, item) {
 
+            if (!new RegExp("^[a-zA-Z0-9\u4e00-\u9fa5]+$").test(value)) {
+                return "输入用户名称名称有误，只能输入汉字+英文+数字";
+            }
+            if (value.length > 20) {
+                return "用户名称不能超过20个字符";
+            }
+        },
+        checkEmail: function (value, item) {
+            if (value != "") {
+                if (!new RegExp("^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$").test(value)) {
+                    return "邮箱格式有误";
+                }
+            }
+        },
+        userDescription: function (value, item) {
+            if (value.length > 255) {
+                return "备注不能超过255个字符";
+            }
+        }
+    });
 
     var startDate = laydate.render({
         elem: '#startdate',
@@ -234,13 +292,14 @@
                         }, function () {
                             var index = parent.layer.getFrameIndex(window.name);
                             win.layui.table.reload('LAY-app-user-list-reload');
+                            win.window.formReder();
                             top.layer.close(index);
                         });
                     }
                 });
             } else if (isExist == true) {
                 submit = false;
-                layer.msg("用户已存在，请重新输入", {
+                layer.msg("账号名已存在，请重新输入", {
                     icon: 2,
                     time: 2000
                 });
@@ -253,31 +312,31 @@
     });
 
     // 判断角色是否已存在
-    $("#userId").blur(function() {
-    	var userId = $("#userId").val();
-    	if (userId != null && userId != "") {
-    		// var json = JSON.stringify({
-    		// 	userId: userId});
-    		$.ajax({
-    			url: "<%=request.getContextPath()%>/user/check/isExist?userId=" + userId,
-    			type: "GET",
-    			// data: json,
+    $("#userId").blur(function () {
+        var userId = $("#userId").val();
+        if (userId != null && userId != "") {
+            // var json = JSON.stringify({
+            // 	userId: userId});
+            $.ajax({
+                url: "<%=request.getContextPath()%>/user/check/isExist?userId=" + userId,
+                type: "GET",
+                // data: json,
                 // data: userId,
                 async: false,
-    			contentType: "text/json",
-    			cache: false,
-    			success: function(text) {
-    			    //通过接口返回，返回检测用户记录条数
-    				if (text.code == "1") {
-    					isExist = true;
-    				} else {
-    					isExist = false;
-    				}
-    			}
-    		});
-    	} else {
-    		return;
-    	}
+                contentType: "text/json",
+                cache: false,
+                success: function (text) {
+                    //通过接口返回，返回检测用户记录条数
+                    if (text.code == "1") {
+                        isExist = true;
+                    } else {
+                        isExist = false;
+                    }
+                }
+            });
+        } else {
+            return;
+        }
         console.log(isExist);
     });
 

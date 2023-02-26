@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <!-- 
-  - Author(s): SSW
+  - Author(s): 李伟杰
   - Date: 2021-03-30 10:42:05
   - Description:
 -->
@@ -42,7 +42,7 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" ><span style="color:red">*</span>用户名称：</label>
 			<div class="layui-input-block">
-				<input id="userName" type="text" name="userName" lay-verify="required" placeholder="角色名称(必填)" autocomplete="off" class="layui-input">
+				<input id="userName" type="text" name="userName" lay-verify="required|userName" placeholder="角色名称(必填)" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 	</div>
@@ -92,13 +92,13 @@
 		<div class="layui-col-sm6">
 			<label class="layui-form-label">手机号：</label>
 			<div class="layui-input-block">
-				<input type="text" name="userPhone" id="userPhone" lay-verify="" autocomplete="off" class="layui-input">
+				<input type="text" name="userPhone" id="userPhone" lay-verify="phone" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 		<div class="layui-col-sm6">
 			<label class="layui-form-label" >邮箱地址：</label>
 			<div class="layui-input-block">
-				<input type="text" name="email" id="email" lay-verify="" autocomplete="off" class="layui-input">
+				<input type="text" name="email" id="email" lay-verify="checkEmail" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 	</div>
@@ -108,7 +108,7 @@
 			<div class="layui-input-block">
             <textarea cols="50" rows="10" style="width:100%;height:100px" name="userDescription" id="userDescription"
 					  autocomplete="off"
-					  class="layui-textarea" lay-verify="" ></textarea>
+					  class="layui-textarea" lay-verify="userDescription" ></textarea>
 			</div>
 		</div>
 	</div>
@@ -166,7 +166,7 @@
               }
          },
 	});
-	
+
 	
     var endDate = laydate.render({
         elem: '#enddate',//绑定的控件名称
@@ -183,11 +183,13 @@
              }
          }
 	});
-  	
+
+    var operatorId ="";
 	var win = null;
 	function SetData(data) {
 		win = data.win ? data.win : window;
 	  	var data = data.data;
+	  	 operatorId = data.operatorId
 		form.val("layuiadmin-app-form-list", {
 			//添加选项几个弄几个，包括一个主键
 			"operatorId": data.operatorId,
@@ -200,7 +202,7 @@
 			"userPhone" : data.userPhone,
 			"userDescription" : data.userDescription,
 			"email": data.email,
-			"status": data.status,
+			"status": data.status
 		});
 
 		if (data.enddate != null) {
@@ -239,6 +241,59 @@
 			});
 		}
 	}
+	//判断字符
+	form.verify({
+		checkUserId: function (value, item) {
+			debugger;
+			if (!new RegExp("^[a-zA-Z0-9_]+$").test(value)) {
+				return "输入用户登录名称有误，只能输入英文字母、数字、下划线";
+			}
+			if (value.length > 20) {
+				return "输入用户登录名称有误，不能超过20个字符";
+			}
+			var checkResult = "";
+			var flag = "0";
+			$.ajax({
+				url: "<%=request.getContextPath()%>/user/check/isExist?userId=" + value + "&flag=" + flag+ "&operatorId=" + operatorId,
+				type: "GET",
+				// data: json,
+				// data: userId,
+				async: false,
+				contentType: "text/json",
+				cache: false,
+				success: function (text) {
+					debugger;
+					if (text.code == "1") {
+						checkResult = "登录名账号名已存在";
+					}
+				},
+				error: function () {
+				}
+			});
+			return checkResult;
+		},
+		userName: function (value, item) {
+
+			if (!new RegExp("^[a-zA-Z0-9\u4e00-\u9fa5]+$").test(value)) {
+				return "输入用户名称名称有误，只能输入汉字+英文+数字";
+			}
+			if (value.length > 20) {
+				return "用户名称不能超过20个字符";
+			}
+		},
+		checkEmail: function (value, item) {
+			if (value != "") {
+				if (!new RegExp("^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$").test(value)) {
+					return "邮箱格式有误";
+				}
+			}
+		},
+		userDescription: function (value, item) {
+			if (value.length > 255) {
+				return "备注不能超过255个字符";
+			}
+		}
+	});
 
 	//判断角色是否已存在
 	$("#userId").blur(function() {

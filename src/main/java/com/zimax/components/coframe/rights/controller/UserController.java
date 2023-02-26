@@ -179,15 +179,26 @@ public class UserController {
 
     /**
      * 检测用户是否存在
-     *
+     * RequestParam 必须传参数，不然访问不到
      * @param userId 用户名字
      */
     @GetMapping("/check/isExist")
-    public Result<?> checkUser(@RequestParam("userId") String userId) {
-        if (userService.checkUser(userId) > 0) {
-            return Result.error("1", "用户已存在");
-        } else {
-            return Result.success();
+    public Result<?> checkUser(@RequestParam("userId") String userId,@RequestParam("flag") String flag,@RequestParam("operatorId") String operatorId) {
+        if(flag.equals("1")){
+            //添加
+            if (userService.checkUser(userId) > 0) {
+                return Result.error("1", "用户已存在");
+            } else {
+                return Result.success();
+            }
+
+        }else {
+            //编辑
+            if (userService.checkUserEdit(userId,operatorId) >0) {
+                return Result.error("1", "用户已存在");
+            } else {
+                return Result.success();
+            }
         }
 
     }
