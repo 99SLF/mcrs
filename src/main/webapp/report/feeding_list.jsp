@@ -303,7 +303,7 @@
 			title: "生产数量",
 			align: "center",
 			hide: isHidden("prodNumber"),
-			minWidth: 60
+			minWidth: 150
 		},{
 			field: "startProdTime",
 			title: "开始生产时间",
