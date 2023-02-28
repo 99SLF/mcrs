@@ -22,7 +22,7 @@ layui.define(["laytpl", "layer", "element", "util"], function(exports) {
 		// 是否开启页面选项卡功能。iframe版推荐开启
 		pageTabs: true,
 		
-		name: "RFID运维管理一体平台",
+		name: "RFID运维管理",
 		
 		// 本地存储表名
 		tableName: "layuiAdmin",

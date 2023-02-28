@@ -6,11 +6,39 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=equipment-width, initial-scale=1, maximum-scale=1">
 <link rel="shortcut icon" href="<%=request.getContextPath() %>/std/dist/images/favicon.ico?v=3" />
-<title>RFID数据采集管控一体平台</title>
+<title>RFID数据采集管控</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/common/layui/css/layui.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/admin.css" media="all">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v2">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/iconfont/iconfont.css?v3">
+<style>
+	.layui-layout-admin .layui-logo {
+		position: fixed;
+		left: 0;
+		top: 0;
+		z-index: 1002;
+		width: 140px;
+		height: 49px;
+		padding: 0 15px;
+		box-sizing: border-box;
+		overflow: hidden;
+		font-weight: 300;
+		background-repeat: no-repeat;
+		background-position: center center;
+	}
+
+	/*.layui-side-menu .layui-nav .layui-nav-more {*/
+	/*	right: 45px;*/
+	/*}*/
+
+
+
+	/*.layadmin-pagetabs, .layui-layout-admin .layui-body, .layui-layout-admin .layui-footer, .layui-layout-admin .layui-layout-left {*/
+	/*	left: 200px;*/
+	/*}*/
+
+
+</style>
 </head>
 <body class="layui-layout-body">
 <div id="LAY_app">
@@ -80,8 +108,8 @@
 				</dl>
 			</script>
 		</li>
-		<li class="layui-nav-item layui-hide-xs" lay-unselect>
-			<a href="javascript:;" layadmin-event="about">
+		<li class="layui-nav-item layui-hide-xs "  lay-unselect >
+			<a href="javascript:;" layadmin-event="about" >
 				<i class="layui-icon layui-icon-more-vertical"></i>
 			</a>
 		</li>
@@ -93,8 +121,8 @@
 	</ul>
 </div>
 <!-- 侧边菜单 -->
-<div class="layui-side layui-side-menu">
-	<div class="layui-side-scroll">
+<div class="layui-side layui-side-menu" >
+	<div class="layui-side-scroll" >
 		<script type="text/html" template lay-url="<%=request.getContextPath()%>/auth/menu?appCode=coframe"
 				lay-done="layui.element.render('nav', 'layadmin-system-side-menu');" id="TPL_layout">
 <div class="layui-logo" lay-href="<%=request.getContextPath()%>/std/dist/views/index.jsp">
