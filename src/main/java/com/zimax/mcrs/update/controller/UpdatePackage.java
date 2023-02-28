@@ -10,6 +10,7 @@ import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.device.pojo.Device;
 import com.zimax.mcrs.device.pojo.DeviceRollback;
 import com.zimax.mcrs.device.pojo.DeviceUpgrade;
+import com.zimax.mcrs.device.pojo.Equipment;
 import com.zimax.mcrs.update.javaBean.UploadJava;
 import com.zimax.mcrs.update.pojo.*;
 import com.zimax.mcrs.update.service.UpdatePackageService;
@@ -444,11 +445,16 @@ public class UpdatePackage {
      * @return 注册成功返回APPID
      */
     @PostMapping("/register")
-    public Result<?> register(HttpServletRequest request,String equipmentIp) {
-        if (equipmentIp == null || equipmentIp == "" ) {
-            return Result.error("1", "传入参数有误");
+    public Result<?> register(@RequestBody Equipment equipment) {
+        String equipmentIp = equipment.getEquipmentIp();
+        String equipmentId = equipment.getEquipmentId();
+        if (equipmentIp == null || "".equals(equipmentIp)||equipmentId==null||"".equals(equipmentId)) {
+            return Result.error("1", "传入参数有误。equipmentIp："+equipmentIp+",resource"+equipmentId);
         }
-
+        if(updatePackageService.checkEqi(equipmentIp)<1){
+            equipment.setEnable("101");
+            updatePackageService.addEqi(equipment);
+        }
         try {
             String equipmentContinuePort = "";
 
@@ -457,7 +463,7 @@ public class UpdatePackage {
             DeviceEquipmentVo deviceEquipmentVo= updatePackageService.getDeviceEquipmentVo(equipmentIp,equipmentContinuePort);
             //2.1不存在资源，返回录入信息
             if (deviceEquipmentVo == null || equipmentIp == "") {
-                return Result.error("1", "不存在设备资源:"+equipmentIp);
+                return Result.error("1", "设备资源"+equipmentIp+"暂未绑定终端，请联系管理员");
             } else {//2.2存在资源
                 appId = deviceEquipmentVo.getAppId();
 

@@ -1,19 +1,19 @@
 package com.zimax.mcrs.update.service;
 
-import com.zimax.mcrs.device.mapper.DeviceMapper;
-import com.zimax.mcrs.device.mapper.DeviceRollbackMapper;
-import com.zimax.mcrs.device.mapper.DeviceUpdateMapper;
-import com.zimax.mcrs.device.mapper.DeviceUpgradeMapper;
-import com.zimax.mcrs.device.pojo.Device;
-import com.zimax.mcrs.device.pojo.DeviceRollback;
-import com.zimax.mcrs.device.pojo.DeviceUpdate;
-import com.zimax.mcrs.device.pojo.DeviceUpgrade;
+import com.zimax.cap.datacontext.DataContextManager;
+import com.zimax.cap.party.IUserObject;
+import com.zimax.mcrs.device.mapper.*;
+import com.zimax.mcrs.device.pojo.*;
 import com.zimax.mcrs.update.mapper.*;
 import com.zimax.mcrs.update.pojo.*;
+import com.zimax.mcrs.update.pojo.DeviceEquipmentVo;
+import com.zimax.mcrs.update.pojo.DeviceRollbackVo;
+import com.zimax.mcrs.update.pojo.DeviceUpgradeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,6 +46,8 @@ public class UpdatePackageService {
 
     @Autowired
     private DeviceMapper deviceMapper;
+    @Autowired
+    private EquipmentMapper equipmentMapper;
 
     @Autowired
     private ConfigurationFileMapper configurationFileMapper;
@@ -167,6 +169,23 @@ public class UpdatePackageService {
         configurationFileMapper.updateConfigurationFile(configurationFile);
     }
 
+    //检测设备是否存在
+    public int checkEqi(String equipmentIp) {
+        return equipmentMapper.checkExistenceIp(equipmentIp);
+    }
+    public void addEqi(Equipment equipment) {
+        //IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
+        equipment.setCreator("sysadmin");
+        equipment.setCreateTime(new Date());
+        equipmentMapper.addEquipment(equipment);
+        //如果工位不为空，则添加至工位表
+        if (equipment.getWorkStationList() != null) {
+            for (WorkStation workStation : equipment.getWorkStationList()) {
+                workStation.setEquipmentInt(equipment.getEquipmentInt());
+                equipmentMapper.addWorkStation(workStation);
+            }
+        }
+    }
 
 //    /**
 //     * 通过更新包id查询记录
