@@ -2,6 +2,7 @@ package com.zimax.mcrs.device.service;
 
 import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
+import com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.device.mapper.EquipmentMapper;
 import com.zimax.mcrs.device.pojo.Device;
@@ -310,5 +311,36 @@ public class EquipmentService {
             }
         }
         return equipmentVos;
+    }
+
+
+    /**
+     * 批量启用
+     */
+    public void enable(List<Integer> equipmentInts) {
+        Equipment equipment = new Equipment();
+        IUserObject useObject = DataContextManager.current().getMUODataContext().getUserObject();
+        for (Integer integer:equipmentInts){
+            equipment.setEquipmentInt(integer);
+            equipment.setEnable("101");
+//            equipment.setUpdater(useObject.getUserId());
+//            equipment.setUpdateTime(new Date());
+            equipmentMapper.enable(equipment);
+        }
+    }
+
+    /**
+     *  批量禁用
+     */
+    public void noEnable(List<Integer> equipmentInts) {
+        Equipment equipment = new Equipment();
+        IUserObject useObject = DataContextManager.current().getMUODataContext().getUserObject();
+        for (Integer integer:equipmentInts){
+            equipment.setEquipmentInt(integer);
+            equipment.setEnable("102");
+//            equipment.setUpdater(useObject.getUserId());
+//            equipment.setUpdateTime(new Date());
+            equipmentMapper.noEnable(equipment);
+        }
     }
 }

@@ -27,15 +27,20 @@
 		background-position: center center;
 	}
 
-	/*.layui-side-menu .layui-nav .layui-nav-more {*/
-	/*	right: 45px;*/
-	/*}*/
-
-
-
-	/*.layadmin-pagetabs, .layui-layout-admin .layui-body, .layui-layout-admin .layui-footer, .layui-layout-admin .layui-layout-left {*/
-	/*	left: 200px;*/
-	/*}*/
+	.layui-side-menu .layui-nav .layui-nav-more {
+		right: 95px;
+	}
+	.layadmin-pagetabs, .layui-layout-admin .layui-body, .layui-layout-admin .layui-footer, .layui-layout-admin .layui-layout-left {
+		left: 155px;
+	}
+	.layadmin-pagetabs .layui-icon-prev {
+		left: 5px;
+		border-left: none;
+		border-right: 1px solid #f6f6f6;
+	}
+	.layui-layout-admin .layui-layout-left {
+		padding: 0 0px;
+	}
 
 
 </style>
@@ -121,7 +126,7 @@
 	</ul>
 </div>
 <!-- 侧边菜单 -->
-<div class="layui-side layui-side-menu" >
+<div class="layui-side layui-side-menu">
 	<div class="layui-side-scroll" >
 		<script type="text/html" template lay-url="<%=request.getContextPath()%>/auth/menu?appCode=coframe"
 				lay-done="layui.element.render('nav', 'layadmin-system-side-menu');" id="TPL_layout">

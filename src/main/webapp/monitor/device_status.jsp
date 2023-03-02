@@ -110,6 +110,8 @@
     var util = layui.util;
     var admin = layui.admin;
     var view = layui.view;
+
+    //websocket引用
     var $ = layui.$;
     // 过滤字段
     var hiddenFields = [];
@@ -423,7 +425,6 @@
         onError: function (event) {
         },
         onMessage: function (event) {
-
             json = JSON.parse(event.data);
             //测试修改数据的方法!
             //$("tr:eq(1)  td:eq(2)"):这代表了要选中表格的第二行中的第三个单元格

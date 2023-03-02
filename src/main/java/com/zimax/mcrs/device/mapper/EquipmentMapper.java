@@ -1,5 +1,6 @@
 package com.zimax.mcrs.device.mapper;
 
+import com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes;
 import com.zimax.mcrs.device.pojo.Equipment;
 import com.zimax.mcrs.device.pojo.EquipmentVo;
 import com.zimax.mcrs.device.pojo.WorkStation;
@@ -111,4 +112,14 @@ public interface EquipmentMapper {
      * 根据主键查询设备信息
      */
     Equipment queryEquipment(int equipmentInt);
+
+    /**
+     * 批量启用
+     */
+    int enable(Equipment equipment);
+
+    /**
+     * 批量启用
+     */
+    int noEnable(Equipment equipment);
 }
