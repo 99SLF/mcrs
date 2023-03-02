@@ -192,5 +192,16 @@
         SELECT * FROM eqi_equipment
         WHERE equipment_int = #{equipmentint}
     </select>
-
+    <!--批量启用-->
+    <update id="enable" parameterType="java.util.List">
+        update eqi_equipment
+        set enable  = #{enable}
+        where equipment_int = #{equipmentInt}
+    </update>
+    <!--批量禁用-->
+    <update id="noEnable" parameterType="java.util.List">
+        update eqi_equipment
+        set enable  = #{enable}
+        where equipment_int = #{equipmentInt}
+    </update>
 </mapper>

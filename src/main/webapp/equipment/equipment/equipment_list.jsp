@@ -165,7 +165,6 @@
     }
 
 
-
     var active = {
 
         //查询按钮
@@ -269,6 +268,128 @@
                     });
                 });
             }
+        },
+        enable: function () {
+            var checkStatus = table.checkStatus("LAY-app-equipment-list-reload");
+            var data = checkStatus.data;
+            if (data.length == 0) {
+                layer.msg("请至少选中一条记录！");
+            }
+            for (i = 0; i < data.length; i++) {
+                if (data[i].enable == "101") {
+                    isExits = true;
+                    break;
+                }
+                isExits = false
+            }
+            if (isExits == false) {
+                if (data.length > 0) {
+                    var equipmentInts = new Array();
+                    for (var i = 0; i < data.length; i++) {
+                        equipmentInts[i] = data[i].equipmentInt;
+                    }
+                    layer.confirm("确定启用所选设备信息？", {
+                        icon: 3,
+                        title: "系统提示"
+                    }, function (index) {
+                        $.ajax({
+                            url: "<%= request.getContextPath() %>/equipment/equipment/enable",
+                            type: "POST",
+                            data: JSON.stringify(equipmentInts),
+                            cache: false,
+                            contentType: "text/json",
+                            success: function (result) {
+                                if (result.exception) {
+                                    layer.alert(result.exception.message, {
+                                        icon: 2,
+                                        title: "系统提示"
+                                    });
+                                } else if (result) {
+                                    layer.msg("启用成功", {
+                                        icon: 1,
+                                        time: 2000
+                                    }, function () {
+                                        table.reload("LAY-app-equipment-list-reload");
+                                    });
+                                } else {
+                                    layer.msg("启用失败");
+                                }
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                layer.msg(jqXHR.responseText, {
+                                    time: 2000,
+                                    icon: 5
+                                });
+                            }
+                        });
+                    });
+                }
+            } else if (isExits == true) {
+                layer.msg("当前选择的设备包含已启用");
+            } else {
+                layer.msg("启用失败");
+            }
+        },
+        noEnable: function () {
+            var checkStatus = table.checkStatus("LAY-app-equipment-list-reload");
+            var data = checkStatus.data;
+            if (data.length == 0) {
+                layer.msg("请至少选中一条记录！");
+            }
+            for (i = 0; i < data.length; i++) {
+                if (data[i].enable == "102") {
+                    isExits = true;
+                    break;
+                }
+                isExits = false
+            }
+            if (isExits == false) {
+                if (data.length > 0) {
+                    var equipmentInts = new Array();
+                    for (var i = 0; i < data.length; i++) {
+                        equipmentInts[i] = data[i].equipmentInt;
+                    }
+                    layer.confirm("确定禁用所选设备信息？", {
+                        icon: 3,
+                        title: "系统提示"
+                    }, function (index) {
+                        $.ajax({
+                            url: "<%= request.getContextPath() %>/equipment/equipment/noEnable",
+                            type: "POST",
+                            data: JSON.stringify(equipmentInts),
+                            cache: false,
+                            contentType: "text/json",
+                            success: function (result) {
+                                if (result.exception) {
+                                    layer.alert(result.exception.message, {
+                                        icon: 2,
+                                        title: "系统提示"
+                                    });
+                                } else if (result) {
+                                    layer.msg("禁用成功", {
+                                        icon: 1,
+                                        time: 2000
+                                    }, function () {
+                                        table.reload("LAY-app-equipment-list-reload");
+                                    });
+                                } else {
+                                    layer.msg("禁用失败");
+                                }
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                layer.msg(jqXHR.responseText, {
+                                    time: 2000,
+                                    icon: 5
+                                });
+                            }
+                        });
+                    });
+                }
+            } else if (isExits == true) {
+                layer.msg("当前选择的设备包含已禁用");
+            } else {
+                layer.msg("禁用失败");
+            }
         }
     };
 
@@ -361,11 +482,19 @@
             title: "高级查询",
             layEvent: "query",
             icon: "icon iconfont icon-gaojichaxun",
-        },{
+        }, {
             title: "添加设备",
             layEvent: "add",
             icon: "layui-icon layui-icon-add-circle-fine",
-        },{
+        }, {
+            title: "启用",
+            layEvent: "enable",
+            icon: "layui-icon layui-icon-ok-circle",
+        }, {
+            title: "禁用",
+            layEvent: "noEnable",
+            icon: "layui-icon layui-icon-close-fill",
+        }, {
             title: "批量删除",
             layEvent: "batchdel",
             icon: "layui-icon layui-icon-delete ",
@@ -403,7 +532,7 @@
             field: "equipmentId",
             title: "设备资源号",
             align: "center",
-            minWidth: 120,
+            minWidth: 175,
             hide: isHidden("equipmentId"),
             //打开监听
             event: "view",
@@ -415,7 +544,7 @@
             field: "equipmentName",
             title: "设备名称",
             align: "center",
-            minWidth: 120,
+            minWidth: 175,
             hide: isHidden("equipmentName")
         }, {
             field: "enable",
@@ -430,13 +559,13 @@
             field: "equipmentInstallLocation",
             title: "设备安装位置",
             align: "center",
-            minWidth: 120,
+            minWidth: 215,
             hide: isHidden("equipmentInstallLocation")
         }, {
             field: "equipTypeName",
             title: "设备类型",
             align: "center",
-            minWidth: 100,
+            minWidth: 120,
             hide: isHidden("equipTypeName"),
         }, {
             field: "mesIpAddress",
@@ -448,7 +577,7 @@
             field: "protocolCommunication",
             title: "支持通信协议",
             align: "center",
-            minWidth: 150,
+            minWidth: 120,
             hide: isHidden("protocolCommunication")
         }, {
             field: "equipmentIp",

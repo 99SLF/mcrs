@@ -40,11 +40,12 @@
         protocol: "mcrs/websocket/test",
         port: "8089",
         onOpen: function (event) {
-            test.send("aa");
+            test.send("hello world");
         },
         onError: function (event) {
         },
         onMessage: function (event) {
+            debugger;
             var json = JSON.parse(event.data);
             console.info(json);
         },

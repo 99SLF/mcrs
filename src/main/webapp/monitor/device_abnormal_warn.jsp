@@ -311,7 +311,7 @@
             title: "APPID",
             align: "center",
             hide: isHidden("aPPId"),
-            minWidth: 150
+            minWidth: 245
         }, {
             //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
             field: "deviceName",
@@ -411,8 +411,6 @@
         onError: function (event) {
         },
         onMessage: function (event) {
-
-            debugger;
             json = JSON.parse(event.data);
             //通过预警事件编码查出预警标题，预警类型，预警等级，预警内容
             var warningContent = json.warningContent;
@@ -428,7 +426,6 @@
                 contentType: "text/json",
                 cache: false,
                 success: function (data) {
-                    debugger;
                     alarmEventContent = data.data[0].alarmEventContent;
                     alarmEventTitle = data.data[0].alarmEventTitle;
                     alarmLevel = data.data[0].alarmLevel;
@@ -461,7 +458,6 @@
                     switch (dataField) {
                         case "alarmEventTitle":
                             if (alarmEventTitle == "正常") {
-                                debugger;
                                 $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
                                 $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
                                 $($(_td).children()[0]).children("span").eq(1).html(alarmEventTitle);
@@ -477,7 +473,6 @@
                         case "alarmType":
                             var alarmTypeVal= layui.admin.getDictText("WRANING_TYPE", alarmType);
                             if (alarmType == "103") {
-                                debugger;
                                 $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
                                 $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
                                 $($(_td).children()[0]).children("span").eq(1).html(alarmTypeVal);

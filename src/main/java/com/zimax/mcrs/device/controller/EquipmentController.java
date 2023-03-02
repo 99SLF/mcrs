@@ -181,4 +181,27 @@ public class EquipmentController {
         return Result.success(equipmentService.queryWorkStation(equipmentInt));
     }
 
+    /**
+     * 批量启用
+     *
+     * @param equipmentInts 设备主键
+     */
+    @PostMapping("/equipment/enable")
+    public Result<?> enable(@RequestBody List<Integer> equipmentInts) {
+        equipmentService.enable(equipmentInts);
+        return Result.success();
+
+    }
+
+    /**
+     * 批量禁用
+     *
+     * @param equipmentInts 设备主键
+     */
+    @PostMapping("/equipment/noEnable")
+    public Result<?> noEnable(@RequestBody List<Integer> equipmentInts) {
+        equipmentService.noEnable(equipmentInts);
+        return Result.success();
+
+    }
 }
