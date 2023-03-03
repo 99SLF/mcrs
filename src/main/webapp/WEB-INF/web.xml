@@ -9,6 +9,8 @@
          version="3.1">
   <display-name>Archetype Created Web Application</display-name>
 
+<!--  &lt;!&ndash; 许可证拦截监听器 &ndash;&gt;-->
+
   <!-- 用户登录拦截过滤器 -->
   <filter>
     <filter-name>UserLoginWebInterceptorFilter</filter-name>
