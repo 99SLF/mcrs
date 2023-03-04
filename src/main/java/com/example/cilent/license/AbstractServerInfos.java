@@ -1,7 +1,7 @@
-package com.zimax.license;
+package com.example.cilent.license;
 
 
-import com.zimax.license.liceseconfig.entity.LicenseCheckModel;
+import com.example.licese.entity.LicenseCheckModel;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetAddress;

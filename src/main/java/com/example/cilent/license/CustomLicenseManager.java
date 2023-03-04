@@ -1,12 +1,14 @@
-package com.zimax.license;
+package com.example.cilent.license;
 
 
 
-import com.zimax.license.liceseconfig.entity.LicenseCheckModel;
+import com.example.cilent.common.config.License;
+import com.example.licese.entity.LicenseCheckModel;
 import de.schlichtherle.license.*;
 import de.schlichtherle.xml.GenericCertificate;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.beans.XMLDecoder;
 import java.io.*;
@@ -196,13 +198,18 @@ public class CustomLicenseManager extends LicenseManager {
      */
 
 
+
     private Object load(String encoded) {
 
+        License license = (License) new ClassPathXmlApplicationContext(
+                "applicationContext.xml").getBean("License");
+        String xmlDecoderPath = license.getXMLDecoderPath();
         PrintWriter printWriter = null;
         String textToBeWritten =encoded;
         {
             try {
-                printWriter = new PrintWriter("D:/test/content.xml");
+//                printWriter = new PrintWriter("D:/test/content.xml");
+                printWriter = new PrintWriter(xmlDecoderPath);
             } catch (FileNotFoundException e) {
                 System.out.println("Unable to locate the fileName: " + e.getMessage());
             }

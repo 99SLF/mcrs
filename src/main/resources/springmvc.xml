@@ -15,7 +15,7 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
 ">
 
 
-    <!--    开启这个配置，spring才能识别@Scheduled注解-->
+    <!--    开启这个配置，spring才能识别@Scheduled注解,定时任务-->
     <task:executor id="executor" pool-size="10"/> <task:scheduler id="scheduler" pool-size="10"/>
     <task:annotation-driven scheduler="scheduler" executor="executor" proxy-target-class="true"/>
 

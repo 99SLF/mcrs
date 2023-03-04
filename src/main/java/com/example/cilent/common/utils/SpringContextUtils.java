@@ -1,4 +1,4 @@
-package com.zimax.license.utils;
+package com.example.cilent.common.utils;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

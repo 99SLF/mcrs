@@ -9,8 +9,24 @@
          version="3.1">
   <display-name>Archetype Created Web Application</display-name>
 
-<!--  &lt;!&ndash; 许可证拦截监听器 &ndash;&gt;-->
+  <!-- 许可证权限管理启动监听器 -->
+  <listener>
+    <listener-class>com.example.cilent.common.config.LicenseCheckListener</listener-class>
+  </listener>
 
+  <!-- 许可证拦截监听器 -->
+  <filter>
+    <filter-name>LincenseCheckedFilter</filter-name>
+    <filter-class>com.example.cilent.common.config.LincenseCheckedFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>LincenseCheckedFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+  </filter-mapping>
   <!-- 用户登录拦截过滤器 -->
   <filter>
     <filter-name>UserLoginWebInterceptorFilter</filter-name>

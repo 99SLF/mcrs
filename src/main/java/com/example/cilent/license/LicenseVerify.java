@@ -1,6 +1,6 @@
-package com.zimax.license;
+package com.example.cilent.license;
 
-import com.zimax.license.liceseconfig.entity.LicenseVerifyParam;
+import com.example.licese.entity.LicenseVerifyParam;
 import de.schlichtherle.license.*;
 import lombok.extern.slf4j.Slf4j;
 
