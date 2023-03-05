@@ -1,4 +1,4 @@
-package com.zimax.license.liceseconfig.entity;
+package com.example.licese.entity;
 
 import java.io.Serializable;
 import java.util.List;

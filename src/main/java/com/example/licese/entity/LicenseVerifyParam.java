@@ -1,4 +1,4 @@
-package com.zimax.license.liceseconfig.entity;
+package com.example.licese.entity;
 
 /**
  * License校验类需要的参数

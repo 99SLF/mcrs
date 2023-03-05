@@ -1,4 +1,4 @@
-package com.zimax.config;
+package com.example.cilent.common.config;
 
 import org.apache.http.Header;
 import org.apache.http.client.HttpClient;

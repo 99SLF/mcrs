@@ -1,4 +1,4 @@
-package com.zimax.license;
+package com.example.cilent.license;
 
 import de.schlichtherle.license.AbstractKeyStoreParam;
 
