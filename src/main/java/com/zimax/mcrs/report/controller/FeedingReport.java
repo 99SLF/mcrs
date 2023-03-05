@@ -41,13 +41,12 @@ public class FeedingReport {
      *
      * @param page          页记录数
      * @param limit         页码
-     * @param equipmentId   设备资源号
-     * @param axisName      轴名称
-     * @param inSFCId       来料SFC编码
-     * @param prodSFCId     生产SFC编码
-     * @param vehicleCode   载具码
-     * @param startProdTime 开始生产时间
-     * @param endProdTime   结束生产时间
+     * @param resource   设备资源号
+     * @param axis      轴名称
+     * @param sfcPre        来料SFC编码
+     * @param processLotPre    载具码
+     * @param startTime 开始时间
+     * @param endTime   结束时间
      * @param order         排序方式
      * @param field         排序字段
      * @return 上料报表信息列表
@@ -57,12 +56,12 @@ public class FeedingReport {
      */
     @GetMapping("/feeding/query")
     public Result<?> queryFeedings(String page, String limit,
-                                   String equipmentId, String axisName,
-                                   String inSFCId, String prodSFCId,
-                                   String vehicleCode, String startProdTime,
-                                   String endProdTime,
+                                   String resource, String axis,
+                                   String sfcPre, String processLotPre,
+                                   String startTime,
+                                   String endTime,
                                    String order, String field) {
-        List feedings = feedingService.queryFeedings(page, limit, equipmentId, axisName, inSFCId, prodSFCId, vehicleCode, startProdTime, endProdTime, order, field);
-        return Result.success(feedings, feedingService.count(equipmentId, axisName, inSFCId, prodSFCId, vehicleCode, startProdTime, endProdTime));
+        List feedings = feedingService.queryFeedings(page, limit, resource, axis, sfcPre, processLotPre, startTime, endTime, order, field);
+        return Result.success(feedings, feedingService.count(resource, axis, sfcPre, processLotPre, startTime, endTime));
     }
 }

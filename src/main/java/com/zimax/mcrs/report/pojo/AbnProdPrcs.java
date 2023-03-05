@@ -11,7 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 /**
- * 生产过程异常报表
+ * 生产过程异常下料报表
  * @author 李伟杰
  * @date 2022/12/8 18:51
  */

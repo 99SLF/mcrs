@@ -6,10 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
  * 上料报表
+ *
  * @author 李伟杰
  * @date 2022/12/8 14:25
  */
@@ -24,60 +26,86 @@ public class Feeding {
      * 上料报表编号
      */
     @TableId(type = IdType.AUTO)
-    private int feedingId;
+    private int id;
+
+    /**
+     * 工位
+     */
+    private String operation;
 
     /**
      * 设备资源号
      */
-    private String equipmentId;
+    private String resource;
 
     /**
-     * 轴名称
+     * 动作类型
      */
-    private String axisName;
+    private Integer actionType;
 
     /**
-     * 来料SFC编码
+     * 上料轴
      */
-    private String inSFCId;
+    private String axis;
 
     /**
-     * 载具码
+     * -来料SFC号
      */
-    private String vehicleCode;
+    private String sfcPre;
 
     /**
-     * 生产SFC编码
+     * 载具号
      */
-    private String prodSFCId;
+    private String processLotPre;
 
     /**
-     * 上账数量（生产数量）
+     * 上料数量
      */
-    private String prodNumber;
+    private String qty;
 
     /**
-     * 创建时间（记录时间）
+     * 校验MES返回的新SFC号
      */
-//    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createTime;
+    private String sfc;
 
     /**
-     * 开始生产时间
+     * 放卷是否全部完工
      */
-//    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date startProdTime;
+    private Integer isFinish;
 
     /**
-     * 结束生产时间
+     * 上料卷径
      */
-//    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date endProdTime;
+    private String diamRealityValue;
 
+    /**
+     * -卸滚筒信息
+     */
+    private String downInfo;
 
+    /**
+     * 乐观锁
+     */
+    private String revision;
 
+    /**
+     * 创建人
+     */
+    private String createdBy;
+
+    /**
+     * 创建时间
+     */
+    private Date createdTime;
+
+    /**
+     * -更新人
+     */
+    private String updatedBy;
+
+    /**
+     * 更新时间
+     */
+    private Date updatedTime;
 
 }

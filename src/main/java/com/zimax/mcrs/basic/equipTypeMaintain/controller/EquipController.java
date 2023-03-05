@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * 设备信息维护
  *
- * @author 李伟杰
+ * @author 李伟杰,施林丰
  * @date 2022/12/19 14:18
  */
 @RestController

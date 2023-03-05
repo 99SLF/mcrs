@@ -122,6 +122,14 @@
         <property name="mapperInterface" value="com.zimax.components.coframe.auth.mapper.UserInitMapper"/>
     </bean>
 
+    <bean id="VerifyUnusualMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.report.mapper.VerifyUnusualMapper"/>
+    </bean>
+    <bean id="CoilDiameterRecordMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.report.mapper.CoilDiameterRecordMapper"/>
+    </bean>
     <bean id="FeedingReportMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.mcrs.report.mapper.FeedingReportMapper"/>

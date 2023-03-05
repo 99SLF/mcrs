@@ -138,6 +138,22 @@
             remarks=#{remarks}
         where equipment_int = #{equipmentInt}
     </update>
+    <!--更新1条设备信息-->
+    <update id="updateEquipmentByUpload" parameterType="com.zimax.mcrs.device.pojo.Equipment">
+    update eqi_equipment
+        set equipment_id=#{equipmentId},
+            equipment_name=#{equipmentName},
+            equip_type_id=#{equipTypeId},
+            equipment_ip=#{equipmentIp},
+            acc_point_res_id=#{accPointResId}
+        where equipment_ip = #{equipmentIp}
+        <selectKey keyColumn="equipment_int" keyProperty='equipmentInt' resultType='int' order='AFTER'>
+            SELECT
+            equipment_int
+            from eqi_equipment
+            where equipment_ip= #{equipmentIp}
+        </selectKey>
+    </update>
 
     <!--  批量删除-->
     <delete id="deleteEquipments" parameterType="java.util.List">
@@ -204,4 +220,11 @@
         set enable  = #{enable}
         where equipment_int = #{equipmentInt}
     </update>
+
+    <!--根据设备ID删除工位-->
+    <delete id="delWorkStationByequInt" parameterType="int">
+        delete
+        from eqi_work_station
+        where  equipment_int= #{equipmentInt}
+    </delete>
 </mapper>

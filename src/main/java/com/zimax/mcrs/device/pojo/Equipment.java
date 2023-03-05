@@ -90,7 +90,16 @@ public class Equipment {
      */
     @TableField(exist = false)
     List<WorkStation> workStationList;
-
-
-
+    //软件启动路径
+    @TableField(exist = false)
+   String programPath;
+    //安装包解压路径
+    @TableField(exist = false)
+    String downloadDir;
+    //工位编码
+    @TableField(exist = false)
+    List<String> operationList;
+    //配置文件路径
+    @TableField(exist = false)
+    List<String> xmlPathList;
 }

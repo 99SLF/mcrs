@@ -26,8 +26,6 @@ public class BlankingService {
      * @param blanking 下料报表
      */
     public void addBlanking(Blanking blanking){
-
-        blanking.setCreateTime(new Date());
         blankingReportMapper.addBlanking(blanking);
     }
 
@@ -44,7 +42,7 @@ public class BlankingService {
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
             map.put("order", "desc");
-            map.put("field", "create_time");
+            map.put("field", "createTtime");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));

@@ -179,12 +179,35 @@ public class UpdatePackageService {
         equipment.setCreateTime(new Date());
         equipmentMapper.addEquipment(equipment);
         //如果工位不为空，则添加至工位表
-        if (equipment.getWorkStationList() != null) {
-            for (WorkStation workStation : equipment.getWorkStationList()) {
+        WorkStation workStation = new WorkStation();
+        if (equipment.getOperationList()!=null) {
+            for (int i=0;i<equipment.getOperationList().size();i++) {
                 workStation.setEquipmentInt(equipment.getEquipmentInt());
+                workStation.setWorkStationNum(equipment.getOperationList().get(i));
                 equipmentMapper.addWorkStation(workStation);
             }
         }
+    }
+    public void updateEquipmentByUpload(Equipment equipment) {
+        equipmentMapper.updateEquipmentByUpload(equipment);
+        equipmentMapper.delWorkStationByequInt(equipment.getEquipmentInt());
+        //如果工位不为空，则添加至工位表
+        WorkStation workStation = new WorkStation();
+        if (equipment.getOperationList()!=null) {
+            for (int i=0;i<equipment.getOperationList().size();i++) {
+                workStation.setEquipmentInt(equipment.getEquipmentInt());
+                workStation.setWorkStationNum(equipment.getOperationList().get(i));
+                equipmentMapper.addWorkStation(workStation);
+            }
+        }
+    }
+
+    /**
+     * 修改安装程序路径
+     * @param device
+     */
+    public void updateDevicePath(Device device){
+        deviceMapper.updateDevicePath(device);
     }
 
 //    /**

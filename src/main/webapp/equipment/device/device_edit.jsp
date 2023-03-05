@@ -158,14 +158,14 @@
             <label class="layui-form-label"><span style="color:red">*</span>终端程序安装路径:</label>
             <div class="layui-input-block">
                 <input id="programInstallationPath" type="text" name="programInstallationPath" lay-verify="required|programInstallationPath"
-                       placeholder="" autocomplete="off" class="layui-input" >
+                       placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>终端执行程序安装路径:</label>
             <div class="layui-input-block">
                 <input id="executorInstallationPath" type="text" name="executorInstallationPath"
-                       lay-verify="required|executorInstallationPath" placeholder="" autocomplete="off" class="layui-input">
+                       lay-verify="required|executorInstallationPath" placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
     </div>

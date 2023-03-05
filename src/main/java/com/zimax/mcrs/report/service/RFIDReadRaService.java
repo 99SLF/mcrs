@@ -32,8 +32,6 @@ public class RFIDReadRaService {
      * @param rfidReadRa RFID读取率报表
      */
     public void addRFIDReadRa(RFIDReadRa rfidReadRa) {
-
-        rfidReadRa.setRecordTime(new Date());
         rfidReadRaReportMapper.addRFIDReadRa(rfidReadRa);
     }
 

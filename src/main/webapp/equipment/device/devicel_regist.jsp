@@ -94,7 +94,7 @@
         </div>
     </div>
 
-    <div class="layui-form-item layui-row layui-col-space6">
+<%--    <div class="layui-form-item layui-row layui-col-space6">
         <label class="layui-form-label"><span style="color:red">*</span>终端程序安装路径:</label>
         <div class="layui-input-block">
             <input id="programInstallationPath" type="text" name="programInstallationPath"
@@ -110,7 +110,7 @@
                    lay-verify="required|executorInstallationPath"
                    placeholder="" autocomplete="off" class="layui-input">
         </div>
-    </div>
+    </div>--%>
 
     <div class="layui-form-item layui-row layui-col-space6">
         <div class="layui-col-sm6">
@@ -220,7 +220,7 @@
                 return "终端名称不能超过20个字符";
             }
         },
-        programInstallationPath: function (value, item) {
+      /*  programInstallationPath: function (value, item) {
             //文件夹路径的正则表达式:^([a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|]+\\.[^\\\\/:*?<>|]+,)*[a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|.]+(/[^\\\\/:*?\"<>.|]|[/w,/s]*|[\\/])$
             if (!new RegExp("^([a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|]+\\.[^\\\\/:*?<>|]+,)*[a-zA-Z]:(([\\\\/])[^\\\\/:*?<>|]+)*([\\\\/])[^\\\\/:*?<>|.]+(/[^\\\\/:*?\"<>.|]|[/w,/s]*|[\\/])$").test(value)) {
                 return "输入终端程序安装路径有误";
@@ -237,7 +237,7 @@
             if (value.length > 100) {
                 return "终端程序安装路径不能超过100个字符";
             }
-        },
+        },*/
         remarks: function (value, item) {
             if (value.length > 255) {
                 return "备注不能超过255个字符";

@@ -443,7 +443,7 @@
             title: "启用接入点",
             layEvent: "enable",
             icon: "layui-icon layui-icon-ok-circle",
-        }, "filter"],
+        }, "filter","exports"],
         colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;

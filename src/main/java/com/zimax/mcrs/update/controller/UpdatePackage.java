@@ -454,6 +454,8 @@ public class UpdatePackage {
         if(updatePackageService.checkEqi(equipmentIp)<1){
             equipment.setEnable("101");
             updatePackageService.addEqi(equipment);
+        }else{
+            updatePackageService.updateEquipmentByUpload(equipment);
         }
         try {
             String equipmentContinuePort = "";
@@ -470,13 +472,16 @@ public class UpdatePackage {
 
                 String registerStatus = deviceEquipmentVo.getRegisterStatus();
                 int deviceId = deviceEquipmentVo.getDeviceId();
-
+                Device device = new Device();
+                device.setDeviceId(deviceId);
+                device.setProgramInstallationPath(equipment.getDownloadDir());
+                device.setExecutorInstallationPath(equipment.getProgramPath());
+                updatePackageService.updateDevicePath(device);
                 if(registerStatus.equals("101")) {
                     //3.1注册存在，但终端已注册，返回终端已经注册，不能重复注册,返回已注册APPID
                     return Result.success(appId,"1", "终端已经注册，不能重复注册");
                 } else {
                     //3.2注册存在，终端未注册，进行终端注册（修改注册表），返回APPID （1，注册表）
-                    Device device = new Device();
                     device.setDeviceId(deviceId);
                     device.setRegisterStatus("101");
                     updatePackageService.updateDeviceStatus(device);

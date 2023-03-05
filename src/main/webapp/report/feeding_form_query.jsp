@@ -39,37 +39,25 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">设备资源号：</label>
 		<div class="layui-input-block">
-			<input type="text" class="layui-input" name="equipmentId" autocomplete="off" />
+			<input type="text" class="layui-input" name="resource" autocomplete="off" />
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">轴名称：</label>
 		<div class="layui-input-block">
-			<input type="text" class="layui-input" name="axisName" autocomplete="off" />
+			<input type="text" class="layui-input" name="axis" autocomplete="off" />
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">生产SFC编码：</label>
+		<label class="layui-form-label">来料SFC号：</label>
 		<div class="layui-input-block">
-			<input type="text" class="layui-input" name="prodSFCId" autocomplete="off" />
+			<input type="text" class="layui-input" name="sfcPre" autocomplete="off" />
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">载具码：</label>
+		<label class="layui-form-label">载具号：</label>
 		<div class="layui-input-block" >
-			<input type="text" class="layui-input" name="vehicleCode" autocomplete="off" />
-		</div>
-	</div>
-	<div class="layui-form-item">
-		<label class="layui-form-label">开始时间：</label>
-		<div class="layui-input-block">
-			<input id="startProdTime" type="text"  class="layui-input" name="startProdTime" autocomplete="off" />
-		</div>
-	</div>
-	<div class="layui-form-item">
-		<label class="layui-form-label">结束时间：</label>
-		<div class="layui-input-block">
-			<input id="endProdTime" type="text" class="layui-input" name="endProdTime" autocomplete="off" />
+			<input type="text" class="layui-input" name="processLotPre" autocomplete="off" />
 		</div>
 	</div>
 	<div class="layui-form-item layui-hide">
@@ -95,21 +83,7 @@
 	var util = layui.util;
 	
 	var win = null;
-	
-	// 开始时间选择器
-	laydate.render({
-		elem: "#startProdTime",
-		type: "date",
-		trigger: "click"
-	});
-	
-	// 结束时间选择器
-	laydate.render({
-		elem: "#endProdTime",
-		type: "date",
-		trigger: "click"
-	});
-	
+
 	// 文本框回车事件
 	$(".layui-input").on("keydown", function(event) {
 		if (event.keyCode == 13) {
@@ -123,30 +97,27 @@
 		win = data.win ? data.win : window;
 		var formData = data.data;
 		form.val("layuiadmin-feeding-form", {
-            equipmentId: formData.equipmentId,
-            axisName: formData.axisName,
-            prodSFCId: formData.prodSFCId,
-            vehicleCode: formData.vehicleCode,
-            startProdTime: formData.startProdTime ? util.toDateString(formData.startProdTime, "yyyy-MM-dd") : "",
-            endProdTime: formData.endProdTime ? util.toDateString(formData.endProdTime, "yyyy-MM-dd") : ""
+            resource: formData.resource,
+            axis: formData.axis,
+            sfcPre: formData.sfcPre,
+            processLotPre: formData.processLotPre,
         });
 	}
 	
 	function reset() {
 		var formData = {
-            equipmentId: "",
-            axisName: "",
-            prodSFCId: "",
-            vehicleCode: "",
-            startProdTime: "",
-            endProdTime: ""
+            resource: "",
+            axis: "",
+            sfcPre: "",
+            processLotPre: "",
 		}
 		win.setFormData(formData);
 	}
 	
 	//监听提交
 	form.on("submit(LAY-app-feeding-search-advanced)", function(data) {
-		win.setFormData(data.field);
+		var rels = data.field;
+		win.setFormData(rels);
         win.layer.closeAll("iframe");
 	});
 </script>

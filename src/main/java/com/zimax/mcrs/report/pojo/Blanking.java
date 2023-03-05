@@ -25,69 +25,78 @@ public class Blanking {
      * 下料报表编号
      */
     @TableId(type = IdType.AUTO)
-    private int blankingId;
+    private int id;
+
+    /**
+     * 工位
+     */
+    private String operation;
 
     /**
      * 设备资源号
      */
-    private String equipmentId;
+    private String resource;
 
     /**
-     * 轴名称
+     * 动作类型
      */
-    private String axisName;
+    private Integer actionType;
 
     /**
-     * 天线位置
+     * 下料轴
      */
-    private String antennaLoc;
+    private String axis;
 
     /**
-     * 载具码
+     * -来料SFC号
      */
-    private String vehicleCode;
+    private String sfcpre;
 
     /**
-     * 生产SFC编码
+     * 载具号
      */
-    private String prodSFCId;
+    private String processLot;
 
     /**
-     * 完工EA数量
+     * EA数
      */
-    private String endEANumber;
+    private String qty;
+
+    /**
+     * 下料绑定的SFC编码
+     */
+    private String sfc;
 
     /**
      * 收卷米数
      */
-    private String inMeterNumber;
+    private String metre ;
 
     /**
-     * 是否完工
+     * 上料卷径
      */
-    private String isEnd;
-
-    /**
-     * 创建时间(记录时间)
-     */
-//    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createTime;
+    private String diamRealityValue ;
 
 
     /**
-     * 开始生产时间
+     * 创建人
      */
-//    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date startProdTime;
+    private String createdBy;
 
     /**
-     * 结束生产时间
+     * 创建时间
      */
-//    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date endProdTime;
+    private Date createdTime;
+
+    /**
+     * -更新人
+     */
+    private String updatedBy;
+
+    /**
+     * 更新时间
+     */
+    private Date updatedTime;
 
 
 }

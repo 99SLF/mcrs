@@ -6,34 +6,32 @@
     <!--添加上料报表-->
     <insert id="addFeeding" parameterType="com.zimax.mcrs.report.pojo.Feeding">
         insert into rep_feeding
-        values (#{feedingId}, #{equipmentId}, #{axisName}, #{inSFCId}, #{vehicleCode}, #{prodSFCId}, #{prodNumber},
-                #{createTime}, #{startProdTime}, #{endProdTime})
+        values (#{id},#{operation}, #{resource}, #{actionType}, #{axis}, #{sfcPre}, #{processLotPre},
+                #{qty}, #{sfc}, #{isFinish},#{diamRealityValue}, #{downInfo}, #{revision}, #{createdBy}, #{createdTime},
+                #{updatedBy}, #{updatedTime})
     </insert>
 
     <!--    查询记录数-->
     <select id="count" resultType="int">
         select count(*) from rep_feeding
         <where>
-            <if test="equipmentId !=null and equipmentId !=''">
-                and equipment_id like '%${equipmentId}%'
+            <if test="resource !=null and resource !=''">
+                and resource like '%${resource}%'
             </if>
-            <if test="axisName !=null and axisName !=''">
-                and axis_name like '%${axisName}%'
+            <if test="axis !=null and axis !=''">
+                and axis like '%${axis}%'
             </if>
-            <if test="inSFCId !=null and inSFCId !=''">
-                and in_SFC_id like '%${inSFCId}%'
+            <if test="sfcPre !=null and sfcPre !=''">
+                and sfcPre like '%${sfcPre}%'
             </if>
-            <if test="prodSFCId !=null and prodSFCId !=''">
-                and prod_SFC_id like '%${prodSFCId}%'
+            <if test="processLotPre !=null and processLotPre !=''">
+                and processLotPre like '%${processLotPre}%'
             </if>
-            <if test="vehicleCode !=null and vehicleCode !=''">
-                and vehicle_code like '%${vehicleCode}%'
+            <if test="startTime !=null and startTime!=''">
+                and createdTime &gt;= #{startTime}
             </if>
-            <if test="startProdTime !=null and startProdTime !=''">
-                and DATE (start_prod_time) = #{startProdTime}
-            </if>
-            <if test="endProdTime !=null and endProdTime !=''">
-                and DATE (end_prod_time) = #{endProdTime}
+            <if test="endTime !=null and endTime !=''">
+                and createdTime &lt;= #{endTime}
             </if>
         </where>
     </select>
@@ -43,26 +41,23 @@
     <select id="queryFeedings" parameterType="map" resultType="com.zimax.mcrs.report.pojo.Feeding">
         select * from rep_feeding
         <where>
-            <if test="equipmentId !=null and equipmentId !=''">
-                and equipment_id like '%${equipmentId}%'
+            <if test="resource !=null and resource !=''">
+                and resource like '%${resource}%'
             </if>
-            <if test="axisName !=null and axisName !=''">
-                and axis_name like '%${axisName}%'
+            <if test="axis !=null and axis !=''">
+                and axis like '%${axis}%'
             </if>
-            <if test="inSFCId !=null and inSFCId !=''">
-                and in_SFC_id like '%${inSFCId}%'
+            <if test="sfcPre !=null and sfcPre !=''">
+                and sfcPre like '%${sfcPre}%'
             </if>
-            <if test="prodSFCId !=null and prodSFCId !=''">
-                and prod_SFC_id like '%${prodSFCId}%'
+            <if test="processLotPre !=null and processLotPre !=''">
+                and processLotPre like '%${processLotPre}%'
             </if>
-            <if test="vehicleCode !=null and vehicleCode !=''">
-                and vehicle_code like '%${vehicleCode}%'
+            <if test="startTime !=null and startTime!=''">
+                and createdTime &gt;= #{startTime}
             </if>
-            <if test="startProdTime !=null and startProdTime !=''">
-                and DATE (start_prod_time) = #{startProdTime}
-            </if>
-            <if test="endProdTime !=null and endProdTime !=''">
-                and DATE (end_prod_time) = #{endProdTime}
+            <if test="endTime !=null and endTime !=''">
+                and createdTime &lt;= #{endTime}
             </if>
         </where>
         <if test="order !=null and order !=''">

@@ -51,6 +51,7 @@ public interface EquipmentMapper {
      * @return
      */
     void updateEquipment(Equipment equipment);
+    void updateEquipmentByUpload (Equipment equipment);
 
     /**
      * 记录条数
@@ -122,4 +123,8 @@ public interface EquipmentMapper {
      * 批量启用
      */
     int noEnable(Equipment equipment);
+    /**
+     * 批量删除工位
+     */
+    void delWorkStationByequInt(int equipmentInt);
 }

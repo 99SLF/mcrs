@@ -8,10 +8,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
  * RFID读取率报表
+ *
  * @author 李伟杰
  * @date 2022/12/8 19:10
  */
@@ -21,38 +23,46 @@ import java.util.Date;
 @AllArgsConstructor
 @TableName("rep_rfid")
 public class RFIDReadRa {
-    
+
     /**
      * RFID读取编码
      */
     @TableId(type = IdType.AUTO)
-    private int rfidReadId;
+    private int id;
 
     /**
-     * 设备资源号
+     * 载具号
      */
-    private String equipmentId;
+    private String epcId;
 
     /**
-     * RFID编码
+     * 读取次数
      */
-    private String rfidId;
+    private Integer readNum;
 
     /**
-     * 天线ID
+     * RFID读写器
      */
-    private String antennaId;
+    private String reader;
 
     /**
-     * 读取率
+     * -RFID天线
      */
-    private String readRate;
+    private String antenna;
+    /**
+     * 天线增益
+     */
+    private String dBm;
+
 
     /**
-     * 创建时间（终端记录时间）
+     * -RSSI
      */
-//    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date recordTime;
+    private String rssi;
+    /**
+     * -更新时间
+     */
+    private Date updatedTime;
+
 
 }

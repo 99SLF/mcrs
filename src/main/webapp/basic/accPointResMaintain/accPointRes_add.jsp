@@ -38,7 +38,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>接入点名称：</label>
             <div class="layui-input-block">
-                <input id="accPointResName" type="text" name="accPointResName" lay-verify="required|accPointResName"
+                <input id="accPointResName" type="text" name="accPointResName" lay-verify="required"
                        placeholder="请输入接入点名称(必填)" autocomplete="off" class="layui-input">
             </div>
         </div>

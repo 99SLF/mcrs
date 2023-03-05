@@ -52,19 +52,25 @@
 				<div class="layui-inline">
 					<label class="layui-form-label">设备资源号：</label>
 					<div class="layui-input-inline">
-						<input type="text" class="layui-input" name="equipmentId" autocomplete="off" />
+						<input type="text" class="layui-input" name="resource" autocomplete="off" />
 					</div>
 				</div>
 				<div class="layui-inline">
 					<label class="layui-form-label">轴名称：</label>
 					<div class="layui-input-inline">
-						<input type="text" class="layui-input" name="axisName" autocomplete="off" />
+						<input type="text" class="layui-input" name="axis" autocomplete="off" />
 					</div>
 				</div>
 				<div class="layui-inline">
-					<label class="layui-form-label">生产SFC编码：</label>
+					<label class="layui-form-label">来料SFC号：</label>
 					<div class="layui-input-inline">
-						<input type="text" class="layui-input" name="prodSFCId" autocomplete="off" />
+						<input type="text" class="layui-input" name="sfcPre" autocomplete="off" />
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">创建时间：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="CREATED_TIME" id="CREATED_TIME" placeholder="请选择创建日期" autocomplete="off" class="layui-input" readonly>
 					</div>
 				</div>
 				<div class="layui-inline layui-hide">
@@ -94,7 +100,7 @@
 	var util = layui.util;
 	var admin = layui.admin;
 	var view = layui.view;
-	
+	var laydate = layui.laydate;
 	// 过滤字段
 	var hiddenFields = [];
 	// 功能名
@@ -103,15 +109,24 @@
 	var advancedFormData = {};
 	// 焦点名称
 	var focusName = null;
-	
+	// 开始时间选择器
 	// 监听搜索
 	form.on("submit(LAY-app-feeding-search)", function(data) {
+		var startTime = "";
+		var endTime = "";
 		var field = data.field;
+		if(field.CREATED_TIME != null){
+			startTime = field.CREATED_TIME.substring(0,field.CREATED_TIME.indexOf("~"));
+			endTime = field.CREATED_TIME.substring(field.CREATED_TIME.indexOf("~")+1);
+		}
+		field["startTime"]=startTime
+		field["endTime"]=endTime
         reloadData(field);
         var formData = {
-            equipmentId: field.equipmentId,
-            axisName: field.axisName,
-            prodSFCId: field.prodSFCId
+            resource: field.resource,
+            axis: field.axis,
+			sfcPre: field.sfcPre,
+			CREATED_TIME:field.CREATED_TIME
         };
         form.val("layuiadmin-feeding-form", formData);
         advancedFormData = $.extend(advancedFormData, formData);
@@ -133,9 +148,10 @@
 		advancedFormData = data;
         reloadData(data);
         form.val("layuiadmin-feeding-form", {
-            equipmentId: data.equipmentId,
-            axisName: data.axisName,
-            prodSFCId: data.prodSFCId
+            resource: data.resource,
+            axis: data.axis,
+            sfcPre: data.sfcPre,
+			CREATED_TIME:data.CREATED_TIME
         });
 	}
 	
@@ -269,65 +285,113 @@
 			title: "序号",
 			type: "numbers"
 		}, {
-			field: "equipmentId",
+			field: "resource",
 			title: "设备资源号",
 			align: "center",
-			hide: isHidden("equipmentId"),
-			minWidth: 150
+			hide: isHidden("resource"),
+			minWidth: 100
 		}, {
-			field: "axisName",
-			title: "轴名称",
+			field: "operation",
+			title: "工位",
+			align: "center",
+			minWidth: 80,
+			hide: isHidden("operation")
+		},{
+			field: "actionType",
+			title: "动作类型",
+			align: "center",
+			minWidth: 100,
+			hide: isHidden("actionType")
+		}, {
+			field: "axis",
+			title: "上料轴",
+			align: "center",
+			hide: isHidden("axis"),
+			minWidth: 80
+		}, {
+			field: "sfcPre",
+			title: "来料SFC号",
+			align: "center",
+			hide: isHidden("sfcPre"),
+			minWidth: 80
+		}, {
+			field: "processLotPre",
+			title: "载具号",
+			align: "center",
+			hide: isHidden("processLotPre"),
+			minWidth: 100
+		}, {
+			field: "qty",
+			title: "上料数量",
+			align: "center",
+			hide: isHidden("qty"),
+			minWidth: 80
+		},{
+			field: "sfc",
+			title: "MES返回SFC号",
 			align: "center",
 			minWidth: 150,
-			hide: isHidden("axisName")
-		}, {
-			field: "inSFCId",
-			title: "来料SFC编码",
-			align: "center",
-			hide: isHidden("inSFCId"),
-			minWidth: 150
-		}, {
-			field: "vehicleCode",
-			title: "载具码",
-			align: "center",
-			hide: isHidden("vehicleCode"),
-			minWidth: 150
-		}, {
-			field: "prodSFCId",
-			title: "生产SFC编码",
-			align: "center",
-			hide: isHidden("prodSFCId"),
-			minWidth: 150
-		}, {
-			field: "prodNumber",
-			title: "生产数量",
-			align: "center",
-			hide: isHidden("prodNumber"),
-			minWidth: 150
+			hide: isHidden("sfc")
 		},{
-			field: "startProdTime",
-			title: "开始生产时间",
+			field: "isFinish",
+			title: "是否完工",
 			align: "center",
-			hide: isHidden("startProdTime"),
-			minWidth: 200,
-			templet: function(d) {
-				return util.toDateString(d.startProdTime, "yyyy-MM-dd HH:mm:ss");
-			}
+			minWidth: 80,
+			hide: isHidden("isFinish")
 		}, {
-			field: "endProdTime",
-			title: "结束生产时间",
+			field: "diamRealityValue",
+			title: "上料卷径",
 			align: "center",
-			hide: isHidden("endProdTime"),
-			minWidth: 200,
+			hide: isHidden("diamRealityValue"),
+			minWidth: 80
+		}, {
+			field: "downInfo",
+			title: "卸滚筒信息",
+			align: "center",
+			hide: isHidden("downInfo"),
+			minWidth: 100
+		}, {
+			field: "createdBy",
+			title: "创建人",
+			align: "center",
+			hide: isHidden("createdBy"),
+			minWidth: 100
+		}, {
+			field: "createdTime",
+			title: "创建时间",
+			align: "center",
+			hide: isHidden("createdTime"),
 			templet: function(d) {
-				return util.toDateString(d.endProdTime, "yyyy-MM-dd HH:mm:ss");
-			}
+				return util.toDateString(d.createdTime, "yyyy-MM-dd HH:mm:ss");
+			},
+			minWidth: 100
+		}, {
+			field: "updatedBy",
+			title: "更新人",
+			align: "center",
+			hide: isHidden("updatedBy"),
+			minWidth: 80
+		}, {
+			field: "updatedTime",
+			title: "更新时间",
+			align: "center",
+			hide: isHidden("updatedTime"),
+			templet: function(d) {
+				return util.toDateString(d.updatedTime, "yyyy-MM-dd HH:mm:ss");
+			},
+			minWidth: 100
 		}]]
 	});
 
     formReder();
 	
     function formReder() {
+		laydate.render({
+			elem: "#CREATED_TIME",
+			type: "datetime",
+			trigger: "click",
+			range:"~"
+		});
         // 文本框回车事件
         $(".layui-input").on("keydown", function (event) {
             if (event.keyCode == 13) {

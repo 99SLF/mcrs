@@ -78,7 +78,7 @@ public class EquipService {
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
             map.put("order", "asc");
-            map.put("field", "a.equip_type_code");
+            map.put("field", "a.equip_type_name");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));

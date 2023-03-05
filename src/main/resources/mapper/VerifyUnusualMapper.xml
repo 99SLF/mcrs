@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.report.mapper.VerifyUnusualMapper">
+
+    <!--添加上料报表-->
+    <insert id="addVerifyUnusual" parameterType="com.zimax.mcrs.report.pojo.VerifyUnusual">
+        insert into rep_verifyUnusual
+        values (#{id},#{resource}, #{axisName}, #{rfidReader}, #{antenna}, #{processLot}, #{tag},
+                #{readNum}, #{sfcPre}, #{sfc},#{updatedTime})
+    </insert>
+
+</mapper>
