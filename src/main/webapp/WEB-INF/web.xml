@@ -14,19 +14,19 @@
     <listener-class>com.example.cilent.common.config.LicenseCheckListener</listener-class>
   </listener>
 
-  <!-- 许可证拦截监听器 -->
-  <filter>
-    <filter-name>LincenseCheckedFilter</filter-name>
-    <filter-class>com.example.cilent.common.config.LincenseCheckedFilter</filter-class>
-  </filter>
+  <!-- 许可证拦截监听器 -每个接口调用，都会进行一次的接口许可证校验-->
+<!--  <filter>-->
+<!--    <filter-name>LincenseCheckedFilter</filter-name>-->
+<!--    <filter-class>com.example.cilent.common.config.LincenseCheckedFilter</filter-class>-->
+<!--  </filter>-->
 
-  <filter-mapping>
-    <filter-name>LincenseCheckedFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-    <dispatcher>FORWARD</dispatcher>
-    <dispatcher>REQUEST</dispatcher>
-    <dispatcher>INCLUDE</dispatcher>
-  </filter-mapping>
+<!--  <filter-mapping>-->
+<!--    <filter-name>LincenseCheckedFilter</filter-name>-->
+<!--    <url-pattern>/*</url-pattern>-->
+<!--    <dispatcher>FORWARD</dispatcher>-->
+<!--    <dispatcher>REQUEST</dispatcher>-->
+<!--    <dispatcher>INCLUDE</dispatcher>-->
+<!--  </filter-mapping>-->
   <!-- 用户登录拦截过滤器 -->
   <filter>
     <filter-name>UserLoginWebInterceptorFilter</filter-name>

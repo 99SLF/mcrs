@@ -1,5 +1,6 @@
 package com.example.cilent.license;
 
+import com.alibaba.fastjson.JSON;
 import com.example.licese.entity.LicenseVerifyParam;
 import de.schlichtherle.license.*;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +9,8 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.prefs.Preferences;
 
 /**
@@ -33,7 +36,21 @@ public class LicenseVerify {
             log.info("content日期信息:{}",result.getNotBefore());
             log.info("content硬件信息:{}",result.getExtra());
         }catch (Exception e){
-            log.error("证书安装失败！",e);
+            log.error("证书安装失败！");
+            System.exit(0);//全局的lincense配置 （之后到每个资源的时候就可以用局部的lincese配置）--只装一次（只有在换服务器的时候才会，进行证书的安装）
+                                                                                //            LicenseVerify licenseVerify = new LicenseVerify();
+                                                                                //
+                                                                                //            //校验证书是否有效
+                                                                                //            boolean verifyResult = licenseVerify.verify();
+                                                                                //            if (!verifyResult) {
+                                                                                //                logger.info("验证失败，证书无效");
+                                                                                //                response.setCharacterEncoding("utf-8");
+                                                                                //                Map<String,String> result = new HashMap<>(1);
+                                                                                //                result.put("权限：","您的证书无效，请核查服务器是否取得授权或重新申请证书！");
+                                                                                //
+                                                                                //                response.getWriter().write(JSON.toJSONString(result));
+                                                                                //                return;
+                                                                                //            } else if
         }
 
         return result;
