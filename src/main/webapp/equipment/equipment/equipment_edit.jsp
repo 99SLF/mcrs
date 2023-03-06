@@ -59,11 +59,11 @@
                     <div class="layui-input-block">
                         <input id="equipTypeId" name="equipTypeId" type="hidden"/>
                         <input type="text" class="layui-input" name="equipTypeName" id="equipTypeName"
-                               lay-verify=""
+                               lay-verify="required"
                                autocomplete="off" placeholder="" readonly>
-                        <button type="button " class="layui-btn layui-btn-sm layui-btn-primary layui-hide" id="selectequipType"
+                        <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="selectequipType"
                                 style="position:absolute;top:0px;right:0px;height:37px"><i
-                                class="layui-icon layui-icon-more" readonly=""></i></button>
+                                class="layui-icon layui-icon-more"></i></button>
                     </div>
                 </div>
             </div>
@@ -110,9 +110,9 @@
                     <div class="layui-input-block">
                         <input id="accPointResId" name="accPointResId" type="hidden"/>
                         <input type="text" class="layui-input" name="accPointResName" id="accPointResName"
-                               lay-verify=""
+                               lay-verify="required"
                                autocomplete="off" placeholder="" readonly>
-                        <button type="button" class="layui-btn layui-btn-sm layui-btn-primary layui-hide" id="selectAcc"
+                        <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="selectAcc"
                                 style="position:absolute;top:0px;right:0px;height:37px"><i
                                 class="layui-icon layui-icon-more"></i></button>
                     </div>
@@ -267,8 +267,8 @@
         form.render();
     }
 
-    //禁用选择设备类型入口
-    $('#selectequipType').addClass("layui-btn-disabled").attr("disabled", true);
+    // //禁用选择设备类型入口
+    // $('#selectequipType').addClass("layui-btn-disabled").attr("disabled", true);
 
     //选择设备类型入口
     $("#selectequipType").click(function () {
@@ -290,8 +290,8 @@
         });
     });
 
-    //禁用选择接入点资源入口
-    $('#selectAcc').addClass("layui-btn-disabled").attr("disabled", true);
+    // //禁用选择接入点资源入口
+    // $('#selectAcc').addClass("layui-btn-disabled").attr("disabled", true);
     //选择接入点资源入口
     $("#selectAcc").click(function () {
         top.layer.open({
