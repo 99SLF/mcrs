@@ -31,5 +31,14 @@
             WHERE recordUpdate_id = ${recordUpdateId}
     </update>
 
+    <select id="getaccPointIdBycode" resultType="Integer">
+        SELECT acc_point_res_id FROM base_access_info
+        WHERE acc_point_res_code = #{accPointResCode}
+    </select>
+    <select id="getequTypeIdBycode" resultType="Integer">
+        SELECT equip_type_id FROM base_equip_info
+        WHERE equip_type_code = #{equipTypeCode}
+    </select>
+
 
 </mapper>

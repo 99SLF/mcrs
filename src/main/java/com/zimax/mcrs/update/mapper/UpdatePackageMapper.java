@@ -15,4 +15,6 @@ public interface UpdatePackageMapper {
     void addRecordUpdateMsg(RecordUpdateMsg recordUpdateMsg);
 
     void updateRecordUpdateMsg(RecordUpdateMsg recordUpdateMsg);
+    Integer getaccPointIdBycode(String accPointResCode);
+    Integer getequTypeIdBycode(String equipTypeCode);
 }

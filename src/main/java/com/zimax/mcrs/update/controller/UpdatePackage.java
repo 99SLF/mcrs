@@ -12,7 +12,9 @@ import com.zimax.mcrs.device.pojo.DeviceRollback;
 import com.zimax.mcrs.device.pojo.DeviceUpgrade;
 import com.zimax.mcrs.device.pojo.Equipment;
 import com.zimax.mcrs.update.javaBean.UploadJava;
+import com.zimax.mcrs.update.mapper.ConfigurationFileMapper;
 import com.zimax.mcrs.update.pojo.*;
+import com.zimax.mcrs.update.service.UpdateConfigService;
 import com.zimax.mcrs.update.service.UpdatePackageService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,8 @@ public class UpdatePackage {
 
     @Autowired
     private UpdatePackageService updatePackageService;
+    @Autowired
+    private ConfigurationFileMapper configurationFileMapper;
     private UploadJava uploadJava = (UploadJava)new ClassPathXmlApplicationContext(
             "applicationContext.xml").getBean("UploadJava");
 
@@ -451,6 +455,10 @@ public class UpdatePackage {
         if (equipmentIp == null || "".equals(equipmentIp)||equipmentId==null||"".equals(equipmentId)) {
             return Result.error("1", "传入参数有误。equipmentIp："+equipmentIp+",resource"+equipmentId);
         }
+        Integer x = updatePackageService.getequTypeIdBycode(equipment.getEquipTypeCode());
+        Integer y = updatePackageService.getaccPointIdBycode(equipment.getAccPointResCode());
+        equipment.setAccPointResId(y);
+        equipment.setEquipTypeId(x);
         if(updatePackageService.checkEqi(equipmentIp)<1){
             equipment.setEnable("101");
             updatePackageService.addEqi(equipment);
@@ -468,8 +476,20 @@ public class UpdatePackage {
                 return Result.error("1", "设备资源"+equipmentIp+"暂未绑定终端，请联系管理员");
             } else {//2.2存在资源
                 appId = deviceEquipmentVo.getAppId();
-
-
+                ConfigurationFile confile = new ConfigurationFile();
+                if(configurationFileMapper.count(appId)==0){
+                    for(int i=0;i<equipment.getXmlPathList().size();i++){
+                        String path = equipment.getXmlPathList().get(i);
+                        path = path.trim();
+                        confile.setConfigPath(path);
+                        String fileName = path.substring(path.lastIndexOf("\\")+1);
+                        confile.setFileName(fileName);
+                        confile.setFileStatus("101");
+                        confile.setCreator("系统管理员");
+                        confile.setAppId(appId);
+                        configurationFileMapper.addConfigurationFile(confile);
+                    }
+                }
                 String registerStatus = deviceEquipmentVo.getRegisterStatus();
                 int deviceId = deviceEquipmentVo.getDeviceId();
                 Device device = new Device();

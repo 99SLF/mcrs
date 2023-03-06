@@ -210,6 +210,13 @@ public class UpdatePackageService {
         deviceMapper.updateDevicePath(device);
     }
 
+    public Integer getaccPointIdBycode(String accPointResCode){
+        return updatePackageMapper.getaccPointIdBycode(accPointResCode);
+    }
+
+    public Integer getequTypeIdBycode(String equipTypeCode){
+        return  updatePackageMapper.getequTypeIdBycode(equipTypeCode);
+    }
 //    /**
 //     * 通过更新包id查询记录
 //     * @param uploadId

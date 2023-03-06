@@ -47,7 +47,7 @@ public class Equipment {
     /**
      * 设备信息主键
      */
-    private int equipTypeId;
+    private Integer equipTypeId;
 
     /**
      * 设备连接端口
@@ -62,7 +62,7 @@ public class Equipment {
     /**
      * 接入点资源维护数据的主键
      */
-    private int accPointResId;
+    private Integer accPointResId;
 
     /**
      * 是否启用
@@ -102,4 +102,9 @@ public class Equipment {
     //配置文件路径
     @TableField(exist = false)
     List<String> xmlPathList;
+    @TableField(exist = false)
+    String equipTypeCode;
+
+    @TableField(exist = false)
+    String accPointResCode;
 }
