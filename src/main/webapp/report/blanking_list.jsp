@@ -59,19 +59,25 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">设备资源号：</label>
                     <div class="layui-input-inline">
-                        <input type="text" class="layui-input" name="equipmentId" autocomplete="off"/>
+                        <input type="text" class="layui-input" name="resource" autocomplete="off"/>
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">轴名称：</label>
+                    <label class="layui-form-label">下料轴：</label>
                     <div class="layui-input-inline">
-                        <input type="text" class="layui-input" name="axisName" autocomplete="off"/>
+                        <input type="text" class="layui-input" name="axis" autocomplete="off"/>
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">天线位置：</label>
+                    <label class="layui-form-label">上料卷径：</label>
                     <div class="layui-input-inline">
-                        <input type="text" class="layui-input" name="antennaLoc" autocomplete="off"/>
+                        <input type="text" class="layui-input" name="diamRealityValue" autocomplete="off"/>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">创建时间：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="CREATED_TIME" id="CREATED_TIME" placeholder="请选择创建日期" autocomplete="off" class="layui-input" readonly>
                     </div>
                 </div>
                 <div class="layui-inline layui-hide">
@@ -126,9 +132,9 @@
 
         //toolbar搜索条件——设备资源号，轴名称 ，天线位置
         var formData = {
-            equipmentId: field.equipmentId,
-            axisName: field.axisName,
-            antennaLoc: field.antennaLoc
+            resource: field.resource,
+            axis: field.axis,
+            diamRealityValue: field.diamRealityValue
         };
 
         //将toolbar 表单赋值
@@ -154,9 +160,9 @@
         advancedFormData = data;
         reloadData(data);
         form.val("layuiadmin-blanking-form", {
-            equipmentId: data.equipmentId,
-            axisName: data.axisName,
-            antennaLoc: data.antennaLoc
+            resource: data.resource,
+            axis: data.axis,
+            diamRealityValue: data.diamRealityValue
         });
     }
 
@@ -300,79 +306,99 @@
             title: "序号",
             type: "numbers"
         }, {
-            field: "equipmentId",
+            field: "operation",
+            title: "工位",
+            align: "center",
+            // sort: true,
+            hide: isHidden("operation"),
+            minWidth: 120
+        }, {
+            field: "resource",
             title: "设备资源号",
             align: "center",
             // sort: true,
-            hide: isHidden("equipmentId"),
+            hide: isHidden("resource"),
             minWidth: 150
         }, {
             //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
-            field: "axisName",
-            title: "轴名称",
+            field: "axis",
+            title: "下料轴",
             align: "center",
             minWidth: 150,
-            hide: isHidden("axisName")
+            hide: isHidden("axis")
         }, {
-            field: "antennaLoc",
-            title: "天线位置",
+            field: "sfcpre",
+            title: "来料SFC号",
             align: "center",
-            hide: isHidden("antennaLoc"),
+            hide: isHidden("sfcpre"),
             minWidth: 150
         }, {
-            field: "vehicleCode",
-            title: "载具码",
+            field: "processLot",
+            title: "载具号",
             align: "center",
-            hide: isHidden("vehicleCode"),
+            hide: isHidden("processLot"),
             minWidth: 150
         }, {
-            field: "prodSFCId",
-            title: "生产SFC编码",
+            field: "sfc",
+            title: "下料绑定的SFC编码",
             align: "center",
-            hide: isHidden("prodSFCId"),
+            hide: isHidden("sfc"),
             minWidth: 150
         }, {
-            field: "endEANumber",
-            title: "完工EA数量",
+            field: "qty",
+            title: "EA数",
             align: "center",
-            hide: isHidden("endEANumber"),
-            minWidth: 150
+            hide: isHidden("qty"),
+            minWidth: 80
         }, {
-            field: "inMeterNumber",
+            field: "metre",
             title: "收卷米数",
             align: "center",
-            hide: isHidden("inMeterNumber"),
+            hide: isHidden("metre"),
             minWidth: 150
         }, {
-            field: "isEnd",
-            title: "是否完工",
+            field: "diamRealityValue",
+            title: "上料卷径",
             align: "center",
-            hide: isHidden("isEnd"),
-            minWidth: 150,
-            templet: function (d) {
-
-                return layui.admin.getDictText("IS_END", d.isEnd);
-            }
+            hide: isHidden("diamRealityValue"),
+            minWidth: 150
         }, {
-            field: "startProdTime",
-            title: "开始生产时间",
+            field: "createdBy",
+            title: "创建人",
             align: "center",
-            hide: isHidden("startProdTime"),
-            minWidth: 200,
-            templet: function (d) {
-                return util.toDateString(d.startProdTime, 'yyyy-MM-dd HH:mm:ss');
-            }
+            hide: isHidden("createdBy"),
+            minWidth: 150
         }, {
-            field: "endProdTime",
-            title: "结束生产时间",
+            field: "createdBy",
+            title: "创建人",
             align: "center",
-            hide: isHidden("endProdTime"),
-            minWidth: 200,
+            hide: isHidden("createdBy"),
+            minWidth: 150
+        }, {
+            field: "createdTime",
+            title: "创建时间",
+            align: "center",
+            hide: isHidden("createdTime"),
+            templet: function(d) {
+                return util.toDateString(d.createdTime, "yyyy-MM-dd HH:mm:ss");
+            },
+            minWidth: 200
+        }, {
+            field: "updatedBy",
+            title: "更新人",
+            align: "center",
+            hide: isHidden("updatedBy"),
+            minWidth: 150
+        }, {
+            field: "updatedTime",
+            title: "更新时间",
+            align: "center",
+            hide: isHidden("updatedTime"),
             templet: function (d) {
-                return util.toDateString(d.endProdTime, 'yyyy-MM-dd HH:mm:ss');
-            }
-        }
-        ]]
+                return util.toDateString(d.updatedTime, "yyyy-MM-dd HH:mm:ss");
+            },
+            minWidth: 200
+        }]]
     });
 
     formReder();

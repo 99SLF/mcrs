@@ -289,18 +289,18 @@
 			title: "设备资源号",
 			align: "center",
 			hide: isHidden("resource"),
-			minWidth: 100
+			minWidth: 120
 		}, {
 			field: "operation",
 			title: "工位",
 			align: "center",
-			minWidth: 80,
+			minWidth: 100,
 			hide: isHidden("operation")
 		},{
 			field: "actionType",
 			title: "动作类型",
 			align: "center",
-			minWidth: 100,
+			minWidth: 120,
 			hide: isHidden("actionType")
 		}, {
 			field: "axis",
@@ -313,7 +313,7 @@
 			title: "来料SFC号",
 			align: "center",
 			hide: isHidden("sfcPre"),
-			minWidth: 80
+			minWidth: 100
 		}, {
 			field: "processLotPre",
 			title: "载具号",
@@ -349,13 +349,13 @@
 			title: "卸滚筒信息",
 			align: "center",
 			hide: isHidden("downInfo"),
-			minWidth: 100
+			minWidth: 150
 		}, {
 			field: "createdBy",
 			title: "创建人",
 			align: "center",
 			hide: isHidden("createdBy"),
-			minWidth: 100
+			minWidth: 120
 		}, {
 			field: "createdTime",
 			title: "创建时间",
@@ -364,13 +364,13 @@
 			templet: function(d) {
 				return util.toDateString(d.createdTime, "yyyy-MM-dd HH:mm:ss");
 			},
-			minWidth: 100
+			minWidth: 200
 		}, {
 			field: "updatedBy",
 			title: "更新人",
 			align: "center",
 			hide: isHidden("updatedBy"),
-			minWidth: 80
+			minWidth: 120
 		}, {
 			field: "updatedTime",
 			title: "更新时间",
@@ -379,7 +379,7 @@
 			templet: function(d) {
 				return util.toDateString(d.updatedTime, "yyyy-MM-dd HH:mm:ss");
 			},
-			minWidth: 100
+			minWidth: 200
 		}]]
 	});
 
