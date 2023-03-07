@@ -38,11 +38,6 @@ public class Blanking {
     private String resource;
 
     /**
-     * 动作类型
-     */
-    private Integer actionType;
-
-    /**
      * 下料轴
      */
     private String axis;
