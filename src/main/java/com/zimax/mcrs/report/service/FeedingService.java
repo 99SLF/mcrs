@@ -39,11 +39,14 @@ public class FeedingService {
      * 查询所有上料报表信息
      */
     public List<Feeding> queryFeedings(String page, String limit,
-                                       String resource, String axis,
+                                       String resource, String operation,
+                                       String actionType, String axis,
                                        String sfcPre, String processLotPre,
-                                      String startTime,
-                                       String endTime,
-                                       String order, String field) {
+                                       String qty, String sfc, String isFinish,
+                                       String diamRealityValue,
+                                       String createdBy, String updatedBy,
+                                       String startTime, String endTime,
+                                       String order, String field){
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
             map.put("order", "desc");
@@ -57,18 +60,29 @@ public class FeedingService {
             map.put("limit", Integer.parseInt(limit));
         }
         map.put("resource", resource);
+        map.put("operation", operation);
+        map.put("actionType", actionType);
         map.put("axis", axis);
         map.put("sfcPre", sfcPre);
         map.put("processLotPre", processLotPre);
+        map.put("qty", qty);
+        map.put("sfc", sfc);
+        map.put("isFinish", isFinish);
+        map.put("diamRealityValue", diamRealityValue);
+        map.put("createdBy", createdBy);
+        map.put("updatedBy", updatedBy);
         map.put("startTime", startTime);
         map.put("endTime", endTime);
         return feedingReportMapper.queryFeedings(map);
 
     }
 
-    public int count(String resource, String axis,
-                     String sfcPre, String processLotPre,
-                     String startTime, String endTime) {
-        return feedingReportMapper.count(resource, axis, sfcPre, processLotPre, startTime, endTime);
+    public int count( String resource, String operation,
+                      String actionType, String axis,
+                      String sfcPre, String processLotPre,
+                      String qty, String sfc, String isFinish, String diamRealityValue,
+                      String createdBy, String updatedBy,
+                      String startTime, String endTime) {
+        return feedingReportMapper.count(resource, operation, actionType, axis, sfcPre, processLotPre, qty, sfc, isFinish,diamRealityValue, createdBy, updatedBy,startTime, endTime);
     }
 }

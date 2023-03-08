@@ -13,29 +13,44 @@
     <select id="count" resultType="int">
         select count(*) from rep_blanking
         <where>
-            <if test="equipmentId !=null and equipmentId !=''">
-                and equipment_id like '%${equipmentId}%'
+            <if test="resource !=null and resource !=''">
+                and resource like '%${resource}%'
             </if>
-            <if test="axisName !=null and axisName !=''">
-                and axis_name like '%${axisName}%'
+            <if test="operation !=null and operation !=''">
+                and operation like '%${operation}%'
             </if>
-            <if test="antennaLoc !=null and antennaLoc !=''">
-                and antenna_loc like '%${antennaLoc}%'
+            <if test="axis !=null and axis !=''">
+                and axis like '%${axis}%'
             </if>
-            <if test="vehicleCode !=null and vehicleCode !=''">
-                and vehicle_code like '%${vehicleCode}%'
+            <if test="sfcPre !=null and sfcPre !=''">
+                and sfcPre like '%${sfcPre}%'
             </if>
-            <if test="prodSFCId !=null and prodSFCId !=''">
-                and prod_SFC_id like '%${prodSFCId}%'
+            <if test="processLot !=null and processLot !=''">
+                and processLot like '%${processLot}%'
             </if>
-            <if test="isEnd !=null and isEnd !=''">
-                and is_end like '%${isEnd}%'
+            <if test="qty !=null and qty !=''">
+                and qty like '%${qty}%'
             </if>
-            <if test="startProdTime !=null and startProdTime !=''">
-                and DATE (start_prod_time) = #{startProdTime}
+            <if test="sfc !=null and sfc !=''">
+                and sfc like '%${sfc}%'
             </if>
-            <if test="endProdTime !=null and endProdTime !=''">
-                and DATE (end_prod_time) = #{endProdTime}
+            <if test="metre !=null and metre !=''">
+                and metre like '%${metre}%'
+            </if>
+            <if test="diamRealityValue !=null and diamRealityValue !=''">
+                and diamRealityValue like '%${diamRealityValue}%'
+            </if>
+            <if test="createdBy !=null and createdBy !=''">
+                and createdBy like '%${createdBy}%'
+            </if>
+            <if test="updatedBy !=null and updatedBy !=''">
+                and updatedBy like '%${updatedBy}%'
+            </if>
+            <if test="startTime !=null and startTime!=''">
+                and createdTime &gt;= #{startTime}
+            </if>
+            <if test="endTime !=null and endTime !=''">
+                and createdTime &lt;= #{endTime}
             </if>
         </where>
     </select>
@@ -43,29 +58,44 @@
     <select id="queryBlankings" parameterType="map" resultType="com.zimax.mcrs.report.pojo.Blanking">
         select * from rep_blanking
         <where>
-            <if test="equipmentId !=null and equipmentId !=''">
-                and equipment_id like '%${equipmentId}%'
+            <if test="resource !=null and resource !=''">
+                and resource like '%${resource}%'
             </if>
-            <if test="axisName !=null and axisName !=''">
-                and axis_name like '%${axisName}%'
+            <if test="operation !=null and operation !=''">
+                and operation like '%${operation}%'
             </if>
-            <if test="antennaLoc !=null and antennaLoc !=''">
-                and antenna_loc like '%${antennaLoc}%'
+            <if test="axis !=null and axis !=''">
+                and axis like '%${axis}%'
             </if>
-            <if test="vehicleCode !=null and vehicleCode !=''">
-                and vehicle_code like '%${vehicleCode}%'
+            <if test="sfcPre !=null and sfcPre !=''">
+                and sfcPre like '%${sfcPre}%'
             </if>
-            <if test="prodSFCId !=null and prodSFCId !=''">
-                and prod_SFC_id like '%${prodSFCId}%'
+            <if test="processLot !=null and processLot !=''">
+                and processLot like '%${processLot}%'
             </if>
-            <if test="isEnd !=null and isEnd !=''">
-                and is_end like '%${isEnd}%'
+            <if test="qty !=null and qty !=''">
+                and qty like '%${qty}%'
             </if>
-            <if test="startProdTime !=null and startProdTime !=''">
-                and DATE (start_prod_time) = #{startProdTime}
+            <if test="sfc !=null and sfc !=''">
+                and sfc like '%${sfc}%'
             </if>
-            <if test="endProdTime !=null and endProdTime !=''">
-                and DATE (end_prod_time) = #{endProdTime}
+            <if test="metre !=null and metre !=''">
+                and metre like '%${metre}%'
+            </if>
+            <if test="diamRealityValue !=null and diamRealityValue !=''">
+                and diamRealityValue like '%${diamRealityValue}%'
+            </if>
+            <if test="createdBy !=null and createdBy !=''">
+                and createdBy like '%${createdBy}%'
+            </if>
+            <if test="updatedBy !=null and updatedBy !=''">
+                and updatedBy like '%${updatedBy}%'
+            </if>
+            <if test="startTime !=null and startTime!=''">
+                and createdTime &gt;= #{startTime}
+            </if>
+            <if test="endTime !=null and endTime !=''">
+                and createdTime &lt;= #{endTime}
             </if>
         </where>
         <if test="order !=null and order !=''">

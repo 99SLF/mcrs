@@ -4,11 +4,11 @@
 <html>
 <!--
   - Author(s): 李伟杰
-  - Date: 2023-1-29 16:39:29
+  - Date: 2023-03-08 10:01:25
   - Description:
 -->
 <head>
-    <title>下料报表高级查询</title>
+    <title>上下料卷径报表高级查询</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css" />
@@ -32,7 +32,7 @@
     </style>
 </head>
 <body>
-<div class="layui-form" lay-filter="layuiadmin-blanking-form" id="layuiadmin-blanking-form">
+<div class="layui-form" lay-filter="layuiadmin-coil-form" id="layuiadmin-coil-form">
     <fieldset class="layui-elem-field layui-field-title">
         <legend>高级搜索</legend>
     </fieldset>
@@ -43,68 +43,62 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">工位：</label>
+        <label class="layui-form-label">放卷SFC：</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" name="operation" autocomplete="off" />
+            <input type="text" class="layui-input" name="sfcPreData" autocomplete="off" />
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">下料轴：</label>
+        <label class="layui-form-label">放卷卷径：</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" name="axis" autocomplete="off" />
+            <input type="text" class="layui-input" name="uDiamRealityValue" autocomplete="off" />
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">来料SFC号：</label>
-        <div class="layui-input-block">
-            <input type="text" class="layui-input" name="sfcPre" autocomplete="off" />
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">载具号：</label>
-        <div class="layui-input-block">
-            <input type="text" class="layui-input" name="processLot" autocomplete="off" />
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">下料绑定SFC编码：</label>
+        <label class="layui-form-label">收卷轴名称：</label>
         <div class="layui-input-block" >
-            <input type="text" class="layui-input" name="sfc" autocomplete="off" />
+            <input type="text" class="layui-input" name="rAxisName" autocomplete="off" />
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">EA数：</label>
+        <label class="layui-form-label">收卷载具号：</label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input" name="rProcessLotPre" autocomplete="off" />
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">收卷SFC：</label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input" name="sfcData" autocomplete="off" />
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">收卷卷径：</label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input" name="rDiamRealityValue" autocomplete="off" />
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否最后一卷：</label>
         <div class="layui-input-block" >
-            <input type="text" class="layui-input" name="qty" autocomplete="off" />
+            <select name="isLastVolume" id="isLastVolume" lay-filter="isLastVolume" type="select">
+                <option value="0">否</option>
+                <option value="1">是</option>
+            </select>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">收卷米数：</label>
-        <div class="layui-input-block">
-            <input type="text" class="layui-input" name="metre" autocomplete="off" />
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">上料卷径：</label>
-        <div class="layui-input-block">
-            <input type="text" class="layui-input" name="diamRealityValue" autocomplete="off" />
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">创建人：</label>
-        <div class="layui-input-block">
-            <input type="text" class="layui-input" name="createdBy" autocomplete="off" />
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">更新人：</label>
+        <label class="layui-form-label">放卷物料是否消耗完成：</label>
         <div class="layui-input-block" >
-            <input type="text" class="layui-input" name="updatedBy" autocomplete="off" />
+            <select name="unwindIsOver" id="unwindIsOver" lay-filter="unwindIsOver" type="select">
+                <option value="0">否</option>
+                <option value="1">是</option>
+            </select>
         </div>
     </div>
     <div class="layui-form-item layui-hide">
         <div class="layui-inline layui-search" style="padding-left:15px">
-            <button id="LAY-app-blanking-search-advanced" class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-blanking-search-advanced">
+            <button id="LAY-app-coil-search-advanced" class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-coil-search-advanced">
                 <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
             </button>
         </div>
@@ -126,12 +120,10 @@
 
     var win = null;
 
-    // 开始时间选择器
-
     // 文本框回车事件
     $(".layui-input").on("keydown", function(event) {
         if (event.keyCode == 13) {
-            var submit = $("#LAY-app-blanking-search-advanced");
+            var submit = $("#LAY-app-coil-search-advanced");
             submit.click();
             return false;
         }
@@ -140,43 +132,42 @@
     function SetData(data) {
         win = data.win ? data.win : window;
         var formData = data.data;
-        form.val("layuiadmin-blanking-form", {
+        form.val("layuiadmin-coil-form", {
             resource: formData.resource,
-            operation: formData.operation,
-            axis: formData.axis,
-            sfcPre: formData.sfcPre,
-            processLot: formData.processLot,
-            sfc: formData.sfc,
-            qty: formData.qty,
-            metre: formData.metre,
-            diamRealityValue: formData.diamRealityValue,
-            createdBy: formData.createdBy,
-            updatedBy: formData.updatedBy
-            // startProdTime: formData.startProdTime ? util.toDateString(formData.startProdTime, "yyyy-MM-dd") : "",
-            // endProdTime: formData.endProdTime ? util.toDateString(formData.endProdTime, "yyyy-MM-dd") : ""
+            sfcPreData: formData.sfcPreData,
+            uDiamRealityValue: formData.uDiamRealityValue,
+            rAxisName: formData.rAxisName,
+            rProcessLotPre: formData.rProcessLotPre,
+            sfcData: formData.sfcData,
+            rDiamRealityValue: formData.rDiamRealityValue,
+            isLastVolume: formData.isLastVolume,
+            unwindIsOver: formData.unwindIsOver,
+            UPDATED_TIME: formData.UPDATED_TIME,
+
+
         });
     }
 
     function reset() {
         var formData = {
             resource: "",
-            operation: "",
-            axis: "",
-            sfcPre: "",
-            processLot: "",
-            sfc: "",
-            qty: "",
-            metre: "",
-            diamRealityValue: "",
-            createdBy: "",
-            updatedBy: ""
+            sfcPreData: "",
+            uDiamRealityValue: "",
+            rAxisName: "",
+            rProcessLotPre: "",
+            sfcData: "",
+            rDiamRealityValue: "",
+            isLastVolume: "",
+            unwindIsOver: "",
+            UPDATED_TIME: ""
         }
         win.setFormData(formData);
     }
 
     //监听提交
-    form.on("submit(LAY-app-blanking-search-advanced)", function(data) {
-        win.setFormData(data.field);
+    form.on("submit(LAY-app-coil-search-advanced)", function(data) {
+        var rels = data.field;
+        win.setFormData(rels);
         win.layer.closeAll("iframe");
     });
 </script>

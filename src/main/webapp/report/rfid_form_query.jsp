@@ -37,35 +37,42 @@
         <legend>高级搜索</legend>
     </fieldset>
     <div class="layui-form-item">
-        <label class="layui-form-label">设备资源号：</label>
+        <label class="layui-form-label">载具号：</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" name="equipmentId" autocomplete="off" />
+            <input type="text" class="layui-input" name="epcId" autocomplete="off" />
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">RFID编码：</label>
+        <label class="layui-form-label">读取次数：</label>
         <div class="layui-input-block" >
-            <input type="text" class="layui-input" name="rfidId" autocomplete="off" />
+            <input type="text" class="layui-input" name="readNum" autocomplete="off" />
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">天线ID：</label>
+        <label class="layui-form-label">RFID读写器：</label>
         <div class="layui-input-block" >
-            <input type="text" class="layui-input" name="antennaId" autocomplete="off" />
+            <input type="text" class="layui-input" name="reader" autocomplete="off" />
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">读取率：</label>
+        <label class="layui-form-label">RFID天线：</label>
         <div class="layui-input-block" >
-            <input type="text" class="layui-input" name="readRate" autocomplete="off" />
+            <input type="text" class="layui-input" name="antenna" autocomplete="off" />
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">记录时间：</label>
-        <div class="layui-input-block">
-            <input id="recordTime" type="text" class="layui-input" name="recordTime" autocomplete="off" />
+        <label class="layui-form-label">天线增益：</label>
+        <div class="layui-input-block" >
+            <input type="text" class="layui-input" name="dBm" autocomplete="off" />
         </div>
     </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">RSSI：</label>
+        <div class="layui-input-block" >
+            <input type="text" class="layui-input" name="rssi" autocomplete="off" />
+        </div>
+    </div>
+
     <div class="layui-form-item layui-hide">
         <div class="layui-inline layui-search" style="padding-left:15px">
             <button id="LAY-app-rfid-search-advanced" class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-rfid-search-advanced">
@@ -90,12 +97,12 @@
 
     var win = null;
 
-    // 更新时间选择器
-    laydate.render({
-        elem: "#recordTime",
-        type: "date",
-        trigger: "click"
-    });
+    // // 更新时间选择器
+    // laydate.render({
+    //     elem: "#recordTime",
+    //     type: "date",
+    //     trigger: "click"
+    // });
 
 
     // 文本框回车事件
@@ -111,21 +118,26 @@
         win = data.win ? data.win : window;
         var formData = data.data;
         form.val("layuiadmin-rfid-form", {
-            equipmentId: formData.equipmentId,
-            rfidId: formData.rfidId,
-            antennaId: formData.antennaId,
-            readRate: formData.readRate,
-            recordTime: formData.recordTime ? util.toDateString(formData.recordTime, "yyyy-MM-dd") : ""
+            epcId: formData.epcId,
+            readNum: formData.readNum,
+            reader: formData.reader,
+            antenna: formData.antenna,
+            dBm: formData.dBm,
+            rssi: formData.rssi,
+            UPDATED_TIME:formData.UPDATED_TIME
+            // recordTime: formData.recordTime ? util.toDateString(formData.recordTime, "yyyy-MM-dd") : ""
         });
     }
 
     function reset() {
         var formData = {
-            equipmentId: "",
-            rfidId: "",
-            antennaId: "",
-            readRate: "",
-            recordTime: ""
+            epcId: "",
+            readNum: "",
+            reader: "",
+            antenna: "",
+            dBm: "",
+            rssi: "",
+            UPDATED_TIME :""
         }
         win.setFormData(formData);
     }

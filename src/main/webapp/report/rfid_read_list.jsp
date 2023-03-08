@@ -49,21 +49,27 @@
         <div class="layui-form layuiadmin-card-header-auto" lay-filter="layuiadmin-rfid-form" id="layuiadmin-rfid-form">
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">设备资源号：</label>
+                    <label class="layui-form-label">载具号：</label>
                     <div class="layui-input-inline">
-                        <input type="text" class="layui-input" name="equipmentId" autocomplete="off" />
+                        <input type="text" class="layui-input" name="epcId" autocomplete="off" />
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">RFID编码：</label>
+                    <label class="layui-form-label">RFID读写器：</label>
                     <div class="layui-input-inline">
-                        <input type="text" class="layui-input" name="rfidId" autocomplete="off" />
+                        <input type="text" class="layui-input" name="reader" autocomplete="off" />
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">天线ID：</label>
+                    <label class="layui-form-label">RSSI：</label>
                     <div class="layui-input-inline">
-                        <input type="text" class="layui-input" name="antennaId" autocomplete="off" />
+                        <input type="text" class="layui-input" name="rssi" autocomplete="off" />
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">更新时间：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="UPDATED_TIME" id="UPDATED_TIME" placeholder="请选择更新日期" autocomplete="off" class="layui-input" readonly>
                     </div>
                 </div>
                 <div class="layui-inline layui-hide">
@@ -93,7 +99,7 @@
     var util = layui.util;
     var admin = layui.admin;
     var view = layui.view;
-
+    var laydate = layui.laydate;
     // 过滤字段
     var hiddenFields = [];
     // 功能名
@@ -105,12 +111,21 @@
 
     // 监听搜索
     form.on("submit(LAY-app-rfid-search)", function(data) {
+        var startTime = "";
+        var endTime = "";
         var field = data.field;
+        if(field.UPDATED_TIME != null){
+            startTime = field.UPDATED_TIME.substring(0,field.UPDATED_TIME.indexOf("~"));
+            endTime = field.UPDATED_TIME.substring(field.UPDATED_TIME.indexOf("~")+1);
+        }
+        field["startTime"]=startTime
+        field["endTime"]=endTime
         reloadData(field);
         var formData = {
-            equipmentId: field.equipmentId,
-            rfidId: field.rfidId,
-            antennaId: field.antennaId
+            epcId: field.epcId,
+            reader: field.reader,
+            rssi: field.rssi,
+            UPDATED_TIME:field.UPDATED_TIME
         };
         form.val("layuiadmin-rfid-form", formData);
         advancedFormData = $.extend(advancedFormData, formData);
@@ -130,9 +145,10 @@
         advancedFormData = data;
         reloadData(data);
         form.val("layuiadmin-rfid-form", {
-            equipmentId: data.equipmentId,
-            rfidId: data.rfidId,
-            antennaId: data.antennaId
+            epcId: data.epcId,
+            reader: data.reader,
+            rssi: data.rssi,
+            UPDATED_TIME:data.UPDATED_TIME
         });
     }
 
@@ -269,40 +285,52 @@
             title: "序号",
             type: "numbers"
         }, {
-            field: "equipmentId",
-            title: "设备资源号",
+            field: "epcId",
+            title: "载具号",
             align: "center",
             // sort: true,
-            hide: isHidden("equipmentId"),
+            hide: isHidden("epcId"),
             minWidth: 150
         }, {
             //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
-            field: "rfidId",
-            title: "RFID编码",
+            field: "readNum",
+            title: "读取次数",
             align: "center",
-            minWidth: 150,
-            hide: isHidden("rfidId")
+            minWidth: 120,
+            hide: isHidden("readNum")
         }, {
-            field: "antennaId",
-            title: "天线ID",
+            field: "reader",
+            title: "RFID读写器",
             align: "center",
-            hide: isHidden("antennaId"),
-            minWidth: 150
+            hide: isHidden("reader"),
+            minWidth: 120
 
         }, {
-            field: "readRate",
-            title: "读取率",
+            field: "antenna",
+            title: "RFID天线",
             align: "center",
-            hide: isHidden("readRate"),
-            minWidth: 60
+            hide: isHidden("antenna"),
+            minWidth: 120
         }, {
-            field: "recordTime",
-            title: "记录时间",
+            field: "dBm",
+            title: "天线增益",
             align: "center",
-            hide: isHidden("recordTime"),
+            hide: isHidden("dBm"),
+            minWidth: 120
+        }, {
+            field: "rssi",
+            title: "RSSI",
+            align: "center",
+            hide: isHidden("rssi"),
+            minWidth: 120
+        }, {
+            field: "updatedTime",
+            title: "更新时间",
+            align: "center",
+            hide: isHidden("updatedTime"),
             minWidth: 200,
             templet:function(d){
-                return util.toDateString(d.recordTime,'yyyy-MM-dd HH:mm:ss');
+                return util.toDateString(d.updatedTime,'yyyy-MM-dd HH:mm:ss');
             }
         }]]
     });
@@ -310,6 +338,18 @@
     formReder();
 
     function formReder() {
+        laydate.render({
+            elem: "#UPDATED_TIME",
+            type: "datetime",
+            trigger: "click",
+            range:"~"
+            // ,done: function(value, date, endDate){
+            // 	debugger;
+            // 	console.log(value); //得到日期生成的值，如：2017-08-18
+            // 	console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
+            // 	console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
+            // }
+        });
         // 文本框回车事件
         $(".layui-input").on("keydown", function (event) {
             if (event.keyCode == 13) {

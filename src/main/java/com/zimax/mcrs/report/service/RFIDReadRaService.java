@@ -39,14 +39,15 @@ public class RFIDReadRaService {
      * 查询所有RFID报表信息
      */
     public List<RFIDReadRa> queryRFIDs(String page, String limit,
-                                       String equipmentId, String rfidId,
-                                       String antennaId, String readRate,
-                                       String recordTime, String order, String field) {
+                                       String epcId, String readNum,
+                                       String reader, String antenna,
+                                       String dBm, String rssi, String startTime, String endTime,
+                                       String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
             map.put("order", "desc");
-            map.put("field", "record_time");
+            map.put("field", "updatedTime");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));
@@ -55,19 +56,22 @@ public class RFIDReadRaService {
             map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
             map.put("limit", Integer.parseInt(limit));
         }
-        map.put("equipmentId", equipmentId);
-        map.put("rfidId", rfidId);
-        map.put("antennaId", antennaId);
-        map.put("readRate", readRate);
-        map.put("recordTime", recordTime);
+        map.put("epcId", epcId);
+        map.put("readNum", readNum);
+        map.put("reader", reader);
+        map.put("antenna", antenna);
+        map.put("dBm", dBm);
+        map.put("rssi", rssi);
+        map.put("startTime", startTime);
+        map.put("endTime", endTime);
 
         return rfidReadRaReportMapper.queryRFIDs(map);
 
     }
 
-    public int count(String equipmentId, String rfidId,
-                     String antennaId, String readRate,
-                     String recordTime) {
-        return rfidReadRaReportMapper.count(equipmentId, rfidId, antennaId, readRate, recordTime);
+    public int count( String epcId, String readNum,
+                      String reader, String antenna,
+                      String dBm, String rssi, String startTime, String endTime) {
+        return rfidReadRaReportMapper.count(epcId, readNum, reader, antenna, dBm,rssi,startTime,endTime);
     }
 }

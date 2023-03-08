@@ -25,11 +25,10 @@ public interface RFIDReadRaReportMapper {
      * @param
      * @return
      */
-    int count(@Param("equipmentId") String equipmentId, @Param("rfidId") String RFIDId,
-              @Param("antennaId") String antennaId, @Param("readRate") String readRate,
-              @Param("recordTime") String recordTime
+    int count(@Param("epcId") String epcId, @Param("readNum") String readNum,
+              @Param("reader") String reader, @Param("antenna") String antenna,
+              @Param("dBm") String dBm, @Param("rssi") String rssi, @Param("startTime") String startTime, @Param("endTime") String endTime
     );
-
     /**
      * 查询所有上料报表信息
      * @param

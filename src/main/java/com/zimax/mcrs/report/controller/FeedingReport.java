@@ -6,6 +6,7 @@ import com.zimax.mcrs.report.pojo.Feeding;
 import com.zimax.mcrs.report.service.FeedingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 /**
@@ -39,16 +40,22 @@ public class FeedingReport {
     /**
      * 分页查询所有用户
      *
-     * @param page          页记录数
-     * @param limit         页码
-     * @param resource   设备资源号
-     * @param axis      轴名称
-     * @param sfcPre        来料SFC编码
-     * @param processLotPre    载具码
-     * @param startTime 开始时间
-     * @param endTime   结束时间
-     * @param order         排序方式
-     * @param field         排序字段
+     * @param page             页记录数
+     * @param limit            页码
+     * @param resource         设备资源号
+     * @param operation        工位
+     * @param actionType       动作类型
+     * @param axis             载具码
+     * @param sfcPre           开始时间
+     * @param processLotPre    结束时间
+     * @param qty              排序方式
+     * @param sfc              载具码
+     * @param diamRealityValue 上料卷径
+     * @param isFinish         放卷是否全部完工
+     * @param createdBy        结束时间
+     * @param updatedBy        结束时间
+     * @param order            排序方式
+     * @param field            排序字段
      * @return 上料报表信息列表
      * @return total 总记录数
      * @return code 状态码
@@ -56,12 +63,15 @@ public class FeedingReport {
      */
     @GetMapping("/feeding/query")
     public Result<?> queryFeedings(String page, String limit,
-                                   String resource, String axis,
+                                   String resource, String operation,
+                                   String actionType, String axis,
                                    String sfcPre, String processLotPre,
-                                   String startTime,
-                                   String endTime,
+                                   String qty, String sfc, String isFinish,
+                                   String diamRealityValue,
+                                   String createdBy, String updatedBy,
+                                   String startTime, String endTime,
                                    String order, String field) {
-        List feedings = feedingService.queryFeedings(page, limit, resource, axis, sfcPre, processLotPre, startTime, endTime, order, field);
-        return Result.success(feedings, feedingService.count(resource, axis, sfcPre, processLotPre, startTime, endTime));
+        List feedings = feedingService.queryFeedings(page, limit, resource, operation, actionType, axis, sfcPre, processLotPre, qty, sfc, isFinish, diamRealityValue, createdBy, updatedBy, startTime, endTime, order, field);
+        return Result.success(feedings, feedingService.count(resource, operation, actionType, axis, sfcPre, processLotPre, qty, sfc, isFinish, diamRealityValue, createdBy, updatedBy, startTime, endTime));
     }
 }

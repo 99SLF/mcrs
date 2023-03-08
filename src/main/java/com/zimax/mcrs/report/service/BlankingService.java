@@ -32,17 +32,20 @@ public class BlankingService {
     /**
      * 查询所有下料报表信息
      */
-    public List<Blanking> queryBlankings(String page,  String limit,
-                                         String equipmentId, String axisName,
-                                         String antennaLoc,String vehicleCode, String prodSFCId,
-                                         String isEnd, String startProdTime,
-                                         String endProdTime,
-                                         String order, String field) {
+    public List<Blanking> queryBlankings(String page, String limit,
+                                         String resource, String operation,
+                                         String axis, String sfcPre,
+                                         String processLot, String sfc,
+                                         String qty, String metre,
+                                         String diamRealityValue, String createdBy,
+                                         String updatedBy,
+                                         String startTime, String endTime,
+                                         String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
             map.put("order", "desc");
-            map.put("field", "createTtime");
+            map.put("field", "createdTime");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));
@@ -51,23 +54,32 @@ public class BlankingService {
             map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
             map.put("limit", Integer.parseInt(limit));
         }
-        map.put("equipmentId", equipmentId);
-        map.put("axisName", axisName);
-        map.put("antennaLoc", antennaLoc);
-        map.put("vehicleCode", vehicleCode);
-        map.put("prodSFCId", prodSFCId);
-        map.put("isEnd", isEnd);
-        map.put("startProdTime", startProdTime);
-        map.put("endProdTime", endProdTime);
+        map.put("resource", resource);
+        map.put("operation", operation);
+        map.put("axis", axis);
+        map.put("sfcPre", sfcPre);
+        map.put("processLot", processLot);
+        map.put("sfc", sfc);
+        map.put("qty", qty);
+        map.put("metre", metre);
+        map.put("diamRealityValue", diamRealityValue);
+        map.put("createdBy", createdBy);
+        map.put("updatedBy", updatedBy);
+        map.put("startTime", startTime);
+        map.put("endTime", endTime);
+
 
         return blankingReportMapper.queryBlankings(map);
 
     }
 
-    public int count(String equipmentId, String axisName,
-                     String antennaLoc, String vehicleCode, String prodSFCId,
-                     String isEnd, String startProdTime,
-                     String endProdTime) {
-        return blankingReportMapper.count(equipmentId,axisName,antennaLoc, vehicleCode ,prodSFCId,isEnd,startProdTime,endProdTime);
+    public int count(String resource, String operation,
+                     String axis, String sfcPre,
+                     String processLot, String sfc,
+                     String qty, String metre,
+                     String diamRealityValue, String createdBy,
+                     String updatedBy,
+                     String startTime, String endTime) {
+        return blankingReportMapper.count(resource, operation, axis, sfcPre, processLot, sfc, qty, metre, diamRealityValue, createdBy, updatedBy, startTime, endTime);
     }
 }

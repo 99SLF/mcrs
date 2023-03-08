@@ -6,7 +6,99 @@
     <!--上下料卷径数据记录表-->
     <insert id="addCoilDiameterRecord" parameterType="com.zimax.mcrs.report.pojo.CoilDiameterRecord">
         insert into rep_coilDiameterRecord
-        values (#{id},#{resource},#{sfcPreData},#{uDiamRealityValue},#{rAxisName},#{rProcessLotPre},#{sfcData},#{rDiamRealityValue}, #{isLastVolume}, #{unwindIsOver}, #{remark}, #{updatedTime})
+        values (#{id},#{resource},#{sfcPreData},#{uDiamRealityValue},#{rAxisName},#{rProcessLotPre},#{sfcData},
+                #{rDiamRealityValue}, #{isLastVolume}, #{unwindIsOver}, #{remark}, #{updatedTime})
     </insert>
+
+    <!--    查询记录数-->
+    <select id="count" resultType="int">
+        select count(*) from rep_coilDiameterRecord
+        <where>
+            <if test="resource !=null and resource !=''">
+                and resource like '%${resource}%'
+            </if>
+            <if test="sfcPreData !=null and sfcPreData !=''">
+                and sfcPreData like '%${sfcPreData}%'
+            </if>
+            <if test="uDiamRealityValue !=null and uDiamRealityValue !=''">
+                and uDiamRealityValue like '%${uDiamRealityValue}%'
+            </if>
+            <if test="rAxisName !=null and rAxisName !=''">
+                and rAxisName like '%${rAxisName}%'
+            </if>
+            <if test="rProcessLotPre !=null and rProcessLotPre !=''">
+                and rProcessLotPre like '%${rProcessLotPre}%'
+            </if>
+            <if test="sfcData !=null and sfcData !=''">
+                and sfcData like '%${sfcData}%'
+            </if>
+            <if test="rDiamRealityValue !=null and rDiamRealityValue !=''">
+                and rDiamRealityValue like '%${rDiamRealityValue}%'
+            </if>
+            <if test="isLastVolume !=null and isLastVolume !=''">
+                and isLastVolume like '%${isLastVolume}%'
+            </if>
+            <if test="unwindIsOver !=null and unwindIsOver !=''">
+                and unwindIsOver like '%${unwindIsOver}%'
+            </if>
+            <if test="remark !=null and remark !=''">
+                and remark like '%${remark}%'
+            </if>
+            <if test="startTime !=null and startTime!=''">
+                and updatedTime &gt;= #{startTime}
+            </if>
+            <if test="endTime !=null and endTime !=''">
+                and updatedTime &lt;= #{endTime}
+            </if>
+        </where>
+    </select>
+    <select id="queryCoilDiameterRecord" parameterType="map" resultType="com.zimax.mcrs.report.pojo.CoilDiameterRecord">
+        select * from rep_coilDiameterRecord
+        <where>
+            <if test="resource !=null and resource !=''">
+                and resource like '%${resource}%'
+            </if>
+            <if test="sfcPreData !=null and sfcPreData !=''">
+                and sfcPreData like '%${sfcPreData}%'
+            </if>
+            <if test="uDiamRealityValue !=null and uDiamRealityValue !=''">
+                and uDiamRealityValue like '%${uDiamRealityValue}%'
+            </if>
+            <if test="rAxisName !=null and rAxisName !=''">
+                and rAxisName like '%${rAxisName}%'
+            </if>
+            <if test="rProcessLotPre !=null and rProcessLotPre !=''">
+                and rProcessLotPre like '%${rProcessLotPre}%'
+            </if>
+            <if test="sfcData !=null and sfcData !=''">
+                and sfcData like '%${sfcData}%'
+            </if>
+            <if test="rDiamRealityValue !=null and rDiamRealityValue !=''">
+                and rDiamRealityValue like '%${rDiamRealityValue}%'
+            </if>
+            <if test="isLastVolume !=null and isLastVolume !=''">
+                and isLastVolume like '%${isLastVolume}%'
+            </if>
+            <if test="unwindIsOver !=null and unwindIsOver !=''">
+                and unwindIsOver like '%${unwindIsOver}%'
+            </if>
+            <if test="remark !=null and remark !=''">
+                and remark like '%${remark}%'
+            </if>
+            <if test="startTime !=null and startTime!=''">
+                and updatedTime &gt;= #{startTime}
+            </if>
+            <if test="endTime !=null and endTime !=''">
+                and updatedTime &lt;= #{endTime}
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
 </mapper>
 

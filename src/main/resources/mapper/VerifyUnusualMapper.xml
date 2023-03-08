@@ -9,5 +9,89 @@
         values (#{id},#{resource}, #{axisName}, #{rfidReader}, #{antenna}, #{processLot}, #{tag},
                 #{readNum}, #{sfcPre}, #{sfc},#{updatedTime})
     </insert>
+    <!--    查询记录数-->
+    <select id="count" resultType="int">
+        select count(*) from rep_verifyUnusual
+        <where>
+            <if test="resource !=null and resource !=''">
+                and resource like '%${resource}%'
+            </if>
+            <if test="axisName !=null and axisName !=''">
+                and axisName like '%${axisName}%'
+            </if>
+            <if test="rfidReader !=null and rfidReader !=''">
+                and rfidReader like '%${rfidReader}%'
+            </if>
+            <if test="antenna !=null and antenna !=''">
+                and antenna like '%${antenna}%'
+            </if>
+            <if test="processLot !=null and processLot !=''">
+                and processLot like '%${processLot}%'
+            </if>
+            <if test="tag !=null and tag !=''">
+                and tag like '%${tag}%'
+            </if>
+            <if test="readNum !=null and readNum !=''">
+                and readNum like '%${readNum}%'
+            </if>
+            <if test="sfcPre !=null and sfcPre !=''">
+                and sfcPre like '%${sfcPre}%'
+            </if>
+            <if test="sfc !=null and sfc !=''">
+                and sfc like '%${sfc}%'
+            </if>
+            <if test="startTime !=null and startTime!=''">
+                and updatedTime &gt;= #{startTime}
+            </if>
+            <if test="endTime !=null and endTime !=''">
+                and updatedTime &lt;= #{endTime}
+            </if>
+        </where>
+    </select>
 
+
+    <select id="queryVerifyUnusual" parameterType="map" resultType="com.zimax.mcrs.report.pojo.VerifyUnusual">
+        select * from rep_verifyUnusual
+        <where>
+            <if test="resource !=null and resource !=''">
+                and resource like '%${resource}%'
+            </if>
+            <if test="axisName !=null and axisName !=''">
+                and axisName like '%${axisName}%'
+            </if>
+            <if test="rfidReader !=null and rfidReader !=''">
+                and rfidReader like '%${rfidReader}%'
+            </if>
+            <if test="antenna !=null and antenna !=''">
+                and antenna like '%${antenna}%'
+            </if>
+            <if test="processLot !=null and processLot !=''">
+                and processLot like '%${processLot}%'
+            </if>
+            <if test="tag !=null and tag !=''">
+                and tag like '%${tag}%'
+            </if>
+            <if test="readNum !=null and readNum !=''">
+                and readNum like '%${readNum}%'
+            </if>
+            <if test="sfcPre !=null and sfcPre !=''">
+                and sfcPre like '%${sfcPre}%'
+            </if>
+            <if test="sfc !=null and sfc !=''">
+                and sfc like '%${sfc}%'
+            </if>
+            <if test="startTime !=null and startTime!=''">
+                and updatedTime &gt;= #{startTime}
+            </if>
+            <if test="endTime !=null and endTime !=''">
+                and updatedTime &lt;= #{endTime}
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
 </mapper>

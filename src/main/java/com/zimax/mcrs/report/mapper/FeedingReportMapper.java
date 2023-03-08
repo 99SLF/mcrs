@@ -33,12 +33,13 @@ public interface FeedingReportMapper {
      * @param
      * @return
      */
-    int count(@Param("resource") String resource, @Param("axis") String axis,
+    int count(@Param("resource") String resource, @Param("operation") String operation,
+              @Param("actionType") String actionType, @Param("axis") String axis,
               @Param("sfcPre") String sfcPre, @Param("processLotPre") String processLotPre,
-              @Param("startTime") String startTime,
-              @Param("endTime") String endTime
+              @Param("qty") String qty, @Param("sfc") String sfc,
+              @Param("isFinish") String isFinish, @Param("diamRealityValue") String diamRealityValue, @Param("createdBy") String createdBy,@Param("updatedBy") String updatedBy,
+              @Param("startTime") String startTime,@Param("endTime") String endTime
     );
-
 
 
 

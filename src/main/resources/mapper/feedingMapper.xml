@@ -18,6 +18,12 @@
             <if test="resource !=null and resource !=''">
                 and resource like '%${resource}%'
             </if>
+            <if test="operation !=null and operation !=''">
+                and operation like '%${operation}%'
+            </if>
+            <if test="actionType !=null and actionType !=''">
+                and actionType like '%${actionType}%'
+            </if>
             <if test="axis !=null and axis !=''">
                 and axis like '%${axis}%'
             </if>
@@ -26,6 +32,24 @@
             </if>
             <if test="processLotPre !=null and processLotPre !=''">
                 and processLotPre like '%${processLotPre}%'
+            </if>
+            <if test="qty !=null and qty !=''">
+                and qty like '%${qty}%'
+            </if>
+            <if test="sfc !=null and sfc !=''">
+                and sfc like '%${sfc}%'
+            </if>
+            <if test="isFinish !=null and isFinish !=''">
+                and isFinish like '%${isFinish}%'
+            </if>
+            <if test="diamRealityValue !=null and diamRealityValue !=''">
+                and diamRealityValue like '%${diamRealityValue}%'
+            </if>
+            <if test="createdBy !=null and createdBy !=''">
+                and createdBy like '%${createdBy}%'
+            </if>
+            <if test="updatedBy !=null and updatedBy !=''">
+                and updatedBy like '%${updatedBy}%'
             </if>
             <if test="startTime !=null and startTime!=''">
                 and createdTime &gt;= #{startTime}
@@ -35,7 +59,6 @@
             </if>
         </where>
     </select>
-
     <!--查询所有报表信息-->
     <!--列表显示-->
     <select id="queryFeedings" parameterType="map" resultType="com.zimax.mcrs.report.pojo.Feeding">
@@ -43,6 +66,12 @@
         <where>
             <if test="resource !=null and resource !=''">
                 and resource like '%${resource}%'
+            </if>
+            <if test="operation !=null and operation !=''">
+                and operation like '%${operation}%'
+            </if>
+            <if test="actionType !=null and actionType !=''">
+                and actionType like '%${actionType}%'
             </if>
             <if test="axis !=null and axis !=''">
                 and axis like '%${axis}%'
@@ -52,6 +81,24 @@
             </if>
             <if test="processLotPre !=null and processLotPre !=''">
                 and processLotPre like '%${processLotPre}%'
+            </if>
+            <if test="qty !=null and qty !=''">
+                and qty like '%${qty}%'
+            </if>
+            <if test="sfc !=null and sfc !=''">
+                and sfc like '%${sfc}%'
+            </if>
+            <if test="isFinish !=null and isFinish !=''">
+                and isFinish like '%${isFinish}%'
+            </if>
+            <if test="diamRealityValue !=null and diamRealityValue !=''">
+                and diamRealityValue like '%${diamRealityValue}%'
+            </if>
+            <if test="createdBy !=null and createdBy !=''">
+                and createdBy like '%${createdBy}%'
+            </if>
+            <if test="updatedBy !=null and updatedBy !=''">
+                and updatedBy like '%${updatedBy}%'
             </if>
             <if test="startTime !=null and startTime!=''">
                 and createdTime &gt;= #{startTime}

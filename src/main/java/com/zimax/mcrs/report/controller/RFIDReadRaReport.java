@@ -36,17 +36,20 @@ public class RFIDReadRaReport {
     }
 
     /**
-     * 分页查询所有用户
+     * 分页查询所有rfid的内容
      *
-     * @param page        页记录数
-     * @param limit       页码
-     * @param equipmentId 设备资源号
-     * @param rfidId      RFID编码
-     * @param antennaId   天线ID
-     * @param readRate    读取率
-     * @param recordTime  记录时间
-     * @param order       排序方式
-     * @param field       排序字段
+     * @param page      页记录数
+     * @param limit     页码
+     * @param epcId     载具号
+     * @param readNum   读取次数
+     * @param reader    RFID读写器
+     * @param antenna   RFID天线
+     * @param dBm       天线增益
+     * @param rssi      RSSI
+     * @param startTime 开始时间
+     * @param endTime   结束时间
+     * @param order     排序方式
+     * @param field     排序字段
      * @return RFID报表信息列表
      * @return total 总记录数
      * @return code 状态码
@@ -54,10 +57,11 @@ public class RFIDReadRaReport {
      */
     @GetMapping("/rfidReadRa/query")
     public Result<?> queryRFIDs(String page, String limit,
-                                String equipmentId, String rfidId,
-                                String antennaId, String readRate,
-                                String recordTime, String order, String field) {
-        List RFIDs = rfidReadRaService.queryRFIDs(page, limit, equipmentId, rfidId, antennaId, readRate, recordTime, order, field);
-        return Result.success(RFIDs, rfidReadRaService.count(equipmentId, rfidId, antennaId, readRate, recordTime));
+                                String epcId, String readNum,
+                                String reader, String antenna,
+                                String dBm, String rssi, String startTime, String endTime,
+                                String order, String field) {
+        List RFIDs = rfidReadRaService.queryRFIDs(page, limit, epcId, readNum, reader, antenna, dBm, rssi, startTime, endTime, order, field);
+        return Result.success(RFIDs, rfidReadRaService.count(epcId, readNum, reader, antenna, dBm, rssi, startTime, endTime));
     }
 }

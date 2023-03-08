@@ -13,20 +13,29 @@
     <select id="count" resultType="int">
         select count(*) from rep_rfid
         <where>
-            <if test="equipmentId !=null and equipmentId !=''">
-                and equipment_id like '%${equipmentId}%'
+            <if test="epcId !=null and epcId !=''">
+                and epcId like '%${epcId}%'
             </if>
-            <if test="rfidId !=null and rfidId !=''">
-                and rfid_id like '%${rfidId}%'
+            <if test="readNum !=null and readNum !=''">
+                and readNum like '%${readNum}%'
             </if>
-            <if test="antennaId !=null and antennaId !=''">
-                and antenna_id like '%${antennaId}%'
+            <if test="reader !=null and reader !=''">
+                and reader like '%${reader}%'
             </if>
-            <if test="readRate !=null and readRate !=''">
-                and read_rate like '%${readRate}%'
+            <if test="antenna !=null and antenna !=''">
+                and antenna like '%${antenna}%'
             </if>
-            <if test="recordTime !=null and recordTime !=''">
-                and DATE (record_time)=#{recordTime}
+            <if test="dBm !=null and dBm !=''">
+                and dBm like '%${dBm}%'
+            </if>
+            <if test="rssi !=null and rssi !=''">
+                and rssi like '%${rssi}%'
+            </if>
+            <if test="startTime !=null and startTime!=''">
+                and updatedTime &gt;= #{startTime}
+            </if>
+            <if test="endTime !=null and endTime !=''">
+                and updatedTime &lt;= #{endTime}
             </if>
         </where>
     </select>
@@ -36,20 +45,29 @@
     <select id="queryRFIDs" parameterType="map" resultType="com.zimax.mcrs.report.pojo.RFIDReadRa">
         select * from rep_rfid
         <where>
-            <if test="equipmentId !=null and equipmentId !=''">
-                and equipment_id like '%${equipmentId}%'
+            <if test="epcId !=null and epcId !=''">
+                and epcId like '%${epcId}%'
             </if>
-            <if test="rfidId !=null and rfidId !=''">
-                and rfid_id like '%${rfidId}%'
+            <if test="readNum !=null and readNum !=''">
+                and readNum like '%${readNum}%'
             </if>
-            <if test="antennaId !=null and antennaId !=''">
-                and antenna_id like '%${antennaId}%'
+            <if test="reader !=null and reader !=''">
+                and reader like '%${reader}%'
             </if>
-            <if test="readRate !=null and readRate !=''">
-                and read_rate like '%${readRate}%'
+            <if test="antenna !=null and antenna !=''">
+                and antenna like '%${antenna}%'
             </if>
-            <if test="recordTime !=null and recordTime !=''">
-                and DATE (record_time)=#{recordTime}
+            <if test="dBm !=null and dBm !=''">
+                and dBm like '%${dBm}%'
+            </if>
+            <if test="rssi !=null and rssi !=''">
+                and rssi like '%${rssi}%'
+            </if>
+            <if test="startTime !=null and startTime!=''">
+                and updatedTime &gt;= #{startTime}
+            </if>
+            <if test="endTime !=null and endTime !=''">
+                and updatedTime &lt;= #{endTime}
             </if>
         </where>
         <if test="order !=null and order !=''">

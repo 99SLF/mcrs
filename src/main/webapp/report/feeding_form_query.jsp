@@ -43,8 +43,20 @@
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">轴名称：</label>
+		<label class="layui-form-label">工位：</label>
 		<div class="layui-input-block">
+			<input type="text" class="layui-input" name="operation" autocomplete="off" />
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">动作类型：</label>
+		<div class="layui-input-block">
+			<input type="text" class="layui-input" name="actionType" autocomplete="off" />
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">上料轴：</label>
+		<div class="layui-input-block" >
 			<input type="text" class="layui-input" name="axis" autocomplete="off" />
 		</div>
 	</div>
@@ -56,8 +68,47 @@
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">载具号：</label>
-		<div class="layui-input-block" >
+		<div class="layui-input-block">
 			<input type="text" class="layui-input" name="processLotPre" autocomplete="off" />
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">上料数量：</label>
+		<div class="layui-input-block">
+			<input type="text" class="layui-input" name="qty" autocomplete="off" />
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">SFC号：</label>
+		<div class="layui-input-block" >
+			<input type="text" class="layui-input" name="sfc" autocomplete="off" />
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">是否完工：</label>
+		<div class="layui-input-block" >
+			<select name="isFinish" id="isFinish" lay-filter="isFinish" type="select">
+				<option value="0">否</option>
+				<option value="1">是</option>
+			</select>
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">上料卷径：</label>
+		<div class="layui-input-block">
+			<input type="text" class="layui-input" name="diamRealityValue" autocomplete="off" />
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">创建人：</label>
+		<div class="layui-input-block">
+			<input type="text" class="layui-input" name="createdBy" autocomplete="off" />
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">更新人：</label>
+		<div class="layui-input-block" >
+			<input type="text" class="layui-input" name="updatedBy" autocomplete="off" />
 		</div>
 	</div>
 	<div class="layui-form-item layui-hide">
@@ -98,18 +149,37 @@
 		var formData = data.data;
 		form.val("layuiadmin-feeding-form", {
             resource: formData.resource,
-            axis: formData.axis,
-            sfcPre: formData.sfcPre,
-            processLotPre: formData.processLotPre,
+			operation: formData.operation,
+			actionType: formData.actionType,
+			axis: formData.axis,
+			sfcPre: formData.sfcPre,
+			processLotPre: formData.processLotPre,
+			qty: formData.qty,
+			sfc: formData.sfc,
+			isFinish: formData.isFinish,
+			diamRealityValue: formData.diamRealityValue,
+			createdBy: formData.createdBy,
+			updatedBy: formData.updatedBy,
+			CREATED_TIME: formData.CREATED_TIME,
+
         });
 	}
 	
 	function reset() {
 		var formData = {
             resource: "",
-            axis: "",
-            sfcPre: "",
-            processLotPre: "",
+			operation: "",
+			actionType: "",
+			axis: "",
+			sfcPre: "",
+			processLotPre: "",
+			qty: "",
+			sfc: "",
+			isFinish: "",
+			diamRealityValue: "",
+			createdBy: "",
+			updatedBy: "",
+			CREATED_TIME: ""
 		}
 		win.setFormData(formData);
 	}

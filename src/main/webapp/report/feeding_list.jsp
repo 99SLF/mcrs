@@ -56,7 +56,7 @@
 					</div>
 				</div>
 				<div class="layui-inline">
-					<label class="layui-form-label">轴名称：</label>
+					<label class="layui-form-label">上料轴：</label>
 					<div class="layui-input-inline">
 						<input type="text" class="layui-input" name="axis" autocomplete="off" />
 					</div>
@@ -337,7 +337,14 @@
 			title: "是否完工",
 			align: "center",
 			minWidth: 80,
-			hide: isHidden("isFinish")
+			hide: isHidden("isFinish"),
+			templet: function(d) {
+				if (d.isFinish==0) {
+					return "否";
+				} else if (d.isFinish==1){
+					return "是"
+			}
+			}
 		}, {
 			field: "diamRealityValue",
 			title: "上料卷径",
@@ -391,6 +398,9 @@
 			type: "datetime",
 			trigger: "click",
 			range:"~"
+			,done: function(value, date, endDate){
+
+			}
 		});
         // 文本框回车事件
         $(".layui-input").on("keydown", function (event) {
