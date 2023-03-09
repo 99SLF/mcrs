@@ -178,6 +178,11 @@
             align: "center",
             minWidth: 100
         }, {
+            field: "equipmentName",
+            title: "设备名称",
+            align: "center",
+            minWidth: 100
+        },{
             field: "equipTypeName",
             title: "设备类型",
             align: "center",

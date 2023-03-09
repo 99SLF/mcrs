@@ -41,6 +41,7 @@ INSERT INTO `app_function` VALUES ('application_edit', '修改应用', '', '/cof
 INSERT INTO `app_function` VALUES ('application_manager', '管理应用功能树', '', '/coframe/framework/application/application_manager.jsp', '', '1', 'page', '2', '1', '', 'default', '1');
 INSERT INTO `app_function` VALUES ('appliction_delete', '删除应用', '', '/com.zimax.components.coframe.framework.ApplicationManager.deleteApplications.biz.ext', 'F', '1', 'other', '4', '0', '', 'default', '1');
 INSERT INTO `app_function` VALUES ('blanking_list', '下料报表查询', '', '/report/blanking_list.jsp', '', '1', 'page', '2', '1', null, 'default', '901');
+INSERT INTO `app_function` VALUES ('CoilDiameterRecord', '上下料卷径记录报表', '', '/report/coil_list.jsp', '', '1', 'page', '5', '1', null, 'default', '901');
 INSERT INTO `app_function` VALUES ('deviceloginLog_query', '登录日志查询', '', '/log/loginLog/login_log_list.jsp', '', '1', 'page', '1', '1', null, 'default', '909');
 INSERT INTO `app_function` VALUES ('device_abnormal_warn', '终端异常告警', '', '/monitor/device_abnormal_warn.jsp', '', '1', 'page', '2', '1', null, 'default', '920');
 INSERT INTO `app_function` VALUES ('device_edit', '终端修改', '', '/equipment/device/device_edit.jsp', '', '', '', '2', '1', null, 'default', '910');
@@ -100,6 +101,7 @@ INSERT INTO `app_function` VALUES ('user_add', '添加用户', '', '/coframe/rig
 INSERT INTO `app_function` VALUES ('user_delete', '删除用户', '', '/com.zimax.components.coframe.rights.UserManager.deleteUser.biz.ext', '', '1', 'other', '5', '0', '', 'default', '5');
 INSERT INTO `app_function` VALUES ('user_list', '查看用户列表', '', '/coframe/rights/user/user_list.jsp', '', '1', 'page', '1', '1', '', 'default', '5');
 INSERT INTO `app_function` VALUES ('user_update', '修改用户', '', '/coframe/rights/user/user_update.jsp', '', '1', 'page', '3', '0', '', 'default', '5');
+INSERT INTO `app_function` VALUES ('VerifyUnusual', '防串读记录报表', '', '/report/verify_list.jsp', '', '1', 'page', '6', '1', null, 'default', '901');
 -- 菜单数据
 INSERT INTO `app_menu` VALUES ('1', '', '权限', '权限', 'menu_auth', '0', null, '1', '7', 'icon-quanxianguanli', null, '.1.', '1', '10', '0', '', null, null);
 INSERT INTO `app_menu` VALUES ('3', '1', '应用功能管理', '应用功能管理', 'menu_app_function', '1', '', '2', '1', '', '', '.1.3.', '', '0', null, 'application_manager', '', 'default');
@@ -109,7 +111,7 @@ INSERT INTO `app_menu` VALUES ('6', '1', '角色管理', '角色管理', 'menu_r
 INSERT INTO `app_menu` VALUES ('7', '1', '用户管理', '用户管理', 'menu_user_manager', '1', '', '2', '5', '', '', '.1.7.', '', '0', null, 'user_list', '', 'default');
 INSERT INTO `app_menu` VALUES ('8', '1', '配置业务字典', '配置业务字典', 'menu_dict_manager', '1', '', '2', '4', '', '', '.1.51.', '', '0', null, 'dict_manager', '', 'default');
 INSERT INTO `app_menu` VALUES ('9', '', '建模', '建模', 'model', '0', null, '1', '2', 'icon-jianmoguanli', null, '.9.', '1', '13', '0', '', null, null);
-INSERT INTO `app_menu` VALUES ('10', '', '报表', '报表', 'report', '0', null, '1', '5', 'icon-baobiaoguanli', null, '.10.', '1', '9', '0', '', null, null);
+INSERT INTO `app_menu` VALUES ('10', '', '报表', '报表', 'report', '0', null, '1', '5', 'icon-baobiaoguanli', null, '.10.', '1', '11', '0', '', null, null);
 INSERT INTO `app_menu` VALUES ('11', '', '监控', '监控', 'monitor', '0', null, '1', '3', 'icon-jiankongguanli', null, '.11.', '1', '10', '0', '', null, null);
 INSERT INTO `app_menu` VALUES ('14', '9', '终端管理', '终端管理', 'terminalManage', '1', null, '2', '2', '', null, '.9.14.', '1', '0', '0', 'device_list', null, null);
 INSERT INTO `app_menu` VALUES ('15', '9', '设备管理', '设备管理', 'assetsManage', '1', null, '2', '3', '', null, '.9.15.', '1', '0', '0', 'equipment_list', null, null);
@@ -144,6 +146,53 @@ INSERT INTO `app_menu` VALUES ('71', '60', 'MES交互日志', 'MES交互日志',
 INSERT INTO `app_menu` VALUES ('72', '60', '异常日志', '异常日志', 'abnLog', '1', null, '2', '8', '', null, '.60.72.', '1', '0', '0', 'abn_log_list', null, null);
 INSERT INTO `app_menu` VALUES ('73', '54', '系统文件', '系统文件', 'SystemFile', '1', null, '2', '7', '', null, '.54.73.', '1', '0', '0', 'about_system', null, null);
 INSERT INTO `app_menu` VALUES ('74', '1', '组织管理', '组织管理', 'organize', '1', null, '2', '1', '', null, '.1.74.', '1', '0', '0', 'organize', null, null);
+INSERT INTO `app_menu` VALUES ('75', '10', '上下料卷径记录报表', '上下料卷径记录报表', 'CoilDiameterRecord', '1', null, '2', '5', '', null, '.10.75.', '1', '0', '0', 'CoilDiameterRecord', null, null);
+INSERT INTO `app_menu` VALUES ('76', '10', '防串读记录报表', '防串读记录报表', 'VerifyUnusual', '1', null, '2', '6', '', null, '.10.76.', '1', '0', '0', 'VerifyUnusual', null, null);
+INSERT INTO `app_menu` VALUES ('1', '', '权限', '权限', 'menu_auth', '0', null, '1', '7', 'icon-quanxianguanli', null, '.1.', '1', '10', '0', '', null, null);
+INSERT INTO `app_menu` VALUES ('3', '1', '应用功能管理', '应用功能管理', 'menu_app_function', '1', '', '2', '1', '', '', '.1.3.', '', '0', null, 'application_manager', '', 'default');
+INSERT INTO `app_menu` VALUES ('4', '1', '菜单管理', '菜单管理', 'menu_menu_manager', '1', '', '2', '2', '', '', '.1.4.', '', '0', null, 'menu_manage', '', 'default');
+INSERT INTO `app_menu` VALUES ('5', '1', '授权管理', '授权管理', 'menu_auth', '1', '', '2', '6', '', '', '.1.5.', '', '0', null, 'role_auth', '', 'default');
+INSERT INTO `app_menu` VALUES ('6', '1', '角色管理', '角色管理', 'menu_role_manager', '1', '', '2', '3', '', '', '.1.6.', '', '0', '0', 'role_manager', '', '');
+INSERT INTO `app_menu` VALUES ('7', '1', '用户管理', '用户管理', 'menu_user_manager', '1', '', '2', '5', '', '', '.1.7.', '', '0', null, 'user_list', '', 'default');
+INSERT INTO `app_menu` VALUES ('8', '1', '配置业务字典', '配置业务字典', 'menu_dict_manager', '1', '', '2', '4', '', '', '.1.51.', '', '0', null, 'dict_manager', '', 'default');
+INSERT INTO `app_menu` VALUES ('9', '', '建模', '建模', 'model', '0', null, '1', '2', 'icon-jianmoguanli', null, '.9.', '1', '13', '0', '', null, null);
+INSERT INTO `app_menu` VALUES ('10', '', '报表', '报表', 'report', '0', null, '1', '5', 'icon-baobiaoguanli', null, '.10.', '1', '11', '0', '', null, null);
+INSERT INTO `app_menu` VALUES ('11', '', '监控', '监控', 'monitor', '0', null, '1', '3', 'icon-jiankongguanli', null, '.11.', '1', '10', '0', '', null, null);
+INSERT INTO `app_menu` VALUES ('14', '9', '终端管理', '终端管理', 'terminalManage', '1', null, '2', '2', '', null, '.9.14.', '1', '0', '0', 'device_list', null, null);
+INSERT INTO `app_menu` VALUES ('15', '9', '设备管理', '设备管理', 'assetsManage', '1', null, '2', '3', '', null, '.9.15.', '1', '0', '0', 'equipment_list', null, null);
+INSERT INTO `app_menu` VALUES ('17', '10', '下料报表', '下料报表', 'blankingReport', '1', '', '2', '2', '', '', '.10.17.', '1', '0', '0', 'blanking_list', '', '');
+INSERT INTO `app_menu` VALUES ('18', '10', '生产过程异常报表', '生产过程异常报表', 'abnProcessReport', '1', '', '2', '3', '', '', '.10.18.', '1', '0', '0', 'abn_pro_prcs_list', '', '');
+INSERT INTO `app_menu` VALUES ('19', '10', 'RFID读取率报表', 'RFID读取率报表', 'RFIDReport', '1', '', '2', '4', '', '', '.10.19.', '1', '0', '0', 'rfid_read_list', '', '');
+INSERT INTO `app_menu` VALUES ('37', '10', '上料报表', '上料报表', 'feedingReport', '1', '', '2', '1', '', '', '.10.37.', '1', '0', '0', 'feeding_list', '', '');
+INSERT INTO `app_menu` VALUES ('38', '', '主页', '主页', 'MainPage', '0', null, '1', '1', '', null, '.38.', '1', '0', '0', '', null, null);
+INSERT INTO `app_menu` VALUES ('39', '11', '终端状态', '终端状态', 'device_status', '1', '', '2', '1', '', '', '.11.39.', '1', '0', '0', 'device_status', '', '');
+INSERT INTO `app_menu` VALUES ('40', '11', '软件运行状态', '软件运行状态', 'software_runtime_status', '1', '', '2', '2', '', '', '.11.40.', '1', '0', '0', 'software_runtime_status', '', '');
+INSERT INTO `app_menu` VALUES ('41', '11', '设备接入状态', '设备接入状态', 'equipment_access _status', '1', '', '2', '3', '', '', '.11.41.', '1', '0', '0', 'equipment_access _status', '', '');
+INSERT INTO `app_menu` VALUES ('42', '11', '终端异常告警', '终端异常告警', 'device_abnormal_warn', '1', '', '2', '4', '', '', '.11.42.', '1', '0', '0', 'device_abnormal_warn', '', '');
+INSERT INTO `app_menu` VALUES ('46', '', '版本', '版本', 'VERSION', '0', null, '1', '2', 'icon-banbenguanli', null, '.46.', '1', '4', '0', '', null, null);
+INSERT INTO `app_menu` VALUES ('48', '46', '升级记录', '升级记录', 'UpdateRecord', '1', null, '2', '2', '', null, '.46.48.', '1', '0', '0', 'device_upgrade_list', null, null);
+INSERT INTO `app_menu` VALUES ('49', '46', '回退记录', '回退记录', 'RollbackRecord', '1', null, '2', '3', '', null, '.46.49.', '1', '0', '0', 'device_rollback_list', null, null);
+INSERT INTO `app_menu` VALUES ('54', '', '基础数据', '基础', 'Basic_data', '0', null, '1', '9', 'icon-jichushuju', null, '.54.', '1', '8', '0', '', null, null);
+INSERT INTO `app_menu` VALUES ('55', '54', '接入点管理', '接入点管理', 'AccessPoint_menu', '1', null, '2', '1', '', null, '.54.55.', '1', '0', '0', 'accPointRes_list', null, null);
+INSERT INTO `app_menu` VALUES ('56', '54', '基地管理', '基地管理', 'Base_data', '1', null, '2', '2', '', null, '.54.56.', '1', '0', '0', 'factory_manage', null, null);
+INSERT INTO `app_menu` VALUES ('57', '54', '设备类型管理', '设备类型管理', 'Device_Type', '1', null, '2', '3', '', null, '.54.57.', '1', '0', '0', 'equipType_list', null, null);
+INSERT INTO `app_menu` VALUES ('60', '', '日志', '日志', 'Log', '0', null, '1', '4', 'icon-rizhiguanli', null, '.60.', '1', '8', '0', '', null, null);
+INSERT INTO `app_menu` VALUES ('61', '60', '接口日志', '接口日志', 'APILog', '1', null, '2', '1', '', null, '.60.61.', '1', '0', '0', 'interface_log_list', null, null);
+INSERT INTO `app_menu` VALUES ('62', '60', '操作日志', '操作日志', 'Operate', '1', null, '2', '2', '', null, '.60.62.', '1', '0', '0', 'operation_log_list', null, null);
+INSERT INTO `app_menu` VALUES ('63', '60', '设备交互日志', '设备交互日志', 'DeviceExchangeLog', '1', null, '2', '3', '', null, '.60.63.', '1', '0', '0', 'device_exchange_log_list', null, null);
+INSERT INTO `app_menu` VALUES ('64', '46', '更新管理', '更新管理', 'UpdatePackage', '1', null, '2', '1', '', null, '.46.64.', '1', '0', '0', 'update_package_manager', null, null);
+INSERT INTO `app_menu` VALUES ('65', '54', '预警规则', '预警规则', 'Alarm_Rule', '1', null, '2', '4', '', null, '.54.65.', '1', '0', '0', 'alarm_rule_list', null, null);
+INSERT INTO `app_menu` VALUES ('66', '54', '预警事件', '预警事件', 'Alarm_Event', '1', null, '2', '5', '', null, '.54.66.', '1', '0', '0', 'alarm_event_list', null, null);
+INSERT INTO `app_menu` VALUES ('67', '54', '日志删除规则', '日志删除规则', 'Log_Delete_Rule', '1', null, '2', '6', '', null, '.54.67.', '1', '0', '0', 'log_delete_rule_list', null, null);
+INSERT INTO `app_menu` VALUES ('68', '60', '登录日志', '登录日志', 'loginLog', '1', null, '2', '4', '', null, '.60.68.', '1', '0', '0', 'deviceloginLog_query', null, null);
+INSERT INTO `app_menu` VALUES ('69', '60', 'PLC交互日志', 'PLC交互日志', 'plcLog', '1', null, '2', '5', '', null, '.60.69.', '1', '0', '0', 'plc_log_list', null, null);
+INSERT INTO `app_menu` VALUES ('70', '60', 'RFID交互日志', 'RFID交互日志', 'rfidLog', '1', null, '2', '6', '', null, '.60.70.', '1', '0', '0', 'rfid_log_list', null, null);
+INSERT INTO `app_menu` VALUES ('71', '60', 'MES交互日志', 'MES交互日志', 'mesLog', '1', null, '2', '7', '', null, '.60.71.', '1', '0', '0', 'mes_log_list', null, null);
+INSERT INTO `app_menu` VALUES ('72', '60', '异常日志', '异常日志', 'abnLog', '1', null, '2', '8', '', null, '.60.72.', '1', '0', '0', 'abn_log_list', null, null);
+INSERT INTO `app_menu` VALUES ('73', '54', '系统文件', '系统文件', 'SystemFile', '1', null, '2', '7', '', null, '.54.73.', '1', '0', '0', 'about_system', null, null);
+INSERT INTO `app_menu` VALUES ('74', '1', '组织管理', '组织管理', 'organize', '1', null, '2', '1', '', null, '.1.74.', '1', '0', '0', 'organize', null, null);
+INSERT INTO `app_menu` VALUES ('75', '10', '上下料卷径记录报表', '上下料卷径记录报表', 'CoilDiameterRecord', '1', null, '2', '5', '', null, '.10.75.', '1', '0', '0', 'CoilDiameterRecord', null, null);
+INSERT INTO `app_menu` VALUES ('76', '10', '防串读记录报表', '防串读记录报表', 'VerifyUnusual', '1', null, '2', '6', '', null, '.10.76.', '1', '0', '0', 'VerifyUnusual', null, null);
 
 -- 编码规则数据
 INSERT INTO `base_coding_serialnumber` VALUES ('1', 'gxCod', '4', '1', '24', '备注', 'gxCod', '更新包单号', '{N}', 'WFprocess', 'GX-{Y}{M}{D}-');

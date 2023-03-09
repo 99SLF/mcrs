@@ -31,7 +31,7 @@
 		right: 95px;
 	}
 	.layadmin-pagetabs, .layui-layout-admin .layui-body, .layui-layout-admin .layui-footer, .layui-layout-admin .layui-layout-left {
-		left: 155px;
+		left: 160px;
 	}
 	.layadmin-pagetabs .layui-icon-prev {
 		left: 5px;
