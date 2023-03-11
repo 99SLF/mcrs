@@ -334,7 +334,8 @@
             minWidth: 150,
             hide: isHidden("alarmEventTitle"),
             templet: function (d) {
-                if (d.alarmEventTitle == "正常") {
+                if(d.alarmEventTitle == null){return ""}
+                else if (d.alarmEventTitle == "正常") {
                     return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + "正常" + '</span>';
                 }else {
                     return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + d.alarmEventTitle + '</span>';
@@ -350,7 +351,9 @@
             minWidth: 150,
             templet: function (d) {
               var alarmType =  layui.admin.getDictText("WRANING_TYPE", d.alarmType);
-                if (d.alarmType == "103") {
+              if(d.alarmType==null){
+                  return "";
+              }else if (d.alarmType == "103") {
                     return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + alarmType + '</span>';
                 }else {
                     return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + alarmType + '</span>';

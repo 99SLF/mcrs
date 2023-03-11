@@ -361,6 +361,8 @@
                 } else if (d.deviceSoftwareStatus == "102") {
                     return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + deviceSoftwareStatus + '</span>';
 
+                }else{
+                    return "";
                 }
             }
         }, {
@@ -378,6 +380,8 @@
                 } else if (d.accessStatus == "102") {
                     return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + accessStatus + '</span>';
 
+                }else{
+                    return "";
                 }
             }
         }, {
