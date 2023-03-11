@@ -10,6 +10,7 @@ import com.zimax.mcrs.device.pojo.*;
 import com.zimax.mcrs.log.pojo.OperationLog;
 import com.zimax.mcrs.log.service.OperationLogService;
 import com.zimax.mcrs.monitor.mapper.AccessMonitorMapper;
+import com.zimax.mcrs.update.mapper.ConfigurationFileMapper;
 import com.zimax.mcrs.update.pojo.UpdateUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,8 @@ public class DeviceService {
 
     @Autowired
     private OperationLogService operationLogService;
+    @Autowired
+    private ConfigurationFileMapper configurationFileMapper;
 
     /**
      * 查询所有终端信息
@@ -172,6 +175,7 @@ public class DeviceService {
             String appId= deviceMapper.getDeviceName(a).getAPPId();
             //通过终端名称修改实时终端监控表
             accessMonitorMapper.deleteDeviceStatus(appId);
+            configurationFileMapper.delConfigurationFileByAppId(appId);
             Device device = selectDevice(a);
             addOperationLog(device, 3);
         }

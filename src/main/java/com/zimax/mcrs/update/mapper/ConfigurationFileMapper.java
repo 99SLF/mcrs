@@ -22,4 +22,5 @@ public interface ConfigurationFileMapper {
     int count(String appId);
 
     void delConfigurationFile(ConfigurationFile configurationFile);
+    void delConfigurationFileByAppId (String appId);
 }

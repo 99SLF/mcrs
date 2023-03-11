@@ -102,4 +102,7 @@ public class UpdateConfigService {
     public void delConfigurationFile(ConfigurationFile configurationFile) {
         configurationFileMapper.delConfigurationFile(configurationFile);
     }
+    public void delConfigurationFileByAppId(String appId) {
+        configurationFileMapper.delConfigurationFileByAppId(appId);
+    }
 }

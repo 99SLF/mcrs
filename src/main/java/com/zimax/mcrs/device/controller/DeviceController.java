@@ -10,6 +10,7 @@ import com.zimax.mcrs.device.service.DeviceService;
 import com.zimax.mcrs.log.service.OperationLogService;
 import com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus;
 import com.zimax.mcrs.monitor.service.AccessMonitorService;
+import com.zimax.mcrs.update.service.UpdateConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,9 @@ public class DeviceController {
     //监控
     @Autowired
     private AccessMonitorService accessMonitorService;
+    //删除配置文件
+    @Autowired
+    private UpdateConfigService updateConfigService;
 
     /**
      * 注册终端
@@ -74,6 +78,7 @@ public class DeviceController {
         //通过终端名称修改实时终端监控表
         accessMonitorService.deleteDeviceStatus(appId);
         deviceService.logoutDevice(deviceId);
+        updateConfigService.delConfigurationFileByAppId(appId);
         return Result.success();
     }
 
