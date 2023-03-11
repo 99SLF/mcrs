@@ -9,6 +9,7 @@ import com.zimax.mcrs.device.mapper.DeviceMapper;
 import com.zimax.mcrs.device.pojo.*;
 import com.zimax.mcrs.log.pojo.OperationLog;
 import com.zimax.mcrs.log.service.OperationLogService;
+import com.zimax.mcrs.monitor.mapper.AccessMonitorMapper;
 import com.zimax.mcrs.update.pojo.UpdateUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,8 @@ public class DeviceService {
 
     @Autowired
     private DeviceUpgradeService deviceUpgradeService;
+    @Autowired
+    private AccessMonitorMapper accessMonitorMapper;
 
     @Autowired
     private OperationLogService operationLogService;
@@ -100,16 +103,18 @@ public class DeviceService {
 //        device.setAPPId(encrypt(device.getAPPId()));
         deviceMapper.registrationDevice(device);
         //注册完成后将本次注册的信息添加至升级信息
-        DeviceUpgrade deviceUpgrade = new DeviceUpgrade();
-        IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
-        deviceUpgrade.setDeviceId(device.getDeviceId());
-        deviceUpgrade.setEquipmentInt(device.getEquipmentInt());
-        deviceUpgrade.setUploadId(deviceMapper.getUpgradeId(device.getVersion(),device.getDeviceSoftwareType()));
-        deviceUpgrade.setUpgradeStatus("100");
-        deviceUpgrade.setUpgradeBeforeVersion(device.getVersion());
-        deviceUpgrade.setVersionUpdater(userObject.getUserName());
-        deviceUpgrade.setVersionUpdateTime(new Date());
-        deviceUpgradeService.addDeviceUpgrade(deviceUpgrade);
+        if("102".equals(device.getIsUpdate())){
+            DeviceUpgrade deviceUpgrade = new DeviceUpgrade();
+            IUserObject userObject = DataContextManager.current().getMUODataContext().getUserObject();
+            deviceUpgrade.setDeviceId(device.getDeviceId());
+            deviceUpgrade.setEquipmentInt(device.getEquipmentInt());
+            deviceUpgrade.setUploadId(deviceMapper.getUpgradeId(device.getVersion(),device.getDeviceSoftwareType()));
+            deviceUpgrade.setUpgradeStatus("100");
+            deviceUpgrade.setUpgradeBeforeVersion(device.getVersion());
+            deviceUpgrade.setVersionUpdater(userObject.getUserName());
+            deviceUpgrade.setVersionUpdateTime(new Date());
+            deviceUpgradeService.addDeviceUpgrade(deviceUpgrade);
+        }
         //调用方法生成接口日志
         addOperationLog(device, 2);
     }
@@ -163,6 +168,10 @@ public class DeviceService {
      */
     public void deleteDevices(List<Integer> deviceId) {
         for (Integer a:deviceId){
+            //根据终端主键获取终端信息（名称）
+            String appId= deviceMapper.getDeviceName(a).getAPPId();
+            //通过终端名称修改实时终端监控表
+            accessMonitorMapper.deleteDeviceStatus(appId);
             Device device = selectDevice(a);
             addOperationLog(device, 3);
         }

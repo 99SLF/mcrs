@@ -75,6 +75,15 @@
                 </select>
             </div>
         </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><span style="color:red">*</span>是否版本初始化:</label>
+            <div class="layui-input-block">
+                <select name="isUpdate" id="isUpdate" lay-filter="" type="select" lay-verify="required">
+                    <option value="101">否</option>
+                    <option value="102">是</option>
+                </select>
+            </div>
+        </div>
     </div>
     <div class="layui-form-item layui-row layui-col-space6">
         <label class="layui-form-label"><span style="color:red">*</span>接入方式:</label>

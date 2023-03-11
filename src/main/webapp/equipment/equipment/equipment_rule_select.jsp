@@ -168,7 +168,7 @@
             };
         },
         cols: [[{
-            type: "checkbox"
+            type: "radio"
         }, {
             title: "序号",
             type: "numbers"

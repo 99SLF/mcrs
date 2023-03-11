@@ -86,12 +86,6 @@
 		</div>
 	</div>
 	<div class="layui-form-item">
-		<label class="layui-form-label">程序安装路径：</label>
-		<div class="layui-input-block">
-			<input type="text"  class="layui-input" name="programInstallationPath" autocomplete="off" />
-		</div>
-	</div>
-	<div class="layui-form-item">
 		<label class="layui-form-label">创建时间：</label>
 		<div class="layui-input-block">
 			<input id="createTime" type="text" class="layui-input" name="createTime" autocomplete="off" />
@@ -171,7 +165,6 @@
             version: formData.version,
             needUpdate: formData.needUpdate,
             registerStatus: formData.registerStatus,
-            programInstallationPath: formData.programInstallationPath,
             createTime: formData.createTime ? util.toDateString(formData.createTime, "yyyy-MM-dd") : ""
         });
 	}
@@ -184,7 +177,6 @@
 			version: "",
 			needUpdate: "",
 			registerStatus: "",
-			programInstallationPath: "",
 			createTime: ""
 		}
 		win.setFormData(formData);

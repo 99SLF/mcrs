@@ -92,4 +92,10 @@ public class Device{
      */
     private String executorInstallationPath;
 
+    /**
+     * 是否版本初始化
+     */
+    @TableField(exist = false)
+    private String isUpdate;
+
 }
