@@ -328,7 +328,7 @@
             hide: isHidden("updatedTime"),
             minWidth: 200,
             templet:function(d){
-                return util.toDateString(d.updatedTime,'yyyy-MM-dd HH:mm:ss');
+                return d.updatedTime==null?"":util.toDateString(d.updatedTime,'yyyy-MM-dd HH:mm:ss');
             }
         }]]
     });

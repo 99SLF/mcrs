@@ -376,7 +376,7 @@
 			align: "center",
 			hide: isHidden("createdTime"),
 			templet: function(d) {
-				return util.toDateString(d.createdTime, "yyyy-MM-dd HH:mm:ss");
+				return d.createdTime ==null?"":util.toDateString(d.createdTime, "yyyy-MM-dd HH:mm:ss");
 			},
 			minWidth: 160
 		}, {
@@ -391,7 +391,7 @@
 			align: "center",
 			hide: isHidden("updatedTime"),
 			templet: function(d) {
-				return util.toDateString(d.updatedTime, "yyyy-MM-dd HH:mm:ss");
+				return d.updatedTime==null?"":util.toDateString(d.updatedTime, "yyyy-MM-dd HH:mm:ss");
 			},
 			minWidth: 160
 		}]]
