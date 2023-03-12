@@ -66,7 +66,7 @@
             <input type="text" class="layui-input" name="processLot" autocomplete="off" />
         </div>
     </div>
-    <div class="layui-form-item">
+    <div class="layui-form-init">
         <label class="layui-form-label">下料绑定SFC编码：</label>
         <div class="layui-input-block" >
             <input type="text" class="layui-input" name="sfc" autocomplete="off" />

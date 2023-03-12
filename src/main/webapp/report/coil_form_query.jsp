@@ -87,7 +87,7 @@
             </select>
         </div>
     </div>
-    <div class="layui-form-item">
+    <div class="layui-form-init">
         <label class="layui-form-label">放卷物料是否消耗完成：</label>
         <div class="layui-input-block" >
             <select name="unwindIsOver" id="unwindIsOver" lay-filter="unwindIsOver" type="select">

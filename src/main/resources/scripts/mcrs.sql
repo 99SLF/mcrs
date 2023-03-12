@@ -654,6 +654,7 @@ CREATE TABLE `rep_abn_prod_prcs`
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT;
 
+
 -- ----------------------------
 -- Table structure for rep_blanking
 -- ----------------------------
@@ -661,22 +662,23 @@ DROP TABLE IF EXISTS `rep_blanking`;
 CREATE TABLE `rep_blanking`
 (
     `id`               int(11) NOT NULL AUTO_INCREMENT COMMENT '下料报表主键',
-    `operation`        text COMMENT '工位',
-    `resource`         text COMMENT '设备资源号',
-    `axis`             text COMMENT '下料轴',
-    `sfcpre`           text COMMENT '来料SFC号',
-    `processLot`       text COMMENT '载具号',
-    `sfc`              text COMMENT '下料绑定的SFC编码',
-    `qty`              text COMMENT 'EA数',
-    `metre`            text COMMENT '收卷米数',
-    `diamRealityValue` tinytext COMMENT '上料卷径',
-    `createdBy`        text COMMENT '创建人',
-    `createdTime`      datetime DEFAULT NULL COMMENT '创建时间',
-    `updatedBy`        text COMMENT 'updatedBy',
-    `updatedTime`      datetime DEFAULT NULL COMMENT '更新时间',
-    PRIMARY KEY (`id`)
+    `operation`        varchar(32) DEFAULT NULL COMMENT '工位',
+    `resource`         varchar(32) DEFAULT NULL COMMENT '设备资源号',
+    `axis`             varchar(32) DEFAULT NULL COMMENT '下料轴',
+    `sfcpre`           varchar(32) DEFAULT NULL COMMENT '来料SFC号',
+    `processLot`       varchar(32) DEFAULT NULL COMMENT '载具号',
+    `sfc`              varchar(32) DEFAULT NULL COMMENT '下料绑定的SFC编码',
+    `qty`              varchar(32) DEFAULT NULL COMMENT 'EA数',
+    `metre`            varchar(32) DEFAULT NULL COMMENT '收卷米数',
+    `diamRealityValue` varchar(32) DEFAULT NULL COMMENT '上料卷径',
+    `createdBy`        varchar(32) DEFAULT NULL COMMENT '创建人',
+    `createdTime`      datetime    DEFAULT NULL COMMENT '创建时间',
+    `updatedBy`        varchar(32) DEFAULT NULL COMMENT '更新人',
+    `updatedTime`      datetime    DEFAULT NULL COMMENT '更新时间',
+    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8
+  ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for rep_coildiameterrecord
@@ -685,20 +687,21 @@ DROP TABLE IF EXISTS `rep_coildiameterrecord`;
 CREATE TABLE `rep_coildiameterrecord`
 (
     `id`                int(11) NOT NULL AUTO_INCREMENT COMMENT '上下料卷径记录表主键',
-    `resource`          text COMMENT '设备资源号',
-    `sfcPreData`        text COMMENT '放卷SFC',
-    `uDiamRealityValue` text COMMENT '放卷卷径',
-    `rAxisName`         text COMMENT '收卷轴名称',
-    `rProcessLotPre`    text COMMENT '收卷载具号',
-    `sfcData`           text COMMENT '收卷SFC',
-    `rDiamRealityValue` text COMMENT '收卷卷径',
-    `isLastVolume`      int(11)  DEFAULT NULL COMMENT 'isLastVolume',
-    `unwindIsOver`      int(11)  DEFAULT NULL COMMENT '放卷物料是否消耗完成',
-    `remark`            text COMMENT '放卷异常信息记录',
-    `updatedTime`       datetime DEFAULT NULL COMMENT '更新时间',
-    PRIMARY KEY (`id`)
+    `resource`          varchar(32) DEFAULT NULL COMMENT '设备资源号',
+    `sfcPreData`        varchar(32) DEFAULT NULL COMMENT '放卷SFC',
+    `uDiamRealityValue` varchar(32) DEFAULT NULL COMMENT '放卷卷径',
+    `rAxisName`         varchar(32) DEFAULT NULL COMMENT '收卷轴名称',
+    `rProcessLotPre`    varchar(32) DEFAULT NULL COMMENT '收卷载具号',
+    `sfcData`           varchar(32) DEFAULT NULL COMMENT '收卷SFC',
+    `rDiamRealityValue` varchar(32) DEFAULT NULL COMMENT '收卷卷径',
+    `isLastVolume`      int(11)     DEFAULT NULL COMMENT 'isLastVolume',
+    `unwindIsOver`      int(11)     DEFAULT NULL COMMENT '放卷物料是否消耗完成',
+    `remark`            varchar(32) DEFAULT NULL COMMENT '放卷异常信息记录',
+    `updatedTime`       datetime    DEFAULT NULL COMMENT '更新时间',
+    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8
+  ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for rep_feeding
@@ -707,25 +710,26 @@ DROP TABLE IF EXISTS `rep_feeding`;
 CREATE TABLE `rep_feeding`
 (
     `id`               int(11) NOT NULL AUTO_INCREMENT COMMENT '上料报表主键',
-    `operation`        text COMMENT '工位',
-    `resource`         text COMMENT '设备资源号',
-    `actionType`       int(11)  DEFAULT NULL COMMENT '动作类型',
-    `axis`             text COMMENT '上料轴',
-    `sfcPre`           text COMMENT '来料SFC号',
-    `processLotPre`    text COMMENT '载具号',
-    `qty`              text COMMENT '上料数量',
-    `sfc`              text COMMENT '校验MES返回的新SFC号',
-    `isFinish`         int(1)   DEFAULT NULL COMMENT '放卷是否全部完工',
-    `diamRealityValue` tinytext COMMENT '上料卷径',
-    `downInfo`         tinytext COMMENT '卸滚筒信息',
-    `revision`         tinytext COMMENT '乐观锁',
-    `createdBy`        tinytext COMMENT '创建人',
-    `createdTime`      datetime DEFAULT NULL COMMENT '创建时间',
-    `updatedBy`        text COMMENT '更新人',
-    `updatedTime`      datetime DEFAULT NULL COMMENT '更新时间',
-    PRIMARY KEY (`id`)
+    `operation`        varchar(32) DEFAULT NULL COMMENT '工位',
+    `resource`         varchar(32) DEFAULT NULL COMMENT '设备资源号',
+    `actionType`       int(11)     DEFAULT NULL COMMENT '动作类型',
+    `axis`             varchar(32) DEFAULT NULL COMMENT '上料轴',
+    `sfcPre`           varchar(32) DEFAULT NULL COMMENT '来料SFC号',
+    `processLotPre`    varchar(32) DEFAULT NULL COMMENT '载具号',
+    `qty`              varchar(32) DEFAULT NULL COMMENT '上料数量',
+    `sfc`              varchar(32) DEFAULT NULL COMMENT '校验MES返回的新SFC号',
+    `isFinish`         int(1)      DEFAULT NULL COMMENT '放卷是否全部完工',
+    `diamRealityValue` varchar(32) DEFAULT NULL COMMENT '上料卷径',
+    `downInfo`         varchar(32) DEFAULT NULL COMMENT '卸滚筒信息',
+    `revision`         varchar(32) DEFAULT NULL COMMENT '乐观锁',
+    `createdBy`        varchar(32) DEFAULT NULL COMMENT '创建人',
+    `createdTime`      datetime    DEFAULT NULL COMMENT '创建时间',
+    `updatedBy`        varchar(32) DEFAULT NULL COMMENT '更新人',
+    `updatedTime`      datetime    DEFAULT NULL COMMENT '更新时间',
+    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8
+  ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for rep_rfid
@@ -734,16 +738,17 @@ DROP TABLE IF EXISTS `rep_rfid`;
 CREATE TABLE `rep_rfid`
 (
     `id`          int(11) NOT NULL AUTO_INCREMENT COMMENT 'rfid读取率报表主键',
-    `epcid`       text COMMENT '载具号',
-    `readNum`     int(11)  DEFAULT NULL COMMENT '读取次数',
-    `reader`      text COMMENT 'RFID读写器',
-    `antenna`     text COMMENT 'RFID天线',
-    `dBm`         text COMMENT '天线增益',
-    `rssi`        text COMMENT 'RSSI',
-    `updatedTime` datetime DEFAULT NULL COMMENT '更新时间',
-    PRIMARY KEY (`id`)
+    `epcid`       varchar(32) DEFAULT NULL COMMENT '载具号',
+    `readNum`     int(11)     DEFAULT NULL COMMENT '读取次数',
+    `reader`      varchar(32) DEFAULT NULL COMMENT 'RFID读写器',
+    `antenna`     varchar(32) DEFAULT NULL COMMENT 'RFID天线',
+    `dBm`         varchar(32) DEFAULT NULL COMMENT '天线增益',
+    `rssi`        varchar(32) DEFAULT NULL COMMENT 'RSSI',
+    `updatedTime` datetime    DEFAULT NULL COMMENT '更新时间',
+    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8
+  ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for rep_verifyunusual
@@ -752,19 +757,20 @@ DROP TABLE IF EXISTS `rep_verifyunusual`;
 CREATE TABLE `rep_verifyunusual`
 (
     `id`          int(11) NOT NULL AUTO_INCREMENT COMMENT '防串读报表主键',
-    `resource`    text COMMENT '设备资源号',
-    `axisName`    text COMMENT '轴名称',
-    `rfidReader`  text COMMENT '读写器ID',
-    `antenna`     int(11)  DEFAULT NULL COMMENT '天线',
-    `processLot`  text COMMENT '已读取标签值',
-    `tag`         text COMMENT '替换的标签值',
-    `readNum`     int(11)  DEFAULT NULL COMMENT '读取到的次数',
-    `sfcPre`      text COMMENT '生产SFC',
-    `sfc`         text COMMENT '拆分后SFC',
-    `updatedTime` datetime DEFAULT NULL COMMENT '更新时间',
-    PRIMARY KEY (`id`)
+    `resource`    varchar(32) DEFAULT NULL COMMENT '设备资源号',
+    `axisName`    varchar(32) DEFAULT NULL COMMENT '轴名称',
+    `rfidReader`  varchar(32) DEFAULT NULL COMMENT '读写器ID',
+    `antenna`     int(11)     DEFAULT NULL COMMENT '天线',
+    `processLot`  varchar(32) DEFAULT NULL COMMENT '已读取标签值',
+    `tag`         varchar(32) DEFAULT NULL COMMENT '替换的标签值',
+    `readNum`     int(11)     DEFAULT NULL COMMENT '读取到的次数',
+    `sfcPre`      varchar(32) DEFAULT NULL COMMENT '生产SFC',
+    `sfc`         varchar(32) DEFAULT NULL COMMENT '拆分后SFC',
+    `updatedTime` datetime    DEFAULT NULL COMMENT '更新时间',
+    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8
+  ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for system_file

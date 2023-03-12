@@ -243,7 +243,7 @@
 		method: "get",
 		height: "full-" + getFullSize(),
 		page: true,
-		limit: 10,
+		limit: 100,
 		toolbar: "#toolbar",
 		defaultToolbar: [{
 			title: "查询",
@@ -270,7 +270,7 @@
 				}
 			});
 		},
-		limits: [10, 15, 20, 30],
+		limits: [100, 150, 200, 300],
 		parseData: function (res) {
 			return {
 				code: res.code,
@@ -280,10 +280,9 @@
 			};
 		},
 		cols: [[{
-			type: "checkbox"
-		}, {
 			title: "序号",
-			type: "numbers"
+			type: "numbers",
+			width: 100
 		}, {
 			field: "resource",
 			title: "设备资源号",
@@ -300,8 +299,16 @@
 			field: "actionType",
 			title: "动作类型",
 			align: "center",
-			minWidth: 120,
-			hide: isHidden("actionType")
+			minWidth: 100,
+			hide: isHidden("actionType"),
+			templet: function(d) {
+				if (d.isFinish==0) {
+					return "上料";
+				} else if (d.isFinish==1){
+					return "卸料"
+				}
+			}
+
 		}, {
 			field: "axis",
 			title: "上料轴",
@@ -325,7 +332,7 @@
 			title: "上料数量",
 			align: "center",
 			hide: isHidden("qty"),
-			minWidth: 80
+			minWidth: 100
 		},{
 			field: "sfc",
 			title: "MES返回SFC号",
@@ -336,7 +343,7 @@
 			field: "isFinish",
 			title: "是否完工",
 			align: "center",
-			minWidth: 80,
+			minWidth: 100,
 			hide: isHidden("isFinish"),
 			templet: function(d) {
 				if (d.isFinish==0) {
@@ -350,19 +357,19 @@
 			title: "上料卷径",
 			align: "center",
 			hide: isHidden("diamRealityValue"),
-			minWidth: 80
+			minWidth: 100
 		}, {
 			field: "downInfo",
 			title: "卸滚筒信息",
 			align: "center",
 			hide: isHidden("downInfo"),
-			minWidth: 150
+			minWidth: 120
 		}, {
 			field: "createdBy",
 			title: "创建人",
 			align: "center",
 			hide: isHidden("createdBy"),
-			minWidth: 120
+			minWidth: 100
 		}, {
 			field: "createdTime",
 			title: "创建时间",
@@ -371,13 +378,13 @@
 			templet: function(d) {
 				return util.toDateString(d.createdTime, "yyyy-MM-dd HH:mm:ss");
 			},
-			minWidth: 200
+			minWidth: 160
 		}, {
 			field: "updatedBy",
 			title: "更新人",
 			align: "center",
 			hide: isHidden("updatedBy"),
-			minWidth: 120
+			minWidth: 100
 		}, {
 			field: "updatedTime",
 			title: "更新时间",
@@ -386,7 +393,7 @@
 			templet: function(d) {
 				return util.toDateString(d.updatedTime, "yyyy-MM-dd HH:mm:ss");
 			},
-			minWidth: 200
+			minWidth: 160
 		}]]
 	});
 

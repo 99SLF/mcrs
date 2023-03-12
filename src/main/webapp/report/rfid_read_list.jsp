@@ -242,7 +242,7 @@
         method: "get",
         height: "full-" + getFullSize(),
         page: true,
-        limit: 10,
+        limit: 100,
         toolbar: "#toolbar",
         defaultToolbar: [{
             title: "查询",
@@ -269,7 +269,7 @@
                 }
             });
         },
-        limits: [10, 15, 20, 30],
+        limits: [100, 150, 200, 300],
         parseData: function (res) {
             return {
                 code: res.code,
@@ -280,8 +280,6 @@
         },
         //设置表头。值是一个二维数组。方法渲染方式必填
         cols: [[{
-            type: "checkbox"
-        },{
             title: "序号",
             type: "numbers"
         }, {

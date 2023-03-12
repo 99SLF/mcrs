@@ -270,7 +270,7 @@
         method: "get",
         height: "full-" + getFullSize(),
         page: true,
-        limit: 10,
+        limit: 100,
         toolbar: "#toolbar",
         // defaultToolbar: ["filter"],
         defaultToolbar: [{
@@ -300,7 +300,7 @@
                 }
             });
         },
-        limits: [10, 15, 20, 30],
+        limits: [100, 150, 200, 300],
         parseData: function (res) {
             return {
                 code: res.code,
@@ -311,8 +311,6 @@
         },
         //设置表头。值是一个二维数组。方法渲染方式必填
         cols: [[{
-            type: "checkbox"
-        }, {
             title: "序号",
             type: "numbers"
         }, {
@@ -321,33 +319,33 @@
             align: "center",
             // sort: true,
             hide: isHidden("operation"),
-            minWidth: 120
+            minWidth: 100
         }, {
             field: "resource",
             title: "设备资源号",
             align: "center",
             // sort: true,
             hide: isHidden("resource"),
-            minWidth: 150
+            minWidth: 120
         }, {
             //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
             field: "axis",
             title: "下料轴",
             align: "center",
-            minWidth: 150,
+            minWidth: 100,
             hide: isHidden("axis")
         }, {
             field: "sfcpre",
             title: "来料SFC号",
             align: "center",
             hide: isHidden("sfcpre"),
-            minWidth: 150
+            minWidth: 120
         }, {
             field: "processLot",
             title: "载具号",
             align: "center",
             hide: isHidden("processLot"),
-            minWidth: 150
+            minWidth: 120
         }, {
             field: "sfc",
             title: "下料绑定的SFC编码",
@@ -365,26 +363,20 @@
             title: "收卷米数",
             align: "center",
             hide: isHidden("metre"),
-            minWidth: 150
+            minWidth: 120
         }, {
             field: "diamRealityValue",
             title: "上料卷径",
             align: "center",
             hide: isHidden("diamRealityValue"),
-            minWidth: 150
+            minWidth: 120
         }, {
             field: "createdBy",
             title: "创建人",
             align: "center",
             hide: isHidden("createdBy"),
-            minWidth: 150
-        }, {
-            field: "createdBy",
-            title: "创建人",
-            align: "center",
-            hide: isHidden("createdBy"),
-            minWidth: 150
-        }, {
+            minWidth: 100
+        },{
             field: "createdTime",
             title: "创建时间",
             align: "center",
@@ -392,7 +384,7 @@
             templet: function(d) {
                 return util.toDateString(d.createdTime, "yyyy-MM-dd HH:mm:ss");
             },
-            minWidth: 200
+            minWidth: 160
         }, {
             field: "updatedBy",
             title: "更新人",
@@ -407,7 +399,7 @@
             templet: function (d) {
                 return util.toDateString(d.updatedTime, "yyyy-MM-dd HH:mm:ss");
             },
-            minWidth: 200
+            minWidth: 160
         }]]
     });
 

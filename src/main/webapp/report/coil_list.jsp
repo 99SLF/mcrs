@@ -64,6 +64,7 @@
                     <label class="layui-form-label">是否最后一卷：</label>
                     <div class="layui-input-inline">
                         <select name="isLastVolume" id="isLastVolume" lay-filter="isLastVolume" type="select">
+                            <option value="">请选择</option>
                             <option value="0">否</option>
                             <option value="1">是</option>
                         </select>
@@ -245,7 +246,7 @@
         method: "get",
         height: "full-" + getFullSize(),
         page: true,
-        limit: 10,
+        limit: 100,
         toolbar: "#toolbar",
         defaultToolbar: [{
             title: "查询",
@@ -272,7 +273,7 @@
                 }
             });
         },
-        limits: [10, 15, 20, 30],
+        limits: [100, 150, 200, 300],
         parseData: function (res) {
             return {
                 code: res.code,
@@ -281,9 +282,7 @@
                 data: res.data
             };
         },
-        cols: [[{
-            type: "checkbox"
-        }, {
+        cols: [[ {
             title: "序号",
             type: "numbers"
         }, {
@@ -332,7 +331,7 @@
             field: "isLastVolume",
             title: "是否最后一卷",
             align: "center",
-            minWidth: 80,
+            minWidth: 120,
             hide: isHidden("isLastVolume"),
             templet: function (d) {
                 if (d.isLastVolume == 0) {
@@ -345,7 +344,7 @@
             field: "unwindIsOver",
             title: "放卷物料是否消耗完成",
             align: "center",
-            minWidth: 80,
+            minWidth: 180,
             hide: isHidden("unwindIsOver"),
             templet: function (d) {
                 if (d.unwindIsOver == 0) {

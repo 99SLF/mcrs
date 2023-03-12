@@ -51,7 +51,10 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">动作类型：</label>
 		<div class="layui-input-block">
-			<input type="text" class="layui-input" name="actionType" autocomplete="off" />
+			<select name="actionType" id="actionType" lay-filter="isFinish" type="select">
+				<option value="0">上料</option>
+				<option value="1">卸料</option>
+			</select>
 		</div>
 	</div>
 	<div class="layui-form-item">
