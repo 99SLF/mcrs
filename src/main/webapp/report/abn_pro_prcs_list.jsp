@@ -141,6 +141,9 @@
 
     function reloadData(formData) {
         table.reload("LAY-app-abn-list-reload", {
+            page: {
+                curr: 1
+            },
             where: formData
         });
         formReder();

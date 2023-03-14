@@ -72,7 +72,10 @@
         };
         table.reload("LAY-app-menu-list", {
             url: "<%= request.getContextPath() %>/accPointResController/query",
-            where: field
+            where: field,
+            page: {
+                curr: 1
+            }
         });
     });
 

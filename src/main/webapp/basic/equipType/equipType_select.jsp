@@ -80,6 +80,9 @@
             "isEquipType": "1"
         };
         table.reload("LAY-app-menu-list", {
+            page: {
+                curr: 1
+            },
             url: "<%= request.getContextPath() %>/EquipController/query",
             where: field
         });

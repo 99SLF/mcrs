@@ -156,6 +156,9 @@
 
     function reloadData(formData) {
         table.reload("LAY-app-blanking-list-reload", {
+            page: {
+                curr: 1
+            },
             where: formData
         });
         formReder();

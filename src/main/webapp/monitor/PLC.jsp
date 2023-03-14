@@ -133,7 +133,10 @@
     function reloadData(formData) {
         //读取表格数据 表格id
         table.reload("LAY-app-PLC-list-reload", {
-            where: formData
+            where: formData,
+            page: {
+                curr: 1
+            }
         });
         formReder();
         if (focusName) {

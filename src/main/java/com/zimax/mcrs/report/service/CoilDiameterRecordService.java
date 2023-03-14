@@ -42,7 +42,7 @@ public class CoilDiameterRecordService {
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
             map.put("order", "desc");
-            map.put("field", "updatedTime");
+            map.put("field", "id");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));

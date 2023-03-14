@@ -86,7 +86,10 @@
         };
         table.reload("LAY-app-device-list", {
             url: "<%= request.getContextPath() %>/equipment/device/query",
-            where: field
+            where: field,
+            page: {
+                curr: 1
+            }
         });
     });
 
