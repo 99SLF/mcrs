@@ -469,7 +469,10 @@ layui.define(["admin"], function(exports) {
 			form.on("submit(LAY-app-rolelist-search)", function(data) {
 				var field = data.field;
 				table.reload("LAY-app-role-list", {
-					where: field
+					where: field,
+					page: {
+						curr: 1
+					}
 				});
 				formReder();
 				form.val("layuiadmin-feeding-form", field);

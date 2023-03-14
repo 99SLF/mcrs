@@ -63,7 +63,10 @@
             where:{
                 appId: appId
             },
-            url: "<%=request.getContextPath() %>/updateConfig/query"
+            url: "<%=request.getContextPath() %>/updateConfig/query",
+            page: {
+                curr: 1
+            }
         })
     }
 

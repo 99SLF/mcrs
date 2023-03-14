@@ -133,6 +133,9 @@
 
     function reloadData(formData) {
         table.reload("LAY-app-rfid-list-reload", {
+            page: {
+                curr: 1
+            },
             where: formData
         });
         formReder();

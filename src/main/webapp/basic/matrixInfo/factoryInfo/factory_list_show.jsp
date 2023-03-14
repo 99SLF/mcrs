@@ -83,6 +83,9 @@
     form.on("submit(LAY-app-devicelist-search)", function (data) {
         var field = data.field;
         table.reload("LAY-app-device-list-reload", {
+            page: {
+                curr: 1
+            },
             where: field
         });
     });

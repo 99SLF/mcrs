@@ -151,6 +151,9 @@
 
         //读取表格数据 表格id LAY-app-update_package-list-reload
         table.reload("LAY-app-equipmentType-list-reload", {
+            page: {
+                curr: 1
+            },
             where: formData
         });
         formReder();

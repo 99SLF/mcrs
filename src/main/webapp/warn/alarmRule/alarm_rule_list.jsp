@@ -249,7 +249,10 @@
 
     function reloadData(formData) {
         table.reload("LAY-app-alarmRule-list-reload", {
-            where: formData
+            where: formData,
+            page: {
+                curr: 1
+            }
         });
         formReder();
         if (focusName) {

@@ -113,6 +113,9 @@
  			url: "<%=request.getContextPath() %>/serialnumber/query",
 			where: dataJson,
 			method:"GET",
+			page: {
+				curr: 1
+			}
 		});			
 	});
 	
