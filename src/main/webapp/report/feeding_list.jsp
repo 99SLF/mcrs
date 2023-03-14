@@ -302,9 +302,9 @@
 			minWidth: 100,
 			hide: isHidden("actionType"),
 			templet: function(d) {
-				if (d.isFinish==0) {
+				if (d.actionType==1) {
 					return "上料";
-				} else if (d.isFinish==1){
+				} else if (d.actionType==2){
 					return "卸料"
 				}
 			}
@@ -350,7 +350,9 @@
 					return "否";
 				} else if (d.isFinish==1){
 					return "是"
-			}
+				}else{
+					return "";
+				}
 			}
 		}, {
 			field: "diamRealityValue",

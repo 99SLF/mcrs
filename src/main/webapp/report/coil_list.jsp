@@ -338,6 +338,8 @@
                     return "否";
                 } else if (d.isLastVolume == 1) {
                     return "是"
+                }else{
+                    return "";
                 }
             }
         }, {
@@ -351,6 +353,8 @@
                     return "否";
                 } else if (d.unwindIsOver == 1) {
                     return "是"
+                }else{
+                    return "";
                 }
             }
         }, {

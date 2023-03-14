@@ -6,7 +6,7 @@
     <!--添加下料报表-->
     <insert id="addBlanking" parameterType="com.zimax.mcrs.report.pojo.Blanking">
         insert into rep_blanking
-        values (#{id},#{operation},#{resource},#{axis},#{sfc},#{processLot},#{sfc},#{qty},#{metre}, #{diamRealityValue}, #{createdBy}, #{createdTime},#{updatedBy}, #{updatedTime})
+        values (#{id},#{operation},#{resource},#{axis},#{sfcpre},#{processLot},#{sfc},#{qty},#{metre}, #{diamRealityValue}, #{createdBy}, #{createdTime},#{updatedBy}, #{updatedTime})
     </insert>
 
     <!--    查询记录数-->
