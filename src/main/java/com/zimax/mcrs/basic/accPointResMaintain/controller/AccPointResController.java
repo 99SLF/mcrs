@@ -1,6 +1,5 @@
 package com.zimax.mcrs.basic.accPointResMaintain.controller;
 
-import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes;
 import com.zimax.mcrs.basic.accPointResMaintain.service.AccPointResService;
 import com.zimax.mcrs.config.Result;
@@ -122,5 +121,44 @@ public class AccPointResController {
         accPointResService.enable(accPointResIds);
         return Result.success();
 
+    }
+
+    /**
+     * 接入点新增的唯一性校验
+     *
+     * @param processCode 接入点主键
+     */
+    @GetMapping("/check/ProcessCode")
+    public Result<?> checkProcessCode(@RequestParam("processCode") String processCode) {
+
+        //通过接入点代码查询出工序id
+        int processId =accPointResService.getProcess(processCode).getProcessId();
+       //通过工序代码查询是否有当前的一条数据
+        if(accPointResService.checkProcessCode(processId) > 0){
+            return Result.success("1","该工序代码已经存在");
+        }
+        return Result.success();
+    }
+
+    /**
+     * 接入点修改的唯一性校验
+     *
+     * @param processCode 接入点主键
+     */
+    @GetMapping("/check/ProcessCode/update")
+    public Result<?> checkProcessCodeUpdate(@RequestParam("processCode") String processCode,@RequestParam("processId") Integer processId) {
+
+        //通过接入点代码查询出工序id
+        int processIdNew =accPointResService.getProcess(processCode).getProcessId();
+        int processIdOld =processId;
+
+        //通过原先的工序id查询出接入点的id
+         int accPointResId =accPointResService.getAccPointResIdOld(processIdOld).getAccPointResId();
+
+        //通过工序代码查询是否有当前的一条数据
+        if(accPointResService.checkProcessCodeUpdate(processIdNew,accPointResId) > 0){
+            return Result.success("1","新选择的工序代码被其他接入点使用");
+        }
+        return Result.success();
     }
 }

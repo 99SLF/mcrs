@@ -220,11 +220,30 @@
         },
 
         processCode: function (value, item) {
+            debugger;
             if (value.length = 0) {
                 return "请选择工序代码";
             }
+            var checkResult = "";
+            $.ajax({
+                url: "<%=request.getContextPath()%>/accPointResController/check/ProcessCode?processCode=" + value ,
+                type: "GET",
+                async: false,
+                contentType: "text/json",
+                cache: false,
+                success: function (text) {
+                    debugger;
+                    if (text.code == "1") {
+                        checkResult = "该工序已被接入点使用";
+                    }
+                },
+                error: function () {
+                }
+            });
+            return checkResult;
         },
         processName: function (value, item) {
+            debugger;
             if (value.length = 0) {
                 return "工序名称不能为空";
             }

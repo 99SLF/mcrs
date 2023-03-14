@@ -204,5 +204,28 @@
             update_time=#{updateTime}
         where acc_point_res_id = #{accPointResId}
     </update>
+    <select id="getProcess" resultType="com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo">
+        SELECT *
+        FROM base_process_info
+        WHERE process_code = #{processCode}
+    </select>
 
+    <select id="getAccPointResIdOld" resultType="com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes">
+        SELECT *
+        FROM base_access_info
+        WHERE process_id = #{processId}
+    </select>
+
+    <select id="checkProcessCode" resultType="int">
+        select count(*)
+        from base_access_info
+        WHERE process_id = #{processId}
+    </select>
+
+    <select id="checkProcessCodeUpdate" resultType="int">
+        SELECT count(*)
+        FROM base_access_info
+        WHERE process_id = #{processIdNew}
+          AND acc_point_res_id != #{accPointResId}
+    </select>
 </mapper>

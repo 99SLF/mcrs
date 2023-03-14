@@ -2,6 +2,7 @@ package com.zimax.mcrs.basic.accPointResMaintain.mapper;
 
 import com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes;
 import com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointResVo;
+import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
 import com.zimax.mcrs.warn.pojo.AlarmEvent;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -30,22 +31,22 @@ public interface AccPointResMapper {
      * @return
      */
     int countAll(@Param("accPointResCode") String accPointResCode,
-              @Param("accPointResName") String accPointResName,
-              @Param("isEnable") String isEnable,
-              @Param("matrixCode") String matrixCode,
-              @Param("factoryCode") String factoryCode,
-              @Param("accCreatorName") String accCreatorName,
-              @Param("createTime") String createTime,
-              @Param("accUpdaterName") String accUpdaterName,
-              @Param("updateTime") String updateTime,
-              @Param("matrixName") String matrixName
+                 @Param("accPointResName") String accPointResName,
+                 @Param("isEnable") String isEnable,
+                 @Param("matrixCode") String matrixCode,
+                 @Param("factoryCode") String factoryCode,
+                 @Param("accCreatorName") String accCreatorName,
+                 @Param("createTime") String createTime,
+                 @Param("accUpdaterName") String accUpdaterName,
+                 @Param("updateTime") String updateTime,
+                 @Param("matrixName") String matrixName
 
     );
 
     int count(@Param("accPointResCode") String accPointResCode,
-                 @Param("accPointResName") String accPointResName,
-                 @Param("accCreatorName") String accCreatorName,
-                 @Param("createTime") String createTime
+              @Param("accPointResName") String accPointResName,
+              @Param("accCreatorName") String accCreatorName,
+              @Param("createTime") String createTime
     );
 
     /**
@@ -89,6 +90,19 @@ public interface AccPointResMapper {
      * 批量启用
      */
     int enable(AccPointRes accPointRes);
+
+    /**
+     * 获取一条工序信息
+     */
+    ProcessInfo getProcess(String processCode);
+
+    int checkProcessCode(@Param("processId") Integer processId);
+
+
+    //参数形式拼接的需要Param
+    int checkProcessCodeUpdate(@Param("processIdNew") Integer processIdNew, @Param("accPointResId") Integer accPointResId);
+
+    AccPointRes getAccPointResIdOld(Integer processIdOld);
 }
 
 

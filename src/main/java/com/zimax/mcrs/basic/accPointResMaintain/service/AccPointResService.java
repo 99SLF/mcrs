@@ -7,6 +7,7 @@ import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.mcrs.basic.accPointResMaintain.mapper.AccPointResMapper;
 import com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes;
 import com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointResVo;
+import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.serialnumber.service.SerialnumberService;
 import com.zimax.mcrs.warn.pojo.AlarmEvent;
@@ -148,4 +149,26 @@ public class AccPointResService {
         }
     }
 
+
+    /**
+     * 根据工序代码查询出工序id(获取出一条工序信息)
+     */
+
+    public ProcessInfo getProcess (String processCode){
+        return  accPointResMapper.getProcess(processCode);
+    }
+
+
+    public int checkProcessCode (Integer processId){
+        return accPointResMapper.checkProcessCode(processId);
+    }
+
+    public int checkProcessCodeUpdate(Integer processIdNew,Integer accPointResId){
+        return accPointResMapper.checkProcessCodeUpdate(processIdNew,accPointResId);
+    }
+
+
+    public AccPointRes getAccPointResIdOld(Integer processIdOld){
+        return  accPointResMapper.getAccPointResIdOld(processIdOld);
+    }
 }

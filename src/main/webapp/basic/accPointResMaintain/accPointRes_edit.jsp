@@ -191,9 +191,28 @@
         },
 
         processCode: function (value, item) {
+            debugger;
             if (value.length = 0) {
                 return "请选择工序代码";
             }
+
+            var checkResult = "";
+            $.ajax({
+                url: "<%=request.getContextPath()%>/accPointResController/check/ProcessCode/update?processCode=" + value + "&processId=" + processId,
+                type: "GET",
+                async: false,
+                contentType: "text/json",
+                cache: false,
+                success: function (text) {
+                    debugger;
+                    if (text.code == "1") {
+                        checkResult = "新选择的工序已被其他接入点使用";
+                    }
+                },
+                error: function () {
+                }
+            });
+            return checkResult;
         },
         processName: function (value, item) {
             if (value.length = 0) {
@@ -264,11 +283,14 @@
         })
 
     }
-
+    var accPointResId ="";
+    var processId ="";
     function SetData(data) {
         //编辑页面取的是管理页面表格数据，做编辑操作，表格值必须都要有
         win = data.win ? data.win : window;
         var results = data.data;
+         accPointResId = results.accPointResId;
+        processId = results.processId;
         debugger;
         init(results);
         debugger;
