@@ -317,11 +317,14 @@
         debugger;
         var matrixCode = results.value;
         if (results.value == null || results.value == "") {
+            layer.msg("更多数据请前往目录树添加");
             $("#matrixName").val("");
             $("#factoryCode").empty();
+            $("#factoryCode").append(new Option("", ""));
             $("#factoryName").val("");
             $("#processId").val("");
             $("#processCode").empty();
+            $("#processCode").append(new Option("", ""));
             $("#processName").val("");
             $("#processRemarks").val("");
             //执行清空
@@ -341,9 +344,11 @@
                     if (result) {
                         $("#matrixName").val("");
                         $("#factoryCode").empty();
+                        $("#factoryCode").append(new Option("", ""));
                         $("#factoryName").val("");
                         $("#processId").val("");
                         $("#processCode").empty();
+                        $("#processCode").append(new Option("", ""));
                         $("#processName").val("");
                         $("#processRemarks").val("");
                         //从后端获取的返回值数据存储到到allDatas
@@ -364,13 +369,15 @@
                                 // $("#factoryCode").empty();
                                 // $("#processCode").empty();
                                 $("#factoryCode").find("option").remove();
+                                $("#factoryCode").append(new Option("", ""));
                                 $("#factoryName").val("");
                                 $("#processId").val("");
                                 $("#processCode").find("option").remove();
+                                $("#processCode").append(new Option("", ""));
                                 $("#processName").val("");
                                 $("#processRemarks").val("");
                                 $.each(data.data, function (index, value) {
-                                    $("#factoryCode").append(new Option("", ""));
+                                    // $("#factoryCode").append(new Option("", ""));
                                     $("#factoryCode").append(new Option(value.factoryCode, value.id))//对应映射字段名 第一个为显示的值  第二个为value值
                                 });
                                 layui.form.render("select")//重新渲染 固定写法
@@ -392,9 +399,11 @@
     form.on("select(factoryCode)", function (results) {
         var factoryCode = results.value;
         if (results.value == null || results.value == "") {
+            layer.msg("请先选择基地代码");
             $("#factoryName").val("");
             $("#processId").val("");
             $("#processCode").find("option").remove();
+            $("#processCode").append(new Option("", ""));
             $("#processName").val("");
             $("#processRemarks").val("");
             form.render();
@@ -414,6 +423,7 @@
                         $("#factoryName").val("");
                         $("#processId").val("");
                         $("#processCode").find("option").remove();
+                        $("#processCode").append(new Option("", ""));
                         $("#processName").val("");
                         $("#processRemarks").val("");
                         var allDatas = result.data;
@@ -432,10 +442,11 @@
                                 //使用循环遍历，给下拉列表赋值
                                 $("#processId").val("");
                                 $("#processCode").find("option").remove();
+                                $("#processCode").append(new Option("", ""));
                                 $("#processName").val("");
                                 $("#processRemarks").val("");
                                 $.each(data.data, function (index, value) {
-                                    $("#processCode").append(new Option("", ""));
+                                    // $("#processCode").append(new Option("", ""));
                                     $("#processCode").append(new Option(value.processCode, value.id))//对应映射字段名 第一个为显示的值  第二个为value值
                                 });
                                 layui.form.render("select")//重新渲染 固定写法
@@ -456,6 +467,7 @@
     form.on("select(processCode)", function (results) {
         var processCode = results.value;
         if (results.value == null || results.value == "") {
+            layer.msg("请先选择工厂代码");
             $("#processId").val("");
             $("#processName").val("");
             $("#processRemarks").val("");

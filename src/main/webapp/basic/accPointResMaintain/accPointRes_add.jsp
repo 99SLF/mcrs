@@ -220,7 +220,6 @@
         },
 
         processCode: function (value, item) {
-            debugger;
             if (value.length = 0) {
                 return "请选择工序代码";
             }
@@ -232,7 +231,6 @@
                 contentType: "text/json",
                 cache: false,
                 success: function (text) {
-                    debugger;
                     if (text.code == "1") {
                         checkResult = "该工序已被接入点使用";
                     }
@@ -243,7 +241,6 @@
             return checkResult;
         },
         processName: function (value, item) {
-            debugger;
             if (value.length = 0) {
                 return "工序名称不能为空";
             }
@@ -270,14 +267,16 @@
 
     //对应lay-verify事件过滤，选择下拉值相应的基地代码获取相应的基地名称返回给基地名称输入框（基地代码查询基地名称）
     form.on("select(matrixCode)", function (data) {
-        debugger;
         var matrixCode = data.value;
         if (data.value == null || data.value == "") {
+            layer.msg("更多数据请前往目录树添加");
             $("#matrixName").val("");
             $("#factoryCode").empty();
+            $("#factoryCode").append(new Option("", ""));
             $("#factoryName").val("");
             $("#processId").val("");
             $("#processCode").empty();
+            $("#processCode").append(new Option("", ""));
             $("#processName").val("");
             $("#processRemarks").val("");
             //执行清空
@@ -297,15 +296,17 @@
                     if (result) {
                         $("#matrixName").val("");
                         $("#factoryCode").empty();
+                        $("#factoryCode").append(new Option("", ""));
                         $("#factoryName").val("");
                         $("#processId").val("");
                         $("#processCode").empty();
+                        $("#processCode").append(new Option("", ""));
                         $("#processName").val("");
                         $("#processRemarks").val("");
                         //从后端获取的返回值数据存储到到allDatas
                         var allDatas = result.data;
                         var matrixNameVal = allDatas[0].matrixName;
-                        //将后端获取的版本号赋值给最新版本号的输入框
+                        //将后端获取的基地名称赋值给基地名称的输入框
                         $("#matrixName").val(matrixNameVal);
                         var matrixId = allDatas[0].matrixId;
                         //下拉选择框动态赋值，将工厂代码赋值给下拉选择框
@@ -320,15 +321,20 @@
                                 // $("#factoryCode").empty();
                                 // $("#processCode").empty();
                                 $("#factoryCode").find("option").remove();
+                                $("#factoryCode").append(new Option("", ""));
                                 $("#factoryName").val("");
                                 $("#processId").val("");
                                 $("#processCode").find("option").remove();
+                                $("#processCode").append(new Option("", ""));
                                 $("#processName").val("");
                                 $("#processRemarks").val("");
+
+
                                 $.each(data.data, function (index, value) {
-                                    $("#factoryCode").append(new Option("", ""));
+                                    // $("#factoryCode").append(new Option("", ""));
                                     $("#factoryCode").append(new Option(value.factoryCode, value.id))//对应映射字段名 第一个为显示的值  第二个为value值
                                 });
+
                                 layui.form.render("select")//重新渲染 固定写法
 
                             }
@@ -346,12 +352,15 @@
     form.on("select(factoryCode)", function (data) {
         var factoryCode = data.value;
         if (data.value == null || data.value == "") {
+            layer.msg("请先选择基地代码");
             $("#factoryName").val("");
             $("#processId").val("");
             $("#processCode").find("option").remove();
+            $("#processCode").append(new Option("", ""));
             $("#processName").val("");
             $("#processRemarks").val("");
             form.render();
+
         } else {
             //调用查询的后端
             $.ajax({
@@ -367,6 +376,7 @@
                         $("#factoryName").val("");
                         $("#processId").val("");
                         $("#processCode").find("option").remove();
+                        $("#processCode").append(new Option("", ""));
                         $("#processName").val("");
                         $("#processRemarks").val("");
                         var allDatas = result.data;
@@ -385,10 +395,11 @@
                                 //使用循环遍历，给下拉列表赋值
                                 $("#processId").val("");
                                 $("#processCode").find("option").remove();
+                                $("#processCode").append(new Option("", ""));
                                 $("#processName").val("");
                                 $("#processRemarks").val("");
                                 $.each(data.data, function (index, value) {
-                                    $("#processCode").append(new Option("", ""));
+                                    // $("#processCode").append(new Option("", ""));
                                     $("#processCode").append(new Option(value.processCode, value.id))//对应映射字段名 第一个为显示的值  第二个为value值
                                 });
                                 layui.form.render("select")//重新渲染 固定写法
@@ -410,13 +421,13 @@
     form.on("select(processCode)", function (data) {
         var processCode = data.value;
         if (data.value == null || data.value == "") {
+            layer.msg("请先选择工厂代码");
             $("#processId").val("");
             $("#processName").val("");
             $("#processRemarks").val("");
             form.render();
         } else {
             //调用查询的后端
-            debugger;
             $.ajax({
                 //获取出工序名称和工序描述
                 url: "<%= request.getContextPath() %>/ProcessController/getProcessNameDe?processCode=" + processCode,
@@ -455,15 +466,10 @@
     //监听提交
     form.on("submit(layuiadmin-app-form-submit)", function (data) {
 
-
-        debugger;
-
         // var submitData = JSON.stringify(data.field);
-        debugger;
         if (submit == false) {
             submit = true;
             var submitData = JSON.stringify(data.field);
-            debugger;
             if (isExist == false) {
                 $.ajax({
                     url: "<%= request.getContextPath() %>/accPointResController/add",

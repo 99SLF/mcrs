@@ -10,11 +10,11 @@
   <display-name>Archetype Created Web Application</display-name>
 
   <!-- 许可证权限管理启动监听器 -->
-  <listener>
-    <listener-class>com.example.cilent.common.config.LicenseCheckListener</listener-class>
-  </listener>
+<!--  <listener>-->
+<!--    <listener-class>com.example.cilent.common.config.LicenseCheckListener</listener-class>-->
+<!--  </listener>-->
 
-  <!-- 许可证拦截监听器 -每个接口调用，都会进行一次的接口许可证校验-->
+<!--   许可证拦截监听器 -每个接口调用，都会进行一次的接口许可证校验-->
 <!--  <filter>-->
 <!--    <filter-name>LincenseCheckedFilter</filter-name>-->
 <!--    <filter-class>com.example.cilent.common.config.LincenseCheckedFilter</filter-class>-->
@@ -27,6 +27,8 @@
 <!--    <dispatcher>REQUEST</dispatcher>-->
 <!--    <dispatcher>INCLUDE</dispatcher>-->
 <!--  </filter-mapping>-->
+
+
   <!-- 用户登录拦截过滤器 -->
   <filter>
     <filter-name>UserLoginWebInterceptorFilter</filter-name>
@@ -162,4 +164,8 @@
     <url-pattern>*.svg</url-pattern>
   </servlet-mapping>
 
+  <!--session超时时间-->
+  <session-config>
+    <session-timeout>30</session-timeout>
+  </session-config>
 </web-app>
