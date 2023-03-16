@@ -100,7 +100,7 @@
             "isEquipment": "1"
         };
         table.reload("LAY-app-device-list", {
-            url: "<%= request.getContextPath() %>/equipment/equipment/query",
+            url: "<%= request.getContextPath() %>/equipment/equipment/queryByselect",
             where: field,
             page: {
                 curr: 1
@@ -154,7 +154,7 @@
 
     table.render({
         elem: "#LAY-app-device-list",
-        url: "<%= request.getContextPath() %>/equipment/equipment/query",
+        url: "<%= request.getContextPath() %>/equipment/equipment/queryByselect",
         method: "GET",
         height: "full-" + getFullSize(),
         page: true,
@@ -162,7 +162,6 @@
         limits: [10, 15, 20, 30],
         where: {"isEquipment": "1"},
         parseData: function (res) {
-            debugger;
             return {
                 code: "0",
                 msg: res.msg,

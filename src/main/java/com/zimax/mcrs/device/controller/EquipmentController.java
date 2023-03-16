@@ -57,10 +57,15 @@ public class EquipmentController {
     public Result<?> query( String limit,  String page, String equipmentId,String equipmentName, String enable, String equipmentInstallLocation, String equipTypeName, String protocolCommunication, String accPointResName, String processName, String createName, String createTime,String order, String field) {
         List<EquipmentVo> equipments = equipmentService.queryEquipments(limit, page,equipmentId, equipmentName ,enable,equipmentInstallLocation, equipTypeName, protocolCommunication,accPointResName,processName,createName,createTime ,order, field);
         List<EquipmentVo> equipments1 = equipmentService.setWorkStation(equipments);
-        System.out.println(equipments1);
         return Result.success(equipments1, equipmentService.count(equipmentId, equipmentName ,enable,equipmentInstallLocation, equipTypeName, protocolCommunication,accPointResName,processName,createName,createTime));
     }
 
+    @GetMapping("/equipment/queryByselect")
+    public Result<?> queryByselect( String limit,  String page, String equipmentId,String equipmentName, String enable, String equipmentInstallLocation, String equipTypeName, String protocolCommunication, String accPointResName, String processName, String createName, String createTime,String order, String field) {
+        List<EquipmentVo> equipments = equipmentService.queryEquipmentsByselect(limit, page,equipmentId, equipmentName ,enable,equipmentInstallLocation, equipTypeName, protocolCommunication,accPointResName,processName,createName,createTime ,order, field);
+        List<EquipmentVo> equipments1 = equipmentService.setWorkStation(equipments);
+        return Result.success(equipments1, equipmentService.countSelect(equipmentId, equipmentName ,enable,equipmentInstallLocation, equipTypeName, protocolCommunication,accPointResName,processName,createName,createTime));
+    }
     /**
      * 添加设备
      *

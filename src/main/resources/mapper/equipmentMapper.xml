@@ -140,12 +140,12 @@
     </update>
     <!--更新1条设备信息-->
     <update id="updateEquipmentByUpload" parameterType="com.zimax.mcrs.device.pojo.Equipment">
-    update eqi_equipment
+        update eqi_equipment
         set equipment_id=#{equipmentId},
-            equipment_name=#{equipmentName},
-            equip_type_id=#{equipTypeId},
-            equipment_ip=#{equipmentIp},
-            acc_point_res_id=#{accPointResId}
+        equipment_name=#{equipmentName},
+        equip_type_id=#{equipTypeId},
+        equipment_ip=#{equipmentIp},
+        acc_point_res_id=#{accPointResId}
         where equipment_ip = #{equipmentIp}
         <selectKey keyColumn="equipment_int" keyProperty='equipmentInt' resultType='int' order='AFTER'>
             SELECT
@@ -174,7 +174,8 @@
     <select id="checkEquipmentIp" resultType="int">
         select count(*)
         from eqi_equipment
-        where equipment_ip = #{equipmentIp} and equipment_int != #{equipmentInt}
+        where equipment_ip = #{equipmentIp}
+          and equipment_int != #{equipmentInt}
     </select>
 
     <!--在注册时候查询当前设备连接Ip是否存在-->
@@ -193,7 +194,7 @@
 
     <insert id="addWorkStation" parameterType="com.zimax.mcrs.device.pojo.WorkStation">
         insert into eqi_work_station
-        values (#{workStationId},#{equipmentInt},#{workStationNum})
+        values (#{workStationId}, #{equipmentInt}, #{workStationNum})
     </insert>
 
     <!--根据主键删除设备-->
@@ -205,19 +206,20 @@
 
     <!--    依据设备主键查询设备信息-->
     <select id="queryEquipment" resultType="com.zimax.mcrs.device.pojo.Equipment">
-        SELECT * FROM eqi_equipment
+        SELECT *
+        FROM eqi_equipment
         WHERE equipment_int = #{equipmentint}
     </select>
     <!--批量启用-->
     <update id="enable" parameterType="java.util.List">
         update eqi_equipment
-        set enable  = #{enable}
+        set enable = #{enable}
         where equipment_int = #{equipmentInt}
     </update>
     <!--批量禁用-->
     <update id="noEnable" parameterType="java.util.List">
         update eqi_equipment
-        set enable  = #{enable}
+        set enable = #{enable}
         where equipment_int = #{equipmentInt}
     </update>
 
@@ -225,6 +227,75 @@
     <delete id="delWorkStationByequInt" parameterType="int">
         delete
         from eqi_work_station
-        where  equipment_int= #{equipmentInt}
+        where equipment_int = #{equipmentInt}
     </delete>
+
+    <select id="queryAllselect" parameterType="map" resultType="com.zimax.mcrs.device.pojo.EquipmentVo">
+        SELECT eqi.*,
+               bei.equip_type_name,
+               bai.acc_point_res_name,
+               bpi.process_name,
+               bfi.factory_code,
+               bmi.matrix_code,
+               cur.USER_NAME AS createName,
+               eqiDev.app_id
+        FROM eqi_equipment AS eqi
+                 LEFT JOIN base_equip_info AS bei
+                           ON eqi.equip_type_id = bei.equip_type_id
+                 LEFT JOIN base_access_info AS bai
+                           ON eqi.acc_point_res_id = bai.acc_point_res_id
+                 LEFT JOIN base_process_info AS bpi
+                           ON bai.process_id = bpi.process_id
+                 LEFT JOIN base_factory_info AS bfi
+                           ON bpi.factory_id = bfi.factory_id
+                 LEFT JOIN base_matrix_info AS bmi
+                           ON bfi.matrix_id = bmi.matrix_id
+                 LEFT JOIN cap_user AS cur
+                           ON eqi.creator = cur.USER_ID
+                 LEFT JOIN eqi_device AS eqiDev
+                           ON eqi.equipment_int = eqiDev.equipment_int
+        <where>
+            and app_id is null
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="processName !=null and processName !=''">
+                and bpi.process_name like '%${processName}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+    <select id="countSelect"  resultType="int">
+        SELECT count(*) FROM eqi_equipment AS eqi
+        LEFT JOIN base_equip_info AS bei
+        ON eqi.equip_type_id = bei.equip_type_id
+        LEFT JOIN base_access_info AS bai
+        ON eqi.acc_point_res_id = bai.acc_point_res_id
+        LEFT JOIN base_process_info AS bpi
+        ON bai.process_id = bpi.process_id
+        LEFT JOIN base_factory_info AS bfi
+        ON bpi.factory_id = bfi.factory_id
+        LEFT JOIN base_matrix_info AS bmi
+        ON bfi.matrix_id = bmi.matrix_id
+        LEFT JOIN cap_user AS cur
+        ON eqi.creator = cur.USER_ID
+        LEFT JOIN eqi_device AS eqiDev
+        ON eqi.equipment_int = eqiDev.equipment_int
+        <where>
+            and app_id is null
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eqi.equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="processName !=null and processName !=''">
+                and bpi.process_name like '%${processName}%'
+            </if>
+        </where>
+    </select>
+
 </mapper>

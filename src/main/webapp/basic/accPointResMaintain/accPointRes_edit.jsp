@@ -191,7 +191,6 @@
         },
 
         processCode: function (value, item) {
-            debugger;
             if (value.length = 0) {
                 return "请选择工序代码";
             }
@@ -204,7 +203,6 @@
                 contentType: "text/json",
                 cache: false,
                 success: function (text) {
-                    debugger;
                     if (text.code == "1") {
                         checkResult = "新选择的工序已被其他接入点使用";
                     }
@@ -225,7 +223,6 @@
     form.render();
 
     function init(results) {
-        debugger;
         //下拉选择框动态赋值，将基地代码赋值给下拉选择框(初始化)
         $.ajax({
             url: "<%= request.getContextPath() %>/MatrixController/selectMatrixCode",
@@ -291,9 +288,7 @@
         var results = data.data;
          accPointResId = results.accPointResId;
         processId = results.processId;
-        debugger;
         init(results);
-        debugger;
         form.val("layuiadmin-app-form-list", {
             //要有主键
             "accPointResId": results.accPointResId,
@@ -314,7 +309,6 @@
 
     //对应lay-verify事件过滤，选择下拉值相应的基地代码获取相应的基地名称返回给基地名称输入框
     form.on("select(matrixCode)", function (results) {
-        debugger;
         var matrixCode = results.value;
         if (results.value == null || results.value == "") {
             layer.msg("更多数据请前往目录树添加");
@@ -474,7 +468,6 @@
             form.render();
         } else {
             //调用查询的后端
-            debugger;
             $.ajax({
                 //获取出工序名称和工序描述
                 url: "<%= request.getContextPath() %>/ProcessController/getProcessNameDe?processCode=" + processCode,

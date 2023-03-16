@@ -24,7 +24,16 @@ public interface EquipmentMapper {
      *
      * @return
      */
+    List<EquipmentVo> queryAllselect(Map map);
     List<EquipmentVo> queryAll(Map map);
+    int countSelect(@Param("equipmentId") String equipmentId, @Param("equipmentName") String equipmentName, @Param("enable") String enable,
+                     @Param("equipmentInstallLocation") String equipmentInstallLocation,
+                     @Param("equipTypeName") String equipTypeName,
+                     @Param("protocolCommunication") String protocolCommunication,
+                     @Param("accPointResName") String accPointResName,
+                     @Param("processName") String processName,
+                     @Param("createName") String createName,
+                     @Param("createTime") String createTime);
 
     /**
      * 新建设备

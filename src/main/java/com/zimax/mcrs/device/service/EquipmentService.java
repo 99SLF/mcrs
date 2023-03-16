@@ -73,6 +73,37 @@ public class EquipmentService {
         return equipmentMapper.queryAll(map);
     }
 
+    public List<EquipmentVo> queryEquipmentsByselect(String limit, String page, String equipmentId, String equipmentName, String enable, String equipmentInstallLocation, String equipTypeName, String protocolCommunication, String accPointResName, String processName, String createName, String createTime, String order, String field) {
+        if (equipmentId != null || equipmentName != null || enable != null || equipmentInstallLocation != null || equipTypeName != null || protocolCommunication != null || accPointResName != null || processName != null || createName != null || createTime != null) {
+            Equipment equipment = new Equipment();
+            addOperationLog(equipment, 1);
+        }
+        ChangeString changeString = new ChangeString();
+        Map<String, Object> map = new HashMap<>();
+        if (order == null) {
+            map.put("order", "desc");
+            map.put("field", "eqi.create_time");
+        } else {
+            map.put("order", order);
+            map.put("field", changeString.camelUnderline(field));
+        }
+        if (limit != null) {
+            map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
+            map.put("limit", Integer.parseInt(limit));
+        }
+        map.put("equipmentId", equipmentId);
+        map.put("equipmentName", equipmentName);
+        map.put("enable", enable);
+        map.put("equipmentInstallLocation", equipmentInstallLocation);
+        map.put("equipTypeName", equipTypeName);
+        map.put("protocolCommunication", protocolCommunication);
+        map.put("accPointResName", accPointResName);
+        map.put("processName", processName);
+        map.put("createName", createName);
+        map.put("createTime", createTime);
+
+        return equipmentMapper.queryAllselect(map);
+    }
     /**
      * 添加设备信息
      *
@@ -146,7 +177,10 @@ public class EquipmentService {
         return equipmentMapper.count(equipmentId, equipmentName, enable, equipmentInstallLocation, equipTypeName,
                 protocolCommunication, accPointResName, processName, createName, createTime);
     }
-
+    public int countSelect(String equipmentId, String equipmentName, String enable, String equipmentInstallLocation, String equipTypeName, String protocolCommunication, String accPointResName, String processName, String createName, String createTime) {
+        return equipmentMapper.countSelect(equipmentId, equipmentName, enable, equipmentInstallLocation, equipTypeName,
+                protocolCommunication, accPointResName, processName, createName, createTime);
+    }
     /**
      * 批量删除终端
      */
