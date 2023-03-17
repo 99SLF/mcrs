@@ -12,6 +12,7 @@ import javax.servlet.ServletContextListener;
 /**
  * @author 李伟杰
  * @date 2023/3/3 16:32
+ * 拦截器配置（Spring方式）
  */
 public class LicenseCheckListener implements ServletContextListener {
 

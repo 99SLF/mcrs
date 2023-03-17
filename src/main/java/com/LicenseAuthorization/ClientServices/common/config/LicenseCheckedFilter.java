@@ -13,6 +13,7 @@ import java.util.Map;
 /**
  * @author 李伟杰
  * @date 2023/3/3 16:10
+ *  @Description: 拦截器配置（Spring方式）
  */
 public class LicenseCheckedFilter implements Filter {
 
