@@ -1,8 +1,8 @@
-package com.example.cilent.common.config;
+package com.LicenseAuthorization.license.entity;
 
 /**
  * @author 李伟杰
- * @date 2023/3/4 12:12
+ * @date 2023/3/17 15:30
  */
 public class License {
     /**
@@ -44,37 +44,36 @@ public class License {
         return subject;
     }
 
-    public String getPublicAlias() {
-        return publicAlias;
-    }
-
-
-    public String getStorePass() {
-        return storePass;
-    }
-
-    public String getLicensePath() {
-        return licensePath;
-    }
-
-    public String getPublicKeysStorePath() {
-        return publicKeysStorePath;
-    }
-
     public void setSubject(String subject) {
         this.subject = subject;
+    }
+
+    public String getPublicAlias() {
+        return publicAlias;
     }
 
     public void setPublicAlias(String publicAlias) {
         this.publicAlias = publicAlias;
     }
 
+    public String getStorePass() {
+        return storePass;
+    }
+
     public void setStorePass(String storePass) {
         this.storePass = storePass;
     }
 
+    public String getLicensePath() {
+        return licensePath;
+    }
+
     public void setLicensePath(String licensePath) {
         this.licensePath = licensePath;
+    }
+
+    public String getPublicKeysStorePath() {
+        return publicKeysStorePath;
     }
 
     public void setPublicKeysStorePath(String publicKeysStorePath) {

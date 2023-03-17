@@ -1,4 +1,9 @@
-package com.example.licese.entity;
+package com.LicenseAuthorization.license.entity;
+
+/**
+ * @author 李伟杰
+ * @date 2023/3/17 15:10
+ */
 
 import java.io.Serializable;
 import java.util.List;
@@ -6,7 +11,7 @@ import java.util.List;
 /**
  * 自定义需要校验的License参数
  */
-public class LicenseCheckModel implements Serializable{
+public class LicenseCheckModel implements Serializable {
 
     private static final long serialVersionUID = 8600137500316662317L;
     /**

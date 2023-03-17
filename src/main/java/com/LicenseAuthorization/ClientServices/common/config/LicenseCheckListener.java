@@ -1,8 +1,8 @@
-package com.example.cilent.common.config;
+package com.LicenseAuthorization.ClientServices.common.config;
 
-import com.example.cilent.license.LicenseVerify;
-import com.example.licese.entity.LicenseVerifyParam;
-import com.zimax.mcrs.update.javaBean.UploadJava;
+import com.LicenseAuthorization.license.entity.License;
+import com.LicenseAuthorization.ClientServices.licenseMatch.LicenseVerify;
+import com.LicenseAuthorization.license.entity.LicenseVerifyParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

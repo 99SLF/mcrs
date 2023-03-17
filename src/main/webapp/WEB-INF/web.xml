@@ -9,19 +9,19 @@
          version="3.1">
   <display-name>Archetype Created Web Application</display-name>
 
-  <!-- 许可证权限管理启动监听器 -->
-<!--  <listener>-->
-<!--    <listener-class>com.example.cilent.common.config.LicenseCheckListener</listener-class>-->
-<!--  </listener>-->
+<!--   许可证权限管理启动监听器-->
+  <listener>
+    <listener-class>com.LicenseAuthorization.ClientServices.common.config.LicenseCheckListener</listener-class>
+  </listener>
 
-<!--   许可证拦截监听器 -每个接口调用，都会进行一次的接口许可证校验-->
+<!--&lt;!&ndash;   许可证拦截监听器 -每个接口调用，都会进行一次的接口许可证校验&ndash;&gt;-->
 <!--  <filter>-->
-<!--    <filter-name>LincenseCheckedFilter</filter-name>-->
-<!--    <filter-class>com.example.cilent.common.config.LincenseCheckedFilter</filter-class>-->
+<!--    <filter-name>LicenseCheckedFilter</filter-name>-->
+<!--    <filter-class>com.LicenseAuthorization.ClientServices.common.config.LicenseCheckedFilter</filter-class>-->
 <!--  </filter>-->
 
 <!--  <filter-mapping>-->
-<!--    <filter-name>LincenseCheckedFilter</filter-name>-->
+<!--    <filter-name>LicenseCheckedFilter</filter-name>-->
 <!--    <url-pattern>/*</url-pattern>-->
 <!--    <dispatcher>FORWARD</dispatcher>-->
 <!--    <dispatcher>REQUEST</dispatcher>-->

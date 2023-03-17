@@ -1,4 +1,4 @@
-package com.example.cilent.license;
+package com.LicenseAuthorization.ClientServices.licenseMatch;
 
 import de.schlichtherle.license.AbstractKeyStoreParam;
 

@@ -1,7 +1,8 @@
-package com.example.cilent.license;
+package com.LicenseAuthorization.ClientServices.licenseMatch;
 
 
-import com.example.licese.entity.LicenseCheckModel;
+
+import com.LicenseAuthorization.license.entity.LicenseCheckModel;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetAddress;

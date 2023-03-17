@@ -1,9 +1,6 @@
-package com.example.cilent.license;
-
-
-
-import com.example.cilent.common.config.License;
-import com.example.licese.entity.LicenseCheckModel;
+package com.LicenseAuthorization.ClientServices.licenseMatch;
+import com.LicenseAuthorization.license.entity.License;
+import com.LicenseAuthorization.license.entity.LicenseCheckModel;
 import de.schlichtherle.license.*;
 import de.schlichtherle.xml.GenericCertificate;
 import lombok.extern.slf4j.Slf4j;

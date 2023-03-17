@@ -1,4 +1,4 @@
-package com.example.cilent.common.config;
+package com.LicenseAuthorization.ClientServices.common.config;
 
 import org.apache.http.Header;
 import org.apache.http.client.HttpClient;

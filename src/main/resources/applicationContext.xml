@@ -59,7 +59,7 @@
     </bean>
 
     <!--许可证装配bean-->
-    <bean id="License" class="com.example.cilent.common.config.License">
+    <bean id="License" class="com.LicenseAuthorization.license.entity.License">
         <property name="subject" value="${subject}"/>
         <property name="publicAlias" value="${publicAlias}"/>
         <property name="storePass" value="${storePass}"/>
