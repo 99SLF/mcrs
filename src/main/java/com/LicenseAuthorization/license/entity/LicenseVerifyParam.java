@@ -1,4 +1,9 @@
-package com.example.licese.entity;
+package com.LicenseAuthorization.license.entity;
+
+/**
+ * @author 李伟杰
+ * @date 2023/3/17 15:11
+ */
 
 /**
  * License校验类需要的参数
@@ -93,3 +98,4 @@ public class LicenseVerifyParam {
                 '}';
     }
 }
+

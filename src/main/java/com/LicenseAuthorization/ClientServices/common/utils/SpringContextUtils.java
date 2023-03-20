@@ -1,4 +1,4 @@
-package com.example.cilent.common.utils;
+package com.LicenseAuthorization.ClientServices.common.utils;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

@@ -1,7 +1,7 @@
-package com.example.cilent.license;
+package com.LicenseAuthorization.ClientServices.licenseMatch;
 
-import com.alibaba.fastjson.JSON;
-import com.example.licese.entity.LicenseVerifyParam;
+
+import com.LicenseAuthorization.license.entity.LicenseVerifyParam;
 import de.schlichtherle.license.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -9,8 +9,6 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.prefs.Preferences;
 
 /**

@@ -1,4 +1,4 @@
-package com.example.cilent.license;
+package com.LicenseAuthorization.ClientServices.licenseMatch;
 
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;

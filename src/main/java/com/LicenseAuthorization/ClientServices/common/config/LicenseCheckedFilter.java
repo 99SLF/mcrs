@@ -1,7 +1,7 @@
-package com.example.cilent.common.config;
+package com.LicenseAuthorization.ClientServices.common.config;
 
+import com.LicenseAuthorization.ClientServices.licenseMatch.LicenseVerify;
 import com.alibaba.fastjson.JSON;
-import com.example.cilent.license.LicenseVerify;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
@@ -13,10 +13,11 @@ import java.util.Map;
 /**
  * @author 李伟杰
  * @date 2023/3/3 16:10
+ *  @Description: 拦截器配置（Spring方式）
  */
-public class LincenseCheckedFilter  implements Filter {
+public class LicenseCheckedFilter implements Filter {
 
-    private static final Logger logger = Logger.getLogger(LincenseCheckedFilter.class);
+    private static final Logger logger = Logger.getLogger(LicenseCheckedFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
