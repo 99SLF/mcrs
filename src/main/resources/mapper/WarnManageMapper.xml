@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.basic.warn.mapper.WarnMapper">
+
+    <!--添加-->
+    <insert id="addWarn" parameterType="com.zimax.mcrs.basic.warn.pojo.WarnManager">
+        insert into base_warn
+        values (#{id},#{warn_grade}, #{creator}, #{create_time})
+    </insert>
+    <insert id="addWarnByUser" parameterType="com.zimax.mcrs.basic.warn.pojo.WarnDealWith">
+        insert into base_warn_dealwith
+        values (#{id},#{warn_id}, #{role_id})
+    </insert>
+    <!--    查询记录数-->
+    <select id="count" resultType="int">
+        select count(*) from base_warn
+        <where>
+            <if test="warn_grade !=null and warn_grade !=''">
+                and warn_grade like '%${warn_grade}%'
+            </if>
+        </where>
+    </select>
+
+
+    <select id="queryWarn" parameterType="map" resultType="com.zimax.mcrs.basic.warn.pojo.WarnManager">
+        select * from base_warn
+        <where>
+            <if test="warn_grade !=null and warn_grade !=''">
+                and warn_grade like '%${warn_grade}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+</mapper>

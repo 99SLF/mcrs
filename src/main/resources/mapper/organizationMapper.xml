@@ -14,7 +14,7 @@
         <result column="org_type"  property="orgType"/>
         <result column="status"  property="status"/>
         <result column="create_time"  property="createTime"/>
-        <result column="last_updatel"  property="lastUpdatel"/>
+        <result column="last_update"  property="lastUpdate"/>
         <result column="sort_no"  property="sortNo"/>
         <result column="is_leaf"  property="isLeaf"/>
         <result column="sub_count"  property="subCount"/>
