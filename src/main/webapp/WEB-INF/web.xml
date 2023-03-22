@@ -9,10 +9,17 @@
          version="3.1">
   <display-name>Archetype Created Web Application</display-name>
 
-<!--   许可证权限管理启动监听器-->
+<!--   许可证权限管理启动监听器，从项目的lib中添加，之后可继承，不在模块中引用的化，可以运行但是爆红-->
   <listener>
     <listener-class>com.LicenseAuthorization.ClientServices.common.config.LicenseCheckListener</listener-class>
   </listener>
+
+  <!--  许可证公钥密码，必须配置-->
+  <context-param>
+    <param-name>storePass</param-name>
+    <param-value>public_password1234</param-value>
+  </context-param>
+
 
 <!--&lt;!&ndash;   许可证拦截监听器 -每个接口调用，都会进行一次的接口许可证校验&ndash;&gt;-->
 <!--  <filter>-->
@@ -27,6 +34,7 @@
 <!--    <dispatcher>REQUEST</dispatcher>-->
 <!--    <dispatcher>INCLUDE</dispatcher>-->
 <!--  </filter-mapping>-->
+
 
 
   <!-- 用户登录拦截过滤器 -->
