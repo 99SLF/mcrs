@@ -4,20 +4,21 @@
 <mapper namespace="com.zimax.mcrs.basic.warn.mapper.WarnMapper">
 
     <!--添加-->
-    <insert id="addWarn" parameterType="com.zimax.mcrs.basic.warn.pojo.WarnManager">
+    <insert id="addWarn" parameterType="com.zimax.mcrs.basic.warn.pojo.WarnManager" keyProperty="id"
+            useGeneratedKeys="true">
         insert into base_warn
-        values (#{id},#{warn_grade}, #{creator}, #{create_time})
+        values (#{id},#{warnGrade},#{remark}#,{creator}, #{createTime})
     </insert>
-    <insert id="addWarnByUser" parameterType="com.zimax.mcrs.basic.warn.pojo.WarnDealWith">
+    <insert id="addWarnToUser" parameterType="com.zimax.mcrs.basic.warn.pojo.WarnDealWith">
         insert into base_warn_dealwith
-        values (#{id},#{warn_id}, #{role_id})
+        values (#{id},#{warnId}, #{roleId})
     </insert>
     <!--    查询记录数-->
     <select id="count" resultType="int">
         select count(*) from base_warn
         <where>
-            <if test="warn_grade !=null and warn_grade !=''">
-                and warn_grade like '%${warn_grade}%'
+            <if test="warnGrade !=null and warnGrade !=''">
+                and warn_grade like '%${warnGrade}%'
             </if>
         </where>
     </select>
@@ -26,8 +27,8 @@
     <select id="queryWarn" parameterType="map" resultType="com.zimax.mcrs.basic.warn.pojo.WarnManager">
         select * from base_warn
         <where>
-            <if test="warn_grade !=null and warn_grade !=''">
-                and warn_grade like '%${warn_grade}%'
+            <if test="warnGrade !=null and warnGrade !=''">
+                and warn_grade like '%${warnGrade}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -37,4 +38,33 @@
             limit ${begin},${limit}
         </if>
     </select>
+
+    <delete id="delWarnToUser">
+        delete
+        from base_warn_dealwith
+        where warn_id = #{warnId}
+    </delete>
+    <select id="isExist" resultType="int">
+        select count(*) from base_warn
+        <where>
+            <if test="warnGrade !=null and warnGrade !=''">
+                and warn_grade = #{warnGrade}
+            </if>
+        </where>
+    </select>
+    <select id="queryWarnToUser" resultType="com.zimax.mcrs.basic.warn.pojo.WarnDealWith">
+        select * from base_warn_dealwith a LEFT JOIN cap_role b ON a.role_id=b.role_id
+        <where>
+            <if test="warnId !=null and warnId !=''">
+                and warn_id = #{warnId}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateWarn" parameterType="com.zimax.mcrs.basic.warn.pojo.WarnManager">
+        update base_warn
+        set warn_grade=#{warnGrade},
+            remark=#{remark}
+        where id = ${id}
+    </update>
 </mapper>

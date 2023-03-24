@@ -26,8 +26,8 @@ public class DeviceAbnormalAlarmService {
      */
     public List<DeviceAbnVo> queryDeviceAbnormalAlarm(String page, String limit,
                                                       String equipmentId,  String equipmentName, String deviceName,
-                                                      String processName, String alarmEventTitle ,String alarmType,
-                                                      String alarmLevel, String alarmEventContent, String occurrenceTime,
+                                                      String processName  ,String warnType,
+                                                      String warnGrade, String occurrenceTime,
                                                       String order, String field){
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
@@ -47,10 +47,8 @@ public class DeviceAbnormalAlarmService {
         map.put("equipmentName", equipmentName);
         map.put("deviceName", deviceName);
         map.put("processName", processName);
-        map.put("alarmEventTitle", alarmEventTitle);
-        map.put("alarmType", alarmType);
-        map.put("alarmLevel", alarmLevel);
-        map.put("alarmEventContent", alarmEventContent);
+        map.put("warnType", warnType);
+        map.put("warnGrade", warnGrade);
         map.put("occurrenceTime", occurrenceTime);
         return deviceAbnormalAlarmMapper.queryDeviceAbnormalAlarm(map);
 
@@ -61,8 +59,8 @@ public class DeviceAbnormalAlarmService {
      * @return
      */
     public int countAA(String equipmentId,  String equipmentName, String deviceName,
-                       String processName, String alarmEventTitle ,String alarmType,
-                       String alarmLevel, String alarmEventContent, String occurrenceTime) {
-        return deviceAbnormalAlarmMapper.countAA(equipmentId, equipmentName,deviceName, processName,alarmEventTitle, alarmType, alarmLevel, alarmEventContent, occurrenceTime);
+                       String processName ,String warnType,
+                       String warnGrade, String occurrenceTime) {
+        return deviceAbnormalAlarmMapper.countAA(equipmentId, equipmentName,deviceName, processName, warnType, warnGrade, occurrenceTime);
     }
 }

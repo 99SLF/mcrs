@@ -12,7 +12,6 @@
         mon_device_real AS mdr
         LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
         LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
-        LEFT JOIN war_alarm_event AS wae ON mdr.warning_content = wae.alarm_event_id
         LEFT JOIN base_access_info AS bai ON equ.acc_point_res_id = bai.acc_point_res_id
         LEFT JOIN base_process_info AS bpi ON bai.process_id = bpi.process_id
         <where>
@@ -28,17 +27,11 @@
             <if test="processName !=null and processName !=''">
                 and bpi.process_name like '%${processName}%'
             </if>
-            <if test="alarmEventTitle !=null and alarmEventTitle !=''">
-                and wae.alarm_event_title like '%${alarmEventTitle}%'
+            <if test="warnType !=null and warnType !=''">
+                and mdr.warn_type like '%${warnType}%'
             </if>
-            <if test="alarmType !=null and alarmType !=''">
-                and wae.alarm_type like '%${alarmType}%'
-            </if>
-            <if test="alarmLevel !=null and alarmLevel !=''">
-                and wae.alarm_level like '%${alarmLevel}%'
-            </if>
-            <if test="alarmEventContent !=null and alarmEventContent !=''">
-                and wae.alarm_event_content like '%${alarmEventContent}%'
+            <if test="warnGrade !=null and warnGrade !=''">
+                and mdr.warn_grade like '%${warnGrade}%'
             </if>
             <if test="occurrenceTime !=null and occurrenceTime !=''">
                 and mdr.occurrence_time like '%${occurrenceTime}%'
@@ -51,8 +44,6 @@
         SELECT
         dev.device_id,
         equ.equipment_int,
-        wae.alarm_event_id,
-        wae.alarm_event_int,
         bai.acc_point_res_id,
         bpi.process_id,
         equ.equipment_id,
@@ -60,16 +51,14 @@
         mdr.app_id,
         dev.device_name,
         bpi.process_name,
-        wae.alarm_event_title,
-        wae.alarm_type,
-        wae.alarm_level,
-        wae.alarm_event_content,
-        mdr.occurrence_time
+        mdr.occurrence_time,
+        mdr.warn_grade,
+        mdr.warn_type,
+        mdr.warning_content
         FROM
         mon_device_real AS mdr
         LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
         LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
-        LEFT JOIN war_alarm_event AS wae ON mdr.warning_content = wae.alarm_event_id
         LEFT JOIN base_access_info AS bai ON equ.acc_point_res_id = bai.acc_point_res_id
         LEFT JOIN base_process_info AS bpi ON bai.process_id = bpi.process_id
         <where>
@@ -85,17 +74,11 @@
             <if test="processName !=null and processName !=''">
                 and bpi.process_name like '%${processName}%'
             </if>
-            <if test="alarmEventTitle !=null and alarmEventTitle !=''">
-                and wae.alarm_event_title like '%${alarmEventTitle}%'
+            <if test="warnType !=null and warnType !=''">
+                and mdr.warn_type like '%${warnType}%'
             </if>
-            <if test="alarmType !=null and alarmType !=''">
-                and wae.alarm_type like '%${alarmType}%'
-            </if>
-            <if test="alarmLevel !=null and alarmLevel !=''">
-                and wae.alarm_level like '%${alarmLevel}%'
-            </if>
-            <if test="alarmEventContent !=null and alarmEventContent !=''">
-                and wae.alarm_event_content like '%${alarmEventContent}%'
+            <if test="warnGrade !=null and warnGrade !=''">
+                and mdr.warn_grade like '%${warnGrade}%'
             </if>
             <if test="occurrenceTime !=null and occurrenceTime !=''">
                 and mdr.occurrence_time like '%${occurrenceTime}%'

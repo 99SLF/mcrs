@@ -2,6 +2,7 @@ package com.zimax.mcrs.basic.warn.mapper;
 
 import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.Matrix;
 import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.MatrixVo;
+import com.zimax.mcrs.basic.warn.pojo.WarnDealWith;
 import com.zimax.mcrs.basic.warn.pojo.WarnManager;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -19,17 +20,15 @@ public interface WarnMapper {
      * 添加预警维护信息
      */
     void addWarn(WarnManager warnManager);
-    /**
-     * 更新预警维护信息
-     */
     void updateWarn(WarnManager warnManager);
 
     /**
      * 查询信息
      */
     List<WarnManager> queryWarn(Map map);
-
-    int count();
+    void addWarnToUser(WarnDealWith warnDealWith);
+    int count(String warnGrade);
     int isExist(String warnGrade);
-    void deleteByWarnGrade(String warnGrade);
+    void delWarnToUser(int warnId);
+    List<WarnDealWith> queryWarnToUser(int warnId);
 }

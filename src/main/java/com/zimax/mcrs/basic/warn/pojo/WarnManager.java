@@ -17,12 +17,13 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("base_warn_dealwith")
+@TableName("base_warn")
 public class WarnManager {
     int id;
     String warnGrade;
     String creator;
+    String remark;
     Date createTime;
     @TableField(exist = false)
-    List<WarnDealWith> warnByUser;
+    List<WarnDealWith> warnToUser;
 }

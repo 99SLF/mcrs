@@ -177,9 +177,8 @@
     //APPID=equipmentId+deviceSoftwareType
     function check() {
         var a = document.getElementById("equipmentId").value;
-        var b = document.getElementById("deviceSoftwareType").value;
-        if (a && b) {
-            var c = a + b;
+        if (a) {
+            var c = a;
             document.getElementById("APPId").value = c;
         } else {
             document.getElementById("APPId").value = "";

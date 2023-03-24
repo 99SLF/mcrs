@@ -86,19 +86,19 @@ public class DeviceAbnVo {
      * 预警类型
      *
      */
-    private String alarmType;
+    private String warnType;
 
     /**
      * 预警等级
      *
      */
-    private String alarmLevel;
+    private String warnGrade;
 
     /**
      * 预警内容
      *
      */
-    private String alarmEventContent;
+    private String warningContent;
 
     /**
      * 发生时间

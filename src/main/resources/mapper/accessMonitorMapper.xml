@@ -31,7 +31,7 @@
         insert into mon_device_real
         values (MD5(#{appId}), #{accessType}, #{accessStatus},
                 #{deviceSoftwareStatus}, #{antennaStatus},
-                #{warningContent}, #{cpuRate}, #{storageRate}, #{errorRate}, #{occurrenceTime})
+                #{warningContent},#{warnGrade},#{warnType},#{cpuRate}, #{storageRate}, #{errorRate}, #{occurrenceTime})
     </insert>
     <update id="updateMonitorDeviceRealExist"
             parameterType="com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus">
@@ -48,6 +48,8 @@
             device_software_status = #{deviceSoftwareStatus},
             antenna_status         = #{antennaStatus},
             warning_content        = #{warningContent},
+            warn_grade = #{warnGrade},
+            warn_type = #{warnType},
             cpu_rate               = #{cpuRate},
             storage_rate           = #{storageRate},
             error_rate             = #{errorRate},
@@ -175,7 +177,8 @@
     <insert id="addDeviceAlarm"
             parameterType="com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceAlarm">
         insert into mon_device_alarm
-        values (#{deviceAlarmId}, #{appId}, #{warningContent}, #{accessStatus}, #{deviceSoftwareStatus}, #{antennaStatus})
+        values (#{deviceAlarmId}, #{appId}, #{accessStatus}, #{deviceSoftwareStatus}, #{antennaStatus},#{warnGrade},
+                #{warnType},#{occurrenceTime},#{warningContent},#{accessType})
     </insert>
 
     <select id="findAlarmEvent" resultType="com.zimax.mcrs.warn.pojo.AlarmEventVo">

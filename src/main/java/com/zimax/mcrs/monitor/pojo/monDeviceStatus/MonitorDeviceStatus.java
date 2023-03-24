@@ -1,6 +1,7 @@
 package com.zimax.mcrs.monitor.pojo.monDeviceStatus;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -78,7 +79,7 @@ public class MonitorDeviceStatus {
 
 
     /**
-     * 预警内容(字典)101正常
+     * 预警内容(字典)
      */
     private String warningContent;
 
@@ -105,11 +106,18 @@ public class MonitorDeviceStatus {
      */
     private Date occurrenceTime;
 
-
-
-
-
-
-
+    /**
+     * 预警等级
+     */
+    private String warnGrade;
+    /**
+     * 预警类型
+     */
+    private String warnType;
+    /**
+     * 设备资源号
+     */
+    @TableField(exist = false)
+    private String resource;
 
 }

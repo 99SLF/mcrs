@@ -28,8 +28,8 @@ public interface DeviceAbnormalAlarmMapper {
      * @return
      */
     int countAA(@Param("equipmentId") String equipmentId,@Param("equipmentName") String equipmentName, @Param("deviceName") String deviceName,
-                @Param("processName") String processName,@Param("alarmEventTitle") String alarmEventTitle, @Param("alarmType") String alarmType,
-                @Param("alarmLevel") String alarmLevel,@Param("alarmEventContent") String alarmEventContent,
+                @Param("processName") String processName, @Param("warnType") String warnType,
+                @Param("warnGrade") String warnGrade,
                 @Param("occurrenceTime") String occurrenceTime
     );
 }

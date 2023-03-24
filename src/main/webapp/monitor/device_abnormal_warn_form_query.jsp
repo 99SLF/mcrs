@@ -61,15 +61,9 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">预警标题：</label>
-        <div class="layui-input-block">
-            <input type="text" class="layui-input" name="alarmEventTitle" autocomplete="off" />
-        </div>
-    </div>
-    <div class="layui-form-item">
         <label class="layui-form-label">预警类型：</label>
         <div class="layui-input-inline">
-            <select name="alarmType" id="alarmType" lay-filter="alarmType"
+            <select name="warnType" id="warnType" lay-filter="warnType"
                     type="select">
                 <option value=""></option>
             </select>
@@ -78,7 +72,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">预警等级：</label>
         <div class="layui-input-inline">
-            <select name="alarmLevel" id="alarmLevel" lay-filter="alarmLevel"
+            <select name="warnGrade" id="warnGrade" lay-filter="warnGrade"
                     type="select">
                 <option value=""></option>
             </select>
@@ -123,13 +117,13 @@
 
     //获取预警类型类型的下拉值
     layui.admin.renderDictSelect({
-        elem: "#alarmType",
+        elem: "#warnType",
         dictTypeId: "WRANING_TYPE",
     });
     form.render();
     //获取预警等级
     layui.admin.renderDictSelect({
-        elem: "#alarmLevel",
+        elem: "#warnGrade",
         dictTypeId: "WARNING_LEVEL",
     });
     //获取预警内容
@@ -155,9 +149,8 @@
             equipmentName: formData.equipmentName,
             deviceName : formData.deviceName,
             processName: formData.processName,
-            alarmEventTitle: formData.alarmEventTitle,
-            alarmType: formData.alarmType ,
-            alarmLevel: formData.alarmLevel ,
+            warnType: formData.warnType ,
+            warnGrade: formData.warnGrade ,
             occurrenceTime: formData.occurrenceTime ? util.toDateString(formData.occurrenceTime, "yyyy-MM-dd") : ""
         });
     }
@@ -168,9 +161,8 @@
             equipmentName: "",
             deviceName : "",
             processName: "",
-            alarmEventTitle: "",
-            alarmType: "" ,
-            alarmLevel: "",
+            warnType: "" ,
+            warnGrade: "",
             occurrenceTime: ""
 
         }

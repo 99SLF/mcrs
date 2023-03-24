@@ -42,9 +42,8 @@ public class DeviceAbnormalAlarm {
      * @param equipmentName   设备名称
      * @param deviceName   终端名称
      * @param processName   使用工序
-     * @param alarmEventTitle  预警标题
-     * @param alarmType  预警类型
-     * @param alarmLevel 预警等级
+     * @param warnType  预警类型
+     * @param warnGrade 预警等级
      * @param alarmEventContent 预警内容
      * @param occurrenceTime    发生时间
      * @param order        排序方式
@@ -57,11 +56,11 @@ public class DeviceAbnormalAlarm {
     @GetMapping("/query")
     public Result<?> queryDeviceAbnormalAlarm(String page, String limit,
                                               String equipmentId,  String equipmentName, String deviceName,
-                                              String processName, String alarmEventTitle ,String alarmType,
-                                              String alarmLevel, String alarmEventContent, String occurrenceTime,
+                                              String processName,String warnType,
+                                              String warnGrade,String occurrenceTime,
                                               String order, String field) {
-        List DeviceAbnormalAlarms = deviceAbnormalAlarmService.queryDeviceAbnormalAlarm(page, limit, equipmentId, equipmentName,deviceName, processName,alarmEventTitle, alarmType, alarmLevel, alarmEventContent, occurrenceTime, order, field);
-        return Result.success(DeviceAbnormalAlarms, deviceAbnormalAlarmService.countAA(equipmentId, equipmentName,deviceName, processName,alarmEventTitle, alarmType, alarmLevel, alarmEventContent, occurrenceTime));
+        List DeviceAbnormalAlarms = deviceAbnormalAlarmService.queryDeviceAbnormalAlarm(page, limit, equipmentId, equipmentName,deviceName, processName, warnType, warnGrade, occurrenceTime, order, field);
+        return Result.success(DeviceAbnormalAlarms, deviceAbnormalAlarmService.countAA(equipmentId, equipmentName,deviceName, processName, warnType, warnGrade, occurrenceTime));
     }
 
 

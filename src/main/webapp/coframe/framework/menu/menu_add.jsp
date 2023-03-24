@@ -138,7 +138,6 @@
 
 
 	$("#menuCode").blur(function() {
-		debugger;
 		var menuCode = $("#menuCode").val();
 		if (menuCode != null && menuCode != "") {
 			$.ajax({
