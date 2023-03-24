@@ -220,6 +220,17 @@
       <artifactId>commons-lang3</artifactId>
       <version>3.7</version>
     </dependency>
+
+
+
+    <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-dependency-plugin -->
+    <!--将所依赖的jar包插件导到 -Maven将依赖项复制到target/lib中-->
+    <dependency>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-dependency-plugin</artifactId>
+      <version>3.1.1</version>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -266,6 +277,30 @@
           <target>8</target>
         </configuration>
       </plugin>
+
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <!-- 拷贝项目依赖包到lib/目录下 -->
+              <outputDirectory>${project.build.directory}/lib</outputDirectory>
+              <!-- 间接依赖也拷贝 -->
+              <excludeTransitive>false</excludeTransitive>
+              <!-- 带上版本号 -->
+              <stripVersion>false</stripVersion>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
   </build>
 </project>

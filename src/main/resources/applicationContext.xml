@@ -15,8 +15,6 @@
     <!--2.使用统配符加载-->
     <!--3.不使用外置文件，直接使用javabean直接修改vaule-->
 
-    <!--许可证配置-->
-    <context:property-placeholder ignore-unresolvable="true" location="classpath:license.properties"/>
     <!--更新包上传配置-->
     <context:property-placeholder ignore-unresolvable="true" location="classpath:upload.properties"/>
     <context:property-placeholder location="classpath:jdbc.properties"/>
@@ -57,21 +55,6 @@
         <property name="ConfigPath" value="${ConfigPath}"/>
         <property name="SystemFilePath" value="${SystemFilePath}"/>
     </bean>
-
-    <!--许可证装配bean-->
-    <bean id="License" class="com.LicenseAuthorization.license.entity.License">
-        <property name="subject" value="${subject}"/>
-        <property name="publicAlias" value="${publicAlias}"/>
-        <property name="storePass" value="${storePass}"/>
-        <property name="licensePath" value="${licensePath}"/>
-        <property name="publicKeysStorePath" value="${publicKeysStorePath}"/>
-        <property name="XMLDecoderPath" value="${XMLDecoderPath}"/>
-    </bean>
-
-
-
-
-
 
 
 
