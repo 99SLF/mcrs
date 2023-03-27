@@ -1,5 +1,6 @@
 package com.zimax.components.coframe.auth.startup;
 
+import com.LicenseAuthorization.ClientServices.licenseMatch.LicenseVerify;
 import com.zimax.cap.auth.IAuthManagerService;
 import com.zimax.cap.auth.manager.AuthManagerServiceLoader;
 import com.zimax.cap.auth.manager.AuthRuntimeManager;
@@ -38,26 +39,41 @@ public class AuthStartupListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent event) {
-        MUODataContextHelper.getCustomMUO(VirtualUserObjectTypes.SERVER_USER);
 
-        // 初始化，主要是为了让授权池作为监听器注册到可授权资源池
-        AuthRuntimeManager.getInstance();
+        try {
+            LicenseVerify licenseVerify = new LicenseVerify();
+            boolean verifyResult = licenseVerify.verify();
+            if (verifyResult){
+                MUODataContextHelper.getCustomMUO(VirtualUserObjectTypes.SERVER_USER);
 
-        PartyManagerServiceLoader
-                .setCurrentPartyUserInitService(new CoframePartyUserInitService());
+                // 初始化，主要是为了让授权池作为监听器注册到可授权资源池
+                AuthRuntimeManager.getInstance();
 
-        // 提升登录性能，将角色资源映射加载出来
-        List<Party> rolePartyList = AuthRuntimeManager.getInstance()
-                .getAllRolePartyList();
-        for (Party roleParty : rolePartyList) {
-            AuthRuntimeManager.getInstance().getAuthResListByRole(roleParty);
+                PartyManagerServiceLoader
+                        .setCurrentPartyUserInitService(new CoframePartyUserInitService());
+
+                // 提升登录性能，将角色资源映射加载出来
+                List<Party> rolePartyList = AuthRuntimeManager.getInstance()
+                        .getAllRolePartyList();
+                for (Party roleParty : rolePartyList) {
+                    AuthRuntimeManager.getInstance().getAuthResListByRole(roleParty);
+                }
+
+                loadPartyService(event);
+                loadAuthService(event);
+                loadPartyTypeConfig(event);
+                loadMenuResourceModelConfig(event);
+                loadPartyRoleAuthService(event);
+            }else{
+                log.info("证书无效");
+                System.exit(0);
+            }
+        }catch (Exception e){
+            log.error("证书安装失败！");
+            System.exit(0);
         }
 
-        loadPartyService(event);
-        loadAuthService(event);
-        loadPartyTypeConfig(event);
-        loadMenuResourceModelConfig(event);
-        loadPartyRoleAuthService(event);
+
     }
 
     // 加载party管理服务
