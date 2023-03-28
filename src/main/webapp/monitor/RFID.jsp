@@ -276,7 +276,6 @@
         },
         limits: [10, 15, 20, 30],
         parseData: function (res) {
-            debugger;
             return {
                 code: res.code,
                 msg: res.msg,
@@ -352,6 +351,15 @@
                 }
             }
 
+        },{
+            field: "occurrenceTime",
+            title: "发生时间",
+            align: "center",
+            hide: isHidden("occurrenceTime"),
+            minWidth: 200,
+            templet: function (d) {
+                return util.toDateString(d.occurrenceTime, 'yyyy-MM-dd HH:mm:ss');
+            }
         }
 
         ]]

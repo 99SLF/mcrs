@@ -345,8 +345,7 @@
             hide: isHidden("deviceSoftwareType"),
             minWidth: 150,
             templet: function (d) {
-
-
+                debugger;
                 return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoftwareType);
             }
         }, {
@@ -411,8 +410,16 @@
             align: "center",
             hide: isHidden("errorRate"),
             minWidth: 150
-        }
-        ]]
+        },{
+            field: "occurrenceTime",
+                title: "发生时间",
+                align: "center",
+                hide: isHidden("occurrenceTime"),
+                minWidth: 200,
+                templet: function (d) {
+                return util.toDateString(d.occurrenceTime, 'yyyy-MM-dd HH:mm:ss');
+            }
+        }]]
     });
 
 
