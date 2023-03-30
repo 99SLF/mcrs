@@ -2,6 +2,8 @@ package com.zimax.mcrs.monitor.pojo.vo;
 
 import lombok.Data;
 
+import java.util.Date;
+
 
 /**
  * 监控表数据和非持久化属性终端告警条数，返回的非持久化结果集
@@ -112,6 +114,7 @@ public class DeviceAbnVo {
      *
      */
     private String remarks;
+    private Date warnTime;
 
 
 }

@@ -365,19 +365,18 @@
                     }
                 }
             },{
-                field: "occurrenceTime",
+                field: "softMonitorTime",
                 title: "发生时间",
                 align: "center",
-                hide: isHidden("occurrenceTime"),
+                hide: isHidden("softMonitorTime"),
                 minWidth: 200,
                 templet: function (d) {
-                    return util.toDateString(d.occurrenceTime, 'yyyy-MM-dd HH:mm:ss');
+                    return d.softMonitorTime==null?"":util.toDateString(d.softMonitorTime, 'yyyy-MM-dd HH:mm:ss');
                 }
             }
         ]]
     });
 
-    debugger;
     var host = window.location.host;
     var port = host.split(":");
     var json = ""

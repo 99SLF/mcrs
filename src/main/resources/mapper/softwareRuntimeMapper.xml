@@ -38,7 +38,8 @@
         mdr.app_id,
         equ.equipment_id,
         equ.equipment_name,
-        mdr.device_software_status
+        mdr.device_software_status,
+        mdr.soft_monitor_time
         FROM mon_device_real AS mdr
         LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
         LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int

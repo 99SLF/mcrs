@@ -26,7 +26,7 @@ private EquipmentRuntimeMapper equipmentRuntimeMapper;
      * 查询PLC设备接入信息
      */
     public List<EquipmentStatusVo> queryEquipmentAccessP(String page, String limit,
-                                                         String equipmentId, String accessStatus,
+                                                         String equipmentId, String plcStatus,
                                                          String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
@@ -43,7 +43,7 @@ private EquipmentRuntimeMapper equipmentRuntimeMapper;
             map.put("limit", Integer.parseInt(limit));
         }
         map.put("equipmentId", equipmentId);
-        map.put("accessStatus", accessStatus);
+        map.put("plcStatus", plcStatus);
         return equipmentRuntimeMapper.queryEquipmentAccessP(map);
 
     }
@@ -52,8 +52,8 @@ private EquipmentRuntimeMapper equipmentRuntimeMapper;
      * @param
      * @return
      */
-    public int countEQP(String equipmentId, String accessStatus) {
-        return equipmentRuntimeMapper.countEQP(equipmentId, accessStatus);
+    public int countEQP(String equipmentId, String plcStatus) {
+        return equipmentRuntimeMapper.countEQP(equipmentId, plcStatus);
     }
 
 
@@ -61,7 +61,7 @@ private EquipmentRuntimeMapper equipmentRuntimeMapper;
      * 查询RFID设备接入信息
      */
     public List<EquipmentStatusVo> queryEquipmentAccessR(String page, String limit,
-                                                    String equipmentId, String accessStatus,
+                                                    String equipmentId, String rfidStatus,
                                                     String antennaStatus,
                                                     String order, String field) {
         ChangeString changeString = new ChangeString();
@@ -79,7 +79,7 @@ private EquipmentRuntimeMapper equipmentRuntimeMapper;
             map.put("limit", Integer.parseInt(limit));
         }
         map.put("equipmentId", equipmentId);
-        map.put("accessStatus", accessStatus);
+        map.put("rfidStatus", rfidStatus);
         map.put("antennaStatus", antennaStatus);
         return equipmentRuntimeMapper.queryEquipmentAccessR(map);
 
@@ -89,9 +89,9 @@ private EquipmentRuntimeMapper equipmentRuntimeMapper;
      * @param
      * @return
      */
-    public int countEQR(String equipmentId, String accessStatus,
+    public int countEQR(String equipmentId, String rfidStatus,
                         String antennaStatus) {
-        return equipmentRuntimeMapper.countEQR(equipmentId, accessStatus, antennaStatus);
+        return equipmentRuntimeMapper.countEQR(equipmentId, rfidStatus, antennaStatus);
     }
 
     public List<Equipment> findEquipmentId(String appId) {

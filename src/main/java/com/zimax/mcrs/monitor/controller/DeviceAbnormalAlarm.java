@@ -44,8 +44,8 @@ public class DeviceAbnormalAlarm {
      * @param processName   使用工序
      * @param warnType  预警类型
      * @param warnGrade 预警等级
-     * @param alarmEventContent 预警内容
-     * @param occurrenceTime    发生时间
+
+     * @param warnTime    发生时间
      * @param order        排序方式
      * @param field        排序字段
      * @return 信息列表
@@ -57,10 +57,10 @@ public class DeviceAbnormalAlarm {
     public Result<?> queryDeviceAbnormalAlarm(String page, String limit,
                                               String equipmentId,  String equipmentName, String deviceName,
                                               String processName,String warnType,
-                                              String warnGrade,String occurrenceTime,
+                                              String warnGrade,String warnTime,
                                               String order, String field) {
-        List DeviceAbnormalAlarms = deviceAbnormalAlarmService.queryDeviceAbnormalAlarm(page, limit, equipmentId, equipmentName,deviceName, processName, warnType, warnGrade, occurrenceTime, order, field);
-        return Result.success(DeviceAbnormalAlarms, deviceAbnormalAlarmService.countAA(equipmentId, equipmentName,deviceName, processName, warnType, warnGrade, occurrenceTime));
+        List DeviceAbnormalAlarms = deviceAbnormalAlarmService.queryDeviceAbnormalAlarm(page, limit, equipmentId, equipmentName,deviceName, processName, warnType, warnGrade, warnTime, order, field);
+        return Result.success(DeviceAbnormalAlarms, deviceAbnormalAlarmService.countAA(equipmentId, equipmentName,deviceName, processName, warnType, warnGrade, warnTime));
     }
 
 

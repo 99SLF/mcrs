@@ -11,12 +11,11 @@
         LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
         LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
         <where>
-            mdr.access_type = "101"
             <if test="equipmentId !=null and equipmentId !=''">
                 and equ.equipment_id like '%${equipmentId}%'
             </if>
-            <if test="accessStatus !=null and accessStatus !=''">
-                and mdr.access_status like '%${accessStatus}%'
+            <if test="plcStatus !=null and plcStatus !=''">
+                and mdr.plc_status like '%${accessStatus}%'
             </if>
         </where>
 
@@ -29,19 +28,18 @@
         equ.equipment_int,
         equ.equipment_id,
         equ.equipment_name,
-        mdr.access_type,
-        mdr.access_status
+        mdr.plc_status,
+        mdr.plc_monitor_time
         FROM
         mon_device_real AS mdr
         LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
         LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
         <where>
-            mdr.access_type = "101"
             <if test="equipmentId !=null and equipmentId !=''">
                 and equ.equipment_id like '%${equipmentId}%'
             </if>
-            <if test="accessStatus !=null and accessStatus !=''">
-                and mdr.access_status like '%${accessStatus}%'
+            <if test="plcStatus !=null and plcStatus !=''">
+                and mdr.plc_status like '%${plcStatus}%'
             </if>
         </where>
         <if test="order !=null and order !=''">
@@ -60,12 +58,11 @@
         LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
         LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
         <where>
-            mdr.access_type = "102"
             <if test="equipmentId !=null and equipmentId !=''">
                 and equ.equipment_id like '%${equipmentId}%'
             </if>
-            <if test="accessStatus !=null and accessStatus !=''">
-                and mdr.access_status like '%${accessStatus}%'
+            <if test="rfidStatus !=null and rfidStatus !=''">
+                and mdr.rfid_status like '%${rfidStatus}%'
             </if>
             <if test="antennaStatus !=null and antennaStatus !=''">
                 and mdr.antenna_status like '%${antennaStatus}%'
@@ -81,20 +78,19 @@
         equ.equipment_int,
         equ.equipment_id,
         equ.equipment_name,
-        mdr.access_type,
-        mdr.access_status,
-        mdr.antenna_status
+        mdr.rfid_status,
+        mdr.antenna_status,
+        mdr.rfid_monitor_time
         FROM
         mon_device_real AS mdr
         LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
         LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
         <where>
-            mdr.access_type = "102"
             <if test="equipmentId !=null and equipmentId !=''">
                 and equ.equipment_id like '%${equipmentId}%'
             </if>
-            <if test="accessStatus !=null and accessStatus !=''">
-                and mdr.access_status like '%${accessStatus}%'
+            <if test="rfidStatus !=null and rfidStatus !=''">
+                and mdr.rfid_status like '%${rfidStatus}%'
             </if>
             <if test="antennaStatus !=null and antennaStatus !=''">
                 and mdr.antenna_status like '%${antennaStatus}%'

@@ -58,5 +58,6 @@ public class SoftwareRunStatusVo {
      * 终端软件运行状态
      */
     private String deviceSoftwareStatus;
+    private Date softMonitorTime;
 
 }

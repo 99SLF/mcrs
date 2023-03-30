@@ -63,7 +63,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">接入状态：</label>
                     <div class="layui-input-inline">
-                        <select name="accessStatus" id="accessStatus" lay-filter="accessStatus"
+                        <select name="rfidStatus" id="rfidStatus" lay-filter="rfidStatus"
                                 type="select">
                             <option value=""></option>
                         </select>
@@ -124,7 +124,7 @@
         reloadData(field);
         var formData = {
             equipmentId: field.equipmentId,
-            accessStatus: field.accessStatus
+            rfidStatus: field.rfidStatus
         };
         form.val("layuiadmin-RFID-form", formData);
         advancedFormData = $.extend(advancedFormData, formData);
@@ -150,7 +150,7 @@
         reloadData(data);
         form.val("layuiadmin-RFID-form", {
             equipmentId: data.equipmentId,
-            accessStatus: data.accessStatus
+            rfidStatus: data.rfidStatus
         });
     }
 
@@ -304,32 +304,23 @@
             hide: isHidden("equipmentName"),
             minWidth: 150
         },{
-            field: "accessType",
-            title: "接入类型",
-            align: "center",
-            // sort: true,
-            hide: isHidden("accessType"),
-            minWidth: 150,
-            templet: function (d) {
-
-                return layui.admin.getDictText("ACCESS_TYPE", d.accessType);
-            }
-        }, {
             //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
-            field: "accessStatus",
+            field: "rfidStatus",
             title: "接入状态",
             align: "center",
             minWidth: 150,
-            hide: isHidden("accessStatus"),
+            hide: isHidden("rfidStatus"),
             templet: function (d) {
-                var accessStatus = layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", d.accessStatus);
-                if (d.accessStatus == "101") {
+                var rfidStatus = layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", d.rfidStatus);
+                if (d.rfidStatus == "101") {
 
-                    return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + accessStatus + '</span>';
+                    return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + rfidStatus + '</span>';
 
-                } else if (d.accessStatus == "102") {
-                    return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + accessStatus + '</span>';
+                } else if (d.rfidStatus == "102") {
+                    return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + rfidStatus + '</span>';
 
+                }else{
+                    return "";
                 }
             }
 
@@ -348,17 +339,19 @@
                 } else if (d.antennaStatus == "102") {
                     return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + antennaStatus + '</span>';
 
+                }else{
+                    return "";
                 }
             }
 
         },{
-            field: "occurrenceTime",
+            field: "rfidMonitorTime",
             title: "发生时间",
             align: "center",
-            hide: isHidden("occurrenceTime"),
+            hide: isHidden("rfidMonitorTime"),
             minWidth: 200,
             templet: function (d) {
-                return util.toDateString(d.occurrenceTime, 'yyyy-MM-dd HH:mm:ss');
+                return d.rfidMonitorTime==null?"":util.toDateString(d.rfidMonitorTime, 'yyyy-MM-dd HH:mm:ss');
             }
         }
 
@@ -380,12 +373,10 @@
         onError: function (event) {
         },
         onMessage: function (event) {
-
-            debugger;
             json = JSON.parse(event.data);
-            var accessTypeVal = json.accessType;
+            var rfidStatus = json.rfidStatus;
             var appId = json.appId
-            if (accessTypeVal == "102"){
+            if (rfidStatus != null||rfidStatus != ""){
                 var equipmentId = "";
                 $.ajax({
                     url: "<%=request.getContextPath()%>/EquipmentRuntime/findEquipmentId?appId=" + appId ,
@@ -418,19 +409,19 @@
                         var _td = _tds[j];
                         var dataField = $(_td).attr("data-field");
                         switch (dataField) {
-                            case "accessStatus":
-                                var accessStatus= layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", json.accessStatus)
-                                if (json.accessStatus == "101") {
+                            case "rfidStatus":
+                                var rfidStatus= layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", json.rfidStatus)
+                                if (rfidStatus == "101") {
                                     debugger;
                                     $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
                                     $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
-                                    $($(_td).children()[0]).children("span").eq(1).html(accessStatus);
+                                    $($(_td).children()[0]).children("span").eq(1).html(rfidStatus);
 
                                 }
-                                if (json.accessStatus == "102") {
+                                if (rfidStatus == "102") {
                                     $($(_td).children()[0]).children("span").eq(0).removeClass('layui-bg-green');
                                     $($(_td).children()[0]).children("span").eq(1).attr("style", "color:red");
-                                    $($(_td).children()[0]).children("span").eq(1).html(accessStatus);
+                                    $($(_td).children()[0]).children("span").eq(1).html(rfidStatus);
                                 }
                                 break;
 
@@ -483,7 +474,7 @@
         });
 
         //软件类型下拉框监听事件
-        form.on("select(accessStatus)", function (data) {
+        form.on("select(rfidStatus)", function (data) {
             var submit = $("#LAY-app-RFID-search");
             submit.click();
         });
@@ -491,7 +482,7 @@
 
         //获取接入状态的下拉值
         layui.admin.renderDictSelect({
-            elem: "#accessStatus",
+            elem: "#rfidStatus",
             dictTypeId: "EQUIPMENT_ACCESS_STATUS",
         });
         form.render();

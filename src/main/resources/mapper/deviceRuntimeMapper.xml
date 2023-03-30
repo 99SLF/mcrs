@@ -183,12 +183,12 @@
         mdr.app_id,
         equ.equipment_id,
         equ.equipment_name,
-        mdr.access_status,
+        mdr.plc_status,
+        mdr.rfid_status,
         mdr.device_software_status,
         mdr.cpu_rate,
         mdr.storage_rate,
-        mdr.error_rate,
-        mdr.occurrence_time
+        mdr.error_rate
         FROM mon_device_real AS mdr
         LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
         LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
@@ -207,9 +207,6 @@
             </if>
             <if test="deviceSoftwareStatus !=null and deviceSoftwareStatus !=''">
                 and mdr.device_software_status like '%${deviceSoftwareStatus}%'
-            </if>
-            <if test="accessStatus !=null and accessStatus !=''">
-                and mdr.access_status like '%${accessStatus}%'
             </if>
             <if test="cpuRate !=null and cpuRate !=''">
                 and mdr.cpu_rate like '%${cpuRate}%'
@@ -252,9 +249,6 @@
                 </if>
                 <if test="deviceSoftwareStatus !=null and deviceSoftwareStatus !=''">
                     and mdr.device_software_status like '%${deviceSoftwareStatus}%'
-                </if>
-                <if test="accessStatus !=null and accessStatus !=''">
-                    and mdr.access_status like '%${accessStatus}%'
                 </if>
                 <if test="cpuRate !=null and cpuRate !=''">
                     and mdr.cpu_rate like '%${cpuRate}%'

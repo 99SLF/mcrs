@@ -376,13 +376,14 @@
             //     }
             // }
         }, {
-            field: "occurrenceTime",
+            field: "warnTime",
             title: "发生时间",
             align: "center",
-            hide: isHidden("occurrenceTime"),
+            hide: isHidden("warnTime"),
             minWidth: 200,
             templet: function (d) {
-                return util.toDateString(d.occurrenceTime, 'yyyy-MM-dd HH:mm:ss');
+                debugger;
+                return d.warnTime==null?"":util.toDateString(d.warnTime, 'yyyy-MM-dd HH:mm:ss');
             }
 
         }]]
@@ -406,7 +407,7 @@
             json = JSON.parse(event.data);
             //通过预警事件编码查出预警标题，预警类型，预警等级，预警内容
             var warningContent = json.warningContent;
-            var occurrenceTime = layui.util.toDateString(json.occurrenceTime);
+            var warnTime = layui.util.toDateString(json.warnTime);
             var warningContent = "";
             var warnGrade = "";
             var warnType = "";
@@ -478,8 +479,8 @@
                             $($(_td).children()[0]).html(warningContent);
                             break;
 
-                        case "occurrenceTime":
-                            $($(_td).children()[0]).html(occurrenceTime);
+                        case "warnTime":
+                            $($(_td).children()[0]).html(warnTime);
                             break;
                     }
                 });

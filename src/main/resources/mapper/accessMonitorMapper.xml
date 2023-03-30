@@ -29,9 +29,9 @@
     <!--添加监控实时信息-->
     <insert id="addMonitorDeviceReal" parameterType="com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus">
         insert into mon_device_real
-        values (MD5(#{appId}), #{accessType}, #{accessStatus},
+        values (MD5(#{appId}), #{plcStatus}, #{rfidStatus},
                 #{deviceSoftwareStatus}, #{antennaStatus},
-                #{warningContent},#{warnGrade},#{warnType},#{cpuRate}, #{storageRate}, #{errorRate}, #{occurrenceTime})
+                #{warningContent},#{warnGrade},#{warnType},#{cpuRate}, #{storageRate}, #{errorRate}, #{warnTime},#{softMonitorTime},#{plcMonitorTime},#{rfidMonitorTime},#{antennaMonitorTime})
     </insert>
     <update id="updateMonitorDeviceRealExist"
             parameterType="com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus">
@@ -43,17 +43,20 @@
     <update id="updateMonitorDeviceStatus"
             parameterType="com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus">
         UPDATE mon_device_real
-        SET access_type            = #{accessType},
-            access_status          = #{accessStatus},
-            device_software_status = #{deviceSoftwareStatus},
-            antenna_status         = #{antennaStatus},
-            warning_content        = #{warningContent},
-            warn_grade = #{warnGrade},
-            warn_type = #{warnType},
-            cpu_rate               = #{cpuRate},
-            storage_rate           = #{storageRate},
-            error_rate             = #{errorRate},
-            occurrence_time        = #{occurrenceTime}
+        <trim prefix="set" suffixOverrides=",">
+            <if test="plcStatus != null">plc_status=#{plcStatus},</if>
+            <if test="rfidStatus != null">rfid_status=#{rfidStatus},</if>
+            <if test="deviceSoftwareStatus != null">device_software_status=#{deviceSoftwareStatus},</if>
+            <if test="antennaStatus != null">antenna_status=#{antennaStatus},</if>
+            <if test="warningContent != null">warning_content=#{warningContent},</if>
+            <if test="warnGrade != null">warn_grade=#{warnGrade},</if>
+            <if test="warnType != null">warn_type=#{warnType},</if>
+            <if test="softMonitorTime != null">soft_monitor_time=#{softMonitorTime},</if>
+            <if test="plcMonitorTime != null">plc_monitor_time=#{plcMonitorTime},</if>
+            <if test="rfidMonitorTime != null">rfid_monitor_time=#{rfidMonitorTime},</if>
+            <if test="antennaMonitorTime != null">antenna_monitor_time=#{antennaMonitorTime},</if>
+            <if test="warnTime != null">warn_time=#{warnTime},</if>
+            </trim>
         where app_id = #{appId}
     </update>
     <!--device_warning_num     = CASE

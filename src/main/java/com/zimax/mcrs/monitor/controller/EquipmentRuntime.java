@@ -33,7 +33,7 @@ public class EquipmentRuntime {
      * @param page        页记录数
      * @param limit       页码
      * @param equipmentId 设备资源号
-     * @param accessStatus       接入状态
+     * @param plcStatus       接入状态
      * @param order       排序方式
      * @param field       排序字段
      * @return 信息列表
@@ -43,10 +43,10 @@ public class EquipmentRuntime {
      */
     @GetMapping("/PLC/queryEquipmentAccessP")
     public Result<?> queryEquipmentAccessP(String page, String limit,
-                                          String equipmentId, String accessStatus,
+                                          String equipmentId, String plcStatus,
                                           String order, String field) {
-        List EquipmentAccess = equipmentRuntimeService.queryEquipmentAccessP(page, limit, equipmentId, accessStatus,order, field);
-        return Result.success(EquipmentAccess, equipmentRuntimeService.countEQP(equipmentId, accessStatus));
+        List EquipmentAccess = equipmentRuntimeService.queryEquipmentAccessP(page, limit, equipmentId, plcStatus,order, field);
+        return Result.success(EquipmentAccess, equipmentRuntimeService.countEQP(equipmentId, plcStatus));
     }
 
     /**
@@ -69,8 +69,8 @@ public class EquipmentRuntime {
      * @param page        页记录数
      * @param limit       页码
      * @param equipmentId 设备资源号
-     * @param accessStatus       接入状态
-     * @param accessStatus       天线状态
+     * @param rfidStatus       接入状态
+     * @param antennaStatus       天线状态
      * @param order       排序方式
      * @param field       排序字段
      * @return 上料报表信息列表
@@ -80,10 +80,10 @@ public class EquipmentRuntime {
      */
     @GetMapping("/RFID/queryEquipmentAccessR")
     public Result<?> queryEquipmentAccessR(String page, String limit,
-                                          String equipmentId, String accessStatus,
+                                          String equipmentId, String rfidStatus,
                                           String antennaStatus,
                                           String order, String field) {
-        List EquipmentAccess = equipmentRuntimeService.queryEquipmentAccessR(page, limit, equipmentId, accessStatus,antennaStatus, order, field);
-        return Result.success(EquipmentAccess, equipmentRuntimeService.countEQR(equipmentId, accessStatus,antennaStatus));
+        List EquipmentAccess = equipmentRuntimeService.queryEquipmentAccessR(page, limit, equipmentId, rfidStatus,antennaStatus, order, field);
+        return Result.success(EquipmentAccess, equipmentRuntimeService.countEQR(equipmentId, rfidStatus,antennaStatus));
     }
 }

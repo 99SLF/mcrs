@@ -76,6 +76,10 @@ public class EquipmentStatusVo {
      *
      */
     private String antennaStatus;
-
+    private String plcStatus;
+    private String rfidStatus;
+    Date rfidMonitorTime;
+    Date plcMonitorTime;
+    Date antennaMonitorTime;
 
 }

@@ -99,31 +99,56 @@ public class AccessMonitor {
         }
         String appId = DigestUtils.md5DigestAsHex(monitorDeviceStatus.getResource().getBytes());
         monitorDeviceStatus.setAppId(appId);
+        Date occurTime = monitorDeviceStatus.getOccurrenceTime();
         //调用修改终端实时表的接口
+        //添加监控对应信息
+        if(monitorDeviceStatus.getDeviceSoftwareStatus()==null&&monitorDeviceStatus.getWarnGrade()==null){
+            return Result.error("1","传入参数有误");
+        }
+        if(monitorDeviceStatus.getDeviceSoftwareStatus()!=null){
+            monitorDeviceStatus.setSoftMonitorTime(occurTime);
+        }
+        if(monitorDeviceStatus.getPlcStatus()!=null){
+            monitorDeviceStatus.setPlcMonitorTime(occurTime);
+        }
+        if(monitorDeviceStatus.getRfidStatus()!=null){
+            monitorDeviceStatus.setRfidMonitorTime(occurTime);
+        }
+        if(monitorDeviceStatus.getAntennaStatus()!=null){
+            monitorDeviceStatus.setAntennaMonitorTime(occurTime);
+        }
+        if(monitorDeviceStatus.getWarnGrade()!=null){
+            monitorDeviceStatus.setWarnTime(occurTime);
+        }
         int i = accessMonitorService.updateMonitorDeviceStatus(monitorDeviceStatus);
         if (i == 0) {
             return Result.error("1", "终端未注册");
         }
 
-        String accessStatus = monitorDeviceStatus.getAccessStatus();
+        String plcStatus = monitorDeviceStatus.getPlcStatus();
+        String rfidStatus = monitorDeviceStatus.getRfidStatus();
+        String antennaStatus = monitorDeviceStatus.getAntennaStatus();
         String deviceSoftwareStatus =monitorDeviceStatus.getDeviceSoftwareStatus();
-        String antennaStatus =monitorDeviceStatus.getAntennaStatus();
          appId = monitorDeviceStatus.getAppId();
+         String warnGrade = monitorDeviceStatus.getWarnGrade();
         String warningContent = monitorDeviceStatus.getWarningContent();
         //创建Jackson的核心对象， ObjectMapper
         ObjectMapper mapper = new ObjectMapper();
         //100是运行状态和接入状态都是正常的，异常就传具体的异常值
-        if (!"101".equals(accessStatus) || !"101".equals(deviceSoftwareStatus)|| !"101".equals(antennaStatus)){
+        if (warnGrade!=null&&warnGrade!=""){
             MonitorDeviceAlarm  monitorDeviceAlarm = new MonitorDeviceAlarm();
             monitorDeviceAlarm.setAppId(appId);
             monitorDeviceAlarm.setWarningContent(warningContent);
-            monitorDeviceAlarm.setAccessStatus(accessStatus);
             monitorDeviceAlarm.setDeviceSoftwareStatus(deviceSoftwareStatus);
             monitorDeviceAlarm.setAntennaStatus(antennaStatus);
             monitorDeviceAlarm.setOccurrenceTime(monitorDeviceStatus.getOccurrenceTime());
             monitorDeviceAlarm.setWarnGrade(monitorDeviceStatus.getWarnGrade());
             monitorDeviceAlarm.setWarnType(monitorDeviceStatus.getWarnType());
-            monitorDeviceAlarm.setAccessType(monitorDeviceStatus.getAccessType());
+            if(monitorDeviceStatus.getPlcStatus()!=null){
+                monitorDeviceAlarm.setAccessType("101");
+            }else{
+                monitorDeviceAlarm.setAccessType("102");
+            }
             accessMonitorService.addDeviceAlarm(monitorDeviceAlarm);
             //将java对象转成json字符串
             String json = mapper.writeValueAsString(monitorDeviceStatus);

@@ -29,7 +29,7 @@ public interface EquipmentRuntimeMapper {
      * @param
      * @return
      */
-    int countEQP(@Param("equipmentId") String equipmentId, @Param("accessStatus") String accessStatus
+    int countEQP(@Param("equipmentId") String equipmentId, @Param("plcStatus") String plcStatus
     );
 
     /**
@@ -44,7 +44,7 @@ public interface EquipmentRuntimeMapper {
      * @param
      * @return
      */
-    int countEQR(@Param("equipmentId") String equipmentId, @Param("accessStatus") String accessStatus,
+    int countEQR(@Param("equipmentId") String equipmentId, @Param("rfidStatus") String rfidStatus,
                  @Param("antennaStatus") String antennaStatus
     );
 

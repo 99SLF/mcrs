@@ -44,10 +44,8 @@ public class MonitorDeviceStatus {
      * RFID
      *
      */
-    private String accessType;
-
     /**
-     * 接入状态(正常异常)硬件
+     * rfid接入状态(正常异常)硬件
      * EQUIPMENT_ACCESS_STATUS
      * 101
      * 正常
@@ -56,7 +54,8 @@ public class MonitorDeviceStatus {
      * 异常
      *
      */
-    private String accessStatus;
+    private String plcStatus;
+    private String rfidStatus;
 
     /**
      * 运行状态（软件）
@@ -104,8 +103,13 @@ public class MonitorDeviceStatus {
     /**
      * 发生时间
      */
+    @TableField(exist = false)
     private Date occurrenceTime;
-
+    private Date softMonitorTime;
+    private Date plcMonitorTime;
+    private Date rfidMonitorTime;
+    private Date antennaMonitorTime;
+    private Date warnTime;
     /**
      * 预警等级
      */
@@ -119,5 +123,9 @@ public class MonitorDeviceStatus {
      */
     @TableField(exist = false)
     private String resource;
+    @TableField(exist = false)
+    private String accessStatus;
+    @TableField(exist = false)
+    private String accessType;
 
 }
