@@ -93,7 +93,7 @@ public class UpdateConfigFile {
         }
 
 
-        System.out.print(fileCont);//将字节数组转换为字符串
+        //System.out.print(fileCont);//将字节数组转换为字符串
         return Result.success(fileCont,"0","请求成功");
     }
 

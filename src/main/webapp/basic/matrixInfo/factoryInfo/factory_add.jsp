@@ -130,7 +130,6 @@
                 contentType: "text/json",
                 cache: false,
                 success: function (text) {
-                    debugger;
                     if (text.code == "1") {
                         checkResult = "工厂名称已存在";
                     }

@@ -157,7 +157,7 @@
     $('#selectEquipment').addClass("layui-btn-disabled").attr("disabled", true);
 
     function SetData(data) {
-        debugger;
+
         win = data.win ? data.win : window;
         var data = data.data;
         var deviceSoTypeVal = data.deviceSoType;
@@ -204,7 +204,7 @@
 
     //监听提交
     form.on("submit(layuiadmin-app-form-edit)", function (data) {
-        debugger;
+
         var submitData = JSON.stringify(data.field);
         if (submit == false) {
             submit = true;
@@ -216,7 +216,7 @@
                     cache: false,
                     contentType: "text/json",
                     success: function (result) {
-                        debugger;
+
                         layer.msg("修改成功", {
                             icon: 1,
                             time: 500

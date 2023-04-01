@@ -88,7 +88,7 @@
     function formRender(){
         //监听搜索
         form.on("submit(LAY-app-pointDispose-search)", function (data) {
-            debugger;
+
             var field = data.field;
             table.reload("pointDispose", {
                 where: field
@@ -98,7 +98,7 @@
         });
         //文本框回车事件
         $(".layui-input").on("keydown", function (event) {
-            debugger;
+
             if (event.keyCode == 13) {
                 var submit = $("#LAY-app-pointDispose-search");
                 submit.click();

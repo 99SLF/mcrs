@@ -575,7 +575,6 @@
 	}
 	
 	function removeDict() {
-		debugger;
 		var checkStatus = dictTb.checkStatus("#LAY-app-dictType-list");
 		var jsonData = JSON.stringify(selectedTermData);
 		layer.confirm("所有关联的业务字典项都将被删除，确认删除业务字典项？", {
@@ -643,7 +642,7 @@
 	});
 	
 	treeTable.on('checkbox(LAY-app-dict-list)', function(obj){//demo2表格复选框监听
-		debugger;
+
 		if (obj.checked) {
 			selected++;
 		} else {

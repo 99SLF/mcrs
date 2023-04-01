@@ -271,7 +271,6 @@
         //升级
         upgrade: function () {
 
-            debugger;
             //获取表单的所有内容
             var checkStatus = table.checkStatus("LAY-app-device-list-reload");
             var data = checkStatus.data;
@@ -353,7 +352,6 @@
                 var isre = contains(registerStatuses, '102');
                 var isSame = same(deviceSoftwareTypes);
                 var deviceSoftwareType = deviceSoftwareTypes[0];
-                debugger;
                 var deviceSoftwareTypeLength = layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", deviceSoftwareType);
                 if (isre == true) {
                     layer.msg("升级的终端，存在未注册！");
@@ -412,7 +410,6 @@
                                         resize: false,
                                         btn: ["确定", "取消"],
                                         success: function (layero, index) {
-                                            debugger;
                                             var dataJson = {
                                                 win: window,
                                                 deviceIds: deviceIds,
@@ -443,7 +440,43 @@
             }
 
         },
+//日志文件查看
+        viewLog:function (){
+            var checkStatus = table.checkStatus("LAY-app-device-list-reload");
+            var data = checkStatus.data;
+           if(data.length==0){
+               layer.msg("请选中一条记录！");
+           }else if(data.length>1){
+                layer.msg("请选中一条记录！");
+            }else{
+               top.layer.open({
+                   //弹窗
+                   type: 2,
+                   title: "日志文件查看",
+                   content: "<%=request.getContextPath() %>/equipment/logFile/list.jsp",
+                   area: ["1024px", "560px"],
+                   resize: false,
+                   btn: ["确定", "取消"],
+                   success: function (layero, index) {
+                       var dataJson = {
+                           win: window,
+                           equipmentId: data[0].equipmentId,
+                           port: data[0].equipmentContinuePort,
+                           equipmentIp: data[0].equipmentIp
+                       };
+                       layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                   },
+                   yes: function (index, layero) {
 
+                       var submit = layero.find("iframe").contents().find("#rollback");
+                       submit.click();
+
+                       //top.layer.close(index);
+                       <%--top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");--%>
+                   }
+               });
+           }
+        },
         //回退
         rollback: function () {
             var checkStatus = table.checkStatus("LAY-app-device-list-reload");
@@ -754,7 +787,11 @@
             title: "回退",
             layEvent: "rollback",
             icon: "layui-icon layui-icon-transfer",
-        }, "filter"],
+        }, {
+            title: "日志文件查看",
+            layEvent: "viewLog",
+            icon: "layui-icon layui-icon-file",
+        },"filter"],
         colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;

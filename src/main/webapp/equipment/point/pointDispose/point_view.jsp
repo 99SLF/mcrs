@@ -293,7 +293,7 @@
             cache: false,
             contentType: "text/json",
             success: function (result) {
-                debugger;
+
                 if (result) {
                     table.reload('plc',{
                         data : result.data.plcGroupList
@@ -384,7 +384,7 @@
                     cache: false,
                     contentType: 'text/json',
                     success: function(result) {
-                        debugger;
+
                         if (result.exception) {
                             layer.alert(result.exception.message, {
                                 icon: 2,
@@ -689,7 +689,6 @@
                 resize: false,
                 btn: ["关闭"],
                 success: function(layero, index) {
-                    debugger;
                     var dataJson = {
                         rfidGroup: obj.data,
                         win: window

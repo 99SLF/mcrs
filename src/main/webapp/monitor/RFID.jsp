@@ -412,7 +412,7 @@
                             case "rfidStatus":
                                 var rfidStatus= layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", json.rfidStatus)
                                 if (rfidStatus == "101") {
-                                    debugger;
+
                                     $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
                                     $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
                                     $($(_td).children()[0]).children("span").eq(1).html(rfidStatus);
@@ -428,7 +428,7 @@
                             case "antennaStatus":
                                 var antennaStatus= layui.admin.getDictText("ANTENNA_TYPE",json.antennaStatus)
                                 if (json.antennaStatus == "101") {
-                                    debugger;
+
                                     $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
                                     $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
                                     $($(_td).children()[0]).children("span").eq(1).html(antennaStatus);

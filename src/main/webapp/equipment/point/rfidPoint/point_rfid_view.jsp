@@ -96,7 +96,7 @@
 
     function SetData(data){
         win = data.win ? data.win : window;
-        debugger;
+
         var data = data.rfidGroup;
         form.val('point-rfid-add', {
             "rfidNum": data.rfidNum,

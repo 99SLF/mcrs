@@ -223,7 +223,7 @@
     form.render();
 
     function SetData(data) {
-        debugger;
+
         win = data.win ? data.win : window;
         var data = data.data;
         equipmentInt = data.equipmentInt;

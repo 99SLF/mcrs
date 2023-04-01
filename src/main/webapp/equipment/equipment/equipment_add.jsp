@@ -312,7 +312,7 @@
                 $("#matrixCode").val(data.matrixCode);
                 $("#factoryCode").val(data.factoryCode);
                 $("#processName").val(data.processName);
-                debugger;
+
                 top.layer.close(index);
             }
         });
@@ -368,7 +368,7 @@
         var equipment = data.field;
         if (submit == false) {
             submit = true;
-            debugger;
+
             var workStationLists = table.cache['workStation'];
             if (workStationLists.length==1 && workStationLists[0].workStationNum == ""){
                 equipment.workStationList = '';

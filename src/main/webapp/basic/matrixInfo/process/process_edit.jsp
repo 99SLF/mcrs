@@ -122,7 +122,7 @@
                 contentType: "text/json",
                 cache: false,
                 success: function (text) {
-                    debugger;
+
                     if (text.code == "1") {
                         checkResult = "工序名称已存在";
                     }
@@ -145,7 +145,7 @@
                 contentType: "text/json",
                 cache: false,
                 success: function (text) {
-                    debugger;
+
                     //通过接口返回，返回检测记录条数
                     if (text.code == "1") {
                         isExist = true;

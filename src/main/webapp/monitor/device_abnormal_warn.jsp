@@ -382,7 +382,7 @@
             hide: isHidden("warnTime"),
             minWidth: 200,
             templet: function (d) {
-                debugger;
+
                 return d.warnTime==null?"":util.toDateString(d.warnTime, 'yyyy-MM-dd HH:mm:ss');
             }
 

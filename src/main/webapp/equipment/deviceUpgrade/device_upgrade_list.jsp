@@ -430,7 +430,7 @@
 
     //监听操作事件
     table.on("tool(LAY-app-deviceUpgrade-list)", function (e) {
-        debugger;
+
         //当前行数据
         var data = e.data;
         var appId = data.aPPId;

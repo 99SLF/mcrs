@@ -106,7 +106,7 @@
     // 判断字符
     form.verify({
         matrixAddress: function (value, item) {
-            debugger;
+
             if (value.length > 255) {
                 return "基地地址内容不能超过255个字";
             }
@@ -127,7 +127,7 @@
                 contentType: "text/json",
                 cache: false,
                 success: function (text) {
-                    debugger;
+
                     if (text.code == "1") {
                         checkResult = "基地名称已存在";
                     }

@@ -54,6 +54,7 @@
         <property name="UploadpackagePath" value="${UploadpackagePath}"/>
         <property name="ConfigPath" value="${ConfigPath}"/>
         <property name="SystemFilePath" value="${SystemFilePath}"/>
+        <property name="LogFilePath" value="${LogFilePath}"/>
     </bean>
 
 
@@ -222,6 +223,10 @@
     <bean id="DeviceExchangeLogMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.mcrs.log.mapper.DeviceExchangeLogMapper"/>
+    </bean>
+    <bean id="LogFileMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.log.mapper.LogFileMapper"/>
     </bean>
 
     <bean id="InterfaceLogMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">

@@ -364,7 +364,7 @@
             content: "<%= request.getContextPath() %>/equipment/device/device_select.jsp",
             yes: function (index, layero) {
                 var pointDispose = layero.find('iframe')[0].contentWindow.getData();
-                debugger;
+
                 form.val("pointDispose-add",{
                     "appId": pointDispose.aPPId,
                     "deviceName": pointDispose.deviceName,
@@ -727,7 +727,7 @@
                 resize: false,
                 btn: ["关闭"],
                 success: function(layero, index) {
-                    debugger;
+
                     var dataJson = {
                         rfidGroup: obj.data,
                         win: window

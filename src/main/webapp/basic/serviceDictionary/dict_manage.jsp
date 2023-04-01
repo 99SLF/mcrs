@@ -97,7 +97,7 @@
 	
 	function refreshTab(node) {
 		var iframe = $(".layui-tab-item.layui-show").find("iframe");
-		debugger;
+
 		for (var i = 0; i < categoryTabs.length; i++) {
 			var obj = categoryTabs[i];
 			var settingTab = $("#" + obj.id);		
@@ -114,7 +114,7 @@
 			cache: false,
 			contentType:"text/json",
 			success: function(rel) {
-				debugger;
+
 				var data = rel;
 				var dataJson = toTreeData(data);
 				loadTree(dataJson);
@@ -168,7 +168,7 @@
 					displayOrder: treeNode.displayOrder
 				};
 				var treeTemplate = JSON.stringify(dataJson);
-				debugger;
+
 				$.ajax({
 					url: "<%=request.getContextPath() %>/TreeInfo/save",
 					type : 'POST',
@@ -176,7 +176,7 @@
 					cache : false,
 					contentType : 'text/json',
 					success: function(result){
-						debugger;
+
 						if (result.code == 0) {
 							layer.msg(result.msg, {icon:1, time:2000}, function(){
 								//DTree.changeTreeNodeAdd(result.data.infoId); // 添加成功，返回ID
@@ -213,7 +213,7 @@
 					infoId: treeNode.nodeId
 				};
 				var treeTemplate = JSON.stringify(dataJson);
-				debugger;
+
 				$.ajax({
 					url: "<%=request.getContextPath() %>/TreeInfo/update",
 					type: "post",
@@ -252,7 +252,7 @@
 					infoId: treeNode.nodeId
 				};
 				var treeTemplate = JSON.stringify(dataJson);
-				debugger;
+
 				$.ajax({
 					url: "<%=request.getContextPath() %>/TreeInfo/del",
 					type : 'POST',
@@ -315,7 +315,7 @@
 	}
 	
 	function toTreeData(data) {
-		debugger;
+
 		var tree = [];
 		var resData = data;
 		for (var i = 0; i < resData.length; i++){

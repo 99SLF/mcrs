@@ -392,7 +392,7 @@
                             case "plcStatus":
                                 var plcStatus= layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", json.plcStatus)
                                 if (json.plcStatus == "101") {
-                                    debugger;
+
                                     $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
                                     $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
                                     $($(_td).children()[0]).children("span").eq(1).html(plcStatus);

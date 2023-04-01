@@ -269,7 +269,7 @@
             cache: false,
             contentType: "text/json",
             success: function (result) {
-                debugger;
+
                 if (result) {
                     table.reload('LAY-app-alarmRule-list-reload', {
                         data: result.data.monitorEquipmentVoList
@@ -473,7 +473,7 @@
 
                     var tableData = layero.find("iframe")[0].contentWindow.GetData();
                     tableDates = tableData;
-                    debugger;
+
                     table.reload("LAY-app-alarmRule-list-reload", {
                         data: tableData
                     });
@@ -510,7 +510,7 @@
             });
         },
         parseData: function (res) {
-            debugger;
+
             return {
                 code: res.code,
                 msg: res.msg,

@@ -10,6 +10,15 @@ public class UploadJava {
     private String UploadpackagePath;
     private String ConfigPath;
     private String SystemFilePath;
+    private String logFilePath;
+    public String getLogFilePath() {
+        return logFilePath;
+    }
+
+    public void setLogFilePath(String logFilePath) {
+        this.logFilePath = logFilePath;
+    }
+
 
     public String getUploadpackagePath() {
         return UploadpackagePath;

@@ -206,7 +206,6 @@
 			contentType: "text/json",
 			cache: false,
 			success: function (text) {
-				debugger;
 				if (text) {
 					funcName1 = text.data.funcName;
 				}	

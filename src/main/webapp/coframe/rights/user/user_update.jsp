@@ -244,7 +244,7 @@
 	//判断字符
 	form.verify({
 		checkUserId: function (value, item) {
-			debugger;
+
 			if (!new RegExp("^[a-zA-Z0-9_]+$").test(value)) {
 				return "输入用户登录名称有误，只能输入英文字母、数字、下划线";
 			}
@@ -262,7 +262,7 @@
 				contentType: "text/json",
 				cache: false,
 				success: function (text) {
-					debugger;
+
 					if (text.code == "1") {
 						checkResult = "登录名账号名已存在";
 					}

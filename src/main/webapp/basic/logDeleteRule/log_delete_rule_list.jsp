@@ -375,7 +375,6 @@
                 contentType: "text/json",
                 cache: false,
                 success: function (result) {
-                    debugger;
                     if (result.code == "1") {
                         isExist = true;
                     } else {

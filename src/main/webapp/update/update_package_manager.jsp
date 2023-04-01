@@ -282,7 +282,7 @@
                     layero.find("iframe")[0].contentWindow.SetData(dataJson);
                 },
                 yes: function (index, layero) {
-                    debugger;
+
                     var submit = layero.find("iframe").contents().find("#layuiadmin-app-form-submit");
                     submit.click();
 

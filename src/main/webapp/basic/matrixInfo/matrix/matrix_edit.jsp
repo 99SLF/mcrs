@@ -114,7 +114,7 @@
     // 判断字符
     form.verify({
         matrixAddress: function (value, item) {
-            debugger;
+
             if (value.length > 255) {
                 return "基地地址内容不能超过255个字";
             }
@@ -135,7 +135,6 @@
                 contentType: "text/json",
                 cache: false,
                 success: function (text) {
-                    debugger;
                     if (text.code == "1") {
                         checkResult = "基地名称已存在";
                     }
@@ -148,7 +147,7 @@
     });
     // 判断基地名称是否已存在
     $("#matrixName").blur(function () {
-        debugger;
+
         var matrixName = $("#matrixName").val();
         if (matrixName != null && matrixName != "") {
             $.ajax({
@@ -158,7 +157,7 @@
                 contentType: "text/json",
                 cache: false,
                 success: function (text) {
-                    debugger;
+
                     //通过接口返回，返回检测记录条数
                     if (text.code == "1") {
                         isExist = true;

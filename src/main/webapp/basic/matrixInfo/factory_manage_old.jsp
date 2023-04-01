@@ -67,7 +67,7 @@
     var util = layui.util;
     var element = layui.element;
     var node = {};
-    debugger;
+
     var basic_list = {
         id: "list",
         title: "基础数据",
@@ -118,7 +118,7 @@
     }
 
     function refreshTab(node) {
-        debugger;
+
         var iframe = $(".layui-tab-item.layui-show").find("iframe");
         var obj = categoryTabs[Number(node.level) - 1];
         var settingTab = $("#" + obj.id);
@@ -128,7 +128,7 @@
 
     rendTree();
 
-    debugger;
+
     function rendTree() {
         $.ajax({
             url:"<%=request.getContextPath() %>/TreeInfo/queryCategoryTreeNode",
@@ -136,7 +136,7 @@
             cache: false,
             contentType:"text/json",
             success: function(rel) {
-                debugger;
+
                 var data = rel;
                 var dataJson = toTreeData(data);
                 loadTree(dataJson);
@@ -198,7 +198,7 @@
                         cache : false,
                         contentType : 'text/json',
                         success: function(result){
-                            debugger;
+
                             if (result.code == 0) {
                                 layer.msg(result.msg, {icon:1, time:2000}, function(){
                                     //DTree.changeTreeNodeAdd(result.data.infoId); // 添加成功，返回ID
@@ -236,7 +236,7 @@
                         infoId: treeNode.nodeId
                     };
                     var treeTemplate = JSON.stringify(dataJson);
-                    debugger;
+
                     $.ajax({
                         url: "<%=request.getContextPath() %>/TreeInfo/update",
                         type: "post",
@@ -276,7 +276,7 @@
                         infoId: treeNode.nodeId
                     };
                     var treeTemplate = JSON.stringify(dataJson);
-                    debugger;
+
                     $.ajax({
                         url: "<%=request.getContextPath() %>/TreeInfo/del",
                         type : 'POST',
@@ -342,9 +342,9 @@
             }
         });
     }
-    debugger;
+
     function toTreeData(data) {
-        debugger;
+
         var tree = [];
         var resData = data;
         for (var i = 0; i < resData.length; i++){
@@ -360,7 +360,7 @@
             // i--;
             // }
         }
-        debugger;
+
         var run = function(treeAttrs){
             if (resData.length > 0 ) {
                 for (var i = 0; i < treeAttrs.length; i++) {
