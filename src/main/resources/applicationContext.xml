@@ -64,6 +64,11 @@
     <!--        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>-->
     <!--        <property name="mapperInterface" value="com.zimax.components.coframe.auth.mapper.authMapper"/>-->
     <!--    </bean>-->
+
+    <bean id="HistoryAlarmMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.monitor.mapper.HistoryAlarmMapper"/>
+    </bean>
     <bean id="ColsFilterMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.components.coframe.tools.mapper.ColsFilterMapper"/>

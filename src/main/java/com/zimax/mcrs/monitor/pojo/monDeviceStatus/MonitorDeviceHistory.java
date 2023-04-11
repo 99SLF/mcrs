@@ -18,6 +18,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("mon_device_history")
+/*废弃*/
 public class MonitorDeviceHistory {
 
 
