@@ -119,9 +119,9 @@ public class AccessMonitorService {
     }
     public EqiAndAccessInfo getEqiAndAccess() {
         int eqiOnline = accessMonitorMapper.getEqiOnline();
-        int accessOnline = accessMonitorMapper.getAccessOnline();
+        //int accessOnline = accessMonitorMapper.getAccessOnline();
         EqiAndAccessInfo eqiAndAccessInfo = new EqiAndAccessInfo();
-        eqiAndAccessInfo.setAccessOnline(accessOnline);
+        //eqiAndAccessInfo.setAccessOnline(accessOnline);
         eqiAndAccessInfo.setEqiOnline(eqiOnline);
         return eqiAndAccessInfo;
     }
@@ -129,6 +129,7 @@ public class AccessMonitorService {
         int[] factoryId = accessMonitorMapper.queryFactoryId();
         Map<String,Object> map = new HashMap<>();
         List<List<Integer>> dataTotalList = new ArrayList<List<Integer>>();
+        //查询添加设备包含的工序名字
         String[] processNames = accessMonitorMapper.queryProcessName();
         ProcessOnfactory processOnfactoryList[] = accessMonitorMapper.queryFactoryAndProcess();
         List intData = null;
@@ -146,6 +147,9 @@ public class AccessMonitorService {
                     }
                     if(j==processOnfactoryList.length-1){
                         intData.add(0);
+                        if(i==0){
+                            factoryName.add(processOnfactoryList[j].getFactoryName());
+                        }
                     }
                 }
             }

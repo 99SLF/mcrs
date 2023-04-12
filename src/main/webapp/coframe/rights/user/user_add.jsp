@@ -33,9 +33,9 @@
      style="padding: 20px 30px 0 0;">
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>用户登录账号名：</label>
+            <label class="layui-form-label"><span style="color:red">*</span>登录账号：</label>
             <div class="layui-input-block">
-                <input id="userId" type="text" name="userId" lay-verify="required|checkUserId" placeholder="用户登录名(必填)"
+                <input id="userId" type="text" name="userId" lay-verify="required|checkUserId" placeholder="登录账号(必填)"
                        autocomplete="off" class="layui-input">
             </div>
         </div>

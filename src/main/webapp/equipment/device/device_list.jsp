@@ -456,7 +456,7 @@
                    content: "<%=request.getContextPath() %>/equipment/logFile/list.jsp",
                    area: ["1024px", "560px"],
                    resize: false,
-                   btn: ["确定", "取消"],
+                   btn: ["关闭"],
                    success: function (layero, index) {
                        var dataJson = {
                            win: window,
@@ -467,11 +467,7 @@
                        layero.find("iframe")[0].contentWindow.SetData(dataJson);
                    },
                    yes: function (index, layero) {
-
-                       var submit = layero.find("iframe").contents().find("#rollback");
-                       submit.click();
-
-                       //top.layer.close(index);
+                       top.layer.close(index);
                        <%--top.layui.index.openTabsPage("<%=request.getContextPath() %>/equipment/deviceUpgrade/device_upgrade_list.jsp", "升级记录");--%>
                    }
                });
