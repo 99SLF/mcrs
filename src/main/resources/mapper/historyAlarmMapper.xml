@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.monitor.mapper.HistoryAlarmMapper">
+    <select id="queryHistoryAlarm" parameterType="map" resultMap="com.zimax.mcrs.monitor.pojo.vo.MonitorDeviceAlarmVo">
+        SELECT
+        *
+        FROM mon_device_abn AS mda
+        LEFT JOIN eqi_device AS ede ON mda.app_id =ede.app_id
+        LEFT JOIN eqi_equipment AS eet ON ede.equipment_int = eet.equipment_int
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eet.equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="appId !=null and appId !=''">
+                and mda.app_id like '%${appId}%'
+            </if>
+            <if test="warnGrade !=null and warnGrade !=''">
+                and mda.warn_grade like '%${warnGrade}%'
+            </if>
+            <if test="startTime !=null and startTime!=''">
+                and mda.occurrence_time &gt;= #{startTime}
+            </if>
+            <if test="endTime !=null and endTime !=''">
+                and mda.occurrence_time &lt;= #{endTime}
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT count(*) FROM mon_device_abn AS mda
+        LEFT JOIN eqi_device AS ede ON mda.app_id =ede.app_id
+        LEFT JOIN eqi_equipment AS eet ON ede.equipment_int = eet.equipment_int
+        <where>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and eet.equipment_id like '%${equipmentId}%'
+            </if>
+            <if test="appId !=null and appId !=''">
+                and mda.app_id like '%${appId}%'
+            </if>
+            <if test="warnGrade !=null and warnGrade !=''">
+                and mda.warn_grade like '%${warnGrade}%'
+            </if>
+            <if test="startTime !=null and startTime!=''">
+                and mda.occurrence_time &gt;= #{startTime}
+            </if>
+            <if test="endTime !=null and endTime !=''">
+                and mda.occurrence_time &lt;= #{endTime}
+            </if>
+        </where>
+    </select>
+</mapper>
