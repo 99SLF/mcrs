@@ -27,8 +27,9 @@ public class HistoryAlarm {
      *
      * @param page              页记录数
      * @param limit             页码
-     * @param equipmentId       设备资源号
-     * @param appId             终端名称
+     * @param equipmentName     设备资源名
+     * @param deviceName        终端名称
+     * @param warnType          预警类型
      * @param warnGrade         预警等级
      * @param startTime/endTime 时间范围
      * @param order             排序方式
@@ -37,15 +38,15 @@ public class HistoryAlarm {
      * @return total 总记录数
      * @return code 状态码
      * @return msg 返回信息
+     * //
      */
     @GetMapping("/historyAlarm/query")
-    public Result<?> queryHistoryAlarm(String page, String limit,
-                                       String equipmentId, String appId,
-                                       String warnGrade,
-                                       String startTime, String endTime,
-                                       String order, String field) {
-        List historyAlarm = historyAlarmService.queryHistoryAlarm(page, limit, equipmentId, appId, warnGrade, startTime, endTime, order, field);
-        return Result.success(historyAlarm, historyAlarmService.count(equipmentId, appId, warnGrade, startTime, endTime));
+    public Result<?> queryHistoryAlarm(String page, String limit, String equipmentName,
+                                       String deviceName, String warnType,
+                                       String warnGrade, String startTime,
+                                       String endTime, String order, String field) {
+        List historyAlarm = historyAlarmService.queryHistoryAlarm(page, limit, equipmentName, deviceName, warnType, warnGrade, startTime, endTime, order, field);
+        return Result.success(historyAlarm, historyAlarmService.count(equipmentName, deviceName, warnType, warnGrade, startTime, endTime));
     }
 
 }

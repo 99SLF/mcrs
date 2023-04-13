@@ -57,21 +57,35 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">设备名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" class="layui-input" name="equipmentId" autocomplete="off">
+                        <input type="text" class="layui-input" name="equipmentName" autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">终端名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" class="layui-input" name="appId" autocomplete="off">
+                        <input type="text" class="layui-input" name="deviceName" autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">终端类型：</label>
+                    <label class="layui-form-label">预警类型：</label>
+                    <div class="layui-input-inline">
+                        <select name="warnType" id="warnType" lay-filter="warnType"
+                                type="select">
+                            <option value="">请选择预警类型</option>
+                            <option value="101">硬件预警</option>
+                            <option value="102">行为预警 </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">预警等级：</label>
                     <div class="layui-input-inline">
                         <select name="warnGrade" id="warnGrade" lay-filter="warnGrade"
                                 type="select">
-                            <option value=""></option>
+                            <option value="">请选择预警等级</option>
+                            <option value="info">info</option>
+                            <option value="warn">warn</option>
+                            <option value="error">error</option>
                         </select>
                     </div>
                 </div>
@@ -102,19 +116,16 @@
 </script>
 <%--字典--%>
 <script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
-<script type="text/javascript"
-        src="<%=request.getContextPath()%>/common/components/websocket/jquery.loadJSON.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/WebSocket.js"></script>
-<script type="text/javascript"
-        src="<%=request.getContextPath()%>/common/components/websocket/jquery.WebSocket.js"></script>
 <script type="text/javascript">
     var layer = layui.layer;
     var table = layui.table;
     var form = layui.form;
     var $ = layui.jquery;
+
     var util = layui.util;
     var admin = layui.admin;
     var view = layui.view;
+    var laydate = layui.laydate;
 
     // 过滤字段
     var hiddenFields = [];
@@ -128,6 +139,7 @@
 
     // 监听搜索
     form.on("submit(LAY-app-device_statusAlarm-search)", function (data) {
+        debugger;
         var startTime = "";
         var endTime = "";
         var field = data.field;
@@ -139,8 +151,9 @@
         field["endTime"]=endTime
         reloadData(field);
         var formData = {
-            equipmentId: field.equipmentId,
-            appId: field.appId,
+            equipmentName: field.equipmentName,
+            deviceName: field.deviceName,
+            warnType: field.warnType,
             warnGrade: field.warnGrade,
             CREATED_TIME:field.CREATED_TIME
         };
@@ -167,8 +180,9 @@
         advancedFormData = data;
         reloadData(data);
         form.val("layuiadmin-device_statusAlarm-form", {
-            equipmentId: data.equipmentId,
-            appId: data.appId,
+            equipmentName: data.equipmentName,
+            deviceName: data.deviceName,
+            warnType: data.warnType,
             warnGrade: data.warnGrade,
             CREATED_TIME:data.CREATED_TIME
         });
@@ -186,8 +200,7 @@
             var submit = $("#LAY-app-device_statusAlarm-search");
             submit.click();
             return false;
-        }
-        ,
+        },
         query: function () {
             var url = "<%=request.getContextPath() %>/monitor/device_statusAlarm_form_query.jsp";
             admin.popupRight({
@@ -270,8 +283,11 @@
             title: "查询",
             layEvent: "search",
             icon: "layui-icon layui-icon-search layuiadmin-button-btn",
-        },
-         "filter"],
+        }, {
+            title: "高级查询",
+            layEvent: "query",
+            icon: "icon iconfont icon-gaojichaxun",
+        }, "filter"],
         colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;
@@ -298,96 +314,146 @@
             };
         },
         //设置表头。值是一个二维数组。方法渲染方式必填
+        //设置表头。值是一个二维数组。方法渲染方式必填
         cols: [[{
             type: "checkbox",
         }, {
             title: "序号",
             type: "numbers",
         }, {
-            field: "appId",
-            title: "APPID",
-            align: "center",
-            hide: isHidden("appId"),
-            minWidth: 150
-        }, {
-            field: "deviceName",
-            title: "终端名称",
-            align: "center",
-            // sort: true,
-            hide: isHidden("deviceName"),
-            minWidth: 150
-        },{
-            field: "warningContent",
-            title: "告警内容",
-            align: "center",
-            // sort: true,
-            hide: isHidden("warningContent"),
-            minWidth: 150
-        }, {
-            //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
             field: "equipmentId",
             title: "设备资源号",
             align: "center",
+            // sort: true,
             hide: isHidden("equipmentId"),
             minWidth: 150
         }, {
             field: "equipmentName",
             title: "设备名称",
             align: "center",
+            // sort: true,
             hide: isHidden("equipmentName"),
             minWidth: 150
         }, {
-            field: "accessStatus",
-            title: "接入状态",
+            //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
+            field: "appId",
+            title: "APPID",
             align: "center",
-            hide: isHidden("accessStatus"),
-            minWidth: 150,
+            hide: isHidden("appId"),
+            minWidth: 245
         }, {
-            field: "deviceSoftwareStatus",
-            title: "软件运行状态",
+            //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
+            field: "deviceName",
+            title: "终端名称",
             align: "center",
-            hide: isHidden("deviceSoftwareStatus"),
-            minWidth: 150,
-        }, {
-            field: "antennaStatus",
-            title: "天线状态",
-            align: "center",
-            hide: isHidden("antennaStatus"),
-            minWidth: 150
-        }, {
-            field: "warnGrade",
-            title: "预警等级",
-            align: "center",
-            hide: isHidden("warnGrade"),
+            hide: isHidden("deviceName"),
             minWidth: 150
         }, {
             field: "warnType",
             title: "预警类型",
             align: "center",
             hide: isHidden("warnType"),
-            minWidth: 150
+            minWidth: 150,
+            templet: function (d) {
+                var warnType = layui.admin.getDictText("WRANING_TYPE", d.warnType);
+                if (d.warnType == null) {
+                    return "";
+                }else {
+                    return  warnType;
+                }
+            }
         }, {
-            field: "accessType",
-            title: "预警来源",
+            field: "warnGrade",
+            title: "预警等级",
             align: "center",
-            hide: isHidden("accessType"),
-            minWidth: 150
-        },{
+            hide: isHidden("warnGrade"),
+            minWidth: 150,
+            templet: function (d) {
+                var warnGrade = d.warnGrade;
+                if (d.warnGrade == null) {
+                    return "";
+                } else if (d.warnGrade == "info") {
+                    return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + warnGrade + '</span>';
+                } else if (d.warnGrade == "warn") {
+                    return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:yellow">' + warnGrade + '</span>';
+                } else {
+                    return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + warnGrade + '</span>';
+                }
+            }
+        }, {
+            field: "warningContent",
+            title: "预警内容",
+            align: "center",
+            hide: isHidden("warningContent"),
+            minWidth: 150,
+            // ,templet: function (d) {
+            //     // var warningContent = layui.admin.getDictText("WARNING_CONTENT", d.warningContent);
+            //     if (d.warningContent == "正常") {
+            //         return '<span style="color:green">' + "正常" + '</span>';
+            //     }else {
+            //         return '<span style="color:red">' + d.warningContent + '</span>';
+            //     }
+            // }
+            templet: function(d) {
+                d.warningContent = d.warningContent == null ? "" : d.warningContent;
+                var html = '<div><a rel="nofollow" href="javascript:void(0);" style="color:#1eddff" lay-event="showWarningContent">' + d.warningContent+ '</a></div>';
+                return html;
+            }
+        }, {
             field: "occurrenceTime",
             title: "发生时间",
             align: "center",
             hide: isHidden("occurrenceTime"),
             minWidth: 200,
             templet: function (d) {
-                return util.toDateString(d.occurrenceTime, 'yyyy-MM-dd HH:mm:ss');
+                return d.occurrenceTime==null?"":util.toDateString(d.occurrenceTime, 'yyyy-MM-dd HH:mm:ss');
             }
+
         }]]
     });
 
+    table.on( 'tool(LAY-app-device_statusAlarm-list)', function ( obj ) {
+        var data = obj.data;
+        if ( obj.event == "showWarningContent") {
+               var title = "预警内容";
+               var dataContent = obj.data.warningContent;
+            top.layer.open( {
+                type: 2,
+                title: title,
+                shadeClose: true,
+                content: "<%= request.getContextPath() %>/monitor/textWindows.jsp",
+                resize: true,
+                maxmin: true,
+                btn: [ "关闭" ],
+                success: function ( layero, index ) {
+                    //找到当前弹出层的iframe元素
+                    var iframe = layui.$( layero )
+                        .find( 'iframe' );
+                    //设定iframe的高度为当前iframe内body的高度
+                    iframe.css( 'height', Number( iframe[ 0 ].contentDocument.body.offsetHeight ) + 30 );
+                    iframe.css( 'width', "800px" );
+                    //重新调整弹出层的位置，保证弹出层在当前屏幕的中间位置
+                    $( layero ).css( 'top', ( window.innerHeight - iframe[ 0 ].offsetHeight ) / 2 );
+                    $( layero ).css( 'left', ( window.innerWidth - iframe[ 0 ].offsetWidth ) / 2 );
+                    var dataJson = {
+                        data: dataContent,
+                        win: window
+                    };
+                    layero.find( "iframe" )[ 0 ].contentWindow.SetData( dataJson );
+                },
+            } );
+        }
+    } );
 
     formReder();
 
     function formReder() {
+        laydate.render({
+            elem: "#CREATED_TIME",
+            type: "datetime",
+            trigger: "click",
+            range:"~"
+        });
         // 文本框回车事件
         $(".layui-input").on("keydown", function (event) {
             if (event.keyCode == 13) {
@@ -399,27 +465,16 @@
         });
 
         //软件类型下拉框监听事件
-        form.on("select(deviceSoftwareType)", function (data) {
+        form.on("select(warnType)", function (data) {
             var submit = $("#LAY-app-device_statusAlarm-search");
             submit.click();
         });
 
-        //获取软件类型的下拉值
-        layui.admin.renderDictSelect({
-            elem: "#",
-            dictTypeId: "",
-        });
-        //获取软件运行状态
-        layui.admin.renderDictSelect({
-            elem: "#",
-            dictTypeId: "",
+        form.on("select(warnGrade)", function (data) {
+            var submit = $("#LAY-app-device_statusAlarm-search");
+            submit.click();
         });
 
-        layui.admin.renderDictSelect({
-            elem: "#",
-            dictTypeId: "",
-        });
-        form.render();
     }
 
 

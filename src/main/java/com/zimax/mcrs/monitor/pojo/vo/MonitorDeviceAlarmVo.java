@@ -1,12 +1,13 @@
 package com.zimax.mcrs.monitor.pojo.vo;
 
-import java.util.Date;
+import lombok.Data;
 
 
 /**
  * @author 李伟杰
  * @date 2023/4/11 11:48
  */
+@Data
 public class MonitorDeviceAlarmVo {
 
     /**
@@ -61,77 +62,9 @@ public class MonitorDeviceAlarmVo {
     private int deviceId;
 
     /**
-     * APPId
-     */
-    private String APPId;
-
-    /**
-     * 版本号
-     */
-    private String version;
-
-    /**
-     * 是否启用
-     */
-    private String enable;
-
-    /**
-     * 注册状态
-     */
-    private String registerStatus;
-
-    /**
-     * 终端软件类型
-     */
-    private String deviceSoftwareType;
-
-    /**
      * 终端名称
      */
-    private String  deviceName;
-
-    /**
-     * 设备主键
-     */
-    private int equipmentInt;
-
-    /**
-     * 接入方式
-     */
-    private String accessMethod;
-
-    /**
-     * 备注
-     */
-    private String remarks;
-
-    /**
-     * 创建人
-     */
-    private String creator;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 终端程序安装路径
-     */
-    private String programInstallationPath;
-
-    /**
-     * 终端执行程序安装路径
-     */
-    private String executorInstallationPath;
-
-    /**
-     * 是否版本初始化
-     */
-
-    private String isUpdate;
-
-
+    private String deviceName;
 
     /**
      * 设备资源号
@@ -141,32 +74,8 @@ public class MonitorDeviceAlarmVo {
     /**
      * 设备名称
      */
+
     private String equipmentName;
-
-    /**
-     * 设备安装位置
-     */
-    private String equipmentInstallLocation;
-
-    /**
-     * 设备信息主键
-     */
-    private Integer equipTypeId;
-
-    /**
-     * 设备连接端口
-     */
-    private String equipmentContinuePort;
-
-    /**
-     * 设备连接IP
-     */
-    private String equipmentIp;
-
-    /**
-     * 接入点资源维护数据的主键
-     */
-    private Integer accPointResId;
 
 }
 

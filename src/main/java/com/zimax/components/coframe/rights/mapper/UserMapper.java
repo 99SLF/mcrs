@@ -48,6 +48,8 @@ public interface UserMapper {
       */
      void updateUser(User user);
 
+     void updateUserPassword(User user);
+
      /**
       * 主键删除用户
       */
@@ -100,6 +102,8 @@ public interface UserMapper {
       * 获取用户
       */
      User getUserByUserId(String userId );
+
+     String getUserPassword(@Param("userId") String userId);
 
 
 }

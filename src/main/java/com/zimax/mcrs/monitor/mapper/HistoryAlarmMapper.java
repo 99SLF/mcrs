@@ -20,10 +20,10 @@ public interface HistoryAlarmMapper {
     List<MonitorDeviceAlarmVo> queryHistoryAlarm(Map map);
 
 
-    int count(@Param("equipmentId") String equipmentId, @Param("appId") String appId,
+    int count(@Param("equipmentName") String equipmentName, @Param("deviceName") String deviceName,
+              @Param("warnType") String warnType,
               @Param("warnGrade") String warnGrade, @Param("startTime") String startTime,
               @Param("endTime") String endTime);
-
 
 }
 

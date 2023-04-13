@@ -11,10 +11,12 @@ layui.define(function(exports) {
 			data: {},
 			done: function(e) {
 				admin.exit(function() {
-					location.href = layui.setter.base + "coframe/auth/login.jsp";
+					top.location.href = layui.setter.base + "coframe/auth/login.jsp";
 				});
 			}
+
 		});
+
 	},
 	
 	// 扩展公共模块

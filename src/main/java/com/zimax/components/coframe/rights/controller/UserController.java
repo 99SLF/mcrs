@@ -1,11 +1,10 @@
 package com.zimax.components.coframe.rights.controller;
 
-
-import com.zimax.components.coframe.rights.pojo.PartyAuth;
+import com.zimax.components.coframe.rights.DefaultUserManager;
 import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.components.coframe.rights.pojo.UserPartyAuthVo;
 import com.zimax.components.coframe.rights.service.UserService;
-import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
+
 import com.zimax.mcrs.config.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -137,13 +136,12 @@ public class UserController {
      * @param userId 用户操作编号数组
      */
     @GetMapping("/getRoleName")
-    public Result<?> getRoleName(@RequestParam("userId") String userId){
-        Map<String,Object> maps = new HashMap<>();
+    public Result<?> getRoleName(@RequestParam("userId") String userId) {
+        Map<String, Object> maps = new HashMap<>();
         List<UserPartyAuthVo> RoleNameList = userService.getRoleName(userId);//查询出数据
-        maps.put("data",RoleNameList);
+        maps.put("data", RoleNameList);
         return Result.success(RoleNameList);
     }
-
 
 
 //	/**
@@ -180,11 +178,12 @@ public class UserController {
     /**
      * 检测用户是否存在
      * RequestParam 必须传参数，不然访问不到
+     *
      * @param userId 用户名字
      */
     @GetMapping("/check/isExist")
-    public Result<?> checkUser(@RequestParam("userId") String userId,@RequestParam("flag") String flag,@RequestParam("operatorId") String operatorId) {
-        if(flag.equals("1")){
+    public Result<?> checkUser(@RequestParam("userId") String userId, @RequestParam("flag") String flag, @RequestParam("operatorId") String operatorId) {
+        if (flag.equals("1")) {
             //添加
             if (userService.checkUser(userId) > 0) {
                 return Result.error("1", "用户已存在");
@@ -192,13 +191,38 @@ public class UserController {
                 return Result.success();
             }
 
-        }else {
+        } else {
             //编辑
-            if (userService.checkUserEdit(userId,operatorId) >0) {
+            if (userService.checkUserEdit(userId, operatorId) > 0) {
                 return Result.error("1", "用户已存在");
             } else {
                 return Result.success();
             }
+        }
+
+    }
+
+    /**
+     * 主页修改密码
+     *
+     * @param
+     * @return
+     */
+    @PostMapping("/updateCapUserPassword")
+    public Result<?> getCapUser(@RequestParam("password") String password,
+                                @RequestParam("userId") String userId,
+                                @RequestParam("pwd2") String pwd2) {
+        //通过userid 查询出该用户的密码 是个加密的密码,将加密的密码和传过来的旧密码加密，匹配判断两次密码是否一致
+        boolean flag = DefaultUserManager.INSTANCE.encodeString(password).equals(userService.getUserPassword(userId));
+        //如果密码一致就给新密码加密，修改数据库密码  如果密码错误就返回错误状态码
+        if (flag) {
+            User user = new User();
+            user.setPassword(DefaultUserManager.INSTANCE.encodeString(pwd2));
+            user.setUserId(userId);
+            userService.updateUserPassword(user);
+            return Result.success("0", "修改密码成功");
+        } else {
+            return Result.error("1", "密码不正确，请重新输入");
         }
 
     }

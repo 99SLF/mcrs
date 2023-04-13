@@ -2,18 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zimax.mcrs.monitor.mapper.HistoryAlarmMapper">
-    <select id="queryHistoryAlarm" parameterType="map" resultMap="com.zimax.mcrs.monitor.pojo.vo.MonitorDeviceAlarmVo">
+    <select id="queryHistoryAlarm" parameterType="map" resultType="com.zimax.mcrs.monitor.pojo.vo.MonitorDeviceAlarmVo">
         SELECT
         *
-        FROM mon_device_abn AS mda
+        FROM mon_device_alarm AS mda
         LEFT JOIN eqi_device AS ede ON mda.app_id =ede.app_id
         LEFT JOIN eqi_equipment AS eet ON ede.equipment_int = eet.equipment_int
         <where>
-            <if test="equipmentId !=null and equipmentId !=''">
-                and eet.equipment_id like '%${equipmentId}%'
+            <if test="equipmentName !=null and equipmentName !=''">
+                and eet.equipment_name like '%${equipmentName}%'
             </if>
-            <if test="appId !=null and appId !=''">
-                and mda.app_id like '%${appId}%'
+            <if test="deviceName !=null and deviceName !=''">
+                and ede.device_name like '%${deviceName}%'
+            </if>
+            <if test="warnType !=null and warnType !=''">
+                and mda.warn_type like '%${warnType}%'
             </if>
             <if test="warnGrade !=null and warnGrade !=''">
                 and mda.warn_grade like '%${warnGrade}%'
@@ -34,15 +37,18 @@
     </select>
 
     <select id="count" resultType="int">
-        SELECT count(*) FROM mon_device_abn AS mda
+        SELECT count(*) FROM mon_device_alarm AS mda
         LEFT JOIN eqi_device AS ede ON mda.app_id =ede.app_id
         LEFT JOIN eqi_equipment AS eet ON ede.equipment_int = eet.equipment_int
         <where>
-            <if test="equipmentId !=null and equipmentId !=''">
-                and eet.equipment_id like '%${equipmentId}%'
+            <if test="equipmentName !=null and equipmentName !=''">
+                and eet.equipment_name like '%${equipmentName}%'
             </if>
-            <if test="appId !=null and appId !=''">
-                and mda.app_id like '%${appId}%'
+            <if test="deviceName !=null and deviceName !=''">
+                and ede.device_name like '%${deviceName}%'
+            </if>
+            <if test="warnType !=null and warnType !=''">
+                and mda.warn_type like '%${warnType}%'
             </if>
             <if test="warnGrade !=null and warnGrade !=''">
                 and mda.warn_grade like '%${warnGrade}%'
