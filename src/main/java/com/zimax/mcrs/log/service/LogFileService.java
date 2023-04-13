@@ -154,13 +154,17 @@ public class LogFileService {
         map.put("code", "0");
         map.put("logType", logFile.getLogType());
         map.put("logTime", fileName);
+        int portNum =9000;
+        if(logFile.getPort()!=0){
+            portNum = logFile.getPort();
+        }
         InputStream in = null;
         OutputStream out = null;
         BufferedWriter bufferedWriter = null;
         Socket socket = null;
         try {
             socket = new Socket();
-            socket.connect(new InetSocketAddress(logFile.getEquipmentIp(), logFile.getPort()), 5000);
+            socket.connect(new InetSocketAddress(logFile.getEquipmentIp(), portNum), 5000);
 
             bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             bufferedWriter.write(JSON.toJSONString(map));

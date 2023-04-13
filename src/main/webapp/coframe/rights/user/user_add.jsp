@@ -102,14 +102,14 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label">手机号：</label>
+            <label class="layui-form-label"><span style="color:red">*</span>手机号：</label>
             <div class="layui-input-block">
                 <input type="text" name="userPhone" id="userPhone" lay-verify="phone" autocomplete="off"
                        class="layui-input">
             </div>
         </div>
         <div class="layui-col-sm6">
-            <label class="layui-form-label">邮箱地址：</label>
+            <label class="layui-form-label"><span style="color:red">*</span>邮箱地址：</label>
             <div class="layui-input-block">
                 <input type="text" name="email" id="email" lay-verify="checkEmail" autocomplete="off"
                        class="layui-input">

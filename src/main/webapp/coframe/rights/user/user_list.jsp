@@ -239,7 +239,7 @@
                 type: 2,
                 title: "添加用户",
                 content: "<%= request.getContextPath() %>/coframe/rights/user/user_add.jsp",
-                area: ["800px", "560px"],
+                area: ["800px", "500px"],
                 resize: false,
                 btn: ["确定", "取消"],
                 success: function (layero, index) {
@@ -579,7 +579,7 @@
             sort: true,
             event: "view",
             hide: isHidden("userId"),
-            minWidth: 120,
+            minWidth: 100,
             //监听打开详情页面
             templet: function (d) {
                 return '<span style="color: #09bbfd">' + d.userId + '</span>';
@@ -630,7 +630,7 @@
             field: "roleNameList",
             title: "角色名称",
             align: "center",
-            minWidth: 250,
+            minWidth: 200,
             hide: isHidden("roleNameList"),
             <%--templet: function(d) {--%>
             <%--    debugger;--%>
@@ -664,13 +664,13 @@
             title: "手机号",
             align: "center",
             hide: isHidden("userPhone"),
-            minWidth: 150
+            minWidth: 120
         }, {
             field: "email",
             title: "邮箱",
             align: "center",
             hide: isHidden("email"),
-            minWidth: 150
+            minWidth: 120
         }, {
             field: "userCreator",
             title: "创建人",
@@ -686,8 +686,7 @@
         }, {
             title: "操作",
             align: "center",
-            fixed: "right",
-            width: 150,
+            width: 160,
             toolbar: "#table-user-list"
         }]]
     });
@@ -728,7 +727,7 @@
                 type: 2,
                 title: "编辑用户",
                 content: "<%= request.getContextPath() %>/coframe/rights/user/user_update.jsp",
-                area: ["800px", "560px"],
+                area: ["800px", "500px"],
                 resize: false,
                 btn: ["确定", "取消"],
                 success: function (layero, index) {
