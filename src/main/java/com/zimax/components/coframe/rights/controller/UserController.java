@@ -220,9 +220,9 @@ public class UserController {
             user.setPassword(DefaultUserManager.INSTANCE.encodeString(pwd2));
             user.setUserId(userId);
             userService.updateUserPassword(user);
-            return Result.success("0", "修改密码成功");
+            return Result.success("0", "修改密码成功,即将退出程序");
         } else {
-            return Result.error("1", "密码不正确，请重新输入");
+            return Result.success("1", "密码不正确，请重新输入");
         }
 
     }
