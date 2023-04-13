@@ -180,6 +180,13 @@ public class UserService {
 		user.setUpdateTime(new Date());
 		userMapper.updateUser(user);
 	}
+
+	public void updateUserPassword(User user) {
+		String updater = DataContextManager.current().getMUODataContext().getUserObject().getUserId();
+		user.setUpdater(updater);
+		user.setUpdateTime(new Date());
+		userMapper.updateUserPassword(user);
+	}
 //	/**
 //	 * 通过用户编码查询匹配密码的记录条数
 //	 * @param
@@ -277,5 +284,14 @@ public class UserService {
 	}
 
 
+
+	/**
+	 * 通过用户名查询出密码
+	 * @param
+	 * @return
+	 */
+	public String getUserPassword(String  userId ){
+		return userMapper.getUserPassword(userId);
+	}
 
 }
