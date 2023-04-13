@@ -288,7 +288,6 @@
                 layer.msg("请至少选中一条记录！");
             }
             for (i = 0; i < data.length; i++) {
-                debugger;
                 if (data[i].enableStatus == "101") {
                     isExits = true;
                     break;

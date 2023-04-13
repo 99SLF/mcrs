@@ -389,7 +389,7 @@
         ]]
     });
 
-debugger;
+
     var host = window.location.host;
     var port = host.split(":");
     var json = ""
@@ -413,7 +413,7 @@ debugger;
             //如果在后面再加上.text() 代表要取出这个单元格中的文本。
             //html()方法返回被选元素的内容，即括号内未设置参数。若设置参数，返回设置参数的内容。并且该参数内容覆盖所有想匹配的元素的内容,参数可为函数，即function(index,dcontent)
             // $("p").html("AAA");所有p标签的内容变为：AAA
-            debugger;
+
             var _trs=$(".layui-table-body.layui-table-main:eq(0) tbody:eq(0)").children();
             function find(tr, appId) {
                 var _tds = $(tr).children();

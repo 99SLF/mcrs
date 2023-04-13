@@ -419,7 +419,7 @@
                         case "deviceSoftwareStatus":
                             var deviceSoftwareStatus = layui.admin.getDictText("DEVICE_SOFTWARE_STATUS", json.deviceSoftwareStatus)
                             if (json.deviceSoftwareStatus == "101") {
-                                debugger;
+
                                 $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
                                 $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
                                 $($(_td).children()[0]).children("span").eq(1).html(deviceSoftwareStatus);

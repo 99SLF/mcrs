@@ -95,7 +95,7 @@
     //文本框回车事件
     $(".layui-input").on("keydown", function (event) {
         if (event.keyCode == 13) {
-            debugger;
+
             var submit = $("#search");
             submit.click();
             return false;

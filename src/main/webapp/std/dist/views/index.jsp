@@ -81,18 +81,18 @@
                                             <p><cite id="deviceOnumber">0</cite></p>
                                         </div>
                                     </li>
-                                    <li class="layui-col-xs6">
-                                        <div class="layadmin-backlog-body">
-                                            <h3>接入点数量</h3>
-                                            <p><cite id="accessPointNumber">0</cite></p>
-                                        </div>
-                                    </li>
-                                    <li class="layui-col-xs6">
-                                        <div class="layadmin-backlog-body">
-                                            <h3>接入点在线数量</h3>
-                                            <p><cite id="accessPointOnumber">0</cite></p>
-                                        </div>
-                                    </li>
+<%--                                    <li class="layui-col-xs6">--%>
+<%--                                        <div class="layadmin-backlog-body">--%>
+<%--                                            <h3>接入点数量</h3>--%>
+<%--                                            <p><cite id="accessPointNumber">0</cite></p>--%>
+<%--                                        </div>--%>
+<%--                                    </li>--%>
+<%--                                    <li class="layui-col-xs6">--%>
+<%--                                        <div class="layadmin-backlog-body">--%>
+<%--                                            <h3>接入点在线数量</h3>--%>
+<%--                                            <p><cite id="accessPointOnumber">0</cite></p>--%>
+<%--                                        </div>--%>
+<%--                                    </li>--%>
                                 </ul>
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                         <div class="layui-tab layui-tab-brief layadmin-latestData">
                             <ul class="layui-tab-title">
                                 <li class="layui-this">终端行为记录</li>
-                                <li>MCS行为记录</li>
+                                <li>MCRS行为记录</li>
                             </ul>
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -238,87 +238,87 @@
     <%--    }--%>
     <%--});--%>
     // 在线数量
-    <%--$.ajax({--%>
-    <%--    url: "<%=request.getContextPath() %>/AccessMonitor/deviceAndaccess",--%>
-    <%--    type: "GET",--%>
-    <%--    async: true,--%>
-    <%--    cache: false,--%>
-    <%--    contentType: "text/json",--%>
-    <%--    success: function (result) {--%>
-    <%--        if (result) {--%>
-    <%--            $("#deviceOnumber").html(result.data.eqiOnline)--%>
-    <%--            $("#accessPointOnumber").html(result.data.accessOnline);--%>
-    <%--        } else {--%>
-    <%--            layer.msg("查询失败");--%>
-    <%--        }--%>
-    <%--    }--%>
-    <%--});--%>
+    $.ajax({
+        url: "<%=request.getContextPath() %>/AccessMonitor/deviceAndaccess",
+        type: "GET",
+        async: true,
+        cache: false,
+        contentType: "text/json",
+        success: function (result) {
+            if (result) {
+                $("#deviceOnumber").html(result.data.eqiOnline)
+               // $("#accessPointOnumber").html(result.data.accessOnline);
+            } else {
+                layer.msg("查询失败");
+            }
+        }
+    });
     // 告警信息
-    <%--$.ajax({--%>
-    <%--    url: "<%=request.getContextPath() %>/DeviceAbnormalAlarm/getWarnInfo",--%>
-    <%--    type: "GET",--%>
-    <%--    async: true,--%>
-    <%--    cache: false,--%>
-    <%--    contentType: "text/json",--%>
-    <%--    success: function (result) {--%>
-    <%--        if (result) {--%>
-    <%--            $("#warnTotal").html(result.data.warnTotal)--%>
-    <%--            $("#hardWarn").html(result.data.hardWarn)--%>
-    <%--            $("#activeWarn").html(result.data.activeWarn)--%>
-    <%--        } else {--%>
-    <%--            layer.msg("查询失败");--%>
-    <%--        }--%>
-    <%--    }--%>
-    <%--});--%>
+    $.ajax({
+        url: "<%=request.getContextPath() %>/DeviceAbnormalAlarm/getWarnInfo",
+        type: "GET",
+        async: true,
+        cache: false,
+        contentType: "text/json",
+        success: function (result) {
+            if (result) {
+                $("#warnTotal").html(result.data.warnTotal)
+                $("#hardWarn").html(result.data.hardWarn)
+                $("#activeWarn").html(result.data.activeWarn)
+            } else {
+                layer.msg("查询失败");
+            }
+        }
+    });
 
     // 告警信息折线图
-    <%--$.ajax({--%>
-    <%--    url: "<%=request.getContextPath() %>/DeviceAbnormalAlarm/groupQueryBydate",--%>
-    <%--    type: "GET",--%>
-    <%--    async: true,--%>
-    <%--    cache: false,--%>
-    <%--    contentType: "text/json",--%>
-    <%--    success: function (result) {--%>
-    <%--        activeWarn = [], hardWarn = [], recordDate = []--%>
-    <%--        if (result) {--%>
-    <%--            var data = result.data;--%>
-    <%--            if (data.length > 0) {--%>
-    <%--                for (var i = 0; i < data.length; i++) {--%>
-    <%--                    var date = new Date(data[i].recordDate)--%>
-    <%--                    var month = date.getMonth() + 1;--%>
-    <%--                    var day = date.getDate();--%>
-    <%--                    var str = month + '-' + day;--%>
-    <%--                    recordDate.push(str);--%>
-    <%--                    activeWarn.push(data[i].activeWarn);--%>
-    <%--                    hardWarn.push(data[i].hardWarn);--%>
-    <%--                }--%>
-    <%--            }--%>
-    <%--            echartZhe();--%>
-    <%--        } else {--%>
-    <%--            layer.msg("查询失败");--%>
-    <%--        }--%>
-    <%--    }--%>
-    <%--});--%>
+    $.ajax({
+        url: "<%=request.getContextPath() %>/DeviceAbnormalAlarm/groupQueryBydate",
+        type: "GET",
+        async: true,
+        cache: false,
+        contentType: "text/json",
+        success: function (result) {
+            activeWarn = [], hardWarn = [], recordDate = []
+            if (result) {
+                var data = result.data;
+                if (data.length > 0) {
+                    for (var i = 0; i < data.length; i++) {
+                        var date = new Date(data[i].recordDate)
+                        var month = date.getMonth() + 1;
+                        var day = date.getDate();
+                        var str = month + '-' + day;
+                        recordDate.push(str);
+                        activeWarn.push(data[i].activeWarn);
+                        hardWarn.push(data[i].hardWarn);
+                    }
+                }
+                echartZhe();
+            } else {
+                layer.msg("查询失败");
+            }
+        }
+    });
     // 饼图
-    <%--$.ajax({--%>
-    <%--    url: "<%=request.getContextPath() %>/DeviceAbnormalAlarm/getWarnByproduction",--%>
-    <%--    type: "GET",--%>
-    <%--    async: true,--%>
-    <%--    cache: false,--%>
-    <%--    contentType: "text/json",--%>
-    <%--    success: function (result) {--%>
-    <%--        if (result) {--%>
-    <%--            var resData = result.data;--%>
-    <%--            bingData = resData--%>
-    <%--            for(var i in resData){--%>
-    <%--                bingProcessName.push(resData[i].name)--%>
-    <%--            }--%>
-    <%--            echartBing();--%>
-    <%--        } else {--%>
-    <%--            layer.msg("查询失败");--%>
-    <%--        }--%>
-    <%--    }--%>
-    <%--});--%>
+    $.ajax({
+        url: "<%=request.getContextPath() %>/DeviceAbnormalAlarm/getWarnByproduction",
+        type: "GET",
+        async: true,
+        cache: false,
+        contentType: "text/json",
+        success: function (result) {
+            if (result) {
+                var resData = result.data;
+                bingData = resData
+                for(var i in resData){
+                    bingProcessName.push(resData[i].name)
+                }
+                echartBing();
+            } else {
+                layer.msg("查询失败");
+            }
+        }
+    });
 
 
     // 柱形图

@@ -121,7 +121,7 @@
 						type: "POST",
 						contentType: "text/json",
 						success: function(text) {
-						    debugger;
+
 							if (text.code) {
 								layer.msg("取消授权成功",{
                                     icon: 1,
@@ -142,7 +142,7 @@
 						type: "POST",
 						contentType: "text/json",
                         success: function(text) {
-                            debugger;
+
                             if (text.code) {
                                 layer.msg("授权成功",{
                                     icon: 1,

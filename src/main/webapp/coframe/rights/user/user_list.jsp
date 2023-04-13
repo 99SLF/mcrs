@@ -610,7 +610,6 @@
             hide: isHidden("status"),
             /*挂起，正常，锁定，注销*/
             templet: function (d) {
-                debugger;
               var statusVal =  layui.admin.getDictText("COF_USERSTATUS", d.status);
                 if (d.status == "102"){
                 return '<span class="layui-badge-dot layui-bg-green"></span>' + "  "+ '<span style="color:#00fd00">' + statusVal + '</span>';
@@ -754,7 +753,7 @@
                 btn: ["关闭"],
                 closeBtn: '',
                 success: function (layero, index) {
-                    debugger;
+
                     var dataJson = {
                         data: data,
                         win: window

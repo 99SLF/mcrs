@@ -154,7 +154,7 @@
 					var dataJson = {
 						win:window,				
 					};
-					debugger;
+
 					layero.find("iframe")[0].contentWindow.SetData(dataJson);
 				},
 				yes: function(index, layero) {

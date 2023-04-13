@@ -70,28 +70,30 @@
     </delete>
 
     <select id="groupQueryBydate" resultType="com.zimax.mcrs.monitor.pojo.vo.GroupByDate">
-        select date_format(t1.equipment_exchange_time, '%Y-%m-%d') as recordDate,
-               sum(CASE abn_type WHEN "101" THEN 1 ELSE 0 END)     AS "activeWarn",
-               sum(CASE abn_type WHEN "100" THEN 1 ELSE 0 END)     AS "hardWarn"
-        from log_log t1
-        where t1.log_type = 108
-        group by date_format(t1.equipment_exchange_time, '%Y-%m-%d')
-        ORDER BY t1.equipment_exchange_time desc limit 0,7
+        select date_format(t1.occurrence_time, '%Y-%m-%d') as recordDate,
+               sum(CASE warn_type WHEN "101" THEN 1 ELSE 0 END)     AS "activeWarn",
+               sum(CASE warn_type WHEN "100" THEN 1 ELSE 0 END)     AS "hardWarn"
+        from mon_device_alarm t1
+        group by date_format(t1.occurrence_time, '%Y-%m-%d')
+        ORDER BY t1.occurrence_time desc limit 0,7
     </select>
     <!--    告警信息-->
     <select id="getWarnInfo" resultType="com.zimax.mcrs.monitor.pojo.vo.WarnTotalInfo">
         select count(*)                                            as "warnTotal",
-               sum(CASE warning_type WHEN "101" THEN 1 ELSE 0 END) AS "activeWarn",
-               sum(CASE warning_type WHEN "100" THEN 1 ELSE 0 END) AS "hardWarn"
-        from mon_device_abn
+               sum(CASE warn_type WHEN "102" THEN 1 ELSE 0 END) AS "activeWarn",
+               sum(CASE warn_type WHEN "101" THEN 1 ELSE 0 END) AS "hardWarn"
+        from mon_device_alarm
     </select>
 
     <select id="getWarnByproduction" resultType="com.zimax.mcrs.monitor.pojo.vo.GroupByProduction">
-        select b.process_name name, count(b.process_name) value
-        from mon_device_abn a
-            left JOIN base_process_info b
-        on a.use_process=b.process_id
-        group by b.process_name
+        select pro.process_name name, count(pro.process_name) value
+        from mon_device_alarm a
+            left join eqi_device dev on a.app_id=dev.app_id
+            LEFT JOIN eqi_equipment eqi on dev.equipment_int=eqi.equipment_int
+            left JOIN base_access_info acc on eqi.acc_point_res_id=acc.acc_point_res_id
+            left JOIN base_process_info pro
+            on acc.process_id=pro.process_id
+        group by pro.process_name
     </select>
 
     <select id="getEqiOnline" resultType="Int">

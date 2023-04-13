@@ -67,7 +67,6 @@
     var isExits = false;
 
     //获取当前的树节点的值的数据库表id
-    debugger;
     var nodeId = "<%=request.getParameter("realId")%>";//url数值类型不需要双引号，字符串类型需要双引号
     //全局参数
     var req_data;

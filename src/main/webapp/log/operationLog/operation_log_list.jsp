@@ -300,7 +300,7 @@
             });
         },
         parseData: function (res) {
-            debugger;
+
             return {
                 code: res.code,
                 msg: res.msg,

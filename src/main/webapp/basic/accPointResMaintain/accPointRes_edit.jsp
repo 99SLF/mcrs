@@ -288,9 +288,7 @@
         var results = data.data;
          accPointResId = results.accPointResId;
         processId = results.processId;
-        debugger;
         init(results);
-        debugger;
         form.val("layuiadmin-app-form-list", {
             //要有主键
             "accPointResId": results.accPointResId,

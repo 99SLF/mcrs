@@ -206,7 +206,7 @@
 		if(submit == false){
 			submit = true ;		
 			var serial = JSON.stringify(data.field);
-			debugger;
+
 			$.ajax({
 				url : "<%=request.getContextPath() %>/serialnumber/add",
 				type : 'POST',

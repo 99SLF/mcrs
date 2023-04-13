@@ -665,7 +665,6 @@ layui.define('layer', function(exports){
             } else {
               layer.msg(errorText, {icon: 5, shift: 6});
             }
-            debugger;
             //非移动设备自动定位焦点
             //if(!device.android && !device.ios){
               setTimeout(function(){

@@ -116,7 +116,6 @@
                 contentType: "text/json",
                 cache: false,
                 success: function (text) {
-                    debugger;
                     if (text.data == "0") {
                         isExist = false;
                     } else {

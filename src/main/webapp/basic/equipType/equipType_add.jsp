@@ -203,11 +203,11 @@
     //监听提交
     form.on("submit(layuiadmin-app-form-submit)", function (data) {
         // var submitData = JSON.stringify(data.field);
-        debugger;
+
         if (submit == false) {
             submit = true;
             var submitData = JSON.stringify(data.field);
-            debugger;
+
             if (isExist == false) {
                 $.ajax({
                     url: "<%= request.getContextPath() %>/EquipController/add",

@@ -158,12 +158,12 @@
 
 	//监听提交
 	form.on("submit(save_data)", function (data) {
-		debugger;
+
 		var data = data.field
 		if(data.factoryId == null || data.factoryId == "") {
 			//新增
 			var factory = JSON.stringify(data);
-			debugger;
+
 			$.ajax({
 				url: "<%=request.getContextPath() %>/FactoryController/add",
 				type: "post",
@@ -191,7 +191,7 @@
 		} else {
 			//修改
 			var factory = JSON.stringify(data);
-			debugger;
+
 			$.ajax({
 				url: "<%=request.getContextPath() %>/FactoryController/update",
 				type: "post",
@@ -224,7 +224,7 @@
 
 	//监听取消
 	form.on("submit(canle)", function (data) {
-		debugger;
+
 		getfactory(infoId);
 	});
 

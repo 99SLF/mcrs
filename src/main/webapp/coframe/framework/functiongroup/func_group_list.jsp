@@ -207,7 +207,6 @@
 			cache: false,
 			contentType: 'text/json',
 			success: function (json) {
-				debugger;
 				if (json != null && json.data != null && json.data.length > 0) {
 					for (var i = 0; i < json.data.length; i++) {
 						$('#appId').append(new Option(json.data[i].appName,json.data[i].appId));// 下拉菜单里添加元素

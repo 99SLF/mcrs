@@ -292,7 +292,7 @@
                 if (result) {
 
                     //从后端获取的返回值数据存储到到allDatas
-                    debugger;
+
                     if (data.value == null || data.value == "") {
                         $("#lastversion").val("");
                         $("#version").val("");
@@ -336,7 +336,7 @@
     });
     //通过选择的是否为主要版本来确定版本递增
     form.on("select(majorVersion)", function (data) {
-        debugger;
+
         if (data.value == "null" || data.value == "") {
             $("#version").val("");
         } else if (data.value == '001') {
@@ -438,7 +438,7 @@
     });
     //提交表单数据
     form.on('submit(layuiadmin-app-form-submit)', function (data) {
-        debugger;
+
         if (document.getElementById("demoListView").innerHTML == null || document.getElementById("demoListView").innerHTML == "") {
             layer.msg("请选择文件");
         } else {

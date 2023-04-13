@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.log.mapper.LogFileMapper">
+
+    <!--查询记录数-->
+    <select id="count" resultType="int">
+        SELECT
+       count(*)
+        FROM
+        log_file
+        <where>
+            <if test="logType !=null and logType !=''">
+                and log_type = '${logType}'
+            </if>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id = '${equipmentId}'
+            </if>
+            <if test="logTime !=null and logTime !=''">
+                and log_time = '${logTime}'
+            </if>
+        </where>
+    </select>
+
+    <!--查询所有-->
+    <select id="queryLogFile" parameterType="map" resultType="com.zimax.mcrs.log.pojo.LogFile">
+        SELECT *
+        FROM
+        log_file
+        <where>
+            <if test="logType !=null and logType !=''">
+                and log_type = '${logType}'
+            </if>
+            <if test="equipmentId !=null and equipmentId !=''">
+                and equipment_id = '${equipmentId}'
+            </if>
+            <if test="logTime !=null and logTime !=''">
+                and log_time = '${logTime}'
+            </if>
+        </where>
+        <if test="order !=null and order !=''">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+    <update id="updateLogFile" parameterType="com.zimax.mcrs.log.pojo.LogFile">
+        update log_file
+        set create_time=#{createTime}
+        where file_uuid = #{fileUuid}
+    </update>
+    <insert id="addLogFile" parameterType="com.zimax.mcrs.log.pojo.LogFile">
+        insert into log_file
+        values (#{id},#{equipmentId},#{logTime},#{logType},#{logFileName},#{filePath},#{fileUuid},
+                #{fileSize}, #{createTime})
+    </insert>
+
+    <delete id="delLogFile" parameterType="String">
+        delete
+        from log_file
+        where file_uuid = #{fileUuid}
+    </delete>
+
+</mapper>

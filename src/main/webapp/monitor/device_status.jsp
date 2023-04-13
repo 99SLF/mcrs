@@ -345,7 +345,7 @@
             hide: isHidden("deviceSoftwareType"),
             minWidth: 150,
             templet: function (d) {
-                debugger;
+
                 return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoftwareType);
             }
         }, {
@@ -472,7 +472,7 @@
                         case "accessStatus":
                            var accessStatus= layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", json.accessStatus)
                             if (json.accessStatus == "101") {
-                                debugger;
+
                                 $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
                                 $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
                                 $($(_td).children()[0]).children("span").eq(1).html(accessStatus);
@@ -488,7 +488,7 @@
                         case "deviceSoftwareStatus":
                             var deviceSoftwareStatus = layui.admin.getDictText("DEVICE_SOFTWARE_STATUS", json.deviceSoftwareStatus)
                             if (json.deviceSoftwareStatus == "101") {
-                                debugger;
+
                                 $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
                                 $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
                                 $($(_td).children()[0]).children("span").eq(1).html(deviceSoftwareStatus);

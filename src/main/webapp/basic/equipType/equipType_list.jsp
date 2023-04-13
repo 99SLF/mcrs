@@ -282,7 +282,7 @@
                 layer.msg("请至少选中一条记录！");
             }
             for (i = 0; i < data.length; i++) {
-                debugger;
+
                 if (data[i].equipTypeEnable == "101") {
                     isExits = true;
                     break;
@@ -670,7 +670,7 @@
                 resize: false,
                 btn: ["关闭"],
                 success: function (layero, index) {
-                    debugger;
+
                     var dataJson = {
                         data: data,
                         win: window

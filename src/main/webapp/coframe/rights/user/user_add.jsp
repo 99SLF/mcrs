@@ -33,9 +33,9 @@
      style="padding: 20px 30px 0 0;">
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>用户登录账号名：</label>
+            <label class="layui-form-label"><span style="color:red">*</span>登录账号：</label>
             <div class="layui-input-block">
-                <input id="userId" type="text" name="userId" lay-verify="required|checkUserId" placeholder="用户登录名(必填)"
+                <input id="userId" type="text" name="userId" lay-verify="required|checkUserId" placeholder="登录账号(必填)"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -188,7 +188,6 @@
     //判断字符
     form.verify({
         checkUserId: function (value, item) {
-            debugger;
             if (!new RegExp("^[a-zA-Z0-9_]+$").test(value)) {
                 return "输入用户登录名称有误，只能输入英文字母、数字、下划线";
             }
@@ -206,7 +205,6 @@
                 contentType: "text/json",
                 cache: false,
                 success: function (text) {
-                    debugger;
                     if (text.code == "1") {
                         checkResult = "登录名账号名已存在";
                     }
