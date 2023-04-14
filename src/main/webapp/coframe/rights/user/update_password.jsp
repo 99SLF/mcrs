@@ -101,28 +101,30 @@
             contentType: "text/json",
             cache: false,
             success: function (result) {
-                debugger;
                 if (result.code == "0") {
-                    //调用退出方法
-                    // admin.events.logout();
-                    layer.msg(result.msg, {}, function (index) {
-                        //调用后端清除数据
-                        $.ajax({
-                            url: "<%=request.getContextPath()%>/auth/logout",
-                            type: "get",
-                            data: {},
-                            done: function(e) {
-                                admin.exit(function() {
-                                    location.href = "<%=request.getContextPath()%>/coframe/auth/login.jsp";
-                                });
-                            }
-                        });
-                        // 1. 清空本地存储中的 token
-                        localStorage.removeItem('token');
-                        sessionStorage.clear();
-                        // 2. 重新跳转到登录页面
-                        top.location.href = "<%=request.getContextPath()%>/coframe/auth/login.jsp";
-                    });
+                    layer.msg(result.msg);
+                    // 调用退出方法
+                    setTimeout(function() {
+                        admin.events.logout();
+                    }, 3000);
+                    <%--layer.msg(result.msg, {}, function (index) {--%>
+                    <%--    //调用后端清除数据--%>
+                    <%--    $.ajax({--%>
+                    <%--        url: "<%=request.getContextPath()%>/auth/logout",--%>
+                    <%--        type: "get",--%>
+                    <%--        data: {},--%>
+                    <%--        done: function(e) {--%>
+                    <%--            admin.exit(function() {--%>
+                    <%--                location.href = "<%=request.getContextPath()%>/coframe/auth/login.jsp";--%>
+                    <%--            });--%>
+                    <%--        }--%>
+                    <%--    });--%>
+                    <%--    // 1. 清空本地存储中的 token--%>
+                    <%--    localStorage.removeItem('token');--%>
+                    <%--    sessionStorage.clear();--%>
+                    <%--    // 2. 重新跳转到登录页面--%>
+                    <%--    top.location.href = "<%=request.getContextPath()%>/coframe/auth/login.jsp";--%>
+                    <%--});--%>
                 } else {
                     layer.msg(result.msg);
                 }
