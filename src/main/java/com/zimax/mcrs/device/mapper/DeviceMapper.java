@@ -1,9 +1,6 @@
 package com.zimax.mcrs.device.mapper;
 
-import com.zimax.mcrs.device.pojo.Device;
-import com.zimax.mcrs.device.pojo.DeviceEquipmentVo;
-import com.zimax.mcrs.device.pojo.DeviceVo;
-import com.zimax.mcrs.device.pojo.Equipment;
+import com.zimax.mcrs.device.pojo.*;
 import com.zimax.mcrs.update.pojo.UpdateUpload;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -33,6 +30,7 @@ public interface DeviceMapper {
      * @return
      */
     int counts(@Param("equipmentId") String equipmentId,
+               @Param("equipmentIp") String equipmentIp,
               @Param("deviceSoftwareType") String deviceSoftwareType,
               @Param("enable")String enable,
               @Param("deviceName")String deviceName,
@@ -90,6 +88,7 @@ public interface DeviceMapper {
      * @return
      */
     int count(@Param("equipmentId") String equipmentId, @Param("APPId") String APPId);
+    DeviceNum countReg();
 
     /**
      * 返回数据给监控

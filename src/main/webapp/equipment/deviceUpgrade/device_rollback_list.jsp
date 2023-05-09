@@ -289,7 +289,7 @@
             field: "deviceName",
             title: "终端名称",
             align: "center",
-            minWidth: 120,
+            minWidth: 130,
             hide: isHidden("deviceName")
         }, {
             field: "deviceSoftwareType",
@@ -364,13 +364,6 @@
             align: "center",
             minWidth: 200,
             hide: isHidden("versionRollbackTime")
-        }, {
-            title: "配置文件",
-            align: "center",
-            fixed: "right",
-            width: 90,
-            toolbar: "#table-deviceRollback-list"
-
         }]]
     });
 

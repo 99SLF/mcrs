@@ -71,8 +71,8 @@
 
     <select id="groupQueryBydate" resultType="com.zimax.mcrs.monitor.pojo.vo.GroupByDate">
         select date_format(t1.occurrence_time, '%Y-%m-%d') as recordDate,
-               sum(CASE warn_type WHEN "101" THEN 1 ELSE 0 END)     AS "activeWarn",
-               sum(CASE warn_type WHEN "100" THEN 1 ELSE 0 END)     AS "hardWarn"
+               sum(CASE warn_type WHEN "102" THEN 1 ELSE 0 END)     AS "activeWarn",
+               sum(CASE warn_type WHEN "101" THEN 1 ELSE 0 END)     AS "hardWarn"
         from mon_device_alarm t1
         group by date_format(t1.occurrence_time, '%Y-%m-%d')
         ORDER BY t1.occurrence_time desc limit 0,7

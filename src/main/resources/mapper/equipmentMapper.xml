@@ -25,6 +25,9 @@
             <if test="equipmentName !=null and equipmentName !=''">
                 and eqi.equipment_name like '%${equipmentName}%'
             </if>
+            <if test="equipmentIp !=null and equipmentIp !=''">
+                and eqi.equipment_ip like '%${equipmentIp}%'
+            </if>
             <if test="enable !=null and enable !=''">
                 and eqi.enable like '%${enable}%'
             </if>
@@ -73,6 +76,9 @@
             </if>
             <if test="equipmentName !=null and equipmentName !=''">
                 and eqi.equipment_name like '%${equipmentName}%'
+            </if>
+            <if test="equipmentIp !=null and equipmentIp !=''">
+                and eqi.equipment_ip like '%${equipmentIp}%'
             </if>
             <if test="enable !=null and enable !=''">
                 and eqi.enable like '%${enable}%'
@@ -178,6 +184,11 @@
           and equipment_int != #{equipmentInt}
     </select>
 
+    <select id="getAppIdByequId" resultType="com.zimax.mcrs.device.pojo.Device">
+        select *
+        from eqi_device
+        where equipment_int = #{equipmentInt}
+    </select>
     <!--在注册时候查询当前设备连接Ip是否存在-->
     <select id="checkExistenceIp" resultType="int">
         select count(*)

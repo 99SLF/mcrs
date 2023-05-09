@@ -65,20 +65,32 @@
                 </div>
                 <div class="layui-col-md6">
                     <div class="layui-card">
-                        <div class="layui-card-header">终端实时数量</div>
+                        <div class="layui-card-header">终端数量</div>
                         <div class="layui-card-body">
                             <div class="layui-carousel layadmin-carousel layadmin-backlog">
                                 <ul class="layui-row layui-col-space10">
                                     <li class="layui-col-xs6">
                                         <div class="layadmin-backlog-body">
-                                            <h3>终端数量</h3>
+                                            <h3>终端总数</h3>
                                             <p><cite id="deviceNumber">0</cite></p>
                                         </div>
                                     </li>
                                     <li class="layui-col-xs6">
                                         <div class="layadmin-backlog-body">
-                                            <h3>终端在线数量</h3>
+                                            <h3>终端正常数量</h3>
                                             <p><cite id="deviceOnumber">0</cite></p>
+                                        </div>
+                                    </li>
+                                    <li class="layui-col-xs6">
+                                        <div class="layadmin-backlog-body">
+                                            <h3>终端异常数量</h3>
+                                            <p><cite id="deviceEnumber">0</cite></p>
+                                        </div>
+                                    </li>
+                                    <li class="layui-col-xs6">
+                                        <div class="layadmin-backlog-body">
+                                            <h3>终端未启动数量</h3>
+                                            <p><cite id="deviceNsnumber">0</cite></p>
                                         </div>
                                     </li>
 <%--                                    <li class="layui-col-xs6">--%>
@@ -102,14 +114,14 @@
                     <div class="layui-card">
                         <div class="layui-tab layui-tab-brief layadmin-latestData">
                             <ul class="layui-tab-title">
-                                <li class="layui-this">终端行为记录</li>
+<%--                                <li class="layui-this">终端行为记录</li>--%>
                                 <li>MCRS行为记录</li>
                             </ul>
                             <div class="layui-tab-content">
+<%--                                <div class="layui-tab-item layui-show">--%>
+<%--                                    <table id="equipmentChangeLog"></table>--%>
+<%--                                </div>--%>
                                 <div class="layui-tab-item layui-show">
-                                    <table id="equipmentChangeLog"></table>
-                                </div>
-                                <div class="layui-tab-item">
                                     <table id="operationLog"></table>
                                 </div>
                             </div>
@@ -138,7 +150,7 @@
 
         <div class="layui-col-md4">
             <div class="layui-card">
-                <div class="layui-card-header">预警实时数量</div>
+                <div class="layui-card-header">预警数量</div>
                 <div class="layui-card-body">
                     <div class="layui-carousel layadmin-carousel layadmin-backlog">
                         <ul class="layui-row layui-col-space10">
@@ -209,14 +221,19 @@
     var chartZhu9 = echarts.init(document.getElementById('EchartZhu9'));
     // 终端数量
     $.ajax({
-        url: "<%=request.getContextPath() %>/equipment/device/count",
+        url: "<%=request.getContextPath() %>/equipment/device/countReg",
         type: "GET",
         async: true,
         cache: false,
         contentType: "text/json",
         success: function (result) {
             if (result) {
-                $("#deviceNumber").html(result.data)
+                var data = result.data;
+                $("#deviceNumber").html(data.deviceNumber)
+                $("#deviceOnumber").html(data.deviceOnumber)
+                $("#deviceEnumber").html(data.deviceEnumber)
+                $("#deviceNsnumber").html(data.deviceNsnumber)
+
             } else {
                 layer.msg("查询失败");
             }
@@ -237,22 +254,6 @@
     <%--        }--%>
     <%--    }--%>
     <%--});--%>
-    // 在线数量
-    $.ajax({
-        url: "<%=request.getContextPath() %>/AccessMonitor/deviceAndaccess",
-        type: "GET",
-        async: true,
-        cache: false,
-        contentType: "text/json",
-        success: function (result) {
-            if (result) {
-                $("#deviceOnumber").html(result.data.eqiOnline)
-               // $("#accessPointOnumber").html(result.data.accessOnline);
-            } else {
-                layer.msg("查询失败");
-            }
-        }
-    });
     // 告警信息
     $.ajax({
         url: "<%=request.getContextPath() %>/DeviceAbnormalAlarm/getWarnInfo",

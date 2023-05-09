@@ -305,10 +305,15 @@
                 minWidth: 150,
                 hide: isHidden("deviceSoType"),
                 templet:function(d) {
-
                     return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoType);
                 }
             }, {
+                field: "remarks",
+                title: "备注",
+                align: "center",
+                minWidth: 150,
+                hide: isHidden("remarks"),
+            },{
                 field: "versionUploadTime",
                 title: "版本上传时间",
                 align: "center",

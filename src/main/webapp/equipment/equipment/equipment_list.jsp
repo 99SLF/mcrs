@@ -71,13 +71,20 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">启用：</label>
+                    <label class="layui-form-label">设备IP：</label>
                     <div class="layui-input-inline">
-                        <select name="enable" id="enable" lay-filter="enable" type="select">
-                            <option value=""></option>
-                        </select>
+                        <input type="text" name="equipmentIp" placeholder="" autocomplete="off"
+                               class="layui-input">
                     </div>
                 </div>
+<%--                <div class="layui-inline">--%>
+<%--                    <label class="layui-form-label">启用：</label>--%>
+<%--                    <div class="layui-input-inline">--%>
+<%--                        <select name="enable" id="enable" lay-filter="enable" type="select">--%>
+<%--                            <option value=""></option>--%>
+<%--                        </select>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
                 <div class="layui-inline layui-hide">
                     <button id="LAY-app-equipmentlist-search" class="layui-btn layuiadmin-btn-list" lay-submit
                             lay-filter="LAY-app-equipmentlist-search">
@@ -138,6 +145,7 @@
         formData = {
             equipmentId: field.equipmentId,
             equipmentName: field.equipmentName,
+            equipmentIp: field.equipmentIp,
             enable: field.enable
         };
         form.val("layuiadmin-equipment-form", formData);
@@ -163,6 +171,7 @@
         form.val("layuiadmin-equipment-form", {
             equipmentId: data.equipmentId,
             equipmentName: data.equipmentName,
+            equipmentIp: field.equipmentIp,
             enable: data.enable
         });
     }
@@ -400,8 +409,8 @@
         table.reload('LAY-app-equipment-list-reload', {
             initSort: obj,
             where: {
-                sortField: obj.field,
-                sortOrder: obj.type
+                field: obj.field,
+                order: obj.type
             }
         });
         formReder();
@@ -411,18 +420,6 @@
     table.on("toolbar(LAY-app-equipment-list)", function (obj) {
         var type = obj.event;
         active[type] ? active[type].call(this) : "";
-    });
-
-    //表格排序
-    table.on("sort(LAY-app-equipment-list)", function (obj) {
-        table.reload("LAY-app-equipment-list-reload", {
-            initSort: obj,
-            where: {
-                sortField: obj.field,
-                sortOrder: obj.type
-            }
-        });
-        formReder();
     });
 
     function getFullSize() {
@@ -548,6 +545,7 @@
             title: "设备名称",
             align: "center",
             minWidth: 175,
+            sort: true,
             hide: isHidden("equipmentName")
         }, {
             field: "enable",

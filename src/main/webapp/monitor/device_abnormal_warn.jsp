@@ -356,7 +356,7 @@
                 } else if (d.warnGrade == "info") {
                     return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + warnGrade + '</span>';
                 } else if (d.warnGrade == "warn") {
-                    return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:yellow">' + warnGrade + '</span>';
+                    return '<span class="layui-badge-dot layui-bg-orange"></span>' + "  " + '<span style="color:orange">' + warnGrade + '</span>';
                 } else {
                     return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + warnGrade + '</span>';
                 }

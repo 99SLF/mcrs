@@ -80,10 +80,10 @@
     <div class="layui-card-body">
         <table id="LAY-app-deviceUpgrade-list" lay-filter="LAY-app-deviceUpgrade-list"></table>
 
-        <script type="text/html" id="table-deviceUpgrade-list">
-            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="configurationFile"><i
-                    class="layui-icon layui-icon-file-b"></i>详细</a>
-        </script>
+<%--        <script type="text/html" id="table-deviceUpgrade-list">--%>
+<%--            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="configurationFile"><i--%>
+<%--                    class="layui-icon layui-icon-file-b"></i>详细</a>--%>
+<%--        </script>--%>
     </div>
 </div>
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
@@ -280,7 +280,7 @@
             field: "deviceName",
             title: "终端名称",
             align: "center",
-            minWidth: 120,
+            minWidth: 130,
             hide: isHidden("deviceName")
         }, {
             field: "deviceSoftwareType",
@@ -355,13 +355,6 @@
             align: "center",
             minWidth: 200,
             hide: isHidden("versionUpdateTime")
-        }, {
-            title: "配置文件",
-            align: "center",
-            fixed: "right",
-            width: 90,
-            toolbar: "#table-deviceUpgrade-list"
-
         }]]
     });
 

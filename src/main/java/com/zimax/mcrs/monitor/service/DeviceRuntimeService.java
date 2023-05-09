@@ -26,7 +26,7 @@ public class DeviceRuntimeService {
      * 查询终端运行状态信息
      */
     public List<DeviceMonitorInfoVo> queryDeviceRuntime( String page, String limit,
-                                                         String equipmentId, String equipmentName,
+                                                         String equipmentId, String equipmentIp, String equipmentName,
                                                          String deviceName, String deviceSoftwareType,
                                                          String deviceSoftwareStatus, String accessStatus,
                                                          String cpuRate, String storageRate,
@@ -46,6 +46,7 @@ public class DeviceRuntimeService {
             map.put("limit", Integer.parseInt(limit));
         }
         map.put("equipmentId", equipmentId);
+        map.put("equipmentIp", equipmentIp);
         map.put("equipmentName", equipmentName);
         map.put("deviceName", deviceName);
         map.put("deviceSoftwareType", deviceSoftwareType);
@@ -59,12 +60,12 @@ public class DeviceRuntimeService {
 
     }
 
-    public int countDR(String equipmentId, String equipmentName,
+    public int countDR(String equipmentId, String equipmentIp,String equipmentName,
                        String deviceName, String deviceSoftwareType,
                        String deviceSoftwareStatus, String accessStatus,
                        String cpuRate, String storageRate,
                        String errorRate) {
-        return deviceRuntimeMapper.countDR(equipmentId,  equipmentName, deviceName,  deviceSoftwareType, deviceSoftwareStatus,  accessStatus, cpuRate,  storageRate, errorRate);
+        return deviceRuntimeMapper.countDR(equipmentId, equipmentIp, equipmentName, deviceName,  deviceSoftwareType, deviceSoftwareStatus,  accessStatus, cpuRate,  storageRate, errorRate);
     }
 
 }

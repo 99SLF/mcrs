@@ -11,6 +11,8 @@ import com.zimax.mcrs.device.pojo.EquipmentVo;
 import com.zimax.mcrs.device.pojo.WorkStation;
 import com.zimax.mcrs.log.pojo.OperationLog;
 import com.zimax.mcrs.log.service.OperationLogService;
+import com.zimax.mcrs.monitor.service.AccessMonitorService;
+import com.zimax.mcrs.update.service.UpdateConfigService;
 import com.zimax.mcrs.warn.pojo.MonitorEquipment;
 import com.zimax.mcrs.warn.pojo.MonitorEquipmentVo;
 import org.apache.ibatis.annotations.Param;
@@ -33,16 +35,23 @@ public class EquipmentService {
 
     @Autowired
     private EquipmentMapper equipmentMapper;
-
+    @Autowired
+    private DeviceService deviceService;
     //操作日志服务层
     @Autowired
     private OperationLogService operationLogService;
+    //监控
+    @Autowired
+    private AccessMonitorService accessMonitorService;
+    //删除配置文件
+    @Autowired
+    private UpdateConfigService updateConfigService;
 
     /**
      * 查询所有
      */
-    public List<EquipmentVo> queryEquipments(String limit, String page, String equipmentId, String equipmentName, String enable, String equipmentInstallLocation, String equipTypeName, String protocolCommunication, String accPointResName, String processName, String createName, String createTime, String order, String field) {
-        if (equipmentId != null || equipmentName != null || enable != null || equipmentInstallLocation != null || equipTypeName != null || protocolCommunication != null || accPointResName != null || processName != null || createName != null || createTime != null) {
+    public List<EquipmentVo> queryEquipments(String limit, String page, String equipmentId, String equipmentName, String equipmentIp,String enable, String equipmentInstallLocation, String equipTypeName, String protocolCommunication, String accPointResName, String processName, String createName, String createTime, String order, String field) {
+        if (equipmentId != null || equipmentName != null || equipmentIp!=null||enable != null || equipmentInstallLocation != null || equipTypeName != null || protocolCommunication != null || accPointResName != null || processName != null || createName != null || createTime != null) {
             Equipment equipment = new Equipment();
             addOperationLog(equipment, 1);
         }
@@ -61,6 +70,7 @@ public class EquipmentService {
         }
         map.put("equipmentId", equipmentId);
         map.put("equipmentName", equipmentName);
+        map.put("equipmentIp", equipmentIp);
         map.put("enable", enable);
         map.put("equipmentInstallLocation", equipmentInstallLocation);
         map.put("equipTypeName", equipTypeName);
@@ -130,6 +140,12 @@ public class EquipmentService {
      * @param equipmentInt 设备号
      */
     public void removeEquipment(int equipmentInt) {
+        Device device = equipmentMapper.getAppIdByequId(equipmentInt);
+        if(device!=null){
+            accessMonitorService.deleteDeviceStatus(device.getAPPId());
+            deviceService.logoutDevice(device.getDeviceId());
+            updateConfigService.delConfigurationFileByAppId(device.getAPPId());
+        }
         List<WorkStation> workStationList = equipmentMapper.queryWorkStation(equipmentInt);
         //如果存在工位信息，删除
         if (workStationList.size() > 0) {
@@ -173,8 +189,8 @@ public class EquipmentService {
     /**
      * 查询记录数
      */
-    public int count(String equipmentId, String equipmentName, String enable, String equipmentInstallLocation, String equipTypeName, String protocolCommunication, String accPointResName, String processName, String createName, String createTime) {
-        return equipmentMapper.count(equipmentId, equipmentName, enable, equipmentInstallLocation, equipTypeName,
+    public int count(String equipmentId, String equipmentName, String equipmentIp,String enable, String equipmentInstallLocation, String equipTypeName, String protocolCommunication, String accPointResName, String processName, String createName, String createTime) {
+        return equipmentMapper.count(equipmentId, equipmentName, equipmentIp,enable, equipmentInstallLocation, equipTypeName,
                 protocolCommunication, accPointResName, processName, createName, createTime);
     }
     public int countSelect(String equipmentId, String equipmentName, String enable, String equipmentInstallLocation, String equipTypeName, String protocolCommunication, String accPointResName, String processName, String createName, String createTime) {
@@ -187,6 +203,12 @@ public class EquipmentService {
     public void deleteEquipments(List<Integer> equipmentInt) {
         //从表中获取设备的对应工位信息
         for (Integer a : equipmentInt) {
+            Device device = equipmentMapper.getAppIdByequId(a);
+            if(device!=null){
+                accessMonitorService.deleteDeviceStatus(device.getAPPId());
+                deviceService.logoutDevice(device.getDeviceId());
+                updateConfigService.delConfigurationFileByAppId(device.getAPPId());
+            }
             List<WorkStation> workStationList = equipmentMapper.queryWorkStation(a);
             //如果存在工位信息，删除
             if (workStationList.size() > 0) {

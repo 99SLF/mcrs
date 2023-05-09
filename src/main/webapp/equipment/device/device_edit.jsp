@@ -155,7 +155,7 @@
 
     <div class="layui-form-item layui-row layui-col-space10">
         <div class="layui-col-sm6">
-            <label class="layui-form-label"><span style="color:red">*</span>终端程序安装路径:</label>
+            <label class="layui-form-label"><span style="color:red">*</span>终端程序解压路径:</label>
             <div class="layui-input-block">
                 <input id="programInstallationPath" type="text" name="programInstallationPath" lay-verify="required|programInstallationPath"
                        placeholder="" autocomplete="off" class="layui-input" readonly>

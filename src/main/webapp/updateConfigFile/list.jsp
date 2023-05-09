@@ -309,15 +309,14 @@
                     cache: false,
                     contentType: 'text/json',
                     success: function (result) {
+                        top.layer.close(index);
                         if (result.code == "0") {
                             layer.msg(result.msg, {icon: 1, time: 1500}, function () {
                                 table.reload('tableReload');
-                                top.layer.close(index);
                             });
                         } else {
                             layer.msg(result.msg, {icon: 2, time: 1500}, function () {
                                 table.reload('tableReload');
-                                top.layer.close(index);
                             });
                         }
                     }

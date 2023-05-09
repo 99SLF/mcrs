@@ -55,15 +55,15 @@
              lay-filter="layuiadmin-device_status-form" id="layuiadmin-device_status-form">
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">设备名称：</label>
+                    <label class="layui-form-label">设备资源号：</label>
                     <div class="layui-input-inline">
-                        <input type="text" class="layui-input" name="equipmentName" autocomplete="off">
+                        <input type="text" class="layui-input" name="equipmentId" autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">终端名称：</label>
+                    <label class="layui-form-label">设备IP：</label>
                     <div class="layui-input-inline">
-                        <input type="text" class="layui-input" name="deviceName" autocomplete="off">
+                        <input type="text" class="layui-input" name="equipmentIp" autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -146,8 +146,8 @@
         var field = data.field;
         reloadData(field);
         var formData = {
-            equipmentName: field.equipmentName,
-            deviceName: field.deviceName,
+            equipmentId: field.equipmentId,
+            equipmentIp: field.equipmentIp,
             deviceSoftwareType: field.deviceSoftwareType
         };
         form.val("layuiadmin-device_status-form", formData);
@@ -173,8 +173,8 @@
         advancedFormData = data;
         reloadData(data);
         form.val("layuiadmin-device_status-form", {
-            equipmentName: data.equipmentName,
-            deviceName: data.deviceName,
+            equipmentId: data.equipmentId,
+            equipmentIp: data.equipmentIp,
             deviceSoftwareType: data.deviceSoftwareType
         });
     }

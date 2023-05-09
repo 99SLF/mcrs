@@ -106,10 +106,10 @@ public class DeviceController {
      * @return 终端列表
      */
     @GetMapping("/device/query")
-    public Result<?> queryDevice(String page, String limit, String equipmentId, String deviceSoftwareType, String enable, String deviceName, String processName, String factoryName,
+    public Result<?> queryDevice(String page, String limit, String equipmentId, String equipmentIp,String deviceSoftwareType, String enable, String deviceName, String processName, String factoryName,
                                  String version, String needUpdate, String registerStatus, String programInstallationPath, String createTime, String order, String field) {
-        List devices = deviceService.queryDevices(page, limit, equipmentId, deviceSoftwareType, enable, deviceName, processName, factoryName, version, needUpdate, registerStatus, programInstallationPath, createTime, order, field);
-        return Result.success(devices, deviceService.counts(equipmentId, deviceSoftwareType, enable, deviceName, processName, factoryName, version, needUpdate, registerStatus, programInstallationPath, createTime));
+        List devices = deviceService.queryDevices(page, limit, equipmentId, equipmentIp,deviceSoftwareType, enable, deviceName, processName, factoryName, version, needUpdate, registerStatus, programInstallationPath, createTime, order, field);
+        return Result.success(devices, deviceService.counts(equipmentId, equipmentIp,deviceSoftwareType, enable, deviceName, processName, factoryName, version, needUpdate, registerStatus, programInstallationPath, createTime));
     }
 
     /**
@@ -139,7 +139,10 @@ public class DeviceController {
     public Result<?> queryCount(String equipmentId, String APPId) {
         return Result.success(deviceService.count(equipmentId, APPId));
     }
-
+    @GetMapping("/device/countReg")
+    public Result<?> queryCount() {
+        return Result.success(deviceService.countReg());
+    }
 
     /**
      * 检测APPId是否存在

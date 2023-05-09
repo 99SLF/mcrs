@@ -15,6 +15,7 @@ import com.zimax.mcrs.update.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -100,9 +101,53 @@ public class UpdateConfigService {
 
 
     public void delConfigurationFile(ConfigurationFile configurationFile) {
-        configurationFileMapper.delConfigurationFile(configurationFile);
+        File file = new File(configurationFile.getFilePath());
+        if(!file.exists()) {
+        }else{
+            if(file.delete()){
+                configurationFileMapper.delConfigurationFile(configurationFile);
+            }
+        }
+
+
     }
     public void delConfigurationFileByAppId(String appId) {
-        configurationFileMapper.delConfigurationFileByAppId(appId);
+        List<ConfigurationFile> configurationFile = configurationFileMapper.getConfigurationFile(appId,null);
+        if(configurationFile.size()==0){
+            return;
+        }
+        String path = configurationFile.get(0).getFilePath();
+        String str = path.substring(0,path.lastIndexOf("/"));
+
+        File file = new File(str);
+       if(deleteFile(file)){
+           configurationFileMapper.delConfigurationFileByAppId(appId);
+       }
+    }
+    public  Boolean deleteFile(File file) {
+        //判断文件不为null或文件目录存在
+        if (file == null || !file.exists()) {
+            //System.out.println("文件保存路径不存在，正在创建");
+            return false;
+        }
+        //获取目录下子文件
+        File[] files = file.listFiles();
+        //遍历该目录下的文件对象
+        for (File f : files) {
+            //判断子目录是否存在子目录,如果是文件则删除
+            if (f.isDirectory()) {
+                //递归删除目录下的文件
+                deleteFile(f);
+            } else {
+                //文件删除
+                f.delete();
+                //打印文件名
+                System.out.println("文件名：" + f.getName());
+            }
+        }
+        //文件夹删除
+        file.delete();
+        System.out.println("目录名：" + file.getName());
+        return true;
     }
 }

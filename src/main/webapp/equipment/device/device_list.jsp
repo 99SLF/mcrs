@@ -68,20 +68,17 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">终端类型：</label>
+                    <label class="layui-form-label">设备资源号：</label>
                     <div class="layui-input-inline">
-                        <select name="deviceSoftwareType" id="deviceSoftwareType" lay-filter="deviceSoftwareType"
-                                type="select">
-                            <option value=""></option>
-                        </select>
+                        <input type="text" name="equipmentId" placeholder="" autocomplete="off"
+                               class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">启用：</label>
+                    <label class="layui-form-label">设备IP：</label>
                     <div class="layui-input-inline">
-                        <select name="enable" id="enable" lay-filter="enable" type="select">
-                            <option value=""></option>
-                        </select>
+                        <input type="text" name="equipmentIp" placeholder="" autocomplete="off"
+                               class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline layui-hide">
@@ -145,8 +142,8 @@
         reloadData(field);
         formData = {
             deviceName: field.deviceName,
-            deviceSoftwareType: field.deviceSoftwareType,
-            enable: field.enable
+            equipmentId: field.equipmentId,
+            equipmentIp: field.equipmentIp
         };
         form.val("layuiadmin-device-form", formData);
         advancedFormData = $.extend(advancedFormData, formData);
@@ -173,8 +170,8 @@
         reloadData(data);
         form.val("layuiadmin-device-form", {
             deviceName: data.deviceName,
-            deviceSoftwareType: data.deviceSoftwareType,
-            enable: data.enable
+            equipmentId: data.equipmentId,
+            equipmentIp: data.equipmentIp
         });
     }
 
@@ -680,8 +677,8 @@
         table.reload('LAY-app-device-list-reload', {
             initSort: obj,
             where: {
-                sortField: obj.field,
-                sortOrder: obj.type
+                feld: obj.field,
+                order: obj.type
             }
         });
         formReder();
@@ -694,16 +691,6 @@
     });
 
     //表格排序
-    table.on("sort(LAY-app-device-list)", function (obj) {
-        table.reload("LAY-app-device-list-reload", {
-            initSort: obj,
-            where: {
-                sortField: obj.field,
-                sortOrder: obj.type
-            }
-        });
-        formReder();
-    });
 
     function getFullSize() {
         var fluid = $(".layui-fluid");
@@ -822,6 +809,7 @@
             title: "终端名称",
             align: "center",
             minWidth: 150,
+            sort: true,
             hide: isHidden("deviceName"),
             //打开监听
             event: "view",

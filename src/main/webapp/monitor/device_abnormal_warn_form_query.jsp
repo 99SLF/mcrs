@@ -69,15 +69,15 @@
             </select>
         </div>
     </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">预警等级：</label>
-        <div class="layui-input-inline">
-            <select name="warnGrade" id="warnGrade" lay-filter="warnGrade"
-                    type="select">
-                <option value=""></option>
-            </select>
-        </div>
-    </div>
+<%--    <div class="layui-form-item">--%>
+<%--        <label class="layui-form-label">预警等级：</label>--%>
+<%--        <div class="layui-input-inline">--%>
+<%--            <select name="warnGrade" id="warnGrade" lay-filter="warnGrade"--%>
+<%--                    type="select">--%>
+<%--                <option value=""></option>--%>
+<%--            </select>--%>
+<%--        </div>--%>
+<%--    </div>--%>
     <div class="layui-form-item">
         <label class="layui-form-label">发生时间：</label>
         <div class="layui-input-block">

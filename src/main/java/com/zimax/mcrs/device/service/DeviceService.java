@@ -12,6 +12,7 @@ import com.zimax.mcrs.log.service.OperationLogService;
 import com.zimax.mcrs.monitor.mapper.AccessMonitorMapper;
 import com.zimax.mcrs.update.mapper.ConfigurationFileMapper;
 import com.zimax.mcrs.update.pojo.UpdateUpload;
+import com.zimax.mcrs.update.service.UpdateConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,16 +40,16 @@ public class DeviceService {
     @Autowired
     private OperationLogService operationLogService;
     @Autowired
-    private ConfigurationFileMapper configurationFileMapper;
+    private UpdateConfigService updateConfigService;
 
     /**
      * 查询所有终端信息
      * @return
      */
-    public List<DeviceVo> queryDevices(String  page, String limit, String equipmentId, String deviceSoftwareType,String enable,String deviceName, String processName, String factoryName,
+    public List<DeviceVo> queryDevices(String  page, String limit, String equipmentId, String equipmentIp,String deviceSoftwareType,String enable,String deviceName, String processName, String factoryName,
                                        String version,String needUpdate,String registerStatus,String programInstallationPath,String createTime, String order, String field) {
         //如果条件不为null(为null的情况为不点击查询按钮),将本次操作插入到操作日志中
-        if (equipmentId != null || deviceSoftwareType != null || enable != null || deviceName != null || processName != null || factoryName != null || version != null || needUpdate != null || registerStatus != null || programInstallationPath != null || createTime != null) {
+        if (equipmentId != null ||equipmentIp != null ||deviceSoftwareType != null || enable != null || deviceName != null || processName != null || factoryName != null || version != null || needUpdate != null || registerStatus != null || programInstallationPath != null || createTime != null) {
             Device device = new Device();
             addOperationLog(device, 1);
         }
@@ -66,6 +67,7 @@ public class DeviceService {
             map.put("limit", Integer.parseInt(limit));
         }
         map.put("equipmentId",equipmentId);
+        map.put("equipmentIp",equipmentIp);
         map.put("deviceSoftwareType",deviceSoftwareType);
         map.put("enable",enable);
         map.put("deviceName",deviceName);
@@ -82,8 +84,8 @@ public class DeviceService {
     /**
      * 终端主页查询记录
      */
-    public int counts(String equipmentId, String deviceSoftwareType,String enable, String deviceName, String processName, String factoryName,String version,String needUpdate,String registerStatus,String programInstallationPath,String createTime){
-        return deviceMapper.counts(equipmentId,deviceSoftwareType,enable, deviceName,processName,factoryName,version,needUpdate,registerStatus,programInstallationPath,createTime);
+    public int counts(String equipmentId, String equipmentIp,String deviceSoftwareType,String enable, String deviceName, String processName, String factoryName,String version,String needUpdate,String registerStatus,String programInstallationPath,String createTime){
+        return deviceMapper.counts(equipmentId,equipmentIp,deviceSoftwareType,enable, deviceName,processName,factoryName,version,needUpdate,registerStatus,programInstallationPath,createTime);
     }
 
 
@@ -96,7 +98,14 @@ public class DeviceService {
         return deviceMapper.count(equipmentId,APPId);
     }
 
-
+    /**
+     * 查询记录
+     */
+    public DeviceNum countReg(){
+        DeviceNum deviceNum =  deviceMapper.countReg();
+        deviceNum.setDeviceEnumber(deviceNum.getDeviceNumber()-deviceNum.getDeviceOnumber()-deviceNum.getDeviceNsnumber());
+        return deviceNum;
+    }
     /**
      * 注册终端
      * @param device 终端
@@ -175,7 +184,7 @@ public class DeviceService {
             String appId= deviceMapper.getDeviceName(a).getAPPId();
             //通过终端名称修改实时终端监控表
             accessMonitorMapper.deleteDeviceStatus(appId);
-            configurationFileMapper.delConfigurationFileByAppId(appId);
+            updateConfigService.delConfigurationFileByAppId(appId);
             Device device = selectDevice(a);
             addOperationLog(device, 3);
         }

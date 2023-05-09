@@ -1,6 +1,7 @@
 package com.zimax.mcrs.device.mapper;
 
 import com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes;
+import com.zimax.mcrs.device.pojo.Device;
 import com.zimax.mcrs.device.pojo.Equipment;
 import com.zimax.mcrs.device.pojo.EquipmentVo;
 import com.zimax.mcrs.device.pojo.WorkStation;
@@ -34,6 +35,7 @@ public interface EquipmentMapper {
                      @Param("processName") String processName,
                      @Param("createName") String createName,
                      @Param("createTime") String createTime);
+    Device getAppIdByequId(int equipmentInt);
 
     /**
      * 新建设备
@@ -67,7 +69,7 @@ public interface EquipmentMapper {
      *
      * @return
      */
-    int count(@Param("equipmentId") String equipmentId, @Param("equipmentName") String equipmentName, @Param("enable") String enable,
+    int count(@Param("equipmentId") String equipmentId, @Param("equipmentName") String equipmentName, @Param("equipmentIp") String equipmentIp,@Param("enable") String enable,
               @Param("equipmentInstallLocation") String equipmentInstallLocation,
               @Param("equipTypeName") String equipTypeName,
               @Param("protocolCommunication") String protocolCommunication,

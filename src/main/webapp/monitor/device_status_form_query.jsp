@@ -176,9 +176,6 @@
             deviceSoftwareType: "",
             deviceSoftwareStatus: "",
             accessStatus: "",
-            cpuRate: "",
-            storageRate: "",
-            errorRate: ""
 
         }
         win.setFormData(formData);

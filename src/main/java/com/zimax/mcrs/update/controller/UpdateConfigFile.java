@@ -98,7 +98,7 @@ public class UpdateConfigFile {
     }
 
     /**
-     * s删除编码规则
+     * 更新配置文件
      */
     @PostMapping("/updatefile")
     public Result<?> updateFile(@RequestBody ConfigurationFile configurationFile) throws Exception {
@@ -114,7 +114,7 @@ public class UpdateConfigFile {
                     return  Result.success("1","请求失败");
                 }
             }
-            byte[] bytes = fileCont.getBytes();
+            byte[] bytes = fileCont.getBytes("UTF-8");
             int b = bytes.length;   //是字节的长度，不是字符串的长度
             fos = new FileOutputStream(txt); // 如果已存在，以覆盖的方式写文件
             // fos = new FileOutputStream(txt, true); // 如果已存在，以追加的方式写文件
