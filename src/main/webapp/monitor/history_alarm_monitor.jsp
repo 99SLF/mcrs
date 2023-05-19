@@ -55,9 +55,9 @@
              lay-filter="layuiadmin-device_statusAlarm-form" id="layuiadmin-device_statusAlarm-form">
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">设备名称：</label>
+                    <label class="layui-form-label">设备资源号：</label>
                     <div class="layui-input-inline">
-                        <input type="text" class="layui-input" name="equipmentName" autocomplete="off">
+                        <input type="text" class="layui-input" name="equipmentId" autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -151,7 +151,7 @@
         field["endTime"]=endTime
         reloadData(field);
         var formData = {
-            equipmentName: field.equipmentName,
+            equipmentId: field.equipmentId,
             deviceName: field.deviceName,
             warnType: field.warnType,
             warnGrade: field.warnGrade,
@@ -180,7 +180,7 @@
         advancedFormData = data;
         reloadData(data);
         form.val("layuiadmin-device_statusAlarm-form", {
-            equipmentName: data.equipmentName,
+            equipmentId: data.equipmentId,
             deviceName: data.deviceName,
             warnType: data.warnType,
             warnGrade: data.warnGrade,
@@ -277,16 +277,12 @@
         method: "GET",
         height: "full-" + getFullSize(),
         page: true,
-        limit: 10,
+        limit: 30,
         toolbar: "#toolbar",
         defaultToolbar: [{
             title: "查询",
             layEvent: "search",
             icon: "layui-icon layui-icon-search layuiadmin-button-btn",
-        }, {
-            title: "高级查询",
-            layEvent: "query",
-            icon: "icon iconfont icon-gaojichaxun",
         }, "filter"],
         colHideChange: function (col, checked) {
             var field = col.field;
@@ -304,7 +300,7 @@
                 }
             });
         },
-        limits: [10, 15, 20, 30],
+        limits: [30, 50, 70, 100],
         parseData: function (res) {
             return {
                 code: res.code,
@@ -327,14 +323,7 @@
             // sort: true,
             hide: isHidden("equipmentId"),
             minWidth: 150
-        }, {
-            field: "equipmentName",
-            title: "设备名称",
-            align: "center",
-            // sort: true,
-            hide: isHidden("equipmentName"),
-            minWidth: 150
-        }, {
+        },{
             //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
             field: "appId",
             title: "APPID",
@@ -375,7 +364,7 @@
                 } else if (d.warnGrade == "info") {
                     return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + warnGrade + '</span>';
                 } else if (d.warnGrade == "warn") {
-                    return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:yellow">' + warnGrade + '</span>';
+                    return '<span class="layui-badge-dot layui-bg-orange"></span>' + "  " + '<span style="color:orange">' + warnGrade + '</span>';
                 } else {
                     return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + warnGrade + '</span>';
                 }

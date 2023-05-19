@@ -31,7 +31,7 @@
         insert into mon_device_real
         values (MD5(#{appId}), #{plcStatus}, #{rfidStatus},
                 #{deviceSoftwareStatus}, #{antennaStatus},
-                #{warningContent},#{warnGrade},#{warnType},#{cpuRate}, #{storageRate}, #{errorRate}, #{warnTime},#{softMonitorTime},#{plcMonitorTime},#{rfidMonitorTime},#{antennaMonitorTime})
+                #{warningContent},#{warnGrade},#{warnType},#{cpuRate}, #{storageRate}, #{errorRate},#{softMonitorTime},#{plcMonitorTime},#{rfidMonitorTime},#{antennaMonitorTime},#{warnTime})
     </insert>
     <update id="updateMonitorDeviceRealExist"
             parameterType="com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus">

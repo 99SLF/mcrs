@@ -29,10 +29,6 @@ public interface DeviceRuntimeMapper {
     int countDR(
                 @Param("equipmentId") String equipmentId, @Param("equipmentIp") String equipmentIp,@Param("equipmentName") String equipmentName,
                 @Param("deviceName") String deviceName, @Param("deviceSoftwareType") String deviceSoftwareType,
-                @Param("deviceSoftwareStatus") String deviceSoftwareStatus, @Param("accessStatus") String accessStatus,
-                @Param("cpuRate") String cpuRate, @Param("storageRate") String storageRate,
-                @Param("errorRate") String errorRate
-
-    );
+                @Param("deviceSoftwareStatus") String deviceSoftwareStatus, @Param("deviceStatus") String deviceStatus);
 
 }

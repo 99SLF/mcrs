@@ -19,8 +19,8 @@
         </where>
     </select>
     <select id="countReg" resultType="com.zimax.mcrs.device.pojo.DeviceNum">
-        select (select count(*) from mon_device_real) as deviceNumber,(select count(*) from mon_device_real where device_software_status is null) as deviceNsnumber,
-               (select count(*) from mon_device_real where device_software_status='101' and plc_status='101' and rfid_status='101' and antenna_status='101') as deviceOnumber
+        select (select count(*) from mon_device_real) as deviceNumber,(select count(*) from mon_device_real where device_software_status is null OR device_software_status="100") as deviceNsnumber,
+               (select count(*) from mon_device_real where device_software_status='101' and plc_status='101' and rfid_status='101') as deviceOnumber
     </select>
     <!--查询所有-->
     <select id="queryAll" parameterType="map" resultType="com.zimax.mcrs.device.pojo.DeviceVo">

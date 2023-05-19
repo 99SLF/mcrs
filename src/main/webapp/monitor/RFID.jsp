@@ -93,9 +93,11 @@
 <%--字典--%>
 <script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
 <%--wesocket 引用类--%>
-<script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/jquery.loadJSON.js"></script>
+<script type="text/javascript"
+        src="<%=request.getContextPath()%>/common/components/websocket/jquery.loadJSON.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/WebSocket.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/jquery.WebSocket.js"></script>
+<script type="text/javascript"
+        src="<%=request.getContextPath()%>/common/components/websocket/jquery.WebSocket.js"></script>
 <script type="text/javascript">
 
     var layer = layui.layer;
@@ -244,7 +246,7 @@
         method: "GET",
         height: "full-" + getFullSize(),
         page: true,
-        limit: 10,
+        limit: 30,
         toolbar: "#toolbar",
         defaultToolbar: [{
             title: "查询",
@@ -274,7 +276,7 @@
                 }
             });
         },
-        limits: [10, 15, 20, 30],
+        limits: [30, 50, 70, 100],
         parseData: function (res) {
             return {
                 code: res.code,
@@ -296,14 +298,14 @@
             // sort: true,
             hide: isHidden("equipmentId"),
             minWidth: 150
-        },{
+        }, {
             field: "equipmentName",
             title: "设备名称",
             align: "center",
             // sort: true,
             hide: isHidden("equipmentName"),
             minWidth: 150
-        },{
+        }, {
             //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
             field: "rfidStatus",
             title: "接入状态",
@@ -319,41 +321,46 @@
                 } else if (d.rfidStatus == "102") {
                     return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + rfidStatus + '</span>';
 
-                }else{
+                } else if (d.rfidStatus == "100") {
+
+                    return '<span class="layui-badge-dot layui-bg-orange"></span>' + "  " + '<span style="color:orange">' + rfidStatus + '</span>';
+
+                }else {
                     return "";
                 }
             }
-
-        }, {
-            field: "antennaStatus",
-            title: "天线状态",
-            align: "center",
-            hide: isHidden("antennaStatus"),
-            minWidth: 150,
-            templet: function (d) {
-                var antennaStatus = layui.admin.getDictText("ANTENNA_TYPE", d.antennaStatus);
-                if (d.antennaStatus == "101") {
-
-                    return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + antennaStatus + '</span>';
-
-                } else if (d.antennaStatus == "102") {
-                    return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + antennaStatus + '</span>';
-
-                }else{
-                    return "";
+        },
+            // {
+            //     field: "antennaStatus",
+            //     title: "天线状态",
+            //     align: "center",
+            //     hide: isHidden("antennaStatus"),
+            //     minWidth: 150,
+            //     templet: function (d) {
+            //         var antennaStatus = layui.admin.getDictText("ANTENNA_TYPE", d.antennaStatus);
+            //         if (d.antennaStatus == "101") {
+            //
+            //             return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + antennaStatus + '</span>';
+            //
+            //         } else if (d.antennaStatus == "102") {
+            //             return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + antennaStatus + '</span>';
+            //
+            //         }else{
+            //             return "";
+            //         }
+            //     }
+            //
+            // },
+            {
+                field: "rfidMonitorTime",
+                title: "发生时间",
+                align: "center",
+                hide: isHidden("rfidMonitorTime"),
+                minWidth: 200,
+                templet: function (d) {
+                    return d.rfidMonitorTime == null ? "" : util.toDateString(d.rfidMonitorTime, 'yyyy-MM-dd HH:mm:ss');
                 }
             }
-
-        },{
-            field: "rfidMonitorTime",
-            title: "发生时间",
-            align: "center",
-            hide: isHidden("rfidMonitorTime"),
-            minWidth: 200,
-            templet: function (d) {
-                return d.rfidMonitorTime==null?"":util.toDateString(d.rfidMonitorTime, 'yyyy-MM-dd HH:mm:ss');
-            }
-        }
 
         ]]
     });
@@ -376,10 +383,10 @@
             json = JSON.parse(event.data);
             var rfidStatus = json.rfidStatus;
             var appId = json.appId
-            if (rfidStatus != null||rfidStatus != ""){
+            if (rfidStatus != null || rfidStatus != "") {
                 var equipmentId = "";
                 $.ajax({
-                    url: "<%=request.getContextPath()%>/EquipmentRuntime/findEquipmentId?appId=" + appId ,
+                    url: "<%=request.getContextPath()%>/EquipmentRuntime/findEquipmentId?appId=" + appId,
                     type: "GET",
                     async: false,
                     contentType: "text/json",
@@ -388,7 +395,8 @@
                         equipmentId = data.data[0].equipmentId;
                     }
                 });
-                var _trs=$(".layui-table-body.layui-table-main:eq(0) tbody:eq(0)").children();
+                var _trs = $(".layui-table-body.layui-table-main:eq(0) tbody:eq(0)").children();
+
                 function find(tr, appId) {
                     var _tds = $(tr).children();
                     var bool = false;
@@ -403,6 +411,7 @@
                     });
                     return bool;
                 }
+
                 function update(tr, json) {
                     var _tds = $(tr).children();
                     _tds.each(function (j) {
@@ -410,40 +419,30 @@
                         var dataField = $(_td).attr("data-field");
                         switch (dataField) {
                             case "rfidStatus":
-                                var rfidStatus= layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", json.rfidStatus)
-                                if (rfidStatus == "101") {
-
-                                    $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
-                                    $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
-                                    $($(_td).children()[0]).children("span").eq(1).html(rfidStatus);
-
-                                }
-                                if (rfidStatus == "102") {
-                                    $($(_td).children()[0]).children("span").eq(0).removeClass('layui-bg-green');
-                                    $($(_td).children()[0]).children("span").eq(1).attr("style", "color:red");
-                                    $($(_td).children()[0]).children("span").eq(1).html(rfidStatus);
-                                }
+                                var rfidStatus = layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", json.rfidStatus)
+                                change(json.rfidStatus,_td,rfidStatus);
                                 break;
 
-                            case "antennaStatus":
-                                var antennaStatus= layui.admin.getDictText("ANTENNA_TYPE",json.antennaStatus)
-                                if (json.antennaStatus == "101") {
-
-                                    $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
-                                    $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
-                                    $($(_td).children()[0]).children("span").eq(1).html(antennaStatus);
-
-                                }
-                                if (json.antennaStatus == "102") {
-                                    $($(_td).children()[0]).children("span").eq(0).removeClass('layui-bg-green');
-                                    $($(_td).children()[0]).children("span").eq(1).attr("style", "color:red");
-                                    $($(_td).children()[0]).children("span").eq(1).html(antennaStatus);
-                                }
-                                break;
+                            // case "antennaStatus":
+                            //     var antennaStatus = layui.admin.getDictText("ANTENNA_TYPE", json.antennaStatus)
+                            //     if (json.antennaStatus == "101") {
+                            //
+                            //         $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
+                            //         $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
+                            //         $($(_td).children()[0]).children("span").eq(1).html(antennaStatus);
+                            //
+                            //     }
+                            //     if (json.antennaStatus == "102") {
+                            //         $($(_td).children()[0]).children("span").eq(0).removeClass('layui-bg-green');
+                            //         $($(_td).children()[0]).children("span").eq(1).attr("style", "color:red");
+                            //         $($(_td).children()[0]).children("span").eq(1).html(antennaStatus);
+                            //     }
+                            //     break;
 
                         }
                     });
                 }
+
                 _trs.each(function (i) {
                     var _tr = _trs[i];
                     if (find(_tr, json.appId)) {
@@ -498,6 +497,33 @@
         if ($(this).attr("data-field") === "0") return;
         $(this).siblings().eq(0).find("i").click();
     });
+    function change(status,_td,statusValue){
+        if (status == "101") {
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-green');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-red');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-orange');
+            $($(_td).children()[0]).children("span").eq(0).addClass('layui-badge-dot layui-bg-green');
+            $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
+            $($(_td).children()[0]).children("span").eq(1).html(statusValue);
+        }
+        if (status == "102") {
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-green');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-red');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-orange');
+            $($(_td).children()[0]).children("span").eq(0).addClass('layui-badge-dot layui-bg-red');
+            $($(_td).children()[0]).children("span").eq(1).attr("style", "color:red");
+            $($(_td).children()[0]).children("span").eq(1).html(statusValue);
+        }
+        if (status == "100") {
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-green');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-red');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-orange');
+            $($(_td).children()[0]).children("span").eq(0).addClass('layui-badge-dot layui-bg-orange');
+            $($(_td).children()[0]).children("span").eq(1).attr("style", "color:orange");
+            $($(_td).children()[0]).children("span").eq(1).html(statusValue);
+        }
+
+    }
 </script>
 </body>
 </html>

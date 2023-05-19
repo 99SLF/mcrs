@@ -22,7 +22,7 @@ public class HistoryAlarmService {
 
 
     public List<MonitorDeviceAlarmVo> queryHistoryAlarm(String page, String limit,
-                                                        String equipmentName, String deviceName,
+                                                        String equipmentId, String deviceName,
                                                         String warnType, String warnGrade,
                                                         String startTime, String endTime,
                                                         String order, String field){
@@ -39,7 +39,7 @@ public class HistoryAlarmService {
             map.put("begin", Integer.parseInt(limit) * (Integer.parseInt(page) - 1));
             map.put("limit", Integer.parseInt(limit));
         }
-        map.put("equipmentName", equipmentName);
+        map.put("equipmentId", equipmentId);
         map.put("deviceName", deviceName);
         map.put("warnType", warnType);
         map.put("warnGrade", warnGrade);
@@ -49,9 +49,9 @@ public class HistoryAlarmService {
 
     }
 
-    public int count(String equipmentName, String deviceName,
+    public int count(String equipmentId, String deviceName,
                      String warnType, String warnGrade,
                      String startTime, String endTime) {
-        return historyAlarmMapper.count(equipmentName, deviceName,warnType, warnGrade, startTime, endTime);
+        return historyAlarmMapper.count(equipmentId, deviceName,warnType, warnGrade, startTime, endTime);
     }
 }

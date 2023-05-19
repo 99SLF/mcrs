@@ -126,30 +126,33 @@ public class AccessMonitorService {
         return eqiAndAccessInfo;
     }
     public Map queryProcessAndFactory(){
-        int[] factoryId = accessMonitorMapper.queryFactoryId();
         Map<String,Object> map = new HashMap<>();
         List<List<Integer>> dataTotalList = new ArrayList<List<Integer>>();
+        List<String> factoryName= new ArrayList();
+        List<Integer> factoryId = new ArrayList();
         //查询添加设备包含的工序名字
         String[] processNames = accessMonitorMapper.queryProcessName();
         ProcessOnfactory processOnfactoryList[] = accessMonitorMapper.queryFactoryAndProcess();
+        for(int i=0;i<processOnfactoryList.length;i++){
+            if(!factoryId.contains(processOnfactoryList[i].getFactoryId())){
+                factoryId.add(processOnfactoryList[i].getFactoryId());
+            }
+            if(!factoryName.contains(processOnfactoryList[i].getFactoryName())){
+                factoryName.add(processOnfactoryList[i].getFactoryName());
+            }
+        }
+
         List intData = null;
-        List factoryName = new ArrayList<String>();
-        for(int i=0;i<processNames.length;i++){
+        for(int i=0;i<processNames.length;i++){//以工序区分不同工厂的数量
             intData = new ArrayList<Integer>();
-            for(int k=0;k<factoryId.length;k++){
+            for(int k=0;k<factoryId.size();k++){
                 for(int j=0;j<processOnfactoryList.length;j++){
-                    if(processNames[i].equals(processOnfactoryList[j].getProcessName())&&factoryId[k]==processOnfactoryList[j].getFactoryId()){
+                    if(processNames[i].equals(processOnfactoryList[j].getProcessName())&&factoryId.get(k)==processOnfactoryList[j].getFactoryId()){
                         intData.add(processOnfactoryList[j].getTotal());
-                        if(i==0){
-                            factoryName.add(processOnfactoryList[j].getFactoryName());
-                        }
                         break;
                     }
                     if(j==processOnfactoryList.length-1){
                         intData.add(0);
-                        if(i==0){
-                            factoryName.add(processOnfactoryList[j].getFactoryName());
-                        }
                     }
                 }
             }

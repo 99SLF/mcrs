@@ -743,8 +743,8 @@
         method: "GET",
         height: "full-" + getFullSize(),
         page: true,
-        limit: 20,
-        limits: [20, 40, 60, 80, 100],
+        limit: 30,
+        limits: [30, 50, 70, 100],
         toolbar: "#toolbar",
         defaultToolbar: [{
             title: "查询",

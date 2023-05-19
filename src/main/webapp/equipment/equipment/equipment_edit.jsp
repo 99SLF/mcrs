@@ -47,7 +47,7 @@
 
             <div class="layui-form-item layui-row layui-col-space10">
                 <div class="layui-col-sm6">
-                    <label class="layui-form-label"><span style="color:red">*</span>设备安装位置:</label>
+                    <label class="layui-form-label">设备安装位置:</label>
                     <div class="layui-input-block">
                         <input id="equipmentInstallLocation" type="text" name="equipmentInstallLocation"
                                lay-verify="" placeholder="请输入设备安装位置" autocomplete="off" class="layui-input">

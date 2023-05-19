@@ -33,9 +33,6 @@ public class DeviceRuntime {
      * @param deviceName         终端名称
      * @param deviceSoftwareType 终端软件类型
      * @param deviceSoftwareStatus  软件运行状态
-     * @param cpuRate            cpu使用情况
-     * @param storageRate        内存占用率
-     * @param errorRate          误读率
      * @param order              排序方式
      * @param field              排序字段
      * @return 信息列表
@@ -47,14 +44,12 @@ public class DeviceRuntime {
     public Result<?> queryDeviceRuntime(String page, String limit,
                                         String equipmentId, String equipmentIp,String equipmentName,
                                         String deviceName, String deviceSoftwareType,
-                                        String deviceSoftwareStatus, String accessStatus,
-                                        String cpuRate, String storageRate,
-                                        String errorRate,
+                                        String deviceSoftwareStatus, String deviceStatus,
                                         String order, String field) {
 
-        List DeviceRuntime = deviceRuntimeService.queryDeviceRuntime(page, limit, equipmentId, equipmentIp,equipmentName, deviceName, deviceSoftwareType, deviceSoftwareStatus, accessStatus, cpuRate, storageRate, errorRate, order, field);
+        List DeviceRuntime = deviceRuntimeService.queryDeviceRuntime(page, limit, equipmentId, equipmentIp,equipmentName, deviceName, deviceSoftwareType, deviceSoftwareStatus, deviceStatus, order, field);
 
-        return Result.success(DeviceRuntime, deviceRuntimeService.countDR(equipmentId, equipmentIp,equipmentName, deviceName, deviceSoftwareType, deviceSoftwareStatus, accessStatus, cpuRate, storageRate, errorRate));
+        return Result.success(DeviceRuntime, deviceRuntimeService.countDR(equipmentId, equipmentIp,equipmentName, deviceName, deviceSoftwareType, deviceSoftwareStatus, deviceStatus));
 //        return Result.success(deviceRuntimeService.countDR(equipmentId, equipmentName, deviceName, deviceSoftwareType, deviceSoRunStatus, accessStatus, cpuRate, storageRate, errorRate));
 
     }

@@ -186,8 +186,10 @@
         equ.equipment_ip,
         mdr.plc_status,
         mdr.rfid_status,
-        mdr.device_software_status
-        FROM mon_device_real AS mdr
+        mdr.device_software_status,
+        mdr.device_status,
+        mdr.soft_monitor_time
+        FROM (select *, case when device_software_status="101"and plc_status="101"and rfid_status="101"then "101" else  "102" end as device_status from mon_device_real) as mdr
         LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
         LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
         <where>
@@ -203,6 +205,9 @@
             <if test="deviceSoftwareType !=null and deviceSoftwareType !=''">
                 and dev.device_software_type like '%${deviceSoftwareType}%'
             </if>
+            <if test="deviceStatus !=null and deviceStatus !=''">
+                and mdr.device_status like '%${deviceStatus}%'
+            </if>
         </where>
         <if test="order !=null and order !=''">
             order by ${field} ${order}
@@ -217,7 +222,7 @@
         <select id="countDR" resultType="int">
             SELECT
             COUNT(dev.device_name)
-            FROM mon_device_real AS mdr
+            FROM (select *, case when device_software_status="101"and plc_status="101"and rfid_status="101"then "101" else  "102" end as device_status from mon_device_real) as mdr
             LEFT JOIN eqi_device AS dev ON mdr.app_id = dev.app_id
             LEFT JOIN eqi_equipment AS equ ON dev.equipment_int = equ.equipment_int
             <where>
@@ -233,17 +238,8 @@
                 <if test="deviceSoftwareType !=null and deviceSoftwareType !=''">
                     and dev.device_software_type like '%${deviceSoftwareType}%'
                 </if>
-                <if test="deviceSoftwareStatus !=null and deviceSoftwareStatus !=''">
-                    and mdr.device_software_status like '%${deviceSoftwareStatus}%'
-                </if>
-                <if test="cpuRate !=null and cpuRate !=''">
-                    and mdr.cpu_rate like '%${cpuRate}%'
-                </if>
-                <if test="storageRate !=null and storageRate !=''">
-                    and mdr.storage_rate like '%${storageRate}%'
-                </if>
-                <if test="errorRate !=null and errorRate !=''">
-                    and mdr.error_rate like '%${errorRate}%'
+                <if test="deviceStatus !=null and deviceStatus !=''">
+                    and mdr.device_status like '%${deviceStatus}%'
                 </if>
             </where>
         </select>

@@ -59,6 +59,13 @@ public class DeviceController {
         String APPId = device.getAPPId();
         MonitorDeviceStatus monitorDeviceStatus = new MonitorDeviceStatus();
         monitorDeviceStatus.setAppId(APPId);
+        monitorDeviceStatus.setDeviceSoftwareStatus("100");
+        Date date = new Date();
+        monitorDeviceStatus.setPlcStatus("100");;
+        monitorDeviceStatus.setRfidStatus("100");
+        monitorDeviceStatus.setSoftMonitorTime(new Date());
+        monitorDeviceStatus.setPlcMonitorTime(date);
+        monitorDeviceStatus.setRfidMonitorTime(date);
         accessMonitorService.addMonitorDeviceReal(monitorDeviceStatus);
 
         deviceService.registrationDevice(device);

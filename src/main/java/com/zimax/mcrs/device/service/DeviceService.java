@@ -103,7 +103,7 @@ public class DeviceService {
      */
     public DeviceNum countReg(){
         DeviceNum deviceNum =  deviceMapper.countReg();
-        deviceNum.setDeviceEnumber(deviceNum.getDeviceNumber()-deviceNum.getDeviceOnumber()-deviceNum.getDeviceNsnumber());
+        deviceNum.setDeviceEnumber(deviceNum.getDeviceNumber()-deviceNum.getDeviceOnumber());
         return deviceNum;
     }
     /**

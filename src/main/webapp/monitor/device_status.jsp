@@ -61,9 +61,20 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">设备IP：</label>
+                    <label class="layui-form-label">终端状态：</label>
                     <div class="layui-input-inline">
-                        <input type="text" class="layui-input" name="equipmentIp" autocomplete="off">
+                        <select name="deviceStatus" id="deviceStatus" lay-filter="deviceStatus"
+                                type="select">
+                            <option value="">请选择</option>
+                            <option value="101">正常</option>
+                            <option value="102">异常</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">终端名称：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="deviceName" autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -127,6 +138,7 @@
         elem: "#deviceSoftwareType",
         dictTypeId: "DEVICE_SOFTWARE_TYPE",
     });
+
     form.render();
     //获取软件运行状态
     layui.admin.renderDictSelect({
@@ -147,7 +159,8 @@
         reloadData(field);
         var formData = {
             equipmentId: field.equipmentId,
-            equipmentIp: field.equipmentIp,
+            deviceName: field.deviceName,
+            deviceStatus: field.deviceStatus,
             deviceSoftwareType: field.deviceSoftwareType
         };
         form.val("layuiadmin-device_status-form", formData);
@@ -174,7 +187,8 @@
         reloadData(data);
         form.val("layuiadmin-device_status-form", {
             equipmentId: data.equipmentId,
-            equipmentIp: data.equipmentIp,
+            deviceName: data.deviceName,
+            deviceSoftwareType: field.deviceSoftwareType,
             deviceSoftwareType: data.deviceSoftwareType
         });
     }
@@ -268,16 +282,12 @@
         method: "GET",
         height: "full-" + getFullSize(),
         page: true,
-        limit: 10,
+        limit: 30,
         toolbar: "#toolbar",
         defaultToolbar: [{
             title: "查询",
             layEvent: "search",
             icon: "layui-icon layui-icon-search layuiadmin-button-btn",
-        }, {
-            title: "高级查询",
-            layEvent: "query",
-            icon: "icon iconfont icon-gaojichaxun",
         }, "filter"],
         colHideChange: function (col, checked) {
             var field = col.field;
@@ -295,7 +305,7 @@
                 }
             });
         },
-        limits: [10, 15, 20, 30],
+        limits: [30, 50, 70, 100],
         parseData: function (res) {
             return {
                 code: res.code,
@@ -318,20 +328,6 @@
             hide: isHidden("equipmentId"),
             minWidth: 150
         }, {
-            field: "equipmentName",
-            title: "设备名称",
-            align: "center",
-            // sort: true,
-            hide: isHidden("equipmentName"),
-            minWidth: 150
-        }, {
-            //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
-            field: "aPPId",
-            title: "APPID",
-            align: "center",
-            hide: isHidden("aPPId"),
-            minWidth: 150
-        }, {
             field: "deviceName",
             title: "终端名称",
             align: "center",
@@ -349,80 +345,133 @@
                 return layui.admin.getDictText("DEVICE_SOFTWARE_TYPE", d.deviceSoftwareType);
             }
         }, {
+            field: "deviceStatus",
+            title: "终端状态",
+            align: "center",
+            // sort: true,
+            hide: isHidden("deviceStatus"),
+            minWidth: 150,
+            templet: function (d) {
+                if (d.deviceStatus == "101") {
+
+                    return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + "正常" + '</span>';
+
+                } else if (d.deviceStatus == "102") {
+                    return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + "异常" + '</span>';
+
+                } else {
+                    return "";
+                }
+            }
+        }, {
             field: "deviceSoftwareStatus",
-            title: "运行状态",
+            title: "软件运行状态",
             align: "center",
             hide: isHidden("deviceSoftwareStatus"),
             minWidth: 150,
             templet: function (d) {
                 var deviceSoftwareStatus = layui.admin.getDictText("DEVICE_SOFTWARE_STATUS", d.deviceSoftwareStatus);
-                if (d.deviceSoftwareStatus == "101") {
+                if (d.deviceSoftwareStatus == "100") {
+
+                    return '<span class="layui-badge-dot layui-bg-orange"></span>' + "  " + '<span style="color:orange">' + deviceSoftwareStatus + '</span>';
+
+                } else if (d.deviceSoftwareStatus == "101") {
 
                     return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + deviceSoftwareStatus + '</span>';
 
                 } else if (d.deviceSoftwareStatus == "102") {
                     return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + deviceSoftwareStatus + '</span>';
 
-                }else{
+                } else {
                     return "";
                 }
             }
         }, {
-            field: "accessStatus",
-            title: "接入状态",
+            //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
+            field: "plcStatus",
+            title: "PLC接入状态",
             align: "center",
-            hide: isHidden("accessStatus"),
             minWidth: 150,
+            hide: isHidden("plcStatus"),
             templet: function (d) {
-                var accessStatus = layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", d.accessStatus);
-                if (d.accessStatus == "101") {
+                var plcStatus = layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", d.plcStatus);
+                if (d.plcStatus == "101") {
 
-                    return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + accessStatus + '</span>';
+                    return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + plcStatus + '</span>';
 
-                } else if (d.accessStatus == "102") {
-                    return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + accessStatus + '</span>';
+                } else if (d.plcStatus == "102") {
+                    return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + plcStatus + '</span>';
 
-                }else{
+                } else if (d.plcStatus == "100") {
+
+                    return '<span class="layui-badge-dot layui-bg-orange"></span>' + "  " + '<span style="color:orange">' + plcStatus + '</span>';
+
+                } else {
+                    return ""
+                }
+            }
+
+        }, {
+            //field:设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识;title:设定标题名称
+            field: "rfidStatus",
+            title: "RFID接入状态",
+            align: "center",
+            minWidth: 150,
+            hide: isHidden("rfidStatus"),
+            templet: function (d) {
+                var rfidStatus = layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", d.rfidStatus);
+                if (d.rfidStatus == "101") {
+
+                    return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + rfidStatus + '</span>';
+
+                } else if (d.rfidStatus == "102") {
+                    return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + rfidStatus + '</span>';
+
+                } else if (d.rfidStatus == "100") {
+
+                    return '<span class="layui-badge-dot layui-bg-orange"></span>' + "  " + '<span style="color:orange">' + rfidStatus + '</span>';
+
+                } else {
                     return "";
                 }
             }
-        }, {
-            field: "deviceWarningNum",
-            title: "累计终端告警",
-            align: "center",
-            hide: isHidden("deviceWarningNum"),
-            minWidth: 150
-        }, {
-            field: "cpuRate",
-            title: "cup使用率",
-            align: "center",
-            hide: isHidden("cpuRate"),
-            minWidth: 150
-        }, {
-            field: "storageRate",
-            title: "内存使用率",
-            align: "center",
-            hide: isHidden("storageRate"),
-            minWidth: 150
-        }, {
-            field: "errorRate",
-            title: "误读率",
-            align: "center",
-            hide: isHidden("errorRate"),
-            minWidth: 150
-        },{
-            field: "occurrenceTime",
+        },
+            //{
+            //     field: "deviceWarningNum",
+            //     title: "累计终端告警",
+            //     align: "center",
+            //     hide: isHidden("deviceWarningNum"),
+            //     minWidth: 150
+            // }, {
+            //     field: "cpuRate",
+            //     title: "cup使用率",
+            //     align: "center",
+            //     hide: isHidden("cpuRate"),
+            //     minWidth: 150
+            // }, {
+            //     field: "storageRate",
+            //     title: "内存使用率",
+            //     align: "center",
+            //     hide: isHidden("storageRate"),
+            //     minWidth: 150
+            // }, {
+            //     field: "errorRate",
+            //     title: "误读率",
+            //     align: "center",
+            //     hide: isHidden("errorRate"),
+            //     minWidth: 150
+            // },
+            {
+                field: "softMonitorTime",
                 title: "发生时间",
                 align: "center",
-                hide: isHidden("occurrenceTime"),
+                hide: isHidden("softMonitorTime"),
                 minWidth: 200,
                 templet: function (d) {
-                return util.toDateString(d.occurrenceTime, 'yyyy-MM-dd HH:mm:ss');
-            }
-        }]]
+                    return d.softMonitorTime == null ? "" : util.toDateString(d.softMonitorTime, 'yyyy-MM-dd HH:mm:ss');
+                }
+            }]]
     });
-
-
     var host = window.location.host;
     var port = host.split(":");
     var json = ""
@@ -448,14 +497,14 @@
 
             var _trs = $(".layui-table-body.layui-table-main:eq(0) tbody:eq(0)").children();
 
-            function find(tr, appId) {
+            function find(tr, equipmentId) {
                 var _tds = $(tr).children();
                 var bool = false;
                 _tds.each(function (j) {
                     var _td = _tds[j];
                     var dataField = $(_td).attr("data-field");
-                    if (dataField === "aPPId") {
-                        if ($($(_td).children()[0]).html() === appId) {
+                    if (dataField === "equipmentId") {
+                        if ($($(_td).children()[0]).html() === equipmentId) {
                             bool = true;
                         }
                     }
@@ -469,50 +518,30 @@
                     var _td = _tds[j];
                     var dataField = $(_td).attr("data-field");
                     switch (dataField) {
-                        case "accessStatus":
-                           var accessStatus= layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", json.accessStatus)
-                            if (json.accessStatus == "101") {
-
-                                $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
-                                $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
-                                $($(_td).children()[0]).children("span").eq(1).html(accessStatus);
-
-                            }
-                            if (json.accessStatus == "102") {
-                                $($(_td).children()[0]).children("span").eq(0).removeClass('layui-bg-green');
-                                $($(_td).children()[0]).children("span").eq(1).attr("style", "color:red");
-                                $($(_td).children()[0]).children("span").eq(1).html(accessStatus);
-                            }
+                        case "plcStatus":
+                            var plcStatus = layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", json.plcStatus)
+                            change(json.plcStatus,_td,plcStatus);
                             break;
 
                         case "deviceSoftwareStatus":
                             var deviceSoftwareStatus = layui.admin.getDictText("DEVICE_SOFTWARE_STATUS", json.deviceSoftwareStatus)
-                            if (json.deviceSoftwareStatus == "101") {
-
-                                $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
-                                $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
-                                $($(_td).children()[0]).children("span").eq(1).html(deviceSoftwareStatus);
-
+                            change(json.deviceSoftwareStatus,_td,deviceSoftwareStatus);
+                            break;
+                        case "rfidStatus":
+                            var rfidStatus = layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", json.rfidStatus)
+                            change(json.rfidStatus,_td,rfidStatus);
+                            break;
+                        case "deviceStatus":
+                            var  deviceStatus;
+                            var   value;
+                            if(json.deviceSoftwareStatus=="101" && json.plcStatus=="101"&& json.rfidStatus=="101"&&json.deviceSoftwareStatus=="101"){
+                              deviceStatus="101";
+                                value = "正常";
+                            }else{
+                                 deviceStatus="102";
+                                   value = "异常";
                             }
-                            if (json.deviceSoftwareStatus == "102") {
-                                //每次的表格数据都是静态的，要对应，不然.className+='layui-bg-green'找不找修改模块，两种状态都要配,之前错误，只做了101，正常状态
-                                $($(_td).children()[0]).children("span").eq(0).removeClass('layui-bg-green');
-                                $($(_td).children()[0]).children("span").eq(1).attr("style", "color:red");
-                                $($(_td).children()[0]).children("span").eq(1).html(deviceSoftwareStatus);
-                            }
-                            break;
-
-
-                        case "cpuRate":
-                            $($(_td).children()[0]).html(json.cpuRate);
-                            break;
-
-                        case "storageRate":
-                            $($(_td).children()[0]).html(json.storageRate);
-                            break;
-
-                        case "errorRate":
-                            $($(_td).children()[0]).html(json.errorRate);
+                            change(deviceStatus,_td,value);
                             break;
                     }
                 });
@@ -520,7 +549,7 @@
 
             _trs.each(function (i) {
                 var _tr = _trs[i];
-                if (find(_tr, json.appId)) {
+                if (find(_tr, json.resource)) {
                     update(_tr, json);
                 }
 
@@ -547,6 +576,10 @@
 
         //软件类型下拉框监听事件
         form.on("select(deviceSoftwareType)", function (data) {
+            var submit = $("#LAY-app-device_status-search");
+            submit.click();
+        });
+        form.on("select(deviceStatus)", function (data) {
             var submit = $("#LAY-app-device_status-search");
             submit.click();
         });
@@ -582,6 +615,33 @@
         if ($(this).attr("data-field") === "0") return;
         $(this).siblings().eq(0).find("i").click();
     });
+    function change(status,_td,statusValue){
+        if (status == "101") {
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-green');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-red');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-orange');
+            $($(_td).children()[0]).children("span").eq(0).addClass('layui-badge-dot layui-bg-green');
+            $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
+            $($(_td).children()[0]).children("span").eq(1).html(statusValue);
+        }
+        if (status == "102") {
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-green');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-red');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-orange');
+            $($(_td).children()[0]).children("span").eq(0).addClass('layui-badge-dot layui-bg-red');
+            $($(_td).children()[0]).children("span").eq(1).attr("style", "color:red");
+            $($(_td).children()[0]).children("span").eq(1).html(statusValue);
+        }
+        if (status == "100") {
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-green');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-red');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-orange');
+            $($(_td).children()[0]).children("span").eq(0).addClass('layui-badge-dot layui-bg-orange');
+            $($(_td).children()[0]).children("span").eq(1).attr("style", "color:orange");
+            $($(_td).children()[0]).children("span").eq(1).html(statusValue);
+        }
+
+    }
 </script>
 </body>
 </html>

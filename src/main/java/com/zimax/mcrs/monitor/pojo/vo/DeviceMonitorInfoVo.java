@@ -2,6 +2,8 @@ package com.zimax.mcrs.monitor.pojo.vo;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @author 李伟杰
  * @date 2023/1/3 16:16
@@ -88,28 +90,17 @@ public class DeviceMonitorInfoVo {
      *
      */
     private String errorRate;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * 终端状态
+     *
+     */
+    private String deviceStatus;
+    /**
+     * plc接入状态
+     *
+     */
+    private String plcStatus;
+    private String rfidStatus;
+    private Date softMonitorTime;
 
 }

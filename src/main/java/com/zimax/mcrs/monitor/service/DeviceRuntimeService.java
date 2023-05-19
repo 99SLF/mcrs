@@ -28,9 +28,7 @@ public class DeviceRuntimeService {
     public List<DeviceMonitorInfoVo> queryDeviceRuntime( String page, String limit,
                                                          String equipmentId, String equipmentIp, String equipmentName,
                                                          String deviceName, String deviceSoftwareType,
-                                                         String deviceSoftwareStatus, String accessStatus,
-                                                         String cpuRate, String storageRate,
-                                                         String errorRate,
+                                                         String deviceSoftwareStatus, String deviceStatus,
                                                          String order, String field) {
         ChangeString changeString = new ChangeString();
         Map<String, Object> map = new HashMap<>();
@@ -51,10 +49,7 @@ public class DeviceRuntimeService {
         map.put("deviceName", deviceName);
         map.put("deviceSoftwareType", deviceSoftwareType);
         map.put("deviceSoftwareStatus", deviceSoftwareStatus);
-        map.put("accessStatus", accessStatus);
-        map.put("cpuRate", cpuRate);
-        map.put("storageRate", storageRate);
-        map.put("errorRate", errorRate);
+        map.put("deviceStatus", deviceStatus);
 
         return deviceRuntimeMapper.queryDeviceRuntime(map);
 
@@ -62,10 +57,8 @@ public class DeviceRuntimeService {
 
     public int countDR(String equipmentId, String equipmentIp,String equipmentName,
                        String deviceName, String deviceSoftwareType,
-                       String deviceSoftwareStatus, String accessStatus,
-                       String cpuRate, String storageRate,
-                       String errorRate) {
-        return deviceRuntimeMapper.countDR(equipmentId, equipmentIp, equipmentName, deviceName,  deviceSoftwareType, deviceSoftwareStatus,  accessStatus, cpuRate,  storageRate, errorRate);
+                       String deviceSoftwareStatus, String deviceStatus) {
+        return deviceRuntimeMapper.countDR(equipmentId, equipmentIp, equipmentName, deviceName,  deviceSoftwareType, deviceSoftwareStatus,deviceStatus);
     }
 
 }

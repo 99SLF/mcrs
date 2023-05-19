@@ -15,7 +15,7 @@
                 and equ.equipment_id like '%${equipmentId}%'
             </if>
             <if test="plcStatus !=null and plcStatus !=''">
-                and mdr.plc_status like '%${accessStatus}%'
+                and mdr.plc_status like '%${plcStatus}%'
             </if>
         </where>
 

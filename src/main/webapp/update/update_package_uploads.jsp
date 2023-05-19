@@ -442,7 +442,12 @@
         if (document.getElementById("demoListView").innerHTML == null || document.getElementById("demoListView").innerHTML == "") {
             layer.msg("请选择文件");
         } else {
-            test.upload();
+            if (submit == false) {
+                submit = true;
+                test.upload();
+            }else {
+                layer.msg("正在添加...请稍等！");
+            }
         }
     });
 

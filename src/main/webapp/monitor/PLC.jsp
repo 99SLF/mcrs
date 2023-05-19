@@ -243,7 +243,7 @@
         method: "GET",
         height: "full-" + getFullSize(),
         page: true,
-        limit: 10,
+        limit: 30,
         toolbar: "#toolbar",
         defaultToolbar: [{
             title: "查询",
@@ -273,7 +273,7 @@
                 }
             });
         },
-        limits: [10, 15, 20, 30],
+        limits: [30, 50, 70, 100],
         parseData: function (res) {
             return {
                 code: res.code,
@@ -316,7 +316,11 @@
                     return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + plcStatus + '</span>';
 
                 } else if (d.plcStatus == "102") {
-                    return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + plcStatus + '</span>';
+                    return '<span class="layui-badge-dot layui-bg-red"></span>' + "  " + '<span style="color:red">' + plcStatus + '</span>';
+
+                } else if (d.plcStatus == "100") {
+
+                    return '<span class="layui-badge-dot layui-bg-orange"></span>' + "  " + '<span style="color:orange">' + plcStatus + '</span>';
 
                 }else{
                     return ""
@@ -391,18 +395,7 @@
                         switch (dataField) {
                             case "plcStatus":
                                 var plcStatus= layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", json.plcStatus)
-                                if (json.plcStatus == "101") {
-
-                                    $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
-                                    $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
-                                    $($(_td).children()[0]).children("span").eq(1).html(plcStatus);
-
-                                }
-                                if (json.plcStatus == "102") {
-                                    $($(_td).children()[0]).children("span").eq(0).removeClass('layui-bg-green');
-                                    $($(_td).children()[0]).children("span").eq(1).attr("style", "color:red");
-                                    $($(_td).children()[0]).children("span").eq(1).html(plcStatus);
-                                }
+                                change(json.plcStatus,_td,plcStatus);
                                 break;
                         }
                     });
@@ -424,7 +417,33 @@
     });
 
     formReder();
+function change(status,_td,statusValue){
+    if (status == "101") {
+        $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-green');
+        $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-red');
+        $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-orange');
+        $($(_td).children()[0]).children("span").eq(0).addClass('layui-badge-dot layui-bg-green');
+        $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
+        $($(_td).children()[0]).children("span").eq(1).html(statusValue);
+    }
+    if (status == "102") {
+        $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-green');
+        $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-red');
+        $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-orange');
+        $($(_td).children()[0]).children("span").eq(0).addClass('layui-badge-dot layui-bg-red');
+        $($(_td).children()[0]).children("span").eq(1).attr("style", "color:red");
+        $($(_td).children()[0]).children("span").eq(1).html(statusValue);
+    }
+    if (status == "100") {
+        $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-green');
+        $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-red');
+        $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-orange');
+        $($(_td).children()[0]).children("span").eq(0).addClass('layui-badge-dot layui-bg-orange');
+        $($(_td).children()[0]).children("span").eq(1).attr("style", "color:orange");
+        $($(_td).children()[0]).children("span").eq(1).html(statusValue);
+    }
 
+}
     function formReder() {
         // 文本框回车事件
         $(".layui-input").on("keydown", function (event) {

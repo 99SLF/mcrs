@@ -251,7 +251,7 @@
         method: "get",
         height: "full-" + getFullSize(),
         page: true,
-        limit: 10,
+        limit: 30,
         toolbar: "#toolbar",
         defaultToolbar: [{
             title: "查询",
@@ -279,7 +279,7 @@
                 }
             });
         },
-        limits: [10, 15, 20, 30],
+        limits: [30, 50, 70, 100],
         parseData: function (res) {
             return {
                 code: res.code,

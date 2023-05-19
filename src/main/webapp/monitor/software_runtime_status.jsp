@@ -102,9 +102,11 @@
 <script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
 
 <%--wesocket 引用类--%>
-<script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/jquery.loadJSON.js"></script>
+<script type="text/javascript"
+        src="<%=request.getContextPath()%>/common/components/websocket/jquery.loadJSON.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/WebSocket.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/common/components/websocket/jquery.WebSocket.js"></script>
+<script type="text/javascript"
+        src="<%=request.getContextPath()%>/common/components/websocket/jquery.WebSocket.js"></script>
 <script type="text/javascript">
     var layer = layui.layer;
     var table = layui.table;
@@ -254,7 +256,7 @@
         method: "get",
         height: "full-" + getFullSize(),
         page: true,
-        limit: 10,
+        limit: 30,
         toolbar: "#toolbar",
         defaultToolbar: [{
             title: "查询",
@@ -282,7 +284,7 @@
                 }
             });
         },
-        limits: [10, 15, 20, 30],
+        limits: [30, 50, 70, 100],
         parseData: function (res) {
             return {
                 code: res.code,
@@ -298,7 +300,7 @@
             }, {
                 title: "序号",
                 type: "numbers",
-            },{
+            }, {
                 field: "equipmentId",
                 title: "设备资源号",
                 align: "center",
@@ -313,7 +315,7 @@
                 // sort: true,
                 hide: isHidden("equipmentName"),
                 minWidth: 150
-            },  {
+            }, {
                 //field:设定字段名。字段名的设定非常重要不能弄成APPId，识别不了，且是表格数据列的唯一标识;title:设定标题名称
                 field: "aPPId",
                 title: "APPID",
@@ -353,25 +355,29 @@
                 minWidth: 150,
                 templet: function (d) {
                     var deviceSoftwareStatus = layui.admin.getDictText("DEVICE_SOFTWARE_STATUS", d.deviceSoftwareStatus);
-                    if (d.deviceSoftwareStatus == "101") {
+                    if (d.deviceSoftwareStatus == "100") {
+
+                        return '<span class="layui-badge-dot layui-bg-orange"></span>' + "  " + '<span style="color:orange">' + deviceSoftwareStatus + '</span>';
+
+                    } else if (d.deviceSoftwareStatus == "101") {
 
                         return '<span class="layui-badge-dot layui-bg-green"></span>' + "  " + '<span style="color:green">' + deviceSoftwareStatus + '</span>';
 
                     } else if (d.deviceSoftwareStatus == "102") {
                         return '<span class="layui-badge-dot"></span>' + "  " + '<span style="color:red">' + deviceSoftwareStatus + '</span>';
 
-                    }else{
+                    } else {
                         return "";
                     }
                 }
-            },{
+            }, {
                 field: "softMonitorTime",
                 title: "发生时间",
                 align: "center",
                 hide: isHidden("softMonitorTime"),
                 minWidth: 200,
                 templet: function (d) {
-                    return d.softMonitorTime==null?"":util.toDateString(d.softMonitorTime, 'yyyy-MM-dd HH:mm:ss');
+                    return d.softMonitorTime == null ? "" : util.toDateString(d.softMonitorTime, 'yyyy-MM-dd HH:mm:ss');
                 }
             }
         ]]
@@ -395,7 +401,8 @@
         onMessage: function (event) {
 
             json = JSON.parse(event.data);
-            var _trs=$(".layui-table-body.layui-table-main:eq(0) tbody:eq(0)").children();
+            var _trs = $(".layui-table-body.layui-table-main:eq(0) tbody:eq(0)").children();
+
             function find(tr, appId) {
                 var _tds = $(tr).children();
                 var bool = false;
@@ -410,6 +417,7 @@
                 });
                 return bool;
             }
+
             function update(tr, json) {
                 var _tds = $(tr).children();
                 _tds.each(function (j) {
@@ -418,23 +426,12 @@
                     switch (dataField) {
                         case "deviceSoftwareStatus":
                             var deviceSoftwareStatus = layui.admin.getDictText("DEVICE_SOFTWARE_STATUS", json.deviceSoftwareStatus)
-                            if (json.deviceSoftwareStatus == "101") {
-
-                                $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
-                                $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
-                                $($(_td).children()[0]).children("span").eq(1).html(deviceSoftwareStatus);
-
-                            }
-                            if (json.deviceSoftwareStatus == "102") {
-                                //每次的表格数据都是静态的，要对应，不然.className+='layui-bg-green'找不找修改模块，两种状态都要配,之前错误，只做了101，正常状态
-                                $($(_td).children()[0]).children("span").eq(0).removeClass('layui-bg-green');
-                                $($(_td).children()[0]).children("span").eq(1).attr("style", "color:red");
-                                $($(_td).children()[0]).children("span").eq(1).html(deviceSoftwareStatus);
-                            }
+                            change(json.deviceSoftwareStatus,_td,deviceSoftwareStatus);
                             break;
                     }
                 });
             }
+
             _trs.each(function (i) {
                 var _tr = _trs[i];
                 if (find(_tr, json.appId)) {
@@ -486,6 +483,33 @@
         if ($(this).attr("data-field") === "0") return;
         $(this).siblings().eq(0).find("i").click();
     });
+    function change(status,_td,statusValue){
+        if (status == "101") {
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-green');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-red');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-orange');
+            $($(_td).children()[0]).children("span").eq(0).addClass('layui-badge-dot layui-bg-green');
+            $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
+            $($(_td).children()[0]).children("span").eq(1).html(statusValue);
+        }
+        if (status == "102") {
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-green');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-red');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-orange');
+            $($(_td).children()[0]).children("span").eq(0).addClass('layui-badge-dot layui-bg-red');
+            $($(_td).children()[0]).children("span").eq(1).attr("style", "color:red");
+            $($(_td).children()[0]).children("span").eq(1).html(statusValue);
+        }
+        if (status == "100") {
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-green');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-red');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-orange');
+            $($(_td).children()[0]).children("span").eq(0).addClass('layui-badge-dot layui-bg-orange');
+            $($(_td).children()[0]).children("span").eq(1).attr("style", "color:orange");
+            $($(_td).children()[0]).children("span").eq(1).html(statusValue);
+        }
+
+    }
 </script>
 </body>
 </html>

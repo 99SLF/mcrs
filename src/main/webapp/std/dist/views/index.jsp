@@ -42,7 +42,7 @@
                                     <li class="layui-col-xs3">
                                         <a lay-href="<%=request.getContextPath() %>/equipment/equipment/equipment_list.jsp">
                                             <i class="layui-icon layui-icon-set"></i>
-                                            <cite>资产管理</cite>
+                                            <cite>设备管理</cite>
                                         </a>
                                     </li>
                                     <li class="layui-col-xs3">
@@ -65,15 +65,15 @@
                 </div>
                 <div class="layui-col-md6">
                     <div class="layui-card">
-                        <div class="layui-card-header">终端数量</div>
+                        <div class="layui-card-header">终端监控</div>
                         <div class="layui-card-body">
                             <div class="layui-carousel layadmin-carousel layadmin-backlog">
                                 <ul class="layui-row layui-col-space10">
                                     <li class="layui-col-xs6">
-                                        <div class="layadmin-backlog-body">
-                                            <h3>终端总数</h3>
-                                            <p><cite id="deviceNumber">0</cite></p>
-                                        </div>
+                                            <div class="layadmin-backlog-body">
+                                                <h3>终端总数</h3>
+                                                <p><cite id="deviceNumber">0</cite></p>
+                                            </div>
                                     </li>
                                     <li class="layui-col-xs6">
                                         <div class="layadmin-backlog-body">
@@ -89,7 +89,7 @@
                                     </li>
                                     <li class="layui-col-xs6">
                                         <div class="layadmin-backlog-body">
-                                            <h3>终端未启动数量</h3>
+                                            <h3>软件未启动数量</h3>
                                             <p><cite id="deviceNsnumber">0</cite></p>
                                         </div>
                                     </li>
@@ -312,6 +312,7 @@
                 var resData = result.data;
                 bingData = resData
                 for(var i in resData){
+                    if(resData[i].name!=null)
                     bingProcessName.push(resData[i].name)
                 }
                 echartBing();

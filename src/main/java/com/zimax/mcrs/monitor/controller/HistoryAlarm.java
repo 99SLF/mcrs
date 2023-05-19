@@ -41,12 +41,12 @@ public class HistoryAlarm {
      * //
      */
     @GetMapping("/historyAlarm/query")
-    public Result<?> queryHistoryAlarm(String page, String limit, String equipmentName,
+    public Result<?> queryHistoryAlarm(String page, String limit, String equipmentId,
                                        String deviceName, String warnType,
                                        String warnGrade, String startTime,
                                        String endTime, String order, String field) {
-        List historyAlarm = historyAlarmService.queryHistoryAlarm(page, limit, equipmentName, deviceName, warnType, warnGrade, startTime, endTime, order, field);
-        return Result.success(historyAlarm, historyAlarmService.count(equipmentName, deviceName, warnType, warnGrade, startTime, endTime));
+        List historyAlarm = historyAlarmService.queryHistoryAlarm(page, limit, equipmentId, deviceName, warnType, warnGrade, startTime, endTime, order, field);
+        return Result.success(historyAlarm, historyAlarmService.count(equipmentId, deviceName, warnType, warnGrade, startTime, endTime));
     }
 
 }

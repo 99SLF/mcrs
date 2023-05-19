@@ -105,9 +105,7 @@ public class AccessMonitor {
         if(monitorDeviceStatus.getDeviceSoftwareStatus()==null&&monitorDeviceStatus.getWarnGrade()==null){
             return Result.error("1","传入参数有误");
         }
-        if(monitorDeviceStatus.getDeviceSoftwareStatus()!=null){
-            monitorDeviceStatus.setSoftMonitorTime(occurTime);
-        }
+        monitorDeviceStatus.setSoftMonitorTime(occurTime);
         if(monitorDeviceStatus.getPlcStatus()!=null){
             monitorDeviceStatus.setPlcMonitorTime(occurTime);
         }
