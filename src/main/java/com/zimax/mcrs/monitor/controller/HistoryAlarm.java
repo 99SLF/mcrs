@@ -27,7 +27,7 @@ public class HistoryAlarm {
      *
      * @param page              页记录数
      * @param limit             页码
-     * @param equipmentName     设备资源名
+     * @param equipmentId     设备资源名
      * @param deviceName        终端名称
      * @param warnType          预警类型
      * @param warnGrade         预警等级
