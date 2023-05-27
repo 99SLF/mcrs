@@ -81,4 +81,5 @@ public interface AccessMonitorMapper {
     void addDeviceAlarm(MonitorDeviceAlarm monitorDeviceAlarm);
 
     List<AlarmEventVo> findAlarmEvent(String warningContent);
+    List<MonitorDeviceStatus> queryMonReals();
 }

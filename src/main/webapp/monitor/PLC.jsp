@@ -360,20 +360,9 @@
             json = JSON.parse(event.data);
             var plcStatus = json.plcStatus;
             var appId = json.appId
-            if (plcStatus !=null||plcStatus!=""){
-                var equipmentId = "";
-                $.ajax({
-                    url: "<%=request.getContextPath()%>/EquipmentRuntime/findEquipmentId?appId=" + appId ,
-                    type: "GET",
-                    async: false,
-                    contentType: "text/json",
-                    cache: false,
-                    success: function (data) {
-                        equipmentId = data.data[0].equipmentId;
-                    }
-                });
+            if (plcStatus !=null && plcStatus!=""){
                 var _trs=$(".layui-table-body.layui-table-main:eq(0) tbody:eq(0)").children();
-                function find(tr, appId) {
+                function find(tr, equipmentId) {
                     var _tds = $(tr).children();
                     var bool = false;
                     _tds.each(function (j) {
@@ -397,12 +386,15 @@
                                 var plcStatus= layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", json.plcStatus)
                                 change(json.plcStatus,_td,plcStatus);
                                 break;
+                            case "plcMonitorTime":
+                                $($(_td).children()[0]).html(json.plcMonitorTime==null?"":util.toDateString(json.plcMonitorTime, 'yyyy-MM-dd HH:mm:ss'));
+                                break;
                         }
                     });
                 }
                 _trs.each(function (i) {
                     var _tr = _trs[i];
-                    if (find(_tr, json.appId)) {
+                    if (find(_tr, json.resource)) {
                         update(_tr, json);
                     }
 

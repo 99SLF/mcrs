@@ -196,6 +196,12 @@
             war_alarm_event
         WHERE alarm_event_id = #{warningContent}
     </select>
+    <select id="queryMonReals" resultType="com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus">
+        SELECT a.app_id,eqi.equipment_id,a.device_software_status,plc_status,rfid_status,soft_monitor_time
+        from mon_device_real a
+                 left join eqi_device dev on a.app_id=dev.app_id
+                 LEFT JOIN eqi_equipment eqi on dev.equipment_int=eqi.equipment_int
+    </select>
 
 </mapper>
 

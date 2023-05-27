@@ -315,7 +315,7 @@
 			}
 		});
 	}
-	badge();
+	//badge();
 
 	// 监听 Tab 选项卡切换事件
 	element.on("tab(layadmin-layout-tabs)", function(data) {

@@ -156,7 +156,7 @@ public class AccessMonitor {
             WebSocket.push("plc",json);
             WebSocket.push("rfid",json);
             WebSocket.push("device_abnormal_warn",json);
-            return Result.success("0","异常添加成功");
+            return Result.success("0","消息发送成功");
         }else {
             //将java对象转成json字符串
             String json = mapper.writeValueAsString(monitorDeviceStatus);
@@ -165,7 +165,7 @@ public class AccessMonitor {
             WebSocket.push("software_runtime_status",json);
             WebSocket.push("plc",json);
             WebSocket.push("rfid",json);
-            return Result.success("0","终端暂无异常");
+            return Result.success("0","消息发送成功");
         }
     }
 

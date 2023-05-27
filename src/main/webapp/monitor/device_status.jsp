@@ -543,6 +543,9 @@
                             }
                             change(deviceStatus,_td,value);
                             break;
+                        case "softMonitorTime":
+                            $($(_td).children()[0]).html(json.softMonitorTime==null?"":util.toDateString(json.softMonitorTime, 'yyyy-MM-dd HH:mm:ss'));
+                            break;
                     }
                 });
             }

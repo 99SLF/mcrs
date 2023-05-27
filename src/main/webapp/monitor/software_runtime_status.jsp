@@ -428,6 +428,9 @@
                             var deviceSoftwareStatus = layui.admin.getDictText("DEVICE_SOFTWARE_STATUS", json.deviceSoftwareStatus)
                             change(json.deviceSoftwareStatus,_td,deviceSoftwareStatus);
                             break;
+                        case "softMonitorTime":
+                            $($(_td).children()[0]).html(json.softMonitorTime==null?"":util.toDateString(json.softMonitorTime, 'yyyy-MM-dd HH:mm:ss'));
+                            break;
                     }
                 });
             }

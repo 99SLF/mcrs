@@ -406,34 +406,16 @@
         onMessage: function (event) {
             json = JSON.parse(event.data);
             //通过预警事件编码查出预警标题，预警类型，预警等级，预警内容
-            var warningContent = json.warningContent;
-            var warnTime = layui.util.toDateString(json.warnTime);
-            var warningContent = "";
-            var warnGrade = "";
-            var warnType = "";
-            $.ajax({
-                url: "<%=request.getContextPath()%>/DeviceAbnormalAlarm/findAlarmEvent?warningContent=" + warningContent,
-                type: "GET",
-                async: false,
-                contentType: "text/json",
-                cache: false,
-                success: function (data) {
-                    warningContent = data.data[0].warningContent;
-                    warnGrade = data.data[0].warnGrade;
-                    warnType = data.data[0].warnType;
-
-                }
-            });
             var _trs = $(".layui-table-body.layui-table-main:eq(0) tbody:eq(0)").children();
 
-            function find(tr, appId) {
+            function find(tr, equipmentId) {
                 var _tds = $(tr).children();
                 var bool = false;
                 _tds.each(function (j) {
                     var _td = _tds[j];
                     var dataField = $(_td).attr("data-field");
-                    if (dataField === "aPPId") {
-                        if ($($(_td).children()[0]).html() === appId) {
+                    if (dataField === "equipmentId") {
+                        if ($($(_td).children()[0]).html() === equipmentId) {
                             bool = true;
                         }
                     }
@@ -448,39 +430,18 @@
                     var dataField = $(_td).attr("data-field");
                     switch (dataField) {
                         case "warnType":
-                            var warnTypeVal = layui.admin.getDictText("WRANING_TYPE", warnType);
-                            if (warnType == "103") {
-                                $($(_td).children()[0]).children("span").eq(0).addClass('layui-bg-green');
-                                $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
-                                $($(_td).children()[0]).children("span").eq(1).html(warnTypeVal);
-
-                            } else {
-                                $($(_td).children()[0]).children("span").eq(0).removeClass('layui-bg-green');
-                                $($(_td).children()[0]).children("span").eq(1).attr("style", "color:red");
-                                $($(_td).children()[0]).children("span").eq(1).html(warnTypeVal);
-                            }
+                            var warnTypeVal = layui.admin.getDictText("WRANING_TYPE", json.warnType);
+                            $($(_td).children()[0]).html(warnTypeVal);
                             break;
-
                         case "warnGrade":
-                            if (warnGrade == "info") {
-                                $($(_td).children()[0]).children("span").eq(0).attr("style", "color:green");
-                                $($(_td).children()[0]).children("span").eq(0).html(warnGrade);
-                            } else if (warnGrade == "warn") {
-                                $($(_td).children()[0]).children("span").eq(0).attr("style", "color:yellow");
-                                $($(_td).children()[0]).children("span").eq(0).html(warnGrade);
-                            } else if (warnGrade == "error") {
-                                $($(_td).children()[0]).children("span").eq(0).attr("style", "color:red");
-                                $($(_td).children()[0]).children("span").eq(0).html(warnGrade);
-                            }
-
+                            change(json.warnGrade,_td,json.warnGrade);
                             break;
-
                         case "warningContent":
-                            $($(_td).children()[0]).html(warningContent);
+                            $($(_td).children()[0]).html(json.warningContent);
                             break;
 
                         case "warnTime":
-                            $($(_td).children()[0]).html(warnTime);
+                            $($(_td).children()[0]).html(json.warnTime==null?"":util.toDateString(json.warnTime, 'yyyy-MM-dd HH:mm:ss'));
                             break;
                     }
                 });
@@ -488,7 +449,7 @@
 
             _trs.each(function (i) {
                 var _tr = _trs[i];
-                if (find(_tr, json.appId)) {
+                if (find(_tr, json.resource)) {
                     update(_tr, json);
                 }
 
@@ -519,7 +480,33 @@
             height: "full-" + getFullSize()
         });
     });
+    function change(status,_td,statusValue){
+        if (status == "info") {
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-green');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-red');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-orange');
+            $($(_td).children()[0]).children("span").eq(0).addClass('layui-badge-dot layui-bg-green');
+            $($(_td).children()[0]).children("span").eq(1).attr("style", "color:green");
+            $($(_td).children()[0]).children("span").eq(1).html(statusValue);
+        }
+        if (status == "error") {
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-green');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-red');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-orange');
+            $($(_td).children()[0]).children("span").eq(0).addClass('layui-badge-dot layui-bg-red');
+            $($(_td).children()[0]).children("span").eq(1).attr("style", "color:red");
+            $($(_td).children()[0]).children("span").eq(1).html(statusValue);
+        }
+        if (status == "warn") {
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-green');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-red');
+            $($(_td).children()[0]).children("span").eq(0).removeClass('layui-badge-dot layui-bg-orange');
+            $($(_td).children()[0]).children("span").eq(0).addClass('layui-badge-dot layui-bg-orange');
+            $($(_td).children()[0]).children("span").eq(1).attr("style", "color:orange");
+            $($(_td).children()[0]).children("span").eq(1).html(statusValue);
+        }
 
+    }
     $("body").on("click", ".layui-table-body table.layui-table tbody tr td", function () {
         if ($(this).attr("data-field") === "0") return;
         $(this).siblings().eq(0).find("i").click();

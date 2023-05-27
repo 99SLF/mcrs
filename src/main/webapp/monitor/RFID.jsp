@@ -384,20 +384,9 @@
             var rfidStatus = json.rfidStatus;
             var appId = json.appId
             if (rfidStatus != null || rfidStatus != "") {
-                var equipmentId = "";
-                $.ajax({
-                    url: "<%=request.getContextPath()%>/EquipmentRuntime/findEquipmentId?appId=" + appId,
-                    type: "GET",
-                    async: false,
-                    contentType: "text/json",
-                    cache: false,
-                    success: function (data) {
-                        equipmentId = data.data[0].equipmentId;
-                    }
-                });
                 var _trs = $(".layui-table-body.layui-table-main:eq(0) tbody:eq(0)").children();
 
-                function find(tr, appId) {
+                function find(tr, equipmentId) {
                     var _tds = $(tr).children();
                     var bool = false;
                     _tds.each(function (j) {
@@ -422,7 +411,9 @@
                                 var rfidStatus = layui.admin.getDictText("EQUIPMENT_ACCESS_STATUS", json.rfidStatus)
                                 change(json.rfidStatus,_td,rfidStatus);
                                 break;
-
+                            case "rfidMonitorTime":
+                                $($(_td).children()[0]).html(json.rfidMonitorTime==null?"":util.toDateString(json.rfidMonitorTime, 'yyyy-MM-dd HH:mm:ss'));
+                                break;
                             // case "antennaStatus":
                             //     var antennaStatus = layui.admin.getDictText("ANTENNA_TYPE", json.antennaStatus)
                             //     if (json.antennaStatus == "101") {
@@ -445,7 +436,7 @@
 
                 _trs.each(function (i) {
                     var _tr = _trs[i];
-                    if (find(_tr, json.appId)) {
+                    if (find(_tr, json.resource)) {
                         update(_tr, json);
                     }
 
