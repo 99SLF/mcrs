@@ -86,7 +86,7 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>终端名称:</label>
             <div class="layui-input-block">
-                <input id="deviceName" type="text" name="deviceName" lay-verify="required|deviceName" placeholder=""
+                <input id="deviceName" type="text" name="deviceName" lay-verify="required" placeholder=""
                        autocomplete="off" class="layui-input">
             </div>
         </div>
