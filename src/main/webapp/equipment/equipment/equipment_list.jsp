@@ -556,13 +556,22 @@
             templet: function (d) {
                 return layui.admin.getDictText("IS_USE", d.enable);
             }
-        }, {
-            field: "equipmentInstallLocation",
-            title: "设备安装位置",
+        },
+        //     {
+        //     field: "equipmentInstallLocation",
+        //     title: "设备安装位置",
+        //     align: "center",
+        //     minWidth: 215,
+        //     hide: isHidden("equipmentInstallLocation")
+        // },
+            {
+            field: "equipTypeCode",
+            title: "设备类型代码",
             align: "center",
-            minWidth: 215,
-            hide: isHidden("equipmentInstallLocation")
-        }, {
+            minWidth: 120,
+            hide: isHidden("equipTypeCode"),
+
+        },{
             field: "equipTypeName",
             title: "设备类型",
             align: "center",

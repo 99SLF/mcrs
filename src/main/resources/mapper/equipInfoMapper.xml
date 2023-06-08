@@ -122,6 +122,18 @@
         </if>
     </select>
 
+    <!--高级搜索中的设备类型下拉框-->
+    <select id="gaoJiEquipTypeName" resultType="com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo">
+        SELECT
+            equip_type_id,
+            equip_type_name
+        FROM
+            base_equip_info
+        GROUP BY  equip_type_name
+    </select>
+
+
+
     <!--更新一条选中信息-->
     <update id="updateEquipInfo" parameterType="com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo">
         UPDATE base_equip_info
@@ -154,4 +166,7 @@
             update_time=#{updateTime}
         where equip_type_id = ${equipTypeId}
     </update>
+
+
+
 </mapper>

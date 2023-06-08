@@ -107,4 +107,14 @@ public class EquipController {
         return Result.success();
 
     }
+
+    /**
+     * 查询设备类型名称作为设备管理的高级查询的下拉选项
+     */
+    @GetMapping("/gaoJiEquipTypeName")
+    public Result<?> gaoJiEquipTypeName() {
+        List typeName = equipService.gaoJiEquipTypeName();
+        return Result.success(typeName);
+    }
+
 }

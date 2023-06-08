@@ -136,11 +136,14 @@
 
 
 	//获取设备类型类型的下拉值
-	layui.admin.renderDictSelect({
+/*	layui.admin.renderDictSelect({
 		elem: "#equipTypeName",
 		dictTypeId: "EQUIPMENT_PROPERTY",
-	});
+	});*/
 	form.render();
+
+
+
 
 
 	//获取启用类型的下拉值
@@ -163,6 +166,24 @@
     function SetData(data) {
 		win = data.win ? data.win : window;
 		var formData = data.data;
+		// 查询设备类型
+		$.ajax({
+			// 获取设备类型和设备类型id
+			url: "<%= request.getContextPath() %>/EquipController/gaoJiEquipTypeName",
+			type: "GET",
+			async: false,//默认是true异步传输，false是同步传输,转全局变量的第一条件
+			cache: false,
+			contentType: "text/json",
+			dataType: "json",//
+			success: function (result) {
+				debugger;
+				var dataEquipTypeName = result.data;
+				$.each(dataEquipTypeName, function (index, value) {
+					$("#equipTypeName").append(new Option(value.equipTypeName, value.id));//对应映射字段名 第一个为显示的值  第二个为value值
+				});
+				layui.form.render("select");//重新渲染 固定写法
+			}
+		});
 		form.val("layuiadmin-equipment-form", {
 			equipmentId: formData.equipmentId,
 			equipmentName: formData.equipmentName,

@@ -69,6 +69,13 @@
 
             <div class="layui-form-item layui-row layui-col-space10">
                 <div class="layui-col-sm6">
+                    <label class="layui-form-label"><span style="color:red">*</span>设备类型代码:</label>
+                    <div class="layui-input-block">
+                        <input id="equipTypeCode" type="text" name="equipTypeCode" lay-verify="required"
+                               placeholder="" autocomplete="off" class="layui-input" readonly>
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
                     <label class="layui-form-label"><span style="color:red">*</span>MES连接IP:</label>
                     <div class="layui-input-block">
                         <input id="mesIpAddress" type="text" name="mesIpAddress" lay-verify="required"
@@ -234,6 +241,7 @@
             "equipmentInstallLocation": data.equipmentInstallLocation,
             "equipTypeId": data.equipTypeId,
             "equipTypeName": data.equipTypeName,
+            "equipTypeCode": data.equipTypeCode,
             "mesIpAddress": data.mesIpAddress,
             "protocolCommunication": data.protocolCommunication,
             "equipmentContinuePort": data.equipmentContinuePort,
@@ -280,6 +288,7 @@
             yes: function (index, layero) {
                 var data = layero.find('iframe')[0].contentWindow.getData();
                 $("#equipTypeId").val(data.equipTypeId);
+                $("#equipTypeCode").val(data.equipTypeCode);
                 $("#equipTypeName").val(data.equipTypeName);
                 $("#mesIpAddress").val(data.mesIpAddress);
                 $("#protocolCommunication").val(data.protocolCommunication);

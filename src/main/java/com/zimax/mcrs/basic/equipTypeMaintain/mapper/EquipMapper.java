@@ -4,6 +4,7 @@ import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo;
 import com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfoVo;
+import com.zimax.mcrs.basic.matrixInfo.matrix.pojo.Matrix;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -62,4 +63,8 @@ public interface EquipMapper {
      * 批量启用
      */
     int enable(EquipTypeInfo equipTypeInfo);
+
+
+
+    List<EquipTypeInfo> gaoJiEquipTypeName();
 }

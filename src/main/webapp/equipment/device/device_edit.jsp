@@ -222,7 +222,8 @@
     //禁用终端软件类型下拉框
     layui.use('form', function () {
         var form = layui.form;
-        $("#deviceSoftwareType").attr("disabled", "disabled");
+        // $("#deviceSoftwareType").attr("disabled", "disabled");
+        $("#deviceSoftwareType").removeAttr("disabled");
         form.render('select');
     });
 

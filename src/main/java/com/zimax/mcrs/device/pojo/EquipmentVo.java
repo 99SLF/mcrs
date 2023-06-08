@@ -48,6 +48,11 @@ public class EquipmentVo {
     private int equipTypeId;
 
     /**
+     * 设备类型代码
+     */
+    private String equipTypeCode;
+
+    /**
      *设备类型名称
      */
     private String equipTypeName;
