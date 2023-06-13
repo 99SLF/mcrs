@@ -162,7 +162,7 @@ public class EquipService {
     /**
      * 查询设备类型名称作为设备管理的高级查询的下拉选项
      */
-    public List<EquipTypeInfo> gaoJiEquipTypeName(){
-        return equipMapper.gaoJiEquipTypeName();
+    public List<EquipTypeInfo> getEquipTypeName(){
+        return equipMapper.getEquipTypeName();
     }
 }

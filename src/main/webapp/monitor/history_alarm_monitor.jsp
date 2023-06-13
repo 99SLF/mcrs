@@ -139,7 +139,6 @@
 
     // 监听搜索
     form.on("submit(LAY-app-device_statusAlarm-search)", function (data) {
-        debugger;
         var startTime = "";
         var endTime = "";
         var field = data.field;

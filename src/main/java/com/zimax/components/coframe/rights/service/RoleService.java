@@ -245,5 +245,14 @@ public class RoleService {
     public void deleteRolePartyRelation(int roleId) {
         partyAuthMapper.deleteRolePartyRelation(roleId, IConstants.ROLE_PARTY_TYPE_ID);
     }
+    /**
+     * 在添加角色时判断角色代码是否已存在
+     * @param roleCode 角色代码
+     * @return
+     */
+    public int checkRoleCode(String roleCode) {
+        return roleMapper.checkRoleCode(roleCode);
+    }
+
 
 }

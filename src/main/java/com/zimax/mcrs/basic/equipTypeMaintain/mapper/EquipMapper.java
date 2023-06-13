@@ -66,5 +66,5 @@ public interface EquipMapper {
 
 
 
-    List<EquipTypeInfo> gaoJiEquipTypeName();
+    List<EquipTypeInfo> getEquipTypeName();
 }

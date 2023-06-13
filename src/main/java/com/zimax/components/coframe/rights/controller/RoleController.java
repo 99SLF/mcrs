@@ -1,5 +1,6 @@
 package com.zimax.components.coframe.rights.controller;
 
+import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
 import com.zimax.mcrs.config.Result;
 import com.zimax.components.coframe.rights.pojo.Role;
 import com.zimax.components.coframe.rights.service.RoleService;
@@ -7,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 角色管理
@@ -120,5 +123,36 @@ public class RoleController {
         List<Role> roles = roleService.queryAuthorizedRoleList();
         return Result.success(roles);
     }
+
+    /**
+     * 在添加角色时判断角色代码是否已存在
+     * @param roleCode 角色代码
+     * @return
+     */
+    @GetMapping("/role/isExist")
+    public Result<?> check(@RequestParam("roleCode") String roleCode) {
+        if(roleService.checkRoleCode(roleCode)>0){
+            return Result.error("1","当前角色代码已存在，请输入正确的角色代码");
+        }else {
+            return Result.success();
+        }
+    }
+
+//    @GetMapping("/role/check/isExist")
+//    public Result<?> checkRoleCode(@RequestParam("roleCode") String roleCode,@RequestParam("roleId") String roleId,@RequestParam("flag") String flag) {
+//        if(flag.equals("1")){
+//            if (roleService.checkRoleCodeAdd(roleCode) > 0) {
+//                return Result.error("1", "当前角色代码已存在，请输入正确的角色代码");
+//            } else {
+//                return Result.success();
+//            }
+//        }else {
+//            if (roleService.checkRoleCodeEdit (roleCode,roleId) > 0) {
+//                return Result.error("1", "当前角色代码已存在，请输入正确的角色代码");
+//            } else {
+//                return Result.success();
+//            }
+//        }
+//    }
 
 }

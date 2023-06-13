@@ -169,14 +169,13 @@
 		// 查询设备类型
 		$.ajax({
 			// 获取设备类型和设备类型id
-			url: "<%= request.getContextPath() %>/EquipController/gaoJiEquipTypeName",
+			url: "<%= request.getContextPath() %>/EquipController/getEquipTypeName",
 			type: "GET",
 			async: false,//默认是true异步传输，false是同步传输,转全局变量的第一条件
 			cache: false,
 			contentType: "text/json",
 			dataType: "json",//
 			success: function (result) {
-				debugger;
 				var dataEquipTypeName = result.data;
 				$.each(dataEquipTypeName, function (index, value) {
 					$("#equipTypeName").append(new Option(value.equipTypeName, value.id));//对应映射字段名 第一个为显示的值  第二个为value值
