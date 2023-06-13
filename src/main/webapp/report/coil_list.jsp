@@ -259,7 +259,7 @@
             title: "高级查询",
             layEvent: "query",
             icon: "icon iconfont icon-gaojichaxun",
-        }, "filter"],
+        }, "filter","exports"],
         colHideChange: function (col, checked) {
             var field = col.field;
             var hidden = col.hide;

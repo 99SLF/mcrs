@@ -123,7 +123,7 @@
     </select>
 
     <!--高级搜索中的设备类型下拉框-->
-    <select id="gaoJiEquipTypeName" resultType="com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo">
+    <select id="getEquipTypeName" resultType="com.zimax.mcrs.basic.equipTypeMaintain.pojo.EquipTypeInfo">
         SELECT
             equip_type_id,
             equip_type_name

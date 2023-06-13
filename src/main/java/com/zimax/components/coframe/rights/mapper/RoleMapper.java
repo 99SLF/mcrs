@@ -1,6 +1,5 @@
 package com.zimax.components.coframe.rights.mapper;
 
-import com.zimax.components.coframe.rights.pojo.PartyAuth;
 import com.zimax.components.coframe.rights.pojo.Role;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -13,6 +12,13 @@ import java.util.Map;
  */
 @Mapper
 public interface RoleMapper {
+    /**
+     * 在添加角色时判断角色代码是否已存在
+     * @param roleCode 角色代码
+     */
+    int checkRoleCode(String roleCode);
+
+
 
     List<Role> queryRoles(Map map);
 

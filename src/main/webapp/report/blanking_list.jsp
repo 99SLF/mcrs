@@ -284,7 +284,7 @@
             title: "高级查询",
             layEvent: "query",
             icon: "icon iconfont icon-gaojichaxun",
-        }, "filter"],
+        }, "filter","exports"],
 
         //列筛选
         colHideChange: function (col, checked) {

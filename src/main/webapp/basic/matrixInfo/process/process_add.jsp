@@ -125,7 +125,6 @@
                 contentType: "text/json",
                 cache: false,
                 success: function (text) {
-
                     if (text.code == "1") {
                         checkResult = "工序名称已存在";
                     }
