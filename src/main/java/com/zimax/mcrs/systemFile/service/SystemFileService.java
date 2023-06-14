@@ -22,4 +22,8 @@ public class SystemFileService {
     public void updateSystemFile(SystemFile systemFile){
         systemFileMapper.updateSystemFile(systemFile);
     }
+
+    public void addSystemFile(SystemFile systemFile){
+        systemFileMapper.addSystemFile(systemFile);
+    }
 }

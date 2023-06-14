@@ -143,7 +143,7 @@
         //根据绑定id，打开本地
         elem: "#test1",
         //上传后台接受接口
-        url: "<%= request.getContextPath() %>/systemFile/upload",
+        url: "<%= request.getContextPath() %>/systemFile/add",
         //true，为选中文件直接提交，false为不提交根据bindAction属性上的id提交，后端做了判断走了两次的接口，直接是选择就提交了
         //bindAction: "#layuiadmin-app-form-submit",
         //是否接受拖拽的文件上传，设置 false 可禁用。不支持ie8/9
@@ -162,9 +162,9 @@
             // uploadNumber:()=>{
             //     return $('#uploadNumber').val();//实现动态传值
             // },
-            fileId: () => {
-                return $('#fileId').val();//实现动态传值
-            },
+            // fileId: () => {
+            //     return $('#fileId').val();//实现动态传值
+            // },
             version: () => {
                 return $('#version').val();//实现动态传值
             },

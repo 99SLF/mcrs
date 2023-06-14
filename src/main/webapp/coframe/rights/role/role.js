@@ -521,16 +521,11 @@ layui.define(["admin"], function(exports) {
 						resize: false,
 						btn: ["确定", "取消"],
 						success: function(layero, index) {
-							var contentWindow = layero.find("iframe")[0].contentWindow;
-							var role = contentWindow.layui.role;
-							if (role) {
-								var initData = {
-							    	win: window,
-							    	type: role.Type.update,
-							    	roleId: data.roleId
-							    };
-								role.init(initData);
-							}
+							var initData = {
+								win: window,
+								data: data
+							};
+							layero.find("iframe")[0].contentWindow.SetData(initData)
 						},
 						yes: function(index, layero) {
 							var submit = layero.find("iframe").contents().find("#layuiadmin-app-form-submit");
