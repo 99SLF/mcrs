@@ -46,13 +46,26 @@
 		<input type="button" lay-submit lay-filter="layuiadmin-app-form-submit" id="layuiadmin-app-form-submit" value="确认添加">
 	</div>
 </div>
+<%--<script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>--%>
+<%--<script>--%>
+<%--	layui.config({--%>
+<%--		base: "<%=request.getContextPath()%>/"--%>
+<%--	});--%>
+<%--</script>--%>
+<%--<script src="<%=request.getContextPath()%>/std/dist/index.all.js" type="text/javascript"></script>--%>
+
+
 <script src="<%= request.getContextPath() %>/common/layui/layui.all.js" type="text/javascript"></script>
 <script>
 	layui.config({
 		base: "<%=request.getContextPath()%>/"
 	});
 </script>
-<script src="<%=request.getContextPath()%>/std/dist/index.all.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
+
+
+
+
 <script src="<%= request.getContextPath() %>/coframe/rights/role/role.js" type="text/javascript"></script>
 <script type="text/javascript">
 	var role = layui.role;
@@ -61,6 +74,7 @@
 <script type="text/javascript">
 	var layer = layui.layer;
 	var form = layui.form;
+	var table = layui.table;
 	var $ = layui.jquery;
 	var isExist = false;
 	var submit = false;
@@ -110,8 +124,8 @@
 							time: 2000
 						}, function() {
 							var index = parent.layer.getFrameIndex(window.name);
-							win.layui.table.reload('LAY-app-role-list');
-							win.window.formReder();
+							win.layui.table.reload("LAY-app-role-list");
+							win.formReder();
 							top.layer.close(index);
 	    			});
 					}

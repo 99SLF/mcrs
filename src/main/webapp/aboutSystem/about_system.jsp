@@ -16,11 +16,12 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/common/layui/css/layui.css"/>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/std/dist/style/admin.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/std/dist/style/custom.css?v=1.0.0">
-
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/iconfont/iconfont.css">
 </head>
 <body>
 <div class="layui-fluid">
     <div class="layui-card">
+        <script type="text/html" id="toolbar"></script>
         <div class="layui-card-body">
             <table id="LAY-app-device-list" lay-filter="LAY-app-device-list"></table>
             <script type="text/html" id="table-device-list">
@@ -91,7 +92,12 @@
         method: "GET",
         height: "full-" + getFullSize(),
         limit: 3,
-        defaultToolbar: [""],
+        toolbar: "#toolbar",
+        defaultToolbar: [{
+            title: "上传文件",
+            layEvent: "add",
+            icon: "layui-icon layui-icon-add-circle",
+        }],
         parseData: function (res) {
             return {
                 code: res.code,
@@ -180,6 +186,29 @@
             });
         }
     });
+
+    var active = {
+        add: function () {
+            top.layer.open({
+                type: 2,
+                title: "上传文件",
+                content: "<%= request.getContextPath() %>/aboutSystem/system_file_add.jsp",
+                area: ["800px", "500px"],
+                resize: false,
+                btn: ["确定", "取消"],
+                success: function (layero, index) {
+                    var dataJson = {
+                        win: window,
+                    };
+                    layero.find("iframe")[0].contentWindow.SetData(dataJson);
+                },
+                yes: function (index, layero) {
+                    var submit = layero.find("iframe").contents().find("#layuiadmin-app-form-submit");
+                    submit.click();
+                }
+            });
+        }
+    }
 
     //批量选中
     $("body").on("click", ".layui-table-body table.layui-table tbody tr td", function () {

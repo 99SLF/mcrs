@@ -41,6 +41,7 @@ public class SystemFileController {
     private SystemFileService systemFileService;
     private UploadJava uploadJava = (UploadJava)new ClassPathXmlApplicationContext(
                     "applicationContext.xml").getBean("UploadJava");
+
     @PostMapping("/upload")
     public Result<?> updateSystemFile(MultipartFile file, SystemFile systemFile, HttpServletRequest request) throws
             Exception {
@@ -87,7 +88,6 @@ public class SystemFileController {
             //19.走编码规则，流水单号，编码规则，参数是编码规则表功能编码functionNum
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String format = simpleDateFormat.format(new Date());
-
             //20.调用存储数据添加功能
             systemFileService.updateSystemFile(systemFile);
         } else {
@@ -97,6 +97,9 @@ public class SystemFileController {
         return Result.success();
 
     }
+
+
+
     @RequestMapping("/download")
     public void download(String filePath, HttpServletRequest request, HttpServletResponse response) {
 
@@ -167,4 +170,61 @@ public class SystemFileController {
         return Result.success(systemFileService.querySystemFile());
     }
 
+
+    @PostMapping("/add")
+    public Result<?> addSystemFile(MultipartFile file, SystemFile systemFile, HttpServletRequest request) throws
+            Exception {
+        if (file != null) {
+            // 1.获取原始文件名
+            String uploadFileName = file.getOriginalFilename();
+            //保存文件原始名到数据库
+            systemFile.setFileName(uploadFileName);
+
+            // 2.截取文件扩展名
+            String extendName = uploadFileName.substring(uploadFileName.lastIndexOf(".") + 1);
+            // 3.把文件加上随机数，防止文件重复
+            //String uuid = UUID.randomUUID().toString().replace("-", "").toUpperCase();
+            //5.获取文件类型
+            Object obj =  DataContextManager.current();
+//            ApplicationContext context = new ClassPathXmlApplicationContext(
+//                    "applicationContext.xml");
+//
+//            UploadJava uploadJava = (UploadJava) context.getBean("UploadJava");
+            //9.调用方法
+            String realPath = uploadJava.getSystemFilePath();
+            File dir = new File(realPath);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            // 13.创建空文件，写入上传文件包
+            File newFile = new File(dir, uploadFileName);
+
+            // 14.将参数file（上传文件）写入空文件中
+            file.transferTo(newFile);
+
+            //15.保存更新包存放文件夹路径位置
+            systemFile.setDownloadPath(dir.getPath() + File.separator+ uploadFileName);
+
+            //16.将更新时间保存到数据库信息中
+            systemFile.setCreateTime(new Date());
+
+            //17.获取当前用户信息
+            IUserObject usetObject = DataContextManager.current().getMUODataContext().getUserObject();
+
+            //18.将当期的用户信息存储到数据库表里
+            systemFile.setCreator(usetObject.getUserId());
+
+            //19.走编码规则，流水单号，编码规则，参数是编码规则表功能编码functionNum
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String format = simpleDateFormat.format(new Date());
+
+            //20.调用存储数据添加功能
+            systemFileService.addSystemFile(systemFile);
+        } else {
+            return Result.error("1", "上传失败");
+
+        }
+        return Result.success();
+
+    }
 }
