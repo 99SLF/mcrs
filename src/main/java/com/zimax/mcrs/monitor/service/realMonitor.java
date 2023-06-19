@@ -31,41 +31,41 @@ public class realMonitor {
     @Autowired
     private AccessMonitorMapper accessMonitorMapper;
     @Async("taskExecutor")
-    @Scheduled(fixedDelay = 2000) // 7分钟执行一次
+    @Scheduled(fixedDelay = 600000) // 7分钟执行一次
     public void changeStatus() {
-        Date current = new Date();
-        MonitorDeviceStatus monitorDeviceStatus = new MonitorDeviceStatus();
-        List<MonitorDeviceStatus> monitorDeviceStatusList = accessMonitorMapper.queryMonReals();
-        for(int i=0;i<monitorDeviceStatusList.size();i++){
-           //判断是否有实时心跳值
-            if(timeCmp(current,monitorDeviceStatusList.get(i).getSoftMonitorTime())){
-                monitorDeviceStatus.setAppId(monitorDeviceStatusList.get(i).getAppId());
-                monitorDeviceStatus.setDeviceSoftwareStatus("100");
-                monitorDeviceStatus.setPlcStatus("100");
-                monitorDeviceStatus.setRfidStatus("100");
-                monitorDeviceStatus.setSoftMonitorTime(current);
-                monitorDeviceStatus.setPlcMonitorTime(current);
-                monitorDeviceStatus.setRfidMonitorTime(current);
-                monitorDeviceStatus.setWarnTime(current);
-                monitorDeviceStatus.setWarnType("102");
-                monitorDeviceStatus.setWarnGrade("error");
-                monitorDeviceStatus.setWarningContent("rfid软件异常关闭");
-                int x =accessMonitorMapper.updateMonitorDeviceStatus(monitorDeviceStatus);
-                ObjectMapper mapper = new ObjectMapper();
-                String json = null;
-                try {
-                    json = mapper.writeValueAsString(monitorDeviceStatus);
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-                //将所有信息打包发到终端状态
-                WebSocket.push("device_status",json);
-                WebSocket.push("software_runtime_status",json);
-                WebSocket.push("plc",json);
-                WebSocket.push("rfid",json);
-                WebSocket.push("device_abnormal_warn",json);
-            }
-        }
+//        Date current = new Date();
+//        MonitorDeviceStatus monitorDeviceStatus = new MonitorDeviceStatus();
+//        List<MonitorDeviceStatus> monitorDeviceStatusList = accessMonitorMapper.queryMonReals();
+//        for(int i=0;i<monitorDeviceStatusList.size();i++){
+//           //判断是否有实时心跳值
+//            if(timeCmp(current,monitorDeviceStatusList.get(i).getSoftMonitorTime())){
+//                monitorDeviceStatus.setAppId(monitorDeviceStatusList.get(i).getAppId());
+//                monitorDeviceStatus.setDeviceSoftwareStatus("100");
+//                monitorDeviceStatus.setPlcStatus("100");
+//                monitorDeviceStatus.setRfidStatus("100");
+//                monitorDeviceStatus.setSoftMonitorTime(current);
+//                monitorDeviceStatus.setPlcMonitorTime(current);
+//                monitorDeviceStatus.setRfidMonitorTime(current);
+//                monitorDeviceStatus.setWarnTime(current);
+//                monitorDeviceStatus.setWarnType("102");
+//                monitorDeviceStatus.setWarnGrade("error");
+//                monitorDeviceStatus.setWarningContent("rfid软件异常关闭");
+//                int x =accessMonitorMapper.updateMonitorDeviceStatus(monitorDeviceStatus);
+//                ObjectMapper mapper = new ObjectMapper();
+//                String json = null;
+//                try {
+//                    json = mapper.writeValueAsString(monitorDeviceStatus);
+//                } catch (JsonProcessingException e) {
+//                    e.printStackTrace();
+//                }
+//                //将所有信息打包发到终端状态
+//                WebSocket.push("device_status",json);
+//                WebSocket.push("software_runtime_status",json);
+//                WebSocket.push("plc",json);
+//                WebSocket.push("rfid",json);
+//                WebSocket.push("device_abnormal_warn",json);
+//            }
+//        }
 
     }
     public boolean timeCmp(Date current,Date ago){
