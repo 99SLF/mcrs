@@ -22,6 +22,12 @@
         </where>
     </select>
 
+    <update id="updateConfigurationFilebydow" parameterType="com.zimax.mcrs.update.pojo.ConfigurationFile">
+        UPDATE dev_config_file
+        SET
+        config_path=  #{configPath}
+        WHERE file_id = '${fileId}'
+    </update>
     <update id="updateConfigurationFile" parameterType="com.zimax.mcrs.update.pojo.ConfigurationFile">
         UPDATE dev_config_file
         SET

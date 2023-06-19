@@ -23,4 +23,5 @@ public interface ConfigurationFileMapper {
 
     void delConfigurationFile(ConfigurationFile configurationFile);
     void delConfigurationFileByAppId (String appId);
+    void updateConfigurationFilebydow(ConfigurationFile configurationFile);
 }

@@ -273,7 +273,7 @@
         method: "get",
         height: "full-" + getFullSize(),
         page: true,
-        limit: 100,
+        limit: 1000,
         toolbar: "#toolbar",
         // defaultToolbar: ["filter"],
         defaultToolbar: [{
@@ -303,7 +303,7 @@
                 }
             });
         },
-        limits: [100, 150, 200, 300],
+        limits: [1000, 1500, 2000, 2500],
         parseData: function (res) {
             return {
                 code: res.code,

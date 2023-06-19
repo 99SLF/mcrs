@@ -335,6 +335,13 @@
             hide: isHidden("deviceName"),
             minWidth: 150
         }, {
+            field: "equipmentIp",
+            title: "设备IP",
+            align: "center",
+            // sort: true,
+            hide: isHidden("equipmentIp"),
+            minWidth: 150
+        },{
             field: "deviceSoftwareType",
             title: "终端类型",
             align: "center",

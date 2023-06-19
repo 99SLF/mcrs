@@ -143,14 +143,6 @@
                        placeholder="" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
-        <div class="layui-col-sm6">
-            <label class="layui-form-label">设备安装位置:</label>
-            <div class="layui-input-block">
-                <input id="equipmentInstallLocation" type="text" name="equipmentInstallLocation"
-                       lay-verify="" placeholder="" autocomplete="off" class="layui-input"
-                       readonly>
-            </div>
-        </div>
     </div>
 
     <div class="layui-form-item layui-row layui-col-space10">

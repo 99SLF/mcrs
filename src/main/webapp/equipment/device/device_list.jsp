@@ -809,7 +809,6 @@
             title: "终端名称",
             align: "center",
             minWidth: 150,
-            sort: true,
             hide: isHidden("deviceName"),
             //打开监听
             event: "view",
@@ -892,12 +891,6 @@
             align: "center",
             minWidth: 150,
             hide: isHidden("equipmentContinuePort")
-        }, {
-            field: "equipmentInstallLocation",
-            title: "设备安装位置",
-            align: "center",
-            minWidth: 150,
-            hide: isHidden("equipmentInstallLocation")
         }, {
             field: "processName",
             title: "工序名称",

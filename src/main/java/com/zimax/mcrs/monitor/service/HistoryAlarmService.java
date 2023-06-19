@@ -30,7 +30,7 @@ public class HistoryAlarmService {
         Map<String, Object> map = new HashMap<>();
         if (order == null) {
             map.put("order", "desc");
-            map.put("field", "occurrence_time");
+            map.put("field", "device_alarm_id");
         } else {
             map.put("order", order);
             map.put("field", changeString.camelUnderline(field));

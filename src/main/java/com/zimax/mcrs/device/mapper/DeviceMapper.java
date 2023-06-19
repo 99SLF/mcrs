@@ -142,7 +142,7 @@ public interface DeviceMapper {
      * @return
      */
     Device selectDevice(@Param("deviceId") int deviceId);
-
+    String queryDevice(@Param("appId") String apId);
     /**
      * 通过终端主键获取终端信息
      */

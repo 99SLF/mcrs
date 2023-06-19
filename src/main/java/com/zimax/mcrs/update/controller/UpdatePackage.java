@@ -7,6 +7,7 @@ import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
 import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.mcrs.config.Result;
+import com.zimax.mcrs.device.mapper.DeviceMapper;
 import com.zimax.mcrs.device.pojo.Device;
 import com.zimax.mcrs.device.pojo.DeviceRollback;
 import com.zimax.mcrs.device.pojo.DeviceUpgrade;
@@ -47,6 +48,8 @@ public class UpdatePackage {
 
     @Autowired
     private UpdatePackageService updatePackageService;
+    @Autowired
+    private  DeviceMapper deviceMapper;
     @Autowired
     private ConfigurationFileMapper configurationFileMapper;
     private UploadJava uploadJava = (UploadJava)new ClassPathXmlApplicationContext(
@@ -477,12 +480,16 @@ public class UpdatePackage {
             } else {//2.2存在资源
                 appId = deviceEquipmentVo.getAppId();
                 ConfigurationFile confile = new ConfigurationFile();
-                if(configurationFileMapper.count(appId)==0){
-                    for(int i=0;i<equipment.getXmlPathList().size();i++){
-                        String path = equipment.getXmlPathList().get(i);
-                        path = path.trim();
+                for(int i=0;i<equipment.getXmlPathList().size();i++){
+                    String path = equipment.getXmlPathList().get(i);
+                    path = path.trim();
+                    String fileName = path.substring(path.lastIndexOf("\\")+1);
+                    List<ConfigurationFile> configurationFileList = configurationFileMapper.getConfigurationFile(appId,fileName);
+                    if(configurationFileList.size()==1) {
+                        configurationFileList.get(0).setConfigPath(path);
+                        configurationFileMapper.updateConfigurationFilebydow(configurationFileList.get(0));
+                    }else{
                         confile.setConfigPath(path);
-                        String fileName = path.substring(path.lastIndexOf("\\")+1);
                         confile.setFileName(fileName);
                         confile.setFileStatus("101");
                         confile.setCreator("系统管理员");
@@ -664,6 +671,7 @@ public class UpdatePackage {
             if (appId == null || appId == "") {
                 return Result.error("1","数据不存在");
             }
+            String dowPath = deviceMapper.queryDevice(appId);
             List<ConfigurationFile> configurationFiles = new ArrayList<>();
             configurationFiles = updatePackageService.getConfigurationFile(appId,null);
             List<HashMap> list = new ArrayList();
@@ -679,7 +687,9 @@ public class UpdatePackage {
                     String terminalTime = configurationFile.getTerminalTime();
                     String webTime =configurationFile.getWebTime();
                     String fileStatus = configurationFile.getFileStatus();
-                    String configPath = configurationFile.getConfigPath();
+                    String str = configurationFile.getConfigPath();
+                    String strPath = str.substring(str.lastIndexOf("\\")+1);
+                    String configPath = dowPath+File.separator+"DataSource\\Config"+File.separator+strPath;
                     if (webTime == null || webTime == "" || terminalTime == null || terminalTime == "") {
                         map.put("fileName",configurationFile.getFileName());
                         map.put("ifUpdate",0);

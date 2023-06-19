@@ -102,5 +102,6 @@ public class DeviceMonitorInfoVo {
     private String plcStatus;
     private String rfidStatus;
     private Date softMonitorTime;
+    private String equipmentIp;
 
 }

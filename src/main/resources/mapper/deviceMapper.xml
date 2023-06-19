@@ -342,4 +342,8 @@
         select * from eqi_device
         where device_id =  #{deviceId}
     </select>
+    <select id="queryDevice" resultType="String">
+        select program_installation_path from eqi_device
+        where app_id =  #{appId}
+    </select>
 </mapper>
