@@ -64,8 +64,6 @@
 <script src="<%=request.getContextPath()%>/std/dist/index.all.js"></script>
 
 
-
-
 <script src="<%= request.getContextPath() %>/coframe/rights/role/role.js" type="text/javascript"></script>
 <script type="text/javascript">
 	var role = layui.role;

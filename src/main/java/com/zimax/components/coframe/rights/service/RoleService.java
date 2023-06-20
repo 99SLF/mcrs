@@ -253,6 +253,4 @@ public class RoleService {
     public int checkRoleCode(String roleCode) {
         return roleMapper.checkRoleCode(roleCode);
     }
-
-
 }
