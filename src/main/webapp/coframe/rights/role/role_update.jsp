@@ -82,6 +82,7 @@
 	//判断角色代码是否已存在
 	$("#roleCode").blur(function () {
 		var roleCode = $("#roleCode").val();
+		debugger;
 		if (roleCode != roleCodeCheck) {
 			$.ajax({
 				url: "<%= request.getContextPath()%>/rights/role/isExist?roleCode=" + roleCode,
@@ -97,17 +98,15 @@
 				}
 			});
 		} else {
-			return;
+			 isExist = false;
 		}
 	});
 	
 // 	监听提交
 	form.on("submit(layuiadmin-app-form-submit)", function(data) {
 		var submitData = JSON.stringify(data.field);
-		console.log(submitData)
 		if (submit == false) {
 			submit = true;
-			console.log(submitData);
 			if (isExist == false) {
 				$.ajax({
 					url: "<%= request.getContextPath() %>/rights/role/update",
