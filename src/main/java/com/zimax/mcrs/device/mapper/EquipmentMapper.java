@@ -21,6 +21,12 @@ import java.util.Map;
 public interface EquipmentMapper {
 
     /**
+     * 查询所有设备信息，用于角色权限的树
+     * @return
+     */
+   List<EquipmentVo> queryAllEquipments();
+
+    /**
      * 查询所有
      *
      * @return

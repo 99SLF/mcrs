@@ -82,7 +82,6 @@
 	//判断角色代码是否已存在
 	$("#roleCode").blur(function () {
 		var roleCode = $("#roleCode").val();
-		debugger;
 		if (roleCode != roleCodeCheck) {
 			$.ajax({
 				url: "<%= request.getContextPath()%>/rights/role/isExist?roleCode=" + roleCode,

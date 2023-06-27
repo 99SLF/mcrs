@@ -228,4 +228,9 @@
         WHERE process_id = #{processIdNew}
           AND acc_point_res_id != #{accPointResId}
     </select>
+
+<!--    查询所有接入点信息-->
+    <select id="queryAllAccPointRes" resultType="com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointResVo">
+        select * from base_access_info
+    </select>
 </mapper>

@@ -66,7 +66,14 @@
     <!--        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>-->
     <!--        <property name="mapperInterface" value="com.zimax.components.coframe.auth.mapper.authMapper"/>-->
     <!--    </bean>-->
-
+    <bean id="EmpRoleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.basic.aboutEmployee.mapper.EmpRoleMapper"/>
+    </bean>
+    <bean id="EmpMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.basic.aboutEmployee.mapper.EmpMapper"/>
+    </bean>
     <bean id="HistoryAlarmMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.mcrs.monitor.mapper.HistoryAlarmMapper"/>
@@ -378,6 +385,10 @@
     <bean id="UserService" class="com.zimax.components.coframe.rights.service.UserService">
         <property name="userMapper" ref="UserMapper"/>
     </bean>
+
+
+
+
     <bean id="EmpPositionService" class="com.zimax.components.coframe.org.service.EmpPositionService">
         <property name="empPositionMapper" ref="EmpPositionMapper"/>
     </bean>
@@ -424,7 +435,6 @@
     <bean id="DefaultUserManagerBean" class="com.zimax.components.coframe.auth.party.manager.DefaultUserManager">
         <property name="userMapper" ref="UserMapper"/>
     </bean>
-
     <bean id="DefaultResAuthManagerBean" class="com.zimax.components.coframe.rights.resauth.DefaultResAuthManager">
         <property name="resAuthMapper" ref="ResAuthMapper"/>
     </bean>

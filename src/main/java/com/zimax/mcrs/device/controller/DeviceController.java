@@ -190,7 +190,6 @@ public class DeviceController {
      */
     @GetMapping("/device/checkEquipment/isExist")
     public Result<?> checkEquipment(@RequestParam("equipmentInt") int equipmentInt) {
-        System.out.println(equipmentInt);
         if (deviceService.checkEquipment(equipmentInt) > 0) {
             return Result.error("1", "当前选择设备已被注册，请重新选择未注册设备");
         } else {

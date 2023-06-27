@@ -2,22 +2,16 @@ package com.zimax.mcrs.basic.accPointResMaintain.service;
 
 import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
-import com.zimax.components.coframe.rights.DefaultUserManager;
-import com.zimax.components.coframe.rights.pojo.User;
 import com.zimax.mcrs.basic.accPointResMaintain.mapper.AccPointResMapper;
 import com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointRes;
 import com.zimax.mcrs.basic.accPointResMaintain.pojo.AccPointResVo;
 import com.zimax.mcrs.basic.matrixInfo.processInfoMaintain.pojo.ProcessInfo;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.serialnumber.service.SerialnumberService;
-import com.zimax.mcrs.warn.pojo.AlarmEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author 李伟杰
@@ -31,10 +25,16 @@ public class AccPointResService {
     @Autowired
     private SerialnumberService serialnumberService;
 
-
+    /**
+     * 查询所有接入点信息，用于员工角色的授权管理
+     * @return
+     */
+    public List<AccPointResVo> queryAllAccPointRes(){
+        return accPointResMapper.queryAllAccPointRes();
+    }
 
     /**
-     * 查询所有接入点信息
+     * 分页查询所有接入点信息
      * @return
      */
     public List<AccPointResVo> queryAccPointRes(String page, String limit, String accPointResCode, String accPointResName, String isEnable,String matrixCode,String factoryCode,  String accCreatorName, String createTime,String accUpdaterName, String updateTime, String matrixName,String order, String field) {

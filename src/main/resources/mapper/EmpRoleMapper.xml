@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.basic.aboutEmployee.mapper.EmpRoleMapper">
+
+<!--    添加一个角色信息-->
+    <insert id="add">
+        insert into base_role
+        values (#{roleId}, #{roleCode}, #{roleName}, #{roleDesc}, #{creator}, #{createTime})
+    </insert>
+
+<!--    添加资源授权-->
+    <insert id="addResource">
+        insert into base_role_eqi(role_id, equipment_int)
+        values ( #{roleId}, #{equId})
+    </insert>
+
+    <!--    更新一条角色信息-->
+    <update id="update">
+        update base_role
+        set role_code = #{roleCode},
+            role_name = #{roleName},
+            role_desc = #{roleDesc}
+        where role_id = #{roleId}
+    </update>
+
+    <!--    删除一个角色信息-->
+    <delete id="delete">
+        delete
+        from base_role
+        where role_id = #{roleId}
+    </delete>
+
+<!--    删除角色的设备资源-->
+    <delete id="deleteResources">
+        delete
+        from base_role_eqi
+        where role_id = #{roleId}
+    </delete>
+
+    <!--    分页条件查询角色-->
+    <select id="queryRole" resultType="com.zimax.mcrs.basic.aboutEmployee.pojo.EmployeeRole">
+        select * from base_role b
+        <where>
+            <if test="roleCode !=null and roleCode !=''">
+                and b.role_code like '%${roleCode}%'
+            </if>
+            <if test="roleName !=null and roleName !=''">
+                and b.role_name like '%${roleName}%'
+            </if>
+        </where>
+        <if test="order !=null and order !=''and field != null">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+<!--    查询角色表总记录数-->
+    <select id="count" resultType="java.lang.Integer">
+        select count(*)
+        from base_role;
+    </select>
+
+<!--    角色代码的唯一性校验-->
+    <select id="checkRoleCode" resultType="java.lang.Integer">
+        select count(*)
+        from base_role
+        where role_code = #{roleCode}
+    </select>
+
+<!--    查询角色是否绑定了设备资源-->
+    <select id="getCheckedState" resultType="java.lang.Integer">
+        SELECT COUNT(*) AS count
+        FROM base_role_eqi
+        WHERE role_id = #{roleId} AND equipment_int =#{equId};
+    </select>
+
+</mapper>

@@ -17,6 +17,11 @@ import java.util.Map;
 @Mapper
 public interface AccPointResMapper {
 
+    /**
+     * 查询所有接入点信息
+     * @return
+     */
+    List<AccPointResVo> queryAllAccPointRes();
 
     /**
      * 查询全部信息

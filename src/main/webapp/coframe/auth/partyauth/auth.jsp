@@ -1,11 +1,6 @@
 <%@page pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<!-- 
-  - Author(s): SSW ，李伟杰
-  - Date: 2021-03-30 10:42:05
-  - Description:
--->
 <head>
 <title>权限信息</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
