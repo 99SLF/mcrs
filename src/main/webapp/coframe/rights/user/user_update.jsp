@@ -295,7 +295,7 @@
 		}
 	});
 
-	//判断角色是否已存在
+	//判断用户是否已存在
 	$("#userId").blur(function() {
 		var userId = $("#userId").val();
 		if (userId != null && userId != "") {

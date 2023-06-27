@@ -48,7 +48,14 @@ public class EquipmentService {
     private UpdateConfigService updateConfigService;
 
     /**
-     * 查询所有
+     * 查询所有设备信息
+     * @return
+     */
+    public List<EquipmentVo> queryAllEquipments(){
+        return equipmentMapper.queryAllEquipments();
+    }
+    /**
+     * 分页查询所有
      */
     public List<EquipmentVo> queryEquipments(String limit, String page, String equipmentId, String equipmentName, String equipmentIp,String enable, String equipmentInstallLocation, String equipTypeName, String protocolCommunication, String accPointResName, String processName, String createName, String createTime, String order, String field) {
         if (equipmentId != null || equipmentName != null || equipmentIp!=null||enable != null || equipmentInstallLocation != null || equipTypeName != null || protocolCommunication != null || accPointResName != null || processName != null || createName != null || createTime != null) {

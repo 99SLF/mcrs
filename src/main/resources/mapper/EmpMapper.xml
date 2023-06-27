@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.basic.aboutEmployee.mapper.EmpMapper">
+    <!--    添加一条员工记录-->
+    <insert id="addEmp" parameterType="com.zimax.mcrs.basic.aboutEmployee.pojo.Emp">
+        insert into base_employee
+        values (#{jobId}, #{jobNo}, #{grade}, #{creator}, #{createTime})
+    </insert>
+
+
+    <insert id="addRoles">
+        insert into base_role_emp(job_id, role_id)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.jobId}, #{item.roleId})
+        </foreach>
+    </insert>
+
+    <!--    修改员工信息-->
+    <update id="updateEmp">
+        update base_employee set job_no = #{jobNo}, grade = #{grade} where job_id = #{jobId}
+    </update>
+
+<!--    删除员工信息-->
+    <delete id="deleteEmp">
+        DELETE t1, t2
+        FROM base_employee t1
+                 left JOIN base_role_emp t2 ON t1.job_id = t2.job_id
+        WHERE t1.job_id = #{jobId};
+    </delete>
+
+<!--    批量删除员工信息-->
+    <delete id="batchDeleteEmp">
+
+    </delete>
+
+    <!--    批量删除授权的员工角色-->
+    <delete id="deleteRoles" parameterType="java.util.List">
+        delete from base_role_emp  WHERE (job_id, role_id) IN
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            (#{item.jobId}, #{item.roleId})
+        </foreach>
+    </delete>
+
+    <!--    分页条件查询员工信息-->
+    <select id="queryEmp" parameterType="map" resultType="com.zimax.mcrs.basic.aboutEmployee.pojo.EmpVo">
+        SELECT
+        r.role_id,
+        e.job_id,
+        e.job_no,
+        e.grade,
+        e.creator,
+        e.create_time,
+        GROUP_CONCAT( DISTINCT r.role_name ) AS roleNameList,
+        c.USER_NAME
+        FROM
+        base_employee e
+        LEFT JOIN base_role_emp b ON e.job_id = b.job_id
+        LEFT JOIN base_role r ON b.role_id = r.role_id
+        left join cap_user c on USER_ID = e.creator
+        <where>
+            <if test="jobNo !=null and jobNo !=''">
+                and e.job_no like '%${jobNo}%'
+            </if>
+        </where>
+        GROUP BY
+        e.job_id
+        <if test="order !=null and order !=''and field != null">
+            order by ${field} ${order}
+        </if>
+        <if test="limit !=null and limit !=''">
+            limit ${begin},${limit}
+        </if>
+    </select>
+
+<!--    查询员工表的总记录数-->
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from base_employee;
+    </select>
+
+<!--    员工工号的唯一性校验-->
+    <select id="checkJobNo" resultType="java.lang.Integer">
+        select count(*) from base_employee where job_no = #{jobNo}
+    </select>
+
+<!--    查询已授权的角色-->
+    <select id="queryAuthorizedRoles" resultType="com.zimax.mcrs.basic.aboutEmployee.pojo.EmployeeRole">
+        select r.role_id, r.role_name
+        from base_role r
+                 left join base_role_emp bre on r.role_id = bre.role_id
+                 left join base_employee be on bre.job_id = be.job_id
+        where be.job_id = #{jobId}
+    </select>
+
+<!--    查询所有员工角色-->
+    <select id="queryAllRoles" resultType="com.zimax.mcrs.basic.aboutEmployee.pojo.EmployeeRole">
+        select * from base_role;
+    </select>
+</mapper>
