@@ -1,7 +1,6 @@
 package com.zimax.mcrs.basic.aboutEmployee.controller;
 
 
-import com.zimax.cap.party.Party;
 import com.zimax.mcrs.basic.aboutEmployee.pojo.Emp;
 import com.zimax.mcrs.basic.aboutEmployee.pojo.EmpVo;
 import com.zimax.mcrs.basic.aboutEmployee.pojo.EmployeeRole;
@@ -135,6 +134,17 @@ public class EmpController {
     @PostMapping("/addRoles/{jobId}")
     public Result<?> addRoles(@PathVariable("jobId") int jobId, @RequestBody List<EmployeeRole> roleList){
         return Result.success(empService.addRoles(jobId,roleList));
+    }
+
+    /**
+     * 通过设备资源号查询员工实体集合
+     * @param resource 设备资源号
+     * @return
+     */
+    @GetMapping("/getEmpListByResource")
+    public Result<?> getEmpListByResourceId(@RequestParam("resource") String resource){
+        String equipmentId = resource;
+        return Result.success(empService.getEmpListByResourceId(equipmentId));
     }
 }
 

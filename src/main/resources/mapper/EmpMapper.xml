@@ -98,4 +98,15 @@
     <select id="queryAllRoles" resultType="com.zimax.mcrs.basic.aboutEmployee.pojo.EmployeeRole">
         select * from base_role;
     </select>
+
+<!--使用设备资源号查询员工实体集合-->
+    <select id="getEmpListByResourceId" resultType="com.zimax.mcrs.basic.aboutEmployee.pojo.EmpVo">
+        SELECT emp.*
+        FROM base_employee emp
+                 INNER JOIN base_role_emp erole ON emp.job_id = erole.job_id
+                 INNER JOIN base_role_eqi eeqi on erole.role_id = eeqi.role_id
+                 join eqi_equipment eqi on eeqi.equipment_int = eqi.equipment_int
+        WHERE eqi.equipment_id = #{equipmentId}
+        GROUP BY emp.job_id
+    </select>
 </mapper>
