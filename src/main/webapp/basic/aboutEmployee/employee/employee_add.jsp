@@ -44,7 +44,14 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>等级：</label>
             <div class="layui-input-block">
-                <input id="grade" type="text" name="grade" lay-verify="required" placeholder="等级(必填)"
+                <input id="grade" type="text" name="grade" lay-verify="required|grade" placeholder="等级(必填)"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><span style="color:red">*</span>姓名：</label>
+            <div class="layui-input-block">
+                <input id="jobName" type="text" name="jobName" lay-verify="" placeholder="姓名"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -107,6 +114,12 @@
                 }
             });
             return checkResult;
+        },
+        grade: function(value,item) {
+            var reg=/^[0-9]*$/;
+            if(!reg.test(value)){
+                return '此项为数字，请重新输入';
+            }
         },
     });
 

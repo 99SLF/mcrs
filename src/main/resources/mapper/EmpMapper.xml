@@ -5,7 +5,7 @@
     <!--    添加一条员工记录-->
     <insert id="addEmp" parameterType="com.zimax.mcrs.basic.aboutEmployee.pojo.Emp">
         insert into base_employee
-        values (#{jobId}, #{jobNo}, #{grade}, #{creator}, #{createTime})
+        values (#{jobId}, #{jobNo}, #{grade}, #{creator}, #{createTime}, #{jobName})
     </insert>
 
 
@@ -19,7 +19,7 @@
 
     <!--    修改员工信息-->
     <update id="updateEmp">
-        update base_employee set job_no = #{jobNo}, grade = #{grade} where job_id = #{jobId}
+        update base_employee set job_no = #{jobNo}, grade = #{grade} , job_name = #{jobName} where job_id = #{jobId}
     </update>
 
 <!--    删除员工信息-->
@@ -49,6 +49,7 @@
         r.role_id,
         e.job_id,
         e.job_no,
+        e.job_name,
         e.grade,
         e.creator,
         e.create_time,
