@@ -450,5 +450,9 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
         <property name="mapperInterface" value="com.zimax.mcrs.basic.warn.mapper.WarnMapper"/>
     </bean>
+    <bean id="DeleteLogsMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+        <property name="mapperInterface" value="com.zimax.mcrs.log.mapper.DeleteLogsMapper"/>
+    </bean>
 
 </beans>

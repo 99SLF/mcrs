@@ -4,6 +4,7 @@ package com.zimax.mcrs.monitor.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zimax.components.websocket.WebSocket;
+import com.zimax.mcrs.log.mapper.DeleteLogsMapper;
 import com.zimax.mcrs.monitor.mapper.AccessMonitorMapper;
 import com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +33,7 @@ import java.util.concurrent.Executor;
 public class realMonitor {
     @Autowired
     private AccessMonitorMapper accessMonitorMapper;
+    private DeleteLogsMapper deleteLogsMapper;
     @Async("taskExecutor")
     @Scheduled(fixedDelay = 420000) // 7分钟执行一次
     public void changeStatus() {
@@ -85,5 +89,19 @@ public class realMonitor {
         }else{
             return  false;
         }
+    }
+    @Async("taskExecutor")
+    @Scheduled(cron = "0 0 0 * * ?") // 每天凌晨执行任务
+    public void deleteLog() {
+        Date dNow = new Date();   //当前时间
+        Date dBefore = new Date();
+        Calendar calendar = Calendar.getInstance(); //得到日历
+        calendar.setTime(dNow);//把当前时间赋给日历
+        calendar.add(Calendar.MONTH, -3);  //设置为前3月
+        dBefore = calendar.getTime();   //得到前3月的时间
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //设置时间格式
+        String defaultStartDate = sdf.format(dBefore);    //格式化前3月的时间
+        deleteLogsMapper.deleteRepBlanking(defaultStartDate);
+
     }
 }

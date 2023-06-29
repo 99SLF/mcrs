@@ -299,33 +299,6 @@
     };
   }
 
-  function saveTree() {
-    var funcDatas = tree.getChecked("resourceTree");
-    var leafNodes = [];
-    for (var cursor = 0; cursor < funcDatas.length; cursor++) {
-      var node = funcDatas[cursor];
-      if (funcTree.isLeaf(node)) {
-        leafNodes.push(node);
-      }
-    }
-    var json = JSON.stringify({
-      functions: leafNodes,
-      roleId: "<%=request.getParameter("roleId") %>"
-    });
-    $.ajax({
-      url: "com.zimax.components.coframe.framework.FunctionAuth.saveFunctionAuths.biz.ext",
-      type: "POST",
-      data: json,
-      cache: false,
-      contentType: "text/json",
-      success: function(text) {
-        layer.alert("权限设置成功");
-      },
-      error: function () {
-        layer.alert("权限设置失败");
-      }
-    });
-  }
 
   function search(){
     var filtedNodes = [];
