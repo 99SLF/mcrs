@@ -312,7 +312,8 @@
 <!--    查询所有设备信息-->
     <select id="queryAllEquipments" resultType="com.zimax.mcrs.device.pojo.EquipmentVo">
         select *
-        from eqi_equipment;
+        from eqi_equipment
+        order by equipment_id asc
     </select>
 
 </mapper>

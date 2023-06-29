@@ -18,6 +18,16 @@ public class EmpService {
     @Autowired
     private EmpMapper empMapper;
 
+
+    /**
+     * 通过设备资源号查询员工实体集合
+     * @param equipmentId 设备资源号
+     * @return
+     */
+    public List<EmpVo> getEmpListByResourceId(String equipmentId){
+       return empMapper.getEmpListByResourceId(equipmentId);
+    }
+
     /**
      * 分页条件查询所有员工
      * @param page 页码

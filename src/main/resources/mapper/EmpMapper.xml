@@ -5,7 +5,7 @@
     <!--    添加一条员工记录-->
     <insert id="addEmp" parameterType="com.zimax.mcrs.basic.aboutEmployee.pojo.Emp">
         insert into base_employee
-        values (#{jobId}, #{jobNo}, #{grade}, #{creator}, #{createTime})
+        values (#{jobId}, #{jobNo}, #{grade}, #{creator}, #{createTime}, #{jobName})
     </insert>
 
 
@@ -19,7 +19,7 @@
 
     <!--    修改员工信息-->
     <update id="updateEmp">
-        update base_employee set job_no = #{jobNo}, grade = #{grade} where job_id = #{jobId}
+        update base_employee set job_no = #{jobNo}, grade = #{grade} , job_name = #{jobName} where job_id = #{jobId}
     </update>
 
 <!--    删除员工信息-->
@@ -49,6 +49,7 @@
         r.role_id,
         e.job_id,
         e.job_no,
+        e.job_name,
         e.grade,
         e.creator,
         e.create_time,
@@ -96,5 +97,16 @@
 <!--    查询所有员工角色-->
     <select id="queryAllRoles" resultType="com.zimax.mcrs.basic.aboutEmployee.pojo.EmployeeRole">
         select * from base_role;
+    </select>
+
+<!--使用设备资源号查询员工实体集合-->
+    <select id="getEmpListByResourceId" resultType="com.zimax.mcrs.basic.aboutEmployee.pojo.EmpVo">
+        SELECT emp.*
+        FROM base_employee emp
+                 INNER JOIN base_role_emp erole ON emp.job_id = erole.job_id
+                 INNER JOIN base_role_eqi eeqi on erole.role_id = eeqi.role_id
+                 join eqi_equipment eqi on eeqi.equipment_int = eqi.equipment_int
+        WHERE eqi.equipment_id = #{equipmentId}
+        GROUP BY emp.job_id
     </select>
 </mapper>

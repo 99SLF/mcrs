@@ -11,6 +11,14 @@ import java.util.Map;
 
 @Mapper
 public interface EmpMapper {
+
+    /**
+     * 通过设备资源号查询员工实体集合
+     * @param equipmentId 设备资源号
+     * @return
+     */
+    List<EmpVo> getEmpListByResourceId(@Param("equipmentId") String equipmentId);
+
     /**
      * 分页查询员工信息
      * @param map

@@ -382,6 +382,13 @@
             //     return '<span style="color: #09bbfd">' + d.userId + '</span>';
             // }
         }, {
+            field: "jobName",
+            title: "姓名",
+            align: "center",
+            sort: true,
+            hide: isHidden("jobName"),
+            minWidth: 120
+        }, {
             field: "grade",
             title: "等级",
             align: "center",

@@ -45,7 +45,14 @@
         <div class="layui-col-sm6">
             <label class="layui-form-label"><span style="color:red">*</span>等级：</label>
             <div class="layui-input-block">
-                <input id="grade" type="text" name="grade" lay-verify="required" placeholder="等级(必填)"
+                <input id="grade" type="text" name="grade" lay-verify="required|grade" placeholder="等级(必填)"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><span style="color:red">*</span>姓名：</label>
+            <div class="layui-input-block">
+                <input id="jobName" type="text" name="jobName" lay-verify="" placeholder="姓名"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -83,6 +90,7 @@
 
 
 
+
     var operatorId ="";
     var win = null;
     function SetData(data) {
@@ -93,10 +101,21 @@
             //添加选项几个弄几个，包括一个主键
             "jobId": data.jobId,
             "jobNo": data.jobNo,
+            "jobName": data.jobName,
             "grade": data.grade
         });
     }
 
+
+    //判断字符
+    form.verify({
+        grade: function(value,item) {
+            var reg=/^[0-9]*$/;
+            if(!reg.test(value)){
+                return '此项为数字，请重新输入';
+            }
+        },
+    });
 
     //判断角色代码是否已存在
     $("#jobNo").blur(function () {

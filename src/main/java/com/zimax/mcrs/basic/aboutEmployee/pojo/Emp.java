@@ -26,6 +26,11 @@ public class Emp {
     private  String jobNo;
 
     /**
+     * 姓名
+     */
+    private String jobName;
+
+    /**
      * 等级
      */
     private  int grade;
