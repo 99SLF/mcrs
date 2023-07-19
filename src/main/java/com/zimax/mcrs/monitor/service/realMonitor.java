@@ -7,21 +7,19 @@ import com.zimax.components.websocket.WebSocket;
 import com.zimax.mcrs.log.mapper.DeleteLogsMapper;
 import com.zimax.mcrs.monitor.mapper.AccessMonitorMapper;
 import com.zimax.mcrs.monitor.pojo.monDeviceStatus.MonitorDeviceStatus;
+import com.zimax.mcrs.update.javaBean.UploadJava;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.Executor;
 
 /**
  * @Author 施林丰
@@ -33,7 +31,10 @@ import java.util.concurrent.Executor;
 public class realMonitor {
     @Autowired
     private AccessMonitorMapper accessMonitorMapper;
+    @Autowired
     private DeleteLogsMapper deleteLogsMapper;
+    private UploadJava uploadJava = (UploadJava)new ClassPathXmlApplicationContext(
+            "applicationContext.xml").getBean("UploadJava");
     @Async("taskExecutor")
     @Scheduled(fixedDelay = 420000) // 7分钟执行一次
     public void changeStatus() {
@@ -97,11 +98,15 @@ public class realMonitor {
         Date dBefore = new Date();
         Calendar calendar = Calendar.getInstance(); //得到日历
         calendar.setTime(dNow);//把当前时间赋给日历
-        calendar.add(Calendar.MONTH, -3);  //设置为前3月
+        calendar.add(Calendar.MONTH, uploadJava.getDelRule());  //设置为前3月
         dBefore = calendar.getTime();   //得到前3月的时间
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //设置时间格式
         String defaultStartDate = sdf.format(dBefore);    //格式化前3月的时间
         deleteLogsMapper.deleteRepBlanking(defaultStartDate);
-
+        deleteLogsMapper.deleteRepfeeding(defaultStartDate);
+        deleteLogsMapper.deleteRepCoilDiameterRecord(defaultStartDate);
+        deleteLogsMapper.deleteRepVerifyUnusual(defaultStartDate);
+        deleteLogsMapper.deleteMonAlarm(defaultStartDate);
+        deleteLogsMapper.deleteLoglog(defaultStartDate);
     }
 }

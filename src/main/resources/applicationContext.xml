@@ -56,6 +56,7 @@
         <property name="ConfigPath" value="${ConfigPath}"/>
         <property name="SystemFilePath" value="${SystemFilePath}"/>
         <property name="LogFilePath" value="${LogFilePath}"/>
+        <property name="DelRule" value="${DelRule}"/>
     </bean>
 
 

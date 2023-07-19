@@ -12,4 +12,9 @@ import java.util.Date;
 @Mapper
 public interface DeleteLogsMapper {
     void deleteRepBlanking(String ruleTime);
+    void deleteRepfeeding(String ruleTime);
+    void deleteRepCoilDiameterRecord(String ruleTime);
+    void deleteRepVerifyUnusual(String ruleTime);
+    void deleteMonAlarm(String ruleTime);
+    void deleteLoglog(String ruleTime);
 }

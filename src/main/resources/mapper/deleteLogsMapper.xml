@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zimax.mcrs.log.mapper.DeleteLogsMapper">
+    <delete id="deleteRepBlanking" parameterType="String">
+        delete from rep_blanking where createdTime &lt;#{ruleTime}
+    </delete>
+    <delete id="deleteRepfeeding" parameterType="String">
+        delete from rep_feeding where createdTime &lt;#{ruleTime}
+    </delete>
+    <delete id="deleteRepCoilDiameterRecord" parameterType="String">
+        delete from rep_coilDiameterRecord where updatedTime &lt;#{ruleTime}
+    </delete>
+    <delete id="deleteRepVerifyUnusual" parameterType="String">
+        delete from rep_verifyUnusual where updatedTime &lt;#{ruleTime}
+    </delete>
+    <delete id="deleteMonAlarm" parameterType="String">
+        delete from mon_device_alarm where occurrence_time &lt;#{ruleTime}
+    </delete>
+    <delete id="deleteLoglog" parameterType="String">
+        delete from log_log where create_time &lt;#{ruleTime}
+    </delete>
+</mapper>

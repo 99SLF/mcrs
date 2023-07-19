@@ -11,6 +11,7 @@ public class UploadJava {
     private String ConfigPath;
     private String SystemFilePath;
     private String logFilePath;
+    private  int delRule;
     public String getLogFilePath() {
         return logFilePath;
     }
@@ -44,4 +45,11 @@ public class UploadJava {
         SystemFilePath = systemFilePath;
     }
 
+    public int getDelRule() {
+        return delRule;
+    }
+
+    public void setDelRule(int delRule) {
+        this.delRule = delRule;
+    }
 }
