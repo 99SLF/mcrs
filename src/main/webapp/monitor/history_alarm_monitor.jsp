@@ -142,6 +142,13 @@
         var startTime = "";
         var endTime = "";
         var field = data.field;
+        if(field.CREATED_TIME == null||field.CREATED_TIME==""){
+            layer.msg("请选择查询时间区间", {
+                icon: 3,
+                time: 1000
+            })
+            return;
+        }
         if(field.CREATED_TIME != null){
             startTime = field.CREATED_TIME.substring(0,field.CREATED_TIME.indexOf("~"));
             endTime = field.CREATED_TIME.substring(field.CREATED_TIME.indexOf("~")+1);
@@ -149,6 +156,7 @@
         field["startTime"]=startTime
         field["endTime"]=endTime
         reloadData(field);
+
         var formData = {
             equipmentId: field.equipmentId,
             deviceName: field.deviceName,
@@ -164,10 +172,13 @@
     function reloadData(formData) {
         //读取表格数据 表格id
         table.reload("LAY-app-device_statusAlarm-list-reload", {
+            url: "<%= request.getContextPath() %>/HistoryAlarm/historyAlarm/query",
+           method: "GET",
             where: formData,
             page: {
                 curr: 1
             }
+
         });
         formReder();
         if (focusName) {
@@ -272,8 +283,7 @@
     table.render({
         elem: "#LAY-app-device_statusAlarm-list",
         id: "LAY-app-device_statusAlarm-list-reload",
-        url: "<%= request.getContextPath() %>/HistoryAlarm/historyAlarm/query",
-        method: "GET",
+        data: [],
         height: "full-" + getFullSize(),
         page: true,
         limit: 30,

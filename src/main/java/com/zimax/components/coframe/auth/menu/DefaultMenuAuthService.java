@@ -14,6 +14,7 @@ import com.zimax.components.coframe.framework.IMenuService;
 import com.zimax.components.coframe.framework.constants.IAppConstants;
 import com.zimax.components.coframe.framework.pojo.Menu;
 import com.zimax.components.coframe.tools.IAuthConstants;
+import com.zimax.components.coframe.tools.service.ApplicationUtil;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -82,7 +83,7 @@ public class DefaultMenuAuthService {
      * @return
      */
     private IMenuService getMenuService() {
-        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        ApplicationContext context = ApplicationUtil.getInstance();
         return context.getBean(SPRING_MENU_BEAN, IMenuService.class);
     }
 

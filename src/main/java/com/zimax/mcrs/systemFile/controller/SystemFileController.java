@@ -2,6 +2,7 @@ package com.zimax.mcrs.systemFile.controller;
 
 import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
+import com.zimax.components.coframe.tools.service.ApplicationUtil;
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.monitor.controller.SystemMonitorAlarm;
 import com.zimax.mcrs.systemFile.pojo.SystemFile;
@@ -39,8 +40,7 @@ import java.util.UUID;
 public class SystemFileController {
     @Autowired
     private SystemFileService systemFileService;
-    private UploadJava uploadJava = (UploadJava)new ClassPathXmlApplicationContext(
-                    "applicationContext.xml").getBean("UploadJava");
+    private UploadJava uploadJava = (UploadJava) ApplicationUtil.getInstance().getBean("UploadJava");
 
     @PostMapping("/upload")
     public Result<?> updateSystemFile(MultipartFile file, SystemFile systemFile, HttpServletRequest request) throws

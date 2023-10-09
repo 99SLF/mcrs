@@ -5,6 +5,7 @@ import com.zimax.cap.party.Party;
 import com.zimax.components.coframe.auth.party.manager.DefaultRoleManager;
 import com.zimax.components.coframe.rights.pojo.Role;
 import com.zimax.components.coframe.tools.IConstants;
+import com.zimax.components.coframe.tools.service.ApplicationUtil;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -22,7 +23,7 @@ public class RolePartyTypeDataService implements IPartyTypeDataService {
     private DefaultRoleManager bean;
 
     public RolePartyTypeDataService() {
-        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        ApplicationContext context = ApplicationUtil.getInstance();
         bean = context.getBean(DefaultRoleManager.SPRING_BEAN_NAME, DefaultRoleManager.class);
     }
 

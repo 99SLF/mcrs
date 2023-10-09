@@ -8,6 +8,7 @@ import com.zimax.components.coframe.framework.pojo.Application;
 import com.zimax.components.coframe.framework.pojo.FuncGroup;
 import com.zimax.components.coframe.framework.pojo.Function;
 import com.zimax.components.coframe.tools.IconCls;
+import com.zimax.components.coframe.tools.service.ApplicationUtil;
 import com.zimax.mcrs.config.ChangeString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -84,7 +85,7 @@ public class ApplicationService {
      */
     public void updateApplication(Application application) {
         applicationMapper.updateApplication(application);
-        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        ApplicationContext context = ApplicationUtil.getInstance();
         IFunctionService functionService = context.getBean("FunctionBean", IFunctionService.class);
         Function[] functions= functionService.getFunctionsByAppId((application.getAppId()));
         functionService.updateResoucesBatch(functions);

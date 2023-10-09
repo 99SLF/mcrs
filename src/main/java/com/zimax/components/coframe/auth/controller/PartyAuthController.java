@@ -47,7 +47,7 @@ public class PartyAuthController {
 	 * @param roleList 角色参与者列表
 	 * @return
 	 */
-	@PostMapping("/delete/{partyTypeId}/{id}")
+	@PostMapping("/delete/{partyTypeId}/0{id}")
 	public Result<?> deletePartyAuth(@PathVariable("partyTypeId") String partyTypeId, @PathVariable("id") String id, @RequestBody List<Party> roleList) {
 		Party party = new Party(partyTypeId, id, null, null);
 		return Result.success(partyAuthService.delPartyAuthBatch(roleList.toArray(new Party[roleList.size()]), party));

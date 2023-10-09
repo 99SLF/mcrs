@@ -6,6 +6,7 @@ import com.zimax.components.coframe.framework.mapper.FunctionMapper;
 import com.zimax.components.coframe.framework.pojo.FuncGroup;
 import com.zimax.components.coframe.framework.pojo.FuncResource;
 import com.zimax.components.coframe.framework.pojo.Function;
+import com.zimax.components.coframe.tools.service.ApplicationUtil;
 import com.zimax.mcrs.config.ChangeString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -92,7 +93,7 @@ public class FuncGroupService {
      * @param funcGroup 应用信息
      */
     public void updatefuncGroup(FuncGroup funcGroup) {
-        funcGroupMapper.updateFuncGroup(funcGroup); ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        funcGroupMapper.updateFuncGroup(funcGroup); ApplicationContext context = ApplicationUtil.getInstance();
         IFunctionService functionService = context.getBean("FunctionBean", IFunctionService.class);
         Function[] functions= functionService.getFunctionsByFuncGroupIds((funcGroup.getFuncGroupId()));
         functionService.updateResoucesBatch(functions);

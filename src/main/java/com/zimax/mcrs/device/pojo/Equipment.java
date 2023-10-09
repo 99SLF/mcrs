@@ -107,4 +107,6 @@ public class Equipment {
 
     @TableField(exist = false)
     String accPointResCode;
+    @TableField(exist = false)
+    String localHostPort;
 }

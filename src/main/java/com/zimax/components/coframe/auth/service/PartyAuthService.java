@@ -7,6 +7,7 @@ import com.zimax.cap.party.manager.PartyRuntimeManager;
 import com.zimax.components.coframe.auth.pojo.PartyDataObject;
 import com.zimax.components.coframe.rights.gradeauth.GradeAuthService;
 import com.zimax.components.coframe.tools.IConstants;
+import com.zimax.components.coframe.tools.service.ApplicationUtil;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -106,7 +107,7 @@ public class PartyAuthService implements IPartyAuthService {
 
 	// GradeAuthBean在另一个构件包，所以直接用BeanFactory获取
 	public GradeAuthService getGradeAuthService() {
-		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+		ApplicationContext context = ApplicationUtil.getInstance();
 		return context.getBean(GradeAuthService.SPRING_BEAN_NAME, GradeAuthService.class);
 	}
 }

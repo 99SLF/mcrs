@@ -7,6 +7,7 @@ import com.zimax.cap.party.impl.DefaultPartyUserInitService;
 import com.zimax.cap.party.impl.UserObject;
 import com.zimax.components.coframe.framework.IFunctionService;
 import com.zimax.components.coframe.tools.IConstants;
+import com.zimax.components.coframe.tools.service.ApplicationUtil;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -46,7 +47,7 @@ public class CoframePartyUserInitService extends DefaultPartyUserInitService {
             userObject = new UserObject();
         }
 
-        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        ApplicationContext context = ApplicationUtil.getInstance();
         InitUserObjectService bean = context.getBean(InitUserObjectService.SPRING_BEAN_NAME, InitUserObjectService.class);
 
         // 取用户基本信息，考虑到用户属于多机构的情况，可能会返回多条记录

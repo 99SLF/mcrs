@@ -1,6 +1,7 @@
 package com.zimax.mcrs.log.service;
 
 import com.alibaba.fastjson.JSON;
+import com.zimax.components.coframe.tools.service.ApplicationUtil;
 import com.zimax.mcrs.config.ChangeString;
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.log.mapper.LogFileMapper;
@@ -27,8 +28,7 @@ import java.util.*;
 public class LogFileService {
     @Autowired
     private LogFileMapper logFileMapper;
-    private UploadJava uploadJava = (UploadJava) new ClassPathXmlApplicationContext(
-            "applicationContext.xml").getBean("UploadJava");
+    private UploadJava uploadJava = (UploadJava) ApplicationUtil.getInstance().getBean("UploadJava");
     /**
      * 查询日志文件信息
      */

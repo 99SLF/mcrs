@@ -2,6 +2,7 @@ package com.zimax.components.coframe.framework.startup;
 
 import com.zimax.components.coframe.framework.IFuncResourceService;
 import com.zimax.components.coframe.framework.IFunctionService;
+import com.zimax.components.coframe.tools.service.ApplicationUtil;
 import com.zimax.components.coframe.tools.tab.TabPage;
 import com.zimax.components.coframe.tools.tab.TabPageManager;
 import org.springframework.context.ApplicationContext;
@@ -21,11 +22,10 @@ public class FunctionStartupListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        IFunctionService functionService = context.getBean("FunctionBean", IFunctionService.class);
+        IFunctionService functionService = ApplicationUtil.getInstance().getBean("FunctionBean", IFunctionService.class);
         functionService.initFunctions();
 
-        IFuncResourceService funcResourceService = context.getBean("FuncResourceBean", IFuncResourceService.class);
+        IFuncResourceService funcResourceService = ApplicationUtil.getInstance().getBean("FuncResourceBean", IFuncResourceService.class);
         funcResourceService.initFuncResources();
 
         TabPage page = new TabPage();

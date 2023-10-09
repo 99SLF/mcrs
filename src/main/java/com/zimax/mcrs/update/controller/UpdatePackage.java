@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
 import com.zimax.components.coframe.rights.pojo.User;
+import com.zimax.components.coframe.tools.service.ApplicationUtil;
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.device.mapper.DeviceMapper;
 import com.zimax.mcrs.device.pojo.Device;
@@ -52,8 +53,7 @@ public class UpdatePackage {
     private  DeviceMapper deviceMapper;
     @Autowired
     private ConfigurationFileMapper configurationFileMapper;
-    private UploadJava uploadJava = (UploadJava)new ClassPathXmlApplicationContext(
-            "applicationContext.xml").getBean("UploadJava");
+    private UploadJava uploadJava = (UploadJava) ApplicationUtil.getInstance().getBean("UploadJava");
 
     /**
      * 注入信息
@@ -455,6 +455,7 @@ public class UpdatePackage {
     public Result<?> register(@RequestBody Equipment equipment) {
         String equipmentIp = equipment.getEquipmentIp();
         String equipmentId = equipment.getEquipmentId();
+        String equipmentContinuePort = equipment.getLocalHostPort();
         if (equipmentIp == null || "".equals(equipmentIp)||equipmentId==null||"".equals(equipmentId)) {
             return Result.error("1", "传入参数有误。equipmentIp："+equipmentIp+",resource"+equipmentId);
         }
@@ -462,6 +463,7 @@ public class UpdatePackage {
         Integer y = updatePackageService.getaccPointIdBycode(equipment.getAccPointResCode());
         equipment.setAccPointResId(y);
         equipment.setEquipTypeId(x);
+        equipment.setEquipmentContinuePort(equipmentContinuePort);
         if(updatePackageService.checkEqi(equipmentIp)<1){
             equipment.setEnable("101");
             updatePackageService.addEqi(equipment);
@@ -469,7 +471,7 @@ public class UpdatePackage {
             updatePackageService.updateEquipmentByUpload(equipment);
         }
         try {
-            String equipmentContinuePort = "";
+             equipmentContinuePort = "";
 
             String appId = null;
             //1.通过IP、端口查询设备资源 （关联2 设备、资源）

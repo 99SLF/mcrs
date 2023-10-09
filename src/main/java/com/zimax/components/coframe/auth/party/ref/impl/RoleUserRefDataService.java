@@ -7,6 +7,7 @@ import com.zimax.components.coframe.auth.party.manager.DefaultUserManager;
 import com.zimax.components.coframe.framework.IFunctionService;
 import com.zimax.components.coframe.rights.pojo.Role;
 import com.zimax.components.coframe.tools.IConstants;
+import com.zimax.components.coframe.tools.service.ApplicationUtil;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -31,7 +32,7 @@ public class RoleUserRefDataService implements IPartyTypeRefDataService {
 	 * 构造方法
 	 */
 	public RoleUserRefDataService() {
-		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+		ApplicationContext context = ApplicationUtil.getInstance();
 		this.roleBean = context.getBean(DefaultRoleManager.SPRING_BEAN_NAME, DefaultRoleManager.class);
 		this.userBean = context.getBean(DefaultUserManager.SPRING_BEAN_NAME, DefaultUserManager.class);
 	}

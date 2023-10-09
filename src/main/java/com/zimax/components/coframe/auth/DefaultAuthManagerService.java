@@ -16,6 +16,7 @@ import com.zimax.components.coframe.rights.pojo.ResAuth;
 import com.zimax.components.coframe.rights.pojo.Role;
 import com.zimax.components.coframe.rights.resauth.DefaultResAuthManager;
 import com.zimax.components.coframe.tools.IConstants;
+import com.zimax.components.coframe.tools.service.ApplicationUtil;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -37,7 +38,7 @@ public class DefaultAuthManagerService implements IAuthManagerService {
     private DefaultPartyAuthManager partyAuthBean = null;
 
     public DefaultAuthManagerService() {
-        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        ApplicationContext context = ApplicationUtil.getInstance();
         this.resAuthBean = context.getBean(DefaultResAuthManager.SPRING_BEAN_NAME, DefaultResAuthManager.class);
         this.partyAuthBean = context.getBean(DefaultPartyAuthManager.SPRING_BEAN_NAME, DefaultPartyAuthManager.class);
     }

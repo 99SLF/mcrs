@@ -3,6 +3,7 @@ package com.zimax.mcrs.monitor.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zimax.components.coframe.tools.service.ApplicationUtil;
 import com.zimax.components.websocket.WebSocket;
 import com.zimax.mcrs.log.mapper.DeleteLogsMapper;
 import com.zimax.mcrs.monitor.mapper.AccessMonitorMapper;
@@ -33,8 +34,7 @@ public class realMonitor {
     private AccessMonitorMapper accessMonitorMapper;
     @Autowired
     private DeleteLogsMapper deleteLogsMapper;
-    private UploadJava uploadJava = (UploadJava)new ClassPathXmlApplicationContext(
-            "applicationContext.xml").getBean("UploadJava");
+    private UploadJava uploadJava = (UploadJava) ApplicationUtil.getInstance().getBean("UploadJava");
     @Async("taskExecutor")
     @Scheduled(fixedDelay = 420000) // 7分钟执行一次
     public void changeStatus() {

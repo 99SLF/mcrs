@@ -147,11 +147,16 @@
     <!--更新1条设备信息-->
     <update id="updateEquipmentByUpload" parameterType="com.zimax.mcrs.device.pojo.Equipment">
         update eqi_equipment
-        set equipment_id=#{equipmentId},
-        equipment_name=#{equipmentName},
-        equip_type_id=#{equipTypeId},
-        equipment_ip=#{equipmentIp},
-        acc_point_res_id=#{accPointResId}
+        <set>
+            equipment_id=#{equipmentId},
+            equipment_name=#{equipmentName},
+            equip_type_id=#{equipTypeId},
+            equipment_ip=#{equipmentIp},
+            acc_point_res_id=#{accPointResId},
+            <if test="equipmentContinuePort !=null and equipmentContinuePort !=''">
+                equipment_continue_port=#{equipmentContinuePort}
+            </if>
+        </set>
         where equipment_ip = #{equipmentIp}
         <selectKey keyColumn="equipment_int" keyProperty='equipmentInt' resultType='int' order='AFTER'>
             SELECT

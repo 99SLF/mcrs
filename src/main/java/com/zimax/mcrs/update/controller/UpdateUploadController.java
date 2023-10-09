@@ -3,6 +3,7 @@ package com.zimax.mcrs.update.controller;
 
 import com.zimax.cap.datacontext.DataContextManager;
 import com.zimax.cap.party.IUserObject;
+import com.zimax.components.coframe.tools.service.ApplicationUtil;
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.device.pojo.DeviceRollback;
 import com.zimax.mcrs.device.pojo.DeviceUpgrade;
@@ -45,8 +46,7 @@ public class UpdateUploadController {
 
     @Autowired
     private SerialnumberService serialnumberService;
-    private UploadJava uploadJava = (UploadJava) new ClassPathXmlApplicationContext(
-            "applicationContext.xml").getBean("UploadJava");
+    private UploadJava uploadJava = (UploadJava) ApplicationUtil.getInstance().getBean("UploadJava");
 
     /**
      * 记录更新包上传记录
