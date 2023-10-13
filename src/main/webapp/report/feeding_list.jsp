@@ -115,6 +115,13 @@
 		var startTime = "";
 		var endTime = "";
 		var field = data.field;
+		if(field.CREATED_TIME == null||field.CREATED_TIME==""){
+			layer.msg("请选择查询时间区间", {
+				icon: 3,
+				time: 1000
+			})
+			return;
+		}
 		if(field.CREATED_TIME != null){
 			startTime = field.CREATED_TIME.substring(0,field.CREATED_TIME.indexOf("~"));
 			endTime = field.CREATED_TIME.substring(field.CREATED_TIME.indexOf("~")+1);
@@ -134,8 +141,9 @@
 
 
 	function reloadData(formData) {
-		//读取表格数据 表格id
 		table.reload("LAY-app-feeding-list-reload", {
+			url: "<%=request.getContextPath() %>/report/feeding/query",
+			method: "GET",
 			page: {
 				curr: 1
 			},
@@ -242,8 +250,7 @@
 	table.render({
 		elem: "#LAY-app-feeding-list",
 		id: "LAY-app-feeding-list-reload",
-		url: "<%=request.getContextPath() %>/report/feeding/query",
-		method: "get",
+		data: [],
 		height: "full-" + getFullSize(),
 		page: true,
 		limit: 1000,

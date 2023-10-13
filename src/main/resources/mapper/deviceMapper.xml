@@ -78,8 +78,7 @@
         LEFT JOIN
         cap_user AS cur
         ON dev.creator = cur.USER_ID
-        order by
-        upd.version_upload_time desc) as vo
+        order by upload_id desc) as vo
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and vo.equipment_id like '%${equipmentId}%'
@@ -105,9 +104,6 @@
             <if test="version !=null and version !=''">
                 and vo.version like '%${version}%'
             </if>
-            <if test="needUpdate !=null and needUpdate !=''">
-                and vo.need_update like '%${needUpdate}%'
-            </if>
             <if test="registerStatus !=null and registerStatus !=''">
                 and vo.register_status like '%${registerStatus}%'
             </if>
@@ -120,6 +116,11 @@
         </where>
         GROUP BY
         vo.device_id
+        <trim prefix="having" suffixOverrides="and">
+            <if test="needUpdate !=null and needUpdate !=''">
+                vo.need_update like '%${needUpdate}%' and
+            </if>
+        </trim>
         <if test="order !=null and order !=''">
             order by ${field} ${order}
          </if>
@@ -186,8 +187,7 @@
         LEFT JOIN
         cap_user AS cur
         ON dev.creator = cur.USER_ID
-        order by
-        upd.version_upload_time desc) as vo
+        order by upload_id desc) as vo
         <where>
             <if test="equipmentId !=null and equipmentId !=''">
                 and vo.equipment_id like '%${equipmentId}%'
@@ -213,9 +213,6 @@
             <if test="version !=null and version !=''">
                 and vo.version like '%${version}%'
             </if>
-            <if test="needUpdate !=null and needUpdate !=''">
-                and vo.need_update like '%${needUpdate}%'
-            </if>
             <if test="registerStatus !=null and registerStatus !=''">
                 and vo.register_status like '%${registerStatus}%'
             </if>
@@ -227,7 +224,12 @@
             </if>
         </where>
         GROUP BY
-        vo.device_id) AS vdi;
+        vo.device_id
+        <trim prefix="having" suffixOverrides="and">
+            <if test="needUpdate !=null and needUpdate !=''">
+                vo.need_update like '%${needUpdate}%' and
+            </if>
+        </trim>) AS vdi
     </select>
 
     <!--注册终端-->

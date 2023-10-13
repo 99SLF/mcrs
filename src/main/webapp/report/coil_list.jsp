@@ -120,6 +120,13 @@
         var startTime = "";
         var endTime = "";
         var field = data.field;
+        if(field.UPDATED_TIME == null||field.UPDATED_TIME==""){
+            layer.msg("请选择查询时间区间", {
+                icon: 3,
+                time: 1000
+            })
+            return;
+        }
         if (field.UPDATED_TIME != null) {
             startTime = field.UPDATED_TIME.substring(0, field.UPDATED_TIME.indexOf("~"));
             endTime = field.UPDATED_TIME.substring(field.UPDATED_TIME.indexOf("~") + 1);
@@ -140,6 +147,8 @@
     function reloadData(formData) {
         //读取表格数据 表格id
         table.reload("LAY-app-coil-list-reload", {
+            url: "<%=request.getContextPath() %>/report/CoilDiameterRecord/query",
+            method: "get",
             page: {
                 curr: 1
             },
@@ -245,8 +254,7 @@
     table.render({
         elem: "#LAY-app-coil-list",
         id: "LAY-app-coil-list-reload",
-        url: "<%=request.getContextPath() %>/report/CoilDiameterRecord/query",
-        method: "get",
+        data: [],
         height: "full-" + getFullSize(),
         page: true,
         limit: 1000,
