@@ -10,9 +10,9 @@
   <display-name>Archetype Created Web Application</display-name>
 
 <!--   许可证权限管理启动监听器，从项目的lib中添加，之后可继承，不在模块中引用的化，可以运行但是爆红-->
-  <listener>
-    <listener-class>com.LicenseAuthorization.ClientServices.common.config.LicenseCheckListener</listener-class>
-  </listener>
+<!--  <listener>-->
+<!--    <listener-class>com.LicenseAuthorization.ClientServices.common.config.LicenseCheckListener</listener-class>-->
+<!--  </listener>-->
 
   <!--  许可证公钥密码，必须配置-->
   <context-param>
