@@ -1,11 +1,15 @@
 package com.zimax.mcrs.report.controller;
 
+import com.alibaba.excel.EasyExcel;
 import com.zimax.mcrs.config.Result;
 import com.zimax.mcrs.report.pojo.Blanking;
 import com.zimax.mcrs.report.service.BlankingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -34,7 +38,22 @@ public class BlankingReport {
         blankingService.addBlanking(blanking);
         return Result.success();
     }
+    @GetMapping("/blanking/export/{page}/{limit}")
+    public void exportExcel(HttpServletResponse response,@PathVariable("page") String page, @PathVariable("limit") String limit) throws IOException {
+        // 导出文件名
+        String fileName = URLEncoder.encode("用户数据", "UTF-8");
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        String headerValue = String.format("attachment; filename*=UTF-8''%s.xlsx", fileName);
+        response.setHeader("Content-Disposition", headerValue);
+        List<Blanking> blankings = blankingService.queryBlankings(page, limit,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
 
+        // 使用 EasyExcel 导出数据
+        EasyExcel.write(response.getOutputStream())
+                .head(Blanking.class) // 使用 User 类的字段作为表头
+                .sheet("用户数据")
+                .doWrite(blankings);
+    }
     /**
      * 分页查询所有用户
      *

@@ -1,6 +1,7 @@
 package com.zimax.components.coframe.framework.controller;
 
 import com.alibaba.excel.util.StringUtils;
+import com.zimax.cap.common.muo.MyException;
 import com.zimax.components.coframe.framework.service.ApplicationService;
 import com.zimax.mcrs.config.Result;
 import com.zimax.components.coframe.framework.pojo.Application;
@@ -162,6 +163,21 @@ public class ApplicationController {
     public Result<?> batchDelete(@RequestBody List<Integer> appIds) {
         applicationService.deleteApplications(appIds);
         return Result.success();
+    }
+    @GetMapping("/test")
+    public void test1(){
+        //int c = 5/0;
+try{
+    int x[] = new int[1];
+    x[5] = 5;
+}catch(MyException e){
+
+    throw new MyException("500");
+}
+
+
+
+
     }
 
 }

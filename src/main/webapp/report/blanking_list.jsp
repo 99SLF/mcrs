@@ -127,13 +127,13 @@
         var startTime = "";
         var endTime = "";
         var field = data.field;
-        if(field.CREATED_TIME == null||field.CREATED_TIME==""){
-            layer.msg("请选择查询时间区间", {
-                icon: 3,
-                time: 1000
-            })
-            return;
-        }
+        // if(field.CREATED_TIME == null||field.CREATED_TIME==""){
+        //     layer.msg("请选择查询时间区间", {
+        //         icon: 3,
+        //         time: 1000
+        //     })
+        //     return;
+        // }
         if(field.CREATED_TIME != null){
             startTime = field.CREATED_TIME.substring(0,field.CREATED_TIME.indexOf("~"));
             endTime = field.CREATED_TIME.substring(field.CREATED_TIME.indexOf("~")+1);
@@ -311,7 +311,7 @@
                 }
             });
         },
-        limits: [1000, 1500, 2000, 2500],
+        limits: [10000, 20000, 50000, 100000],
         parseData: function (res) {
             return {
                 code: res.code,

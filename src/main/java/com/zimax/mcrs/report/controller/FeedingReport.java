@@ -1,10 +1,13 @@
 package com.zimax.mcrs.report.controller;
 
 
+import com.zimax.components.coframe.tools.service.ApplicationUtil;
 import com.zimax.mcrs.config.Result;
+import com.zimax.mcrs.report.mapper.FeedingReportMapper;
 import com.zimax.mcrs.report.pojo.Feeding;
 import com.zimax.mcrs.report.service.FeedingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,7 +35,10 @@ public class FeedingReport {
      */
     @PostMapping("/feeding/add")
     public Result<?> addFeeding(@RequestBody Feeding feeding) {
+
         feedingService.addFeeding(feeding);
+        FeedingReportMapper feedingReportMapper = (FeedingReportMapper) new ClassPathXmlApplicationContext("applicationContext.xml").getBean("FeedingReportMapper");
+        feedingReportMapper.addFeeding(feeding);
         return Result.success();
     }
 

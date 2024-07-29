@@ -6,6 +6,7 @@ package com.zimax.mcrs.monitor.mapper;
 import com.zimax.mcrs.monitor.pojo.vo.MonitorDeviceAlarmVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import java.util.Map;
  * @date 2023/4/11 9:30
  */
 @Mapper
+
 public interface HistoryAlarmMapper {
 
     List<MonitorDeviceAlarmVo> queryHistoryAlarm(Map map);

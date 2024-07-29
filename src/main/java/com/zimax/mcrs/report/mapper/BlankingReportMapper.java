@@ -13,7 +13,7 @@ import java.util.Map;
  * @author 李伟杰
  * @date 2022/12/8 19:28
  */
-@Mapper
+
 public interface BlankingReportMapper {
 
     /**

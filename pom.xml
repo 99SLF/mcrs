@@ -15,8 +15,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
   </properties>
 
   <dependencies>
@@ -25,6 +25,13 @@
       <groupId>com.mchange</groupId>
       <artifactId>c3p0</artifactId>
       <version>0.9.5.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>5.3.22</version>
+      <scope>test</scope>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
@@ -228,9 +235,21 @@
       <artifactId>commons-lang3</artifactId>
       <version>3.7</version>
     </dependency>
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+      <version>2.6.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis -->
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-redis</artifactId>
+      <version>2.6.2</version>
+    </dependency>
 
 
-<!--用于jar包的生成，打包项目的时候，通过打包所有的依赖到target/lib-->
+
+    <!--用于jar包的生成，打包项目的时候，通过打包所有的依赖到target/lib-->
 <!--    &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-dependency-plugin &ndash;&gt;-->
 <!--    &lt;!&ndash;将所依赖的jar包插件导到 -Maven将依赖项复制到target/lib中&ndash;&gt;-->
 <!--    <dependency>-->
@@ -243,66 +262,48 @@
 
   <build>
     <finalName>mcrs</finalName>
-<!--    静态配置文件排除打包-->
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-<!--        <includes>-->
-<!--          <include>**/*.xml</include> &lt;!&ndash; 配置需要打包的文件类型，例如xml &ndash;&gt;-->
-<!--        </includes>-->
-<!--        <excludes>-->
-<!--          <exclude>**/license.lic</exclude> &lt;!&ndash; 配置需要排除的文件 &ndash;&gt;-->
-<!--        </excludes>-->
-      </resource>
-    </resources>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.1.0</version>
         </plugin>
         <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.0.2</version>
         </plugin>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.0</version>
-          <configuration>
-            <!--  项目用到maven打包编译，本地开发jar包使用maven管理，部分依赖jar包放在WEB-INF/lib目录下-->
-            <!--解决使用maven install命令打war包时，则会出现“程序包xxx不存在的”错误-->
-            <!--让maven既加载maven库中的jar包，又要加载本地WEB-INF/lib下的jar包-->
-            <compilerArguments>
-              <extdirs>${project.basedir}/src/main/webapp/WEB-INF/lib</extdirs>
-            </compilerArguments>
-          </configuration>
         </plugin>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.22.1</version>
         </plugin>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-war-plugin</artifactId>
           <version>3.2.2</version>
         </plugin>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-install-plugin</artifactId>
           <version>2.5.2</version>
         </plugin>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
           <version>2.8.2</version>
         </plugin>
       </plugins>
     </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>8</source>
+          <target>8</target>
+        </configuration>
+      </plugin>
 
 <!--用于jar包的生成，打包项目的时候，通过打包所有的依赖到target/lib-->
 <!--      <plugin>-->
@@ -326,5 +327,25 @@
 <!--          </execution>-->
 <!--        </executions>-->
 <!--      </plugin>-->
+
+
+    <!--  项目用到maven打包编译，本地开发jar包使用maven管理，部分依赖jar包放在WEB-INF/lib目录下-->
+      <!--解决使用maven install命令打war包时，则会出现“程序包xxx不存在的”错误-->
+      <!--让maven既加载maven库中的jar包，又要加载本地WEB-INF/lib下的jar包-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+          <encoding>UTF-8</encoding>
+          <compilerArguments>
+            <extdirs>${project.basedir}/src/main/webapp/WEB-INF/lib</extdirs>
+          </compilerArguments>
+        </configuration>
+      </plugin>
+
+    </plugins>
   </build>
 </project>
